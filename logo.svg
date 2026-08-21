@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 60">
+  <style>
+    .l-num {
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      font-weight: 700;
+      font-size: 46px;
+      fill: #8B1A1A;
+      letter-spacing: -1px;
+    }
+    .l-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      fill: #8B1A1A;
+      letter-spacing: 4px;
+    }
+  </style>
+  <text x="0" y="44" class="l-num">1928</text>
+  <line x1="140" y1="10" x2="140" y2="46" stroke="#8B1A1A" stroke-width="0.8" opacity="0.3"/>
+  <text x="152" y="26" class="l-sub">CREATIVE</text>
+  <text x="152" y="42" class="l-sub">STUDIO</text>
+</svg>

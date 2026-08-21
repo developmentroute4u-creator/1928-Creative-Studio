@@ -1,0 +1,4754 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1928 Creative Studio — Engineering Iconic Brands</title>
+  <meta name="description"
+    content="1928 Creative Studio — Multidisciplinary brand architecture, digital platforms, and cinematic design systems." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+   1928 CREATIVE STUDIO — COMPLETE REDESIGN
+   Motion-heavy, scroll-driven single-page experience
+   Pure CSS — No Tailwind, No frameworks
+   ═══════════════════════════════════════════════════════════ */
+
+    /* ── Design System Tokens ──────────────────────────────── */
+    :root {
+      /* Palette */
+      --bg: #F5F4F0;
+      --bg-alt: #EBE9E4;
+      --ink: #0A0A0A;
+      --ink-mid: rgba(10, 10, 10, 0.55);
+      --ink-dim: rgba(10, 10, 10, 0.25);
+      --rule: rgba(10, 10, 10, 0.08);
+      --rule-m: rgba(10, 10, 10, 0.15);
+      --cr: #8B1A1A;
+      --cr-dk: #6B1212;
+      --cr-lo: rgba(139, 26, 26, 0.08);
+      --card-bg: #FFFFFF;
+      --card-shadow: 0 16px 48px rgba(0, 0, 0, 0.07);
+      --card-shadow-lg: 0 32px 80px rgba(0, 0, 0, 0.12);
+
+      /* Typography Tokens */
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-mono: 'Space Mono', monospace;
+
+      /* Motion Easings */
+      --sp: cubic-bezier(.34, 1.56, .64, 1);
+      --sm: cubic-bezier(.16, 1, .3, 1);
+      --ease: cubic-bezier(.25, 1, .5, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0A0A0C;
+      --bg-alt: #111114;
+      --ink: #F5F4F0;
+      --ink-mid: rgba(245, 244, 240, 0.55);
+      --ink-dim: rgba(245, 244, 240, 0.22);
+      --rule: rgba(245, 244, 240, 0.08);
+      --rule-m: rgba(245, 244, 240, 0.15);
+      --cr: #B91C1C;
+      --cr-dk: #991B1B;
+      --cr-lo: rgba(185, 28, 28, 0.15);
+      --card-bg: #18181B;
+      --card-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+      --card-shadow-lg: 0 32px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ── Reset ────────────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: auto;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+      transition: background .5s var(--ease), color .5s var(--ease);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      background: none;
+      cursor: none;
+      color: inherit;
+    }
+
+    ::selection {
+      background: var(--cr);
+      color: #fff;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ── Custom Cursor ────────────────────────────────────── */
+    #cur {
+      position: fixed;
+      z-index: 99999;
+      pointer-events: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cr);
+      transform: translate(-50%, -50%);
+      transition: width .15s, height .15s;
+    }
+
+    #cur-r {
+      position: fixed;
+      z-index: 99998;
+      pointer-events: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cr);
+      opacity: .4;
+      transform: translate(-50%, -50%);
+      transition: width .28s var(--sm), height .28s var(--sm), opacity .3s, background .3s;
+    }
+
+    body.hov #cur-r {
+      width: 56px;
+      height: 56px;
+      opacity: .85;
+      background: var(--cr-lo);
+    }
+
+    /* ── Fixed Navigation Header (Hidden on Hero Landing) ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 900;
+      padding: 18px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(245, 244, 240, 0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--rule);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+      transition: opacity .5s, transform .5s var(--sm), background .4s, border-color .4s;
+    }
+
+    [data-theme="dark"] #nav {
+      background: rgba(10, 10, 12, 0.88);
+    }
+
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nav.hidden {
+      transform: translateY(-100%);
+    }
+
+    .nav-logo svg {
+      height: 36px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      transition: color .25s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 1.5px;
+      background: var(--cr);
+      transition: width .3s var(--sm);
+    }
+
+    .nav-links a:hover {
+      color: var(--cr);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    #tbtn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-m);
+      display: grid;
+      place-items: center;
+      transition: border-color .25s, transform .32s;
+      background: var(--bg);
+    }
+
+    #tbtn:hover {
+      border-color: var(--cr);
+      transform: rotate(22deg);
+    }
+
+    #tbtn svg {
+      width: 15px;
+      height: 15px;
+      fill: var(--ink-mid);
+    }
+
+    .nav-cta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #fff;
+      transition: background .25s, transform .25s;
+      cursor: pointer;
+    }
+
+    .nav-cta:hover {
+      background: var(--cr-dk);
+      transform: translateY(-1px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+   §1 — HERO SECTION (Full Bleed 3D Room & 2-Box Frame Architecture)
+   ═══════════════════════════════════════════════════════════ */
+    #hero-driver {
+      position: relative;
+      height: 700vh;
+    }
+
+    #hero-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Architectural Wireframe SVG — zooms forward with camera ── */
+    .hero-corner-rays {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      transform-origin: center center;
+      will-change: transform;
+      overflow: visible;
+    }
+
+    [data-theme="dark"] .hero-corner-rays rect,
+    [data-theme="dark"] .hero-corner-rays line {
+      stroke: rgba(245, 244, 240, 0.16);
+    }
+
+    /* ── Inner Rectangle Box (Clear Text Zone) ── */
+    .hero-frame {
+      position: absolute;
+      left: 20vw;
+      top: 20vh;
+      width: 60vw;
+      height: 60vh;
+      border: none;
+      pointer-events: none;
+      z-index: 8;
+      transition: opacity .4s;
+    }
+
+    [data-theme="dark"] .hero-frame {
+      border-color: rgba(245, 244, 240, 0.12);
+    }
+
+    /* ── Centered Brand Text ── */
+    .hero-title {
+      position: absolute;
+      z-index: 15;
+      text-align: center;
+      pointer-events: none;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 850px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+
+    .hero-title h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(48px, 7vw, 104px);
+      line-height: 1.02;
+      letter-spacing: -.03em;
+      color: var(--ink);
+    }
+
+    .hero-title .hero-sub {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      font-size: clamp(14px, 1.15vw, 17px);
+      line-height: 1.65;
+      color: var(--ink-mid);
+      margin-top: 20px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-title .hero-sub em {
+      color: var(--cr);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    .hero-title .hero-btns {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 28px;
+      pointer-events: auto;
+    }
+
+    .hero-btn-primary {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--bg);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      transition: background .25s, transform .25s;
+      cursor: none;
+    }
+
+    .hero-btn-primary:hover {
+      background: var(--cr);
+      transform: translateY(-2px);
+    }
+
+    .hero-btn-ghost {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .06em;
+      color: var(--ink-mid);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .25s, gap .25s;
+      cursor: none;
+    }
+
+    .hero-btn-ghost:hover {
+      color: var(--cr);
+      gap: 10px;
+    }
+
+    /* ── 3D Room Container & Vanishing Lines ── */
+    .room-scene {
+      position: absolute;
+      inset: 0;
+      perspective: 1100px;
+      perspective-origin: 50% 50%;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .room-cube {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translateZ(0px);
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    /* ── Room Faces (clean monochrome surfaces — zero extra border lines) ── */
+    .room-face {
+      position: absolute;
+      overflow: visible;
+      backface-visibility: hidden;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+
+    .room-face.back {
+      background: transparent;
+      transform: translateZ(-800px);
+    }
+
+    .room-face.left {
+      width: 800px;
+      transform-origin: left center;
+      transform: rotateY(90deg);
+      background: transparent;
+    }
+
+    .room-face.right {
+      width: 800px;
+      right: 0;
+      transform-origin: right center;
+      transform: rotateY(-90deg);
+      background: transparent;
+    }
+
+    .room-face.top {
+      height: 800px;
+      transform-origin: center top;
+      transform: rotateX(-90deg);
+      background: transparent;
+    }
+
+    .room-face.bottom {
+      height: 800px;
+      bottom: 0;
+      transform-origin: center bottom;
+      transform: rotateX(90deg);
+      background: transparent;
+    }
+
+    /* ── Sleek Grayscale / White Architectural Project Cards ── */
+    .wall-card {
+      position: absolute;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #FFFFFF;
+      border: 1px solid var(--rule-m);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+      will-change: transform;
+    }
+
+    [data-theme="dark"] .wall-card {
+      background: #18181B;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .wall-card .wc-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 16px;
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(100%);
+      transition: filter .4s, transform .4s;
+    }
+
+    .wall-card:hover .wc-inner {
+      filter: grayscale(0%);
+    }
+
+    .wall-card .wc-num {
+      font-family: 'Space Mono', monospace;
+      font-size: .62rem;
+      font-weight: 700;
+      color: var(--ink-dim);
+      letter-spacing: .08em;
+    }
+
+    .wall-card .wc-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    /* ── Video / Showreel Pop-up & Right Docking ── */
+    .hero-reel {
+      position: fixed;
+      z-index: 25;
+      width: 520px;
+      height: 330px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+      will-change: transform, opacity, left, top;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .hero-reel .reel-inner {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reel-play {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(16px);
+      display: grid;
+      place-items: center;
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      z-index: 2;
+    }
+
+    .reel-play svg {
+      width: 22px;
+      height: 22px;
+      fill: #fff;
+      margin-left: 3px;
+    }
+
+    .reel-inner::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: repeating-linear-gradient(-45deg, transparent 0px, transparent 40px, rgba(255, 255, 255, 0.03) 40px, rgba(255, 255, 255, 0.03) 42px);
+      animation: reelScan 8s linear infinite;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+   §2 — BRAND STORY (Split Layout with Right Docked Video & Word Reveal)
+   ═══════════════════════════════════════════════════════════ */
+    #story-driver {
+      position: relative;
+      height: 380vh;
+      /* Extended runway so each scroll tick reveals only 1 or 2 words calmly and smoothly */
+    }
+
+    #story-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      background: var(--bg);
+      z-index: 8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8vw;
+      gap: 5vw;
+    }
+
+    .story-block {
+      flex: 1;
+      max-width: 620px;
+      will-change: transform;
+    }
+
+    .story-right-anchor {
+      width: 520px;
+      height: 330px;
+      flex-shrink: 0;
+    }
+
+    .story-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .65rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .8s var(--sm), transform .8s var(--sm);
+      will-change: transform, opacity;
+    }
+
+    .story-tag.vis {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .story-words-block {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: clamp(24px, 2.8vw, 38px);
+      line-height: 1.45;
+      letter-spacing: -.015em;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+    }
+
+    .story-words-block .sw {
+      display: inline-block;
+      margin-right: 0.24em;
+      opacity: 0.12;
+      filter: blur(3px);
+      transform: translateY(8px) scale(0.94);
+      transition: opacity .45s cubic-bezier(0.16, 1, 0.3, 1), filter .45s cubic-bezier(0.16, 1, 0.3, 1), transform .45s cubic-bezier(0.16, 1, 0.3, 1), color .45s;
+    }
+
+    .story-words-block .sw.active {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0) scale(1.0);
+      color: var(--ink);
+    }
+
+    .story-words-block .sw.highlight.active {
+      color: var(--cr);
+    }
+
+    .story-words-block .sw.highlight {
+      color: var(--cr);
+      font-weight: 700;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+   §3 — SELECTED WORK (Interbrand-Style Vertical Parallax Showcase)
+   ═══════════════════════════════════════════════════════════ */
+    #port-driver {
+      position: relative;
+      background: var(--bg);
+    }
+
+    /* Sticky Center Headline (Pinned firmly in the center while cards flow over it) */
+    .port-sticky-center {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      z-index: 1;
+      padding: 0 4vw;
+      will-change: transform, opacity;
+    }
+
+    .psc-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: 20px;
+    }
+
+    .psc-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(52px, 8.5vw, 120px);
+      line-height: .95;
+      letter-spacing: -.035em;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+    }
+
+    .psc-title .psc-accent {
+      color: var(--cr);
+      font-style: italic;
+    }
+
+    .psc-sub {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(14px, 1.2vw, 18px);
+      font-weight: 400;
+      color: var(--ink-mid);
+      margin-top: 24px;
+      max-width: 440px;
+    }
+
+    /* Staggered Vertical Parallax Flow (Over the Sticky Center) */
+    .port-cards-flow {
+      position: relative;
+      z-index: 5;
+      margin-top: -100vh;
+      padding-top: 100vh;
+      padding-bottom: calc(100vh + 560px);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(80px, 14vh, 180px);
+      padding-left: 5vw;
+      padding-right: 5vw;
+      pointer-events: none;
+    }
+
+    .p-flow-item {
+      display: flex;
+      width: 100%;
+      pointer-events: auto;
+    }
+
+    /* Distinct Placements & Staggered Offsets for Each Card */
+    .p-item-1 {
+      justify-content: flex-start;
+      padding-left: clamp(20px, 6vw, 80px);
+    }
+
+    .p-item-2 {
+      justify-content: flex-end;
+      padding-right: clamp(20px, 8vw, 100px);
+      margin-top: -60px;
+    }
+
+    .p-item-3 {
+      justify-content: flex-start;
+      padding-left: clamp(40px, 15vw, 180px);
+    }
+
+    .p-item-4 {
+      justify-content: flex-end;
+      padding-right: clamp(30px, 14vw, 160px);
+      margin-top: -50px;
+    }
+
+    .p-item-5 {
+      justify-content: flex-start;
+      padding-left: clamp(10px, 4vw, 60px);
+    }
+
+    .p-item-6 {
+      justify-content: flex-end;
+      padding-right: clamp(20px, 7vw, 90px);
+      margin-top: -40px;
+    }
+
+    /* Individual Vertical Portrait Cards with Distinct Natural Tilts */
+    .p-card-v {
+      display: block;
+      width: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow .5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: none;
+      will-change: transform;
+    }
+
+    .p-card-1 {
+      max-width: 460px;
+      transform: rotate(-2.2deg);
+    }
+
+    .p-card-2 {
+      max-width: 490px;
+      transform: rotate(2.4deg);
+    }
+
+    .p-card-3 {
+      max-width: 440px;
+      transform: rotate(-1.5deg);
+    }
+
+    .p-card-4 {
+      max-width: 490px;
+      transform: rotate(2.8deg);
+    }
+
+    .p-card-5 {
+      max-width: 450px;
+      transform: rotate(-2.8deg);
+    }
+
+    .p-card-6 {
+      max-width: 470px;
+      transform: rotate(1.6deg);
+    }
+
+    .p-card-v:hover {
+      box-shadow: 0 36px 90px rgba(0, 0, 0, 0.22);
+    }
+
+    [data-theme="dark"] .p-card-v {
+      background: #151518;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .p-card-v:hover {
+      transform: translateY(-8px) scale(1.015);
+      box-shadow: 0 36px 90px rgba(0, 0, 0, 0.20);
+    }
+
+    [data-theme="dark"] .p-card-v {
+      background: #151518;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    .pcv-media {
+      position: relative;
+      width: 100%;
+      height: clamp(300px, 34vw, 420px);
+      overflow: hidden;
+      background: #000;
+    }
+
+    .pcv-gradient {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      transition: transform .7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .p-card-v:hover .pcv-gradient {
+      transform: scale(1.06);
+    }
+
+    .pcv-badge-top {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .pcv-num {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .pcv-client {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      text-transform: uppercase;
+    }
+
+    .pcv-info {
+      padding: 28px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background: var(--card-bg);
+    }
+
+    [data-theme="dark"] .pcv-info {
+      background: #151518;
+    }
+
+    .pcv-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .pcv-tags span {
+      font-family: 'Space Mono', monospace;
+      font-size: .62rem;
+      font-weight: 600;
+      color: var(--ink-dim);
+      background: rgba(0, 0, 0, 0.04);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--rule);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    [data-theme="dark"] .pcv-tags span {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .pcv-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: clamp(17px, 1.4vw, 21px);
+      line-height: 1.35;
+      letter-spacing: -.01em;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .pcv-cta {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .75rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--cr);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 6px;
+      transition: gap .3s;
+    }
+
+    .p-card-v:hover .pcv-cta {
+      gap: 12px;
+    }
+
+    /* Abstract patterns inside media gradients */
+    .pcv-art-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.28;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .pcv-art-1 {
+      background-image: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+    }
+
+    .pcv-art-2 {
+      background-image: radial-gradient(circle at 70% 60%, rgba(59, 130, 246, 0.5) 0%, transparent 60%);
+    }
+
+    .pcv-art-3 {
+      background-image: radial-gradient(circle at 40% 70%, rgba(244, 63, 94, 0.4) 0%, transparent 60%);
+    }
+
+    .pcv-art-4 {
+      background-image: radial-gradient(circle at 60% 30%, rgba(20, 184, 166, 0.5) 0%, transparent 60%);
+    }
+
+    .pcv-art-5 {
+      background-image: radial-gradient(circle at 30% 60%, rgba(168, 85, 247, 0.5) 0%, transparent 60%);
+    }
+
+    .pcv-art-6 {
+      background-image: radial-gradient(circle at 70% 40%, rgba(99, 102, 241, 0.5) 0%, transparent 60%);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+   §4 — SERVICES (Unified Architecture with Single Persistent Physical Dossier Folder)
+   ═══════════════════════════════════════════════════════════ */
+    #svc-driver {
+      position: relative;
+      height: 1600vh;
+      background: var(--bg);
+    }
+
+    #svc-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Ambient Soft Radial Spotlight */
+    .svc-spotlight {
+      position: absolute;
+      width: 900px;
+      height: 900px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200, 16, 46, 0.06) 0%, rgba(245, 244, 240, 0) 70%);
+      pointer-events: none;
+      z-index: 1;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(50px);
+    }
+
+    [data-theme="dark"] .svc-spotlight {
+      background: radial-gradient(circle, rgba(200, 16, 46, 0.08) 0%, rgba(18, 18, 20, 0) 70%);
+    }
+
+    .svc-stage {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 1140px;
+      height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ═══ 1. HERO CAPSULE BACKGROUND (Phase 1) ═══ */
+    .svc-hero-capsule {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 340px;
+      height: 435px;
+      background: #1C1C20;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.35);
+      z-index: 3;
+      will-change: transform, width, opacity;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      pointer-events: none;
+    }
+
+    .svc-capsule-folder-placeholder {
+      flex: 0 0 300px;
+      width: 300px;
+      height: 395px;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .svc-hero-right-content {
+      flex: 0 0 540px;
+      width: 540px;
+      min-width: 540px;
+      max-width: 540px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      padding-left: 36px;
+      padding-right: 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      will-change: opacity, transform, clip-path;
+      pointer-events: none;
+    }
+
+    .svc-s1-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .svc-s1-headline {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: clamp(26px, 2.8vw, 40px);
+      line-height: 1.15;
+      color: #FFFFFF;
+      margin: 0;
+      letter-spacing: -.02em;
+    }
+
+    .svc-s1-desc {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .84rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.65);
+      margin: 0;
+    }
+
+    .svc-s1-desc span {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .svc-s1-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .82rem;
+      color: #FFFFFF;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+
+    /* ═══ 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER ═══ */
+    .svc-main-folder {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 395px;
+      z-index: 6;
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+
+    .svc-folder-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .svc-folder-back {
+      position: absolute;
+      inset: 0;
+      background: #141416;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .svc-sheets-stack {
+      position: absolute;
+      top: 18px;
+      left: 14px;
+      right: 14px;
+      height: 220px;
+      z-index: 2;
+    }
+
+    .svc-sheet {
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 14px 18px;
+      color: #FFFFFF;
+      will-change: transform, opacity, z-index;
+      transition: transform .45s cubic-bezier(0.16, 1, 0.3, 1), opacity .35s ease;
+    }
+
+    .svc-punch-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .svc-hole {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+
+    .svc-sheet-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      opacity: 0.95;
+      text-align: center;
+    }
+
+    .svc-sheet-header-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-top: 2px;
+    }
+
+    .svc-sheet-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.08rem;
+      line-height: 1.2;
+      color: #FFFFFF;
+      margin: 0;
+      letter-spacing: -.01em;
+    }
+
+    .svc-sheet-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: .56rem;
+      color: rgba(255, 255, 255, 0.7);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* Distinct Brand Crimson Gradient Palettes for Each Discipline */
+    .svc-sheet-default {
+      background: linear-gradient(135deg, #C8102E 0%, #8A0B1E 100%);
+      z-index: 6;
+    }
+
+    .svc-sheet-s1 {
+      background: linear-gradient(135deg, #D41434 0%, #940C20 100%);
+    }
+
+    .svc-sheet-s2 {
+      background: linear-gradient(135deg, #C8102E 0%, #850A1B 100%);
+    }
+
+    .svc-sheet-s3 {
+      background: linear-gradient(135deg, #B50D27 0%, #720817 100%);
+    }
+
+    .svc-sheet-s4 {
+      background: linear-gradient(135deg, #A00B22 0%, #5E0713 100%);
+    }
+
+    .svc-sheet-s5 {
+      background: linear-gradient(135deg, #8C091D 0%, #4D050F 100%);
+    }
+
+    /* Front Jacket Pocket with Tab Silhouette */
+    .svc-jacket {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 250px;
+      background: #1A1A1E;
+      border-radius: 0 0 22px 22px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px 20px;
+      overflow: hidden;
+      clip-path: path("M 0 0 L 115 0 Q 128 0 138 12 L 152 26 Q 162 34 178 34 L 300 34 L 300 250 L 0 250 Z");
+    }
+
+    .svc-jacket-notch {
+      display: none;
+    }
+
+    .svc-jacket-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.35rem;
+      letter-spacing: -.02em;
+      color: #FFFFFF;
+      margin-top: auto;
+      line-height: 1;
+    }
+
+    .svc-jacket-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: .56rem;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
+
+    /* ═══ 3. FIVE SERVICES MENU (Phase 2 Left) ═══ */
+    .svc-s2-menu {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translateX(-240px);
+      width: min(500px, 48vw);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      z-index: 4;
+      opacity: 0;
+      pointer-events: none;
+      will-change: transform, opacity;
+    }
+
+    .svc-s2-menu.active-events {
+      pointer-events: auto;
+    }
+
+    .svc-s2-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(12px);
+      text-decoration: none;
+      color: var(--ink);
+      transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(16px);
+      will-change: opacity, transform;
+    }
+
+    [data-theme="dark"] .svc-s2-item {
+      background: rgba(28, 28, 32, 0.6);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .svc-s2-item:hover,
+    .svc-s2-item.active {
+      background: #FFFFFF;
+      border-color: rgba(200, 16, 46, 0.3);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      transform: translateX(6px);
+    }
+
+    [data-theme="dark"] .svc-s2-item:hover,
+    [data-theme="dark"] .svc-s2-item.active {
+      background: #25252A;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
+    }
+
+    .svc-s2-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .svc-s2-item.active .svc-s2-title {
+      color: var(--cr);
+    }
+
+    .svc-s2-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      color: var(--ink-dim);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-top: 3px;
+      display: block;
+    }
+
+    .svc-s2-arrow {
+      color: var(--ink-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .25s, color .25s;
+    }
+
+    .svc-s2-item:hover .svc-s2-arrow,
+    .svc-s2-item.active .svc-s2-arrow {
+      color: var(--cr);
+      transform: translate(2px, -2px);
+    }
+
+    /* ═══ 4. DETAIL SHOWCASE DECK (Phase 3 Right) ═══ */
+    .svc-detail-deck {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) translateX(260px);
+      width: min(540px, 48vw);
+      height: 520px;
+      z-index: 4;
+      pointer-events: none;
+      perspective: 1200px;
+    }
+
+    .svc-detail-deck.active-events {
+      pointer-events: auto;
+    }
+
+    .svc-showcase-card {
+      position: absolute;
+      inset: 0;
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 28px;
+      padding: 26px 30px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      will-change: transform, opacity, filter;
+      transition: border-color .3s ease;
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+    }
+
+    [data-theme="dark"] .svc-showcase-card {
+      background: #18181C;
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    }
+
+    /* 3D Visual Art Display for each discipline */
+    .svc-s3-art-frame {
+      width: 100%;
+      height: 125px;
+      border-radius: 16px;
+      background: radial-gradient(circle at 50% 50%, #201416 0%, #0D090A 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .svc-art-orbit {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .svc-orbit-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1.5px solid rgba(200, 16, 46, 0.5);
+    }
+
+    .svc-orbit-ring.ring-1 {
+      width: 74px;
+      height: 74px;
+      border-top-color: #FF2E4D;
+      animation: spinOrbit 8s linear infinite;
+    }
+
+    .svc-orbit-ring.ring-2 {
+      width: 52px;
+      height: 52px;
+      border-bottom-color: #FF5A70;
+      animation: spinOrbit 5s linear infinite reverse;
+    }
+
+    .svc-orbit-core {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #FF2E4D 0%, #C8102E 80%);
+      box-shadow: 0 0 20px rgba(200, 16, 46, 0.8);
+      animation: pulseCore 3s ease-in-out infinite alternate;
+    }
+
+    .svc-art-torus {
+      position: relative;
+      width: 85px;
+      height: 85px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .svc-torus-shape {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      position: relative;
+      animation: torusSpin 10s linear infinite;
+      box-shadow: 0 0 25px rgba(200, 16, 46, 0.35);
+    }
+
+    .svc-torus-shape::after {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      background: #0D090A;
+      border-radius: 50%;
+    }
+
+    .svc-torus-shape.s1 {
+      background: conic-gradient(from 0deg, #D41434, #FF3B56, #800A1A, #D41434);
+    }
+
+    .svc-torus-shape.s2 {
+      background: conic-gradient(from 45deg, #C8102E, #FF5069, #700814, #C8102E);
+    }
+
+    .svc-torus-shape.s3 {
+      background: conic-gradient(from 90deg, #B50D27, #E82342, #600610, #B50D27);
+    }
+
+    .svc-torus-shape.s4 {
+      background: conic-gradient(from 135deg, #A00B22, #D81A38, #50040C, #A00B22);
+    }
+
+    .svc-torus-shape.s5 {
+      background: conic-gradient(from 180deg, #8C091D, #C01230, #40030A, #8C091D);
+    }
+
+    @keyframes spinOrbit {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes pulseCore {
+      from {
+        transform: scale(0.9);
+        opacity: 0.85;
+      }
+
+      to {
+        transform: scale(1.15);
+        opacity: 1;
+      }
+    }
+
+    @keyframes torusSpin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .svc-card-num-watermark {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 4.8rem;
+      color: var(--cr);
+      opacity: .07;
+      position: absolute;
+      top: 8px;
+      right: 24px;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -.04em;
+    }
+
+    .svc-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--cr);
+      background: rgba(200, 16, 46, 0.08);
+      border: 1px solid rgba(200, 16, 46, 0.22);
+      padding: 5px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .svc-showcase-card h3 {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 700;
+      font-size: clamp(22px, 2.2vw, 30px);
+      line-height: 1.15;
+      color: var(--ink);
+      margin: 4px 0 0 0;
+      letter-spacing: -.02em;
+    }
+
+    [data-theme="dark"] .svc-showcase-card h3 {
+      color: #FFFFFF;
+    }
+
+    .svc-showcase-card p {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-size: .90rem;
+      line-height: 1.55;
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    [data-theme="dark"] .svc-showcase-card p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .svc-deliverables {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .svc-deliv-pill {
+      font-family: 'Space Mono', monospace;
+      font-size: .68rem;
+      font-weight: 600;
+      color: var(--ink-dim);
+      background: rgba(0, 0, 0, 0.03);
+      border: 1px solid var(--rule);
+      padding: 5px 12px;
+      border-radius: 10px;
+    }
+
+    [data-theme="dark"] .svc-deliv-pill {
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .svc-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 10px;
+      border-top: 1px solid var(--rule);
+    }
+
+    [data-theme="dark"] .svc-card-footer {
+      border-top-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .svc-action-link {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .82rem;
+      color: var(--cr);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform .2s, color .2s;
+    }
+
+    .svc-action-link:hover {
+      color: var(--cr-dark);
+      transform: translateX(4px);
+    }
+
+    .svc-pagination {
+      font-family: 'Space Mono', monospace;
+      font-size: .72rem;
+      font-weight: 700;
+      color: var(--ink-dim);
+      letter-spacing: .08em;
+    }
+
+    [data-theme="dark"] .svc-pagination {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    /* Front Jacket Pocket is Lower so Top Cards are Clearly Visible */
+    .svc-jacket {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 250px;
+      background: #1A1A1E;
+      border-radius: 0 0 24px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      z-index: 4;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px 24px;
+      overflow: hidden;
+    }
+
+    .svc-jacket-notch {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 30px;
+      background: #1A1A1E;
+      clip-path: path("M 0 0 L 100 0 Q 112 0 120 10 L 128 18 Q 136 24 148 24 L 320 24 L 320 0 Z");
+    }
+
+    .svc-jacket-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1.5rem;
+      letter-spacing: -.02em;
+      color: #FFFFFF;
+      margin-top: auto;
+      line-height: 1;
+    }
+
+    .svc-jacket-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+
+    /* Right Detail Card Typography & Elements */
+    .svc-card-num-watermark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 5.5rem;
+      color: var(--cr);
+      opacity: .07;
+      position: absolute;
+      top: 12px;
+      right: 32px;
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .svc-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      color: var(--cr);
+      background: rgba(200, 16, 46, 0.08);
+      border: 1px solid rgba(200, 16, 46, 0.22);
+      padding: 5px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+
+    .svc-s3-right-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(26px, 2.6vw, 36px);
+      line-height: 1.1;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .svc-s3-right-card p {
+      font-size: .94rem;
+      line-height: 1.65;
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    .svc-deliverables {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 2px;
+    }
+
+    .svc-deliv-pill {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--ink-dim);
+      background: rgba(0, 0, 0, 0.03);
+      border: 1px solid var(--rule);
+      padding: 6px 14px;
+      border-radius: 12px;
+    }
+
+    [data-theme="dark"] .svc-deliv-pill {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .svc-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule);
+      margin-top: 4px;
+    }
+
+    .svc-action-link {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .82rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--cr);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: gap .3s;
+    }
+
+    .svc-action-link:hover {
+      gap: 14px;
+    }
+
+    .svc-pagination {
+      font-family: 'Space Mono', monospace;
+      font-size: .78rem;
+      color: var(--ink-dim);
+      letter-spacing: .1em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+   §5 — BRAND PARTNERS (Scroll-Driven Sticky Pin)
+   ═══════════════════════════════════════════════════════════ */
+
+    /* Tall scroll driver — gives ample room for header arrival, card train flow, line opening, perspective stage hold & footer exit */
+    #brands-driver {
+      height: 660vh;
+      position: relative;
+      background: var(--bg);
+      z-index: 5;
+    }
+
+    /* Sticky full-screen canvas — blank until animation starts */
+    #brands-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* ── Pinned Heading (travels from bottom → balanced upper-center lockup) ── */
+    #brands-pin-head {
+      position: absolute;
+      left: 0;
+      right: 0;
+      text-align: center;
+      padding: 0 5vw;
+      transform: translateY(100vh);
+      will-change: transform, opacity;
+      z-index: 3;
+    }
+
+    #brands-pin-head .bph-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #brands-pin-head h2 {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 800;
+      font-size: clamp(38px, 5.8vw, 86px);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    #brands-pin-head h2 em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cr);
+    }
+
+    /* ── Continuous Card Train Viewport (Generous 520px height to guarantee zero shadow clipping) ── */
+    #brands-train-viewport {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 60%;
+      transform: translateY(-50%);
+      height: clamp(420px, 55vh, 520px);
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
+      opacity: 0;
+      pointer-events: auto;
+      z-index: 8;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Horizontal train track of cards — moves right to left on scroll */
+    #brands-train-track {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      padding: 0 4vw;
+      height: 100%;
+      width: max-content;
+      transform: translateX(100vw);
+      will-change: transform;
+    }
+
+    /* Individual Brand Card in the train — Ultra-soft pure Gaussian diffused shadow */
+    .brand-train-card {
+      position: relative;
+      z-index: 8;
+      flex-shrink: 0;
+      width: clamp(290px, 25vw, 380px);
+      height: clamp(220px, 28vh, 270px);
+      border-radius: 28px;
+      background: #FFFFFF;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.025),
+        0 16px 36px rgba(0, 0, 0, 0.045),
+        0 32px 64px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 32px;
+      cursor: default;
+      transition: border-color .35s, box-shadow .4s, transform .35s var(--sp);
+    }
+
+    [data-theme="dark"] .brand-train-card {
+      background: #141418;
+      border-color: rgba(255, 255, 255, 0.07);
+      box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.45),
+        0 20px 45px rgba(0, 0, 0, 0.65),
+        0 40px 80px rgba(0, 0, 0, 0.7),
+        inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .brand-train-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(139, 26, 26, 0.3);
+      box-shadow: 
+        0 8px 24px rgba(139, 26, 26, 0.05),
+        0 24px 50px rgba(139, 26, 26, 0.08),
+        0 40px 80px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] .brand-train-card:hover {
+      border-color: rgba(255, 46, 77, 0.5);
+      box-shadow: 
+        0 6px 20px rgba(255, 46, 77, 0.15),
+        0 24px 55px rgba(0, 0, 0, 0.85),
+        0 45px 90px rgba(0, 0, 0, 0.9),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    .btc-top {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .btc-glyph {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--cr);
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .3s;
+    }
+
+    .brand-train-card:hover .btc-glyph {
+      transform: scale(1.18) rotate(5deg);
+    }
+
+    .btc-counter {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--ink-dim);
+    }
+
+    .btc-center {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btc-name {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 800;
+      font-size: clamp(22px, 2.1vw, 32px);
+      letter-spacing: .06em;
+      color: var(--ink);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .btc-name.style-aura {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(32px, 2.8vw, 42px);
+      letter-spacing: 0;
+      text-transform: lowercase;
+      color: var(--ink);
+    }
+
+    .btc-name.style-jukku {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 900;
+      letter-spacing: -.02em;
+      text-transform: none;
+      font-size: clamp(25px, 2.3vw, 34px);
+    }
+
+    .btc-bottom {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btc-category {
+      font-family: 'Space Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      background: var(--cr-lo);
+      color: var(--cr);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    /* ── Section 5 → Section 6 Flared Funnel Attached to Card 7 ── */
+    #card7-funnel-container {
+      position: absolute;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 6;
+      overflow: hidden;
+    }
+
+    #card7-funnel-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    #card7FunnelPath {
+      fill: var(--bg);
+    }
+
+    .funnel-boundary-line {
+      fill: none;
+      stroke: var(--cr);
+      stroke-width: 2;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 6px rgba(200, 16, 46, 0.3));
+      transition: opacity .2s ease;
+    }
+
+    /* Fresh Perspectives Stage mounted inside the Seamless Studio Canvas */
+    .funnel-blog-stage {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 4vh, 50px) 6vw;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 25;
+      transition: opacity .35s ease;
+    }
+
+    .funnel-blog-stage.active {
+      pointer-events: auto;
+    }
+
+    .fbc-content {
+      width: 100%;
+      max-width: 1260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: clamp(24px, 3.5vh, 40px);
+    }
+
+    .fbc-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .fbc-tag {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: 12px;
+    }
+
+    .fbc-header h2 {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 800;
+      font-size: clamp(36px, 4.4vw, 64px);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    .fbc-header h2 em {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cr);
+      text-transform: uppercase;
+    }
+
+    .fbc-all {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cr);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: gap .25s var(--sm);
+    }
+
+    .fbc-all:hover {
+      gap: 12px;
+    }
+
+    .fbc-cards-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(20px, 2.2vw, 30px);
+      width: 100%;
+    }
+
+    .fbc-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 26px;
+      padding: clamp(32px, 4vh, 44px) clamp(24px, 2.2vw, 34px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+      min-height: clamp(260px, 32vh, 320px);
+      text-decoration: none;
+      box-shadow: var(--card-shadow);
+      transition: transform .3s var(--sp), box-shadow .35s, border-color .3s;
+    }
+
+    .fbc-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--cr);
+      box-shadow: 0 24px 50px rgba(200, 16, 46, 0.12);
+    }
+
+    .fbc-cat {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cr);
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .fbc-card h4 {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.1rem, 1.25vw, 1.24rem);
+      line-height: 1.35;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .fbc-card p {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: var(--ink-mid);
+    }
+
+    .fbc-link {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cr);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap .2s;
+    }
+
+    .fbc-card:hover .fbc-link {
+      gap: 10px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+   §6 — LATEST BLOG (Creative Editorial Grid)
+   ═══════════════════════════════════════════════════════════ */
+    #blog-section {
+      padding: 120px 64px;
+      background: var(--bg);
+      position: relative;
+      z-index: 5;
+    }
+
+    .blog-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+
+    .blog-header .blog-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .65rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: 10px;
+    }
+
+    .blog-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: clamp(32px, 4.5vw, 64px);
+      line-height: 1.05;
+    }
+
+    .blog-header .blog-all {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: .72rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--cr);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap .25s var(--sm);
+    }
+
+    .blog-header .blog-all:hover {
+      gap: 12px;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 24px;
+    }
+
+    .blog-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      box-shadow: var(--card-shadow);
+      transition: transform .4s var(--sm), box-shadow .4s var(--sm), opacity .7s var(--sm);
+      cursor: none;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    .blog-card.vis {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--card-shadow-lg);
+    }
+
+    .blog-card.featured {
+      grid-row: 1/3;
+    }
+
+    .blog-card-img {
+      height: 240px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .blog-card.featured .blog-card-img {
+      height: 100%;
+      min-height: 340px;
+      flex: 1;
+    }
+
+    .blog-card-img .bc-gradient {
+      width: 100%;
+      height: 100%;
+      transition: transform .6s var(--sm);
+    }
+
+    .blog-card:hover .bc-gradient {
+      transform: scale(1.05);
+    }
+
+    .blog-card-body {
+      padding: 24px 28px 28px;
+    }
+
+    .blog-card.featured .blog-card-body {
+      padding: 28px 32px 32px;
+    }
+
+    .blog-card-body .bc-cat {
+      font-family: 'Space Mono', monospace;
+      font-size: .58rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--cr);
+      padding: 4px 12px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .blog-card-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      line-height: 1.25;
+      margin-bottom: 10px;
+      transition: color .25s;
+    }
+
+    .blog-card.featured .blog-card-body h3 {
+      font-size: 1.6rem;
+    }
+
+    .blog-card:hover .blog-card-body h3 {
+      color: var(--cr);
+    }
+
+    .blog-card-body .bc-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: .6rem;
+      color: var(--ink-dim);
+      letter-spacing: .04em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+   §7 — MODERN EDITORIAL LUXURY FOOTER (Uncluttered Balanced Card)
+   ═══════════════════════════════════════════════════════════ */
+    #footer-driver {
+      position: relative;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      box-sizing: border-box;
+      z-index: 10;
+    }
+
+    .footer-luxury-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: clamp(36px, 5vw, 64px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
+      padding: clamp(52px, 6.5vh, 76px) clamp(40px, 5vw, 72px) clamp(16px, 2vh, 24px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1640px;
+      min-height: clamp(560px, 78vh, 740px);
+      margin: auto;
+      gap: clamp(72px, 11vh, 130px);
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .f-header-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1.3fr 1.4fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: flex-start;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      max-width: 340px;
+    }
+
+    .f-col-label {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 20px;
+    }
+
+    .f-links-clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .f-links-clean a {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 500;
+      font-size: 0.94rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color .2s, transform .2s;
+      display: inline-block;
+    }
+
+    .f-links-clean a:hover {
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    .f-social-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .f-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all .25s var(--sp);
+    }
+
+    .f-chip:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .f-chip .f-chip-icon {
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .f-chip .f-chip-icon svg {
+      width: 13px;
+      height: 13px;
+      display: block;
+    }
+
+    .f-cta-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f-action-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: transform .25s var(--sp), box-shadow .25s;
+    }
+
+    .f-action-pill:hover {
+      transform: translateY(-3px);
+    }
+
+    .f-action-pill.cta-primary {
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(200, 16, 46, 0.22);
+    }
+
+    .f-action-pill.cta-secondary {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+    }
+
+    .f-action-pill.cta-secondary:hover {
+      border-color: var(--ink);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .f-action-txt {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .f-action-heading {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-weight: 700;
+      font-size: 0.96rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f-action-sub {
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.74rem;
+      opacity: 0.78;
+    }
+
+    .f-action-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .cta-primary .f-action-arrow {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .cta-secondary .f-action-arrow {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line ── */
+    .f-bottom-cluster {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+    }
+
+    .f-giant-cut-wrap {
+      width: 100%;
+      height: clamp(34px, 5.2vw, 84px);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      pointer-events: none;
+      user-select: none;
+      transform-origin: center bottom;
+      will-change: height, transform;
+    }
+
+    .f-giant-cut-svg {
+      width: 100%;
+      height: clamp(34px, 5.2vw, 84px);
+      display: block;
+      color: var(--ink);
+      overflow: hidden;
+      transform-origin: center bottom;
+      will-change: height, transform;
+    }
+
+    .f-giant-cut-svg text {
+      transform-origin: center bottom;
+      will-change: transform;
+    }
+
+    /* ── Minimal Sub-Footer Meta Bar with Horizontal Line ── */
+    .f-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1.5px solid var(--rule);
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin: 0;
+    }
+
+    .f-meta-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .f-meta-links a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .f-meta-links a:hover {
+      color: var(--cr);
+    }
+
+    .f-live-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .f-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      animation: fStatusPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes fStatusPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    @media (max-width: 1024px) {
+      .f-header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .f-header-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .f-meta-bar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+    }
+
+    /* ── Smooth scrollbar ─────────────────────────────────── */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cr);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ CUSTOM CURSOR ══ -->
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+
+  <!-- ══ FIXED NAVIGATION ══ -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:36px;width:auto;">
+        <style>
+          .nl {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            fill: #8B1A1A;
+          }
+
+          .ns {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            fill: #8B1A1A;
+            letter-spacing: 6px;
+          }
+        </style>
+        <text x="0" y="52" class="nl" font-size="52">1928</text>
+        <text x="218" y="38" class="ns" font-size="18">CREATIVE</text>
+        <text x="218" y="58" class="ns" font-size="18">STUDIO</text>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="blogs.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button id="tbtn" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24">
+          <path
+            d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z" />
+        </svg>
+      </button>
+      <a href="contact.html" class="nav-cta">Start Project</a>
+    </div>
+  </nav>
+
+  <!-- §1 — HERO (Full Bleed 3D Room & 2-Box Frame Architecture) -->
+  <section id="hero-driver">
+    <div id="hero-sticky">
+
+      <!-- LAYER 1 (z:2) — Architectural Wireframe SVG (Outer Box, Inner Doorway Box, and 4 Diagonal Rays) -->
+      <!-- Ultra-fine, elegant, razor-thin architectural lines -->
+      <svg class="hero-corner-rays" id="heroRaysSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <!-- Outer screen border (Box 1) -->
+        <rect id="r1Outer" x="0.2" y="0.2" width="99.6" height="99.6" stroke="rgba(10,10,10,0.055)" fill="none"
+          stroke-width="0.08" />
+        <!-- Inner back-wall doorway frame (Box 2) -->
+        <rect id="r1Inner" x="20" y="20" width="60" height="60" stroke="rgba(10,10,10,0.075)" fill="none"
+          stroke-width="0.10" />
+        <!-- 4 diagonal depth rays connecting Box 1 to Box 2 -->
+        <line id="r1Ray1" x1="0" y1="0" x2="20" y2="20" stroke="rgba(10,10,10,0.055)" stroke-width="0.08" />
+        <line id="r1Ray2" x1="100" y1="0" x2="80" y2="20" stroke="rgba(10,10,10,0.055)" stroke-width="0.08" />
+        <line id="r1Ray3" x1="0" y1="100" x2="20" y2="80" stroke="rgba(10,10,10,0.055)" stroke-width="0.08" />
+        <line id="r1Ray4" x1="100" y1="100" x2="80" y2="80" stroke="rgba(10,10,10,0.055)" stroke-width="0.08" />
+      </svg>
+
+      <!-- LAYER 2 (z:3) — 3D Room (Full screen 100vw × 100vh — cards touch outer screen edges) -->
+      <div class="room-scene" id="roomScene">
+        <div class="room-cube" id="roomCube">
+
+          <!-- ROOM 1 BACK WALL: 2 white architectural project cards tilted in depth -->
+          <div class="room-face back">
+            <div class="wall-card r1-card"
+              style="width:180px;height:120px;top:28px;right:36px;transform:rotateY(-12deg) rotateX(4deg);">
+              <div class="wc-inner"><span class="wc-num">01</span><span class="wc-label">Juventus</span></div>
+            </div>
+            <div class="wall-card r1-card"
+              style="width:160px;height:110px;bottom:28px;left:36px;transform:rotateY(10deg) rotateX(-4deg);">
+              <div class="wc-inner"><span class="wc-num">02</span><span class="wc-label">Vijay Enter</span></div>
+            </div>
+          </div>
+
+          <!-- ROOM 1 LEFT WALL: 2 white architectural cards with true 3D perspective tilt -->
+          <div class="room-face left" id="wallLeft">
+            <div class="wall-card r1-card" id="wc-l1"
+              style="width:220px;height:145px;top:36px;left:20px;transform:rotateY(38deg) rotateX(4deg);">
+              <div class="wc-inner"><span class="wc-num">03</span><span class="wc-label">MINI Brand</span></div>
+            </div>
+            <div class="wall-card r1-card" id="wc-l2"
+              style="width:180px;height:120px;bottom:40px;left:50px;transform:rotateY(42deg) rotateX(-4deg);">
+              <div class="wc-inner"><span class="wc-num">04</span><span class="wc-label">Outline</span></div>
+            </div>
+          </div>
+
+          <!-- ROOM 1 RIGHT WALL: 2 white architectural cards with true 3D perspective tilt -->
+          <div class="room-face right" id="wallRight">
+            <div class="wall-card r1-card" id="wc-r1"
+              style="width:240px;height:155px;top:28px;right:20px;transform:rotateY(-38deg) rotateX(-4deg);">
+              <div class="wc-inner"><span class="wc-num">05</span><span class="wc-label">Shyamoli</span></div>
+            </div>
+            <div class="wall-card r1-card" id="wc-r2"
+              style="width:190px;height:125px;bottom:46px;right:45px;transform:rotateY(-42deg) rotateX(4deg);">
+              <div class="wc-inner"><span class="wc-num">06</span><span class="wc-label">Zerodha</span></div>
+            </div>
+          </div>
+
+          <!-- TOP WALL (CEILING): 1 white card with top-down 3D perspective tilt -->
+          <div class="room-face top" id="wallTop">
+            <div class="wall-card r1-card" id="wc-t1"
+              style="width:210px;height:135px;top:20px;right:70px;transform:rotateX(-45deg) rotateY(6deg);">
+              <div class="wc-inner"><span class="wc-num">07</span><span class="wc-label">Wild Stone</span></div>
+            </div>
+          </div>
+
+          <!-- BOTTOM WALL (FLOOR): 1 white card with bottom-up 3D perspective tilt -->
+          <div class="room-face bottom" id="wallBottom">
+            <div class="wall-card r1-card" id="wc-b1"
+              style="width:220px;height:140px;bottom:20px;left:50%;margin-left:-110px;transform:rotateX(45deg) rotateY(-6deg);">
+              <div class="wc-inner"><span class="wc-num">08</span><span class="wc-label">Unfiltrd</span></div>
+            </div>
+          </div>
+
+          <!-- CENTER BRAND TEXT — Physically anchored inside the 3D Room for 100% identical speed -->
+          <div class="hero-title" id="heroTitle">
+            <h1>1928 Creative<br />Studio.</h1>
+            <div class="hero-sub">Ahmedabad's premier brand engineering studio.<br />Crafting iconic visual identities
+              for market leaders,
+              <em>infinitely.</em>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- LAYER 3 (z:8) — Single Inner rectangle box -->
+      <div class="hero-frame" id="heroFrame"></div>
+
+      <!-- LAYER 4.5 (z:22) — Whiteout / Portal Flash Transition Overlay -->
+      <div id="heroWhiteout" style="
+        position:absolute;inset:0;background:var(--bg);
+        opacity:0;pointer-events:none;z-index:22;will-change:opacity;
+      "></div>
+
+      <!-- LAYER 5 (z:25) — Video Showreel -->
+      <div class="hero-reel" id="heroReel">
+        <div class="reel-inner">
+          <div class="reel-play"><svg viewBox="0 0 24 24">
+              <polygon points="5,3 19,12 5,21" />
+            </svg></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- §2 — BRAND STORY (Split Layout with Right Docked Video & Word Reveal) -->
+  <section id="story-driver">
+    <div id="story-sticky">
+      <div class="story-block" id="storyBlock">
+        <div class="story-tag" id="storyTag">Who We Are</div>
+        <div class="story-words-block" id="storyWordsBlock">
+          <span class="sw">Design</span> <span class="sw">on</span> <span class="sw">the</span> <span
+            class="sw">web</span> <span class="sw">isn't</span> <span class="sw">static</span> <span
+            class="sw">anymore.</span> <span class="sw">Today's</span> <span class="sw">brands</span> <span
+            class="sw">need</span> <span class="sw highlight">energy,</span> <span
+            class="sw highlight">personality</span> <span class="sw">and</span> <span
+            class="sw highlight">meaning.</span> <span class="sw">We</span> <span class="sw">bring</span> <span
+            class="sw">together</span> <span class="sw">strategy,</span> <span class="sw">design</span> <span
+            class="sw">and</span> <span class="sw">storytelling</span> <span class="sw">to</span> <span
+            class="sw">build</span> <span class="sw">digital</span> <span class="sw">experiences</span> <span
+            class="sw">that</span> <span class="sw highlight">grab</span> <span class="sw highlight">attention,</span>
+          <span class="sw">move</span> <span class="sw">fast</span> <span class="sw">and</span> <span
+            class="sw">make</span> <span class="sw highlight">people</span> <span class="sw highlight">feel.</span>
+        </div>
+      </div>
+      <div class="story-right-anchor" id="storyRightAnchor"></div>
+    </div>
+  </section>
+
+  <!-- §3 — SELECTED WORK (Interbrand-Style Vertical Parallax Showcase with Sticky Center Headline) -->
+  <section id="port-driver" class="port-parallax-section">
+
+    <!-- STICKY BACKGROUND CENTER HEADLINE (Pinned in Viewport Center) -->
+    <div class="port-sticky-center" id="portStickyCenter">
+      <div class="psc-badge">PORTFOLIO // 2024 — 2026</div>
+      <h2 class="psc-title">SELECTED<br /><span class="psc-accent">WORK.</span></h2>
+      <p class="psc-sub">Transforming ambitious brands into market icons.</p>
+    </div>
+
+    <!-- FOREGROUND VERTICAL STAGGERED PARALLAX CARDS (Gliding Over Sticky Center Text with Dynamic Offsets) -->
+    <div class="port-cards-flow" id="portCardsFlow">
+
+      <!-- CARD 1 (LEFT TILT) -->
+      <article class="p-flow-item p-item-1">
+        <a href="project-detail.html" class="p-card-v p-card-1">
+          <div class="pcv-media">
+            <div class="pcv-gradient" style="background: linear-gradient(145deg, #1E293B 0%, #0F172A 100%);">
+              <div class="pcv-art-pattern pcv-art-1"></div>
+            </div>
+            <div class="pcv-badge-top"><span class="pcv-num">01</span><span class="pcv-client">JUVENTUS</span></div>
+          </div>
+          <div class="pcv-info">
+            <div class="pcv-tags"><span>Branding</span><span>Global Icon</span></div>
+            <h3 class="pcv-title">Engineering an iconic global visual identity for Italy's most storied club.</h3>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- CARD 2 (RIGHT TILT) -->
+      <article class="p-flow-item p-item-2">
+        <a href="project-detail.html" class="p-card-v p-card-2">
+          <div class="pcv-media">
+            <div class="pcv-gradient" style="background: linear-gradient(145deg, #0B192C 0%, #1E3E62 100%);">
+              <div class="pcv-art-pattern pcv-art-2"></div>
+            </div>
+            <div class="pcv-badge-top"><span class="pcv-num">02</span><span class="pcv-client">BUGATTI</span></div>
+          </div>
+          <div class="pcv-info">
+            <div class="pcv-tags"><span>Automotive</span><span>Digital Platform</span></div>
+            <h3 class="pcv-title">Crafting the hypercar digital experience as timeless as the engineering.</h3>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- CARD 3 (CENTER-LEFT TILT) -->
+      <article class="p-flow-item p-item-3">
+        <a href="project-detail.html" class="p-card-v p-card-3">
+          <div class="pcv-media">
+            <div class="pcv-gradient" style="background: linear-gradient(145deg, #18181B 0%, #27272A 100%);">
+              <div class="pcv-art-pattern pcv-art-3"></div>
+            </div>
+            <div class="pcv-badge-top"><span class="pcv-num">03</span><span class="pcv-client">MINI BRAND</span></div>
+          </div>
+          <div class="pcv-info">
+            <div class="pcv-tags"><span>Spatial</span><span>Design System</span></div>
+            <h3 class="pcv-title">Designing next-generation retail flagships and spatial brand systems.</h3>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- CARD 4 (FAR-RIGHT TILT) -->
+      <article class="p-flow-item p-item-4">
+        <a href="project-detail.html" class="p-card-v p-card-4">
+          <div class="pcv-media">
+            <div class="pcv-gradient" style="background: linear-gradient(145deg, #134E4A 0%, #042F2E 100%);">
+              <div class="pcv-art-pattern pcv-art-4"></div>
+            </div>
+            <div class="pcv-badge-top"><span class="pcv-num">04</span><span class="pcv-client">ZERODHA</span></div>
+          </div>
+          <div class="pcv-info">
+            <div class="pcv-tags"><span>Fintech</span><span>Design Engineering</span></div>
+            <h3 class="pcv-title">Architecting India's premier investment experience with geometric clarity.</h3>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- CARD 5 (FAR-LEFT TILT) -->
+      <article class="p-flow-item p-item-5">
+        <a href="project-detail.html" class="p-card-v p-card-5">
+          <div class="pcv-media">
+            <div class="pcv-gradient" style="background: linear-gradient(145deg, #311042 0%, #170726 100%);">
+              <div class="pcv-art-pattern pcv-art-5"></div>
+            </div>
+            <div class="pcv-badge-top"><span class="pcv-num">05</span><span class="pcv-client">WILD STONE</span></div>
+          </div>
+          <div class="pcv-info">
+            <div class="pcv-tags"><span>Campaign</span><span>Packaging & Motion</span></div>
+            <h3 class="pcv-title">Reimagining modern masculine luxury through bold visual storytelling.</h3>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+          </div>
+        </a>
+      </article>
+
+      <!-- CARD 6 (CENTER-RIGHT TILT) -->
+      <article class="p-flow-item p-item-6">
+        <a href="project-detail.html" class="p-card-v p-card-6">
+          <div class="pcv-media">
+            <div class="pcv-gradient" style="background: linear-gradient(145deg, #1E1B4B 0%, #312E81 100%);">
+              <div class="pcv-art-pattern pcv-art-6"></div>
+            </div>
+            <div class="pcv-badge-top"><span class="pcv-num">06</span><span class="pcv-client">OUTLINE SUITE</span>
+            </div>
+          </div>
+          <div class="pcv-info">
+            <div class="pcv-tags"><span>SaaS Product</span><span>Digital Architecture</span></div>
+            <h3 class="pcv-title">Building a modular design tool for next-generation creative studios.</h3>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+          </div>
+        </a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- §4 — SERVICES (Unified Architecture: One Single Persistent Physical Dossier Folder) -->
+  <section id="svc-driver">
+    <div id="svc-sticky">
+      <!-- Ambient Spotlight -->
+      <div class="svc-spotlight"></div>
+
+      <div class="svc-stage" id="svcStage">
+
+        <!-- ═══ 1. HERO CAPSULE BACKGROUND (Phase 1) ═══ -->
+        <div class="svc-hero-capsule" id="svcHeroCapsule">
+          <div class="svc-capsule-folder-placeholder"></div>
+          <div class="svc-hero-right-content" id="svcHeroRight">
+            <div class="svc-s1-tag">Studio Capabilities Index</div>
+
+            <h2 class="svc-s1-headline">
+              <span>Shaping Culture.</span><br />
+              <span style="color: rgba(255, 255, 255, 0.65);">Building Prestige.</span>
+            </h2>
+
+            <p class="svc-s1-desc">
+              <span>Five multidisciplinary practices delivering bespoke brand identities,</span><br />
+              <span>high-conversion digital platforms, and cultural campaigns.</span>
+            </p>
+
+            <div class="svc-s1-pill">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+              </svg>
+              <span>1928 Creative Studio</span>
+              <span style="opacity:0.4;">|</span>
+              <span style="color:#FFFFFF; font-weight:700;">05 Studio Services</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER ═══ -->
+        <div class="svc-main-folder" id="mainSvcFolder">
+          <div class="svc-folder-wrap">
+            <div class="svc-folder-back"></div>
+            <div class="svc-sheets-stack" id="svcSheetsStack">
+              <!-- Default Overview Sheet (Card 0 / Cover) -->
+              <div class="svc-sheet svc-sheet-default" id="svcSheetDefault">
+                <div class="svc-punch-row">
+                  <div class="svc-hole"></div>
+                  <div class="svc-sheet-tag">1928 // STUDIO SERVICES</div>
+                  <div class="svc-hole"></div>
+                </div>
+                <div class="svc-sheet-header-block">
+                  <div class="svc-sheet-title">Capabilities Index</div>
+                  <div class="svc-sheet-sub">05 Disciplines · Full Spectrum</div>
+                </div>
+              </div>
+              <!-- Service Card 1 -->
+              <div class="svc-sheet svc-sheet-s1" id="svcSheet0">
+                <div class="svc-punch-row">
+                  <div class="svc-hole"></div>
+                  <div class="svc-sheet-tag">01 // LOGO DESIGN</div>
+                  <div class="svc-hole"></div>
+                </div>
+                <div class="svc-sheet-header-block">
+                  <div class="svc-sheet-title">Logo Design</div>
+                  <div class="svc-sheet-sub">Visual Foundation &amp; Typography</div>
+                </div>
+              </div>
+              <!-- Service Card 2 -->
+              <div class="svc-sheet svc-sheet-s2" id="svcSheet1">
+                <div class="svc-punch-row">
+                  <div class="svc-hole"></div>
+                  <div class="svc-sheet-tag">02 // BRAND IDENTITY</div>
+                  <div class="svc-hole"></div>
+                </div>
+                <div class="svc-sheet-header-block">
+                  <div class="svc-sheet-title">Brand Identity</div>
+                  <div class="svc-sheet-sub">Strategy &amp; Visual Architecture</div>
+                </div>
+              </div>
+              <!-- Service Card 3 -->
+              <div class="svc-sheet svc-sheet-s3" id="svcSheet2">
+                <div class="svc-punch-row">
+                  <div class="svc-hole"></div>
+                  <div class="svc-sheet-tag">03 // WEBSITE DESIGN</div>
+                  <div class="svc-hole"></div>
+                </div>
+                <div class="svc-sheet-header-block">
+                  <div class="svc-sheet-title">Website Design</div>
+                  <div class="svc-sheet-sub">Digital Platforms &amp; UI/UX</div>
+                </div>
+              </div>
+              <!-- Service Card 4 -->
+              <div class="svc-sheet svc-sheet-s4" id="svcSheet3">
+                <div class="svc-punch-row">
+                  <div class="svc-hole"></div>
+                  <div class="svc-sheet-tag">04 // DIGITAL MARKETING</div>
+                  <div class="svc-hole"></div>
+                </div>
+                <div class="svc-sheet-header-block">
+                  <div class="svc-sheet-title">Digital Marketing</div>
+                  <div class="svc-sheet-sub">Performance &amp; Social Media</div>
+                </div>
+              </div>
+              <!-- Service Card 5 -->
+              <div class="svc-sheet svc-sheet-s5" id="svcSheet4">
+                <div class="svc-punch-row">
+                  <div class="svc-hole"></div>
+                  <div class="svc-sheet-tag">05 // CONTENT CREATION</div>
+                  <div class="svc-hole"></div>
+                </div>
+                <div class="svc-sheet-header-block">
+                  <div class="svc-sheet-title">Content Creation</div>
+                  <div class="svc-sheet-sub">Media Production &amp; UGC</div>
+                </div>
+              </div>
+            </div>
+            <div class="svc-jacket">
+              <div></div>
+              <div>
+                <div class="svc-jacket-title">1928</div>
+                <div class="svc-jacket-sub">Creative Studio // Services</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ 3. FIVE SERVICES MENU (Phase 2 Left) ═══ -->
+        <div class="svc-s2-menu" id="svcFiveMenu">
+          <div class="svc-s2-item" data-s2="0">
+            <div>
+              <h4 class="svc-s2-title">01. Logo Design</h4>
+              <span class="svc-s2-sub">Custom Marks · Wordmarks · Vector Systems</span>
+            </div>
+            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
+                stroke-width="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg></div>
+          </div>
+          <div class="svc-s2-item" data-s2="1">
+            <div>
+              <h4 class="svc-s2-title">02. Brand Identity Development</h4>
+              <span class="svc-s2-sub">Strategy · Visual Architecture · Guidelines</span>
+            </div>
+            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
+                stroke-width="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg></div>
+          </div>
+          <div class="svc-s2-item" data-s2="2">
+            <div>
+              <h4 class="svc-s2-title">03. Website Design &amp; Development</h4>
+              <span class="svc-s2-sub">Digital Platforms · UI/UX · Conversion</span>
+            </div>
+            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
+                stroke-width="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg></div>
+          </div>
+          <div class="svc-s2-item" data-s2="3">
+            <div>
+              <h4 class="svc-s2-title">04. Social Media &amp; Digital Marketing</h4>
+              <span class="svc-s2-sub">Management · Meta Ads · Performance</span>
+            </div>
+            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
+                stroke-width="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg></div>
+          </div>
+          <div class="svc-s2-item" data-s2="4">
+            <div>
+              <h4 class="svc-s2-title">05. Content Creation &amp; Influencer Marketing</h4>
+              <span class="svc-s2-sub">Photography · Videography · Reels · UGC</span>
+            </div>
+            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
+                stroke-width="2.5">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg></div>
+          </div>
+        </div>
+
+        <!-- ═══ 4. DETAIL SHOWCASE DECK (Phase 3 Right) ═══ -->
+        <div class="svc-detail-deck" id="svcDetailDeck">
+
+          <!-- Card 0: 1928 Studio Services Capabilities Index -->
+          <div class="svc-showcase-card" id="svcCard0">
+            <div class="svc-s3-art-frame">
+              <div class="svc-art-orbit">
+                <div class="svc-orbit-ring ring-1"></div>
+                <div class="svc-orbit-ring ring-2"></div>
+                <div class="svc-orbit-core"></div>
+              </div>
+            </div>
+            <div class="svc-card-num-watermark">1928</div>
+            <div class="svc-card-header">
+              <span class="svc-badge">1928 Creative Studio · Capabilities Index</span>
+            </div>
+            <h3>Studio Disciplines &amp; Capabilities</h3>
+            <p>Five multidisciplinary practices engineered to build iconic brand identities, bespoke digital platforms,
+              and high-impact cultural campaigns.</p>
+            <div class="svc-deliverables">
+              <span class="svc-deliv-pill">Brand Strategy &amp; Identity</span>
+              <span class="svc-deliv-pill">Web Design &amp; Development</span>
+              <span class="svc-deliv-pill">Digital Marketing</span>
+              <span class="svc-deliv-pill">Social Media</span>
+              <span class="svc-deliv-pill">Content &amp; Production</span>
+            </div>
+            <div class="svc-card-footer">
+              <a href="service-detail.html" class="svc-action-link">
+                Explore Studio Capabilities <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor"
+                  fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <div class="svc-pagination">00 / 05</div>
+            </div>
+          </div>
+
+          <!-- Card 1: 01 Logo Design -->
+          <div class="svc-showcase-card" id="svcCard1">
+            <div class="svc-s3-art-frame">
+              <div class="svc-art-torus">
+                <div class="svc-torus-shape s1"></div>
+              </div>
+            </div>
+            <div class="svc-card-num-watermark">01</div>
+            <div class="svc-card-header">
+              <span class="svc-badge">Visual Foundation · Mark &amp; Typography</span>
+            </div>
+            <h3>01. Logo Design</h3>
+            <p>Precision-crafted logomarks, typography systems, and iconic symbol design engineered to give your brand
+              an indelible signature across all media.</p>
+            <div class="svc-deliverables">
+              <span class="svc-deliv-pill">Custom Wordmarks</span>
+              <span class="svc-deliv-pill">Monogram &amp; Logomark</span>
+              <span class="svc-deliv-pill">Vector Master Files</span>
+              <span class="svc-deliv-pill">Usage &amp; Color System</span>
+            </div>
+            <div class="svc-card-footer">
+              <a href="service-detail.html" class="svc-action-link">
+                Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
+                  stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <div class="svc-pagination">01 / 05</div>
+            </div>
+          </div>
+
+          <!-- Card 2: 02 Brand Identity Development -->
+          <div class="svc-showcase-card" id="svcCard2">
+            <div class="svc-s3-art-frame">
+              <div class="svc-art-torus">
+                <div class="svc-torus-shape s2"></div>
+              </div>
+            </div>
+            <div class="svc-card-num-watermark">02</div>
+            <div class="svc-card-header">
+              <span class="svc-badge">Strategy · Visual Architecture · Guidelines</span>
+            </div>
+            <h3>02. Brand Identity Development</h3>
+            <p>Complete brand universe construction — defining visual voice, color palettes, motion principles, and
+              comprehensive brand books that establish market dominance.</p>
+            <div class="svc-deliverables">
+              <span class="svc-deliv-pill">Brand Positioning &amp; Strategy</span>
+              <span class="svc-deliv-pill">Complete Brand Guidelines</span>
+              <span class="svc-deliv-pill">Packaging &amp; Stationary</span>
+              <span class="svc-deliv-pill">Art Direction</span>
+            </div>
+            <div class="svc-card-footer">
+              <a href="service-detail.html" class="svc-action-link">
+                Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
+                  stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <div class="svc-pagination">02 / 05</div>
+            </div>
+          </div>
+
+          <!-- Card 3: 03 Website Design & Development -->
+          <div class="svc-showcase-card" id="svcCard3">
+            <div class="svc-s3-art-frame">
+              <div class="svc-art-torus">
+                <div class="svc-torus-shape s3"></div>
+              </div>
+            </div>
+            <div class="svc-card-num-watermark">03</div>
+            <div class="svc-card-header">
+              <span class="svc-badge">Digital Platforms · UI/UX · Conversion Engine</span>
+            </div>
+            <h3>03. Website Design &amp; Development</h3>
+            <p>High-conversion digital experiences combining editorial beauty with world-class performance, bespoke
+              motion graphics, and fluid responsive design.</p>
+            <div class="svc-deliverables">
+              <span class="svc-deliv-pill">UI/UX Architecture</span>
+              <span class="svc-deliv-pill">Web Development</span>
+              <span class="svc-deliv-pill">Interaction Design</span>
+              <span class="svc-deliv-pill">Performance Optimization</span>
+            </div>
+            <div class="svc-card-footer">
+              <a href="service-detail.html" class="svc-action-link">
+                Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
+                  stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <div class="svc-pagination">03 / 05</div>
+            </div>
+          </div>
+
+          <!-- Card 4: 04 Social Media & Digital Marketing -->
+          <div class="svc-showcase-card" id="svcCard4">
+            <div class="svc-s3-art-frame">
+              <div class="svc-art-torus">
+                <div class="svc-torus-shape s4"></div>
+              </div>
+            </div>
+            <div class="svc-card-num-watermark">04</div>
+            <div class="svc-card-header">
+              <span class="svc-badge">Performance · Growth · Paid Media</span>
+            </div>
+            <h3>04. Social Media &amp; Digital Marketing</h3>
+            <p>Full-funnel digital marketing engine and high-impact social media management to capture market share and
+              convert audiences into loyal brand advocates.</p>
+            <div class="svc-deliverables">
+              <span class="svc-deliv-pill">Social Media Management</span>
+              <span class="svc-deliv-pill">Digital Marketing Services</span>
+              <span class="svc-deliv-pill">Meta Ads</span>
+              <span class="svc-deliv-pill">Performance Marketing</span>
+            </div>
+            <div class="svc-card-footer">
+              <a href="service-detail.html" class="svc-action-link">
+                Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
+                  stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <div class="svc-pagination">04 / 05</div>
+            </div>
+          </div>
+
+          <!-- Card 5: 05 Content Creation & Influencer Marketing -->
+          <div class="svc-showcase-card" id="svcCard5">
+            <div class="svc-s3-art-frame">
+              <div class="svc-art-torus">
+                <div class="svc-torus-shape s5"></div>
+              </div>
+            </div>
+            <div class="svc-card-num-watermark">05</div>
+            <div class="svc-card-header">
+              <span class="svc-badge">Campaigns · Production · Creator Network</span>
+            </div>
+            <h3>05. Content Creation &amp; Influencer Marketing</h3>
+            <p>End-to-end multimedia creation and strategic creator collaborations that ignite viral cultural resonance
+              and amplify brand prestige.</p>
+            <div class="svc-deliverables">
+              <span class="svc-deliv-pill">Photography</span>
+              <span class="svc-deliv-pill">Videography</span>
+              <span class="svc-deliv-pill">Reels &amp; Short Form</span>
+              <span class="svc-deliv-pill">Influencer Campaigns</span>
+              <span class="svc-deliv-pill">UGC Production</span>
+            </div>
+            <div class="svc-card-footer">
+              <a href="service-detail.html" class="svc-action-link">
+                Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
+                  stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </a>
+              <div class="svc-pagination">05 / 05</div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- §5 — BRAND PARTNERS (Scroll-Driven Sticky Pin) -->
+  <section id="brands-driver">
+    <div id="brands-sticky">
+
+      <!-- Heading: starts at bottom of screen, rises & pins at top on scroll -->
+      <div id="brands-pin-head">
+        <div class="bph-label">✦ Trusted By // 05</div>
+        <h2>Brands That<br /><em>Trust Us.</em></h2>
+      </div>
+
+      <!-- Card Train Viewport: Connected series of cards flowing right to left AFTER header is pinned -->
+      <div id="brands-train-viewport">
+        <div id="brands-train-track">
+
+          <!-- Card 1: Velox Apex -->
+          <div class="brand-train-card">
+            <div class="btc-top">
+              <span class="btc-glyph">◪</span>
+              <span class="btc-counter">01 / 07</span>
+            </div>
+            <div class="btc-center">
+              <span class="btc-name">VELOX APEX</span>
+            </div>
+            <div class="btc-bottom">
+              <span class="btc-category">Brand Architecture</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Kinesis -->
+          <div class="brand-train-card">
+            <div class="btc-top">
+              <span class="btc-glyph">∿</span>
+              <span class="btc-counter">02 / 07</span>
+            </div>
+            <div class="btc-center">
+              <span class="btc-name">KINESIS</span>
+            </div>
+            <div class="btc-bottom">
+              <span class="btc-category">Spatial Identity</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Aura -->
+          <div class="brand-train-card">
+            <div class="btc-top">
+              <span class="btc-glyph">◎</span>
+              <span class="btc-counter">03 / 07</span>
+            </div>
+            <div class="btc-center">
+              <span class="btc-name style-aura">aura</span>
+            </div>
+            <div class="btc-bottom">
+              <span class="btc-category">Visual Systems</span>
+            </div>
+          </div>
+
+          <!-- Card 4: Jukku -->
+          <div class="brand-train-card">
+            <div class="btc-top">
+              <span class="btc-glyph">⬡</span>
+              <span class="btc-counter">04 / 07</span>
+            </div>
+            <div class="btc-center">
+              <span class="btc-name style-jukku">Jukku</span>
+            </div>
+            <div class="btc-bottom">
+              <span class="btc-category">Digital Growth</span>
+            </div>
+          </div>
+
+          <!-- Card 5: Synapse -->
+          <div class="brand-train-card">
+            <div class="btc-top">
+              <span class="btc-glyph">◉</span>
+              <span class="btc-counter">05 / 07</span>
+            </div>
+            <div class="btc-center">
+              <span class="btc-name">SYNAPSE</span>
+            </div>
+            <div class="btc-bottom">
+              <span class="btc-category">Product Architecture</span>
+            </div>
+          </div>
+
+          <!-- Card 6: Monolith -->
+          <div class="brand-train-card">
+            <div class="btc-top">
+              <span class="btc-glyph">◈</span>
+              <span class="btc-counter">06 / 07</span>
+            </div>
+            <div class="btc-center">
+              <span class="btc-name">MONOLITH</span>
+            </div>
+            <div class="btc-bottom">
+              <span class="btc-category">Spatial Design</span>
+            </div>
+          </div>
+
+          <!-- Card 7: Solaris -->
+          <div class="brand-train-card">
+            <div class="btc-top">
+              <span class="btc-glyph">⎔</span>
+              <span class="btc-counter">07 / 07</span>
+            </div>
+            <div class="btc-center">
+              <span class="btc-name">SOLARIS</span>
+            </div>
+            <div class="btc-bottom">
+              <span class="btc-category">Energy &amp; Innovation</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Flared Curved Funnel attached to Card 7 -->
+      <div id="card7-funnel-container">
+        <svg id="card7-funnel-svg" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
+          <path id="card7FunnelPath" d="M 0 0" fill="var(--bg)" />
+          <path id="funnelBorderTop" class="funnel-boundary-line" d="M 0 0" />
+          <path id="funnelBorderBottom" class="funnel-boundary-line" d="M 0 0" />
+        </svg>
+
+        <!-- Fresh Perspectives & Insights UX Stage mounted inside the Canvas -->
+        <div class="funnel-blog-stage" id="funnelBlogStage">
+          <div class="fbc-content">
+            <div class="fbc-header">
+              <div>
+                <div class="fbc-tag">✦ Studio Perspectives // 06</div>
+                <h2>Fresh Perspectives<br /><em>&amp; Insights.</em></h2>
+              </div>
+              <a href="blogs.html" class="fbc-all">Explore All Insights <span>→</span></a>
+            </div>
+            <div class="fbc-cards-row">
+              <a href="blog-detail.html" class="fbc-card">
+                <div>
+                  <span class="fbc-cat">Identity &amp; Narrative</span>
+                  <h4>The Architectural Role of Language in Modern Brand Systems</h4>
+                  <p>How precise UX copywriting and brand vocabulary define category leadership and emotional equity.</p>
+                </div>
+                <span class="fbc-link">Read Perspective →</span>
+              </a>
+              <a href="blog-detail.html" class="fbc-card">
+                <div>
+                  <span class="fbc-cat">Spatial &amp; Motion</span>
+                  <h4>Designing Frictionless Micro-Interactions for High-Retention Products</h4>
+                  <p>Exploring kinetic feedback loops, spatial pacing, and sensory digital choreography.</p>
+                </div>
+                <span class="fbc-link">Read Perspective →</span>
+              </a>
+              <a href="blog-detail.html" class="fbc-card">
+                <div>
+                  <span class="fbc-cat">Strategic Growth</span>
+                  <h4>Scaling from Boutique Practice to Global Cultural Authority</h4>
+                  <p>Strategic frameworks behind iconic studio transformations and non-linear venture expansion.</p>
+                </div>
+                <span class="fbc-link">Read Perspective →</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- §7 — MODERN EDITORIAL LUXURY FOOTER -->
+  <footer id="footer-driver">
+    <div class="footer-luxury-card">
+      
+      <!-- Top Grid: Statement, Links, Socials, CTA -->
+      <div class="f-header-grid">
+        <div class="f-desc-col">
+          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in Ahmedabad.</p>
+        </div>
+
+        <div class="f-nav-col">
+          <div class="f-col-label">Explore</div>
+          <ul class="f-links-clean">
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="portfolio.html">Work</a></li>
+            <li><a href="blogs.html">Perspectives</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="f-social-col">
+          <div class="f-col-label">Follow us</div>
+          <div class="f-social-chips">
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">𝕏</span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">in</span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://behance.net" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">Bē</span>
+              <span>@1928creativestudio</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="f-cta-column">
+          <a href="contact.html" class="f-action-pill cta-primary">
+            <div class="f-action-txt">
+              <span class="f-action-heading">Call 1928 Creative Studio</span>
+              <span class="f-action-sub">Let's work together</span>
+            </div>
+            <div class="f-action-arrow">↗</div>
+          </a>
+
+          <a href="services.html" class="f-action-pill cta-secondary">
+            <div class="f-action-txt">
+              <span class="f-action-heading">Studio Work &amp; Inquiry</span>
+              <span class="f-action-sub">Creative capabilities</span>
+            </div>
+            <div class="f-action-arrow">↗</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Cluster: Full-Bleed 50% Sliced Headline touching the Line + Meta Bar -->
+      <div class="f-bottom-cluster">
+        <div class="f-giant-cut-wrap">
+          <svg class="f-giant-cut-svg" viewBox="0 0 1600 65" preserveAspectRatio="none">
+            <text x="0" y="115" font-family="'Space Grotesk', -apple-system, sans-serif" font-weight="900" font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs" letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
+          </svg>
+        </div>
+
+        <!-- Sub-Footer Meta Bar with Horizontal Line Divider -->
+        <div class="f-meta-bar">
+          <div class="f-meta-links">
+            <span>1928 Creative Studio © 2026</span>
+            <span>·</span>
+            <a href="#">Privacy Policy</a>
+            <span>·</span>
+            <a href="#">Studio Terms</a>
+          </div>
+          <div class="f-live-status">
+            <span class="f-status-dot"></span>
+            <span id="footer-live-clock">Ahmedabad, India · 10:42 PM · 28°C ☀</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT — Scroll Engine & Animation Choreography
+     ═══════════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ── Utilities ────────────────────────────────────── */
+      function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function eio(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+      function easeOutElastic(t) {
+        const c4 = 2 * Math.PI / 3;
+        return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - .75) * c4) + 1;
+      }
+
+      /* ── Custom Cursor ─────────────────────────────────── */
+      const CUR = document.getElementById('cur');
+      const CURR = document.getElementById('cur-r');
+      let mx = 0, my = 0, rx = 0, ry = 0;
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        if (CUR) { CUR.style.left = mx + 'px'; CUR.style.top = my + 'px'; }
+      });
+      (function L() {
+        rx += (mx - rx) * .11; ry += (my - ry) * .11;
+        if (CURR) { CURR.style.left = rx + 'px'; CURR.style.top = ry + 'px'; }
+        requestAnimationFrame(L);
+      })();
+      document.addEventListener('mouseover', e => { if (e.target.closest('a,button,.port-card,.blog-card,.marquee-item,.svc-card')) document.body.classList.add('hov'); });
+      document.addEventListener('mouseout', e => { if (e.target.closest('a,button,.port-card,.blog-card,.marquee-item,.svc-card')) document.body.classList.remove('hov'); });
+
+      /* ── Theme Toggle ──────────────────────────────────── */
+      const DR = document.documentElement;
+      DR.setAttribute('data-theme', localStorage.getItem('t28') || 'light');
+      const tbtn = document.getElementById('tbtn');
+      if (tbtn) {
+        tbtn.addEventListener('click', () => {
+          const n = DR.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+          DR.setAttribute('data-theme', n); localStorage.setItem('t28', n);
+        });
+      }
+
+      /* ── Cached DOM Elements & Section References ──────── */
+      const nav = document.getElementById('nav');
+
+      // §1 Hero Elements
+      const heroDriver = document.getElementById('hero-driver');
+      const heroTitle = document.getElementById('heroTitle');
+      const heroReel = document.getElementById('heroReel');
+      const roomCube = document.getElementById('roomCube');
+      const heroFrame = document.getElementById('heroFrame');
+      const heroRaysSvg = document.getElementById('heroRaysSvg');
+      const r1Cards = document.querySelectorAll('.r1-card');
+      const heroWhiteout = document.getElementById('heroWhiteout');
+      const r1Outer = document.getElementById('r1Outer');
+      const r1Inner = document.getElementById('r1Inner');
+      const r1Rays = ['r1Ray1', 'r1Ray2', 'r1Ray3', 'r1Ray4'].map(id => document.getElementById(id));
+
+      // §2 Story Elements
+      const storyDriver = document.getElementById('story-driver');
+      const storyBlock = document.getElementById('storyBlock');
+      const storyTag = document.getElementById('storyTag');
+      const storyWords = document.querySelectorAll('.story-words-block .sw');
+
+      // §3 Portfolio Elements
+      const portDriver = document.getElementById('port-driver');
+      const portStickyCenter = document.getElementById('portStickyCenter');
+      const portFlowCards = document.querySelectorAll('.p-card-v');
+      const lastPortCard = document.querySelector('.p-card-6') || document.querySelector('.p-item-6');
+
+      // §4 Services Elements
+      const svcDriver = document.getElementById('svc-driver');
+      const svcHeroCapsule = document.getElementById('svcHeroCapsule');
+      const svcHeroRight = document.getElementById('svcHeroRight');
+      const mainSvcFolder = document.getElementById('mainSvcFolder');
+      const allDossierCards = [
+        document.getElementById('svcSheetDefault'),
+        document.getElementById('svcSheet0'),
+        document.getElementById('svcSheet1'),
+        document.getElementById('svcSheet2'),
+        document.getElementById('svcSheet3'),
+        document.getElementById('svcSheet4')
+      ];
+      const svcFiveMenu = document.getElementById('svcFiveMenu');
+      const svcS2Items = document.querySelectorAll('#svcFiveMenu .svc-s2-item');
+      const svcDetailDeck = document.getElementById('svcDetailDeck');
+      const allShowcaseCards = [
+        document.getElementById('svcCard0'),
+        document.getElementById('svcCard1'),
+        document.getElementById('svcCard2'),
+        document.getElementById('svcCard3'),
+        document.getElementById('svcCard4'),
+        document.getElementById('svcCard5')
+      ];
+      const totalSvcCards = 6;
+
+      // §5 Brands Elements
+      const brandsDriver = document.getElementById('brands-driver');
+      const brandsSticky = document.getElementById('brands-sticky');
+      const brandsPinHead = document.getElementById('brands-pin-head');
+      const brandsTrainViewport = document.getElementById('brands-train-viewport');
+      const brandsTrainTrack = document.getElementById('brands-train-track');
+      const card7FunnelSvg = document.getElementById('card7-funnel-svg');
+      const card7FunnelPath = document.getElementById('card7FunnelPath');
+      const funnelBorderTop = document.getElementById('funnelBorderTop');
+      const funnelBorderBottom = document.getElementById('funnelBorderBottom');
+      const funnelBlogStage = document.getElementById('funnelBlogStage');
+
+      // §7 Footer Elements
+      const footerDriver = document.getElementById('footer-driver');
+      const fgTop = document.getElementById('fgTop');
+      const fgBottom = document.getElementById('fgBottom');
+
+      // Easing helpers
+      function eioq(t) { return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2; }
+      function eoq(t) { return 1 - Math.pow(1 - t, 4); }
+      function eiq(t) { return t * t * t * t; }
+
+      // Services Helper Functions
+      function resetFolderSheetsDefault(offsetY = 0) {
+        allDossierCards.forEach((sheet, idx) => {
+          if (sheet) {
+            if (idx === 0) {
+              sheet.style.transform = `translateY(${offsetY}px) scale(1.0)`;
+              sheet.style.zIndex = '3';
+              sheet.style.opacity = '1';
+            } else {
+              sheet.style.transform = `translateY(${offsetY + 165}px) scale(0.93)`;
+              sheet.style.zIndex = '2';
+              sheet.style.opacity = '1';
+            }
+          }
+        });
+      }
+
+      function resetShowcaseDeckDefault() {
+        allShowcaseCards.forEach((card, idx) => {
+          if (!card) return;
+          if (idx === 0) {
+            card.style.transform = 'translateY(0px) scale(1.0)';
+            card.style.opacity = '1';
+            card.style.zIndex = '10';
+            card.style.filter = 'none';
+            card.style.pointerEvents = 'auto';
+          } else if (idx === 1) {
+            card.style.transform = 'translateY(-22px) scale(0.96)';
+            card.style.opacity = '1';
+            card.style.zIndex = '5';
+            card.style.filter = 'brightness(0.8)';
+            card.style.pointerEvents = 'none';
+          } else {
+            card.style.transform = 'translateY(-40px) scale(0.92)';
+            card.style.opacity = '0';
+            card.style.zIndex = '2';
+            card.style.pointerEvents = 'none';
+          }
+        });
+      }
+
+      let lastSY = 0;
+
+      /* ── Master Scroll Handler ─────────────────── */
+      function onScroll(forcedSY) {
+        const sy = (typeof forcedSY === 'number') ? forcedSY : window.scrollY;
+        const vh = window.innerHeight;
+        const portTopCheck = portDriver ? portDriver.offsetTop : 3000;
+
+        // Global Nav Visibility
+        if (nav) {
+          if (sy >= portTopCheck - 250) {
+            nav.classList.add('visible');
+            nav.classList.toggle('hidden', sy > lastSY && sy > portTopCheck + 200);
+          } else {
+            nav.classList.remove('visible');
+            nav.classList.remove('hidden');
+          }
+        }
+        lastSY = sy;
+
+        /* ═══ §1 HERO — 3D Room Walkthrough & Video Emergence ═══ */
+        if (heroDriver && heroTitle && roomCube && heroReel) {
+          const heroH = heroDriver.offsetHeight - vh;
+          const hp = clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1);
+
+          // Phase 1 & 2: 3D Locomotion
+          const zoomP = clamp(hp / 0.52, 0, 1);
+          const zoomE = Math.pow(zoomP, 1.25);
+
+          const svgScaleR1 = lerp(1.0, 1.72, zoomE);
+          const svgFadeR1 = clamp(1 - clamp((zoomP - 0.70) / 0.30, 0, 1), 0, 1);
+
+          const tiltDamp = Math.max(0, 1 - zoomP * 2.5);
+          const tiltX = ((my / vh) - 0.5) * -3 * tiltDamp;
+          const tiltY = ((mx / window.innerWidth) - 0.5) * 3 * tiltDamp;
+          const room1Z = lerp(0, 1200, zoomE);
+
+          const r1CardFade = clamp(1 - clamp((zoomP - 0.68) / 0.32, 0, 1), 0, 1);
+          const titleOpacity = clamp(1 - clamp((zoomP - 0.70) / 0.30, 0, 1), 0, 1);
+
+          // Whiteout Flash / Portal Transition (hp: 0.48 -> 0.62)
+          let whiteoutOpacity = 0;
+          if (hp >= 0.48 && hp <= 0.62) {
+            if (hp < 0.55) {
+              whiteoutOpacity = clamp((hp - 0.48) / 0.07, 0, 1);
+            } else if (hp <= 0.57) {
+              whiteoutOpacity = 1;
+            } else {
+              whiteoutOpacity = clamp(1 - (hp - 0.57) / 0.05, 0, 1);
+            }
+          }
+          if (heroWhiteout) heroWhiteout.style.opacity = whiteoutOpacity + '';
+
+          // Room 1 Elements
+          if (hp < 0.58) {
+            if (heroRaysSvg) {
+              heroRaysSvg.style.transform = `scale(${svgScaleR1})`;
+              heroRaysSvg.style.opacity = svgFadeR1 + '';
+            }
+            if (r1Outer) r1Outer.style.opacity = '1';
+            if (r1Inner) r1Inner.style.opacity = '1';
+            r1Rays.forEach(el => { if (el) el.style.opacity = '1'; });
+
+            roomCube.style.opacity = '1';
+            roomCube.style.transform = `translate(-50%,-50%) translateZ(${room1Z}px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+            r1Cards.forEach(c => { c.style.opacity = r1CardFade + ''; });
+            heroTitle.style.opacity = titleOpacity + '';
+          } else {
+            if (heroRaysSvg) heroRaysSvg.style.opacity = '0';
+            if (heroTitle) heroTitle.style.opacity = '0';
+            if (roomCube) roomCube.style.opacity = '0';
+            r1Cards.forEach(c => { c.style.opacity = '0'; });
+          }
+
+          // Video Showreel & Story Section Coordination
+          const storyTop = storyDriver ? storyDriver.offsetTop : (heroDriver.offsetTop + heroDriver.offsetHeight);
+          const storyH = storyDriver ? (storyDriver.offsetHeight - vh) : 1;
+          const portTop = portDriver ? portDriver.offsetTop : (storyTop + 2000);
+
+          if (sy < storyTop) {
+            const vidP = clamp((hp - 0.65) / 0.20, 0, 1);
+            const vidE = eoq(vidP);
+
+            if (vidP <= 0) {
+              heroReel.style.opacity = '0';
+              heroReel.style.transform = 'translate(-50%,-50%) scale(0.04)';
+              heroReel.style.pointerEvents = 'none';
+            } else if (hp < 0.85) {
+              const rScale = lerp(0.04, 1.0, vidE);
+              heroReel.style.opacity = clamp(vidP * 3.5, 0, 1) + '';
+              heroReel.style.left = '50%';
+              heroReel.style.top = '50%';
+              heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
+              heroReel.style.pointerEvents = vidP > 0.3 ? 'auto' : 'none';
+            } else {
+              const dockP = clamp((hp - 0.85) / 0.15, 0, 1);
+              const dockE = eioq(dockP);
+              const rScale = lerp(1.0, 0.82, dockE);
+              const tLeft = lerp(50, 74, dockE);
+              heroReel.style.opacity = '1';
+              heroReel.style.left = `${tLeft}%`;
+              heroReel.style.top = '50%';
+              heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
+              heroReel.style.pointerEvents = 'auto';
+            }
+
+            if (storyBlock) {
+              storyBlock.style.transform = 'none';
+              storyBlock.style.opacity = '1';
+            }
+            if (storyTag) storyTag.classList.remove('vis');
+            storyWords.forEach(word => word.classList.remove('active'));
+          } else if (sy < portTop - vh) {
+            if (storyTag) storyTag.classList.add('vis');
+            if (storyBlock) {
+              storyBlock.style.transform = 'none';
+              storyBlock.style.opacity = '1';
+            }
+
+            const sp = clamp((sy - storyTop) / (storyH || 1), 0, 1);
+            const activeCount = Math.floor(clamp(sp / 0.80, 0, 1) * storyWords.length);
+            storyWords.forEach((word, idx) => {
+              if (idx <= activeCount) word.classList.add('active');
+              else word.classList.remove('active');
+            });
+
+            heroReel.style.opacity = '1';
+            heroReel.style.left = '74%';
+            heroReel.style.top = '50%';
+            heroReel.style.transform = 'translate(-50%,-50%) scale(0.82)';
+            heroReel.style.pointerEvents = 'auto';
+          } else {
+            if (storyTag) storyTag.classList.add('vis');
+            storyWords.forEach(word => word.classList.add('active'));
+
+            const exitOffset = sy - (portTop - vh);
+
+            if (sy >= portTop) {
+              heroReel.style.opacity = '0';
+              heroReel.style.pointerEvents = 'none';
+            } else {
+              heroReel.style.opacity = '1';
+              heroReel.style.left = '74%';
+              heroReel.style.top = '50%';
+              heroReel.style.transform = `translate(-50%, calc(-50% - ${exitOffset}px)) scale(0.82)`;
+              heroReel.style.pointerEvents = 'none';
+            }
+          }
+        }
+
+        /* ═══ §3 SELECTED WORK — Parallax Showcase with Sticky Center Headline ═══ */
+        if (portDriver) {
+          const portTop = portDriver.offsetTop;
+
+          if (portStickyCenter) {
+            if (sy < portTop) {
+              const enterP = clamp((sy - (portTop - vh)) / vh, 0, 1);
+              const enterE = eoq(enterP);
+              const enterY = lerp(vh * 0.45, 0, enterE);
+              portStickyCenter.style.transform = `translateY(${enterY}px)`;
+              portStickyCenter.style.opacity = '1';
+            } else if (lastPortCard) {
+              const card6Rect = lastPortCard.getBoundingClientRect();
+              if (card6Rect.bottom > 0) {
+                portStickyCenter.style.transform = 'translateY(0px)';
+              } else {
+                const scrollPastCard6 = -card6Rect.bottom;
+                const exitRange = vh;
+                const exitP = clamp(scrollPastCard6 / exitRange, 0, 1);
+                const exitE = eioq(exitP);
+                const textY = lerp(0, -vh, exitE);
+                portStickyCenter.style.transform = `translateY(${textY}px)`;
+              }
+              portStickyCenter.style.opacity = '1';
+            } else {
+              portStickyCenter.style.transform = 'translateY(0px)';
+              portStickyCenter.style.opacity = '1';
+            }
+          }
+
+          // Parallax for floating cards
+          if (portFlowCards.length) {
+            const baseRotations = [-2.2, 2.4, -1.5, 2.8, -2.8, 1.6];
+            const ySpeeds = [-40, 46, -30, 50, -42, 34];
+            const xDrifts = [-14, 16, 12, -15, -18, 13];
+
+            portFlowCards.forEach((card, idx) => {
+              const rect = card.getBoundingClientRect();
+              if (rect.top < vh + 140 && rect.bottom > -140) {
+                const relY = (rect.top + rect.height / 2 - vh / 2) / vh;
+                const rot = baseRotations[idx % baseRotations.length] + relY * (idx % 2 === 0 ? 1.3 : -1.3);
+                const yShift = relY * (ySpeeds[idx % ySpeeds.length]);
+                const xShift = relY * (xDrifts[idx % xDrifts.length]);
+                card.style.transform = `translate3d(${xShift}px, ${yShift}px, 0) rotate(${rot}deg)`;
+              }
+            });
+          }
+        }
+
+        /* ═══ §4 SERVICES — Unified Single Persistent Physical Dossier Folder ═══ */
+        if (svcDriver && svcHeroCapsule && mainSvcFolder) {
+          const svcTop = svcDriver.offsetTop;
+          const svcH = svcDriver.offsetHeight - vh;
+
+          if (sy < svcTop) {
+            const approachP = clamp((sy - (svcTop - vh * 0.75)) / (vh * 0.75), 0, 1);
+            if (approachP > 0) {
+              const enterE = eoq(approachP);
+              const curY = lerp(120, 0, enterE);
+              const opacVal = clamp(approachP * 2.5, 0, 1);
+
+              svcHeroCapsule.style.width = '340px';
+              svcHeroCapsule.style.transform = `translate(-50%, -50%) translateY(${curY}px) translateX(0px)`;
+              svcHeroCapsule.style.opacity = opacVal + '';
+
+              mainSvcFolder.style.transform = `translate(-50%, -50%) translateY(${curY}px) translateX(0px)`;
+              mainSvcFolder.style.opacity = opacVal + '';
+
+              resetFolderSheetsDefault(0);
+
+              if (svcHeroRight) {
+                svcHeroRight.style.opacity = '0';
+                svcHeroRight.style.transform = 'translateX(30px)';
+                svcHeroRight.style.clipPath = 'inset(0 100% 0 0)';
+              }
+            } else {
+              svcHeroCapsule.style.opacity = '0';
+              mainSvcFolder.style.opacity = '0';
+            }
+            if (svcFiveMenu) {
+              svcFiveMenu.style.opacity = '0';
+              svcFiveMenu.classList.remove('active-events');
+            }
+            if (svcDetailDeck) {
+              svcDetailDeck.style.opacity = '0';
+              svcDetailDeck.classList.remove('active-events');
+            }
+          } else {
+            const svp = clamp((sy - svcTop) / (svcH || 1), 0, 1);
+            const maxW = Math.min(960, window.innerWidth * 0.94);
+            const stageOffset = 260;
+            const offscreenLeft = Math.max(960, window.innerWidth * 0.85);
+            const offscreenRight = Math.max(960, window.innerWidth * 0.85);
+
+            // Phase 1: Hero Capsule Horizontal Expansion (svp: 0.00 -> 0.16)
+            if (svp < 0.16) {
+              const expandP = clamp(svp / 0.12, 0, 1);
+              const expandE = eioq(expandP);
+              const curW = lerp(340, maxW, expandE);
+              const folderX = -(curW - 340) / 2;
+
+              svcHeroCapsule.style.width = curW + 'px';
+              svcHeroCapsule.style.transform = 'translate(-50%, -50%) translateX(0px)';
+              svcHeroCapsule.style.opacity = '1';
+
+              mainSvcFolder.style.transform = `translate(-50%, -50%) translateX(${folderX}px)`;
+              mainSvcFolder.style.opacity = '1';
+
+              resetFolderSheetsDefault(0);
+
+              if (svcHeroRight) {
+                const textP = clamp((expandP - 0.35) / 0.65, 0, 1);
+                const textE = eoq(textP);
+                const clipVal = lerp(100, 0, textE);
+                svcHeroRight.style.opacity = textE + '';
+                svcHeroRight.style.transform = `translateX(${lerp(30, 0, textE)}px)`;
+                svcHeroRight.style.clipPath = `inset(0 ${clipVal}% 0 0)`;
+              }
+
+              if (svcFiveMenu) {
+                svcFiveMenu.style.opacity = '0';
+                svcFiveMenu.classList.remove('active-events');
+              }
+              if (svcDetailDeck) {
+                svcDetailDeck.style.opacity = '0';
+                svcDetailDeck.classList.remove('active-events');
+              }
+            }
+            // Phase 1 -> Phase 2: Contracts from Left to Right (svp: 0.16 -> 0.32)
+            else if (svp >= 0.16 && svp < 0.32) {
+              const closeP = (svp - 0.16) / 0.16;
+              const closeE = eioq(closeP);
+
+              svcHeroCapsule.style.opacity = '1';
+              svcHeroCapsule.style.width = lerp(maxW, 330, closeE) + 'px';
+              svcHeroCapsule.style.transform = `translate(-50%, -50%) translateX(${lerp(0, stageOffset, closeE)}px)`;
+
+              if (svcHeroRight) {
+                svcHeroRight.style.opacity = clamp(1 - closeP * 2.5, 0, 1) + '';
+              }
+
+              const startX = -(maxW - 340) / 2;
+              const folderX = lerp(startX, stageOffset, closeE);
+              mainSvcFolder.style.transform = `translate(-50%, -50%) translateX(${folderX}px)`;
+              mainSvcFolder.style.opacity = '1';
+
+              resetFolderSheetsDefault(0);
+
+              if (svcFiveMenu) {
+                const menuP = clamp((closeP - 0.15) / 0.85, 0, 1);
+                const menuE = eoq(menuP);
+                svcFiveMenu.style.opacity = menuP + '';
+                svcFiveMenu.style.transform = `translate(-50%, -50%) translateX(${lerp(-300, -stageOffset, menuE)}px)`;
+                if (closeP > 0.8) {
+                  svcFiveMenu.classList.add('active-events');
+                } else {
+                  svcFiveMenu.classList.remove('active-events');
+                }
+
+                svcS2Items.forEach((item, idx) => {
+                  const itemDelay = idx * 0.10;
+                  const itemP = clamp((menuP - itemDelay) / 0.6, 0, 1);
+                  const itemE = eoq(itemP);
+                  item.style.opacity = itemP + '';
+                  item.style.transform = `translateX(${lerp(-30, 0, itemE)}px) scale(${lerp(0.96, 1.0, itemE)})`;
+                });
+              }
+
+              if (svcDetailDeck) {
+                svcDetailDeck.style.opacity = '0';
+                svcDetailDeck.classList.remove('active-events');
+              }
+            }
+            // Phase 2: 5 Services Left + Solid Folder Right (svp: 0.32 -> 0.44)
+            else if (svp >= 0.32 && svp < 0.44) {
+              svcHeroCapsule.style.opacity = '1';
+              svcHeroCapsule.style.width = '330px';
+              svcHeroCapsule.style.transform = `translate(-50%, -50%) translateX(${stageOffset}px)`;
+
+              mainSvcFolder.style.transform = `translate(-50%, -50%) translateX(${stageOffset}px)`;
+              mainSvcFolder.style.opacity = '1';
+
+              resetFolderSheetsDefault(0);
+
+              if (svcFiveMenu) {
+                svcFiveMenu.style.opacity = '1';
+                svcFiveMenu.style.transform = `translate(-50%, -50%) translateX(-${stageOffset}px)`;
+                svcFiveMenu.classList.add('active-events');
+
+                svcS2Items.forEach(item => {
+                  item.style.opacity = '1';
+                  item.style.transform = 'translateX(0px) scale(1)';
+                });
+              }
+
+              if (svcDetailDeck) {
+                svcDetailDeck.style.transform = `translate(-50%, -50%) translateX(${offscreenRight}px)`;
+                svcDetailDeck.style.opacity = '1';
+                svcDetailDeck.classList.remove('active-events');
+                resetShowcaseDeckDefault();
+              }
+            }
+            // Phase 2 -> Phase 3: Folder glides left as detail deck arrives (svp: 0.44 -> 0.60)
+            else if (svp >= 0.44 && svp < 0.60) {
+              const morphP = (svp - 0.44) / 0.16;
+              const morphE = eioq(morphP);
+
+              if (svcFiveMenu) {
+                svcFiveMenu.style.opacity = '1';
+                svcFiveMenu.style.transform = `translate(-50%, -50%) translateX(${lerp(-stageOffset, -offscreenLeft, morphE)}px)`;
+                svcFiveMenu.classList.remove('active-events');
+              }
+
+              const folderX = lerp(stageOffset, -stageOffset, morphE);
+              svcHeroCapsule.style.opacity = '1';
+              svcHeroCapsule.style.width = '330px';
+              svcHeroCapsule.style.transform = `translate(-50%, -50%) translateX(${folderX}px)`;
+
+              mainSvcFolder.style.transform = `translate(-50%, -50%) translateX(${folderX}px)`;
+              mainSvcFolder.style.opacity = '1';
+
+              if (allDossierCards[0]) {
+                allDossierCards[0].style.transform = `translateY(${lerp(0, -75, morphE)}px) scale(${lerp(1.0, 1.02, morphE)})`;
+                allDossierCards[0].style.zIndex = '3';
+                allDossierCards[0].style.opacity = '1';
+              }
+              allDossierCards.slice(1).forEach((sheet) => {
+                if (sheet) {
+                  sheet.style.transform = 'translateY(165px) scale(0.93)';
+                  sheet.style.zIndex = '2';
+                  sheet.style.opacity = '1';
+                }
+              });
+
+              if (svcDetailDeck) {
+                const cardX = lerp(offscreenRight, stageOffset, morphE);
+                svcDetailDeck.style.transform = `translate(-50%, -50%) translateX(${cardX}px)`;
+                svcDetailDeck.style.opacity = '1';
+                if (morphP > 0.8) {
+                  svcDetailDeck.classList.add('active-events');
+                } else {
+                  svcDetailDeck.classList.remove('active-events');
+                }
+                resetShowcaseDeckDefault();
+              }
+            }
+            // Phase 3: Extraction of 6 cards in sequence (svp: 0.60 -> 1.00)
+            else {
+              svcHeroCapsule.style.opacity = '1';
+              svcHeroCapsule.style.width = '330px';
+              svcHeroCapsule.style.transform = `translate(-50%, -50%) translateX(-${stageOffset}px)`;
+
+              if (svcFiveMenu) {
+                svcFiveMenu.style.opacity = '0';
+                svcFiveMenu.classList.remove('active-events');
+              }
+
+              mainSvcFolder.style.transform = `translate(-50%, -50%) translateX(-${stageOffset}px)`;
+              mainSvcFolder.style.opacity = '1';
+
+              if (svcDetailDeck) {
+                svcDetailDeck.style.transform = `translate(-50%, -50%) translateX(${stageOffset}px)`;
+                svcDetailDeck.style.opacity = '1';
+                svcDetailDeck.classList.add('active-events');
+              }
+
+              const serviceZone = clamp((svp - 0.60) / 0.38, 0, 1.0);
+              const u = serviceZone * (totalSvcCards - 1);
+              const fallDistance = Math.max(vh * 1.05, 750);
+
+              // Left Folder Dossier Cards
+              allDossierCards.forEach((sheet, idx) => {
+                if (!sheet) return;
+                const delta = idx - u;
+
+                if (delta <= -1) {
+                  sheet.style.transform = 'translateY(165px) scale(0.93)';
+                  sheet.style.zIndex = '2';
+                  sheet.style.opacity = '1';
+                } else if (delta < 0) {
+                  const d = -delta;
+                  const dE = eioq(d);
+                  sheet.style.transform = `translateY(${lerp(-75, 165, dE)}px) scale(${lerp(1.02, 0.93, dE)})`;
+                  sheet.style.zIndex = '2';
+                  sheet.style.opacity = '1';
+                } else if (delta <= 1) {
+                  const p = 1 - delta;
+                  const pE = eioq(p);
+                  sheet.style.transform = `translateY(${lerp(165, -75, pE)}px) scale(${lerp(0.93, 1.02, pE)})`;
+                  sheet.style.zIndex = p > 0.5 ? '4' : '2';
+                  sheet.style.opacity = '1';
+                } else {
+                  sheet.style.transform = 'translateY(165px) scale(0.93)';
+                  sheet.style.zIndex = '2';
+                  sheet.style.opacity = '1';
+                }
+              });
+
+              // Right Showcase Deck
+              allShowcaseCards.forEach((card, idx) => {
+                if (!card) return;
+                const delta = idx - u;
+
+                if (delta <= -1) {
+                  card.style.transform = `translateY(${fallDistance + 40}px) scale(1.02)`;
+                  card.style.zIndex = '1';
+                  card.style.opacity = '0';
+                  card.style.filter = 'none';
+                  card.style.pointerEvents = 'none';
+                } else if (delta < 0) {
+                  const d = -delta;
+                  const dE = eioq(d);
+                  const curY = lerp(0, fallDistance, dE);
+                  const curScale = lerp(1.0, 1.02, dE);
+                  const curOpac = lerp(1, 0, clamp((d - 0.75) / 0.25, 0, 1));
+                  card.style.transform = `translateY(${curY}px) scale(${curScale})`;
+                  card.style.zIndex = '10';
+                  card.style.opacity = curOpac + '';
+                  card.style.filter = 'none';
+                  card.style.pointerEvents = 'none';
+                } else if (delta <= 1) {
+                  const p = 1 - delta;
+                  const pE = eioq(p);
+                  const curY = lerp(-22, 0, pE);
+                  const curScale = lerp(0.96, 1.0, pE);
+                  const curBright = lerp(0.80, 1.0, pE);
+                  card.style.transform = `translateY(${curY}px) scale(${curScale})`;
+                  card.style.zIndex = p > 0.85 ? '10' : '8';
+                  card.style.opacity = '1';
+                  card.style.filter = `brightness(${curBright})`;
+                  card.style.pointerEvents = p > 0.85 ? 'auto' : 'none';
+                } else if (delta <= 2) {
+                  const q = 2 - delta;
+                  const qE = eioq(q);
+                  const curY = lerp(-40, -22, qE);
+                  const curScale = lerp(0.92, 0.96, qE);
+                  const curOpac = lerp(0, 1, qE);
+                  const curBright = lerp(0.60, 0.80, qE);
+                  card.style.transform = `translateY(${curY}px) scale(${curScale})`;
+                  card.style.zIndex = '4';
+                  card.style.opacity = curOpac + '';
+                  card.style.filter = `brightness(${curBright})`;
+                  card.style.pointerEvents = 'none';
+                } else {
+                  card.style.transform = 'translateY(-45px) scale(0.90)';
+                  card.style.zIndex = '2';
+                  card.style.opacity = '0';
+                  card.style.filter = 'brightness(0.5)';
+                  card.style.pointerEvents = 'none';
+                }
+              });
+            }
+          }
+        }
+
+        /* ═══ §5 BRAND PARTNERS — Sequential Phased Orchestration ═══ */
+        if (brandsDriver) {
+          const bTop = brandsDriver.offsetTop;
+          const bH = brandsDriver.offsetHeight - vh;
+          const bp = clamp((sy - bTop) / (bH || 1), 0, 1);
+
+          // Phase 1 (bp: 0 → 0.14): Heading rises from bottom (100vh) → balanced upper-center pin (12vh)
+          const riseP = clamp(bp / 0.14, 0, 1);
+          const headY = lerp(vh, vh * 0.12, eioq(riseP));
+          brandsPinHead.style.transform = `translateY(${headY}px)`;
+
+          if (bp < 0.14) {
+            // Header is rising — hide cards, funnel and stage
+            if (brandsTrainViewport) brandsTrainViewport.style.opacity = '0';
+            if (brandsTrainTrack) brandsTrainTrack.style.transform = `translateX(${window.innerWidth}px)`;
+            if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M ${window.innerWidth} ${vh/2} L ${window.innerWidth} 0 L ${window.innerWidth} ${vh} Z`);
+            if (funnelBorderTop) {
+              funnelBorderTop.setAttribute('d', `M ${window.innerWidth} ${vh/2} L ${window.innerWidth} 0`);
+              funnelBorderTop.style.opacity = '0';
+            }
+            if (funnelBorderBottom) {
+              funnelBorderBottom.setAttribute('d', `M ${window.innerWidth} ${vh/2} L ${window.innerWidth} ${vh}`);
+              funnelBorderBottom.style.opacity = '0';
+            }
+            if (funnelBlogStage) {
+              funnelBlogStage.style.opacity = '0';
+              funnelBlogStage.classList.remove('active');
+            }
+            brandsPinHead.style.opacity = '1';
+          } else {
+            // Phase 2: Connected Train flows right to left
+            const trainP = clamp((bp - 0.14) / 0.74, 0, 1);
+            const viewOpac = clamp((bp - 0.14) / 0.04, 0, 1);
+            if (brandsTrainViewport) brandsTrainViewport.style.opacity = viewOpac + '';
+
+            const trackW = brandsTrainTrack ? (brandsTrainTrack.scrollWidth || (7 * 400)) : (7 * 400);
+            const startX = window.innerWidth;
+            const endX = -(trackW + window.innerWidth * 0.45);
+            const curX = lerp(startX, endX, trainP);
+            if (brandsTrainTrack) {
+              brandsTrainTrack.style.transform = `translateX(${curX}px)`;
+            }
+
+            // Real-time tracking of Card 7's right edge
+            const card7El = document.querySelector('#brands-train-track .brand-train-card:last-child');
+            let card7Right = window.innerWidth + 100;
+            let apexY = vh * 0.60;
+            if (card7El) {
+              const r7 = card7El.getBoundingClientRect();
+              card7Right = r7.right;
+              apexY = r7.top + (r7.height / 2);
+            }
+
+            if (card7FunnelSvg) {
+              card7FunnelSvg.setAttribute('viewBox', `0 0 ${window.innerWidth} ${vh}`);
+            }
+
+            if (card7Right > 0) {
+              // ── CARD 7 IS ON SCREEN: Two lines remain firmly PINCHED to Card 7's right edge ──
+              if (card7Right < window.innerWidth + 10) {
+                const span = window.innerWidth - card7Right;
+                const cp1x = card7Right + span * 0.28;
+                const cp2x = card7Right + span * 0.28;
+                const cp1y = apexY - 20;
+                const cp2y = apexY + 20;
+
+                const d = `M ${card7Right} ${apexY} Q ${cp1x} ${cp1y}, ${window.innerWidth} 0 L ${window.innerWidth} ${vh} Q ${cp2x} ${cp2y}, ${card7Right} ${apexY} Z`;
+                if (card7FunnelPath) card7FunnelPath.setAttribute('d', d);
+                if (funnelBorderTop) {
+                  funnelBorderTop.setAttribute('d', `M ${card7Right} ${apexY} Q ${cp1x} ${cp1y}, ${window.innerWidth} 0`);
+                  funnelBorderTop.style.opacity = '1';
+                }
+                if (funnelBorderBottom) {
+                  funnelBorderBottom.setAttribute('d', `M ${card7Right} ${apexY} Q ${cp2x} ${cp2y}, ${window.innerWidth} ${vh}`);
+                  funnelBorderBottom.style.opacity = '1';
+                }
+              } else {
+                if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M ${window.innerWidth} ${apexY} L ${window.innerWidth} 0 L ${window.innerWidth} ${vh} Z`);
+                if (funnelBorderTop) funnelBorderTop.style.opacity = '0';
+                if (funnelBorderBottom) funnelBorderBottom.style.opacity = '0';
+              }
+
+              // Fresh Perspectives is strictly hidden while card is on screen (ZERO overlap)
+              if (funnelBlogStage) {
+                funnelBlogStage.style.opacity = '0';
+                funnelBlogStage.classList.remove('active');
+              }
+            } else {
+              // ── CARD 7'S RIGHT SIDE HAS REACHED THE LEFT EDGE (card7Right <= 0): SPLIT OF TWO LINES OCCURS ──
+              const splitDistance = -card7Right;
+              const splitThreshold = window.innerWidth * 0.18;
+              const splitP = clamp(splitDistance / splitThreshold, 0, 1);
+              const sE = eioq(splitP);
+
+              const topY = lerp(apexY, 0, sE);
+              const topCPy = lerp(apexY - 20, 0, sE);
+              const topCPx = lerp(window.innerWidth * 0.28, window.innerWidth * 0.5, sE);
+
+              const bottomY = lerp(apexY, vh, sE);
+              const bottomCPy = lerp(apexY + 20, vh, sE);
+              const bottomCPx = lerp(window.innerWidth * 0.28, window.innerWidth * 0.5, sE);
+
+              if (splitP >= 0.98) {
+                if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M 0 0 L ${window.innerWidth} 0 L ${window.innerWidth} ${vh} L 0 ${vh} Z`);
+                if (funnelBorderTop) funnelBorderTop.setAttribute('d', `M 0 0 L ${window.innerWidth} 0`);
+                if (funnelBorderBottom) funnelBorderBottom.setAttribute('d', `M 0 ${vh} L ${window.innerWidth} ${vh}`);
+              } else {
+                const d = `M 0 ${topY} Q ${topCPx} ${topCPy}, ${window.innerWidth} 0 L ${window.innerWidth} ${vh} Q ${bottomCPx} ${bottomCPy}, 0 ${bottomY} L 0 0 Z`;
+                if (card7FunnelPath) card7FunnelPath.setAttribute('d', d);
+                if (funnelBorderTop) funnelBorderTop.setAttribute('d', `M 0 ${topY} Q ${topCPx} ${topCPy}, ${window.innerWidth} 0`);
+                if (funnelBorderBottom) funnelBorderBottom.setAttribute('d', `M 0 ${bottomY} Q ${bottomCPx} ${bottomCPy}, ${window.innerWidth} ${vh}`);
+              }
+
+              const lineFade = 1 - clamp((splitP - 0.85) / 0.15, 0, 1);
+              if (funnelBorderTop) funnelBorderTop.style.opacity = lineFade + '';
+              if (funnelBorderBottom) funnelBorderBottom.style.opacity = lineFade + '';
+
+              // Fresh Perspectives stage only fades in AFTER the split is complete and lines disappear
+              if (splitP < 1.0) {
+                if (funnelBlogStage) {
+                  funnelBlogStage.style.opacity = '0';
+                  funnelBlogStage.classList.remove('active');
+                }
+                if (brandsSticky) brandsSticky.style.transform = 'translateY(0)';
+              } else {
+                const fadeDistance = splitDistance - splitThreshold;
+                const fadeThreshold = window.innerWidth * 0.14;
+                const holdWindow = window.innerWidth * 0.20;
+                const scrollUpThreshold = window.innerWidth * 0.24;
+
+                const fadeP = clamp(fadeDistance / fadeThreshold, 0, 1);
+                const fE = eioq(fadeP);
+
+                if (funnelBlogStage) {
+                  funnelBlogStage.style.opacity = fE + '';
+                  if (fadeP > 0.5) funnelBlogStage.classList.add('active');
+                  else funnelBlogStage.classList.remove('active');
+                }
+
+                // ── 1. While in holdWindow: section stays 100% visible and held still ──
+                if (fadeDistance < (fadeThreshold + holdWindow)) {
+                  if (brandsSticky) brandsSticky.style.transform = 'translateY(0)';
+                } else {
+                  // ── 2. Once holdWindow is scrolled past: section smoothly glides up to -100vh into Footer ──
+                  const scrollUpDist = fadeDistance - (fadeThreshold + holdWindow);
+                  const scrollUpP = clamp(scrollUpDist / scrollUpThreshold, 0, 1);
+                  const sU = eioq(scrollUpP);
+                  if (brandsSticky) {
+                    brandsSticky.style.transform = `translateY(-${lerp(0, vh, sU)}px)`;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        /* ═══ §7 FOOTER — Live Clock Initialization ═══ */
+      }
+
+      function updateFooterTime() {
+        const clockEl = document.getElementById('footer-live-clock');
+        if (!clockEl) return;
+        const now = new Date();
+        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
+        const timeStr = now.toLocaleTimeString('en-US', options);
+        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
+      }
+      updateFooterTime();
+      setInterval(updateFooterTime, 30000);
+
+      /* ── Blog Cards Reveal ─────────────────────────── */
+      const blogCards = document.querySelectorAll('.blog-card');
+      if (blogCards.length) {
+        const blogObs = new IntersectionObserver(entries => {
+          entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+              setTimeout(() => e.target.classList.add('vis'), i * 120);
+              blogObs.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        blogCards.forEach(c => blogObs.observe(c));
+      }
+
+      /* ── Scroll Listener (RAF-throttled) ───────────── */
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => { onScroll(); ticking = false; });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      /* ═══ §7 FOOTER — Dynamic Elastic Logo Emergence & Tightness Physics ═══ */
+      const footerCutWrap = document.querySelector('.f-giant-cut-wrap');
+      const footerCutSvg = document.querySelector('.f-giant-cut-svg');
+      const footerCutText = document.querySelector('.f-giant-cut-svg text');
+
+      let logoPull = 0; // -0.35 to 1.0
+      let logoVelocity = 0;
+      let isInteractingLogo = false;
+      let logoWheelTimer = null;
+      let springRunning = false;
+
+      function applyLogoPhysics(p) {
+        if (!footerCutWrap || !footerCutSvg) return;
+
+        const baseH = footerCutWrap.offsetWidth * 0.052;
+        const safeBaseH = Math.max(34, Math.min(84, baseH));
+
+        if (p >= 0) {
+          // ── Scrolling More: Logo emerges out from the line to reveal 100% full text ──
+          const targetH = safeBaseH * (1 + p * 1.05);
+          footerCutWrap.style.height = `${targetH}px`;
+          footerCutSvg.style.height = `${targetH}px`;
+
+          const targetVbH = 65 + p * 65;
+          footerCutSvg.setAttribute('viewBox', `0 0 1600 ${targetVbH}`);
+
+          const liftY = p * 4;
+          if (footerCutText) {
+            footerCutText.style.transform = `translateY(${liftY}px)`;
+          }
+          footerCutWrap.style.transform = `scaleY(1) scaleX(1)`;
+        } else {
+          // ── Scrolling Up: Tightness / Tension resistance effect ──
+          const absP = Math.abs(p);
+          const targetH = safeBaseH * (1 - absP * 0.16);
+          footerCutWrap.style.height = `${targetH}px`;
+          footerCutSvg.style.height = `${targetH}px`;
+
+          const targetVbH = 65 - absP * 10;
+          footerCutSvg.setAttribute('viewBox', `0 0 1600 ${targetVbH}`);
+
+          footerCutWrap.style.transform = `scaleY(${1 - absP * 0.10}) scaleX(${1 + absP * 0.025})`;
+          if (footerCutText) {
+            footerCutText.style.transform = `translateY(0)`;
+          }
+        }
+      }
+
+      function stepLogoSpring() {
+        if (!isInteractingLogo) {
+          const stiffness = 0.14;
+          const damping = 0.78;
+          const force = -stiffness * logoPull;
+          logoVelocity = (logoVelocity + force) * damping;
+          logoPull += logoVelocity;
+
+          if (Math.abs(logoPull) < 0.001 && Math.abs(logoVelocity) < 0.001) {
+            logoPull = 0;
+            logoVelocity = 0;
+            applyLogoPhysics(0);
+            springRunning = false;
+            return;
+          }
+        }
+
+        applyLogoPhysics(logoPull);
+        requestAnimationFrame(stepLogoSpring);
+      }
+
+      function triggerLogoSpring() {
+        if (!springRunning) {
+          springRunning = true;
+          requestAnimationFrame(stepLogoSpring);
+        }
+      }
+
+      // Wheel listener for interactive scroll over footer
+      window.addEventListener('wheel', (e) => {
+        if (!footerDriver) return;
+        const rect = footerDriver.getBoundingClientRect();
+        const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+
+        if (rect.top <= window.innerHeight * 0.35 || isAtBottom) {
+          if (e.deltaY > 0 || (e.deltaY < 0 && logoPull > 0.05)) {
+            if (e.cancelable) e.preventDefault();
+          }
+
+          isInteractingLogo = true;
+          if (e.deltaY > 0) {
+            // Scroll down more: pull logo out of the line to reveal full 100% text
+            logoPull = Math.min(1.0, logoPull + Math.abs(e.deltaY) * 0.006);
+          } else if (e.deltaY < 0) {
+            // Scroll up: tight resistance tension
+            logoPull = Math.max(-0.35, logoPull - Math.abs(e.deltaY) * 0.005);
+          }
+
+          triggerLogoSpring();
+
+          clearTimeout(logoWheelTimer);
+          logoWheelTimer = setTimeout(() => {
+            // Swiftly spring back to 50% cut resting spot upon release
+            isInteractingLogo = false;
+            triggerLogoSpring();
+          }, 180);
+        }
+      }, { passive: false });
+
+      // Touch listener for mobile devices
+      let touchStartY = 0;
+      window.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!footerDriver) return;
+        const rect = footerDriver.getBoundingClientRect();
+        const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+        if (rect.top <= window.innerHeight * 0.35 || isAtBottom) {
+          const deltaY = touchStartY - e.touches[0].clientY;
+          if (deltaY > 0 || (deltaY < 0 && logoPull > 0.05)) {
+            if (e.cancelable) e.preventDefault();
+          }
+          isInteractingLogo = true;
+          if (deltaY > 0) {
+            logoPull = Math.min(1.0, logoPull + deltaY * 0.006);
+          } else {
+            logoPull = Math.max(-0.35, logoPull + deltaY * 0.005);
+          }
+          triggerLogoSpring();
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchend', () => {
+        clearTimeout(logoWheelTimer);
+        logoWheelTimer = setTimeout(() => {
+          isInteractingLogo = false;
+          triggerLogoSpring();
+        }, 140);
+      }, { passive: true });
+
+      // Mouse drag hold support on the footer card
+      const luxuryCard = document.querySelector('.footer-luxury-card');
+      if (luxuryCard) {
+        let isMouseDownCard = false;
+        let dragStartY = 0;
+        luxuryCard.addEventListener('mousedown', (e) => {
+          isMouseDownCard = true;
+          dragStartY = e.clientY;
+          isInteractingLogo = true;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isMouseDownCard) return;
+          const deltaY = dragStartY - e.clientY;
+          if (deltaY > 0) {
+            logoPull = Math.min(1.0, logoPull + deltaY * 0.01);
+          } else {
+            logoPull = Math.max(-0.35, logoPull + deltaY * 0.01);
+          }
+          triggerLogoSpring();
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (isMouseDownCard) {
+            isMouseDownCard = false;
+            clearTimeout(logoWheelTimer);
+            logoWheelTimer = setTimeout(() => {
+              isInteractingLogo = false;
+              triggerLogoSpring();
+            }, 120);
+          }
+        });
+      }
+
+      onScroll();
+    })();
+  </script>
+</body>
+
+</html>
