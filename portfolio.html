@@ -1,142 +1,353 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Portfolio — 1928 Creative Studio</title>
-<meta name="description" content="Case studies and selected work by 1928 Creative Studio — branding, UI/UX, digital campaigns and more."/>
-<link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Under Development · 1928 Creative Studio</title>
+  <meta name="description" content="1928 Creative Studio — This page is currently under development." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #f4f3ef;
+      --ink: #111111;
+      --ink-dim: #888888;
+      --rule: rgba(0, 0, 0, 0.08);
+      --cr: #c8102e;
+      --cr-glow: rgba(200, 16, 46, 0.20);
+      --sp: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: #0a0a0a;
+      --ink: #f2f2f2;
+      --ink-dim: #777777;
+      --rule: rgba(255, 255, 255, 0.10);
+      --cr: #e62343;
+      --cr-glow: rgba(230, 35, 67, 0.25);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: clamp(24px, 4vh, 48px) clamp(24px, 4vw, 56px);
+      transition: background .3s, color .3s;
+      position: relative;
+    }
+
+    /* ── Custom Cursor ── */
+    .c-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+
+    .c-ring {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform .12s ease-out, width .25s, height .25s;
+    }
+
+    /* ── Minimal Top Navigation ── */
+    .top-bar {
+      width: 100%;
+      max-width: 1500px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+    }
+
+    .brand-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 900;
+      font-size: 1.25rem;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .theme-btn {
+      background: transparent;
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all .25s var(--sp);
+    }
+
+    .theme-btn:hover {
+      border-color: var(--ink);
+      transform: scale(1.08);
+    }
+
+    /* ── Creative Centered Hero Statement ── */
+    .center-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      max-width: 900px;
+      margin: auto;
+      z-index: 2;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cr);
+      padding: 8px 18px;
+      background: var(--cr-glow);
+      border-radius: 999px;
+      margin-bottom: clamp(24px, 3.5vh, 36px);
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--cr);
+      animation: pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.8); opacity: 0.3; }
+    }
+
+    .statement-title {
+      font-size: clamp(38px, 6.5vw, 92px);
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: clamp(28px, 4vh, 44px);
+    }
+
+    .statement-title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cr);
+      display: inline-block;
+      letter-spacing: -0.02em;
+    }
+
+    .return-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 32px;
+      background: var(--ink);
+      color: var(--bg);
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.92rem;
+      letter-spacing: 0.04em;
+      transition: all .25s var(--sp);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+    }
+
+    .return-pill:hover {
+      background: var(--cr);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px var(--cr-glow);
+    }
+
+    .return-pill .arr {
+      transition: transform .25s var(--sp);
+    }
+
+    .return-pill:hover .arr {
+      transform: translate(3px, -3px);
+    }
+
+    /* ── Minimal Bottom Sub-Bar ── */
+    .bottom-bar {
+      width: 100%;
+      max-width: 1500px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.74rem;
+      color: var(--ink-dim);
+      letter-spacing: 0.08em;
+      z-index: 2;
+    }
+
+    .bottom-bar a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .bottom-bar a:hover {
+      color: var(--cr);
+    }
+
+    @media (max-width: 600px) {
+      .bottom-bar {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<div class="c-dot" id="cDot"></div>
-<div class="c-ring" id="cRing"></div>
+  <!-- Custom Cursor -->
+  <div class="c-dot" id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
 
-<nav id="nav">
-  <div class="container">
-    <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:44px;width:auto;">
-          <style>.nl{font-family:'Cormorant Garamond',serif;font-weight:700;fill:#8B1A1A;}.ns{font-family:'Cormorant Garamond',serif;font-weight:600;fill:#8B1A1A;letter-spacing:6px;}</style>
-          <text x="0" y="52" class="nl" font-size="52">1928</text>
-          <text x="218" y="38" class="ns" font-size="18">CREATIVE</text>
-          <text x="218" y="58" class="ns" font-size="18">STUDIO</text>
-        </svg>
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
-        <li><a href="services.html">Services</a></li><li><a href="portfolio.html" class="active">Portfolio</a></li>
-        <li><a href="blogs.html">Blogs</a></li><li><a href="contact.html">Contact</a></li>
-      </ul>
-      <div class="nav-actions">
-        <button class="btn-theme" id="themeToggle"><svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg></button>
-        <a href="contact.html" class="btn-nav-cta">Start Project</a>
-      </div>
+  <!-- Minimal Top Bar -->
+  <header class="top-bar">
+    <a href="index.html" class="brand-link">
+      <span class="brand-title">1928</span>
+      <span class="brand-dot"></span>
+    </a>
+    <button class="theme-btn" id="themeToggle" title="Toggle Theme">◐</button>
+  </header>
+
+  <!-- Creative Centered Label Statement -->
+  <main class="center-container">
+    <div class="status-pill">
+      <span class="pulse-dot"></span>
+      <span>1928 Creative Studio</span>
     </div>
-  </div>
-</nav>
 
-<section style="padding:180px 0 100px; background:var(--bg-main);">
-  <div class="container">
-    <div class="s-tag reveal">Our Work</div>
-    <h1 class="s-title reveal" style="font-size:clamp(52px,9vw,130px); line-height:0.95; margin-bottom:36px;">
-      Selected<br/><em style="color:var(--crimson);">Case</em><br/>Studies.
+    <h1 class="statement-title">
+      This page is under <br />
+      <em>development.</em>
     </h1>
-  </div>
-</section>
 
-<!-- Filter tabs -->
-<div style="padding:0 0 60px; background:var(--bg-main);">
-  <div class="container">
-    <div id="filterRow" style="display:flex; gap:12px;">
-      <button class="filter-btn active" data-filter="all">All Work</button>
-      <button class="filter-btn" data-filter="branding">Branding</button>
-      <button class="filter-btn" data-filter="digital">Digital</button>
-      <button class="filter-btn" data-filter="uiux">UI/UX</button>
-    </div>
-  </div>
-</div>
+    <a href="index.html" class="return-pill">
+      <span>Return to Homepage</span>
+      <span class="arr">↗</span>
+    </a>
+  </main>
 
-<style>
-.filter-btn{font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:10px 22px;border-radius:var(--radius-full);border:1px solid var(--border);color:var(--text-muted);background:transparent;cursor:none;transition:var(--transition-fast);}
-.filter-btn:hover,.filter-btn.active{background:var(--crimson);border-color:var(--crimson);color:var(--white-pure);}
-</style>
+  <!-- Minimal Bottom Bar -->
+  <footer class="bottom-bar">
+    <span>1928 Creative Studio © 2026</span>
+    <span id="liveClock">Ahmedabad, India · 10:42 PM · 28°C ☀</span>
+  </footer>
 
-<section style="padding:0 0 130px; background:var(--bg-main);">
-  <div class="container">
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px;">
-      <a href="project-detail.html" class="port-card reveal delay-1" style="display:block; padding:0;" data-cat="branding">
-        <div class="port-card-img" style="height:380px;"><div class="img-ph"><span>[ ZENITH — HERO IMAGE ]</span></div></div>
-        <div class="port-card-body">
-          <div class="port-card-tag">Branding · Web Design · Photography</div>
-          <div class="port-card-title" style="font-size:1.8rem;">Zenith Luxury Homes</div>
-          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">Comprehensive identity overhaul for one of Ahmedabad's top luxury real estate brands.</p>
-        </div>
-        <div class="port-card-footer"><span style="font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--text-dim);">Pro Portfolio · 2025</span><span style="font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;color:var(--crimson);">View Case &#8594;</span></div>
-      </a>
-      <a href="project-detail.html" class="port-card reveal delay-2" style="display:block; padding:0;" data-cat="digital">
-        <div class="port-card-img" style="height:380px;"><div class="img-ph"><span>[ ARKA — HERO IMAGE ]</span></div></div>
-        <div class="port-card-body">
-          <div class="port-card-tag">Social Strategy · Content Creation</div>
-          <div class="port-card-title" style="font-size:1.8rem;">Arka Fashion Studio</div>
-          <p style="font-size:0.85rem; color:var(--text-muted); margin-top:8px;">360° digital strategy and content architecture generating 340% engagement growth.</p>
-        </div>
-        <div class="port-card-footer"><span style="font-family:'Space Mono',monospace;font-size:0.62rem;color:var(--text-dim);">Featured · 2025</span><span style="font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;color:var(--crimson);">View Case &#8594;</span></div>
-      </a>
-    </div>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:24px;">
-      <a href="project-detail.html" class="port-card reveal delay-1" style="display:block; padding:0;" data-cat="uiux">
-        <div class="port-card-img"><div class="img-ph"><span>[ VEDA ]</span></div></div>
-        <div class="port-card-body">
-          <div class="port-card-tag">UI/UX · Product Design</div>
-          <div class="port-card-title">Veda Wellness Platform</div>
-        </div>
-        <div class="port-card-footer"><span style="font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;color:var(--crimson);">View Case &#8594;</span></div>
-      </a>
-      <a href="project-detail.html" class="port-card reveal delay-2" style="display:block; padding:0;" data-cat="branding">
-        <div class="port-card-img"><div class="img-ph"><span>[ NOVA ]</span></div></div>
-        <div class="port-card-body">
-          <div class="port-card-tag">Brand Identity · Packaging</div>
-          <div class="port-card-title">Nova Organics</div>
-        </div>
-        <div class="port-card-footer"><span style="font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;color:var(--crimson);">View Case &#8594;</span></div>
-      </a>
-      <a href="project-detail.html" class="port-card reveal delay-3" style="display:block; padding:0;" data-cat="digital">
-        <div class="port-card-img"><div class="img-ph"><span>[ APEX ]</span></div></div>
-        <div class="port-card-body">
-          <div class="port-card-tag">Digital Marketing · SEO</div>
-          <div class="port-card-title">Apex Technologies</div>
-        </div>
-        <div class="port-card-footer"><span style="font-family:'Space Mono',monospace;font-size:0.68rem;font-weight:700;color:var(--crimson);">View Case &#8594;</span></div>
-      </a>
-    </div>
-  </div>
-</section>
+  <script>
+    (function () {
+      'use strict';
 
-<section class="cta-section">
-  <div class="container" style="position:relative;z-index:1;">
-    <h2 class="cta-title reveal">Your Story<br/>Is Next.</h2>
-    <div class="reveal delay-2"><a href="contact.html" class="btn-cta-white">Start Your Project &#8594;</a></div>
-  </div>
-</section>
+      // Live Clock
+      function updateClock() {
+        const clockEl = document.getElementById('liveClock');
+        if (!clockEl) return;
+        const now = new Date();
+        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
+        const timeStr = now.toLocaleTimeString('en-US', options);
+        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
+      }
+      updateClock();
+      setInterval(updateClock, 30000);
 
-<footer id="footer"><div class="container"><div class="footer-grid"><div><div class="footer-brand-text">1928 Creative Studio</div><p class="footer-tagline">Ahmedabad's premier branding &amp; design studio.</p></div><div><div class="footer-col-title">Navigation</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="services.html">Services</a></li><li><a href="portfolio.html">Portfolio</a></li><li><a href="blogs.html">Blogs</a></li><li><a href="contact.html">Contact</a></li></ul></div><div><div class="footer-col-title">Services</div><ul class="footer-links"><li><a href="service-detail.html">Logo Design</a></li><li><a href="service-detail.html">Brand Identity</a></li><li><a href="service-detail.html">UI/UX Design</a></li><li><a href="service-detail.html">Digital Marketing</a></li></ul></div><div><div class="footer-col-title">Contact</div><ul class="footer-links"><li><a href="mailto:hello@1928creativestudio.com">hello@1928creativestudio.com</a></li></ul></div></div><div class="footer-bottom"><div>&copy; 2026 1928 Creative Studio.</div><div>Ideas Take Shape.</div></div></div></footer>
+      // Custom Cursor
+      const cDot = document.getElementById('cDot');
+      const cRing = document.getElementById('cRing');
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let ringX = mouseX, ringY = mouseY;
 
-<script>
-(function(){const dot=document.getElementById('cDot'),ring=document.getElementById('cRing');let mx=0,my=0,rx=0,ry=0;document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});(function a(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();document.querySelectorAll('a,button').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));});})();
-window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
-(function(){const btn=document.getElementById('themeToggle'),root=document.documentElement;root.setAttribute('data-theme',localStorage.getItem('1928_theme')||'light');btn.addEventListener('click',()=>{const n=root.getAttribute('data-theme')==='light'?'dark':'light';root.setAttribute('data-theme',n);localStorage.setItem('1928_theme',n);});})();
-(function(){const els=document.querySelectorAll('.reveal,.reveal-left,.reveal-scale');const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:0.12});els.forEach(el=>io.observe(el));})();
-// Filter
-document.querySelectorAll('.filter-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const f=btn.dataset.filter;
-    document.querySelectorAll('[data-cat]').forEach(card=>{
-      card.style.opacity=f==='all'||card.dataset.cat===f?'1':'0.25';
-    });
-  });
-});
-</script>
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (cDot) {
+          cDot.style.left = mouseX + 'px';
+          cDot.style.top = mouseY + 'px';
+        }
+      }, { passive: true });
+
+      function renderCursor() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        if (cRing) {
+          cRing.style.left = ringX + 'px';
+          cRing.style.top = ringY + 'px';
+        }
+        requestAnimationFrame(renderCursor);
+      }
+      renderCursor();
+
+      // Theme Toggle Sync
+      const themeToggle = document.getElementById('themeToggle');
+      const savedTheme = localStorage.getItem('theme-1928') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const curTheme = document.documentElement.getAttribute('data-theme');
+          const nextTheme = curTheme === 'dark' ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', nextTheme);
+          localStorage.setItem('theme-1928', nextTheme);
+        });
+      }
+    })();
+  </script>
 </body>
+
 </html>
