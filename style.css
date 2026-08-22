@@ -51,10 +51,15 @@ html {
   scroll-behavior: smooth;
 }
 
+:root {
+  --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
 body {
   background: var(--bg-main);
   color: var(--text-main);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-secondary);
   line-height: 1.5;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -120,7 +125,7 @@ button {
 }
 
 .cz-number {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-primary);
   font-size: clamp(80px, 18vw, 240px);
   font-weight: 900;
   letter-spacing: -0.05em;
@@ -224,7 +229,7 @@ body.hovering-text .c-ring {
 }
 
 .nav-logo-brand {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-primary);
   font-size: 1.15rem;
   font-weight: 900;
   letter-spacing: 0.12em;
@@ -247,7 +252,7 @@ body.hovering-text .c-ring {
 }
 
 .nav-links a {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.82rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -311,7 +316,7 @@ body.hovering-text .c-ring {
 }
 
 .nav-cta {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -374,7 +379,7 @@ body.hovering-text .c-ring {
 }
 
 .hero-headline-master {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-primary);
   font-size: clamp(52px, 8.2vw, 135px);
   font-weight: 900;
   line-height: 0.94;
@@ -411,7 +416,7 @@ body.hovering-text .c-ring {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.82rem;
   font-weight: 800;
   letter-spacing: 0.14em;
@@ -434,7 +439,7 @@ body.hovering-text .c-ring {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-primary);
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.12em;

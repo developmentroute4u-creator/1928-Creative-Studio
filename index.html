@@ -1,30 +1,59 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1928 Creative Studio — Engineering Iconic Brands</title>
+  <title>1928 Creative Studio — Ideas Take Shape</title>
   <meta name="description"
-    content="1928 Creative Studio — Multidisciplinary brand architecture, digital platforms, and cinematic design systems." />
+    content="1928 Creative Studio is an independent brand consultancy and design practice. We craft iconic identities, spatial experiences, and digital ecosystems." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
 
   <style>
+    /* ── Gotham Primary & Raleway Secondary Font System ── */
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
     /* ═══════════════════════════════════════════════════════════
-   1928 CREATIVE STUDIO — COMPLETE REDESIGN
-   Motion-heavy, scroll-driven single-page experience
+   1928 CREATIVE STUDIO — COMPLETE UNIFIED SINGLE-FILE ENGINE
    Pure CSS — No Tailwind, No frameworks
    ═══════════════════════════════════════════════════════════ */
 
     /* ── Design System Tokens ──────────────────────────────── */
     :root {
-      /* Palette */
-      --bg: #F5F4F0;
-      --bg-alt: #EBE9E4;
+      /* Palette — Light Theme (Pure White Canvas) */
+      --bg: #FFFFFF;
+      --bg-alt: #F7F7F7;
       --ink: #0A0A0A;
       --ink-mid: rgba(10, 10, 10, 0.55);
       --ink-dim: rgba(10, 10, 10, 0.25);
@@ -38,9 +67,11 @@
       --card-shadow-lg: 0 32px 80px rgba(0, 0, 0, 0.12);
 
       /* Typography Tokens */
-      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-sans: var(--font-secondary);
+      --font-display: var(--font-primary);
+      --font-serif: var(--font-secondary);
       --font-mono: 'Space Mono', monospace;
 
       /* Motion Easings */
@@ -50,6 +81,7 @@
     }
 
     [data-theme="dark"] {
+      /* Palette — Dark Theme (Primary Default) */
       --bg: #0A0A0C;
       --bg-alt: #111114;
       --ink: #F5F4F0;
@@ -83,7 +115,7 @@
     body {
       background: var(--bg);
       color: var(--ink);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: var(--font-secondary);
       overflow-x: hidden;
       cursor: none;
       transition: background .5s var(--ease), color .5s var(--ease);
@@ -193,7 +225,7 @@
     }
 
     .nav-links a {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .78rem;
       font-weight: 600;
       letter-spacing: .06em;
@@ -228,30 +260,69 @@
       gap: 14px;
     }
 
-    #tbtn {
-      width: 36px;
-      height: 36px;
+    /* ── Floating Fixed Theme Toggle Button (Bottom-Right Corner) ── */
+    #theme-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9990;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      border: 1px solid var(--rule-m);
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-m);
+      color: var(--ink);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
       display: grid;
       place-items: center;
-      transition: border-color .25s, transform .32s;
-      background: var(--bg);
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(16px) scale(0.9);
+      transition: opacity .4s var(--sp), transform .4s var(--sp), border-color .3s, box-shadow .3s, background .3s;
     }
 
-    #tbtn:hover {
+    #theme-fab.vis {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    #theme-fab.vis:hover {
+      transform: translateY(-3px) scale(1.08);
       border-color: var(--cr);
-      transform: rotate(22deg);
+      box-shadow: 0 14px 40px var(--cr-glow);
     }
 
-    #tbtn svg {
-      width: 15px;
-      height: 15px;
-      fill: var(--ink-mid);
+    #theme-fab svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform .4s var(--sp);
+    }
+
+    #theme-fab:hover svg {
+      transform: rotate(25deg);
+    }
+
+    [data-theme="dark"] #theme-fab .icon-moon,
+    [data-theme="light"] #theme-fab .icon-sun {
+      display: none;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-sun,
+    [data-theme="light"] #theme-fab .icon-moon {
+      display: block;
     }
 
     .nav-cta {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .72rem;
       font-weight: 700;
       letter-spacing: .1em;
@@ -324,7 +395,7 @@
       border-color: rgba(245, 244, 240, 0.12);
     }
 
-    /* ── Centered Brand Text ── */
+    /* ── Centered Brand Text (Vector High-Definition, Zero Pixelation) ── */
     .hero-title {
       position: absolute;
       z-index: 15;
@@ -337,22 +408,25 @@
       max-width: 850px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      text-rendering: geometricPrecision;
-      transform-style: preserve-3d;
+      text-rendering: optimizeLegibility;
       backface-visibility: hidden;
+      will-change: transform, opacity;
     }
 
     .hero-title h1 {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: clamp(48px, 7vw, 104px);
       line-height: 1.02;
       letter-spacing: -.03em;
       color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
     .hero-title .hero-sub {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: var(--font-secondary);
       font-weight: 400;
       font-size: clamp(14px, 1.15vw, 17px);
       line-height: 1.65;
@@ -379,7 +453,7 @@
     }
 
     .hero-btn-primary {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .75rem;
       font-weight: 700;
       letter-spacing: .08em;
@@ -399,7 +473,7 @@
     }
 
     .hero-btn-ghost {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .75rem;
       font-weight: 600;
       letter-spacing: .06em;
@@ -525,7 +599,7 @@
     }
 
     .wall-card .wc-label {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .7rem;
       font-weight: 700;
       letter-spacing: .04em;
@@ -537,12 +611,12 @@
     .hero-reel {
       position: fixed;
       z-index: 25;
-      width: 520px;
-      height: 330px;
-      border-radius: 20px;
+      width: clamp(560px, 46vw, 740px);
+      height: clamp(340px, 28vw, 448px);
+      border-radius: 24px;
       overflow: hidden;
       background: #000;
-      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+      box-shadow: 0 32px 90px rgba(0, 0, 0, 0.45);
       will-change: transform, opacity, left, top;
       display: flex;
       align-items: center;
@@ -627,7 +701,7 @@
     }
 
     .story-tag {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: .65rem;
       letter-spacing: .3em;
@@ -646,12 +720,14 @@
     }
 
     .story-words-block {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 600;
       font-size: clamp(24px, 2.8vw, 38px);
       line-height: 1.45;
       letter-spacing: -.015em;
       color: var(--ink);
+      text-align: justify;
+      text-justify: inter-word;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: geometricPrecision;
@@ -717,7 +793,7 @@
     }
 
     .psc-title {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: clamp(52px, 8.5vw, 120px);
       line-height: .95;
@@ -736,7 +812,7 @@
     }
 
     .psc-sub {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: var(--font-secondary);
       font-size: clamp(14px, 1.2vw, 18px);
       font-weight: 400;
       color: var(--ink-mid);
@@ -910,7 +986,7 @@
     }
 
     .pcv-client {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .7rem;
       font-weight: 700;
       letter-spacing: .08em;
@@ -960,7 +1036,7 @@
     }
 
     .pcv-title {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 600;
       font-size: clamp(17px, 1.4vw, 21px);
       line-height: 1.35;
@@ -970,7 +1046,7 @@
     }
 
     .pcv-cta {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: .75rem;
       letter-spacing: .06em;
@@ -1128,7 +1204,7 @@
     }
 
     .svc-s1-headline {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: clamp(26px, 2.8vw, 40px);
       line-height: 1.15;
@@ -1138,7 +1214,7 @@
     }
 
     .svc-s1-desc {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .84rem;
       line-height: 1.5;
       color: rgba(255, 255, 255, 0.65);
@@ -1158,7 +1234,7 @@
       border: 1px solid rgba(255, 255, 255, 0.14);
       padding: 8px 16px;
       border-radius: 12px;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .82rem;
       color: #FFFFFF;
       align-self: flex-start;
@@ -1252,7 +1328,7 @@
     }
 
     .svc-sheet-title {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: 1.08rem;
       line-height: 1.2;
@@ -1320,7 +1396,7 @@
     }
 
     .svc-jacket-title {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: 1.35rem;
       letter-spacing: -.02em;
@@ -1338,97 +1414,155 @@
       margin-top: 5px;
     }
 
-    /* ═══ 3. FIVE SERVICES MENU (Phase 2 Left) ═══ */
+    /* ═══ 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) ═══ */
     .svc-s2-menu {
       position: absolute;
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%) translateX(-240px);
-      width: min(500px, 48vw);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      width: min(520px, 46vw);
+      height: 435px;
       z-index: 4;
       opacity: 0;
       pointer-events: none;
       will-change: transform, opacity;
+      display: flex;
     }
 
     .svc-s2-menu.active-events {
       pointer-events: auto;
     }
 
-    .svc-s2-item {
+    .svc-why-card {
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 28px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: clamp(22px, 2.5vw, 30px) clamp(24px, 3vw, 36px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: space-between;
-      padding: 14px 20px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.55);
-      border: 1px solid rgba(0, 0, 0, 0.06);
-      backdrop-filter: blur(12px);
-      text-decoration: none;
       color: var(--ink);
-      transition: all .25s cubic-bezier(0.16, 1, 0.3, 1);
-      cursor: pointer;
-      opacity: 0;
-      transform: translateY(16px);
-      will-change: opacity, transform;
+      transition: border-color .3s, transform .3s, background .3s;
+      box-sizing: border-box;
     }
 
-    [data-theme="dark"] .svc-s2-item {
-      background: rgba(28, 28, 32, 0.6);
-      border-color: rgba(255, 255, 255, 0.08);
+    [data-theme="dark"] .svc-why-card {
+      background: rgba(20, 20, 24, 0.78);
+      border-color: rgba(255, 255, 255, 0.09);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
     }
 
-    .svc-s2-item:hover,
-    .svc-s2-item.active {
-      background: #FFFFFF;
-      border-color: rgba(200, 16, 46, 0.3);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
-      transform: translateX(6px);
-    }
-
-    [data-theme="dark"] .svc-s2-item:hover,
-    [data-theme="dark"] .svc-s2-item.active {
-      background: #25252A;
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
-    }
-
-    .svc-s2-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1rem;
+    .svc-why-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.65rem;
       font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cr);
+    }
+
+    .svc-why-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cr);
+    }
+
+    .svc-why-title {
+      font-family: var(--font-primary);
+      font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
       color: var(--ink);
       margin: 0;
     }
 
-    .svc-s2-item.active .svc-s2-title {
+    .svc-why-title em {
+      font-style: italic;
+      font-weight: 400;
       color: var(--cr);
     }
 
-    .svc-s2-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: .6rem;
-      color: var(--ink-dim);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin-top: 3px;
-      display: block;
+    .svc-why-desc {
+      font-family: var(--font-secondary);
+      font-size: 0.86rem;
+      line-height: 1.55;
+      color: var(--ink-mid);
+      margin: 0;
+      text-align: justify;
+      text-justify: inter-word;
     }
 
-    .svc-s2-arrow {
+    .svc-why-points {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      padding: 14px 0;
+    }
+
+    .svc-why-point {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .swp-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--cr);
+      background: var(--cr-lo);
+      padding: 2px 6px;
+      border-radius: 6px;
+      line-height: 1.2;
+      margin-top: 2px;
+    }
+
+    .svc-why-point strong {
+      display: block;
+      font-family: var(--font-primary);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .svc-why-point p {
+      font-family: var(--font-secondary);
+      font-size: 0.78rem;
       color: var(--ink-dim);
+      margin-top: 2px;
+      line-height: 1.35;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .svc-why-footer {
       display: flex;
       align-items: center;
-      justify-content: center;
-      transition: transform .25s, color .25s;
+      justify-content: space-between;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--ink-dim);
+      letter-spacing: 0.06em;
     }
 
-    .svc-s2-item:hover .svc-s2-arrow,
-    .svc-s2-item.active .svc-s2-arrow {
+    .swp-foot-arrow {
       color: var(--cr);
-      transform: translate(2px, -2px);
+      font-weight: 700;
     }
 
     /* ═══ 4. DETAIL SHOWCASE DECK (Phase 3 Right) ═══ */
@@ -1462,7 +1596,7 @@
       overflow: hidden;
       will-change: transform, opacity, filter;
       transition: border-color .3s ease;
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
     }
 
     [data-theme="dark"] .svc-showcase-card {
@@ -1601,7 +1735,7 @@
     }
 
     .svc-card-num-watermark {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 800;
       font-size: 4.8rem;
       color: var(--cr);
@@ -1630,7 +1764,7 @@
     }
 
     .svc-showcase-card h3 {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: clamp(22px, 2.2vw, 30px);
       line-height: 1.15;
@@ -1644,7 +1778,7 @@
     }
 
     .svc-showcase-card p {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: var(--font-secondary);
       font-size: .90rem;
       line-height: 1.55;
       color: var(--ink-mid);
@@ -1692,7 +1826,7 @@
     }
 
     .svc-action-link {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: .82rem;
       color: var(--cr);
@@ -1750,7 +1884,7 @@
     }
 
     .svc-jacket-title {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: 1.5rem;
       letter-spacing: -.02em;
@@ -1770,7 +1904,7 @@
 
     /* Right Detail Card Typography & Elements */
     .svc-card-num-watermark {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--font-secondary);
       font-weight: 700;
       font-size: 5.5rem;
       color: var(--cr);
@@ -1798,7 +1932,7 @@
     }
 
     .svc-s3-right-card h3 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--font-secondary);
       font-weight: 700;
       font-size: clamp(26px, 2.6vw, 36px);
       line-height: 1.1;
@@ -1821,7 +1955,7 @@
     }
 
     .svc-deliv-pill {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-size: .75rem;
       font-weight: 600;
       color: var(--ink-dim);
@@ -1845,7 +1979,7 @@
     }
 
     .svc-action-link {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: .82rem;
       letter-spacing: .08em;
@@ -1920,7 +2054,7 @@
     }
 
     #brands-pin-head h2 {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 800;
       font-size: clamp(38px, 5.8vw, 86px);
       line-height: 0.96;
@@ -1977,7 +2111,7 @@
       border-radius: 28px;
       background: #FFFFFF;
       border: 1px solid rgba(0, 0, 0, 0.05);
-      box-shadow: 
+      box-shadow:
         0 4px 20px rgba(0, 0, 0, 0.025),
         0 16px 36px rgba(0, 0, 0, 0.045),
         0 32px 64px rgba(0, 0, 0, 0.04);
@@ -1993,7 +2127,7 @@
     [data-theme="dark"] .brand-train-card {
       background: #141418;
       border-color: rgba(255, 255, 255, 0.07);
-      box-shadow: 
+      box-shadow:
         0 4px 20px rgba(0, 0, 0, 0.45),
         0 20px 45px rgba(0, 0, 0, 0.65),
         0 40px 80px rgba(0, 0, 0, 0.7),
@@ -2003,7 +2137,7 @@
     .brand-train-card:hover {
       transform: translateY(-8px);
       border-color: rgba(139, 26, 26, 0.3);
-      box-shadow: 
+      box-shadow:
         0 8px 24px rgba(139, 26, 26, 0.05),
         0 24px 50px rgba(139, 26, 26, 0.08),
         0 40px 80px rgba(0, 0, 0, 0.06);
@@ -2011,7 +2145,7 @@
 
     [data-theme="dark"] .brand-train-card:hover {
       border-color: rgba(255, 46, 77, 0.5);
-      box-shadow: 
+      box-shadow:
         0 6px 20px rgba(255, 46, 77, 0.15),
         0 24px 55px rgba(0, 0, 0, 0.85),
         0 45px 90px rgba(0, 0, 0, 0.9),
@@ -2057,7 +2191,7 @@
     }
 
     .btc-name {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 800;
       font-size: clamp(22px, 2.1vw, 32px);
       letter-spacing: .06em;
@@ -2067,7 +2201,7 @@
     }
 
     .btc-name.style-aura {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--font-secondary);
       font-style: italic;
       font-weight: 500;
       font-size: clamp(32px, 2.8vw, 42px);
@@ -2077,7 +2211,7 @@
     }
 
     .btc-name.style-jukku {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: var(--font-secondary);
       font-weight: 900;
       letter-spacing: -.02em;
       text-transform: none;
@@ -2173,7 +2307,7 @@
     }
 
     .fbc-tag {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.26em;
@@ -2183,7 +2317,7 @@
     }
 
     .fbc-header h2 {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 800;
       font-size: clamp(36px, 4.4vw, 64px);
       line-height: 1.02;
@@ -2193,7 +2327,7 @@
     }
 
     .fbc-header h2 em {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-style: italic;
       font-weight: 300;
       color: var(--cr);
@@ -2201,7 +2335,7 @@
     }
 
     .fbc-all {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -2247,7 +2381,7 @@
     }
 
     .fbc-cat {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.16em;
@@ -2258,7 +2392,7 @@
     }
 
     .fbc-card h4 {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: clamp(1.1rem, 1.25vw, 1.24rem);
       line-height: 1.35;
@@ -2268,14 +2402,14 @@
     }
 
     .fbc-card p {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-size: 0.86rem;
       line-height: 1.55;
       color: var(--ink-mid);
     }
 
     .fbc-link {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.08em;
@@ -2309,7 +2443,7 @@
     }
 
     .blog-header .blog-tag {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: .65rem;
       letter-spacing: .3em;
@@ -2319,14 +2453,14 @@
     }
 
     .blog-header h2 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--font-secondary);
       font-weight: 700;
       font-size: clamp(32px, 4.5vw, 64px);
       line-height: 1.05;
     }
 
     .blog-header .blog-all {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: .72rem;
       letter-spacing: .08em;
@@ -2422,7 +2556,7 @@
     }
 
     .blog-card-body h3 {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: var(--font-secondary);
       font-weight: 700;
       font-size: 1.3rem;
       line-height: 1.25;
@@ -2487,7 +2621,7 @@
     }
 
     .f-desc-col .f-desc-text {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: clamp(1.2rem, 1.55vw, 1.6rem);
       line-height: 1.25;
@@ -2497,7 +2631,7 @@
     }
 
     .f-col-label {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: 0.72rem;
       letter-spacing: 0.16em;
@@ -2514,7 +2648,7 @@
     }
 
     .f-links-clean a {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 500;
       font-size: 0.94rem;
       color: var(--ink-mid);
@@ -2542,7 +2676,7 @@
       background: var(--bg);
       border: 1px solid var(--rule);
       border-radius: 999px;
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-size: 0.76rem;
       font-weight: 600;
       color: var(--ink);
@@ -2616,7 +2750,7 @@
     }
 
     .f-action-heading {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-weight: 700;
       font-size: 0.96rem;
       display: flex;
@@ -2625,7 +2759,7 @@
     }
 
     .f-action-sub {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-size: 0.74rem;
       opacity: 0.78;
     }
@@ -2696,7 +2830,7 @@
       align-items: center;
       padding-top: 18px;
       border-top: 1.5px solid var(--rule);
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
+      font-family: var(--font-primary);
       font-size: 0.76rem;
       color: var(--ink-dim);
       font-weight: 500;
@@ -2720,6 +2854,16 @@
       color: var(--cr);
     }
 
+    .f-credit-author {
+      font-weight: 700;
+      color: var(--ink-mid);
+      transition: color .2s;
+    }
+
+    .f-meta-links a:hover .f-credit-author {
+      color: var(--cr);
+    }
+
     .f-live-status {
       display: flex;
       align-items: center;
@@ -2737,8 +2881,17 @@
     }
 
     @keyframes fStatusPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.85);
+      }
     }
 
     @media (max-width: 1024px) {
@@ -2753,6 +2906,7 @@
         grid-template-columns: 1fr;
         gap: 32px;
       }
+
       .f-meta-bar {
         flex-direction: column;
         gap: 12px;
@@ -2788,13 +2942,13 @@
       <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:36px;width:auto;">
         <style>
           .nl {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: var(--font-secondary);
             font-weight: 700;
             fill: #8B1A1A;
           }
 
           .ns {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: var(--font-secondary);
             font-weight: 600;
             fill: #8B1A1A;
             letter-spacing: 6px;
@@ -2814,12 +2968,6 @@
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <button id="tbtn" aria-label="Toggle theme">
-        <svg viewBox="0 0 24 24">
-          <path
-            d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z" />
-        </svg>
-      </button>
       <a href="contact.html" class="nav-cta">Start Project</a>
     </div>
   </nav>
@@ -2900,15 +3048,15 @@
             </div>
           </div>
 
-          <!-- CENTER BRAND TEXT — Physically anchored inside the 3D Room for 100% identical speed -->
-          <div class="hero-title" id="heroTitle">
-            <h1>1928 Creative<br />Studio.</h1>
-            <div class="hero-sub">Ahmedabad's premier brand engineering studio.<br />Crafting iconic visual identities
-              for market leaders,
-              <em>infinitely.</em>
-            </div>
-          </div>
+        </div>
+      </div>
 
+      <!-- LAYER 2.5 (z:15) — Crisp Center Brand Headline (Vector High-Definition, Zero Pixelation) -->
+      <div class="hero-title" id="heroTitle">
+        <h1>1928<br />Creative Studio.</h1>
+        <div class="hero-sub">Ahmedabad's premier brand engineering studio.<br />Crafting iconic visual identities
+          for market leaders,
+          <em>infinitely.</em>
         </div>
       </div>
 
@@ -3200,57 +3348,48 @@
           </div>
         </div>
 
-        <!-- ═══ 3. FIVE SERVICES MENU (Phase 2 Left) ═══ -->
+        <!-- ═══ 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) ═══ -->
         <div class="svc-s2-menu" id="svcFiveMenu">
-          <div class="svc-s2-item" data-s2="0">
-            <div>
-              <h4 class="svc-s2-title">01. Logo Design</h4>
-              <span class="svc-s2-sub">Custom Marks · Wordmarks · Vector Systems</span>
+          <div class="svc-why-card">
+            <div class="svc-why-badge">
+              <span class="svc-why-dot"></span>
+              <span>1928 Studio · Distinction &amp; Craft</span>
             </div>
-            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
-                stroke-width="2.5">
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg></div>
-          </div>
-          <div class="svc-s2-item" data-s2="1">
-            <div>
-              <h4 class="svc-s2-title">02. Brand Identity Development</h4>
-              <span class="svc-s2-sub">Strategy · Visual Architecture · Guidelines</span>
+            <h3 class="svc-why-title">
+              Why choose <br />
+              <em>1928 Creative Studio?</em>
+            </h3>
+            <p class="svc-why-desc">
+              We bridge high-precision strategic architecture with obsessive visual craft. Category-defining brands
+              demand bespoke systems built to command prestige and enduring market authority.
+            </p>
+            <div class="svc-why-points">
+              <div class="svc-why-point">
+                <span class="swp-num">01</span>
+                <div>
+                  <strong>End-to-End Brand Architecture</strong>
+                  <p>From identity &amp; spatial frameworks to digital ecosystems.</p>
+                </div>
+              </div>
+              <div class="svc-why-point">
+                <span class="swp-num">02</span>
+                <div>
+                  <strong>Bespoke Craft &amp; Zero Templates</strong>
+                  <p>Tailored typography, motion graphics &amp; 3D spatial visuals.</p>
+                </div>
+              </div>
+              <div class="svc-why-point">
+                <span class="swp-num">03</span>
+                <div>
+                  <strong>High-Impact Market Velocity</strong>
+                  <p>Measurable commercial distinction and conversion design.</p>
+                </div>
+              </div>
             </div>
-            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
-                stroke-width="2.5">
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg></div>
-          </div>
-          <div class="svc-s2-item" data-s2="2">
-            <div>
-              <h4 class="svc-s2-title">03. Website Design &amp; Development</h4>
-              <span class="svc-s2-sub">Digital Platforms · UI/UX · Conversion</span>
+            <div class="svc-why-footer">
+              <span>85+ Disciplines · Full Spectrum Studio</span>
+              <span class="swp-foot-arrow">Explore Capabilities →</span>
             </div>
-            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
-                stroke-width="2.5">
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg></div>
-          </div>
-          <div class="svc-s2-item" data-s2="3">
-            <div>
-              <h4 class="svc-s2-title">04. Social Media &amp; Digital Marketing</h4>
-              <span class="svc-s2-sub">Management · Meta Ads · Performance</span>
-            </div>
-            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
-                stroke-width="2.5">
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg></div>
-          </div>
-          <div class="svc-s2-item" data-s2="4">
-            <div>
-              <h4 class="svc-s2-title">05. Content Creation &amp; Influencer Marketing</h4>
-              <span class="svc-s2-sub">Photography · Videography · Reels · UGC</span>
-            </div>
-            <div class="svc-s2-arrow"><svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none"
-                stroke-width="2.5">
-                <path d="M7 17L17 7M17 7H7M17 7V17" />
-              </svg></div>
           </div>
         </div>
 
@@ -3591,7 +3730,8 @@
                 <div>
                   <span class="fbc-cat">Identity &amp; Narrative</span>
                   <h4>The Architectural Role of Language in Modern Brand Systems</h4>
-                  <p>How precise UX copywriting and brand vocabulary define category leadership and emotional equity.</p>
+                  <p>How precise UX copywriting and brand vocabulary define category leadership and emotional equity.
+                  </p>
                 </div>
                 <span class="fbc-link">Read Perspective →</span>
               </a>
@@ -3622,11 +3762,12 @@
   <!-- §7 — MODERN EDITORIAL LUXURY FOOTER -->
   <footer id="footer-driver">
     <div class="footer-luxury-card">
-      
+
       <!-- Top Grid: Statement, Links, Socials, CTA -->
       <div class="f-header-grid">
         <div class="f-desc-col">
-          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in Ahmedabad.</p>
+          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in
+            Ahmedabad.</p>
         </div>
 
         <div class="f-nav-col">
@@ -3649,7 +3790,8 @@
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener" class="f-chip">
               <span class="f-chip-icon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -3691,7 +3833,9 @@
       <div class="f-bottom-cluster">
         <div class="f-giant-cut-wrap">
           <svg class="f-giant-cut-svg" viewBox="0 0 1600 65" preserveAspectRatio="none">
-            <text x="0" y="115" font-family="'Space Grotesk', -apple-system, sans-serif" font-weight="900" font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs" letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
+            <text x="0" y="115" font-family="'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900"
+              font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs"
+              letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
           </svg>
         </div>
 
@@ -3703,6 +3847,8 @@
             <a href="#">Privacy Policy</a>
             <span>·</span>
             <a href="#">Studio Terms</a>
+            <span>·</span>
+            <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener">UXWITHJAYTHAKER</a></span>
           </div>
           <div class="f-live-status">
             <span class="f-status-dot"></span>
@@ -3713,6 +3859,26 @@
 
     </div>
   </footer>
+
+  <!-- Floating Bottom-Right Theme Toggle Button -->
+  <button id="theme-fab" aria-label="Toggle light/dark theme" title="Toggle Theme">
+    <!-- Sun Icon (shown in Dark mode to prompt switching to Light) -->
+    <svg class="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <!-- Moon Icon (shown in Light mode to prompt switching to Dark) -->
+    <svg class="icon-moon" viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
 
   <!-- ═══════════════════════════════════════════════════════════
      JAVASCRIPT — Scroll Engine & Animation Choreography
@@ -3746,14 +3912,17 @@
       document.addEventListener('mouseover', e => { if (e.target.closest('a,button,.port-card,.blog-card,.marquee-item,.svc-card')) document.body.classList.add('hov'); });
       document.addEventListener('mouseout', e => { if (e.target.closest('a,button,.port-card,.blog-card,.marquee-item,.svc-card')) document.body.classList.remove('hov'); });
 
-      /* ── Theme Toggle ──────────────────────────────────── */
+      /* ── Floating Theme Toggle ──────────────────────────── */
       const DR = document.documentElement;
-      DR.setAttribute('data-theme', localStorage.getItem('t28') || 'light');
-      const tbtn = document.getElementById('tbtn');
-      if (tbtn) {
-        tbtn.addEventListener('click', () => {
-          const n = DR.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-          DR.setAttribute('data-theme', n); localStorage.setItem('t28', n);
+      const initTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark';
+      DR.setAttribute('data-theme', initTheme);
+      const themeFab = document.getElementById('theme-fab');
+      if (themeFab) {
+        themeFab.addEventListener('click', () => {
+          const n = DR.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          DR.setAttribute('data-theme', n);
+          localStorage.setItem('t28', n);
+          localStorage.setItem('theme-1928', n);
         });
       }
 
@@ -3799,7 +3968,6 @@
         document.getElementById('svcSheet4')
       ];
       const svcFiveMenu = document.getElementById('svcFiveMenu');
-      const svcS2Items = document.querySelectorAll('#svcFiveMenu .svc-s2-item');
       const svcDetailDeck = document.getElementById('svcDetailDeck');
       const allShowcaseCards = [
         document.getElementById('svcCard0'),
@@ -3882,14 +4050,28 @@
         const vh = window.innerHeight;
         const portTopCheck = portDriver ? portDriver.offsetTop : 3000;
 
-        // Global Nav Visibility
+        // Global Nav Visibility (Only appears after video section is gone)
+        const isPastVideo = sy >= portTopCheck - 250;
         if (nav) {
-          if (sy >= portTopCheck - 250) {
+          if (isPastVideo) {
             nav.classList.add('visible');
             nav.classList.toggle('hidden', sy > lastSY && sy > portTopCheck + 200);
           } else {
             nav.classList.remove('visible');
             nav.classList.remove('hidden');
+          }
+        }
+
+        // Theme Button Visibility: Appears the moment the video pops out of the screen (hp >= 0.60) & stays for all subsequent sections
+        const heroH = heroDriver ? (heroDriver.offsetHeight - vh) : 1;
+        const heroHp = heroDriver ? clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1) : 1;
+        const isVideoOrPast = heroHp >= 0.60 || sy >= (heroDriver ? heroDriver.offsetHeight : 0);
+
+        if (themeFab) {
+          if (isVideoOrPast) {
+            themeFab.classList.add('vis');
+          } else {
+            themeFab.classList.remove('vis');
           }
         }
         lastSY = sy;
@@ -3912,7 +4094,12 @@
           const room1Z = lerp(0, 1200, zoomE);
 
           const r1CardFade = clamp(1 - clamp((zoomP - 0.68) / 0.32, 0, 1), 0, 1);
-          const titleOpacity = clamp(1 - clamp((zoomP - 0.70) / 0.30, 0, 1), 0, 1);
+          
+          // Cinematic close zoom towards the screen & soft loose fade-out
+          const titleScale = lerp(1.0, 2.55, Math.pow(zoomP, 1.35));
+          const titleFadeP = clamp((zoomP - 0.50) / 0.45, 0, 1);
+          const titleOpacity = Math.pow(1 - titleFadeP, 1.5);
+          const titleBlur = lerp(0, 5, titleFadeP);
 
           // Whiteout Flash / Portal Transition (hp: 0.48 -> 0.62)
           let whiteoutOpacity = 0;
@@ -3941,9 +4128,14 @@
             roomCube.style.transform = `translate(-50%,-50%) translateZ(${room1Z}px) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
             r1Cards.forEach(c => { c.style.opacity = r1CardFade + ''; });
             heroTitle.style.opacity = titleOpacity + '';
+            heroTitle.style.transform = `translate(-50%,-50%) scale(${titleScale})`;
+            heroTitle.style.filter = titleBlur > 0.3 ? `blur(${titleBlur.toFixed(1)}px)` : 'none';
           } else {
             if (heroRaysSvg) heroRaysSvg.style.opacity = '0';
-            if (heroTitle) heroTitle.style.opacity = '0';
+            if (heroTitle) {
+              heroTitle.style.opacity = '0';
+              heroTitle.style.filter = 'none';
+            }
             if (roomCube) roomCube.style.opacity = '0';
             r1Cards.forEach(c => { c.style.opacity = '0'; });
           }
@@ -3971,8 +4163,8 @@
             } else {
               const dockP = clamp((hp - 0.85) / 0.15, 0, 1);
               const dockE = eioq(dockP);
-              const rScale = lerp(1.0, 0.82, dockE);
-              const tLeft = lerp(50, 74, dockE);
+              const rScale = lerp(1.0, 0.86, dockE);
+              const tLeft = lerp(50, 72, dockE);
               heroReel.style.opacity = '1';
               heroReel.style.left = `${tLeft}%`;
               heroReel.style.top = '50%';
@@ -4001,9 +4193,9 @@
             });
 
             heroReel.style.opacity = '1';
-            heroReel.style.left = '74%';
+            heroReel.style.left = '72%';
             heroReel.style.top = '50%';
-            heroReel.style.transform = 'translate(-50%,-50%) scale(0.82)';
+            heroReel.style.transform = 'translate(-50%,-50%) scale(0.86)';
             heroReel.style.pointerEvents = 'auto';
           } else {
             if (storyTag) storyTag.classList.add('vis');
@@ -4016,9 +4208,9 @@
               heroReel.style.pointerEvents = 'none';
             } else {
               heroReel.style.opacity = '1';
-              heroReel.style.left = '74%';
+              heroReel.style.left = '72%';
               heroReel.style.top = '50%';
-              heroReel.style.transform = `translate(-50%, calc(-50% - ${exitOffset}px)) scale(0.82)`;
+              heroReel.style.transform = `translate(-50%, calc(-50% - ${exitOffset}px)) scale(0.86)`;
               heroReel.style.pointerEvents = 'none';
             }
           }
@@ -4173,23 +4365,22 @@
               resetFolderSheetsDefault(0);
 
               if (svcFiveMenu) {
-                const menuP = clamp((closeP - 0.15) / 0.85, 0, 1);
-                const menuE = eoq(menuP);
-                svcFiveMenu.style.opacity = menuP + '';
-                svcFiveMenu.style.transform = `translate(-50%, -50%) translateX(${lerp(-300, -stageOffset, menuE)}px)`;
-                if (closeP > 0.8) {
-                  svcFiveMenu.classList.add('active-events');
+                // Zero overlap: only start revealing left card after folder has cleared center (closeP > 0.70)
+                if (closeP > 0.70) {
+                  const menuP = clamp((closeP - 0.70) / 0.30, 0, 1);
+                  const menuE = eoq(menuP);
+                  svcFiveMenu.style.opacity = menuP + '';
+                  svcFiveMenu.style.transform = `translate(-50%, -50%) translateX(${lerp(-stageOffset - 25, -stageOffset, menuE)}px)`;
+                  if (closeP > 0.9) {
+                    svcFiveMenu.classList.add('active-events');
+                  } else {
+                    svcFiveMenu.classList.remove('active-events');
+                  }
                 } else {
+                  svcFiveMenu.style.opacity = '0';
+                  svcFiveMenu.style.transform = `translate(-50%, -50%) translateX(-${stageOffset + 25}px)`;
                   svcFiveMenu.classList.remove('active-events');
                 }
-
-                svcS2Items.forEach((item, idx) => {
-                  const itemDelay = idx * 0.10;
-                  const itemP = clamp((menuP - itemDelay) / 0.6, 0, 1);
-                  const itemE = eoq(itemP);
-                  item.style.opacity = itemP + '';
-                  item.style.transform = `translateX(${lerp(-30, 0, itemE)}px) scale(${lerp(0.96, 1.0, itemE)})`;
-                });
               }
 
               if (svcDetailDeck) {
@@ -4197,7 +4388,7 @@
                 svcDetailDeck.classList.remove('active-events');
               }
             }
-            // Phase 2: 5 Services Left + Solid Folder Right (svp: 0.32 -> 0.44)
+            // Phase 2: Why Choose Card Left + Solid Folder Right (svp: 0.32 -> 0.44)
             else if (svp >= 0.32 && svp < 0.44) {
               svcHeroCapsule.style.opacity = '1';
               svcHeroCapsule.style.width = '330px';
@@ -4212,11 +4403,6 @@
                 svcFiveMenu.style.opacity = '1';
                 svcFiveMenu.style.transform = `translate(-50%, -50%) translateX(-${stageOffset}px)`;
                 svcFiveMenu.classList.add('active-events');
-
-                svcS2Items.forEach(item => {
-                  item.style.opacity = '1';
-                  item.style.transform = 'translateX(0px) scale(1)';
-                });
               }
 
               if (svcDetailDeck) {
@@ -4394,13 +4580,13 @@
             // Header is rising — hide cards, funnel and stage
             if (brandsTrainViewport) brandsTrainViewport.style.opacity = '0';
             if (brandsTrainTrack) brandsTrainTrack.style.transform = `translateX(${window.innerWidth}px)`;
-            if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M ${window.innerWidth} ${vh/2} L ${window.innerWidth} 0 L ${window.innerWidth} ${vh} Z`);
+            if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M ${window.innerWidth} ${vh / 2} L ${window.innerWidth} 0 L ${window.innerWidth} ${vh} Z`);
             if (funnelBorderTop) {
-              funnelBorderTop.setAttribute('d', `M ${window.innerWidth} ${vh/2} L ${window.innerWidth} 0`);
+              funnelBorderTop.setAttribute('d', `M ${window.innerWidth} ${vh / 2} L ${window.innerWidth} 0`);
               funnelBorderTop.style.opacity = '0';
             }
             if (funnelBorderBottom) {
-              funnelBorderBottom.setAttribute('d', `M ${window.innerWidth} ${vh/2} L ${window.innerWidth} ${vh}`);
+              funnelBorderBottom.setAttribute('d', `M ${window.innerWidth} ${vh / 2} L ${window.innerWidth} ${vh}`);
               funnelBorderBottom.style.opacity = '0';
             }
             if (funnelBlogStage) {
@@ -4535,7 +4721,17 @@
           }
         }
 
-        /* ═══ §7 FOOTER — Live Clock Initialization ═══ */
+        /* ═══ §7 FOOTER — Scroll-Linked Logo Emergence ═══ */
+        if (footerDriver && !isInteractingLogo) {
+          const rect = footerDriver.getBoundingClientRect();
+          if (rect.top <= vh) {
+            const footerInViewP = clamp((vh - rect.top) / (rect.height * 0.75), 0, 1);
+            const autoEmergence = clamp((footerInViewP - 0.55) / 0.45, 0, 1);
+            applyLogoPhysics(autoEmergence);
+          } else {
+            applyLogoPhysics(0);
+          }
+        }
       }
 
       function updateFooterTime() {
