@@ -4470,25 +4470,27 @@
           const portTop = portDriver ? portDriver.offsetTop : (storyTop + 2000);
 
           if (sy < storyTop) {
-            const vidP = clamp((hp - 0.65) / 0.20, 0, 1);
+            const vidP = clamp((hp - 0.62) / 0.20, 0, 1);
             const vidE = eoq(vidP);
 
             if (vidP <= 0) {
               heroReel.style.opacity = '0';
               heroReel.style.transform = 'translate(-50%,-50%) scale(0.04)';
               heroReel.style.pointerEvents = 'none';
-            } else if (hp < 0.85) {
-              const rScale = lerp(0.04, 1.0, vidE);
+            } else if (hp < 0.82) {
+              // 1. Center Pop-up: Expands significantly to cover more space in the center (scale up to 1.52)
+              const rScale = lerp(0.04, 1.52, vidE);
               heroReel.style.opacity = clamp(vidP * 3.5, 0, 1) + '';
               heroReel.style.left = '50%';
               heroReel.style.top = '50%';
               heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
               heroReel.style.pointerEvents = vidP > 0.3 ? 'auto' : 'none';
             } else {
-              const dockP = clamp((hp - 0.85) / 0.15, 0, 1);
+              // 2. Glides to the right side while smoothly decreasing in size (scale 1.52 -> 0.82)
+              const dockP = clamp((hp - 0.82) / 0.18, 0, 1);
               const dockE = eioq(dockP);
-              const rScale = lerp(1.0, 0.86, dockE);
-              const tLeft = lerp(50, 72, dockE);
+              const rScale = lerp(1.52, 0.82, dockE);
+              const tLeft = lerp(50, 73, dockE);
               heroReel.style.opacity = '1';
               heroReel.style.left = `${tLeft}%`;
               heroReel.style.top = '50%';
@@ -4517,9 +4519,9 @@
             });
 
             heroReel.style.opacity = '1';
-            heroReel.style.left = '72%';
+            heroReel.style.left = '73%';
             heroReel.style.top = '50%';
-            heroReel.style.transform = 'translate(-50%,-50%) scale(0.86)';
+            heroReel.style.transform = 'translate(-50%,-50%) scale(0.82)';
             heroReel.style.pointerEvents = 'auto';
           } else {
             if (storyTag) storyTag.classList.add('vis');
@@ -4532,9 +4534,9 @@
               heroReel.style.pointerEvents = 'none';
             } else {
               heroReel.style.opacity = '1';
-              heroReel.style.left = '72%';
+              heroReel.style.left = '73%';
               heroReel.style.top = '50%';
-              heroReel.style.transform = `translate(-50%, calc(-50% - ${exitOffset}px)) scale(0.86)`;
+              heroReel.style.transform = `translate(-50%, calc(-50% - ${exitOffset}px)) scale(0.82)`;
               heroReel.style.pointerEvents = 'none';
             }
           }
