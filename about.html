@@ -2426,10 +2426,9 @@
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html" class="active">About</a></li>
       <li><a href="services.html">Services</a></li>
-      <li><a href="portfolio.html">Portfolio</a></li>
-      <li><a href="blogs.html">Blog</a></li>
+      <li><a href="portfolio.html">Work</a></li>
+      <li><a href="blogs.html">Perspectives</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
@@ -3223,7 +3222,7 @@
         <div class="f-nav-col">
           <div class="f-col-label">Explore</div>
           <ul class="f-links-clean">
-            <li><a href="about.html">About</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="portfolio.html">Work</a></li>
             <li><a href="blogs.html">Perspectives</a></li>
@@ -3496,16 +3495,23 @@
         }
       }
 
+      // Wheel listener for interactive scroll over footer (locks page scroll and stretches sliced logo only)
       window.addEventListener('wheel', (e) => {
         if (!footerDriver) return;
         const rect = footerDriver.getBoundingClientRect();
         const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
 
         if (rect.top <= window.innerHeight * 0.35 || isAtBottom) {
+          if (e.deltaY > 0 || (e.deltaY < 0 && logoPull > 0.05)) {
+            if (e.cancelable) e.preventDefault();
+          }
+
           isInteractingLogo = true;
           if (e.deltaY > 0) {
+            // Scroll down more: pull logo out of the line to reveal full 100% text
             logoPull = Math.min(1.0, logoPull + Math.abs(e.deltaY) * 0.006);
           } else if (e.deltaY < 0) {
+            // Scroll up: tight resistance tension
             logoPull = Math.max(-0.35, logoPull - Math.abs(e.deltaY) * 0.005);
           }
 
@@ -3513,11 +3519,79 @@
 
           clearTimeout(logoWheelTimer);
           logoWheelTimer = setTimeout(() => {
+            // Swiftly spring back to 50% cut resting spot upon release
             isInteractingLogo = false;
             triggerLogoSpring();
           }, 180);
         }
+      }, { passive: false });
+
+      // Touch listener for mobile devices
+      let touchStartY = 0;
+      window.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
       }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!footerDriver) return;
+        const rect = footerDriver.getBoundingClientRect();
+        const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+        if (rect.top <= window.innerHeight * 0.35 || isAtBottom) {
+          const deltaY = touchStartY - e.touches[0].clientY;
+          if (deltaY > 0 || (deltaY < 0 && logoPull > 0.05)) {
+            if (e.cancelable) e.preventDefault();
+          }
+          isInteractingLogo = true;
+          if (deltaY > 0) {
+            logoPull = Math.min(1.0, logoPull + deltaY * 0.006);
+          } else {
+            logoPull = Math.max(-0.35, logoPull + deltaY * 0.005);
+          }
+          triggerLogoSpring();
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchend', () => {
+        clearTimeout(logoWheelTimer);
+        logoWheelTimer = setTimeout(() => {
+          isInteractingLogo = false;
+          triggerLogoSpring();
+        }, 140);
+      }, { passive: true });
+
+      // Mouse drag hold support on the footer card
+      const luxuryCard = document.querySelector('.footer-luxury-card');
+      if (luxuryCard) {
+        let isMouseDownCard = false;
+        let dragStartY = 0;
+        luxuryCard.addEventListener('mousedown', (e) => {
+          isMouseDownCard = true;
+          dragStartY = e.clientY;
+          isInteractingLogo = true;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isMouseDownCard) return;
+          const deltaY = dragStartY - e.clientY;
+          if (deltaY > 0) {
+            logoPull = Math.min(1.0, logoPull + deltaY * 0.01);
+          } else {
+            logoPull = Math.max(-0.35, logoPull + deltaY * 0.01);
+          }
+          triggerLogoSpring();
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (isMouseDownCard) {
+            isMouseDownCard = false;
+            clearTimeout(logoWheelTimer);
+            logoWheelTimer = setTimeout(() => {
+              isInteractingLogo = false;
+              triggerLogoSpring();
+            }, 120);
+          }
+        });
+      }
 
       /* ── Best Works 2-Set Pinned Scroll Deck (Soft Crossfade with Zero Text Overlap) ── */
       const worksDriver = document.getElementById('works-driver');
