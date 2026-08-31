@@ -22,6 +22,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
@@ -29,6 +30,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
@@ -36,6 +38,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
@@ -44,7 +47,9 @@
       font-display: swap;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -358,16 +363,19 @@
         transform: translateY(20px) scale(0.97);
         filter: blur(2px);
       }
+
       40% {
         opacity: 0.6;
         transform: translateY(8px) scale(1.01);
         filter: blur(1px);
       }
+
       75% {
         opacity: 0.9;
         transform: translateY(-2px) scale(0.995);
         filter: blur(0px);
       }
+
       100% {
         opacity: 1;
         transform: translateY(0px) scale(1.0);
@@ -482,6 +490,7 @@
         opacity: 0;
         transform: translateX(-50%) translateY(28px);
       }
+
       100% {
         opacity: 1;
         transform: translateX(-50%) translateY(0);
@@ -514,10 +523,12 @@
         opacity: 1;
         transform: translateY(0);
       }
+
       70% {
         opacity: 0.2;
         transform: translateY(8px);
       }
+
       100% {
         opacity: 0;
         transform: translateY(10px);
@@ -879,20 +890,24 @@
       #works-driver {
         min-height: auto;
       }
+
       .works-sticky-stage {
         position: relative;
         height: auto;
         padding: 80px 0;
       }
+
       .works-card-stage {
         height: auto;
       }
+
       .works-card-set {
         position: relative;
         grid-template-columns: 1fr;
         gap: 20px;
         height: auto;
       }
+
       #worksSet2 {
         opacity: 1;
         transform: none;
@@ -1170,21 +1185,28 @@
         height: auto;
         gap: 16px;
       }
+
       .val-panel {
         flex: none !important;
         height: auto;
         min-height: 180px;
       }
+
       .val-collapsed-content {
         display: none;
       }
+
       .val-expanded-content {
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;
         min-width: 0;
       }
-      .val-exp-top, .val-exp-title, .val-exp-desc, .val-exp-bottom {
+
+      .val-exp-top,
+      .val-exp-title,
+      .val-exp-desc,
+      .val-exp-bottom {
         opacity: 1 !important;
         transform: none !important;
       }
@@ -1264,104 +1286,34 @@
     }
 
     .team-row-main {
-      display: grid;
-      grid-template-columns: 1.5fr 1.4fr 1fr;
+      display: flex;
       align-items: center;
-      gap: clamp(16px, 2.5vw, 36px);
-      padding: clamp(20px, 2.6vh, 30px) clamp(12px, 1.5vw, 24px);
+      justify-content: space-between;
+      padding: clamp(24px, 3.4vh, 38px) clamp(12px, 1.5vw, 24px);
       transition: padding 0.35s var(--sp);
     }
 
     .team-row-left {
       display: flex;
       align-items: center;
-      gap: clamp(14px, 1.8vw, 24px);
-    }
-
-    /* ── Circle Badge / Avatar Profile Holder ── */
-    .team-avatar-circle {
-      width: clamp(40px, 3.6vw, 46px);
-      height: clamp(40px, 3.6vw, 46px);
-      border-radius: 50%;
-      border: 1.5px solid var(--rule);
-      background: rgba(200, 16, 46, 0.08);
-      display: grid;
-      place-items: center;
-      color: var(--cr);
-      flex-shrink: 0;
-      overflow: hidden;
-      transition: border-color 0.3s var(--sp), background 0.3s var(--sp), box-shadow 0.3s var(--sp);
-    }
-
-    .team-avatar-icon {
-      width: clamp(18px, 1.6vw, 22px);
-      height: clamp(18px, 1.6vw, 22px);
-      color: var(--cr);
-      transition: color 0.3s;
-    }
-
-    .team-avatar-circle img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .team-index-row:hover .team-avatar-circle,
-    .team-index-row.expanded .team-avatar-circle {
-      border-color: var(--cr);
-      background: rgba(200, 16, 46, 0.2);
-      box-shadow: 0 0 18px var(--cr-glow);
     }
 
     .team-row-name {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(22px, 2.5vw, 34px);
+      font-size: clamp(24px, 2.8vw, 38px);
       letter-spacing: -0.035em;
       color: var(--ink);
-      transition: color 0.3s, transform 0.3s;
+      transition: color 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .team-index-row:hover .team-row-name,
     .team-index-row.expanded .team-row-name {
       color: var(--cr);
-      transform: translateX(4px);
+      transform: translateX(6px);
     }
 
-    .team-row-center {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .team-row-role {
-      font-family: var(--font-secondary);
-      font-size: clamp(13.5px, 1.1vw, 15.5px);
-      font-weight: 600;
-      color: var(--ink-mid);
-      transition: color 0.3s;
-    }
-
-    .team-index-row:hover .team-row-role,
-    .team-index-row.expanded .team-row-role {
-      color: var(--ink);
-    }
-
-    .team-row-pill {
-      font-family: var(--font-mono);
-      font-size: 9.5px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--cr);
-      background: rgba(200, 16, 46, 0.1);
-      border: 1px solid rgba(200, 16, 46, 0.3);
-      padding: 3px 10px;
-      border-radius: 999px;
-      text-transform: uppercase;
-    }
-
+    /* ── Right Column: Role / Speciality ── */
     .team-row-right {
       display: flex;
       align-items: center;
@@ -1369,73 +1321,75 @@
       text-align: right;
     }
 
-    .team-row-city {
-      font-family: var(--font-mono);
-      font-size: clamp(11.5px, 0.95vw, 13px);
-      font-weight: 700;
-      letter-spacing: 0.1em;
+    .team-row-role {
+      font-family: var(--font-secondary);
+      font-size: clamp(14px, 1.15vw, 17px);
+      font-weight: 600;
       color: var(--ink-mid);
-      text-transform: uppercase;
-      transition: color 0.3s;
+      transition: color 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .team-index-row:hover .team-row-city,
-    .team-index-row.expanded .team-row-city {
+    .team-index-row:hover .team-row-role,
+    .team-index-row.expanded .team-row-role {
       color: var(--ink);
+      transform: translateX(-6px);
     }
 
-    /* ── Smooth Reveal Quotation-Only Drawer on Hover / Active Tap ── */
-    .team-row-reveal {
-      max-height: 0;
+    /* ── Floating Circular Portrait Lens ("image comes into the circle") ── */
+    .team-floating-circle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      width: clamp(170px, 15vw, 210px);
+      height: clamp(170px, 15vw, 210px);
+      border-radius: 50%;
       overflow: hidden;
+      border: 3px solid #ffffff;
+      background: #0a0a0e;
+      box-shadow: 0 0 45px var(--cr-glow), 0 25px 65px rgba(0, 0, 0, 0.85);
       opacity: 0;
-      padding: 0 clamp(12px, 1.5vw, 24px) 0 clamp(66px, 6vw, 84px);
-      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, padding 0.3s ease;
-      display: flex;
-      align-items: center;
+      transform: translate(-50%, -50%) scale(0.2);
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform, left, top, opacity;
     }
 
-    .team-index-row:hover .team-row-reveal,
-    .team-index-row.expanded .team-row-reveal {
-      max-height: 60px;
+    .team-floating-circle.active {
       opacity: 1;
-      padding: 0 clamp(12px, 1.5vw, 24px) clamp(16px, 2vh, 22px) clamp(66px, 6vw, 84px);
+      transform: translate(-50%, -50%) scale(1);
     }
 
-    .team-reveal-quote {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-style: italic;
-      font-size: clamp(13.5px, 1.15vw, 16.5px);
-      line-height: 1.45;
-      color: var(--ink);
-      margin: 0;
-      border-left: 2px solid var(--cr);
-      padding-left: 12px;
-      transform: translateY(6px);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+    .tfc-circle-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 50%;
+      transform: scale(1.05);
+      transition: transform 0.4s ease;
     }
 
-    .team-index-row:hover .team-reveal-quote,
-    .team-index-row.expanded .team-reveal-quote {
-      transform: translateY(0);
+    .team-floating-circle.active .tfc-circle-img {
+      transform: scale(1.12);
     }
 
     @media (max-width: 860px) {
       .team-row-main {
         grid-template-columns: 1fr;
-        gap: 10px;
+        gap: 16px;
+        padding: 24px 12px;
       }
-      .team-row-right {
+
+      .team-row-center {
         justify-content: flex-start;
       }
-      .team-row-reveal {
-        padding-left: clamp(12px, 1.5vw, 24px) !important;
+
+      .team-row-right {
+        justify-content: flex-start;
+        text-align: left;
       }
-      .team-index-row:hover .team-row-reveal,
-      .team-index-row.expanded .team-row-reveal {
-        max-height: 90px;
-        padding-left: clamp(12px, 1.5vw, 24px) !important;
+
+      .team-floating-circle {
+        display: none !important;
       }
     }
 
@@ -1552,10 +1506,12 @@
         transform: scale(0.95);
         opacity: 0.8;
       }
+
       50% {
         transform: scale(1.25);
         opacity: 0;
       }
+
       100% {
         transform: scale(0.95);
         opacity: 0;
@@ -1668,12 +1624,15 @@
         justify-content: flex-start !important;
         gap: 16px;
       }
+
       .proc-item-right .proc-step-card {
         order: 2;
       }
+
       .proc-item-right .proc-node-wrapper {
         order: 1;
       }
+
       .proc-step-card {
         width: 100%;
       }
@@ -1985,8 +1944,17 @@
     }
 
     @keyframes fctaPulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.75; }
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+
+      50% {
+        transform: scale(1.3);
+        opacity: 0.75;
+      }
     }
 
     .fcta-title {
@@ -2336,13 +2304,16 @@
         grid-template-columns: 1fr 1fr;
         gap: 40px;
       }
+
       .f-desc-col {
         grid-column: 1 / -1;
       }
+
       .footer-luxury-card {
         padding: 40px 28px 18px;
         gap: 50px;
       }
+
       .f-meta-bar {
         flex-direction: column;
         gap: 12px;
@@ -2398,7 +2369,9 @@
     }
 
     @media (max-width: 768px) {
-      .c-dot, .c-ring {
+
+      .c-dot,
+      .c-ring {
         display: none !important;
       }
     }
@@ -2416,8 +2389,18 @@
     <a href="index.html" class="nav-logo">
       <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:34px;width:auto;">
         <style>
-          .nl { font-family: 'Raleway', sans-serif; font-weight: 700; fill: #C8102E; }
-          .ns { font-family: 'Raleway', sans-serif; font-weight: 600; fill: #C8102E; letter-spacing: 6px; }
+          .nl {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 700;
+            fill: #C8102E;
+          }
+
+          .ns {
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            fill: #C8102E;
+            letter-spacing: 6px;
+          }
         </style>
         <text x="0" y="52" class="nl" font-size="52">1928</text>
         <text x="218" y="38" class="ns" font-size="18">CREATIVE</text>
@@ -2453,7 +2436,9 @@
       </h1>
 
       <p class="hero-sub">
-        <span class="hl">1928 Creative Studio</span> is an independent brand engineering practice. We synthesize <span class="hl">architectural design rigor</span>, sensory spatial systems, and <span class="hl">high-velocity digital craft</span> to build category-defining enterprises.
+        <span class="hl">1928 Creative Studio</span> is an independent brand engineering practice. We synthesize <span
+          class="hl">architectural design rigor</span>, sensory spatial systems, and <span class="hl">high-velocity
+          digital craft</span> to build category-defining enterprises.
       </p>
 
       <div class="hero-actions">
@@ -2478,7 +2463,8 @@
     <div class="section-container">
       <div class="sec-tag-pill"><span class="sec-dot"></span> ORIGINS &amp; ESSENCE</div>
       <h2 class="sec-heading">THE <span>1928</span> STUDIO STORY</h2>
-      <p class="sec-desc">A nearly century-old legacy of architectural design rigor, reimagined for modern cultural leadership.</p>
+      <p class="sec-desc">A nearly century-old legacy of architectural design rigor, reimagined for modern cultural
+        leadership.</p>
 
       <div class="story-card-wrap">
         <h3 class="story-statement">
@@ -2486,10 +2472,12 @@
         </h3>
         <div class="story-paragraphs">
           <p>
-            Founded on the principle that enduring brands require architectural discipline rather than fleeting trends, 1928 operates at the convergence of identity systems, spatial design, and high-velocity digital technology.
+            Founded on the principle that enduring brands require architectural discipline rather than fleeting trends,
+            1928 operates at the convergence of identity systems, spatial design, and high-velocity digital technology.
           </p>
           <p>
-            From our headquarters in Ahmedabad to collaborations across London, Milan, Tokyo, and New York, our studio engineers timeless visual authority for ambitious founders and global icons.
+            From our headquarters in Ahmedabad to collaborations across London, Milan, Tokyo, and New York, our studio
+            engineers timeless visual authority for ambitious founders and global icons.
           </p>
         </div>
       </div>
@@ -2502,7 +2490,8 @@
   <section id="works-driver" class="works-driver">
     <div class="works-sticky-stage" id="worksStickyStage">
       <div class="section-container works-stage-container">
-        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> CURATED ARCHIVE</div>
+        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> CURATED
+          ARCHIVE</div>
         <h2 class="sec-heading" style="margin-bottom:clamp(6px, 1vh, 12px);">BEST <span>WORKS</span></h2>
         <p class="sec-desc">Flagship partnerships engineered to command prestige and set new industry benchmarks.</p>
 
@@ -2521,7 +2510,8 @@
                 </div>
                 <div class="work-mid-body">
                   <h3 class="work-title">JUVENTUS</h3>
-                  <p class="work-desc">Global visual identity system, brand guidelines, and sensory stadium experience touchpoints.</p>
+                  <p class="work-desc">Global visual identity system, brand guidelines, and sensory stadium experience
+                    touchpoints.</p>
                 </div>
                 <div class="work-bottom-meta">
                   <div class="work-pills">
@@ -2546,7 +2536,8 @@
                 </div>
                 <div class="work-mid-body">
                   <h3 class="work-title">BUGATTI</h3>
-                  <p class="work-desc">Bespoke hypercar digital ecosystem, WebGL 3D configurator, and high-prestige UI craft.</p>
+                  <p class="work-desc">Bespoke hypercar digital ecosystem, WebGL 3D configurator, and high-prestige UI
+                    craft.</p>
                 </div>
                 <div class="work-bottom-meta">
                   <div class="work-pills">
@@ -2574,7 +2565,8 @@
                 </div>
                 <div class="work-mid-body">
                   <h3 class="work-title">MINI BRAND</h3>
-                  <p class="work-desc">Next-generation spatial architecture, flagship design codes, and sensory retail environments.</p>
+                  <p class="work-desc">Next-generation spatial architecture, flagship design codes, and sensory retail
+                    environments.</p>
                 </div>
                 <div class="work-bottom-meta">
                   <div class="work-pills">
@@ -2599,7 +2591,8 @@
                 </div>
                 <div class="work-mid-body">
                   <h3 class="work-title">ZERODHA</h3>
-                  <p class="work-desc">High-performance trading platform design system, micro-interactions, and visual architecture.</p>
+                  <p class="work-desc">High-performance trading platform design system, micro-interactions, and visual
+                    architecture.</p>
                 </div>
                 <div class="work-bottom-meta">
                   <div class="work-pills">
@@ -2624,7 +2617,8 @@
     <div class="section-container">
       <div class="sec-tag-pill"><span class="sec-dot"></span> IMMUTABLE STANDARDS</div>
       <h2 class="sec-heading">CORE <span>VALUES</span></h2>
-      <p class="sec-desc">The four foundational pillars that govern our architectural craft, design rigor, and strategic executions.</p>
+      <p class="sec-desc">The four foundational pillars that govern our architectural craft, design rigor, and strategic
+        executions.</p>
 
       <div class="values-accordion" id="valuesAccordion">
         <!-- ── 01 OBSESSIVE CRAFT ── -->
@@ -2635,7 +2629,7 @@
             <span class="val-col-title">Obsessive Craft</span>
             <div class="val-col-glyph">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2L12 0Z"/>
+                <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2L12 0Z" />
               </svg>
             </div>
           </div>
@@ -2649,14 +2643,15 @@
               </div>
               <div class="val-exp-glyph">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2L12 0Z"/>
+                  <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2L12 0Z" />
                 </svg>
               </div>
             </div>
 
             <div class="val-exp-body">
               <h3 class="val-exp-title">Obsessive Craft</h3>
-              <p class="val-exp-desc">Microscopic precision across typography, materials, and motion. We operate with zero tolerance for average execution, treating every pixel as an immutable artifact.</p>
+              <p class="val-exp-desc">Microscopic precision across typography, materials, and motion. We operate with
+                zero tolerance for average execution, treating every pixel as an immutable artifact.</p>
             </div>
 
             <div class="val-exp-bottom">
@@ -2675,8 +2670,8 @@
             <span class="val-col-title">Radical Clarity</span>
             <div class="val-col-glyph">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <circle cx="12" cy="12" r="9"/>
-                <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
+                <circle cx="12" cy="12" r="9" />
+                <circle cx="12" cy="12" r="3.5" fill="currentColor" />
               </svg>
             </div>
           </div>
@@ -2690,15 +2685,16 @@
               </div>
               <div class="val-exp-glyph">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <circle cx="12" cy="12" r="9"/>
-                  <circle cx="12" cy="12" r="3.5" fill="currentColor"/>
+                  <circle cx="12" cy="12" r="9" />
+                  <circle cx="12" cy="12" r="3.5" fill="currentColor" />
                 </svg>
               </div>
             </div>
 
             <div class="val-exp-body">
               <h3 class="val-exp-title">Radical Clarity</h3>
-              <p class="val-exp-desc">Stripping away clutter, noise, and superfluous decoration to reveal pure brand truth, articulated with unapologetic geometric focus and editorial conviction.</p>
+              <p class="val-exp-desc">Stripping away clutter, noise, and superfluous decoration to reveal pure brand
+                truth, articulated with unapologetic geometric focus and editorial conviction.</p>
             </div>
 
             <div class="val-exp-bottom">
@@ -2717,9 +2713,9 @@
             <span class="val-col-title">Spatial Rigor</span>
             <div class="val-col-glyph">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
-                <path d="M2 17L12 22L22 17"/>
-                <path d="M2 12L12 17L22 12"/>
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" />
+                <path d="M2 17L12 22L22 17" />
+                <path d="M2 12L12 17L22 12" />
               </svg>
             </div>
           </div>
@@ -2733,16 +2729,17 @@
               </div>
               <div class="val-exp-glyph">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 2L2 7L12 12L22 7L12 2Z"/>
-                  <path d="M2 17L12 22L22 17"/>
-                  <path d="M2 12L12 17L22 12"/>
+                  <path d="M12 2L2 7L12 12L22 7L12 2Z" />
+                  <path d="M2 17L12 22L22 17" />
+                  <path d="M2 12L12 17L22 12" />
                 </svg>
               </div>
             </div>
 
             <div class="val-exp-body">
               <h3 class="val-exp-title">Spatial Rigor</h3>
-              <p class="val-exp-desc">Treating brand identity as architectural engineering — building robust, modular design systems that scale across flagships, spatial environments, and digital monoliths.</p>
+              <p class="val-exp-desc">Treating brand identity as architectural engineering — building robust, modular
+                design systems that scale across flagships, spatial environments, and digital monoliths.</p>
             </div>
 
             <div class="val-exp-bottom">
@@ -2760,10 +2757,11 @@
             <span class="val-col-num">04</span>
             <span class="val-col-title">Cultural Prestige</span>
             <div class="val-col-glyph">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 3h12l4 6-10 13L2 9z"/>
-                <path d="M11 3L8 9l4 13 4-13-3-6"/>
-                <path d="M2 9h20"/>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 3h12l4 6-10 13L2 9z" />
+                <path d="M11 3L8 9l4 13 4-13-3-6" />
+                <path d="M2 9h20" />
               </svg>
             </div>
           </div>
@@ -2776,17 +2774,19 @@
                 <span class="val-exp-pill">GLOBAL AUTHORITY</span>
               </div>
               <div class="val-exp-glyph">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M6 3h12l4 6-10 13L2 9z"/>
-                  <path d="M11 3L8 9l4 13 4-13-3-6"/>
-                  <path d="M2 9h20"/>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 3h12l4 6-10 13L2 9z" />
+                  <path d="M11 3L8 9l4 13 4-13-3-6" />
+                  <path d="M2 9h20" />
                 </svg>
               </div>
             </div>
 
             <div class="val-exp-body">
               <h3 class="val-exp-title">Cultural Prestige</h3>
-              <p class="val-exp-desc">Creating work that commands genuine market leadership, elevates valuation, and shapes contemporary culture with enduring timeless authority.</p>
+              <p class="val-exp-desc">Creating work that commands genuine market leadership, elevates valuation, and
+                shapes contemporary culture with enduring timeless authority.</p>
             </div>
 
             <div class="val-exp-bottom">
@@ -2805,115 +2805,70 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="team">
     <div class="section-container">
-      <div class="sec-tag-pill" style="margin-bottom: clamp(6px, 1vh, 12px);"><span class="sec-dot"></span> STUDIO MINDS</div>
+      <div class="sec-tag-pill" style="margin-bottom: clamp(6px, 1vh, 12px);"><span class="sec-dot"></span> STUDIO MINDS
+      </div>
       <div class="team-header-split">
         <h2 class="sec-heading" style="margin-bottom: 0; line-height: 1;">OUR <span>TEAM</span></h2>
-        <p class="team-header-desc">
-          A focused collective of brand architects, creative technologists, and spatial designers operating across the world.
-        </p>
       </div>
 
       <div class="team-minimal-index" id="teamMinimalIndex">
         <!-- 01 AMI -->
-        <div class="team-index-row" data-member="ami">
+        <div class="team-index-row" data-member="ami" data-name="Ami" data-role="Principal &amp; Creative Director"
+          data-photo="img/team-ami.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <div class="team-avatar-circle">
-                <svg class="team-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </div>
               <span class="team-row-name">Ami</span>
             </div>
-            <div class="team-row-center">
-              <span class="team-row-role">Principal &amp; Creative Director</span>
-              <span class="team-row-pill">FOUNDER // DIRECTION</span>
-            </div>
             <div class="team-row-right">
-              <span class="team-row-city">Ahmedabad, India</span>
+              <span class="team-row-role">Principal &amp; Creative Director</span>
             </div>
-          </div>
-          <div class="team-row-reveal">
-            <p class="team-reveal-quote">"Great design is never decoration. It is the gravitational center of enterprise authority."</p>
           </div>
         </div>
 
         <!-- 02 TUSAR PANCHAL -->
-        <div class="team-index-row" data-member="tusar">
+        <div class="team-index-row" data-member="tusar" data-name="Tusar Panchal" data-role="Head of Brand Architecture"
+          data-photo="img/team-tusar.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <div class="team-avatar-circle">
-                <svg class="team-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </div>
               <span class="team-row-name">Tusar Panchal</span>
             </div>
-            <div class="team-row-center">
-              <span class="team-row-role">Head of Brand Architecture</span>
-              <span class="team-row-pill">SYSTEMS // TOKENS</span>
-            </div>
             <div class="team-row-right">
-              <span class="team-row-city">Ahmedabad, India</span>
+              <span class="team-row-role">Head of Brand Architecture</span>
             </div>
-          </div>
-          <div class="team-row-reveal">
-            <p class="team-reveal-quote">"Enduring identity systems operate like structural engineering — pure geometry and permanent scale."</p>
           </div>
         </div>
 
         <!-- 03 ELENA ROSTOVA -->
-        <div class="team-index-row" data-member="elena">
+        <div class="team-index-row" data-member="elena" data-name="Elena Rostova" data-role="Lead Spatial Architect"
+          data-photo="img/team-elena.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <div class="team-avatar-circle">
-                <svg class="team-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </div>
               <span class="team-row-name">Elena Rostova</span>
             </div>
-            <div class="team-row-center">
-              <span class="team-row-role">Lead Spatial Architect</span>
-              <span class="team-row-pill">SPATIAL // FLAGSHIPS</span>
-            </div>
             <div class="team-row-right">
-              <span class="team-row-city">Ahmedabad, India</span>
+              <span class="team-row-role">Spatial Systems &amp; Flagships</span>
             </div>
-          </div>
-          <div class="team-row-reveal">
-            <p class="team-reveal-quote">"Physical flagships and digital interfaces must speak one unified sensory architectural language."</p>
           </div>
         </div>
 
         <!-- 04 KAITO TANAKA -->
-        <div class="team-index-row" data-member="kaito">
+        <div class="team-index-row" data-member="kaito" data-name="Kaito Tanaka" data-role="Lead Creative Technologist"
+          data-photo="img/team-kaito.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <div class="team-avatar-circle">
-                <svg class="team-avatar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="12" cy="7" r="4"></circle>
-                </svg>
-              </div>
               <span class="team-row-name">Kaito Tanaka</span>
             </div>
-            <div class="team-row-center">
-              <span class="team-row-role">Lead Creative Technologist</span>
-              <span class="team-row-pill">WEBGL // 3D ENGINES</span>
-            </div>
             <div class="team-row-right">
-              <span class="team-row-city">Ahmedabad, India</span>
+              <span class="team-row-role">Generative 3D &amp; WebGL Engines</span>
             </div>
-          </div>
-          <div class="team-row-reveal">
-            <p class="team-reveal-quote">"High-performance WebGL and procedural shaders turn digital interfaces into tangible art."</p>
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Floating Circular Portrait Lens ("image comes into the circle") -->
+    <div id="teamFloatingCard" class="team-floating-circle" aria-hidden="true">
+      <img id="tfcImg" src="img/team-ami.jpg" alt="Team Portrait" class="tfc-circle-img" />
     </div>
   </section>
 
@@ -2960,7 +2915,8 @@
               <span class="proc-card-phase">PHASE 01 // DISCOVERY</span>
               <h3 class="proc-card-title">Immersion &amp; Diagnostic Discovery</h3>
             </div>
-            <p class="proc-card-desc">Uncovering market anomalies, competitive white space, audience psychology, and core brand DNA.</p>
+            <p class="proc-card-desc">Uncovering market anomalies, competitive white space, audience psychology, and
+              core brand DNA.</p>
             <div class="proc-card-tags">
               <span>Diagnostic Audit</span>
               <span>Market Psychology</span>
@@ -2976,7 +2932,8 @@
               <span class="proc-card-phase">PHASE 02 // ARCHITECTURE</span>
               <h3 class="proc-card-title">Strategic Blueprint &amp; Positioning</h3>
             </div>
-            <p class="proc-card-desc">Defining the category-defining narrative, foundational pillars, and architectural design roadmap.</p>
+            <p class="proc-card-desc">Defining the category-defining narrative, foundational pillars, and architectural
+              design roadmap.</p>
             <div class="proc-card-tags">
               <span>Brand Narrative</span>
               <span>Positioning Matrix</span>
@@ -3004,7 +2961,8 @@
               <span class="proc-card-phase">PHASE 03 // DESIGN LAB</span>
               <h3 class="proc-card-title">Prototyping &amp; Visual Design</h3>
             </div>
-            <p class="proc-card-desc">Iterating bespoke typography, spatial scale models, motion choreography, and digital interactive systems.</p>
+            <p class="proc-card-desc">Iterating bespoke typography, spatial scale models, motion choreography, and
+              digital interactive systems.</p>
             <div class="proc-card-tags">
               <span>Bespoke Type</span>
               <span>Spatial Prototypes</span>
@@ -3020,7 +2978,8 @@
               <span class="proc-card-phase">PHASE 04 // ENGINEERING</span>
               <h3 class="proc-card-title">Precision Engineering &amp; Craft</h3>
             </div>
-            <p class="proc-card-desc">Developing production-ready code, token design systems, spatial construction specifications, and guidelines.</p>
+            <p class="proc-card-desc">Developing production-ready code, token design systems, spatial construction
+              specifications, and guidelines.</p>
             <div class="proc-card-tags">
               <span>Token Systems</span>
               <span>Spatial Specs</span>
@@ -3048,7 +3007,8 @@
               <span class="proc-card-phase">PHASE 05 // LAUNCH &amp; SCALE</span>
               <h3 class="proc-card-title">Activation &amp; Brand Velocity</h3>
             </div>
-            <p class="proc-card-desc">Orchestrating high-impact market launch, cultural campaign rollouts, and ongoing brand stewardship.</p>
+            <p class="proc-card-desc">Orchestrating high-impact market launch, cultural campaign rollouts, and ongoing
+              brand stewardship.</p>
             <div class="proc-card-tags">
               <span>Cultural Launch</span>
               <span>Brand Stewardship</span>
@@ -3192,7 +3152,8 @@
               <span class="fcta-line-2">THAT ENDURES?</span>
             </h2>
             <p class="fcta-sub">
-              We partner with select category-defining founders, institutions, and enterprises each quarter. Let's engineer your legacy.
+              We partner with select category-defining founders, institutions, and enterprises each quarter. Let's
+              engineer your legacy.
             </p>
             <div class="fcta-actions">
               <a href="contact.html" class="btn-primary">Start a Project →</a>
@@ -3216,7 +3177,8 @@
       <!-- Top Grid: Statement, Links, Socials, CTA -->
       <div class="f-header-grid">
         <div class="f-desc-col">
-          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in Ahmedabad.</p>
+          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in
+            Ahmedabad.</p>
         </div>
 
         <div class="f-nav-col">
@@ -3239,7 +3201,8 @@
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener" class="f-chip">
               <span class="f-chip-icon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
                   <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                   <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                   <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
@@ -3281,7 +3244,10 @@
       <div class="f-bottom-cluster">
         <div class="f-giant-cut-wrap" id="footerCutWrap">
           <svg class="f-giant-cut-svg" id="footerCutSvg" viewBox="0 0 1600 65" preserveAspectRatio="none">
-            <text x="0" y="115" font-family="'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs" letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
+            <text x="0" y="115"
+              font-family="'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+              font-weight="900" font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs"
+              letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
           </svg>
         </div>
 
@@ -3294,7 +3260,8 @@
             <span>·</span>
             <a href="#">Studio Terms</a>
             <span>·</span>
-            <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener" class="f-credit-author">UXWITHJAYTHAKER</a></span>
+            <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener"
+                class="f-credit-author">UXWITHJAYTHAKER</a></span>
           </div>
           <div class="f-live-status">
             <span class="f-status-dot"></span>
@@ -3371,9 +3338,51 @@
         });
       }
 
-      /* ── Minimalist Team Typographic Line Archive Interactivity ── */
+      /* ── Minimalist Team Typographic Line Archive & Floating Portrait Portal ── */
       const teamRows = document.querySelectorAll('.team-index-row');
+      const teamFloatCard = document.getElementById('teamFloatingCard');
+      const tfcImg = document.getElementById('tfcImg');
+      const tfcName = document.getElementById('tfcName');
+      const tfcRole = document.getElementById('tfcRole');
+
+      let tfcTargetX = -300, tfcTargetY = -300;
+      let tfcCurrentX = -300, tfcCurrentY = -300;
+      let tfcActive = false;
+
+      function renderTeamFloat() {
+        if (teamFloatCard) {
+          tfcCurrentX += (tfcTargetX - tfcCurrentX) * 0.16;
+          tfcCurrentY += (tfcTargetY - tfcCurrentY) * 0.16;
+          teamFloatCard.style.left = `${tfcCurrentX}px`;
+          teamFloatCard.style.top = `${tfcCurrentY}px`;
+        }
+        requestAnimationFrame(renderTeamFloat);
+      }
+      renderTeamFloat();
+
       teamRows.forEach(row => {
+        row.addEventListener('mouseenter', (e) => {
+          const photo = row.getAttribute('data-photo');
+          const name = row.getAttribute('data-name');
+          const role = row.getAttribute('data-role');
+          if (tfcImg && photo) tfcImg.src = photo;
+          if (tfcName && name) tfcName.textContent = name;
+          tfcTargetX = e.clientX;
+          tfcTargetY = e.clientY;
+          if (teamFloatCard && window.innerWidth > 860) teamFloatCard.classList.add('active');
+          tfcActive = true;
+        });
+
+        row.addEventListener('mousemove', (e) => {
+          tfcTargetX = e.clientX;
+          tfcTargetY = e.clientY;
+        });
+
+        row.addEventListener('mouseleave', () => {
+          if (teamFloatCard) teamFloatCard.classList.remove('active');
+          tfcActive = false;
+        });
+
         row.addEventListener('click', () => {
           const isExpanded = row.classList.contains('expanded');
           teamRows.forEach(r => r.classList.remove('expanded'));
@@ -3413,7 +3422,7 @@
       /* ── Dark / Light Theme FAB ── */
       const themeFab = document.getElementById('theme-fab');
       const root = document.documentElement;
-      
+
       const savedTheme = localStorage.getItem('theme') || 'dark';
       root.setAttribute('data-theme', savedTheme);
 
@@ -3740,7 +3749,7 @@
         const rect = clientsDriver.getBoundingClientRect();
         const bH = clientsDriver.offsetHeight - vh;
         if (bH <= 0) return;
-        
+
         // Accurate viewport-relative progress:
         const scrolled = -rect.top;
         const bp = clamp(scrolled / bH, 0, 1);
