@@ -4,8 +4,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Under Development · 1928 Creative Studio</title>
-  <meta name="description" content="1928 Creative Studio — This page is currently under development." />
+  <title>Work &amp; Portfolio · 1928 Creative Studio</title>
+  <meta name="description"
+    content="Explore selected works and category-defining brand architectures engineered by 1928 Creative Studio." />
+  
+  <!-- Immediate Theme Initializer to prevent flashing -->
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -13,7 +23,7 @@
     rel="stylesheet" />
 
   <style>
-    /* ── Gotham Primary & Raleway Secondary Font System ── */
+    /* ── Font System (Project Core Fonts Only) ── */
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
@@ -21,6 +31,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
@@ -28,6 +39,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
@@ -35,6 +47,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
@@ -43,51 +56,61 @@
       font-display: swap;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     :root {
-      --bg: #ffffff;
-      --card-bg: #ffffff;
-      --ink: #111111;
-      --ink-dim: #888888;
-      --rule: rgba(0, 0, 0, 0.08);
-      --rule-m: rgba(0, 0, 0, 0.15);
+      --bg: #09090b;
+      --card-bg: #111115;
+      --card-hover: #16161c;
+      --ink: #f5f5f7;
+      --ink-mid: #9c9ca6;
+      --ink-dim: #5a5a66;
+      --rule: rgba(255, 255, 255, 0.08);
+      --rule-m: rgba(255, 255, 255, 0.16);
+      --rule-heavy: rgba(255, 255, 255, 0.28);
       --cr: #c8102e;
-      --cr-glow: rgba(200, 16, 46, 0.20);
+      --cr-glow: rgba(200, 16, 46, 0.35);
+      --cr-soft: rgba(200, 16, 46, 0.08);
       --sp: cubic-bezier(0.16, 1, 0.3, 1);
       --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
     }
 
-    [data-theme="dark"] {
-      --bg: #0a0a0a;
-      --card-bg: #141414;
-      --ink: #f2f2f2;
-      --ink-dim: #777777;
-      --rule: rgba(255, 255, 255, 0.10);
-      --rule-m: rgba(255, 255, 255, 0.18);
-      --cr: #e62343;
-      --cr-glow: rgba(230, 35, 67, 0.25);
+    [data-theme="light"] {
+      --bg: #f7f7f9;
+      --card-bg: #ffffff;
+      --card-hover: #f0f0f4;
+      --ink: #111114;
+      --ink-mid: #555562;
+      --ink-dim: #8e8e9c;
+      --rule: rgba(0, 0, 0, 0.08);
+      --rule-m: rgba(0, 0, 0, 0.15);
+      --rule-heavy: rgba(0, 0, 0, 0.25);
+      --cr: #c8102e;
+      --cr-glow: rgba(200, 16, 46, 0.22);
+      --cr-soft: rgba(200, 16, 46, 0.05);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--ink);
     }
 
     body {
       background: var(--bg);
       color: var(--ink);
       font-family: var(--font-secondary);
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: clamp(24px, 4vh, 48px) clamp(24px, 4vw, 56px);
-      transition: background .3s, color .3s;
-      position: relative;
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background 0.4s var(--sp), color 0.4s var(--sp);
     }
 
     /* ── Custom Cursor ── */
@@ -98,7 +121,7 @@
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
-      z-index: 9999;
+      z-index: 99999;
       transform: translate(-50%, -50%);
     }
 
@@ -109,46 +132,1191 @@
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
-      z-index: 9998;
+      z-index: 99998;
       transform: translate(-50%, -50%);
-      transition: transform .12s ease-out, width .25s, height .25s;
+      transition: width 0.25s, height 0.25s, border-color 0.25s;
     }
 
-    /* ── Minimal Top Navigation ── */
-    .top-bar {
+    /* ── Shared Layout Utilities ── */
+    .section-container {
       width: 100%;
-      max-width: 1500px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 2;
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+      position: relative;
     }
 
-    .brand-link {
-      display: flex;
+    .sec-tag-pill {
+      display: inline-flex;
       align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--ink);
-    }
-
-    .brand-title {
-      font-family: var(--font-primary);
-      font-weight: 900;
-      font-size: 1.25rem;
-      letter-spacing: -0.04em;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: clamp(10px, 0.85vw, 11.5px);
+      font-weight: 700;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
+      color: var(--cr);
+      background: var(--cr-soft);
+      border: 1px solid rgba(200, 16, 46, 0.24);
+      padding: 5px 14px;
+      border-radius: 999px;
+      margin-bottom: clamp(14px, 2vh, 22px);
     }
 
-    .brand-dot {
+    /* ═══════════════════════════════════════════════════════════
+       1. HERO SECTION (Adaptive Light & Dark Modes)
+       ═══════════════════════════════════════════════════════════ */
+    #portfolio-hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 48%, #13131a 0%, #08080a 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(24px, 4vh, 48px) clamp(20px, 4vw, 56px);
+      box-sizing: border-box;
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.4s var(--sp), border-color 0.4s var(--sp);
+    }
+
+    [data-theme="light"] #portfolio-hero {
+      background: radial-gradient(circle at 50% 48%, #ffffff 0%, #eceef3 100%);
+      border-bottom-color: var(--rule);
+    }
+
+    .hero-stage-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      max-width: 1100px;
+      width: 100%;
+      z-index: 10;
+      position: relative;
+    }
+
+    .hero-eyebrow-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cr);
+      background: rgba(200, 16, 46, 0.08);
+      border: 1px solid rgba(200, 16, 46, 0.25);
+      padding: 6px 16px;
+      border-radius: 999px;
+      margin-bottom: clamp(20px, 3vh, 32px);
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="light"] .hero-eyebrow-tag {
+      background: rgba(200, 16, 46, 0.06);
+      border-color: rgba(200, 16, 46, 0.22);
+    }
+
+    .het-dot {
       width: 6px;
       height: 6px;
       background: var(--cr);
       border-radius: 50%;
+      box-shadow: 0 0 8px var(--cr);
+    }
+
+    .hero-statement-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(34px, 4.6vw, 64px);
+      letter-spacing: -0.035em;
+      line-height: 1.22;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: clamp(20px, 3vh, 30px);
+      transition: color 0.4s var(--sp);
+    }
+
+    .hst-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(10px, 1.4vw, 18px);
+    }
+
+    .hero-rounded-media {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: clamp(76px, 8vw, 115px);
+      height: clamp(38px, 4.2vw, 56px);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(200, 16, 46, 0.25);
+      cursor: pointer;
+      vertical-align: middle;
+      position: relative;
+      transition: transform 0.4s var(--sp), width 0.4s var(--sp), border-color 0.3s, box-shadow 0.3s;
+    }
+
+    [data-theme="light"] .hero-rounded-media {
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 20px rgba(200, 16, 46, 0.12);
+    }
+
+    .hero-rounded-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s var(--sp);
+    }
+
+    .hero-rounded-media:hover {
+      width: clamp(98px, 10.5vw, 145px);
+      border-color: var(--cr);
+      transform: scale(1.06);
+      box-shadow: 0 12px 36px var(--cr-glow);
+    }
+
+    .hero-rounded-media:hover img {
+      transform: scale(1.18);
+    }
+
+    .hst-dot-red {
+      color: var(--cr);
+    }
+
+    .hero-manifesto {
+      font-family: var(--font-secondary);
+      font-size: clamp(15px, 1.25vw, 18.5px);
+      color: var(--ink-mid);
+      max-width: 680px;
+      line-height: 1.6;
+      font-weight: 400;
+      margin-bottom: clamp(28px, 4vh, 44px);
+      transition: color 0.4s var(--sp);
+    }
+
+    .hero-actions-deck {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-pill-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--rule-m);
+      padding: 12px 28px;
+      border-radius: 999px;
+      transition: all 0.35s var(--sp);
+    }
+
+    [data-theme="light"] .hero-pill-cta {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: var(--rule-m);
+      color: var(--ink);
+    }
+
+    .hero-pill-cta:hover {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 35px var(--cr-glow);
+    }
+
+    .hpc-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+
+    .hero-pill-cta:hover .hpc-dot {
+      background: #fff;
+    }
+
+    .hpc-arrow {
+      font-size: 12px;
+      transition: transform 0.3s;
+    }
+
+    .hero-pill-cta:hover .hpc-arrow {
+      transform: translateY(3px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       2. PORTFOLIO ARCHIVE WRAPPER & STICKY FILTER BAR
+       ═══════════════════════════════════════════════════════════ */
+    #portfolio-archive-wrapper {
+      position: relative;
+      width: 100%;
+      background: var(--bg);
+      transition: background 0.4s var(--sp);
+    }
+
+    #filter-bar-wrap {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: rgba(9, 9, 11, 0.94);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--rule);
+      padding: 18px 0 20px;
+      transition: transform 0.4s var(--sp), opacity 0.35s ease, background 0.4s var(--sp), border-color 0.4s;
+    }
+
+    #filter-bar-wrap.hide-for-footer {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    [data-theme="light"] #filter-bar-wrap {
+      background: rgba(247, 247, 249, 0.96);
+      border-bottom-color: var(--rule);
+    }
+
+    .filter-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      overflow: visible;
+      padding: 10px 16px 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .filter-bar-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      font-family: var(--font-primary);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--rule-m);
+      padding: 10px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s var(--sp);
+      flex-shrink: 0;
+    }
+
+    [data-theme="light"] .filter-btn {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: var(--rule-m);
+      color: var(--ink-mid);
+    }
+
+    .filter-btn:hover {
+      color: var(--ink);
+      border-color: var(--ink-mid);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+    }
+
+    [data-theme="light"] .filter-btn:hover {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: var(--ink);
+      color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      color: var(--bg);
+      background: var(--ink);
+      border-color: var(--ink);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+      transform: translateY(-1px);
+    }
+
+    [data-theme="dark"] .filter-btn.active {
+      color: #09090b;
+      background: #ffffff;
+      border-color: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 255, 255, 0.12);
+    }
+
+    [data-theme="light"] .filter-btn.active {
+      color: #ffffff;
+      background: #09090b;
+      border-color: #09090b;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
+    }
+
+    .filter-count {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      opacity: 0.7;
+      font-weight: 700;
+    }
+
+    .filter-icon-plus {
+      font-size: 12px;
+      line-height: 1;
+      transition: transform 0.3s;
+    }
+
+    .filter-btn.active .filter-icon-plus {
+      transform: rotate(45deg);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       3. EDITORIAL ASYMMETRIC BENTO GRID (DZ!NR Architecture)
+          - Every card image has the EXACT SAME UNIFORM HEIGHT
+          - Widths alternate (13 cols vs 7 cols) with zero gaps
+       ═══════════════════════════════════════════════════════════ */
+    #portfolio-grid-sec {
+      padding: clamp(48px, 6vh, 90px) 0 clamp(80px, 10vh, 140px);
+    }
+
+    .dzinr-bento-matrix {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: clamp(24px, 3vw, 44px);
+      width: 100%;
+    }
+
+    /* Bento Column Spans */
+    .bento-wide {
+      grid-column: span 13;
+    }
+
+    .bento-compact {
+      grid-column: span 7;
+    }
+
+    .bento-full {
+      grid-column: span 20;
+    }
+
+    .dzinr-project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      width: 100%;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    /* CARD IMAGE CONTAINER: EXACT SAME UNIFORM HEIGHT ON ALL CARDS */
+    .dpc-img-wrap {
+      position: relative;
+      width: 100%;
+      height: clamp(440px, 58vh, 680px);
+      overflow: hidden;
+      border-radius: 18px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      transition: border-color 0.35s, box-shadow 0.35s, background 0.4s;
+    }
+
+    [data-theme="light"] .dpc-img-wrap {
+      background: #e8e8ed;
+      border-color: var(--rule);
+    }
+
+    .dpc-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dzinr-project-card:hover .dpc-img-wrap {
+      border-color: var(--cr);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 30px var(--cr-glow);
+    }
+
+    .dzinr-project-card:hover .dpc-img-wrap img {
+      transform: scale(1.06);
+    }
+
+    .dpc-tag-pill {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 2;
+      background: rgba(10, 10, 14, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="light"] .dpc-tag-pill {
+      background: rgba(255, 255, 255, 0.92);
+      color: #111114;
+      border-color: rgba(0, 0, 0, 0.12);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .dpc-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 2px 8px;
+      min-height: 52px;
+    }
+
+    .dpc-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dpc-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(20px, 1.8vw, 26px);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--ink);
+      transition: color 0.3s;
+    }
+
+    .dzinr-project-card:hover .dpc-title {
+      color: var(--cr);
+    }
+
+    .dpc-category-sub {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      color: var(--ink-dim);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .dzinr-project-card:hover .dpc-category-sub {
+      color: var(--ink-mid);
+    }
+
+    .dpc-arrow-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-m);
+      background: rgba(255, 255, 255, 0.03);
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      flex-shrink: 0;
+      transition: transform 0.35s var(--sp), background 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    [data-theme="light"] .dpc-arrow-circle {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: var(--rule-m);
+      color: var(--ink);
+    }
+
+    .dpc-arrow-circle svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transform: rotate(-45deg);
+      transition: transform 0.35s var(--sp);
+    }
+
+    .dzinr-project-card:hover .dpc-arrow-circle {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+    }
+
+    .dzinr-project-card:hover .dpc-arrow-circle svg {
+      transform: rotate(0deg);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       4. PROJECT DETAIL DEEP-DIVE MODAL DRAWER
+       ═══════════════════════════════════════════════════════════ */
+    .project-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9990;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .project-modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .project-modal-stage {
+      width: 100%;
+      max-width: 1400px;
+      height: 92vh;
+      background: var(--card-bg);
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      border: 1px solid var(--rule-m);
+      border-bottom: none;
+      box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.8);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s var(--sp);
+      position: relative;
+    }
+
+    .project-modal-stage::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .project-modal-backdrop.active .project-modal-stage {
+      transform: translateY(0);
+    }
+
+    .modal-close-btn {
+      position: sticky;
+      top: 24px;
+      right: 24px;
+      margin-left: auto;
+      z-index: 9999;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(10, 10, 14, 0.8);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid var(--rule-m);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="light"] .modal-close-btn {
+      background: rgba(255, 255, 255, 0.9);
+      color: #111114;
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-close-btn:hover {
+      transform: rotate(90deg) scale(1.1);
+      background: var(--cr) !important;
+      border-color: var(--cr) !important;
+      color: #fff !important;
+    }
+
+    .modal-content-wrap {
+      padding: clamp(24px, 4vw, 60px);
+      margin-top: -30px;
+    }
+
+    .modal-hero-banner {
+      width: 100%;
+      height: clamp(340px, 45vh, 560px);
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: clamp(30px, 4vh, 50px);
+      border: 1px solid var(--rule);
+    }
+
+    .modal-hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10, 10, 14, 0.95) 0%, rgba(10, 10, 14, 0.2) 60%, rgba(10, 10, 14, 0) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(24px, 4vw, 48px);
+    }
+
+    .modal-hero-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(32px, 4.5vw, 64px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .modal-info-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: clamp(30px, 4vw, 60px);
+      margin-bottom: clamp(48px, 6vh, 76px);
+    }
+
+    .modal-section-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(20px, 1.8vw, 26px);
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      color: var(--ink);
+    }
+
+    .modal-desc-body {
+      font-size: clamp(15px, 1.2vw, 17.5px);
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .modal-spec-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="light"] .modal-spec-card {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: var(--rule);
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 12px;
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .spec-lbl {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 4px;
+    }
+
+    .spec-val {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    /* ── Editorial Project Visual Showcase (DZ!NR-Style Multi-Composition Layout) ── */
+    .modal-project-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(20px, 2.5vw, 36px);
+      margin-bottom: clamp(52px, 7vh, 84px);
+    }
+
+    .modal-gal-card {
+      border-radius: clamp(20px, 2vw, 28px);
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      background: #111115;
+      position: relative;
+      transition: border-color 0.4s var(--sp), box-shadow 0.4s var(--sp);
+    }
+
+    [data-theme="light"] .modal-gal-card {
+      background: #f0f0f4;
+      border-color: var(--rule);
+    }
+
+    .modal-gal-card:hover {
+      border-color: var(--rule-m);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .modal-gal-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.75s var(--sp);
+    }
+
+    .modal-gal-card:hover img {
+      transform: scale(1.03);
+    }
+
+    /* 2-Column Balanced Grid */
+    .modal-gal-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(16px, 2.2vw, 32px);
+    }
+
+    .modal-gal-2col .modal-gal-card {
+      aspect-ratio: 16 / 11;
+    }
+
+    /* Full-Width Cinema Banner */
+    .modal-gal-full {
+      width: 100%;
+      height: clamp(340px, 48vh, 620px);
+    }
+
+    /* 3-Column Asset Trio */
+    .modal-gal-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(14px, 1.8vw, 26px);
+    }
+
+    .modal-gal-3col .modal-gal-card {
+      aspect-ratio: 4 / 3;
+    }
+
+    /* Modal End Benchmark CTA */
+    .modal-cta-deck {
+      border-top: 1.5px solid var(--rule);
+      padding-top: clamp(36px, 5vh, 52px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 28px;
+    }
+
+    .modal-cta-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(22px, 2.2vw, 32px);
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin: 0 0 6px 0;
+    }
+
+    .modal-cta-sub {
+      font-size: clamp(14px, 1.1vw, 16px);
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    .modal-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 36px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: var(--cr);
+      border: 1px solid var(--cr);
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 12px 35px var(--cr-glow);
+      transition: all 0.35s var(--sp);
+      flex-shrink: 0;
+    }
+
+    .modal-cta-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 45px rgba(200, 16, 46, 0.45);
+      background: #e01436;
+    }
+
+    .mcb-arrow {
+      font-size: 14px;
+      transition: transform 0.3s;
+    }
+
+    .modal-cta-btn:hover .mcb-arrow {
+      transform: translate(3px, -3px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       5. EXACT UNIFIED LUXURY FOOTER (Identical to Home Page)
+       ═══════════════════════════════════════════════════════════ */
+    #footer-driver {
+      position: relative;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      box-sizing: border-box;
+      z-index: 10;
+      transition: background 0.4s var(--sp);
+    }
+
+    .footer-luxury-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: clamp(36px, 5vw, 64px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
+      padding: clamp(52px, 6.5vh, 76px) clamp(40px, 5vw, 72px) clamp(16px, 2vh, 24px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1640px;
+      min-height: clamp(560px, 78vh, 740px);
+      margin: auto;
+      gap: clamp(72px, 11vh, 130px);
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+      transition: background 0.4s var(--sp), border-color 0.4s;
+    }
+
+    .f-header-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1.3fr 1.4fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: flex-start;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      max-width: 340px;
+      transition: color 0.4s var(--sp);
+    }
+
+    .f-col-label {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 20px;
+    }
+
+    .f-links-clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .f-links-clean a {
+      font-family: var(--font-primary);
+      font-weight: 500;
+      font-size: 0.94rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color .2s, transform .2s;
       display: inline-block;
     }
 
-    /* ── Floating Fixed Theme Toggle Button (Bottom-Right Corner) ── */
+    .f-links-clean a:hover {
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    .f-social-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .f-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all .25s var(--sp);
+    }
+
+    .f-chip:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .f-chip .f-chip-icon {
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .f-chip .f-chip-icon svg {
+      width: 13px;
+      height: 13px;
+      display: block;
+    }
+
+    .f-cta-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f-action-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: transform .25s var(--sp), box-shadow .25s;
+    }
+
+    .f-action-pill:hover {
+      transform: translateY(-3px);
+    }
+
+    .f-action-pill.cta-primary {
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(200, 16, 46, 0.22);
+    }
+
+    .f-action-pill.cta-secondary {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+    }
+
+    .f-action-pill.cta-secondary:hover {
+      border-color: var(--ink);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .f-action-txt {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .f-action-heading {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.96rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f-action-sub {
+      font-family: var(--font-primary);
+      font-size: 0.74rem;
+      opacity: 0.78;
+    }
+
+    .f-action-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .cta-primary .f-action-arrow {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .cta-secondary .f-action-arrow {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line ── */
+    .f-bottom-cluster {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+    }
+
+    .f-giant-cut-wrap {
+      width: 100%;
+      height: clamp(34px, 5.2vw, 84px);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      pointer-events: none;
+      user-select: none;
+      transform-origin: center bottom;
+      will-change: height, transform;
+    }
+
+    .f-giant-cut-svg {
+      width: 100%;
+      height: clamp(34px, 5.2vw, 84px);
+      display: block;
+      color: var(--ink);
+      overflow: hidden;
+      transform-origin: center bottom;
+      will-change: height, transform;
+      transition: color 0.4s;
+    }
+
+    .f-giant-cut-svg text {
+      transform-origin: center bottom;
+      will-change: transform;
+    }
+
+    /* ── Minimal Sub-Footer Meta Bar with Horizontal Line ── */
+    .f-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1.5px solid var(--rule);
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin: 0;
+      transition: border-color 0.4s, color 0.4s;
+    }
+
+    .f-meta-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .f-meta-links a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color .2s;
+    }
+
+    .f-meta-links a:hover {
+      color: var(--cr);
+    }
+
+    .f-credit-author {
+      font-weight: 700;
+      color: var(--ink-mid);
+      transition: color .2s;
+    }
+
+    .f-meta-links a:hover .f-credit-author {
+      color: var(--cr);
+    }
+
+    .f-live-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .f-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      animation: fStatusPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes fStatusPulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.4;
+        transform: scale(0.85);
+      }
+    }
+
+    /* ── Floating Theme Toggle FAB ── */
     #theme-fab {
       position: fixed;
       bottom: 28px;
@@ -160,13 +1328,20 @@
       background: var(--card-bg);
       border: 1.5px solid var(--rule-m);
       color: var(--ink);
-      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
       display: grid;
       place-items: center;
       cursor: pointer;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      transition: transform .3s var(--sp), border-color .3s, box-shadow .3s, background .3s;
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.4s, color 0.4s;
+    }
+
+    [data-theme="light"] #theme-fab {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.15);
+      color: #111114;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
     }
 
     #theme-fab:hover {
@@ -183,11 +1358,6 @@
       stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
-      transition: transform .4s var(--sp);
-    }
-
-    #theme-fab:hover svg {
-      transform: rotate(25deg);
     }
 
     [data-theme="dark"] #theme-fab .icon-moon,
@@ -200,176 +1370,526 @@
       display: block;
     }
 
-    /* ── Creative Centered Hero Statement ── */
-    .center-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      max-width: 900px;
-      margin: auto;
-      z-index: 2;
+    /* ── Responsive Queries ── */
+    @media (max-width: 1024px) {
+      .f-header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
     }
 
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Space Mono', var(--font-secondary), monospace;
-      font-size: clamp(0.72rem, 0.9vw, 0.82rem);
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--cr);
-      padding: 8px 18px;
-      background: var(--cr-glow);
-      border-radius: 999px;
-      margin-bottom: clamp(24px, 3.5vh, 36px);
+    @media (max-width: 991px) {
+      .filter-bar-inner {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 10px 20px 16px;
+      }
+
+      .dzinr-bento-matrix {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .bento-wide,
+      .bento-compact,
+      .bento-full {
+        grid-column: span 1 !important;
+      }
+
+      .dpc-img-wrap {
+        height: clamp(360px, 46vh, 520px);
+      }
+
+      .modal-gal-2col {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .modal-gal-3col {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .modal-gal-full {
+        height: clamp(260px, 36vh, 420px);
+      }
     }
 
-    .pulse-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--cr);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--cr);
-      animation: pulse 2s infinite ease-in-out;
-    }
+    @media (max-width: 640px) {
+      .f-header-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.8); opacity: 0.3; }
-    }
-
-    .statement-title {
-      font-family: var(--font-primary);
-      font-size: clamp(38px, 6.5vw, 92px);
-      font-weight: 900;
-      line-height: 0.98;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      color: var(--ink);
-      margin-bottom: clamp(28px, 4vh, 44px);
-    }
-
-    .statement-title em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--cr);
-      display: inline-block;
-      letter-spacing: -0.02em;
-    }
-
-    .return-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 32px;
-      background: var(--ink);
-      color: var(--bg);
-      border-radius: 999px;
-      text-decoration: none;
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: 0.92rem;
-      letter-spacing: 0.04em;
-      transition: all .25s var(--sp);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
-    }
-
-    .return-pill:hover {
-      background: var(--cr);
-      transform: translateY(-3px);
-      box-shadow: 0 14px 36px var(--cr-glow);
-    }
-
-    .return-pill .arr {
-      transition: transform .25s var(--sp);
-    }
-
-    .return-pill:hover .arr {
-      transform: translate(3px, -3px);
-    }
-
-    /* ── Minimal Bottom Sub-Bar ── */
-    .bottom-bar {
-      width: 100%;
-      max-width: 1500px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: 'Space Mono', var(--font-secondary), monospace;
-      font-size: 0.74rem;
-      color: var(--ink-dim);
-      letter-spacing: 0.08em;
-      z-index: 2;
-    }
-
-    .bottom-bar a {
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .bottom-bar a:hover {
-      color: var(--cr);
-    }
-
-    @media (max-width: 600px) {
-      .bottom-bar {
+      .f-meta-bar {
         flex-direction: column;
-        gap: 8px;
-        text-align: center;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .modal-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-cta-deck {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- Custom Cursor -->
+  <!-- Custom Interactive Cursor -->
   <div class="c-dot" id="cDot"></div>
   <div class="c-ring" id="cRing"></div>
 
-  <!-- Minimal Top Bar -->
-  <header class="top-bar">
-    <a href="index.html" class="brand-link">
-      <span class="brand-title">1928</span>
-      <span class="brand-dot"></span>
-    </a>
-  </header>
+  <!-- ═══════════════════════════════════════════════════════════
+       1. HERO SECTION (Adaptive Light & Dark Modes)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="portfolio-hero">
+    <div class="hero-stage-container">
+      <div class="hero-eyebrow-tag">
+        <span class="het-dot"></span>
+        <span>PORTFOLIO ARCHIVE</span>
+      </div>
 
-  <!-- Creative Centered Label Statement -->
-  <main class="center-container">
-    <div class="status-pill">
-      <span class="pulse-dot"></span>
-      <span>1928 Creative Studio</span>
+      <h1 class="hero-statement-title">
+        <div class="hst-line">
+          <span>CURATED</span>
+          <div class="hero-rounded-media" data-project-id="aurora" title="Explore Aurora Horology">
+            <img src="img/port-chronos.jpg" alt="Aurora Horology Preview" />
+          </div>
+          <span>WORKS</span>
+        </div>
+        <div class="hst-line" style="margin-top: 6px;">
+          <span>SHAPING</span>
+          <div class="hero-rounded-media" data-project-id="aetherion" title="Explore Aetherion EV">
+            <img src="img/port-veloce.jpg" alt="Aetherion EV Preview" />
+          </div>
+          <span>DISTINCTION<span class="hst-dot-red">.</span></span>
+        </div>
+      </h1>
+
+      <p class="hero-manifesto">
+        Engineering category-defining brand architectures, spatial identities, and sensory digital platforms for
+        ambitious global leaders.
+      </p>
+
+      <div class="hero-actions-deck">
+        <a href="#filter-bar-wrap" class="hero-pill-cta" id="heroScrollCue">
+          <span class="hpc-dot"></span>
+          <span>EXPLORE PORTFOLIO</span>
+          <span class="hpc-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2 & 3. PORTFOLIO ARCHIVE CONTAINER
+       (Binds sticky filter bar to the portfolio section only)
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="portfolio-archive-wrapper">
+    <!-- Sticky Filter Bar (Sticks within archive, scrolls away before footer) -->
+    <div id="filter-bar-wrap">
+      <div class="section-container">
+        <div class="filter-bar-inner" id="filterTabsCluster">
+          <button class="filter-btn active" data-filter="all">
+            <span>ALL</span>
+            <sup class="filter-count">(08)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="brand-identity">
+            <span>BRAND IDENTITY</span>
+            <sup class="filter-count">(05)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="logo-design">
+            <span>LOGO &amp; SYSTEM</span>
+            <sup class="filter-count">(03)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="web-design">
+            <span>WEBSITE &amp; WEBGL</span>
+            <sup class="filter-count">(04)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="social-marketing">
+            <span>SOCIAL &amp; CAMPAIGN</span>
+            <sup class="filter-count">(03)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="spatial-packaging">
+            <span>SPATIAL &amp; PACKAGING</span>
+            <sup class="filter-count">(03)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+        </div>
+      </div>
     </div>
 
-    <h1 class="statement-title">
-      This page is under <br />
-      <em>development.</em>
-    </h1>
+    <!-- Editorial Asymmetric Bento Grid -->
+    <section id="portfolio-grid-sec">
+      <div class="section-container">
+        <div class="dzinr-bento-matrix" id="matrixGrid">
 
-    <a href="index.html" class="return-pill">
-      <span>Return to Homepage</span>
-      <span class="arr">↗</span>
-    </a>
-  </main>
+          <!-- 01 AURORA HOROLOGY (Wide: 13 cols) -->
+          <div class="dzinr-project-card bento-wide" data-category="brand-identity web-design logo-design" data-project-id="aurora">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Horology &amp; WebGL</span>
+              <img src="img/port-chronos.jpg" alt="Aurora Horology" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Aurora Chronometer Systems</h3>
+                <p class="dpc-category-sub">Swiss Luxury Brand Identity &amp; 3D Vault</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
 
-  <!-- Minimal Bottom Bar -->
-  <footer class="bottom-bar">
-    <div>
-      <span>1928 Creative Studio © 2026</span>
-      <span> · </span>
-      <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener">UXWITHJAYTHAKER</a></span>
+          <!-- 02 VERTEX ARCHITECTS (Compact: 7 cols) -->
+          <div class="dzinr-project-card bento-compact" data-category="logo-design brand-identity spatial-packaging" data-project-id="vertex">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Spatial System</span>
+              <img src="img/port-spectra.jpg" alt="Vertex Architects" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Vertex Architects</h3>
+                <p class="dpc-category-sub">Geometric Logo Architecture</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 03 SOLSTICE PERFUME (Compact: 7 cols) -->
+          <div class="dzinr-project-card bento-compact" data-category="logo-design brand-identity spatial-packaging" data-project-id="solstice">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Packaging Craft</span>
+              <img src="img/port-lumina.jpg" alt="Solstice Perfume" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Solstice Haute Parfumerie</h3>
+                <p class="dpc-category-sub">Fluted Monolithic Glass Vessel</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 04 AETHERION EV (Wide: 13 cols) -->
+          <div class="dzinr-project-card bento-wide" data-category="web-design brand-identity" data-project-id="aetherion">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Cyber Cockpit</span>
+              <img src="img/port-veloce.jpg" alt="Aetherion EV" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Aetherion Cyber Telemetry</h3>
+                <p class="dpc-category-sub">Real-Time WebGL Automotive Cockpit</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 05 QUANTUM CHROME (Wide: 13 cols) -->
+          <div class="dzinr-project-card bento-wide" data-category="web-design logo-design brand-identity" data-project-id="quantum">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Neural Platform</span>
+              <img src="img/port-kroma.jpg" alt="Quantum Chrome Engine" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Quantum Chrome Engine</h3>
+                <p class="dpc-category-sub">Generative AI Shaders &amp; Design System</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 06 MILAN MOMENTUM FW24 (Compact: 7 cols) -->
+          <div class="dzinr-project-card bento-compact" data-category="social-marketing spatial-packaging" data-project-id="milan">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Runway Takeover</span>
+              <img src="img/port-zenith.jpg" alt="Milan Momentum" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Milan Runway Momentum</h3>
+                <p class="dpc-category-sub">Global Omnichannel Social Campaign</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 07 LOFY SPATIAL (Compact: 7 cols) -->
+          <div class="dzinr-project-card bento-compact" data-category="brand-identity social-marketing" data-project-id="lofy">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Modular Flagship</span>
+              <img src="assets/services/svc_1.jpg" alt="LOFY Modular Architecture" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">LOFY Spatial Environments</h3>
+                <p class="dpc-category-sub">Sustainable Architectural Brand System</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 08 ST. REGIS MUMBAI (Wide: 13 cols) -->
+          <div class="dzinr-project-card bento-wide" data-category="brand-identity spatial-packaging social-marketing" data-project-id="stregis">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Luxury Hospitality</span>
+              <img src="assets/services/svc_2.jpg" alt="St. Regis Mumbai" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">St. Regis Spatial Monogram</h3>
+                <p class="dpc-category-sub">Sensory Hospitality Suite &amp; Print Architecture</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       4. PROJECT DETAIL DEEP-DIVE MODAL DRAWER
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="project-modal-backdrop" id="projectModal" aria-hidden="true">
+    <div class="project-modal-stage">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Case Study">✕</button>
+
+      <div class="modal-content-wrap">
+        <!-- Hero Banner -->
+        <div class="modal-hero-banner">
+          <img id="mHeroImg" src="img/port-chronos.jpg" alt="Case Hero" />
+          <div class="modal-hero-overlay">
+            <span class="sec-tag-pill" id="mHeroCat" style="width:fit-content; margin-bottom: 8px;">Brand Identity</span>
+            <h2 class="modal-hero-title" id="mHeroTitle">Aurora Chronometer Systems</h2>
+          </div>
+        </div>
+
+        <!-- Overview & Client Meta Grid -->
+        <div class="modal-info-grid">
+          <div>
+            <h3 class="modal-section-title">Strategic Overview</h3>
+            <p class="modal-desc-body" id="mOverviewText">
+              Aurora Horology commissioned 1928 Creative Studio to architect an enduring brand ecosystem that honors Swiss horological precision while establishing commanding digital authority for the next generation of luxury collectors. Through monolithic typographic architecture, bespoke crimson color physics, and a zero-latency 3D WebGL boutique vault, we transformed the brand into an iconic collector centerpiece.
+            </p>
+          </div>
+
+          <div class="modal-spec-card">
+            <div class="spec-item">
+              <span class="spec-lbl">Client</span>
+              <span class="spec-val" id="mClientName">Aurora Horology Ltd.</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Sector</span>
+              <span class="spec-val" id="mSector">Swiss Luxury Horology</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Deliverables</span>
+              <span class="spec-val" id="mDeliverables">Identity, Packaging, WebGL Vault</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Timeline</span>
+              <span class="spec-val" id="mTimeline">6 Months · Global Launch</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Visual Gallery Showcase (DZ!NR Full Editorial Stack) -->
+        <div class="modal-project-gallery">
+          <!-- Composition 1: 2-Column Side-by-Side -->
+          <div class="modal-gal-2col">
+            <div class="modal-gal-card">
+              <img id="mGal1" src="img/port-chronos.jpg" alt="Asset Detail 1" />
+            </div>
+            <div class="modal-gal-card">
+              <img id="mGal2" src="img/port-spectra.jpg" alt="Asset Detail 2" />
+            </div>
+          </div>
+
+          <!-- Composition 2: Full-Width Cinema Banner -->
+          <div class="modal-gal-card modal-gal-full">
+            <img id="mGalFull1" src="img/wc-top.jpg" alt="Master Asset Showcase" />
+          </div>
+
+          <!-- Composition 3: 3-Column Detail Trio -->
+          <div class="modal-gal-3col">
+            <div class="modal-gal-card">
+              <img id="mGal3" src="img/port-lumina.jpg" alt="Asset Detail 3" />
+            </div>
+            <div class="modal-gal-card">
+              <img id="mGal4" src="img/wc-l1.jpg" alt="Asset Detail 4" />
+            </div>
+            <div class="modal-gal-card">
+              <img id="mGal5" src="img/wc-r1.jpg" alt="Asset Detail 5" />
+            </div>
+          </div>
+
+          <!-- Composition 4: Full-Width Panoramic Spotlight -->
+          <div class="modal-gal-card modal-gal-full">
+            <img id="mGalFull2" src="img/wc-bot.jpg" alt="Atmospheric Environment" />
+          </div>
+
+          <!-- Composition 5: 2-Column Closing Duo -->
+          <div class="modal-gal-2col">
+            <div class="modal-gal-card">
+              <img id="mGal6" src="img/port-veloce.jpg" alt="Asset Detail 6" />
+            </div>
+            <div class="modal-gal-card">
+              <img id="mGal7" src="img/port-kroma.jpg" alt="Asset Detail 7" />
+            </div>
+          </div>
+        </div>
+
+        <!-- End Separator & Benchmark CTA -->
+        <div class="modal-cta-deck">
+          <div>
+            <span class="sec-tag-pill" style="margin-bottom: 8px;">COMMISSION &amp; INQUIRY</span>
+            <h3 class="modal-cta-title">Ready to build a similar benchmark?</h3>
+            <p class="modal-cta-sub">Let’s engineer an enduring, category-defining visual identity system for your brand.</p>
+          </div>
+          <a href="contact.html" class="modal-cta-btn">
+            <span>Initiate Project Commission</span>
+            <span class="mcb-arrow">↗</span>
+          </a>
+        </div>
+      </div>
     </div>
-    <span id="liveClock">Ahmedabad, India · 10:42 PM · 28°C ☀</span>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       5. EXACT UNIFIED LUXURY FOOTER (Exact Match to Home Page)
+       ═══════════════════════════════════════════════════════════ -->
+  <footer id="footer-driver">
+    <div class="footer-luxury-card">
+
+      <!-- Top Grid: Statement, Links, Socials, CTA -->
+      <div class="f-header-grid">
+        <div class="f-desc-col">
+          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in
+            Ahmedabad.</p>
+        </div>
+
+        <div class="f-nav-col">
+          <div class="f-col-label">Explore</div>
+          <ul class="f-links-clean">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="blogs.html">Perspectives</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="f-social-col">
+          <div class="f-col-label">Follow us</div>
+          <div class="f-social-chips">
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">𝕏</span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">in</span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://behance.net" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">Bē</span>
+              <span>@1928creativestudio</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="f-cta-column">
+          <a href="contact.html" class="f-action-pill cta-primary">
+            <div class="f-action-txt">
+              <span class="f-action-heading">Call 1928 Creative Studio</span>
+              <span class="f-action-sub">Let's work together</span>
+            </div>
+            <div class="f-action-arrow">↗</div>
+          </a>
+
+          <a href="services.html" class="f-action-pill cta-secondary">
+            <div class="f-action-txt">
+              <span class="f-action-heading">Studio Work &amp; Inquiry</span>
+              <span class="f-action-sub">Creative capabilities</span>
+            </div>
+            <div class="f-action-arrow">↗</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Cluster: Full-Bleed 50% Sliced Headline touching the Line + Meta Bar -->
+      <div class="f-bottom-cluster">
+        <div class="f-giant-cut-wrap">
+          <svg class="f-giant-cut-svg" viewBox="0 0 1600 65" preserveAspectRatio="none">
+            <text x="0" y="115"
+              font-family="'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+              font-weight="900" font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs"
+              letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
+          </svg>
+        </div>
+
+        <!-- Sub-Footer Meta Bar with Horizontal Line Divider -->
+        <div class="f-meta-bar">
+          <div class="f-meta-links">
+            <span>1928 Creative Studio © 2026</span>
+            <span>·</span>
+            <a href="#">Privacy Policy</a>
+            <span>·</span>
+            <a href="#">Studio Terms</a>
+            <span>·</span>
+            <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener"
+                class="f-credit-author">UXWITHJAYTHAKER</a></span>
+          </div>
+          <div class="f-live-status">
+            <span class="f-status-dot"></span>
+            <span id="footer-live-clock">Ahmedabad, India · 10:42 PM · 28°C ☀</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </footer>
 
-  <!-- Floating Bottom-Right Theme Toggle Button -->
-  <button id="theme-fab" aria-label="Toggle light/dark theme" title="Toggle Theme">
-    <!-- Sun Icon (shown in Dark mode to prompt switching to Light) -->
+  <!-- Floating Fixed Theme Toggle Button -->
+  <button id="theme-fab" aria-label="Toggle Dark/Light Mode" title="Toggle Light/Dark Theme">
     <svg class="icon-sun" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -381,68 +1901,576 @@
       <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
       <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
     </svg>
-    <!-- Moon Icon (shown in Light mode to prompt switching to Dark) -->
     <svg class="icon-moon" viewBox="0 0 24 24">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
   </button>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       JAVASCRIPT LOGIC & INTERACTIONS
+       ═══════════════════════════════════════════════════════════ -->
   <script>
     (function () {
-      'use strict';
+      /* ── Math Helpers ── */
+      function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
-      // Live Clock
-      function updateClock() {
-        const clockEl = document.getElementById('liveClock');
-        if (!clockEl) return;
-        const now = new Date();
-        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
-        const timeStr = now.toLocaleTimeString('en-US', options);
-        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
-      }
-      updateClock();
-      setInterval(updateClock, 30000);
-
-      // Custom Cursor
-      const cDot = document.getElementById('cDot');
-      const cRing = document.getElementById('cRing');
-      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-      let ringX = mouseX, ringY = mouseY;
+      /* ── Custom Cursor Logic ── */
+      const dot = document.getElementById('cDot');
+      const ring = document.getElementById('cRing');
+      let mx = -100, my = -100, rx = -100, ry = -100;
 
       window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        if (cDot) {
-          cDot.style.left = mouseX + 'px';
-          cDot.style.top = mouseY + 'px';
+        mx = e.clientX;
+        my = e.clientY;
+        if (dot) {
+          dot.style.left = mx + 'px';
+          dot.style.top = my + 'px';
         }
       }, { passive: true });
 
       function renderCursor() {
-        ringX += (mouseX - ringX) * 0.18;
-        ringY += (mouseY - ringY) * 0.18;
-        if (cRing) {
-          cRing.style.left = ringX + 'px';
-          cRing.style.top = ringY + 'px';
+        rx += (mx - rx) * 0.18;
+        ry += (my - ry) * 0.18;
+        if (ring) {
+          ring.style.left = rx + 'px';
+          ring.style.top = ry + 'px';
         }
         requestAnimationFrame(renderCursor);
       }
       renderCursor();
 
-      // Floating Theme Toggle Sync
+      document.querySelectorAll('a, button, .dzinr-project-card, .hero-rounded-media, .f-chip, .f-action-pill').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if (ring) {
+            ring.style.width = '54px';
+            ring.style.height = '54px';
+            ring.style.borderColor = 'rgba(200, 16, 46, 0.75)';
+          }
+        });
+        el.addEventListener('mouseleave', () => {
+          if (ring) {
+            ring.style.width = '32px';
+            ring.style.height = '32px';
+            ring.style.borderColor = 'var(--cr)';
+          }
+        });
+      });
+
+      /* ── Dynamic Bento Re-Layout Filter Engine (DZ!NR Style with Zero Gaps) ── */
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const projectCards = Array.from(document.querySelectorAll('.dzinr-project-card'));
+
+      function applyFilter(filter) {
+        const visibleCards = [];
+
+        projectCards.forEach(card => {
+          const categories = card.getAttribute('data-category').split(' ');
+          if (filter === 'all' || categories.includes(filter)) {
+            card.style.display = 'flex';
+            visibleCards.push(card);
+          } else {
+            card.style.display = 'none';
+            card.classList.remove('bento-wide', 'bento-compact', 'bento-full');
+          }
+        });
+
+        // Dynamically assign alternating 13/7 bento spans across all visible items
+        for (let i = 0; i < visibleCards.length; i++) {
+          const card = visibleCards[i];
+          card.classList.remove('bento-wide', 'bento-compact', 'bento-full');
+
+          // If there is an odd item left alone on the last row, expand it to full 20 columns
+          const isLastOdd = (i === visibleCards.length - 1) && (visibleCards.length % 2 === 1);
+          if (isLastOdd && visibleCards.length > 1) {
+            card.classList.add('bento-full');
+            continue;
+          }
+
+          const pairIndex = Math.floor(i / 2);
+          const isFirstInPair = (i % 2 === 0);
+
+          if (pairIndex % 2 === 0) {
+            // Row pattern: Wide (13 cols) + Compact (7 cols)
+            if (isFirstInPair) {
+              card.classList.add('bento-wide');
+            } else {
+              card.classList.add('bento-compact');
+            }
+          } else {
+            // Row pattern: Compact (7 cols) + Wide (13 cols)
+            if (isFirstInPair) {
+              card.classList.add('bento-compact');
+            } else {
+              card.classList.add('bento-wide');
+            }
+          }
+        }
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.getAttribute('data-filter');
+          applyFilter(filter);
+        });
+      });
+
+      // Initial filter pass
+      applyFilter('all');
+
+      /* ── Sticky Filter Hide on Footer Scroll (Dismiss smoothly when entering footer) ── */
+      const filterWrap = document.getElementById('filter-bar-wrap');
+      const footerElement = document.getElementById('footer-driver');
+
+      function checkFilterFooterCollision() {
+        if (!filterWrap || !footerElement) return;
+        const footerRect = footerElement.getBoundingClientRect();
+        // When the footer enters the upper viewport, smoothly hide filter bar up
+        if (footerRect.top <= 120) {
+          filterWrap.classList.add('hide-for-footer');
+        } else {
+          filterWrap.classList.remove('hide-for-footer');
+        }
+      }
+
+      window.addEventListener('scroll', checkFilterFooterCollision, { passive: true });
+
+      /* ── Project Case Study Modal Data Matrix ── */
+      const caseStudies = {
+        aurora: {
+          title: 'Aurora Chronometer Systems',
+          category: 'Brand Identity & WebGL Vault',
+          client: 'Aurora Horology Ltd. (Geneva)',
+          sector: 'Swiss Luxury Horology',
+          deliverables: 'Identity, Packaging, 3D WebGL Vault',
+          timeline: '6 Months · Global Launch',
+          overview: 'Aurora Horology commissioned 1928 Creative Studio to architect an enduring brand ecosystem that honors Swiss horological precision while establishing commanding digital authority for the next generation of luxury collectors. Through monolithic typographic architecture, bespoke crimson color physics, and a zero-latency 3D WebGL boutique vault, we transformed the brand into an iconic collector centerpiece that sold out its inaugural batch within minutes.',
+          heroImg: 'img/port-chronos.jpg',
+          gal1: 'img/port-chronos.jpg',
+          gal2: 'img/port-spectra.jpg',
+          galFull1: 'img/wc-top.jpg',
+          gal3: 'img/port-lumina.jpg',
+          gal4: 'img/wc-l1.jpg',
+          gal5: 'img/wc-r1.jpg',
+          galFull2: 'img/wc-bot.jpg',
+          gal6: 'img/port-veloce.jpg',
+          gal7: 'assets/services/svc_1.jpg'
+        },
+        vertex: {
+          title: 'Vertex Architectural Tokens',
+          category: 'Logo Design & Spatial Identity',
+          client: 'Vertex Studio Dubai',
+          sector: 'Modern Architecture & Urban Planning',
+          deliverables: 'Logo Mark, Embossed Stationery, Spatial Codes',
+          timeline: '4 Months · MENA Region',
+          overview: 'Creating an architectural brand language rooted in structural integrity, monolithic geometries, and tactile materials that reflect physical urban excellence. We formulated a geometric logo token, tactile stationery system with micro-embossed crimson foil on raw concrete linen, and spatial brand codes that elevated the firm’s global win-rate by 48% across international institutional developments.',
+          heroImg: 'img/port-spectra.jpg',
+          gal1: 'img/port-spectra.jpg',
+          gal2: 'img/wc-l1.jpg',
+          galFull1: 'img/wc-r1.jpg',
+          gal3: 'img/port-lumina.jpg',
+          gal4: 'img/wc-r2.jpg',
+          gal5: 'img/port-chronos.jpg',
+          galFull2: 'img/wc-top.jpg',
+          gal6: 'assets/services/svc_2.jpg',
+          gal7: 'assets/services/svc_3.jpg'
+        },
+        aetherion: {
+          title: 'Aetherion Cyber Telemetry',
+          category: 'WebGL & Automotive UI Platform',
+          client: 'Aetherion Motors (Munich / Silicon Valley)',
+          sector: 'Hyper Electric Automotive',
+          deliverables: 'Curved Cockpit UI, 3D Vehicle Configurator',
+          timeline: '8 Months · Global Reveal',
+          overview: 'Designing the next-generation digital cockpit and companion mobile platform for an ultra-high performance electric hypercar capable of 0-100 km/h in 1.8 seconds. We synthesized dense telemetry parameters into a high-contrast dark mode visual hierarchy, procedural real-time raytraced shaders, and micro-haptic interactions running at 120fps on custom curved automotive displays.',
+          heroImg: 'img/port-veloce.jpg',
+          gal1: 'img/port-veloce.jpg',
+          gal2: 'img/port-kroma.jpg',
+          galFull1: 'img/wc-r2.jpg',
+          gal3: 'img/port-zenith.jpg',
+          gal4: 'img/wc-top.jpg',
+          gal5: 'assets/services/svc_4.jpg',
+          galFull2: 'img/wc-bot.jpg',
+          gal6: 'img/port-chronos.jpg',
+          gal7: 'assets/services/svc_5.jpg'
+        },
+        solstice: {
+          title: 'Solstice Monolithic Perfume',
+          category: 'Logo Design & Cosmetic Packaging',
+          client: 'Solstice Haute Parfumerie (Paris)',
+          sector: 'Luxury Fragrance & Cosmetics',
+          deliverables: 'Glass Bottle Design, Logo Monogram, Box Suite',
+          timeline: '5 Months · European Flagships',
+          overview: 'Sculpting a bespoke fluted glass vessel and monolithic identity for a Paris-based luxury fragrance house featuring deep crimson gradients and pure geometry. The physical packaging pairs fluted frosted crystal with a custom brushed brass collar, creating an instantly recognizable silhouette that won Pentawards Gold and secured commanding flagship shelf presence across Europe.',
+          heroImg: 'img/port-lumina.jpg',
+          gal1: 'img/port-lumina.jpg',
+          gal2: 'img/port-chronos.jpg',
+          galFull1: 'assets/services/svc_3.jpg',
+          gal3: 'img/wc-l2.jpg',
+          gal4: 'assets/services/svc_1.jpg',
+          gal5: 'img/wc-r1.jpg',
+          galFull2: 'img/wc-top.jpg',
+          gal6: 'img/port-spectra.jpg',
+          gal7: 'assets/services/svc_2.jpg'
+        },
+        milan: {
+          title: 'Milan Runway Global Momentum',
+          category: 'Social Media & Influencer Campaign',
+          client: 'Maison Element (Milan)',
+          sector: 'High Fashion & Luxury Apparel',
+          deliverables: 'Omnichannel Social Takeover, Dynamic Video Ads',
+          timeline: '3 Months · Milan Fashion Week FW24',
+          overview: 'An avant-garde digital campaign orchestrating viral street projections, high-velocity motion graphics, and top-tier influencer activations for Milan Fashion Week. Combining kinetic oversized typography overlays with metallic crimson motion treatments and AR filter suites, the campaign captured over 18.4M organic impressions and drove complete capsule sell-outs.',
+          heroImg: 'img/port-zenith.jpg',
+          gal1: 'img/port-zenith.jpg',
+          gal2: 'assets/services/svc_4.jpg',
+          galFull1: 'img/wc-bot.jpg',
+          gal3: 'assets/services/svc_1.jpg',
+          gal4: 'assets/services/svc_2.jpg',
+          gal5: 'img/wc-r2.jpg',
+          galFull2: 'img/wc-top.jpg',
+          gal6: 'img/port-veloce.jpg',
+          gal7: 'img/port-kroma.jpg'
+        },
+        quantum: {
+          title: 'Quantum Chrome Engine',
+          category: 'WebGL 3D Engine & Identity',
+          client: 'Quantum Neural AI Systems',
+          sector: 'Deep Tech & Generative AI',
+          deliverables: 'Brand System, 3D WebGL Platform, Visual Tokens',
+          timeline: '4 Months · Enterprise Launch',
+          overview: 'Engineering an interactive 3D brand environment and generative liquid chrome identity system that visualizes complex neural computing in real-time. Powered by custom GLSL procedural liquid metal shaders and responsive physics engines, the platform demystifies enterprise AI infrastructure and positioned the client to close their landmark $45M Series B funding round.',
+          heroImg: 'img/port-kroma.jpg',
+          gal1: 'img/port-kroma.jpg',
+          gal2: 'img/port-veloce.jpg',
+          galFull1: 'img/wc-top.jpg',
+          gal3: 'assets/services/svc_5.jpg',
+          gal4: 'img/wc-r1.jpg',
+          gal5: 'img/wc-l2.jpg',
+          galFull2: 'img/wc-bot.jpg',
+          gal6: 'img/port-lumina.jpg',
+          gal7: 'assets/services/svc_4.jpg'
+        },
+        lofy: {
+          title: 'LOFY Modular Architecture',
+          category: 'Spatial Brand Architecture',
+          client: 'LOFY Living Environments',
+          sector: 'Architectural Real Estate',
+          deliverables: 'Brand Guidelines, Spatial Flagships, Digital Portal',
+          timeline: '6 Months · India / UAE',
+          overview: 'Crafting the foundational identity and environmental wayfinding for modular luxury residential developments across major metropolitan centers in India and the UAE. Utilizing a modular typographic grid, raw stone textures with crimson accents, and an interactive digital property sales portal, 100% of flagship residences were pre-sold within 60 days of unveil.',
+          heroImg: 'assets/services/svc_1.jpg',
+          gal1: 'assets/services/svc_1.jpg',
+          gal2: 'assets/services/svc_3.jpg',
+          galFull1: 'assets/services/svc_2.jpg',
+          gal3: 'img/wc-l1.jpg',
+          gal4: 'assets/services/svc_5.jpg',
+          gal5: 'img/port-spectra.jpg',
+          galFull2: 'img/wc-top.jpg',
+          gal6: 'img/wc-bot.jpg',
+          gal7: 'img/port-chronos.jpg'
+        },
+        stregis: {
+          title: 'St. Regis Mumbai Spatial Identity',
+          category: 'Hospitality Brand & Collateral',
+          client: 'St. Regis Hotels &amp; Resorts',
+          sector: 'Ultra-Luxury Hospitality',
+          deliverables: 'VIP Onboarding Suite, Culinary Collateral, Campaign',
+          timeline: '4 Months · Mumbai Flagship',
+          overview: 'A bespoke suite of sensory physical collateral and digital guest experiences engineered for one of India’s most prestigious luxury hotel addresses. Featuring handcrafted gold foil debossing, custom calligraphy monograms, and tactile artisan paper stocks, the new collateral suite achieved record 99.2% VIP guest satisfaction ratings and international travel press acclaim.',
+          heroImg: 'assets/services/svc_2.jpg',
+          gal1: 'assets/services/svc_2.jpg',
+          gal2: 'assets/services/svc_5.jpg',
+          galFull1: 'img/port-lumina.jpg',
+          gal3: 'img/wc-r1.jpg',
+          gal4: 'assets/services/svc_3.jpg',
+          gal5: 'assets/services/svc_1.jpg',
+          galFull2: 'img/wc-bot.jpg',
+          gal6: 'img/wc-top.jpg',
+          gal7: 'img/port-spectra.jpg'
+        }
+      };
+
+      /* ── Modal Open / Close Controller ── */
+      const modal = document.getElementById('projectModal');
+      const modalStage = modal ? modal.querySelector('.project-modal-stage') : null;
+      const closeBtn = document.getElementById('modalCloseBtn');
+      const triggerCards = document.querySelectorAll('[data-project-id]');
+
+      function openModal(id) {
+        const data = caseStudies[id] || caseStudies.aurora;
+        
+        document.getElementById('mHeroImg').src = data.heroImg;
+        document.getElementById('mHeroTitle').textContent = data.title;
+        document.getElementById('mHeroCat').textContent = data.category;
+        document.getElementById('mOverviewText').textContent = data.overview;
+        document.getElementById('mClientName').textContent = data.client;
+        document.getElementById('mSector').textContent = data.sector;
+        document.getElementById('mDeliverables').textContent = data.deliverables;
+        document.getElementById('mTimeline').textContent = data.timeline;
+
+        if (data.gal1 && document.getElementById('mGal1')) document.getElementById('mGal1').src = data.gal1;
+        if (data.gal2 && document.getElementById('mGal2')) document.getElementById('mGal2').src = data.gal2;
+        if (data.galFull1 && document.getElementById('mGalFull1')) document.getElementById('mGalFull1').src = data.galFull1;
+        if (data.gal3 && document.getElementById('mGal3')) document.getElementById('mGal3').src = data.gal3;
+        if (data.gal4 && document.getElementById('mGal4')) document.getElementById('mGal4').src = data.gal4;
+        if (data.gal5 && document.getElementById('mGal5')) document.getElementById('mGal5').src = data.gal5;
+        if (data.galFull2 && document.getElementById('mGalFull2')) document.getElementById('mGalFull2').src = data.galFull2;
+        if (data.gal6 && document.getElementById('mGal6')) document.getElementById('mGal6').src = data.gal6;
+        if (data.gal7 && document.getElementById('mGal7')) document.getElementById('mGal7').src = data.gal7;
+
+        if (modalStage) modalStage.scrollTop = 0;
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      triggerCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const pid = card.getAttribute('data-project-id');
+          if (pid) openModal(pid);
+        });
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+      });
+
+      /* ── Live Ahmedabad Clock ── */
+      function updateFooterTime() {
+        const clockEl = document.getElementById('footer-live-clock');
+        const now = new Date();
+        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
+        const timeStr = now.toLocaleTimeString('en-US', options);
+        if (clockEl) clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
+      }
+      updateFooterTime();
+      setInterval(updateFooterTime, 30000);
+
+      /* ── Comprehensive Dark / Light Theme Toggle & Cross-Site Persistence Engine ── */
       const themeFab = document.getElementById('theme-fab');
-      const savedTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
+      const root = document.documentElement;
+
+      function setTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('t28', theme);
+        localStorage.setItem('theme-1928', theme);
+        localStorage.setItem('theme', theme);
+      }
+
+      // Read current active or stored theme
+      const initialTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
+      setTheme(initialTheme);
 
       if (themeFab) {
         themeFab.addEventListener('click', () => {
-          const curTheme = document.documentElement.getAttribute('data-theme');
-          const nextTheme = curTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', nextTheme);
-          localStorage.setItem('t28', nextTheme);
-          localStorage.setItem('theme-1928', nextTheme);
+          const current = root.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          setTheme(next);
         });
       }
+
+      /* ═══ §7 FOOTER — Dynamic Elastic Logo Emergence & Tightness Physics (Exact Home Engine) ═══ */
+      const footerDriver = document.getElementById('footer-driver');
+      const footerCutWrap = document.querySelector('.f-giant-cut-wrap');
+      const footerCutSvg = document.querySelector('.f-giant-cut-svg');
+      const footerCutText = document.querySelector('.f-giant-cut-svg text');
+
+      let logoPull = 0; // -0.35 to 1.0
+      let logoVelocity = 0;
+      let isInteractingLogo = false;
+      let logoWheelTimer = null;
+      let springRunning = false;
+
+      function applyLogoPhysics(p) {
+        if (!footerCutWrap || !footerCutSvg) return;
+
+        const baseH = footerCutWrap.offsetWidth * 0.052;
+        const safeBaseH = Math.max(34, Math.min(84, baseH));
+
+        if (p >= 0) {
+          // ── Scrolling More: Logo emerges out from the line to reveal 100% full text ──
+          const targetH = safeBaseH * (1 + p * 1.05);
+          footerCutWrap.style.height = `${targetH}px`;
+          footerCutSvg.style.height = `${targetH}px`;
+
+          const targetVbH = 65 + p * 65;
+          footerCutSvg.setAttribute('viewBox', `0 0 1600 ${targetVbH}`);
+
+          const liftY = p * 4;
+          if (footerCutText) {
+            footerCutText.style.transform = `translateY(${liftY}px)`;
+          }
+          footerCutWrap.style.transform = `scaleY(1) scaleX(1)`;
+        } else {
+          // ── Scrolling Up: Tightness / Tension resistance effect ──
+          const absP = Math.abs(p);
+          const targetH = safeBaseH * (1 - absP * 0.16);
+          footerCutWrap.style.height = `${targetH}px`;
+          footerCutSvg.style.height = `${targetH}px`;
+
+          const targetVbH = 65 - absP * 10;
+          footerCutSvg.setAttribute('viewBox', `0 0 1600 ${targetVbH}`);
+
+          footerCutWrap.style.transform = `scaleY(${1 - absP * 0.10}) scaleX(${1 + absP * 0.025})`;
+          if (footerCutText) {
+            footerCutText.style.transform = `translateY(0)`;
+          }
+        }
+      }
+
+      function stepLogoSpring() {
+        if (!isInteractingLogo) {
+          const stiffness = 0.14;
+          const damping = 0.78;
+          const force = -stiffness * logoPull;
+          logoVelocity = (logoVelocity + force) * damping;
+          logoPull += logoVelocity;
+
+          if (Math.abs(logoPull) < 0.001 && Math.abs(logoVelocity) < 0.001) {
+            logoPull = 0;
+            logoVelocity = 0;
+            applyLogoPhysics(0);
+            springRunning = false;
+            return;
+          }
+        }
+
+        applyLogoPhysics(logoPull);
+        requestAnimationFrame(stepLogoSpring);
+      }
+
+      function triggerLogoSpring() {
+        if (!springRunning) {
+          springRunning = true;
+          requestAnimationFrame(stepLogoSpring);
+        }
+      }
+
+      // Scroll-linked emergence
+      window.addEventListener('scroll', () => {
+        if (footerDriver && !isInteractingLogo) {
+          const rect = footerDriver.getBoundingClientRect();
+          const vh = window.innerHeight;
+          if (rect.top <= vh) {
+            const footerInViewP = clamp((vh - rect.top) / (rect.height * 0.75), 0, 1);
+            const autoEmergence = clamp((footerInViewP - 0.55) / 0.45, 0, 1);
+            applyLogoPhysics(autoEmergence);
+          } else {
+            applyLogoPhysics(0);
+          }
+        }
+      }, { passive: true });
+
+      // Wheel listener for interactive scroll over footer
+      window.addEventListener('wheel', (e) => {
+        if (!footerDriver) return;
+        const rect = footerDriver.getBoundingClientRect();
+        const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+
+        if (rect.top <= window.innerHeight * 0.35 || isAtBottom) {
+          if (e.deltaY > 0 || (e.deltaY < 0 && logoPull > 0.05)) {
+            if (e.cancelable) e.preventDefault();
+          }
+
+          isInteractingLogo = true;
+          if (e.deltaY > 0) {
+            logoPull = Math.min(1.0, logoPull + Math.abs(e.deltaY) * 0.006);
+          } else if (e.deltaY < 0) {
+            logoPull = Math.max(-0.35, logoPull - Math.abs(e.deltaY) * 0.005);
+          }
+
+          triggerLogoSpring();
+
+          clearTimeout(logoWheelTimer);
+          logoWheelTimer = setTimeout(() => {
+            isInteractingLogo = false;
+            triggerLogoSpring();
+          }, 180);
+        }
+      }, { passive: false });
+
+      // Touch listener for mobile devices
+      let touchStartY = 0;
+      window.addEventListener('touchstart', (e) => {
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!footerDriver) return;
+        const rect = footerDriver.getBoundingClientRect();
+        const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+        if (rect.top <= window.innerHeight * 0.35 || isAtBottom) {
+          const deltaY = touchStartY - e.touches[0].clientY;
+          if (deltaY > 0 || (deltaY < 0 && logoPull > 0.05)) {
+            if (e.cancelable) e.preventDefault();
+          }
+          isInteractingLogo = true;
+          if (deltaY > 0) {
+            logoPull = Math.min(1.0, logoPull + deltaY * 0.006);
+          } else {
+            logoPull = Math.max(-0.35, logoPull + deltaY * 0.005);
+          }
+          triggerLogoSpring();
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchend', () => {
+        clearTimeout(logoWheelTimer);
+        logoWheelTimer = setTimeout(() => {
+          isInteractingLogo = false;
+          triggerLogoSpring();
+        }, 140);
+      }, { passive: true });
+
+      // Mouse drag support on luxury card
+      const luxuryCard = document.querySelector('.footer-luxury-card');
+      if (luxuryCard) {
+        let isMouseDownCard = false;
+        let dragStartY = 0;
+        luxuryCard.addEventListener('mousedown', (e) => {
+          isMouseDownCard = true;
+          dragStartY = e.clientY;
+          isInteractingLogo = true;
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (!isMouseDownCard) return;
+          const deltaY = dragStartY - e.clientY;
+          if (deltaY > 0) {
+            logoPull = Math.min(1.0, logoPull + deltaY * 0.01);
+          } else {
+            logoPull = Math.max(-0.35, logoPull + deltaY * 0.01);
+          }
+          triggerLogoSpring();
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (isMouseDownCard) {
+            isMouseDownCard = false;
+            clearTimeout(logoWheelTimer);
+            logoWheelTimer = setTimeout(() => {
+              isInteractingLogo = false;
+              triggerLogoSpring();
+            }, 120);
+          }
+        });
+      }
+
     })();
   </script>
 </body>
