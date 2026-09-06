@@ -668,19 +668,24 @@
       position: relative;
       width: 100%;
       align-self: stretch;
-      height: clamp(280px, 40vh, 400px);
-      overflow: hidden;
-      margin-top: clamp(18px, 2.5vh, 32px);
+      height: clamp(290px, 42vh, 420px);
+      overflow: visible;
+      margin-top: clamp(16px, 2.2vh, 28px);
+      padding: 16px 0 20px 0;
+      box-sizing: border-box;
     }
 
     .works-card-set {
       position: absolute;
-      inset: 0;
+      top: 16px;
+      left: 0;
+      right: 0;
+      bottom: 20px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: clamp(18px, 2.2vw, 32px);
       width: 100%;
-      height: 100%;
+      overflow: visible;
       will-change: transform, opacity;
     }
 
@@ -759,8 +764,13 @@
 
     .work-duo-card:hover {
       border-color: var(--cr);
-      transform: translateY(-5px);
-      box-shadow: 0 24px 65px rgba(0, 0, 0, 0.55), 0 0 32px var(--cr-glow);
+      transform: translateY(-8px);
+      box-shadow: 0 26px 70px rgba(0, 0, 0, 0.55), 0 0 32px var(--cr-glow);
+      z-index: 10;
+    }
+
+    [data-theme="light"] .work-duo-card:hover {
+      box-shadow: 0 26px 65px rgba(0, 0, 0, 0.15), 0 0 32px var(--cr-glow);
     }
 
     .work-duo-card:hover .work-card-img {
@@ -899,13 +909,20 @@
 
       .works-card-stage {
         height: auto;
+        overflow: visible;
+        padding: 10px 0;
       }
 
       .works-card-set {
         position: relative;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        right: auto;
         grid-template-columns: 1fr;
         gap: 20px;
         height: auto;
+        overflow: visible;
       }
 
       #worksSet2 {
@@ -1639,368 +1656,361 @@
     }
 
     /* ═══════════════════════════════════════════════════════════
-       7. SELECTED CLIENTS (Continuous Pinned Luxury Train + Flared Funnel)
+       7. SELECTED CLIENTS (3-Row Infinite Dual-Direction Logo Marquee)
        ═══════════════════════════════════════════════════════════ */
-    #clients-driver {
+    #clients-section {
       position: relative;
-      height: 660vh;
       background: var(--bg);
-      z-index: 5;
-    }
-
-    #clientsSticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      width: 100vw;
+      padding: clamp(90px, 12vh, 150px) 0;
       overflow: hidden;
+      z-index: 5;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background: var(--bg);
-      will-change: transform;
+      gap: clamp(48px, 6.5vh, 72px);
     }
 
-    #clients-pin-head {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
+    .brands-header-block {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 4vw, 64px);
       text-align: center;
-      z-index: 3;
-      pointer-events: none;
-      will-change: transform, opacity;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
     }
 
-    #clients-pin-head h2 {
+    .brands-header-block .bph-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cr);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brands-header-block .bph-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cr);
+      display: inline-block;
+      box-shadow: 0 0 8px var(--cr);
+    }
+
+    .brands-title {
       font-family: var(--font-primary);
       font-weight: 800;
-      font-size: clamp(38px, 5.8vw, 86px);
-      line-height: 0.96;
+      font-size: clamp(38px, 5.2vw, 76px);
+      line-height: 0.98;
       letter-spacing: -0.04em;
       color: var(--ink);
       text-transform: uppercase;
       margin: 0;
     }
 
-    #clients-pin-head h2 span {
-      color: var(--cr);
+    .brands-title em,
+    .brands-title span {
       font-style: italic;
       font-weight: 300;
-    }
-
-    /* ── Continuous Card Train Viewport (Generous 520px height) ── */
-    #clients-train-viewport {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 60%;
-      transform: translateY(-50%);
-      height: clamp(420px, 55vh, 520px);
-      overflow: visible;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
-      opacity: 0;
-      pointer-events: auto;
-      z-index: 8;
-      transition: opacity 0.3s ease;
-    }
-
-    /* Horizontal train track of cards — moves right to left on scroll */
-    #clients-train-track {
-      display: flex;
-      align-items: center;
-      gap: 36px;
-      padding: 0 4vw;
-      height: 100%;
-      width: max-content;
-      transform: translateX(100vw);
-      will-change: transform;
-    }
-
-    /* Individual Brand Card in the train — Ultra-soft pure Gaussian diffused shadow */
-    .brand-train-card {
-      position: relative;
-      z-index: 8;
-      flex-shrink: 0;
-      width: clamp(290px, 25vw, 380px);
-      height: clamp(220px, 28vh, 270px);
-      border-radius: 28px;
-      background: #FFFFFF;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      box-shadow:
-        0 4px 20px rgba(0, 0, 0, 0.025),
-        0 16px 36px rgba(0, 0, 0, 0.045),
-        0 32px 64px rgba(0, 0, 0, 0.04);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 32px;
-      cursor: default;
-      transition: border-color .35s, box-shadow .4s, transform .35s var(--sp);
-    }
-
-    [data-theme="dark"] .brand-train-card {
-      background: #141418;
-      border-color: rgba(255, 255, 255, 0.07);
-      box-shadow:
-        0 4px 20px rgba(0, 0, 0, 0.45),
-        0 20px 45px rgba(0, 0, 0, 0.65),
-        0 40px 80px rgba(0, 0, 0, 0.7),
-        inset 0 1px 0 rgba(255, 255, 255, 0.06);
-    }
-
-    .brand-train-card:hover {
-      transform: translateY(-8px);
-      border-color: rgba(139, 26, 26, 0.3);
-      box-shadow:
-        0 8px 24px rgba(139, 26, 26, 0.05),
-        0 24px 50px rgba(139, 26, 26, 0.08),
-        0 40px 80px rgba(0, 0, 0, 0.06);
-    }
-
-    [data-theme="dark"] .brand-train-card:hover {
-      border-color: rgba(255, 46, 77, 0.5);
-      box-shadow:
-        0 6px 20px rgba(255, 46, 77, 0.15),
-        0 24px 55px rgba(0, 0, 0, 0.85),
-        0 45px 90px rgba(0, 0, 0, 0.9),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    }
-
-    .btc-top {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .btc-glyph {
-      font-size: 1.45rem;
-      font-weight: 800;
       color: var(--cr);
-      line-height: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform .3s;
     }
 
-    .brand-train-card:hover .btc-glyph {
-      transform: scale(1.18) rotate(5deg);
-    }
-
-    .btc-counter {
-      font-family: var(--font-mono);
-      font-size: 0.64rem;
-      font-weight: 700;
-      letter-spacing: 0.15em;
-      color: var(--ink-dim);
-    }
-
-    .btc-center {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btc-name {
+    .brands-subtitle {
       font-family: var(--font-primary);
-      font-weight: 800;
-      font-size: clamp(22px, 2.1vw, 32px);
-      letter-spacing: .06em;
-      color: var(--ink);
-      text-transform: uppercase;
-      white-space: nowrap;
+      font-size: clamp(0.92rem, 1.15vw, 1.12rem);
+      color: var(--ink-dim);
+      max-width: 640px;
+      line-height: 1.55;
+      margin: 0;
     }
 
-    .btc-bottom {
+    /* ── 3-Row Infinite Marquee Stage ── */
+    .brands-marquee-stage {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      padding: 12px 0;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+    }
+
+    .brand-row-wrap {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      padding: 14px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      width: max-content;
+      will-change: transform;
+      padding: 6px 0;
+    }
+
+    .marquee-left .marquee-track {
+      animation: marqueeL2R 45s linear infinite;
+    }
+
+    .marquee-right .marquee-track {
+      animation: marqueeR2L 42s linear infinite;
+    }
+
+    .brand-row-wrap:nth-child(3) .marquee-track {
+      animation: marqueeL2R 50s linear infinite;
+    }
+
+    .brand-row-wrap:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeL2R {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    @keyframes marqueeR2L {
+      0% { transform: translate3d(-50%, 0, 0); }
+      100% { transform: translate3d(0, 0, 0); }
+    }
+
+    .marquee-group {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-shrink: 0;
+    }
+
+    /* ── Individual Brand Logo Card ── */
+    .brand-logo-card {
+      min-width: clamp(210px, 17vw, 260px);
+      height: clamp(84px, 9.8vh, 98px);
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 14px 26px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.025);
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.3s;
+      cursor: pointer;
+      user-select: none;
+      flex-shrink: 0;
     }
 
-    .btc-category {
-      font-family: var(--font-mono);
-      font-size: .62rem;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      background: var(--cr-lo);
-      color: var(--cr);
-      padding: 6px 16px;
-      border-radius: 999px;
-      font-weight: 700;
+    [data-theme="dark"] .brand-logo-card {
+      background: #121217;
+      border-color: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
     }
 
-    /* ── Flared Funnel Attached to Last Card ── */
-    #card7-funnel-container {
-      position: absolute;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 6;
-      overflow: hidden;
+    .brand-logo-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(200, 16, 46, 0.45);
+      box-shadow: 0 14px 32px rgba(200, 16, 46, 0.12);
     }
 
-    #card7-funnel-svg {
-      position: absolute;
-      inset: 0;
+    [data-theme="dark"] .brand-logo-card:hover {
+      border-color: rgba(255, 46, 77, 0.5);
+      box-shadow: 0 14px 34px rgba(255, 46, 77, 0.2);
+    }
+
+    .brand-logo-svg {
       width: 100%;
       height: 100%;
-      pointer-events: none;
+      max-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
     }
 
-    #card7FunnelPath {
-      fill: var(--bg);
-    }
-
-    .funnel-boundary-line {
-      fill: none;
-      stroke: var(--cr);
-      stroke-width: 2;
-      stroke-linecap: round;
-      filter: drop-shadow(0 0 6px rgba(200, 16, 46, 0.3));
-      transition: opacity .2s ease;
-    }
-
-    /* Flash Portal Overlay */
-    #clientsFlashOverlay {
-      position: absolute;
-      inset: 0;
-      background: #FFFFFF;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 30;
-      transition: opacity .15s ease-out;
-    }
-
-    /* ── Seamless Ready To Build CTA Stage in Canvas ── */
-    .funnel-cta-stage {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+    /* ═══════════════════════════════════════════════════════════
+       8. EDITORIAL LUXURY CALL-TO-ACTION (Pre-Footer Stage)
+       ═══════════════════════════════════════════════════════════ */
+    #about-cta-section {
+      position: relative;
+      background: var(--bg);
+      padding: clamp(100px, 14vh, 160px) clamp(24px, 5vw, 80px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: clamp(24px, 4vh, 50px) 6vw;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 25;
-      transition: opacity .35s ease, transform .35s ease;
-      transform: scale(0.96);
-      background: radial-gradient(circle at 50% 50%, rgba(200, 16, 46, 0.12) 0%, transparent 65%);
+      text-align: center;
+      overflow: hidden;
+      z-index: 5;
     }
 
-    .funnel-cta-stage.active {
-      pointer-events: auto;
-      transform: scale(1);
-    }
-
-    .fcta-content {
+    .about-cta-stage {
+      position: relative;
+      max-width: 1140px;
       width: 100%;
-      max-width: 1180px;
+      margin: 0 auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      z-index: 2;
     }
 
-    .fcta-pill {
+    .about-cta-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: clamp(340px, 50vw, 720px);
+      height: clamp(340px, 50vw, 720px);
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--cr-glow) 0%, rgba(200, 16, 46, 0.04) 45%, transparent 70%);
+      pointer-events: none;
+      z-index: 1;
+      filter: blur(40px);
+    }
+
+    .acta-pill {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
-      font-family: var(--font-mono);
-      font-size: clamp(0.68rem, 0.8vw, 0.78rem);
-      font-weight: 700;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--cr);
-      background: rgba(200, 16, 46, 0.12);
-      border: 1.5px solid rgba(200, 16, 46, 0.45);
+      gap: 10px;
       padding: 8px 22px;
       border-radius: 999px;
-      box-shadow: 0 0 20px rgba(200, 16, 46, 0.25);
-      margin-bottom: clamp(18px, 2.8vh, 28px);
+      border: 1px solid var(--rule-m);
+      background: var(--card-bg);
+      font-family: var(--font-mono);
+      font-size: clamp(0.7rem, 0.82vw, 0.82rem);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: clamp(24px, 3.5vh, 36px);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+      z-index: 2;
     }
 
-    .fcta-pill .fcta-dot {
+    .acta-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: var(--cr);
-      box-shadow: 0 0 10px var(--cr), 0 0 4px #FFFFFF;
-      animation: fctaPulse 2s infinite ease-in-out;
+      box-shadow: 0 0 10px var(--cr);
+      animation: pulseDot 2s ease-in-out infinite;
     }
 
-    @keyframes fctaPulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-
-      50% {
-        transform: scale(1.3);
-        opacity: 0.75;
-      }
-    }
-
-    .fcta-title {
+    .acta-title {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(30px, 4.4vw, 68px);
-      line-height: 1.08;
+      font-size: clamp(38px, 6.2vw, 88px);
+      line-height: 0.98;
       letter-spacing: -0.04em;
       color: var(--ink);
       text-transform: uppercase;
-      margin: 0 0 clamp(16px, 2.2vh, 26px);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin: 0 0 clamp(20px, 2.8vh, 32px);
+      z-index: 2;
     }
 
-    .fcta-line-1 {
-      display: block;
-      white-space: nowrap;
-      color: var(--ink);
-    }
-
-    .fcta-line-2 {
-      display: block;
-      color: var(--cr);
+    .acta-title em {
       font-style: italic;
       font-weight: 300;
-      white-space: nowrap;
+      color: var(--cr);
     }
 
-    .fcta-sub {
-      font-family: var(--font-secondary);
-      font-size: clamp(15px, 1.25vw, 19px);
+    .acta-desc {
+      font-family: var(--font-primary);
+      font-size: clamp(16px, 1.35vw, 21px);
       line-height: 1.6;
-      color: var(--ink-mid);
+      color: var(--ink-dim);
       max-width: 680px;
-      margin-bottom: clamp(24px, 3.5vh, 38px);
+      margin: 0 auto clamp(36px, 5vh, 52px);
+      z-index: 2;
     }
 
-    .fcta-actions {
+    .acta-actions {
       display: flex;
-      gap: 16px;
+      gap: 18px;
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
+      z-index: 2;
+      margin-bottom: clamp(32px, 4.5vh, 48px);
     }
+
+    .acta-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--cr);
+      color: #FFFFFF;
+      padding: clamp(16px, 2vh, 20px) clamp(32px, 3vw, 44px);
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: clamp(0.92rem, 1vw, 1.05rem);
+      letter-spacing: 0.04em;
+      transition: transform 0.35s var(--sp), box-shadow 0.35s, background 0.35s;
+      box-shadow: 0 10px 28px var(--cr-glow);
+    }
+
+    .acta-btn-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 36px var(--cr-glow);
+      background: #b50e28;
+    }
+
+    .acta-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--rule-m);
+      padding: clamp(16px, 2vh, 20px) clamp(30px, 2.8vw, 40px);
+      border-radius: 999px;
+      text-decoration: none;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: clamp(0.92rem, 1vw, 1.05rem);
+      letter-spacing: 0.04em;
+      transition: border-color 0.3s, color 0.3s, transform 0.3s var(--sp);
+    }
+
+    .acta-btn-ghost:hover {
+      border-color: var(--cr);
+      color: var(--cr);
+      transform: translateY(-3px);
+    }
+
+    .acta-meta-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--font-mono);
+      font-size: clamp(0.72rem, 0.85vw, 0.82rem);
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .acta-meta-row a {
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .acta-meta-row a:hover {
+      color: var(--cr);
+    }
+
 
     /* ═══════════════════════════════════════════════════════════
        8. MODERN EDITORIAL LUXURY EXIT FOOTER (Exact Homepage Design)
@@ -3022,256 +3032,575 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
-       7. SELECTED CLIENTS (Continuous Pinned Luxury Train + Flared Funnel)
+       7. SELECTED CLIENTS (3-Row Infinite Dual-Direction Logo Marquee)
        ═══════════════════════════════════════════════════════════ -->
-  <section id="clients-driver">
-    <div id="clientsSticky">
-      <!-- Pinned Header -->
-      <div id="clients-pin-head">
-        <div class="sec-tag-pill" style="margin-bottom:14px;"><span class="sec-dot"></span> PARTNERSHIPS</div>
-        <h2>SELECTED <span>CLIENTS</span></h2>
-      </div>
+  <section id="clients-section">
+    <div class="brands-header-block">
+      <div class="bph-label"><span class="bph-dot"></span> PARTNERSHIPS // SELECTED CLIENTS</div>
+      <h2 class="brands-title">SELECTED <span>CLIENTS.</span></h2>
+      <p class="brands-subtitle">Engineering category leadership and enduring prestige alongside market-defining enterprises.</p>
+    </div>
 
-      <!-- Continuous Card Train Viewport -->
-      <div id="clients-train-viewport">
-        <div id="clients-train-track">
-          <!-- Card 1: Juventus -->
-          <div class="brand-train-card">
-            <div class="btc-top">
-              <span class="btc-glyph">✦</span>
-              <span class="btc-counter">01 / 07</span>
+    <div class="brands-marquee-stage">
+      <!-- ── ROW 1 (Left to Right / Normal Direction) ── -->
+      <div class="brand-row-wrap marquee-left">
+        <div class="marquee-track">
+          <!-- Group 1 -->
+          <div class="marquee-group">
+            <div class="brand-logo-card" title="Flipkart">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="8" y="27" font-family="'Montserrat', sans-serif" font-weight="800" font-style="italic" font-size="21" fill="#2874F0">Flipkart</text>
+                <rect x="120" y="8" width="24" height="24" rx="5" fill="#FFD200" />
+                <path d="M 125 21 Q 132 26 139 21" fill="none" stroke="#2874F0" stroke-width="2.2" stroke-linecap="round" />
+                <path d="M 129 12 Q 132 8 135 12" fill="none" stroke="#2874F0" stroke-width="2" stroke-linecap="round" />
+              </svg>
             </div>
-            <div class="btc-center">
-              <span class="btc-name">JUVENTUS</span>
+            <div class="brand-logo-card" title="Cars24">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="10" y="6" width="90" height="28" rx="6" fill="#0B3C5D" />
+                <text x="18" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#FFFFFF" letter-spacing="1px">CARS</text>
+                <rect x="104" y="6" width="46" height="28" rx="6" fill="#FF6A00" />
+                <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
+              </svg>
             </div>
-            <div class="btc-bottom">
-              <span class="btc-category">Global Sport</span>
+            <div class="brand-logo-card" title="Zepto">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="32" y="28" font-family="'Outfit', 'Montserrat', sans-serif" font-weight="900" font-size="26" fill="#7C22DE" letter-spacing="-0.02em">zepto</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Shivalik">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="15" y="22" font-family="'Cinzel', 'Playfair Display', serif" font-weight="800" font-size="17" fill="currentColor" letter-spacing="2px">SHIVALIK</text>
+                <circle cx="126" cy="17" r="2.5" fill="#C8102E" />
+                <text x="16" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.8" fill="var(--ink-dim)" letter-spacing="1.2px">BUILDING LANDMARKS SINCE 1998</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Swiggy">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="14" y="6" width="28" height="28" rx="8" fill="#FC8019" />
+                <path d="M 28 12 C 23 12 20 16 20 20 C 20 25 28 31 28 31 C 28 31 36 25 36 20 C 36 16 33 12 28 12 Z" fill="#FFFFFF" />
+                <circle cx="28" cy="19" r="2.5" fill="#FC8019" />
+                <text x="50" y="27" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#FC8019" letter-spacing="-0.01em">Swiggy</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="CRED">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 22 10 L 36 10 L 36 25 Q 36 30 29 32 Q 22 30 22 25 Z" fill="none" stroke="currentColor" stroke-width="2.2" />
+                <path d="M 26 15 L 32 15 L 32 23 Q 32 26 29 27.5 Q 26 26 26 23 Z" fill="none" stroke="currentColor" stroke-width="2" />
+                <text x="48" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="currentColor" letter-spacing="3.5px">CRED</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Phoenix Palladium">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 80 5 L 84 14 L 92 10 L 87 18 L 96 18 L 88 23 L 80 18 L 72 23 L 64 18 L 73 18 L 68 10 L 76 14 Z" fill="currentColor" opacity="0.85" />
+                <text x="80" y="32" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="2px">PHOENIX PALLADIUM</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Jade Blue">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="14" y="8" width="132" height="24" rx="4" fill="#005691" />
+                <path d="M 28 20 C 28 16 32 15 35 18 C 38 21 42 20 42 16 C 42 12 38 13 35 16 C 32 19 28 20 28 20 Z" fill="none" stroke="#FFFFFF" stroke-width="2.2" />
+                <text x="52" y="25" font-family="'Montserrat', sans-serif" font-weight="800" font-size="12" fill="#FFFFFF" letter-spacing="2px">JADE BLUE</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Gujarat Titans">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 24 8 L 44 8 L 39 30 L 34 33 L 29 30 Z" fill="#0C2340" stroke="#C59B27" stroke-width="1.8" />
+                <path d="M 34 11 L 38 18 L 30 18 Z" fill="#C59B27" />
+                <text x="52" y="20" font-family="'Montserrat', sans-serif" font-weight="900" font-size="11" fill="#0C2340" letter-spacing="0.5px">GUJARAT</text>
+                <text x="52" y="31" font-family="'Montserrat', sans-serif" font-weight="900" font-size="13" fill="#C59B27" letter-spacing="1px">TITANS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Adani Foundation">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="18" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#2B5B84" letter-spacing="-0.02em">adani</text>
+                <text x="78" y="24" font-family="'Montserrat', sans-serif" font-weight="600" font-size="11" fill="#8C3B78">Foundation</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="CREDAI">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 22 18 L 34 8 L 46 18 L 40 18 L 34 13 L 28 18 Z" fill="#0A7C42" />
+                <text x="52" y="23" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#0A7C42" letter-spacing="1.5px">CREDAÎ</text>
+                <text x="53" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="var(--ink-dim)" letter-spacing="1px">NASHIK METRO</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="LOFY">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="22" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="19" fill="currentColor" letter-spacing="4px">LOFY</text>
+                <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">HOME STORE</text>
+              </svg>
             </div>
           </div>
-
-          <!-- Card 2: Bugatti -->
-          <div class="brand-train-card">
-            <div class="btc-top">
-              <span class="btc-glyph">❖</span>
-              <span class="btc-counter">02 / 07</span>
+          <!-- Group 2 (Duplicate for Infinite Loop) -->
+          <div class="marquee-group" aria-hidden="true">
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="8" y="27" font-family="'Montserrat', sans-serif" font-weight="800" font-style="italic" font-size="21" fill="#2874F0">Flipkart</text>
+                <rect x="120" y="8" width="24" height="24" rx="5" fill="#FFD200" />
+                <path d="M 125 21 Q 132 26 139 21" fill="none" stroke="#2874F0" stroke-width="2.2" stroke-linecap="round" />
+                <path d="M 129 12 Q 132 8 135 12" fill="none" stroke="#2874F0" stroke-width="2" stroke-linecap="round" />
+              </svg>
             </div>
-            <div class="btc-center">
-              <span class="btc-name">BUGATTI</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="10" y="6" width="90" height="28" rx="6" fill="#0B3C5D" />
+                <text x="18" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#FFFFFF" letter-spacing="1px">CARS</text>
+                <rect x="104" y="6" width="46" height="28" rx="6" fill="#FF6A00" />
+                <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
+              </svg>
             </div>
-            <div class="btc-bottom">
-              <span class="btc-category">Automotive</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="32" y="28" font-family="'Outfit', 'Montserrat', sans-serif" font-weight="900" font-size="26" fill="#7C22DE" letter-spacing="-0.02em">zepto</text>
+              </svg>
             </div>
-          </div>
-
-          <!-- Card 3: Mini Brand -->
-          <div class="brand-train-card">
-            <div class="btc-top">
-              <span class="btc-glyph">▲</span>
-              <span class="btc-counter">03 / 07</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="15" y="22" font-family="'Cinzel', 'Playfair Display', serif" font-weight="800" font-size="17" fill="currentColor" letter-spacing="2px">SHIVALIK</text>
+                <circle cx="126" cy="17" r="2.5" fill="#C8102E" />
+                <text x="16" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.8" fill="var(--ink-dim)" letter-spacing="1.2px">BUILDING LANDMARKS SINCE 1998</text>
+              </svg>
             </div>
-            <div class="btc-center">
-              <span class="btc-name">MINI BRAND</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="14" y="6" width="28" height="28" rx="8" fill="#FC8019" />
+                <path d="M 28 12 C 23 12 20 16 20 20 C 20 25 28 31 28 31 C 28 31 36 25 36 20 C 36 16 33 12 28 12 Z" fill="#FFFFFF" />
+                <circle cx="28" cy="19" r="2.5" fill="#FC8019" />
+                <text x="50" y="27" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#FC8019" letter-spacing="-0.01em">Swiggy</text>
+              </svg>
             </div>
-            <div class="btc-bottom">
-              <span class="btc-category">Spatial Retail</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 22 10 L 36 10 L 36 25 Q 36 30 29 32 Q 22 30 22 25 Z" fill="none" stroke="currentColor" stroke-width="2.2" />
+                <path d="M 26 15 L 32 15 L 32 23 Q 32 26 29 27.5 Q 26 26 26 23 Z" fill="none" stroke="currentColor" stroke-width="2" />
+                <text x="48" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="currentColor" letter-spacing="3.5px">CRED</text>
+              </svg>
             </div>
-          </div>
-
-          <!-- Card 4: Zerodha -->
-          <div class="brand-train-card">
-            <div class="btc-top">
-              <span class="btc-glyph">◆</span>
-              <span class="btc-counter">04 / 07</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 80 5 L 84 14 L 92 10 L 87 18 L 96 18 L 88 23 L 80 18 L 72 23 L 64 18 L 73 18 L 68 10 L 76 14 Z" fill="currentColor" opacity="0.85" />
+                <text x="80" y="32" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="2px">PHOENIX PALLADIUM</text>
+              </svg>
             </div>
-            <div class="btc-center">
-              <span class="btc-name">ZERODHA</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="14" y="8" width="132" height="24" rx="4" fill="#005691" />
+                <path d="M 28 20 C 28 16 32 15 35 18 C 38 21 42 20 42 16 C 42 12 38 13 35 16 C 32 19 28 20 28 20 Z" fill="none" stroke="#FFFFFF" stroke-width="2.2" />
+                <text x="52" y="25" font-family="'Montserrat', sans-serif" font-weight="800" font-size="12" fill="#FFFFFF" letter-spacing="2px">JADE BLUE</text>
+              </svg>
             </div>
-            <div class="btc-bottom">
-              <span class="btc-category">Fintech</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 24 8 L 44 8 L 39 30 L 34 33 L 29 30 Z" fill="#0C2340" stroke="#C59B27" stroke-width="1.8" />
+                <path d="M 34 11 L 38 18 L 30 18 Z" fill="#C59B27" />
+                <text x="52" y="20" font-family="'Montserrat', sans-serif" font-weight="900" font-size="11" fill="#0C2340" letter-spacing="0.5px">GUJARAT</text>
+                <text x="52" y="31" font-family="'Montserrat', sans-serif" font-weight="900" font-size="13" fill="#C59B27" letter-spacing="1px">TITANS</text>
+              </svg>
             </div>
-          </div>
-
-          <!-- Card 5: Wild Stone -->
-          <div class="brand-train-card">
-            <div class="btc-top">
-              <span class="btc-glyph">◉</span>
-              <span class="btc-counter">05 / 07</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="18" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#2B5B84" letter-spacing="-0.02em">adani</text>
+                <text x="78" y="24" font-family="'Montserrat', sans-serif" font-weight="600" font-size="11" fill="#8C3B78">Foundation</text>
+              </svg>
             </div>
-            <div class="btc-center">
-              <span class="btc-name">WILD STONE</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 22 18 L 34 8 L 46 18 L 40 18 L 34 13 L 28 18 Z" fill="#0A7C42" />
+                <text x="52" y="23" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#0A7C42" letter-spacing="1.5px">CREDAÎ</text>
+                <text x="53" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="var(--ink-dim)" letter-spacing="1px">NASHIK METRO</text>
+              </svg>
             </div>
-            <div class="btc-bottom">
-              <span class="btc-category">Luxury Sensory</span>
-            </div>
-          </div>
-
-          <!-- Card 6: Shyamoli -->
-          <div class="brand-train-card">
-            <div class="btc-top">
-              <span class="btc-glyph">◈</span>
-              <span class="btc-counter">06 / 07</span>
-            </div>
-            <div class="btc-center">
-              <span class="btc-name">SHYAMOLI</span>
-            </div>
-            <div class="btc-bottom">
-              <span class="btc-category">Hospitality</span>
-            </div>
-          </div>
-
-          <!-- Card 7: Solaris -->
-          <div class="brand-train-card">
-            <div class="btc-top">
-              <span class="btc-glyph">⎔</span>
-              <span class="btc-counter">07 / 07</span>
-            </div>
-            <div class="btc-center">
-              <span class="btc-name">SOLARIS</span>
-            </div>
-            <div class="btc-bottom">
-              <span class="btc-category">Energy &amp; Innovation</span>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="22" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="19" fill="currentColor" letter-spacing="4px">LOFY</text>
+                <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">HOME STORE</text>
+              </svg>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Flared Curved Funnel attached to Card 7 -->
-      <div id="card7-funnel-container">
-        <svg id="card7-funnel-svg" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
-          <path id="card7FunnelPath" d="M 0 0" fill="var(--bg)" />
-          <path id="funnelBorderTop" class="funnel-boundary-line" d="M 0 0" />
-          <path id="funnelBorderBottom" class="funnel-boundary-line" d="M 0 0" />
-        </svg>
-
-        <!-- Ready to Build CTA UX Stage mounted inside the Canvas -->
-        <div class="funnel-cta-stage" id="funnelCtaStage">
-          <div class="fcta-content">
-            <div class="fcta-pill"><span class="fcta-dot"></span> INITIATE DIALOGUE</div>
-            <h2 class="fcta-title">
-              <span class="fcta-line-1">READY TO BUILD WORK</span>
-              <span class="fcta-line-2">THAT ENDURES?</span>
-            </h2>
-            <p class="fcta-sub">
-              We partner with select category-defining founders, institutions, and enterprises each quarter. Let's
-              engineer your legacy.
-            </p>
-            <div class="fcta-actions">
-              <a href="contact.html" class="btn-primary">Start a Project →</a>
-              <a href="portfolio.html" class="btn-ghost">Explore Archive</a>
+      <!-- ── ROW 2 (Right to Left / Reverse Direction) ── -->
+      <div class="brand-row-wrap marquee-right">
+        <div class="marquee-track">
+          <!-- Group 1 -->
+          <div class="marquee-group">
+            <div class="brand-logo-card" title="Haldiram's">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <ellipse cx="80" cy="20" rx="60" ry="14" fill="#FFC72C" stroke="#8B0000" stroke-width="1.8" />
+                <text x="80" y="24" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="700" font-size="17" fill="#8B0000">Haldiram's</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Cult Store">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="28" cy="14" r="3.5" fill="#FF3278" />
+                <path d="M 20 28 L 28 20 L 36 28 M 28 20 L 28 26" stroke="#FF3278" stroke-width="2.5" stroke-linecap="round" />
+                <text x="46" y="26" font-family="'Montserrat', sans-serif" font-weight="800" font-size="17" fill="currentColor">cult store</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="TVS">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="18" y="27" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#002D62" letter-spacing="1px">TVS</text>
+                <path d="M 85 24 L 92 18 L 104 18 L 115 11 L 108 20 L 118 22 L 102 24 L 95 28 Z" fill="#D32F2F" />
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="CaratLane">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="22" cy="20" r="8" fill="none" stroke="#8E24AA" stroke-width="2" stroke-dasharray="2 2" />
+                <text x="36" y="21" font-family="'Montserrat', sans-serif" font-weight="800" font-size="12" fill="#5E2750" letter-spacing="2px">CARATLANE</text>
+                <text x="36" y="29" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6" fill="#888" letter-spacing="1px">A TATA PRODUCT</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="The St. Regis Mumbai">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="20" text-anchor="middle" font-family="'Cinzel', 'Playfair Display', serif" font-weight="700" font-size="14" fill="currentColor" letter-spacing="3px">ST REGIS</text>
+                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">MUMBAI</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Space">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="24" cy="20" r="9" fill="none" stroke="#E5A93C" stroke-width="2" />
+                <path d="M 24 14 Q 28 20 24 26" stroke="#E5A93C" stroke-width="2" fill="none" />
+                <text x="40" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="currentColor" letter-spacing="2px">SPACE</text>
+                <text x="41" y="29" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1px">EMPOWERING LIFE</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Goldi Solar">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="21" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#1C355E" letter-spacing="1.5px">GOLDI</text>
+                <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="10" fill="#E87722" letter-spacing="4px">SOLAR</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Naturals">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="20" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#0A7C42" letter-spacing="1px">NATUR</text>
+                <circle cx="95" cy="18" r="5" fill="#66BB6A" />
+                <text x="104" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#0A7C42">LS</text>
+                <text x="22" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TASTE THE ORIGINAL</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Thakkers">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="20" y="8" width="18" height="24" rx="2" fill="#1E4E79" />
+                <path d="M 29 11 L 29 29 M 23 18 L 35 18" stroke="#FFFFFF" stroke-width="1.5" />
+                <text x="46" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="13" fill="#1E4E79" letter-spacing="1.5px">THAKKERS</text>
+                <text x="47" y="30" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TRUST. HERITAGE. QUALITY.</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="ABH Developers">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 16 28 L 24 10 L 32 28 L 27 28 L 24 19 L 21 28 Z" fill="#008080" />
+                <text x="38" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="16" fill="#008080" letter-spacing="1px">ABH</text>
+                <text x="39" y="31" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="currentColor" letter-spacing="2px">DEVELOPERS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Bikes24">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="10" y="6" width="90" height="28" rx="6" fill="#0288D1" />
+                <text x="18" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#FFFFFF" letter-spacing="1px">BIKES</text>
+                <rect x="104" y="6" width="46" height="28" rx="6" fill="#FF9800" />
+                <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Reneev">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 28 8 L 34 16 L 34 32 L 28 32 Z M 36 12 L 42 18 L 42 32 L 36 32 Z" fill="#1B6B93" />
+                <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="#1B6B93" letter-spacing="2.5px">RENEEV</text>
+                <text x="51" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1.5px">DEVELOPERS</text>
+              </svg>
+            </div>
+          </div>
+          <!-- Group 2 (Duplicate for Infinite Loop) -->
+          <div class="marquee-group" aria-hidden="true">
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <ellipse cx="80" cy="20" rx="60" ry="14" fill="#FFC72C" stroke="#8B0000" stroke-width="1.8" />
+                <text x="80" y="24" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="700" font-size="17" fill="#8B0000">Haldiram's</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="28" cy="14" r="3.5" fill="#FF3278" />
+                <path d="M 20 28 L 28 20 L 36 28 M 28 20 L 28 26" stroke="#FF3278" stroke-width="2.5" stroke-linecap="round" />
+                <text x="46" y="26" font-family="'Montserrat', sans-serif" font-weight="800" font-size="17" fill="currentColor">cult store</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="18" y="27" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#002D62" letter-spacing="1px">TVS</text>
+                <path d="M 85 24 L 92 18 L 104 18 L 115 11 L 108 20 L 118 22 L 102 24 L 95 28 Z" fill="#D32F2F" />
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="22" cy="20" r="8" fill="none" stroke="#8E24AA" stroke-width="2" stroke-dasharray="2 2" />
+                <text x="36" y="21" font-family="'Montserrat', sans-serif" font-weight="800" font-size="12" fill="#5E2750" letter-spacing="2px">CARATLANE</text>
+                <text x="36" y="29" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6" fill="#888" letter-spacing="1px">A TATA PRODUCT</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="20" text-anchor="middle" font-family="'Cinzel', 'Playfair Display', serif" font-weight="700" font-size="14" fill="currentColor" letter-spacing="3px">ST REGIS</text>
+                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">MUMBAI</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="24" cy="20" r="9" fill="none" stroke="#E5A93C" stroke-width="2" />
+                <path d="M 24 14 Q 28 20 24 26" stroke="#E5A93C" stroke-width="2" fill="none" />
+                <text x="40" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="currentColor" letter-spacing="2px">SPACE</text>
+                <text x="41" y="29" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1px">EMPOWERING LIFE</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="21" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#1C355E" letter-spacing="1.5px">GOLDI</text>
+                <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="10" fill="#E87722" letter-spacing="4px">SOLAR</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="20" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#0A7C42" letter-spacing="1px">NATUR</text>
+                <circle cx="95" cy="18" r="5" fill="#66BB6A" />
+                <text x="104" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#0A7C42">LS</text>
+                <text x="22" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TASTE THE ORIGINAL</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="20" y="8" width="18" height="24" rx="2" fill="#1E4E79" />
+                <path d="M 29 11 L 29 29 M 23 18 L 35 18" stroke="#FFFFFF" stroke-width="1.5" />
+                <text x="46" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="13" fill="#1E4E79" letter-spacing="1.5px">THAKKERS</text>
+                <text x="47" y="30" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TRUST. HERITAGE. QUALITY.</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 16 28 L 24 10 L 32 28 L 27 28 L 24 19 L 21 28 Z" fill="#008080" />
+                <text x="38" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="16" fill="#008080" letter-spacing="1px">ABH</text>
+                <text x="39" y="31" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="currentColor" letter-spacing="2px">DEVELOPERS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="10" y="6" width="90" height="28" rx="6" fill="#0288D1" />
+                <text x="18" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#FFFFFF" letter-spacing="1px">BIKES</text>
+                <rect x="104" y="6" width="46" height="28" rx="6" fill="#FF9800" />
+                <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 28 8 L 34 16 L 34 32 L 28 32 Z M 36 12 L 42 18 L 42 32 L 36 32 Z" fill="#1B6B93" />
+                <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="#1B6B93" letter-spacing="2.5px">RENEEV</text>
+                <text x="51" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1.5px">DEVELOPERS</text>
+              </svg>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Flash Portal Overlay -->
-      <div id="clientsFlashOverlay"></div>
+      <!-- ── ROW 3 (Left to Right / Normal Direction) ── -->
+      <div class="brand-row-wrap marquee-left">
+        <div class="marquee-track">
+          <!-- Group 1 -->
+          <div class="marquee-group">
+            <div class="brand-logo-card" title="Mahindra Tractors">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="19" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="#E51937" letter-spacing="0.5px">mahindra</text>
+                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#E51937" letter-spacing="3px">TRACTORS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Palladium Ahmedabad">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 80 5 L 84 13 L 90 9 L 86 16 L 93 16 L 87 20 L 80 16 L 73 20 L 67 16 L 74 16 L 70 9 L 76 13 Z" fill="#C59B27" />
+                <text x="80" y="28" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="9.5" fill="currentColor" letter-spacing="2px">PALLADIUM</text>
+                <text x="80" y="35" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1.5px">AHMEDABAD</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Space Arcade">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="26" cy="20" r="9" fill="none" stroke="#E5A93C" stroke-width="2" />
+                <text x="44" y="21" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="1.5px">SPACE</text>
+                <text x="45" y="30" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7.5" fill="#E5A93C" letter-spacing="2px">ARCADE</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Spectra">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 22 28 L 32 10 L 42 28 Z M 32 14 L 38 24 L 26 24 Z" fill="none" stroke="currentColor" stroke-width="2" />
+                <text x="50" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="currentColor" letter-spacing="3px">SPECTRA</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Skoda Stellar">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="25" cy="20" r="10" fill="none" stroke="#4BA82E" stroke-width="2" />
+                <path d="M 22 17 L 28 20 L 22 23 Z" fill="#4BA82E" />
+                <text x="42" y="21" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="1.5px">SKODA</text>
+                <text x="42" y="30" font-family="'Montserrat', sans-serif" font-weight="900" font-size="12" fill="#4BA82E" letter-spacing="2px">STELLAR</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Qutone">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#008080" letter-spacing="3px">QUTONE</text>
+                <text x="80" y="33" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="2px">CERAMIC INNOVATIONS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Istana">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="24" cy="20" r="8" fill="none" stroke="#007A87" stroke-width="1.8" stroke-dasharray="3 2" />
+                <text x="38" y="22" font-family="'Cinzel', serif" font-weight="700" font-size="14" fill="#007A87" letter-spacing="2.5px">ISTANA</text>
+                <text x="39" y="30" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6" fill="var(--ink-dim)" letter-spacing="1.5px">LUXURY VILLAS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Oberoi Mall">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="25" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="600" font-size="22" fill="currentColor">oberoi mall</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Clear Water">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="25" y="8" width="110" height="24" rx="4" fill="#E51937" />
+                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF" letter-spacing="2.5px">CLEAR</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Swati">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="18" y="14" width="8" height="12" fill="#E51937" />
+                <rect x="28" y="14" width="8" height="12" fill="#222222" />
+                <text x="44" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="currentColor" letter-spacing="2px">SWATI</text>
+                <text x="45" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1px">BUILDING TOMORROW</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Volkswagen Landmark">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="30" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="2" />
+                <path d="M 23 15 L 27 25 L 30 18 L 33 25 L 37 15" stroke="currentColor" stroke-width="1.8" fill="none" />
+                <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="1px">Landmark</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Navratna">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="26" text-anchor="middle" font-family="'Outfit', 'Montserrat', sans-serif" font-weight="800" font-size="20" fill="currentColor" letter-spacing="-0.02em">navratna</text>
+              </svg>
+            </div>
+          </div>
+          <!-- Group 2 (Duplicate for Infinite Loop) -->
+          <div class="marquee-group" aria-hidden="true">
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="19" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="#E51937" letter-spacing="0.5px">mahindra</text>
+                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#E51937" letter-spacing="3px">TRACTORS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 80 5 L 84 13 L 90 9 L 86 16 L 93 16 L 87 20 L 80 16 L 73 20 L 67 16 L 74 16 L 70 9 L 76 13 Z" fill="#C59B27" />
+                <text x="80" y="28" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="9.5" fill="currentColor" letter-spacing="2px">PALLADIUM</text>
+                <text x="80" y="35" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1.5px">AHMEDABAD</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="26" cy="20" r="9" fill="none" stroke="#E5A93C" stroke-width="2" />
+                <text x="44" y="21" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="1.5px">SPACE</text>
+                <text x="45" y="30" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7.5" fill="#E5A93C" letter-spacing="2px">ARCADE</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <path d="M 22 28 L 32 10 L 42 28 Z M 32 14 L 38 24 L 26 24 Z" fill="none" stroke="currentColor" stroke-width="2" />
+                <text x="50" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="currentColor" letter-spacing="3px">SPECTRA</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="25" cy="20" r="10" fill="none" stroke="#4BA82E" stroke-width="2" />
+                <path d="M 22 17 L 28 20 L 22 23 Z" fill="#4BA82E" />
+                <text x="42" y="21" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="1.5px">SKODA</text>
+                <text x="42" y="30" font-family="'Montserrat', sans-serif" font-weight="900" font-size="12" fill="#4BA82E" letter-spacing="2px">STELLAR</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#008080" letter-spacing="3px">QUTONE</text>
+                <text x="80" y="33" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="2px">CERAMIC INNOVATIONS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="24" cy="20" r="8" fill="none" stroke="#007A87" stroke-width="1.8" stroke-dasharray="3 2" />
+                <text x="38" y="22" font-family="'Cinzel', serif" font-weight="700" font-size="14" fill="#007A87" letter-spacing="2.5px">ISTANA</text>
+                <text x="39" y="30" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6" fill="var(--ink-dim)" letter-spacing="1.5px">LUXURY VILLAS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="25" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="600" font-size="22" fill="currentColor">oberoi mall</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="25" y="8" width="110" height="24" rx="4" fill="#E51937" />
+                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF" letter-spacing="2.5px">CLEAR</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <rect x="18" y="14" width="8" height="12" fill="#E51937" />
+                <rect x="28" y="14" width="8" height="12" fill="#222222" />
+                <text x="44" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="currentColor" letter-spacing="2px">SWATI</text>
+                <text x="45" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1px">BUILDING TOMORROW</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="30" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="2" />
+                <path d="M 23 15 L 27 25 L 30 18 L 33 25 L 37 15" stroke="currentColor" stroke-width="1.8" fill="none" />
+                <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="1px">Landmark</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="26" text-anchor="middle" font-family="'Outfit', 'Montserrat', sans-serif" font-weight="800" font-size="20" fill="currentColor" letter-spacing="-0.02em">navratna</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
-       8. MODERN EDITORIAL LUXURY EXIT FOOTER (Exact Homepage Design)
+       8. EDITORIAL LUXURY CALL-TO-ACTION (Pre-Footer Stage)
        ═══════════════════════════════════════════════════════════ -->
-  <footer id="footer-driver">
-    <div class="footer-luxury-card">
-
-      <!-- Top Grid: Statement, Links, Socials, CTA -->
-      <div class="f-header-grid">
-        <div class="f-desc-col">
-          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in
-            Ahmedabad.</p>
-        </div>
-
-        <div class="f-nav-col">
-          <div class="f-col-label">Explore</div>
-          <ul class="f-links-clean">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="services.html">Services</a></li>
-            <li><a href="blogs.html">Perspectives</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-
-        <div class="f-social-col">
-          <div class="f-col-label">Follow us</div>
-          <div class="f-social-chips">
-            <a href="https://twitter.com" target="_blank" rel="noopener" class="f-chip">
-              <span class="f-chip-icon">𝕏</span>
-              <span>@1928creativestudio</span>
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener" class="f-chip">
-              <span class="f-chip-icon">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                </svg>
-              </span>
-              <span>@1928creativestudio</span>
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener" class="f-chip">
-              <span class="f-chip-icon">in</span>
-              <span>@1928creativestudio</span>
-            </a>
-            <a href="https://behance.net" target="_blank" rel="noopener" class="f-chip">
-              <span class="f-chip-icon">Bē</span>
-              <span>@1928creativestudio</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="f-cta-column">
-          <a href="contact.html" class="f-action-pill cta-primary">
-            <div class="f-action-txt">
-              <span class="f-action-heading">Call 1928 Creative Studio</span>
-              <span class="f-action-sub">Let's work together</span>
-            </div>
-            <div class="f-action-arrow">↗</div>
-          </a>
-
-          <a href="services.html" class="f-action-pill cta-secondary">
-            <div class="f-action-txt">
-              <span class="f-action-heading">Studio Work &amp; Inquiry</span>
-              <span class="f-action-sub">Creative capabilities</span>
-            </div>
-            <div class="f-action-arrow">↗</div>
-          </a>
-        </div>
+  <section id="about-cta-section">
+    <div class="about-cta-glow"></div>
+    <div class="about-cta-stage">
+      <div class="acta-pill"><span class="acta-dot"></span> INITIATE DIALOGUE</div>
+      <h2 class="acta-title">
+        READY TO BUILD WORK <br />
+        <em>THAT ENDURES?</em>
+      </h2>
+      <p class="acta-desc">
+        We partner with select category-defining founders, institutions, and enterprises each quarter. Let's engineer your legacy.
+      </p>
+      <div class="acta-actions">
+        <a href="contact.html" class="acta-btn-primary">Start a Project →</a>
+        <a href="portfolio.html" class="acta-btn-ghost">Explore Archive ↗</a>
       </div>
-
-      <!-- Bottom Cluster: Full-Bleed 50% Sliced Headline touching the Line + Meta Bar -->
-      <div class="f-bottom-cluster">
-        <div class="f-giant-cut-wrap" id="footerCutWrap">
-          <svg class="f-giant-cut-svg" id="footerCutSvg" viewBox="0 0 1600 65" preserveAspectRatio="none">
-            <text x="0" y="115"
-              font-family="'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
-              font-weight="900" font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs"
-              letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
-          </svg>
-        </div>
-
-        <!-- Sub-Footer Meta Bar with Horizontal Line Divider -->
-        <div class="f-meta-bar">
-          <div class="f-meta-links">
-            <span>1928 Creative Studio © 2026</span>
-            <span>·</span>
-            <a href="#">Privacy Policy</a>
-            <span>·</span>
-            <a href="#">Studio Terms</a>
-            <span>·</span>
-            <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener"
-                class="f-credit-author">UXWITHJAYTHAKER</a></span>
-          </div>
-          <div class="f-live-status">
-            <span class="f-status-dot"></span>
-            <span id="footer-live-clock">Ahmedabad, India · 10:42 PM · 28°C ☀</span>
-          </div>
-        </div>
+      <div class="acta-meta-row">
+        <span><a href="mailto:hello@1928creativestudio.com">hello@1928creativestudio.com</a></span>
+        <span>·</span>
+        <span>Ahmedabad, India</span>
       </div>
-
     </div>
-  </footer>
+  </section>
+
+
+  <!-- 8. MODERN EDITORIAL LUXURY EXIT FOOTER (Referenced from footer.html) -->
+  <div id="footer-placeholder"></div>
+  <script src="footer-loader.js"></script>
+
 
   <!-- Floating Theme Toggle FAB (Dark / Light) -->
   <button id="theme-fab" aria-label="Toggle theme">
@@ -3725,190 +4054,6 @@
       }
       initProcessSerpentine();
 
-      /* ── Selected Clients Pinned Luxury Train & Flared Funnel Choreography (Exact Home Engine) ── */
-      function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
-      function lerp(a, b, t) { return a + (b - a) * t; }
-      function eioq(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
-
-      const clientsDriver = document.getElementById('clients-driver');
-      const clientsSticky = document.getElementById('clientsSticky');
-      const clientsPinHead = document.getElementById('clients-pin-head');
-      const clientsTrainViewport = document.getElementById('clients-train-viewport');
-      const clientsTrainTrack = document.getElementById('clients-train-track');
-      const card7FunnelPath = document.getElementById('card7FunnelPath');
-      const funnelBorderTop = document.getElementById('funnelBorderTop');
-      const funnelBorderBottom = document.getElementById('funnelBorderBottom');
-      const card7FunnelSvg = document.getElementById('card7-funnel-svg');
-      const clientsFlashOverlay = document.getElementById('clientsFlashOverlay');
-      const funnelCtaStage = document.getElementById('funnelCtaStage');
-
-      function updateClientsTrainOnScroll() {
-        if (!clientsDriver || !clientsSticky || !clientsPinHead) return;
-        const vh = window.innerHeight;
-        const vw = window.innerWidth;
-        const rect = clientsDriver.getBoundingClientRect();
-        const bH = clientsDriver.offsetHeight - vh;
-        if (bH <= 0) return;
-
-        // Accurate viewport-relative progress:
-        const scrolled = -rect.top;
-        const bp = clamp(scrolled / bH, 0, 1);
-
-        // Phase 1 (bp: 0 → 0.14): Heading rises from bottom (100vh) → balanced upper-center pin (12vh)
-        const riseP = clamp(bp / 0.14, 0, 1);
-        const headY = lerp(vh, vh * 0.12, eioq(riseP));
-        clientsPinHead.style.transform = `translateY(${headY}px)`;
-
-        if (bp < 0.14) {
-          // Header is rising — hide cards, funnel, and CTA stage
-          if (clientsTrainViewport) clientsTrainViewport.style.opacity = '0';
-          if (clientsTrainTrack) clientsTrainTrack.style.transform = `translateX(${vw}px)`;
-          if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M ${vw} ${vh / 2} L ${vw} 0 L ${vw} ${vh} Z`);
-          if (funnelBorderTop) funnelBorderTop.style.opacity = '0';
-          if (funnelBorderBottom) funnelBorderBottom.style.opacity = '0';
-          if (clientsFlashOverlay) clientsFlashOverlay.style.opacity = '0';
-          if (funnelCtaStage) {
-            funnelCtaStage.style.opacity = '0';
-            funnelCtaStage.classList.remove('active');
-          }
-          clientsSticky.style.transform = 'translateY(0)';
-          clientsPinHead.style.opacity = '1';
-        } else {
-          // Phase 2: Connected Train flows right to left
-          const trainP = clamp((bp - 0.14) / 0.74, 0, 1);
-          const viewOpac = clamp((bp - 0.14) / 0.04, 0, 1);
-          if (clientsTrainViewport) clientsTrainViewport.style.opacity = viewOpac + '';
-
-          const trackW = clientsTrainTrack ? (clientsTrainTrack.scrollWidth || (7 * 400)) : (7 * 400);
-          const startX = vw;
-          const endX = -(trackW + vw * 0.45);
-          const curX = lerp(startX, endX, trainP);
-          if (clientsTrainTrack) {
-            clientsTrainTrack.style.transform = `translateX(${curX}px)`;
-          }
-
-          // Real-time tracking of Card 7's right edge
-          const card7El = document.querySelector('#clients-train-track .brand-train-card:last-child');
-          let card7Right = vw + 100;
-          let apexY = vh * 0.60;
-          if (card7El) {
-            const r7 = card7El.getBoundingClientRect();
-            card7Right = r7.right;
-            apexY = r7.top + (r7.height / 2);
-          }
-
-          if (card7FunnelSvg) {
-            card7FunnelSvg.setAttribute('viewBox', `0 0 ${vw} ${vh}`);
-          }
-
-          if (card7Right > 0) {
-            // ── CARD 7 IS ON SCREEN: Two lines remain firmly PINCHED to Card 7's right edge ──
-            if (card7Right < vw + 10) {
-              const span = vw - card7Right;
-              const cp1x = card7Right + span * 0.28;
-              const cp2x = card7Right + span * 0.28;
-              const cp1y = apexY - 20;
-              const cp2y = apexY + 20;
-
-              const d = `M ${card7Right} ${apexY} Q ${cp1x} ${cp1y}, ${vw} 0 L ${vw} ${vh} Q ${cp2x} ${cp2y}, ${card7Right} ${apexY} Z`;
-              if (card7FunnelPath) card7FunnelPath.setAttribute('d', d);
-              if (funnelBorderTop) {
-                funnelBorderTop.setAttribute('d', `M ${card7Right} ${apexY} Q ${cp1x} ${cp1y}, ${vw} 0`);
-                funnelBorderTop.style.opacity = '1';
-              }
-              if (funnelBorderBottom) {
-                funnelBorderBottom.setAttribute('d', `M ${card7Right} ${apexY} Q ${cp2x} ${cp2y}, ${vw} ${vh}`);
-                funnelBorderBottom.style.opacity = '1';
-              }
-            } else {
-              if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M ${vw} ${apexY} L ${vw} 0 L ${vw} ${vh} Z`);
-              if (funnelBorderTop) funnelBorderTop.style.opacity = '0';
-              if (funnelBorderBottom) funnelBorderBottom.style.opacity = '0';
-            }
-            if (clientsFlashOverlay) clientsFlashOverlay.style.opacity = '0';
-
-            // Ready to Build CTA is strictly hidden while card is on screen
-            if (funnelCtaStage) {
-              funnelCtaStage.style.opacity = '0';
-              funnelCtaStage.classList.remove('active');
-            }
-            clientsSticky.style.transform = 'translateY(0)';
-          } else {
-            // ── CARD 7'S RIGHT SIDE HAS REACHED THE LEFT EDGE (card7Right <= 0): SPLIT OF TWO LINES OCCURS ──
-            const splitDistance = -card7Right;
-            const splitThreshold = vw * 0.18;
-            const splitP = clamp(splitDistance / splitThreshold, 0, 1);
-            const sE = eioq(splitP);
-
-            const topY = lerp(apexY, 0, sE);
-            const topCPy = lerp(apexY - 20, 0, sE);
-            const topCPx = lerp(vw * 0.28, vw * 0.5, sE);
-
-            const bottomY = lerp(apexY, vh, sE);
-            const bottomCPy = lerp(apexY + 20, vh, sE);
-            const bottomCPx = lerp(vw * 0.28, vw * 0.5, sE);
-
-            if (splitP >= 0.98) {
-              if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M 0 0 L ${vw} 0 L ${vw} ${vh} L 0 ${vh} Z`);
-              if (funnelBorderTop) funnelBorderTop.setAttribute('d', `M 0 0 L ${vw} 0`);
-              if (funnelBorderBottom) funnelBorderBottom.setAttribute('d', `M 0 ${vh} L ${vw} ${vh}`);
-            } else {
-              const d = `M 0 ${topY} Q ${topCPx} ${topCPy}, ${vw} 0 L ${vw} ${vh} Q ${bottomCPx} ${bottomCPy}, 0 ${bottomY} L 0 0 Z`;
-              if (card7FunnelPath) card7FunnelPath.setAttribute('d', d);
-              if (funnelBorderTop) funnelBorderTop.setAttribute('d', `M 0 ${topY} Q ${topCPx} ${topCPy}, ${vw} 0`);
-              if (funnelBorderBottom) funnelBorderBottom.setAttribute('d', `M 0 ${bottomY} Q ${bottomCPx} ${bottomCPy}, ${vw} ${vh}`);
-            }
-
-            const lineFade = 1 - clamp((splitP - 0.85) / 0.15, 0, 1);
-            if (funnelBorderTop) funnelBorderTop.style.opacity = lineFade + '';
-            if (funnelBorderBottom) funnelBorderBottom.style.opacity = lineFade + '';
-
-            // Flash effect at the terminal completion of the split
-            if (splitP >= 0.70 && splitP <= 1.0) {
-              const flashP = (splitP - 0.70) / 0.30;
-              const flashOpac = flashP < 0.5 ? (flashP * 2) : ((1 - flashP) * 2);
-              if (clientsFlashOverlay) clientsFlashOverlay.style.opacity = (flashOpac * 0.95) + '';
-            } else {
-              if (clientsFlashOverlay) clientsFlashOverlay.style.opacity = '0';
-            }
-
-            // Ready to Build CTA stage only fades in softly from back AFTER the split is complete and lines disappear
-            if (splitP < 1.0) {
-              if (funnelCtaStage) {
-                funnelCtaStage.style.opacity = '0';
-                funnelCtaStage.classList.remove('active');
-              }
-              clientsSticky.style.transform = 'translateY(0)';
-            } else {
-              const fadeDistance = splitDistance - splitThreshold;
-              const fadeThreshold = vw * 0.14;
-              const holdWindow = vw * 0.20;
-              const scrollUpThreshold = vw * 0.24;
-
-              const fadeP = clamp(fadeDistance / fadeThreshold, 0, 1);
-              const fE = eioq(fadeP);
-
-              if (funnelCtaStage) {
-                funnelCtaStage.style.opacity = fE + '';
-                if (fadeP > 0.5) funnelCtaStage.classList.add('active');
-                else funnelCtaStage.classList.remove('active');
-              }
-
-              // ── 1. While in holdWindow: section stays 100% visible and held still ──
-              if (fadeDistance < (fadeThreshold + holdWindow)) {
-                clientsSticky.style.transform = 'translateY(0)';
-              } else {
-                // ── 2. Once holdWindow is scrolled past: section smoothly glides up to -100vh into Footer ──
-                const scrollUpDist = fadeDistance - (fadeThreshold + holdWindow);
-                const scrollUpP = clamp(scrollUpDist / scrollUpThreshold, 0, 1);
-                const sU = eioq(scrollUpP);
-                clientsSticky.style.transform = `translateY(-${lerp(0, vh, sU)}px)`;
-              }
-            }
-          }
-        }
-      }
-
       const heroIndicator = document.getElementById('heroScrollIndicator');
       const nav = document.getElementById('nav');
       let lastSY = 0;
@@ -3928,8 +4073,6 @@
         // Best Works 2-Step Pinned Scroll
         updateWorksOnScroll();
 
-        // Selected Clients Continuous Luxury Card Train & Ready to Build Stage
-        updateClientsTrainOnScroll();
 
         // Header Navigation: Hidden on Hero, Story, and Best Works (#works-driver)
         // From the next section (#values onwards), Appears ONLY on Scroll UP

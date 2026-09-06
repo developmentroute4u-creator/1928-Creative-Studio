@@ -1,0 +1,4086 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perspectives · 1928 Creative Studio — Strategic Design Research &amp; Cultural Theorems</title>
+  <meta name="description"
+    content="A provocative research laboratory and editorial codex exploring mathematical brand geometry, computational spatial physics, and luxury market dominance by 1928 Creative Studio." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ── Font System (Project Core Fonts Only) ── */
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #070709;
+      --card-bg: #0e0e12;
+      --card-hover: #14141a;
+      --card-alt: #121217;
+      --ink: #f5f5f7;
+      --ink-mid: #9898a6;
+      --ink-dim: #545462;
+      --rule: rgba(255, 255, 255, 0.08);
+      --rule-m: rgba(255, 255, 255, 0.15);
+      --rule-heavy: rgba(255, 255, 255, 0.28);
+      --cr: #c8102e;
+      --cr-glow: rgba(200, 16, 46, 0.38);
+      --cr-soft: rgba(200, 16, 46, 0.09);
+      --cr-bright: #ff1e42;
+      --sp: cubic-bezier(0.16, 1, 0.3, 1);
+      --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f5f8;
+      --card-bg: #ffffff;
+      --card-hover: #ececf2;
+      --card-alt: #f0f0f6;
+      --ink: #0c0c0f;
+      --ink-mid: #4d4d5a;
+      --ink-dim: #848494;
+      --rule: rgba(0, 0, 0, 0.08);
+      --rule-m: rgba(0, 0, 0, 0.16);
+      --rule-heavy: rgba(0, 0, 0, 0.28);
+      --cr: #c8102e;
+      --cr-glow: rgba(200, 16, 46, 0.22);
+      --cr-soft: rgba(200, 16, 46, 0.06);
+      --cr-bright: #d91434;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-secondary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background 0.4s var(--sp), color 0.4s var(--sp);
+      position: relative;
+    }
+
+    /* ── Interactive Custom Cursor ── */
+    .c-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s;
+    }
+
+    .c-ring {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s ease-out, width 0.3s var(--sp), height 0.3s var(--sp), border-color 0.3s;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       1. HERO SECTION: AVANT-GARDE ARCHITECTURAL MONOLITH
+       (Integrated Editorial Masthead — NO Standard Nav/Logo/Links)
+       ═══════════════════════════════════════════════════════════ */
+    #perspectives-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--rule);
+      overflow: hidden;
+      background: 
+        radial-gradient(circle at 50% 30%, rgba(200, 16, 46, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.02) 0%, transparent 50%),
+        var(--bg);
+    }
+
+    /* Subtle Architectural Coordinate Grid Lines */
+    .hero-grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-size: 64px 64px;
+      background-image: 
+        linear-gradient(to right, var(--rule) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
+      opacity: 0.4;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at 50% 50%, black 25%, transparent 88%);
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 25%, transparent 88%);
+    }
+
+    /* ── Integrated Architectural Editorial Masthead ── */
+    .hero-codex-masthead {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.2fr 2fr 1.2fr;
+      align-items: center;
+      padding: clamp(18px, 2.5vh, 28px) clamp(24px, 4vw, 64px);
+      border-bottom: 1px solid var(--rule);
+      background: rgba(7, 7, 9, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      position: relative;
+      z-index: 10;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: background 0.4s;
+    }
+
+    [data-theme="light"] .hero-codex-masthead {
+      background: rgba(245, 245, 248, 0.75);
+    }
+
+    .hcm-col {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hcm-left {
+      justify-content: flex-start;
+    }
+
+    .hcm-back-link {
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hcm-back-link:hover {
+      color: var(--cr-bright);
+    }
+
+    .hcm-sep {
+      color: var(--rule-heavy);
+    }
+
+    .hcm-beacon {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cr-bright);
+      box-shadow: 0 0 10px var(--cr-bright);
+      animation: pulseBeacon 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseBeacon {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hcm-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: 0.08em;
+    }
+
+    .hcm-center {
+      justify-content: center;
+      color: var(--ink-dim);
+      font-size: 10px;
+      text-align: center;
+    }
+
+    .hcm-right {
+      justify-content: flex-end;
+      color: var(--ink-dim);
+      gap: 16px;
+    }
+
+    .hcm-clock {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* ── Monumental Hero Centerpiece ── */
+    .hero-monolith-stage {
+      width: 100%;
+      max-width: 1440px;
+      margin: clamp(24px, 4vh, 48px) auto clamp(20px, 3vh, 36px);
+      padding: 0 clamp(24px, 4vw, 64px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .hms-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+      margin-bottom: clamp(12px, 1.8vh, 18px);
+    }
+
+    .hms-divider {
+      color: var(--rule-heavy);
+    }
+
+    .hms-edition {
+      color: var(--ink-mid);
+    }
+
+    /* Monumental Kinetic Typography */
+    .hero-kinetic-display {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(38px, 5.8vw, 84px);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+      color: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(6px, 1vw, 12px);
+      margin-bottom: clamp(16px, 2.2vh, 24px);
+    }
+
+    .hkd-line {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(10px, 1.5vw, 20px);
+      flex-wrap: wrap;
+    }
+
+    .hkd-bracket {
+      font-family: var(--font-mono);
+      font-weight: 400;
+      color: var(--cr-bright);
+    }
+
+    .hkd-wireframe {
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--ink);
+      letter-spacing: 0.04em;
+    }
+
+    [data-theme="light"] .hkd-wireframe {
+      -webkit-text-stroke: 1.8px var(--ink);
+    }
+
+    .text-crimson {
+      color: var(--cr-bright);
+    }
+
+    .hkd-period {
+      color: var(--cr);
+    }
+
+    .hero-lead-thesis {
+      max-width: 780px;
+      font-size: clamp(15px, 1.15vw, 18px);
+      color: var(--ink-mid);
+      line-height: 1.65;
+      font-weight: 400;
+      margin-bottom: clamp(24px, 3.5vh, 38px);
+    }
+
+    /* ── Perspective Focal Specimen (Raw Asset Placeholder) ── */
+    .hero-focal-specimen-deck {
+      width: 100%;
+      max-width: 980px;
+      margin-bottom: clamp(24px, 3.5vh, 40px);
+      cursor: pointer;
+    }
+
+    .hfs-glass-card {
+      width: 100%;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: clamp(18px, 2.2vw, 28px);
+      padding: clamp(16px, 2vw, 24px);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      transition: transform 0.4s var(--sp), border-color 0.4s var(--sp), box-shadow 0.4s var(--sp);
+      position: relative;
+    }
+
+    .hero-focal-specimen-deck:hover .hfs-glass-card {
+      transform: translateY(-4px);
+      border-color: var(--cr);
+      box-shadow: 0 26px 80px rgba(0, 0, 0, 0.65), 0 0 28px var(--cr-soft);
+    }
+
+    .hfs-telemetry-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--rule);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .hfs-lens-state {
+      color: var(--cr-bright);
+    }
+
+    /* Blueprint Stage Visual Placeholder */
+    .hfs-blueprint-stage {
+      width: 100%;
+      height: clamp(180px, 22vh, 260px);
+      border-radius: clamp(12px, 1.5vw, 18px);
+      background: radial-gradient(circle at 50% 50%, rgba(200, 16, 46, 0.08) 0%, transparent 68%), var(--card-alt);
+      border: 1px dashed var(--rule-heavy);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: border-color 0.4s;
+    }
+
+    .hero-focal-specimen-deck:hover .hfs-blueprint-stage {
+      border-color: var(--cr);
+    }
+
+    .hfs-asset-glyph {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink-mid);
+      transition: transform 0.4s var(--sp), color 0.3s;
+      z-index: 2;
+    }
+
+    .hero-focal-specimen-deck:hover .hfs-asset-glyph {
+      transform: scale(1.06);
+      color: var(--ink);
+    }
+
+    .hfs-svg-icon {
+      width: 52px;
+      height: 52px;
+      stroke: currentColor;
+    }
+
+    .hfs-radar-ring {
+      animation: radarSpin 12s infinite linear;
+      transform-origin: 32px 32px;
+    }
+
+    @keyframes radarSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .hfs-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--cr-bright);
+      background: var(--cr-soft);
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 16, 46, 0.25);
+    }
+
+    .hfs-prompt {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      color: var(--ink-dim);
+      letter-spacing: 0.08em;
+    }
+
+    /* Corner Crosshairs */
+    .corner-crosshair {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-dim);
+      line-height: 1;
+      pointer-events: none;
+      transition: color 0.3s;
+    }
+
+    .hero-focal-specimen-deck:hover .corner-crosshair,
+    .featured-monograph-spread:hover .corner-crosshair,
+    .codex-card:hover .corner-crosshair,
+    .reader-modal-stage:hover .corner-crosshair {
+      color: var(--cr);
+    }
+
+    .cc-tl { top: 10px; left: 10px; }
+    .cc-tr { top: 10px; right: 10px; }
+    .cc-bl { bottom: 10px; left: 10px; }
+    .cc-br { bottom: 10px; right: 10px; }
+
+    .hfs-telemetry-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 4px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hfs-spec-paper {
+      color: var(--ink);
+    }
+
+    .hfs-spec-time {
+      color: var(--ink-dim);
+    }
+
+    .hfs-spec-cta {
+      color: var(--cr-bright);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: transform 0.3s;
+    }
+
+    .hero-focal-specimen-deck:hover .hfs-spec-cta {
+      transform: translateX(4px);
+    }
+
+    /* ── 4-Item Telemetry Matrix ── */
+    .hero-telemetry-matrix {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(14px, 2.5vw, 36px);
+      padding: 12px clamp(20px, 2.5vw, 36px);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--rule);
+    }
+
+    [data-theme="light"] .hero-telemetry-matrix {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .htm-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .htm-num {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--cr-bright);
+    }
+
+    .htm-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .htm-sep {
+      color: var(--rule-m);
+      font-family: var(--font-mono);
+    }
+
+    /* ── Kinetic Marquee Ticker Strip (User's Favorite Feature) ── */
+    .hero-marquee-strip {
+      width: 100%;
+      overflow: hidden;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      background: rgba(255, 255, 255, 0.015);
+      padding: 13px 0;
+      user-select: none;
+      position: relative;
+      z-index: 5;
+    }
+
+    .hms-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeRightToLeft 34s linear infinite;
+    }
+
+    .hms-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeRightToLeft {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .hms-item {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hms-dot {
+      color: var(--cr);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       2 & 3. COMMAND DOCK: SEARCH & CATEGORIES (Sticky to top)
+       ═══════════════════════════════════════════════════════════ */
+    #command-dock-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 850;
+      background: rgba(7, 7, 9, 0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--rule);
+      padding: 14px 0;
+      transition: background 0.4s var(--sp), border-color 0.4s var(--sp);
+    }
+
+    [data-theme="light"] #command-dock-wrap {
+      background: rgba(245, 245, 248, 0.94);
+    }
+
+    .command-dock-container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 4vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* Minimalist Search Input */
+    .cmd-search-box {
+      position: relative;
+      width: 290px;
+      display: flex;
+      align-items: center;
+    }
+
+    .csb-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--rule-m);
+      border-radius: 999px;
+      padding: 10px 42px 10px 38px;
+      font-family: var(--font-secondary);
+      font-size: 13px;
+      color: var(--ink);
+      outline: none;
+      transition: all 0.3s var(--sp);
+    }
+
+    [data-theme="light"] .csb-input {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: var(--rule-m);
+    }
+
+    .csb-input:focus {
+      border-color: var(--cr);
+      background: rgba(255, 255, 255, 0.07);
+      box-shadow: 0 0 20px var(--cr-soft);
+    }
+
+    [data-theme="light"] .csb-input:focus {
+      background: #fff;
+    }
+
+    .csb-icon {
+      position: absolute;
+      left: 14px;
+      width: 15px;
+      height: 15px;
+      stroke: var(--ink-dim);
+      fill: none;
+      stroke-width: 2.2;
+      pointer-events: none;
+    }
+
+    .csb-shortcut {
+      position: absolute;
+      right: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid var(--rule);
+      pointer-events: none;
+    }
+
+    .csb-clear {
+      position: absolute;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--ink-dim);
+      cursor: pointer;
+      font-size: 14px;
+      display: none;
+    }
+
+    .csb-clear.active {
+      display: block;
+    }
+
+    /* Category Filter Tags */
+    .cmd-category-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .cmd-category-group::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cmd-cat-btn {
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid var(--rule);
+      color: var(--ink-mid);
+      font-family: var(--font-primary);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s var(--sp);
+    }
+
+    .cmd-cat-btn:hover {
+      border-color: var(--rule-heavy);
+      color: var(--ink);
+    }
+
+    .cmd-cat-btn.active {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+    }
+
+    .cmd-cat-btn .ccb-count {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      opacity: 0.75;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       4. FEATURED MASTER MONOGRAPH (Asymmetric Spread № 01)
+       ═══════════════════════════════════════════════════════════ */
+    #featured-monograph {
+      padding: clamp(52px, 7vh, 84px) clamp(24px, 4vw, 64px) clamp(36px, 4vh, 52px);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .featured-monograph-spread {
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: clamp(24px, 3vw, 36px);
+      padding: clamp(28px, 4vw, 56px);
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(36px, 5vw, 70px);
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.4s var(--sp), border-color 0.4s var(--sp), box-shadow 0.4s var(--sp);
+    }
+
+    .featured-monograph-spread:hover {
+      transform: translateY(-5px);
+      border-color: var(--cr);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 32px var(--cr-soft);
+    }
+
+    .fms-narrative {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .fms-top-spec {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+    }
+
+    .fms-numeral {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--ink-dim);
+    }
+
+    .fms-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(26px, 3vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      transition: color 0.3s;
+    }
+
+    .featured-monograph-spread:hover .fms-title {
+      color: var(--cr);
+    }
+
+    .fms-excerpt {
+      font-size: clamp(15px, 1.15vw, 17.5px);
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .fms-footer-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--rule);
+      padding-top: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .fms-author-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .fab-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--cr-soft);
+      border: 1.5px solid var(--cr);
+      display: grid;
+      place-items: center;
+      color: var(--cr);
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .fab-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .fab-name {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 13.5px;
+      color: var(--ink);
+    }
+
+    .fab-role {
+      font-size: 11px;
+      color: var(--ink-dim);
+    }
+
+    .fms-launch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--rule-m);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s var(--sp);
+    }
+
+    .featured-monograph-spread:hover .fms-launch-btn {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+    }
+
+    .fms-blueprint-visual {
+      width: 100%;
+      min-height: clamp(300px, 40vh, 440px);
+      border-radius: clamp(18px, 2vw, 26px);
+      background: radial-gradient(circle at 50% 50%, rgba(200, 16, 46, 0.1) 0%, transparent 65%), var(--card-alt);
+      border: 1px dashed var(--rule-heavy);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: border-color 0.4s;
+    }
+
+    .featured-monograph-spread:hover .fms-blueprint-visual {
+      border-color: var(--cr);
+    }
+
+    .asset-blueprint-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink-mid);
+      transition: transform 0.4s var(--sp), color 0.3s;
+    }
+
+    .featured-monograph-spread:hover .asset-blueprint-icon {
+      transform: scale(1.06);
+      color: var(--ink);
+    }
+
+    .abi-svg {
+      width: 64px;
+      height: 64px;
+      stroke: currentColor;
+    }
+
+    .abi-radar {
+      animation: radarSpin 12s infinite linear;
+      transform-origin: 32px 32px;
+    }
+
+    .abi-badge {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--cr-bright);
+      background: var(--cr-soft);
+      padding: 5px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 16, 46, 0.25);
+    }
+
+    .abi-subtext {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--ink-dim);
+      letter-spacing: 0.08em;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       5. PERSPECTIVES ARCHIVE (Asymmetric Editorial Grid)
+       ═══════════════════════════════════════════════════════════ */
+    #perspectives-grid-sec {
+      padding: clamp(20px, 3vh, 40px) clamp(24px, 4vw, 64px) clamp(50px, 7vh, 84px);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .pga-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: clamp(32px, 4vh, 48px);
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .pga-sec-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(22px, 2.2vw, 32px);
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .pga-counter {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .pga-editorial-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(24px, 3vw, 36px);
+    }
+
+    .codex-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: clamp(20px, 2vw, 28px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+      transition: transform 0.4s var(--sp), border-color 0.4s var(--sp), box-shadow 0.4s var(--sp);
+    }
+
+    .codex-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--cr);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45), 0 0 24px var(--cr-soft);
+    }
+
+    .card-blueprint-stage {
+      width: 100%;
+      height: clamp(200px, 25vh, 250px);
+      background: radial-gradient(circle at 50% 50%, rgba(200, 16, 46, 0.06) 0%, transparent 65%), var(--card-alt);
+      border-bottom: 1px dashed var(--rule-m);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .codex-card:hover .card-blueprint-stage {
+      border-bottom-color: var(--cr);
+    }
+
+    .card-asset-glyph {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink-mid);
+      transition: transform 0.4s var(--sp), color 0.3s;
+    }
+
+    .codex-card:hover .card-asset-glyph {
+      transform: scale(1.08);
+      color: var(--ink);
+    }
+
+    .cag-svg {
+      width: 48px;
+      height: 48px;
+      stroke: currentColor;
+    }
+
+    .cag-badge {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--cr-bright);
+      background: var(--cr-soft);
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 16, 46, 0.2);
+    }
+
+    .card-cat-pill {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(10, 10, 14, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    [data-theme="light"] .card-cat-pill {
+      background: rgba(255, 255, 255, 0.94);
+      color: #111114;
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .card-body-content {
+      padding: clamp(20px, 2.5vw, 30px);
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .cbc-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .cbc-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(17px, 1.5vw, 21px);
+      line-height: 1.25;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      transition: color 0.3s;
+    }
+
+    .codex-card:hover .cbc-title {
+      color: var(--cr);
+    }
+
+    .cbc-excerpt {
+      font-size: 13.5px;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .cbc-author-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--rule);
+      padding-top: 16px;
+      margin-top: auto;
+    }
+
+    .cbc-author-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cbc-avatar-initials {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--cr-soft);
+      border: 1px solid var(--cr);
+      color: var(--cr);
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 11px;
+      display: grid;
+      place-items: center;
+    }
+
+    .cbc-author-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cbc-aname {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--ink);
+    }
+
+    .cbc-adate {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      color: var(--ink-dim);
+    }
+
+    .cbc-action-arrow {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-m);
+      background: rgba(255, 255, 255, 0.03);
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      transition: all 0.3s var(--sp);
+      flex-shrink: 0;
+    }
+
+    [data-theme="light"] .cbc-action-arrow {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .codex-card:hover .cbc-action-arrow {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+      transform: rotate(45deg);
+    }
+
+    /* Empty Search State */
+    .empty-search-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: clamp(60px, 10vh, 100px) 20px;
+      display: none;
+    }
+
+    .empty-search-state.visible {
+      display: block;
+    }
+
+    .ess-title {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .ess-sub {
+      color: var(--ink-dim);
+      font-size: 15px;
+      margin-bottom: 24px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       6. PAGINATION ARCHIVE CONTROLS
+       ═══════════════════════════════════════════════════════════ */
+    .pagination-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: clamp(40px, 6vh, 64px);
+    }
+
+    .pagi-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-m);
+      background: var(--card-bg);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s var(--sp);
+    }
+
+    .pagi-btn:hover {
+      border-color: var(--cr);
+      color: var(--cr);
+    }
+
+    .pagi-btn.active {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+      box-shadow: 0 6px 20px var(--cr-glow);
+    }
+
+    .pagi-next {
+      width: auto;
+      padding: 0 22px;
+      border-radius: 999px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       7. EDITORIAL NEWSLETTER (The Sealed Memorandum)
+       ═══════════════════════════════════════════════════════════ */
+    #newsletter-sec {
+      padding: clamp(50px, 7vh, 84px) clamp(24px, 4vw, 64px);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .newsletter-codex-card {
+      background: radial-gradient(circle at 100% 0%, rgba(200, 16, 46, 0.16) 0%, transparent 60%), var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: clamp(24px, 3vw, 36px);
+      padding: clamp(36px, 6vw, 64px);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(32px, 5vw, 64px);
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ncc-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+      margin-bottom: 12px;
+    }
+
+    .ncc-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(26px, 2.8vw, 40px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .ncc-desc {
+      font-size: clamp(14.5px, 1.1vw, 16.5px);
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    .ncc-form-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .ncc-input-box {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 999px;
+      padding: 6px 6px 6px 24px;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    [data-theme="light"] .ncc-input-box {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .ncc-input-box:focus-within {
+      border-color: var(--cr);
+      box-shadow: 0 0 24px var(--cr-soft);
+    }
+
+    .ncc-input {
+      flex-grow: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .ncc-submit-btn {
+      padding: 14px 28px;
+      border-radius: 999px;
+      border: none;
+      background: var(--cr);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.3s var(--sp), box-shadow 0.3s;
+      white-space: nowrap;
+    }
+
+    .ncc-submit-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 24px var(--cr-glow);
+    }
+
+    .ncc-legal {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-dim);
+      padding-left: 12px;
+    }
+
+    .ncc-toast {
+      padding: 12px 18px;
+      border-radius: 12px;
+      background: rgba(200, 16, 46, 0.15);
+      border: 1px solid var(--cr);
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 13px;
+      display: none;
+    }
+
+    .ncc-toast.show {
+      display: block;
+      animation: fadeIn 0.4s var(--sp);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       8. DEDICATED STUDIO CALL-TO-ACTION SECTION (Before Footer)
+       ═══════════════════════════════════════════════════════════ */
+    #perspective-studio-cta {
+      padding: clamp(60px, 8vh, 100px) clamp(24px, 4vw, 64px);
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .psc-card {
+      background: radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.14) 0%, transparent 70%), var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: clamp(28px, 3.5vw, 44px);
+      padding: clamp(48px, 8vh, 84px) clamp(28px, 5vw, 72px);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+
+    .psc-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+      margin-bottom: clamp(16px, 2.5vh, 24px);
+    }
+
+    .psc-headline {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(32px, 4.2vw, 60px);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: clamp(18px, 2.5vh, 28px);
+    }
+
+    .psc-manifesto {
+      max-width: 720px;
+      font-size: clamp(15px, 1.15vw, 18px);
+      color: var(--ink-mid);
+      line-height: 1.7;
+      margin-bottom: clamp(32px, 5vh, 48px);
+    }
+
+    .psc-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: clamp(28px, 4vh, 40px);
+    }
+
+    .psc-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: var(--cr);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px var(--cr-glow);
+      transition: all 0.35s var(--sp);
+    }
+
+    .psc-btn-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 45px rgba(200, 16, 46, 0.45);
+      background: #e01436;
+    }
+
+    .psc-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--rule-m);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.3s var(--sp);
+    }
+
+    [data-theme="light"] .psc-btn-secondary {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .psc-btn-secondary:hover {
+      border-color: var(--cr);
+      color: var(--cr);
+    }
+
+    .psc-telemetry-strip {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       9. DEEP-DIVE PERSPECTIVE READER DRAWER (Detail Modal)
+       (With Dynamic TOC Scrollspy & Related Articles Grid)
+       ═══════════════════════════════════════════════════════════ */
+    .reader-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 9990;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .reader-modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .reader-modal-stage {
+      width: 100%;
+      max-width: 1360px;
+      height: 94vh;
+      background: var(--card-bg);
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      border: 1px solid var(--rule-m);
+      border-bottom: none;
+      box-shadow: 0 -24px 90px rgba(0, 0, 0, 0.85);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s var(--sp);
+      position: relative;
+    }
+
+    .reader-modal-stage::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .reader-modal-backdrop.active .reader-modal-stage {
+      transform: translateY(0);
+    }
+
+    /* Sticky Reader Nav Header */
+    .reader-top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 9999;
+      background: rgba(14, 14, 18, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--rule);
+      padding: 16px clamp(24px, 4vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+    }
+
+    [data-theme="light"] .reader-top-bar {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: var(--rule);
+    }
+
+    .reader-cat-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+      background: var(--cr-soft);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 16, 46, 0.2);
+    }
+
+    .reader-top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .reader-share-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--rule-m);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s var(--sp);
+    }
+
+    [data-theme="light"] .reader-share-btn {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .reader-share-btn:hover {
+      border-color: var(--cr);
+      color: var(--cr);
+    }
+
+    .reader-close-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--rule-m);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-size: 18px;
+      cursor: pointer;
+      transition: transform 0.3s var(--sp), background 0.3s, border-color 0.3s;
+    }
+
+    .reader-close-btn:hover {
+      transform: rotate(90deg) scale(1.1);
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+    }
+
+    .reader-body-wrap {
+      padding: clamp(28px, 4vw, 64px);
+    }
+
+    .reader-hero-box {
+      margin-bottom: clamp(32px, 4vh, 48px);
+    }
+
+    .reader-hero-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(30px, 3.8vw, 54px);
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .reader-hero-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .rhm-author-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .rhm-avatar-initials {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--cr-soft);
+      border: 1.5px solid var(--cr);
+      color: var(--cr);
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 15px;
+      display: grid;
+      place-items: center;
+    }
+
+    .rhm-name {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .rhm-role {
+      font-size: 12px;
+      color: var(--ink-dim);
+    }
+
+    .rhm-info-chip {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Reader Blueprint Banner */
+    .reader-blueprint-banner {
+      width: 100%;
+      height: clamp(260px, 36vh, 440px);
+      border-radius: clamp(20px, 2.5vw, 32px);
+      background: radial-gradient(circle at 50% 50%, rgba(200, 16, 46, 0.08) 0%, transparent 65%), var(--card-alt);
+      border: 1px dashed var(--rule-heavy);
+      margin-bottom: clamp(40px, 6vh, 64px);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Two-Column Reader Prose Layout */
+    .reader-editorial-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: clamp(40px, 5vw, 80px);
+      margin-bottom: clamp(52px, 7vh, 84px);
+    }
+
+    /* Sticky Table of Contents */
+    .reader-toc-sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .toc-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+    }
+
+    .toc-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-left: 2px solid var(--rule);
+      padding-left: 14px;
+    }
+
+    .toc-nav-list li a {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color 0.25s, transform 0.25s;
+      display: block;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .toc-nav-list li a:hover,
+    .toc-nav-list li a.active {
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    /* Reader Typography Prose */
+    .reader-content-prose {
+      font-size: clamp(16px, 1.2vw, 18.5px);
+      color: var(--ink-mid);
+      line-height: 1.8;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .reader-content-prose p {
+      margin: 0;
+    }
+
+    .reader-content-prose h2 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(24px, 2.2vw, 32px);
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-top: 24px;
+      line-height: 1.2;
+    }
+
+    .reader-pullquote {
+      position: relative;
+      background: var(--cr-soft);
+      border-left: 3px solid var(--cr);
+      border-radius: 0 18px 18px 0;
+      padding: clamp(24px, 3vw, 36px);
+      margin: 12px 0;
+    }
+
+    .reader-pullquote p {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: clamp(18px, 1.4vw, 22px);
+      line-height: 1.45;
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    .reader-takeaway-box {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid var(--rule-m);
+      border-radius: 20px;
+      padding: clamp(22px, 3vw, 32px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    [data-theme="light"] .reader-takeaway-box {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .rtb-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+    }
+
+    .rtb-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rtb-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14.5px;
+      color: var(--ink);
+    }
+
+    .rtb-list li::before {
+      content: '→';
+      color: var(--cr);
+      font-weight: 700;
+    }
+
+    /* ── Related Articles Grid inside Drawer ── */
+    .reader-related-section {
+      border-top: 1.5px solid var(--rule);
+      padding-top: clamp(36px, 5vh, 56px);
+      margin-bottom: clamp(48px, 6vh, 72px);
+    }
+
+    .rrs-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .rrs-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+    }
+
+    .rrs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .rrs-card {
+      background: var(--card-alt);
+      border: 1px solid var(--rule-m);
+      border-radius: 20px;
+      padding: 24px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .rrs-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--cr);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .rrs-cat {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+    }
+
+    .rrs-card-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1.3;
+      color: var(--ink);
+      transition: color 0.25s;
+    }
+
+    .rrs-card:hover .rrs-card-title {
+      color: var(--cr);
+    }
+
+    .rrs-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      border-top: 1px solid var(--rule);
+      padding-top: 12px;
+    }
+
+    /* Author Bio Signature Deck */
+    .reader-author-bio-card {
+      border-top: 1.5px solid var(--rule);
+      border-bottom: 1.5px solid var(--rule);
+      padding: 36px 0;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: clamp(48px, 6vh, 72px);
+    }
+
+    .rabc-avatar-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--cr-soft);
+      border: 2px solid var(--cr);
+      display: grid;
+      place-items: center;
+      color: var(--cr);
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .rabc-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .rabc-name {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--ink);
+    }
+
+    .rabc-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cr-bright);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .rabc-bio {
+      font-size: 14px;
+      color: var(--ink-mid);
+      line-height: 1.55;
+    }
+
+    /* Commission Callout Deck */
+    .reader-cta-deck {
+      border-top: 1.5px solid var(--rule);
+      padding-top: clamp(36px, 5vh, 52px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 28px;
+    }
+
+    .reader-cta-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(22px, 2.2vw, 32px);
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin: 0 0 6px 0;
+    }
+
+    .reader-cta-sub {
+      font-size: clamp(14px, 1.1vw, 16px);
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    .reader-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 36px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: var(--cr);
+      border: 1px solid var(--cr);
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 12px 35px var(--cr-glow);
+      transition: all 0.35s var(--sp);
+      flex-shrink: 0;
+    }
+
+    .reader-cta-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 45px rgba(200, 16, 46, 0.45);
+      background: #e01436;
+    }
+
+    /* Share Toast */
+    #shareToast {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111115;
+      border: 1px solid var(--cr);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 24px var(--cr-glow);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s var(--sp);
+    }
+
+    #shareToast.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       10. EXACT UNIFIED LUXURY FOOTER (Identical to Home Page)
+       ═══════════════════════════════════════════════════════════ */
+    #footer-driver {
+      position: relative;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      box-sizing: border-box;
+      z-index: 10;
+      border-top: 1px solid var(--rule);
+    }
+
+    .footer-luxury-card {
+      width: 100%;
+      max-width: 1440px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: clamp(24px, 3.5vw, 44px);
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: calc(100vh - clamp(64px, 9vh, 112px));
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transition: background 0.4s var(--sp), border-color 0.4s var(--sp);
+    }
+
+    .f-header-grid {
+      display: grid;
+      grid-template-columns: 2fr 1.1fr 1.4fr 1.3fr;
+      gap: clamp(20px, 3vw, 44px);
+      align-items: start;
+    }
+
+    .f-desc-text {
+      font-size: clamp(14px, 1.1vw, 16px);
+      line-height: 1.6;
+      color: var(--ink-mid);
+      max-width: 320px;
+    }
+
+    .f-col-label {
+      font-family: var(--font-primary);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 16px;
+    }
+
+    .f-links-clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .f-links-clean li a {
+      font-family: var(--font-primary);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.25s var(--sp);
+    }
+
+    .f-links-clean li a:hover {
+      color: var(--cr);
+    }
+
+    .f-social-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .f-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      width: fit-content;
+      transition: all 0.25s var(--sp);
+    }
+
+    [data-theme="light"] .f-chip {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .f-chip:hover {
+      border-color: var(--cr);
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    .f-cta-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .f-cta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 26px;
+      background: var(--cr);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.3s var(--sp);
+      box-shadow: 0 8px 24px var(--cr-glow);
+    }
+
+    .f-cta-pill:hover {
+      transform: scale(1.04);
+      background: #e01436;
+      box-shadow: 0 12px 30px rgba(200, 16, 46, 0.5);
+    }
+
+    /* Giant Cut Sliced Interactive Logo Section */
+    .f-giant-logo-area {
+      position: relative;
+      width: 100%;
+      margin: clamp(30px, 4vh, 48px) 0 clamp(20px, 3vh, 32px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      user-select: none;
+      cursor: ns-resize;
+    }
+
+    .f-giant-cut-wrap {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      height: 0px;
+    }
+
+    .f-giant-cut-svg {
+      width: 100%;
+      max-width: 1350px;
+      display: block;
+      overflow: visible;
+    }
+
+    .f-cut-h-line {
+      width: 100%;
+      height: 1.5px;
+      background: var(--rule-heavy);
+      position: relative;
+      z-index: 5;
+    }
+
+    .f-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--rule);
+      padding-top: 20px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Floating Theme Toggle Button ── */
+    #theme-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9990;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-m);
+      color: var(--ink);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+
+    #theme-fab:hover {
+      transform: translateY(-3px) scale(1.08);
+      border-color: var(--cr);
+      box-shadow: 0 14px 40px var(--cr-glow);
+    }
+
+    #theme-fab svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-moon,
+    [data-theme="light"] #theme-fab .icon-sun {
+      display: none;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-sun,
+    [data-theme="light"] #theme-fab .icon-moon {
+      display: block;
+    }
+
+    /* ── Responsive Media Queries ── */
+    @media (max-width: 1180px) {
+      .hero-codex-masthead {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hcm-center {
+        display: none;
+      }
+
+      .pga-editorial-matrix {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .f-header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 991px) {
+      .featured-monograph-spread {
+        grid-template-columns: 1fr;
+      }
+
+      .reader-editorial-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .reader-toc-sidebar {
+        position: static;
+      }
+
+      .newsletter-codex-card {
+        grid-template-columns: 1fr;
+      }
+
+      .rrs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .c-dot,
+      .c-ring {
+        display: none !important;
+      }
+
+      .hero-codex-masthead {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+      }
+
+      .hcm-right {
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .pga-editorial-matrix {
+        grid-template-columns: 1fr;
+      }
+
+      .command-dock-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .cmd-search-box {
+        width: 100%;
+      }
+
+      .hero-telemetry-matrix {
+        border-radius: 20px;
+      }
+
+      .f-header-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .f-meta-bar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Custom Mouse Cursor -->
+  <div class="c-dot" id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       1. HERO: AVANT-GARDE ARCHITECTURAL EDITORIAL CODEX
+       (Features Integrated Architectural Masthead — NO Standard Nav/Links/Button)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="perspectives-hero">
+    <div class="hero-grid-overlay"></div>
+
+    <!-- Integrated Architectural Editorial Masthead (No Logo / No Page Links / No Button) -->
+    <header class="hero-codex-masthead">
+      <div class="hcm-col hcm-left">
+        <a href="index.html" class="hcm-back-link" title="Return to Studio Home">← STUDIO INDEX</a>
+        <span class="hcm-sep">/</span>
+        <span class="hcm-beacon"></span>
+        <span class="hcm-title">PERSPECTIVES</span>
+      </div>
+      <div class="hcm-col hcm-center">
+        <span>CRITICAL DESIGN RESEARCH · STRATEGIC SEMIOTICS · COMPUTATIONAL AESTHETICS</span>
+      </div>
+      <div class="hcm-col hcm-right">
+        <span class="hcm-coord">[ 23°01' N · 72°35' E ]</span>
+        <span class="hcm-clock" id="heroLiveClock">AHMEDABAD // 01:00 PM</span>
+      </div>
+    </header>
+
+    <!-- Monumental Hero Centerpiece -->
+    <div class="hero-monolith-stage">
+      
+      <div class="hms-eyebrow">
+        <span class="hms-tag">RESEARCH LABORATORY &amp; CODEX</span>
+        <span class="hms-divider">/</span>
+        <span class="hms-edition">ISSUE № 04</span>
+      </div>
+
+      <!-- Monumental Typography -->
+      <h1 class="hero-kinetic-display">
+        <div class="hkd-line">
+          <span>RADICAL</span>
+          <span class="hkd-bracket">[</span>
+          <span class="hkd-wireframe">THEOREMS</span>
+          <span class="hkd-bracket">]</span>
+        </div>
+        <div class="hkd-line">
+          <span>SHAPING BRAND</span>
+          <span class="text-crimson">GRAVITY<span class="hkd-period">.</span></span>
+        </div>
+      </h1>
+
+      <p class="hero-lead-thesis">
+        A provocative design laboratory deconstructing the invisible mechanics of luxury brand dominance — where pure mathematical geometry, spatial retail physics, and real-time computation converge into enduring institutional value.
+      </p>
+
+      <!-- The Perspective Focal Specimen (Raw Visual Asset Placeholder Glyph) -->
+      <div class="hero-focal-specimen-deck" id="heroFocalSpecimen" data-article-id="art-monogram">
+        <div class="hfs-glass-card">
+          <div class="hfs-telemetry-header">
+            <span class="hfs-lens-coord">OPTICAL SENSOR // FOCAL SPECIMEN 01</span>
+            <span class="hfs-lens-state">● ACTIVE TARGET</span>
+            <span class="hfs-lens-res">RAW 16:9 ASSET FRAME</span>
+          </div>
+
+          <div class="hfs-blueprint-stage">
+            <!-- Architectural Image Placeholder Glyph -->
+            <div class="hfs-asset-glyph">
+              <svg viewBox="0 0 64 64" fill="none" class="hfs-svg-icon">
+                <rect x="6" y="10" width="52" height="44" rx="8" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.8" />
+                <path d="M12 46L26 32L38 44L44 38L52 46" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                <circle cx="32" cy="32" r="20" stroke="var(--cr)" stroke-width="1.5" stroke-dasharray="3 3" class="hfs-radar-ring" />
+              </svg>
+              <div class="hfs-badge">ASSET BLUEPRINT SPECIMEN</div>
+              <div class="hfs-prompt">CLICK TO ENGAGE FULL MONOGRAPH READER</div>
+            </div>
+
+            <!-- Precision Corner Crosshairs -->
+            <div class="corner-crosshair cc-tl">+</div>
+            <div class="corner-crosshair cc-tr">+</div>
+            <div class="corner-crosshair cc-bl">+</div>
+            <div class="corner-crosshair cc-br">+</div>
+          </div>
+
+          <div class="hfs-telemetry-footer">
+            <span class="hfs-spec-paper">MONOGRAPH № 01: THE MONOLITHIC MONOGRAM</span>
+            <span class="hfs-spec-time">7 MIN READ · JAY THAKER</span>
+            <span class="hfs-spec-cta">LAUNCH READER ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4-Item Telemetry Matrix -->
+      <div class="hero-telemetry-matrix">
+        <div class="htm-cell">
+          <span class="htm-num">08</span>
+          <span class="htm-label">Curated Monographs</span>
+        </div>
+        <span class="htm-sep">/</span>
+        <div class="htm-cell">
+          <span class="htm-num">52M</span>
+          <span class="htm-label">Total Reading Time</span>
+        </div>
+        <span class="htm-sep">/</span>
+        <div class="htm-cell">
+          <span class="htm-num">05</span>
+          <span class="htm-label">Strategic Disciplines</span>
+        </div>
+        <span class="htm-sep">/</span>
+        <div class="htm-cell">
+          <span class="htm-num">100%</span>
+          <span class="htm-label">Independent Research</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Kinetic Marquee Ticker Strip (User's Favorite: Goes Right to Left) -->
+    <div class="hero-marquee-strip">
+      <div class="hms-track">
+        <div class="hms-item"><span class="hms-dot">●</span> 01. GEOMETRIC PURITY OVER ARISTOCRATIC DECORATION</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 02. 120FPS REAL-TIME RAYTRACING IN LUXURY DIGITAL COMMERCE</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 03. THE ACOUSTIC DAMPING OF RAW SPLIT-FACE TRAVERTINE</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 04. THE 99% BLACK SPECTRUM HIERARCHY</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 05. FLUID COMPUTATIONAL SHADERS IN NEURAL INTERFACES</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 06. TACTILE ACOUSTIC SNAP IN BESPOKE LUXURY PACKAGING</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 01. GEOMETRIC PURITY OVER ARISTOCRATIC DECORATION</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 02. 120FPS REAL-TIME RAYTRACING IN LUXURY DIGITAL COMMERCE</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 03. THE ACOUSTIC DAMPING OF RAW SPLIT-FACE TRAVERTINE</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 04. THE 99% BLACK SPECTRUM HIERARCHY</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 05. FLUID COMPUTATIONAL SHADERS IN NEURAL INTERFACES</div>
+        <div class="hms-item"><span class="hms-dot">●</span> 06. TACTILE ACOUSTIC SNAP IN BESPOKE LUXURY PACKAGING</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2 & 3. COMMAND DOCK: SEARCH & CATEGORIES (Sticky to top)
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="command-dock-wrap">
+    <div class="command-dock-container">
+      <!-- Minimalist Search Input -->
+      <div class="cmd-search-box">
+        <svg class="csb-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchInput" class="csb-input" placeholder="Search archive..." autocomplete="off" />
+        <span class="csb-shortcut">/</span>
+        <button id="searchClear" class="csb-clear" aria-label="Clear Search">✕</button>
+      </div>
+
+      <!-- Categories Filter Tabs -->
+      <div class="cmd-category-group" id="filterTabsGroup">
+        <button class="cmd-cat-btn active" data-category="all">
+          <span>ALL</span>
+          <span class="ccb-count">(08)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="brand-architecture">
+          <span>BRAND ARCHITECTURE</span>
+          <span class="ccb-count">(02)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="spatial-design">
+          <span>SPATIAL DESIGN</span>
+          <span class="ccb-count">(02)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="computational-webgl">
+          <span>COMPUTATIONAL WEBGL</span>
+          <span class="ccb-count">(02)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="luxury-semiotics">
+          <span>LUXURY SEMIOTICS</span>
+          <span class="ccb-count">(01)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="cultural-critique">
+          <span>CULTURAL CRITIQUE</span>
+          <span class="ccb-count">(01)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       4. FEATURED MASTER MONOGRAPH (Asymmetric Spread № 01)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="featured-monograph">
+    <div class="featured-monograph-spread" data-article-id="art-monogram">
+      <!-- Narrative Left Column -->
+      <div class="fms-narrative">
+        <div>
+          <div class="fms-top-spec">
+            <span class="fms-numeral">SPREAD № 01</span>
+            <span>·</span>
+            <span>BRAND ARCHITECTURE</span>
+            <span>·</span>
+            <span style="color:var(--ink-dim)">7 MIN READ</span>
+          </div>
+          <h2 class="fms-title">The Monolithic Monogram: Why High-Growth Luxury Houses are Abandoning Serif Complexities for Pure Geometric Gravity</h2>
+          <p class="fms-excerpt">
+            In an attention economy dominated by zero-latency digital micro-surfaces and brutalist physical flagship spaces, heritage serif typography is giving way to mathematically rigorous monolithic marks that command authority across microscopic horology dials and 50-foot LED facades alike.
+          </p>
+        </div>
+
+        <div class="fms-footer-meta">
+          <div class="fms-author-box">
+            <div class="fab-avatar">JT</div>
+            <div class="fab-info">
+              <span class="fab-name">Jay Thaker</span>
+              <span class="fab-role">Studio Principal &amp; Brand Architect</span>
+            </div>
+          </div>
+          <div class="fms-launch-btn">
+            <span>Launch Monograph ↗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architectural Blueprint Visual Frame -->
+      <div class="fms-blueprint-visual">
+        <div class="asset-blueprint-icon">
+          <svg viewBox="0 0 64 64" fill="none" class="abi-svg">
+            <rect x="8" y="12" width="48" height="40" rx="6" stroke="currentColor" stroke-width="2" />
+            <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="2" />
+            <path d="M12 44L26 30L38 42L44 36L52 44" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="32" cy="32" r="18" stroke="var(--cr)" stroke-width="1.5" stroke-dasharray="3 3" class="abi-radar" />
+          </svg>
+          <div class="abi-badge">[ 16:10 ASSET FRAME ]</div>
+          <div class="abi-subtext">CLICK TO ENGAGE FULL MONOGRAPH</div>
+        </div>
+
+        <div class="corner-crosshair cc-tl">+</div>
+        <div class="corner-crosshair cc-tr">+</div>
+        <div class="corner-crosshair cc-bl">+</div>
+        <div class="corner-crosshair cc-br">+</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       5. PERSPECTIVES ARCHIVE (Asymmetric Editorial Grid)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="perspectives-grid-sec">
+    <div class="pga-header-bar">
+      <h3 class="pga-sec-title">The Editorial Codex</h3>
+      <span class="pga-counter" id="resultCounter">Showing 8 of 8 Perspectives</span>
+    </div>
+
+    <div class="pga-editorial-matrix" id="articlesGrid">
+
+      <!-- 01 SPATIAL DESIGN -->
+      <article class="codex-card" data-category="spatial-design" data-article-id="art-spatial">
+        <div class="card-blueprint-stage">
+          <span class="card-cat-pill">Spatial Design</span>
+          <div class="card-asset-glyph">
+            <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+              <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+          </div>
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+        <div class="card-body-content">
+          <div class="cbc-meta-row">
+            <span>6 Min Read</span>
+            <span>·</span>
+            <span>Aug 2026</span>
+          </div>
+          <h4 class="cbc-title">Spatial Choreography in Flagship Retail: How Raw Concrete and Controlled Photons Dictate Purchasing Velocity</h4>
+          <p class="cbc-excerpt">
+            Analyzing the psychological impact of atmospheric lighting, tactile monolithic stone surfaces, and acoustically isolated consultation chambers on high-ticket luxury conversion.
+          </p>
+          <div class="cbc-author-footer">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">EV</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Elena Vance</span>
+                <span class="cbc-adate">Spatial Director</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 COMPUTATIONAL WEBGL -->
+      <article class="codex-card" data-category="computational-webgl" data-article-id="art-webgl">
+        <div class="card-blueprint-stage">
+          <span class="card-cat-pill">Computational WebGL</span>
+          <div class="card-asset-glyph">
+            <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+              <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+          </div>
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+        <div class="card-body-content">
+          <div class="cbc-meta-row">
+            <span>5 Min Read</span>
+            <span>·</span>
+            <span>Aug 2026</span>
+          </div>
+          <h4 class="cbc-title">Zero-Latency Real-Time Raytracing: Transitioning Brand Storytelling from Flat Pixels to Generative Three.js Dimensions</h4>
+          <p class="cbc-excerpt">
+            Why modern luxury consumers demand interactive WebGL digital twins over pre-rendered marketing video renders, and how GLSL shaders deliver emotional brand depth.
+          </p>
+          <div class="cbc-author-footer">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">KT</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Kaito Tanaka</span>
+                <span class="cbc-adate">Lead Shader Engineer</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 SPATIAL DESIGN & PACKAGING -->
+      <article class="codex-card" data-category="spatial-design" data-article-id="art-fluted">
+        <div class="card-blueprint-stage">
+          <span class="card-cat-pill">Spatial Design</span>
+          <div class="card-asset-glyph">
+            <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+              <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+          </div>
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+        <div class="card-body-content">
+          <div class="cbc-meta-row">
+            <span>8 Min Read</span>
+            <span>·</span>
+            <span>Jul 2026</span>
+          </div>
+          <h4 class="cbc-title">The Tactile Physics of Luxury Glass: Refractive Light Dynamics in Bespoke Perfume Vessel Architecture</h4>
+          <p class="cbc-excerpt">
+            An empirical investigation into fluted crystal glass tolerances, brushed brass collar engineering, and the acoustic snap of weighted magnetic closures.
+          </p>
+          <div class="cbc-author-footer">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">AP</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Ami Patel</span>
+                <span class="cbc-adate">Materials Specialist</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 CULTURAL CRITIQUE -->
+      <article class="codex-card" data-category="cultural-critique" data-article-id="art-kinetic">
+        <div class="card-blueprint-stage">
+          <span class="card-cat-pill">Cultural Critique</span>
+          <div class="card-asset-glyph">
+            <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+              <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+          </div>
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+        <div class="card-body-content">
+          <div class="cbc-meta-row">
+            <span>4 Min Read</span>
+            <span>·</span>
+            <span>Jul 2026</span>
+          </div>
+          <h4 class="cbc-title">Kinetic Typography as Omnichannel Authority: Milan Fashion Week FW24 Case Study Analysis</h4>
+          <p class="cbc-excerpt">
+            Deconstructing our viral runway takeover that synchronized architectural projection mapping with high-velocity social motion graphics to capture 18.4M organic impressions.
+          </p>
+          <div class="cbc-author-footer">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">JT</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Jay Thaker</span>
+                <span class="cbc-adate">Studio Principal</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 05 COMPUTATIONAL WEBGL & AI -->
+      <article class="codex-card" data-category="computational-webgl" data-article-id="art-neural">
+        <div class="card-blueprint-stage">
+          <span class="card-cat-pill">Computational WebGL</span>
+          <div class="card-asset-glyph">
+            <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+              <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+          </div>
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+        <div class="card-body-content">
+          <div class="cbc-meta-row">
+            <span>7 Min Read</span>
+            <span>·</span>
+            <span>Jun 2026</span>
+          </div>
+          <h4 class="cbc-title">Neural Aesthetics: Designing Ethical Liquid Metal AI Interfaces for High-Stakes Computational Platforms</h4>
+          <p class="cbc-excerpt">
+            Moving beyond sterile flat SaaS dashboards into dynamic, organic liquid chrome shaders that visualize deep neural network state transitions in real time.
+          </p>
+          <div class="cbc-author-footer">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">KT</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Kaito Tanaka</span>
+                <span class="cbc-adate">Shader Engineer</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06 LUXURY SEMIOTICS -->
+      <article class="codex-card" data-category="luxury-semiotics" data-article-id="art-monochrome">
+        <div class="card-blueprint-stage">
+          <span class="card-cat-pill">Luxury Semiotics</span>
+          <div class="card-asset-glyph">
+            <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+              <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+          </div>
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+        <div class="card-body-content">
+          <div class="cbc-meta-row">
+            <span>6 Min Read</span>
+            <span>·</span>
+            <span>Jun 2026</span>
+          </div>
+          <h4 class="cbc-title">The 99% Black Spectrum: Mastering Extreme Contrast Hierarchy in Ultra-Luxury Print &amp; Digital Ecosystems</h4>
+          <p class="cbc-excerpt">
+            Why restrained monochrome palettes with solitary crimson accents create an impenetrable aura of institutional prestige that multi-color brand systems cannot replicate.
+          </p>
+          <div class="cbc-author-footer">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">AP</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Ami Patel</span>
+                <span class="cbc-adate">Design Director</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 07 BRAND ARCHITECTURE -->
+      <article class="codex-card" data-category="brand-architecture" data-article-id="art-sensory">
+        <div class="card-blueprint-stage">
+          <span class="card-cat-pill">Brand Architecture</span>
+          <div class="card-asset-glyph">
+            <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+              <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+              <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+          </div>
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+        <div class="card-body-content">
+          <div class="cbc-meta-row">
+            <span>5 Min Read</span>
+            <span>·</span>
+            <span>May 2026</span>
+          </div>
+          <h4 class="cbc-title">The Architecture of Hospitality Onboarding: Why Physical Invitation Suites Outperform Digital First-Touches</h4>
+          <p class="cbc-excerpt">
+            Examining our bespoke tactile collateral system for St. Regis Mumbai that leveraged handcrafted gold foil debossing and custom calligraphy to elevate VIP retention.
+          </p>
+          <div class="cbc-author-footer">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">JT</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Jay Thaker</span>
+                <span class="cbc-adate">Studio Principal</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Empty State Card -->
+      <div class="empty-search-state" id="emptySearchState">
+        <h4 class="ess-title">No Monographs Matched Your Query</h4>
+        <p class="ess-sub">Try searching for terms like "monogram", "spatial", "WebGL", "semiotics", or "concrete".</p>
+        <button class="nav-cta" id="resetSearchBtn" style="border:none; cursor:pointer; background:var(--cr); color:#fff; padding:10px 24px; border-radius:999px; font-family:var(--font-mono); font-size:11px; font-weight:700;">Reset Search &amp; Filters</button>
+      </div>
+
+    </div>
+
+    <!-- 6. PAGINATION ARCHIVE CONTROLS -->
+    <div class="pagination-bar" id="paginationBar">
+      <button class="pagi-btn active" data-page="1">01</button>
+      <button class="pagi-btn" data-page="2">02</button>
+      <button class="pagi-btn pagi-next" id="pagiNextBtn">Next Perspectives →</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       7. EDITORIAL NEWSLETTER (The Sealed Memorandum)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="newsletter-sec">
+    <div class="newsletter-codex-card">
+      <div>
+        <div class="ncc-badge">● PRIVATE DISPATCH // WEEKLY MEMORANDUM</div>
+        <h3 class="ncc-title">Intelligence for Ambitious Design Leaders</h3>
+        <p class="ncc-desc">
+          Join 8,400+ creative founders, architects, and luxury brand directors receiving our private Sunday essays on design critique, computational brand physics, and market positioning.
+        </p>
+      </div>
+      <div class="ncc-form-wrap">
+        <form id="newsletterForm" onsubmit="event.preventDefault(); handleNewsletterSubmit();">
+          <div class="ncc-input-box">
+            <input type="email" id="nlEmail" class="ncc-input" placeholder="Enter executive email address..." required />
+            <button type="submit" class="ncc-submit-btn">Subscribe ↗</button>
+          </div>
+        </form>
+        <span class="ncc-legal">Dispatched every Sunday at 08:00 CET. Instant unsubscribe anytime.</span>
+        <div class="ncc-toast" id="nlToast">✓ Successfully subscribed. Welcome to the 1928 Intelligence Dispatch.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       8. DEDICATED STUDIO CALL-TO-ACTION SECTION (Before Footer)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="perspective-studio-cta">
+    <div class="psc-card">
+      <div class="psc-eyebrow">
+        <span>●</span>
+        <span>STUDIO ADVISORY &amp; COMMISSIONS</span>
+      </div>
+      <h2 class="psc-headline">
+        <span>READY TO SHAPE</span><br>
+        <span class="text-crimson">CATEGORY AUTHORITY?</span>
+      </h2>
+      <p class="psc-manifesto">
+        We partner with ambitious founders, established luxury maisons, and visionary institutional leaders to build uncompromising visual architectures that command gravity for decades.
+      </p>
+      <div class="psc-actions-row">
+        <a href="contact.html" class="psc-btn-primary">Initiate Project Commission ↗</a>
+        <a href="portfolio.html" class="psc-btn-secondary">Explore Curated Work Archive →</a>
+      </div>
+      <div class="psc-telemetry-strip">
+        <span>AHMEDABAD HEADQUARTERS</span>
+        <span>·</span>
+        <span>GLOBAL CLIENT ELEVATION</span>
+        <span>·</span>
+        <span>SELECTIVE ANNUAL SLOTS</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       9. DEEP-DIVE PERSPECTIVE READER DRAWER (Detail Modal)
+       (With Dynamic TOC Scrollspy & Related Articles Grid)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="reader-modal-backdrop" id="perspectiveModal" aria-hidden="true">
+    <div class="reader-modal-stage">
+      
+      <!-- Top Sticky Reader Bar -->
+      <div class="reader-top-bar">
+        <span class="reader-cat-pill" id="mReaderCat">Brand Architecture</span>
+        <div class="reader-top-actions">
+          <button class="reader-share-btn" id="mShareTwitterBtn">
+            <span>𝕏 Share</span>
+          </button>
+          <button class="reader-share-btn" id="mCopyLinkBtn">
+            <span>Copy Link</span>
+          </button>
+          <button class="reader-close-btn" id="readerCloseBtn" aria-label="Close Perspective">✕</button>
+        </div>
+      </div>
+
+      <!-- Main Reader Content Area -->
+      <div class="reader-body-wrap">
+        
+        <!-- Header Info -->
+        <div class="reader-hero-box">
+          <h2 class="reader-hero-title" id="mReaderTitle">The Monolithic Monogram</h2>
+          <div class="reader-hero-meta">
+            <div class="rhm-author-pill">
+              <div class="rhm-avatar-initials" id="mReaderAvatarInitials">JT</div>
+              <div>
+                <div class="rhm-name" id="mReaderAuthor">Jay Thaker</div>
+                <div class="rhm-role" id="mReaderRole">Studio Principal &amp; Brand Architect</div>
+              </div>
+            </div>
+            <span class="rhm-info-chip" id="mReaderDate">September 2026</span>
+            <span class="rhm-info-chip" id="mReaderReadTime">7 Min Read</span>
+          </div>
+        </div>
+
+        <!-- Featured Architectural Blueprint Banner -->
+        <div class="reader-blueprint-banner">
+          <div class="hfs-asset-glyph">
+            <svg viewBox="0 0 64 64" fill="none" class="hfs-svg-icon">
+              <rect x="6" y="10" width="52" height="44" rx="8" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.8" />
+              <path d="M12 46L26 32L38 44L44 38L52 46" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="32" cy="32" r="20" stroke="var(--cr)" stroke-width="1.5" stroke-dasharray="3 3" class="hfs-radar-ring" />
+            </svg>
+            <div class="hfs-badge">[ FULL MONOGRAPH ASSET SPECIMEN ]</div>
+            <div class="hfs-prompt">1928 EDITORIAL PROVENANCE CAPTURE</div>
+          </div>
+
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+
+        <!-- Two-Column Editorial Layout -->
+        <div class="reader-editorial-layout">
+          
+          <!-- Sticky Table of Contents -->
+          <aside class="reader-toc-sidebar">
+            <div class="toc-label">Table of Contents</div>
+            <ul class="toc-nav-list" id="mReaderTOC">
+              <!-- Dynamically rendered per article -->
+            </ul>
+          </aside>
+
+          <!-- Main Article Prose -->
+          <div class="reader-content-prose" id="mReaderProse">
+            <!-- Dynamically populated rich editorial content -->
+          </div>
+        </div>
+
+        <!-- Related Articles / Recommended Monographs Grid (User Architecture Requirement) -->
+        <div class="reader-related-section">
+          <div class="rrs-header">
+            <span class="rrs-title">Related Monographs // Strategic Adjacencies</span>
+          </div>
+          <div class="rrs-grid" id="mReaderRelatedGrid">
+            <!-- Dynamically populated 2 related cards -->
+          </div>
+        </div>
+
+        <!-- Author Signature Card -->
+        <div class="reader-author-bio-card">
+          <div class="rabc-avatar-box" id="mBioAvatarBox">JT</div>
+          <div class="rabc-text">
+            <span class="rabc-role">Author Monograph</span>
+            <h4 class="rabc-name" id="mBioName">Jay Thaker</h4>
+            <p class="rabc-bio" id="mBioText">
+              Founder &amp; Principal Brand Strategist at 1928 Creative Studio. Advising high-growth luxury maisons, architectural firms, and deep-tech enterprises on enduring visual authority and spatial physics.
+            </p>
+          </div>
+        </div>
+
+        <!-- Benchmark Commission CTA -->
+        <div class="reader-cta-deck">
+          <div>
+            <h3 class="reader-cta-title">Ready to implement these strategic principles?</h3>
+            <p class="reader-cta-sub">Let’s sculpt an enduring, category-defining visual architecture for your brand.</p>
+          </div>
+          <a href="contact.html" class="reader-cta-btn">Initiate Project Commission ↗</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Toast -->
+  <div id="shareToast">✓ Monograph Link Copied to Clipboard</div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       10. EXACT UNIFIED LUXURY FOOTER (Identical to Home Page)
+       ═══════════════════════════════════════════════════════════ -->
+  <footer id="footer-driver">
+    <div class="footer-luxury-card">
+
+      <!-- Top Grid: Statement, Links, Socials, CTA -->
+      <div class="f-header-grid">
+        <div class="f-desc-col">
+          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in
+            Ahmedabad.</p>
+        </div>
+
+        <div class="f-nav-col">
+          <div class="f-col-label">Explore</div>
+          <ul class="f-links-clean">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="blogs.html">Perspectives</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="f-social-col">
+          <div class="f-col-label">Follow us</div>
+          <div class="f-social-chips">
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">𝕏</span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">ig</span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">in</span>
+              <span>1928 Creative Studio</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="f-cta-col">
+          <div class="f-col-label">Ready to collaborate?</div>
+          <div class="f-cta-box">
+            <a href="contact.html" class="f-cta-pill">Initiate Project Commission ↗</a>
+            <a href="about.html" class="f-cta-sublink">Learn about our studio</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Giant Cut Sliced Interactive Logo Area -->
+      <div class="f-giant-logo-area" title="Drag vertically to stretch typography">
+        <div class="f-giant-cut-wrap">
+          <svg class="f-giant-cut-svg" viewBox="0 0 1440 280" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="270" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900"
+              font-size="290" fill="currentColor" letter-spacing="-0.04em">1928</text>
+          </svg>
+        </div>
+        <div class="f-cut-h-line"></div>
+      </div>
+
+      <!-- Bottom Meta Bar: Time, Year, Copyright -->
+      <div class="f-meta-bar">
+        <div class="f-meta-item" id="footer-live-clock">Ahmedabad, India · 12:00 PM · 28°C ☀</div>
+        <div class="f-meta-item">© 2026 1928 Creative Studio. All Rights Reserved.</div>
+        <div class="f-meta-item">Sculpting Brand Architecture Worldwide</div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Floating Dark / Light Theme FAB -->
+  <button id="theme-fab" aria-label="Toggle Dark and Light Theme" title="Toggle Dark / Light Theme">
+    <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+  </button>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       INTERACTIVE JAVASCRIPT ENGINE
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* ── Custom Mouse Follower Physics ── */
+      const dot = document.getElementById('cDot');
+      const ring = document.getElementById('cRing');
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let ringX = mouseX, ringY = mouseY;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (dot) {
+          dot.style.left = `${mouseX}px`;
+          dot.style.top = `${mouseY}px`;
+        }
+      });
+
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        if (ring) {
+          ring.style.left = `${ringX}px`;
+          ring.style.top = `${ringY}px`;
+        }
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      /* ── Live Ahmedabad Clocks ── */
+      function updateLiveClocks() {
+        const now = new Date();
+        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
+        const timeStr = now.toLocaleTimeString('en-US', options);
+        
+        const heroClock = document.getElementById('heroLiveClock');
+        if (heroClock) heroClock.textContent = `AHMEDABAD // ${timeStr}`;
+
+        const footerClock = document.getElementById('footer-live-clock');
+        if (footerClock) footerClock.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
+      }
+      updateLiveClocks();
+      setInterval(updateLiveClocks, 15000);
+
+      /* ── Perspectives Articles Knowledge Matrix (Full 8 Curated Monograph Papers) ── */
+      const articlesData = {
+        'art-monogram': {
+          title: 'The Monolithic Monogram: Why High-Growth Luxury Houses are Abandoning Serif Complexities for Pure Geometric Gravity',
+          category: 'Brand Architecture',
+          categorySlug: 'brand-architecture',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal & Brand Architect',
+          date: 'September 2026',
+          readTime: '7 Min Read',
+          excerpt: 'In an attention economy dominated by zero-latency digital micro-surfaces and brutalist physical flagship architectures, heritage serif typography is giving way to mathematically rigorous monolithic marks.',
+          sections: [
+            { id: 'sec-shift', title: '01. The Strategic Shift' },
+            { id: 'sec-geometry', title: '02. Mathematical Geometry' },
+            { id: 'sec-empirical', title: '03. Empirical Telemetry' },
+            { id: 'sec-takeaways', title: '04. Strategic Takeaways' }
+          ],
+          related: ['art-spatial', 'art-monochrome'],
+          contentHtml: `
+            <div id="sec-shift">
+              <h2>01. The Strategic Shift</h2>
+              <p>For over two centuries, luxury identity was anchored in typographic ornamentation: delicate high-contrast Didone serifs, hand-engraved filigree, and intricate crests meant to signify aristocratic provenance. Today, that aesthetic vocabulary is encountering severe friction in a computational world governed by high-density digital micro-surfaces and monolithic physical environments.</p>
+              <p>Modern consumers evaluate brand prestige not through historical nostalgia, but through unwavering geometric confidence and cross-platform clarity.</p>
+            </div>
+
+            <div class="reader-pullquote">
+              <p>"A modern luxury monogram is no longer an emblem of aristocracy; it is an architectural mathematical vector engineered for zero-latency cognitive recognition."</p>
+            </div>
+
+            <div id="sec-geometry">
+              <h2>02. Mathematical Geometry &amp; Reductive Precision</h2>
+              <p>When 1928 Creative Studio engineers an enduring monogram, we adhere to strict proportion physics: optical stroke compensation, bespoke grid alignments, and modular counter-space balances. A mark must retain commanding presence whether machined at 3mm on a surgical titanium horology crown or laser-projected 100 meters wide across an airport terminal facade.</p>
+              <p>By eliminating non-structural flourishes, the brand concentrates 100% of its visual energy into pure form, creating an instant subconscious anchor.</p>
+            </div>
+
+            <div class="reader-takeaway-box">
+              <div class="rtb-title">Key Architectural Principles</div>
+              <ul class="rtb-list">
+                <li><strong>Optical Stroke Balance:</strong> Horizontal lines are tuned 7% lighter than verticals to eliminate human retinal distortion.</li>
+                <li><strong>Zero-Noise Vectoring:</strong> Reduction of bezier anchor points by 60% for pure mathematical curves.</li>
+                <li><strong>Sub-Pixel Digital Mastery:</strong> Perfect pixel-grid snapping across 4K, OLED, and micro-HUD screens.</li>
+              </ul>
+            </div>
+
+            <div id="sec-empirical">
+              <h2>03. Empirical Telemetry &amp; Valuation Impact</h2>
+              <p>Across our recent institutional rebrands, transitioning from legacy complex wordmarks to monolithic geometric systems produced a measurable +42% uplift in digital recall rates and a 3.8x increase in social icon engagement. When visual friction is eliminated, authority increases proportionally.</p>
+            </div>
+
+            <div id="sec-takeaways">
+              <h2>04. Strategic Takeaways</h2>
+              <p>If your brand mark was designed exclusively for paper letterheads, it is actively leaking value in the spatial and digital era. A monolithic monogram is not a trend; it is the fundamental infrastructure for the next quarter-century of brand dominance.</p>
+            </div>
+          `,
+          bio: 'Founder & Principal Brand Strategist at 1928 Creative Studio. Advising luxury maisons and deep-tech founders on enduring visual systems.'
+        },
+        'art-spatial': {
+          title: 'Spatial Choreography in Flagship Retail: How Raw Concrete and Controlled Photons Dictate Luxury Purchasing Velocity',
+          category: 'Spatial Design',
+          categorySlug: 'spatial-design',
+          author: 'Elena Vance',
+          initials: 'EV',
+          role: 'Spatial Design Director',
+          date: 'August 2026',
+          readTime: '6 Min Read',
+          excerpt: 'Analyzing the psychological impact of atmospheric lighting, tactile monolithic stone surfaces, and acoustically isolated consultation chambers on high-ticket luxury conversion.',
+          sections: [
+            { id: 'sec-spatial-sensory', title: '01. The Sensory Environment' },
+            { id: 'sec-spatial-materials', title: '02. Monolithic Material Physics' },
+            { id: 'sec-spatial-acoustics', title: '03. Acoustic Damping' },
+            { id: 'sec-spatial-takeaways', title: '04. Flagship Directives' }
+          ],
+          related: ['art-fluted', 'art-monogram'],
+          contentHtml: `
+            <div id="sec-spatial-sensory">
+              <h2>01. The Sensory Environment</h2>
+              <p>Physical retail in 2026 is no longer about inventory distribution; it is sensory brand communion. When a client crosses the threshold into a physical flagship, every sensory input—the acoustic reverberation time of polished concrete, the color temperature of 2700K recessed spotlights, and the scent of custom cedarwood—instantly primes their valuation perception.</p>
+            </div>
+
+            <div class="reader-pullquote">
+              <p>"The space itself is the most powerful salesperson. When architecture radiates permanence, price resistance dissipates."</p>
+            </div>
+
+            <div id="sec-spatial-materials">
+              <h2>02. Monolithic Material Physics</h2>
+              <p>We specify raw split-face travertine, blackened brushed steel, and acoustic felt panels to establish a temple-like reverence. Clients spend 3.2x longer inside acoustically damped private VIP suites than open retail floors.</p>
+            </div>
+
+            <div id="sec-spatial-acoustics">
+              <h2>03. Acoustic Damping &amp; Spatial Stillness</h2>
+              <p>By eliminating urban street noise and controlling echo decay to exactly 0.45 seconds, the flagship creates a sensation of entering an alternate dimension where time slows down.</p>
+            </div>
+
+            <div id="sec-spatial-takeaways" class="reader-takeaway-box">
+              <div class="rtb-title">Spatial Strategy Rules</div>
+              <ul class="rtb-list">
+                <li><strong>Threshold Deceleration:</strong> 15 feet of un-merchandised transition foyer to drop client heart rates.</li>
+                <li><strong>Photonic Hierarchy:</strong> 90% ambient darkness with razor-focused 4000-lumen spotlights on key hero artifacts.</li>
+                <li><strong>Micro-Climate Tuning:</strong> Sustained 21°C temperature and custom negative-ion air filtration.</li>
+              </ul>
+            </div>
+          `,
+          bio: 'Head of Spatial Architecture at 1928 Creative Studio. Former associate at leading European spatial consultancies.'
+        },
+        'art-webgl': {
+          title: 'Zero-Latency Real-Time Raytracing: Transitioning Brand Storytelling from Flat Pixels to Generative Three.js Dimensions',
+          category: 'Computational WebGL',
+          categorySlug: 'computational-webgl',
+          author: 'Kaito Tanaka',
+          initials: 'KT',
+          role: 'Lead Shader Engineer',
+          date: 'August 2026',
+          readTime: '5 Min Read',
+          excerpt: 'Why modern luxury consumers demand interactive WebGL digital twins over pre-rendered marketing video renders, and how GLSL shaders deliver emotional brand depth.',
+          sections: [
+            { id: 'sec-webgl-2d', title: '01. Beyond the Flat 2D Web' },
+            { id: 'sec-webgl-shaders', title: '02. Custom GLSL Fragment Shaders' },
+            { id: 'sec-webgl-perf', title: '03. 120fps Mobile Optimization' },
+            { id: 'sec-webgl-takeaways', title: '04. WebGL Implementation' }
+          ],
+          related: ['art-neural', 'art-kinetic'],
+          contentHtml: `
+            <div id="sec-webgl-2d">
+              <h2>01. Beyond the Flat 2D Web</h2>
+              <p>Static JPEG mockups and auto-playing video loops are remnants of a bygone digital era. The contemporary luxury buyer demands agency—the power to inspect sub-millimeter stitching on an automotive interior or rotate a tourbillon watch under real-time procedural lighting.</p>
+            </div>
+
+            <div class="reader-pullquote">
+              <p>"Interactive 3D WebGL is not a gimmick; it is the closest digital surrogate to physical touch."</p>
+            </div>
+
+            <div id="sec-webgl-shaders">
+              <h2>02. Custom GLSL Fragment Shaders</h2>
+              <p>By compiling custom GLSL fragment shaders and implementing procedural normal map decompression, we achieve buttery 120fps performance across mobile Safari and desktop Chrome without draining device thermals.</p>
+            </div>
+
+            <div id="sec-webgl-perf">
+              <h2>03. 120fps Mobile Optimization</h2>
+              <p>Our shader architecture separates geometric draw passes from lighting calculations, allowing complex anisotropic metallic sheen to render on iOS and Android with sub-12 millisecond frame budgets.</p>
+            </div>
+
+            <div id="sec-webgl-takeaways" class="reader-takeaway-box">
+              <div class="rtb-title">Technical Takeaways</div>
+              <ul class="rtb-list">
+                <li><strong>Draw Call Consolidation:</strong> Merge meshes into single instanced buffers to minimize CPU-GPU state changes.</li>
+                <li><strong>HDR Environment Probes:</strong> Real-time light adaptation based on client device orientation.</li>
+                <li><strong>Fallback Grace:</strong> Instant degradation to high-resolution webp progressive sprites on low-power devices.</li>
+              </ul>
+            </div>
+          `,
+          bio: 'Creative technologist and WebGL specialist at 1928 Creative Studio. Three.js contributor and shader artist.'
+        },
+        'art-fluted': {
+          title: 'The Tactile Physics of Luxury Glass: Refractive Light Dynamics in Bespoke Perfume Vessel Architecture',
+          category: 'Spatial Design',
+          categorySlug: 'spatial-design',
+          author: 'Ami Patel',
+          initials: 'AP',
+          role: 'Materials & Packaging Specialist',
+          date: 'July 2026',
+          readTime: '8 Min Read',
+          excerpt: 'An empirical investigation into fluted crystal glass tolerances, brushed brass collar engineering, and the acoustic snap of weighted magnetic closures.',
+          sections: [
+            { id: 'sec-fluted-physics', title: '01. The Tactile Physics of Glass' },
+            { id: 'sec-fluted-refraction', title: '02. Light Refraction & Tolerances' },
+            { id: 'sec-fluted-weight', title: '03. Weight as Quality Perception' },
+            { id: 'sec-fluted-takeaways', title: '04. Packaging Standards' }
+          ],
+          related: ['art-spatial', 'art-monochrome'],
+          contentHtml: `
+            <div id="sec-fluted-physics">
+              <h2>01. The Tactile Physics of Glass</h2>
+              <p>Weight is perceived as quality. A perfume vessel weighing 480 grams with an internal magnetic snap rated at 1.2 Newtons immediately communicates $300+ value before the atomizer is ever depressed.</p>
+            </div>
+
+            <div class="reader-pullquote">
+              <p>"The tactile sensation of opening a luxury package triggers dopamine pathways faster than visual advertising."</p>
+            </div>
+
+            <div id="sec-fluted-refraction">
+              <h2>02. Light Refraction &amp; Fluting Tolerances</h2>
+              <p>Precision micro-fluting cut into lead-free crystal glass bends ambient gallery spotlights into vertical prismatic rays, transforming the fragrance liquid into a radiant glowing beacon.</p>
+            </div>
+
+            <div id="sec-fluted-weight">
+              <h2>03. Weight as Quality Perception</h2>
+              <p>Subconscious sensory testing confirms that doubling bottle bottom glass thickness increases perceived prestige by +68%, even when outer silhouette dimensions remain unchanged.</p>
+            </div>
+
+            <div id="sec-fluted-takeaways" class="reader-takeaway-box">
+              <div class="rtb-title">Production Directives</div>
+              <ul class="rtb-list">
+                <li><strong>Brass Collar Machining:</strong> CNC milled from solid billet brass with hand-brushed satin finish.</li>
+                <li><strong>Acoustic Snap Resonance:</strong> 1200Hz closure sound tuned to register as an authoritative mechanical click.</li>
+              </ul>
+            </div>
+          `,
+          bio: 'Materials architect at 1928 Creative Studio with 12 years of luxury packaging engineering experience across Milan and Paris.'
+        },
+        'art-kinetic': {
+          title: 'Kinetic Typography as Omnichannel Authority: Milan Fashion Week FW24 Case Study Analysis',
+          category: 'Cultural Critique',
+          categorySlug: 'cultural-critique',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal',
+          date: 'July 2026',
+          readTime: '4 Min Read',
+          excerpt: 'Deconstructing our viral runway takeover that synchronized architectural projection mapping with high-velocity social motion graphics to capture 18.4M organic impressions.',
+          sections: [
+            { id: 'sec-kinetic-velocity', title: '01. High-Velocity Typography' },
+            { id: 'sec-kinetic-milan', title: '02. The Milan Runway Architecture' },
+            { id: 'sec-kinetic-omnichannel', title: '03. Omnichannel Amplification' },
+            { id: 'sec-kinetic-takeaways', title: '04. Motion Principles' }
+          ],
+          related: ['art-webgl', 'art-monogram'],
+          contentHtml: `
+            <div id="sec-kinetic-velocity">
+              <h2>01. High-Velocity Typography</h2>
+              <p>In the noise of Milan Fashion Week, static billboards are invisible. By treating typography as physical kinetic particles that react to model runway pacing, we turned the entire venue into an immersive living typographic ecosystem.</p>
+            </div>
+
+            <div class="reader-pullquote">
+              <p>"Type in motion is the heartbeat of digital culture. If your letters don't breathe, your brand is already obsolete."</p>
+            </div>
+
+            <div id="sec-kinetic-milan">
+              <h2>02. The Milan Runway Architecture</h2>
+              <p>Ten synchronized 30,000-lumen laser projectors cast real-time responsive typographic glyphs across 80 meters of black reflective runway, reacting dynamically to ambient footstep sensors.</p>
+            </div>
+
+            <div id="sec-kinetic-omnichannel">
+              <h2>03. Omnichannel Amplification</h2>
+              <p>The visual spectacle drove over 18.4 million organic TikTok and Instagram impressions within the first 12 hours of the show, proving that spatial kinetic design is the ultimate digital growth engine.</p>
+            </div>
+
+            <div id="sec-kinetic-takeaways" class="reader-takeaway-box">
+              <div class="rtb-title">Motion Guidelines</div>
+              <ul class="rtb-list">
+                <li><strong>Spring Physics Curves:</strong> Replace linear easing with spring bezier curves ('cubic-bezier(0.16, 1, 0.3, 1)').</li>
+                <li><strong>Rhythmic Synchronization:</strong> Match motion cadence to 120BPM human walking tempo.</li>
+              </ul>
+            </div>
+          `,
+          bio: 'Studio Principal & Design Director at 1928 Creative Studio.'
+        },
+        'art-neural': {
+          title: 'Neural Aesthetics: Designing Ethical Liquid Metal AI Interfaces for High-Stakes Computational Platforms',
+          category: 'Computational WebGL',
+          categorySlug: 'computational-webgl',
+          author: 'Kaito Tanaka',
+          initials: 'KT',
+          role: 'Shader Engineer',
+          date: 'June 2026',
+          readTime: '7 Min Read',
+          excerpt: 'Moving beyond sterile flat SaaS dashboards into dynamic, organic liquid chrome shaders that visualize deep neural network state transitions in real time.',
+          sections: [
+            { id: 'sec-neural-states', title: '01. Fluid Computational States' },
+            { id: 'sec-neural-liquid', title: '02. Liquid Chrome Shaders' },
+            { id: 'sec-neural-ai', title: '03. AI Interface Psychology' },
+            { id: 'sec-neural-takeaways', title: '04. Future UI Standards' }
+          ],
+          related: ['art-webgl', 'art-kinetic'],
+          contentHtml: `
+            <div id="sec-neural-states">
+              <h2>01. Fluid Computational States</h2>
+              <p>As artificial intelligence systems become more complex, human operators need intuitive qualitative feedback. Procedural liquid metal shaders provide instant visual comprehension of neural confidence metrics and data flow densities.</p>
+            </div>
+
+            <div class="reader-pullquote">
+              <p>"We are replacing rigid rectangles with fluid computational matter that breathes in rhythm with machine reasoning."</p>
+            </div>
+
+            <div id="sec-neural-liquid">
+              <h2>02. Liquid Chrome Shaders</h2>
+              <p>Simulating mercury surface tension using Navier-Stokes fluid approximation running on WebGPU enables operators to observe data anomaly spikes as ripples across a liquid chrome pool.</p>
+            </div>
+
+            <div id="sec-neural-ai">
+              <h2>03. AI Interface Psychology</h2>
+              <p>Operators demonstrated 31% faster error detection and reported significantly reduced cognitive fatigue when interacting with organic fluid indicators compared to traditional bar graphs.</p>
+            </div>
+
+            <div id="sec-neural-takeaways" class="reader-takeaway-box">
+              <div class="rtb-title">Interface Recommendations</div>
+              <ul class="rtb-list">
+                <li><strong>Biomorphic Feedback:</strong> Use organic surface tension to signify system load.</li>
+                <li><strong>Haptic Audio Pairing:</strong> Micro-sound design mapped to fluid viscosity changes.</li>
+              </ul>
+            </div>
+          `,
+          bio: 'Lead Shader Engineer at 1928 Creative Studio.'
+        },
+        'art-monochrome': {
+          title: 'The 99% Black Spectrum: Mastering Extreme Contrast Hierarchy in Ultra-Luxury Print & Digital Ecosystems',
+          category: 'Luxury Semiotics',
+          categorySlug: 'luxury-semiotics',
+          author: 'Ami Patel',
+          initials: 'AP',
+          role: 'Design Director',
+          date: 'June 2026',
+          readTime: '6 Min Read',
+          excerpt: 'Why restrained monochrome palettes with solitary crimson accents create an impenetrable aura of institutional prestige that multi-color brand systems cannot replicate.',
+          sections: [
+            { id: 'sec-mono-discipline', title: '01. Monochromatic Discipline' },
+            { id: 'sec-mono-contrast', title: '02. 99% Black Hierarchy' },
+            { id: 'sec-mono-crimson', title: '03. Solitary Crimson Accentuation' },
+            { id: 'sec-mono-takeaways', title: '04. Identity Execution' }
+          ],
+          related: ['art-monogram', 'art-sensory'],
+          contentHtml: `
+            <div id="sec-mono-discipline">
+              <h2>01. Monochromatic Discipline</h2>
+              <p>Restraint is the ultimate form of luxury. By confining brand color palettes to deep carbon blacks, neutral zincs, and an uncompromising solitary crimson accent, the brand radiates supreme confidence and timeless elegance.</p>
+            </div>
+
+            <div class="reader-pullquote">
+              <p>"Color attracts attention; pure contrast commands reverence."</p>
+            </div>
+
+            <div id="sec-mono-contrast">
+              <h2>02. 99% Black Hierarchy</h2>
+              <p>We work with 5 distinct shades of black: Carbon (#070709), Onyx (#0E0E12), Gunmetal (#14141A), Zinc (#181820), and Obsidian (#000000). Layering these values creates depth without chromatic clutter.</p>
+            </div>
+
+            <div id="sec-mono-crimson">
+              <h2>03. Solitary Crimson Accentuation</h2>
+              <p>When color appears only once—a single crimson period or a glowing status beacon—it carries 100 times the psychological weight of a rainbow palette.</p>
+            </div>
+
+            <div id="sec-mono-takeaways" class="reader-takeaway-box">
+              <div class="rtb-title">Application Matrix</div>
+              <ul class="rtb-list">
+                <li><strong>90/9/1 Ratio:</strong> 90% monochrome base, 9% micro-rule lines, 1% pure crimson focus.</li>
+                <li><strong>Paper Stock Matching:</strong> Fedrigoni Sirio Black 400gsm with matte foil debossing.</li>
+              </ul>
+            </div>
+          `,
+          bio: 'Materials & Design Director at 1928 Creative Studio.'
+        },
+        'art-sensory': {
+          title: 'The Architecture of Hospitality Onboarding: Why Physical Invitation Suites Outperform Digital First-Touches',
+          category: 'Brand Architecture',
+          categorySlug: 'brand-architecture',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal',
+          date: 'May 2026',
+          readTime: '5 Min Read',
+          excerpt: 'Examining our bespoke tactile collateral system for St. Regis Mumbai that leveraged handcrafted gold foil debossing and custom calligraphy to elevate VIP retention.',
+          sections: [
+            { id: 'sec-sensory-weight', title: '01. The Power of Physical Weight' },
+            { id: 'sec-sensory-luxury', title: '02. Handcrafted Collateral Suites' },
+            { id: 'sec-sensory-retention', title: '03. Ultra-VIP Retention Metrics' },
+            { id: 'sec-sensory-takeaways', title: '04. Onboarding Rules' }
+          ],
+          related: ['art-monochrome', 'art-fluted'],
+          contentHtml: `
+            <div id="sec-sensory-weight">
+              <h2>01. The Power of Physical Weight</h2>
+              <p>In a world drowning in digital emails and push notifications, receiving a 600gsm hand-embossed letterpress invitation card in a wax-sealed linen envelope is an unforgettable sensory statement that guarantees attendance.</p>
+            </div>
+
+            <div class="reader-pullquote">
+              <p>"The tactile ceremony of breaking wax is an uncopyable high-trust brand ritual."</p>
+            </div>
+
+            <div id="sec-sensory-luxury">
+              <h2>02. Handcrafted Collateral Suites</h2>
+              <p>Crafted on Japanese mulberry paper with deep blind deboss and individualized handwritten calligraphy, each invitation felt like an irreplaceable historical artifact.</p>
+            </div>
+
+            <div id="sec-sensory-retention">
+              <h2>03. Ultra-VIP Retention Metrics</h2>
+              <p>The physical onboarding suite delivered a remarkable 94% RSVP acceptance rate and sustained a 4.6x higher guest spend index throughout the gala weekend.</p>
+            </div>
+
+            <div id="sec-sensory-takeaways" class="reader-takeaway-box">
+              <div class="rtb-title">Executive Checklist</div>
+              <ul class="rtb-list">
+                <li><strong>Weight Threshold:</strong> Minimum 540gsm paper substrate.</li>
+                <li><strong>Sensory Scent:</strong> Lightly misted with signature estate fragrance before sealing.</li>
+              </ul>
+            </div>
+          `,
+          bio: 'Studio Principal & Design Director at 1928 Creative Studio.'
+        }
+      };
+
+      /* ── Reader Modal Open / Close Controller ── */
+      const modal = document.getElementById('perspectiveModal');
+      const modalStage = modal ? modal.querySelector('.reader-modal-stage') : null;
+      const closeBtn = document.getElementById('readerCloseBtn');
+      const shareTwitterBtn = document.getElementById('mShareTwitterBtn');
+      const copyLinkBtn = document.getElementById('mCopyLinkBtn');
+      const shareToast = document.getElementById('shareToast');
+      const readerTOC = document.getElementById('mReaderTOC');
+      const readerRelatedGrid = document.getElementById('mReaderRelatedGrid');
+
+      function openReader(id) {
+        const data = articlesData[id] || articlesData['art-monogram'];
+        if (!data) return;
+
+        document.getElementById('mReaderCat').textContent = data.category;
+        document.getElementById('mReaderTitle').textContent = data.title;
+        document.getElementById('mReaderAuthor').textContent = data.author;
+        document.getElementById('mReaderRole').textContent = data.role;
+        document.getElementById('mReaderAvatarInitials').textContent = data.initials;
+        document.getElementById('mReaderDate').textContent = data.date;
+        document.getElementById('mReaderReadTime').textContent = data.readTime;
+        document.getElementById('mReaderProse').innerHTML = data.contentHtml;
+        document.getElementById('mBioName').textContent = data.author;
+        document.getElementById('mBioAvatarBox').textContent = data.initials;
+        document.getElementById('mBioText').textContent = data.bio;
+
+        // Populate Dynamic Table of Contents (TOC) with Scrollspy
+        if (readerTOC && data.sections) {
+          readerTOC.innerHTML = '';
+          data.sections.forEach((sec, idx) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.textContent = sec.title;
+            a.setAttribute('data-target', sec.id);
+            if (idx === 0) a.classList.add('active');
+
+            a.addEventListener('click', (e) => {
+              e.preventDefault();
+              const targetEl = document.getElementById(sec.id);
+              if (targetEl && modalStage) {
+                const targetPos = targetEl.offsetTop - 80;
+                modalStage.scrollTo({ top: targetPos, behavior: 'smooth' });
+              }
+            });
+
+            li.appendChild(a);
+            readerTOC.appendChild(li);
+          });
+        }
+
+        // Populate Related Articles Grid inside Drawer
+        if (readerRelatedGrid && data.related) {
+          readerRelatedGrid.innerHTML = '';
+          data.related.forEach(relId => {
+            const relData = articlesData[relId];
+            if (!relData) return;
+
+            const card = document.createElement('div');
+            card.className = 'rrs-card';
+            card.innerHTML = `
+              <div>
+                <span class="rrs-cat">${relData.category}</span>
+                <h4 class="rrs-card-title">${relData.title}</h4>
+              </div>
+              <div class="rrs-meta">
+                <span>${relData.readTime}</span>
+                <span style="color:var(--cr-bright); font-weight:700;">Explore Monograph →</span>
+              </div>
+            `;
+            card.addEventListener('click', () => {
+              openReader(relId);
+            });
+            readerRelatedGrid.appendChild(card);
+          });
+        }
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        if (modalStage) modalStage.scrollTop = 0;
+      }
+
+      function closeReader() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeReader);
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeReader();
+        });
+      }
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeReader();
+      });
+
+      // Bind all article triggers across page
+      document.querySelectorAll('[data-article-id]').forEach(el => {
+        el.addEventListener('click', () => {
+          const aid = el.getAttribute('data-article-id');
+          if (aid) openReader(aid);
+        });
+      });
+
+      // Scrollspy on Modal Stage
+      if (modalStage) {
+        modalStage.addEventListener('scroll', () => {
+          const tocLinks = readerTOC ? readerTOC.querySelectorAll('a[data-target]') : [];
+          if (!tocLinks.length) return;
+
+          let currentActiveId = '';
+          tocLinks.forEach(link => {
+            const targetId = link.getAttribute('data-target');
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+              const rect = targetEl.getBoundingClientRect();
+              if (rect.top <= 200) {
+                currentActiveId = targetId;
+              }
+            }
+          });
+
+          if (currentActiveId) {
+            tocLinks.forEach(link => {
+              if (link.getAttribute('data-target') === currentActiveId) link.classList.add('active');
+              else link.classList.remove('active');
+            });
+          }
+        }, { passive: true });
+      }
+
+      // Share Actions
+      if (shareTwitterBtn) {
+        shareTwitterBtn.addEventListener('click', () => {
+          const title = document.getElementById('mReaderTitle').textContent;
+          const url = encodeURIComponent(window.location.href);
+          const tweetText = encodeURIComponent(`"${title}" by @1928creativestudio`);
+          window.open(`https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`, '_blank');
+        });
+      }
+
+      if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', () => {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(window.location.href);
+          }
+          if (shareToast) {
+            shareToast.classList.add('active');
+            setTimeout(() => shareToast.classList.remove('active'), 3000);
+          }
+        });
+      }
+
+      /* ── Real-time Instant Search, Category Filtering & Functional Pagination ── */
+      const searchInput = document.getElementById('searchInput');
+      const searchClear = document.getElementById('searchClear');
+      const filterBtns = document.querySelectorAll('.cmd-cat-btn');
+      const cards = Array.from(document.querySelectorAll('.codex-card[data-category]'));
+      const featuredSpread = document.querySelector('.featured-monograph-spread');
+      const emptyState = document.getElementById('emptySearchState');
+      const resultCounter = document.getElementById('resultCounter');
+      const resetSearchBtn = document.getElementById('resetSearchBtn');
+      const paginationBar = document.getElementById('paginationBar');
+      const pagiBtns = document.querySelectorAll('.pagi-btn[data-page]');
+      const pagiNextBtn = document.getElementById('pagiNextBtn');
+
+      let currentCategory = 'all';
+      let currentQuery = '';
+      let currentPage = 1;
+      const CARDS_PER_PAGE = 4;
+
+      function renderArticles() {
+        // Filter matching cards
+        const matchingCards = cards.filter(card => {
+          const cat = card.getAttribute('data-category');
+          const title = card.querySelector('.cbc-title').textContent.toLowerCase();
+          const excerpt = card.querySelector('.cbc-excerpt').textContent.toLowerCase();
+          const matchesCat = (currentCategory === 'all' || cat === currentCategory);
+          const matchesQuery = !currentQuery || title.includes(currentQuery) || excerpt.includes(currentQuery);
+          return matchesCat && matchesQuery;
+        });
+
+        // Featured spread check
+        let featuredVisible = false;
+        if (featuredSpread) {
+          const fTitle = featuredSpread.querySelector('.fms-title').textContent.toLowerCase();
+          const fExcerpt = featuredSpread.querySelector('.fms-excerpt').textContent.toLowerCase();
+          const fCat = 'brand-architecture';
+          const fMatchesCat = (currentCategory === 'all' || currentCategory === fCat);
+          const fMatchesQuery = !currentQuery || fTitle.includes(currentQuery) || fExcerpt.includes(currentQuery);
+          // Only show featured spread on page 1 when query matches
+          if (fMatchesCat && fMatchesQuery && currentPage === 1) {
+            featuredSpread.style.display = 'grid';
+            featuredVisible = true;
+          } else {
+            featuredSpread.style.display = 'none';
+          }
+        }
+
+        const totalVisible = matchingCards.length + (featuredVisible ? 1 : 0);
+        const totalPages = Math.max(1, Math.ceil(matchingCards.length / CARDS_PER_PAGE));
+
+        if (currentPage > totalPages) currentPage = 1;
+
+        // Paginate grid cards
+        const startIndex = (currentPage - 1) * CARDS_PER_PAGE;
+        const endIndex = startIndex + CARDS_PER_PAGE;
+
+        cards.forEach(c => c.style.display = 'none');
+        matchingCards.slice(startIndex, endIndex).forEach(c => c.style.display = 'flex');
+
+        // Update Counter
+        if (totalVisible === 0) {
+          if (emptyState) emptyState.classList.add('visible');
+          if (resultCounter) resultCounter.textContent = 'Found 0 perspectives';
+          if (paginationBar) paginationBar.style.display = 'none';
+        } else {
+          if (emptyState) emptyState.classList.remove('visible');
+          if (resultCounter) resultCounter.textContent = `Showing ${totalVisible} of 8 Perspectives (Page ${currentPage} of ${totalPages})`;
+          if (paginationBar) paginationBar.style.display = (totalPages > 1) ? 'flex' : 'none';
+        }
+
+        // Update Pagination Buttons
+        pagiBtns.forEach(b => {
+          const p = parseInt(b.getAttribute('data-page'), 10);
+          b.style.display = (p <= totalPages) ? 'grid' : 'none';
+          if (p === currentPage) b.classList.add('active');
+          else b.classList.remove('active');
+        });
+
+        if (pagiNextBtn) {
+          pagiNextBtn.style.display = (currentPage < totalPages) ? 'inline-flex' : 'none';
+        }
+      }
+
+      // Pagination Click Handlers
+      pagiBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const p = parseInt(btn.getAttribute('data-page'), 10);
+          currentPage = p;
+          renderArticles();
+          const gridSec = document.getElementById('perspectives-grid-sec');
+          if (gridSec) gridSec.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      if (pagiNextBtn) {
+        pagiNextBtn.addEventListener('click', () => {
+          currentPage++;
+          renderArticles();
+          const gridSec = document.getElementById('perspectives-grid-sec');
+          if (gridSec) gridSec.scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+
+      // Search Handlers
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          currentQuery = e.target.value.trim().toLowerCase();
+          currentPage = 1;
+          if (searchClear) {
+            if (currentQuery.length > 0) searchClear.classList.add('active');
+            else searchClear.classList.remove('active');
+          }
+          renderArticles();
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (e.key === '/' && document.activeElement !== searchInput) {
+            e.preventDefault();
+            searchInput.focus();
+          }
+        });
+      }
+
+      if (searchClear) {
+        searchClear.addEventListener('click', () => {
+          if (searchInput) searchInput.value = '';
+          currentQuery = '';
+          currentPage = 1;
+          searchClear.classList.remove('active');
+          renderArticles();
+        });
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentCategory = btn.getAttribute('data-category');
+          currentPage = 1;
+          renderArticles();
+        });
+      });
+
+      if (resetSearchBtn) {
+        resetSearchBtn.addEventListener('click', () => {
+          if (searchInput) searchInput.value = '';
+          currentQuery = '';
+          currentPage = 1;
+          if (searchClear) searchClear.classList.remove('active');
+          currentCategory = 'all';
+          filterBtns.forEach(b => {
+            if (b.getAttribute('data-category') === 'all') b.classList.add('active');
+            else b.classList.remove('active');
+          });
+          renderArticles();
+        });
+      }
+
+      // Initial Render
+      renderArticles();
+
+      /* ── Newsletter Dispatch Handler ── */
+      window.handleNewsletterSubmit = function() {
+        const input = document.getElementById('nlEmail');
+        const toast = document.getElementById('nlToast');
+        if (input && input.value) {
+          if (toast) {
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 6000);
+          }
+          input.value = '';
+        }
+      };
+
+      /* ── Theme Switcher Engine (Synced across site) ── */
+      const themeFab = document.getElementById('theme-fab');
+      const root = document.documentElement;
+
+      function setTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('t28', theme);
+        localStorage.setItem('theme-1928', theme);
+        localStorage.setItem('theme', theme);
+      }
+
+      const initialTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
+      setTheme(initialTheme);
+
+      if (themeFab) {
+        themeFab.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          setTheme(next);
+        });
+      }
+
+      /* ── Footer Elastic Logo Physics ── */
+      const footerCutWrap = document.querySelector('.f-giant-cut-wrap');
+      const footerCutSvg = document.querySelector('.f-giant-cut-svg');
+
+      function applyLogoPhysics(p) {
+        if (!footerCutWrap || !footerCutSvg) return;
+        const baseH = footerCutWrap.offsetWidth * 0.052;
+        const safeBaseH = Math.max(34, Math.min(84, baseH));
+        const maxH = footerCutWrap.offsetWidth * 0.19;
+        const targetH = safeBaseH + (maxH - safeBaseH) * Math.min(p, 1.0);
+        footerCutWrap.style.height = `${targetH}px`;
+      }
+
+      window.addEventListener('scroll', () => {
+        const scrollBottom = window.innerHeight + window.scrollY;
+        const docHeight = document.documentElement.scrollHeight;
+        const dist = docHeight - scrollBottom;
+        if (dist < 300) {
+          const progress = 1 - (dist / 300);
+          applyLogoPhysics(progress);
+        } else {
+          applyLogoPhysics(0);
+        }
+      }, { passive: true });
+
+      applyLogoPhysics(0);
+    });
+  </script>
+</body>
+
+</html>

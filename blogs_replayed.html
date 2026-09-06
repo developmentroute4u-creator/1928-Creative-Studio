@@ -13,15 +13,6 @@
     href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
 
-  <script>
-    (function () {
-      try {
-        const saved = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', saved);
-      } catch (e) {}
-    })();
-  </script>
-
   <style>
     /* ── Font System (Project Core Fonts Only) ── */
     @font-face {
@@ -85,10 +76,7 @@
       --font-mono: 'Space Mono', monospace;
     }
 
-    [data-theme="light"],
-    body[data-theme="light"],
-    html[data-theme="light"],
-    :root[data-theme="light"] {
+    [data-theme="light"] {
       --bg: #f5f5f8;
       --card-bg: #ffffff;
       --card-hover: #ececf2;
@@ -165,7 +153,7 @@
       box-sizing: border-box;
       padding: 0;
       margin: 0;
-      background:
+      background: 
         radial-gradient(ellipse 80% 60% at 50% 48%, rgba(200, 16, 46, 0.10) 0%, transparent 72%),
         radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.015) 0%, transparent 50%),
         var(--bg);
@@ -176,7 +164,7 @@
       position: absolute;
       inset: 0;
       background-size: 80px 80px;
-      background-image:
+      background-image: 
         linear-gradient(to right, var(--rule) 1px, transparent 1px),
         linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
       opacity: 0.28;
@@ -200,16 +188,16 @@
       box-sizing: border-box;
     }
 
-    /* Monumental Sculptural Display Typography (Refined Scale) */
+    /* Monumental Sculptural Display Typography */
     .hm-monument-title {
       font-family: var(--font-primary);
-      font-weight: 800;
-      font-size: clamp(32px, 4.4vw, 56px);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
+      font-weight: 900;
+      font-size: clamp(44px, 6.8vw, 94px);
+      line-height: 0.98;
+      letter-spacing: -0.035em;
       text-transform: uppercase;
       color: var(--ink);
-      margin: 0 0 clamp(20px, 2.8vh, 32px);
+      margin: 0 0 clamp(24px, 3.4vh, 38px);
       user-select: none;
       display: inline-flex;
       flex-wrap: wrap;
@@ -428,19 +416,9 @@
     }
 
     @keyframes scrollDrop {
-      0% {
-        transform: translateY(-100%);
-        opacity: 0;
-      }
-
-      30% {
-        opacity: 1;
-      }
-
-      100% {
-        transform: translateY(280%);
-        opacity: 0;
-      }
+      0% { transform: translateY(-100%); opacity: 0; }
+      30% { opacity: 1; }
+      100% { transform: translateY(280%); opacity: 0; }
     }
 
     /* Corner Crosshairs for Cards */
@@ -460,25 +438,10 @@
       color: var(--cr);
     }
 
-    .cc-tl {
-      top: 10px;
-      left: 10px;
-    }
-
-    .cc-tr {
-      top: 10px;
-      right: 10px;
-    }
-
-    .cc-bl {
-      bottom: 10px;
-      left: 10px;
-    }
-
-    .cc-br {
-      bottom: 10px;
-      right: 10px;
-    }
+    .cc-tl { top: 10px; left: 10px; }
+    .cc-tr { top: 10px; right: 10px; }
+    .cc-bl { bottom: 10px; left: 10px; }
+    .cc-br { bottom: 10px; right: 10px; }
 
     /* ═══════════════════════════════════════════════════════════
        COMMAND DOCK: WIDE SEARCH AT TOP & CENTERED FILTERS BELOW
@@ -541,29 +504,47 @@
     }
 
     /* Search Icon on the LEFT side */
-    /* ── Search icon — absolute, inside the pill ── */
-    .csb-icon {
+    .csb-icon-left {
       position: absolute;
-      left: 24px;
-      top: 50%;
-      transform: translateY(-50%);
+      left: 18px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--ink-dim);
+      pointer-events: none;
+      transition: all 0.3s var(--sp);
+      z-index: 2;
+    }
+
+    /* ── LEFT SIDE HIGHLIGHT ON HOVER / FOCUS ── */
+    .cmd-search-box:hover .csb-icon-left {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.16);
+      transform: scale(1.08);
+    }
+
+    .cmd-search-box:focus-within .csb-icon-left {
+      color: var(--cr-bright);
+      background: var(--cr-soft);
+      box-shadow: 0 0 20px var(--cr-soft);
+      transform: scale(1.12);
+    }
+
+    [data-theme="light"] .cmd-search-box:hover .csb-icon-left {
+      color: #000;
+      background: rgba(0, 0, 0, 0.07);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .csb-icon {
       width: 17px;
       height: 17px;
       stroke: currentColor;
       fill: none;
       stroke-width: 2.2;
-      color: var(--ink-dim);
-      pointer-events: none;
-      z-index: 2;
-      transition: color 0.3s var(--sp);
-    }
-
-    .cmd-search-box:hover .csb-icon {
-      color: var(--ink);
-    }
-
-    .cmd-search-box:focus-within .csb-icon {
-      color: var(--cr-bright);
     }
 
     .csb-input {
@@ -572,7 +553,7 @@
       background: rgba(255, 255, 255, 0.035);
       border: 1px solid var(--rule-m);
       border-radius: 999px;
-      padding: 0 84px 0 56px;
+      padding: 0 74px 0 58px;
       font-family: var(--font-secondary);
       font-size: 13.5px;
       color: var(--ink);
@@ -625,12 +606,7 @@
     }
 
     /* ── RIGHT SIDE SHORTCUT HIGHLIGHT ON HOVER / FOCUS ── */
-    /* ── Shortcut badge — absolute, inside pill on the right ── */
     .csb-shortcut {
-      position: absolute;
-      right: 24px;
-      top: 50%;
-      transform: translateY(-50%);
       font-family: var(--font-mono);
       font-size: 10.5px;
       font-weight: 700;
@@ -646,27 +622,27 @@
 
     .cmd-search-box:hover .csb-shortcut {
       color: var(--ink);
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+      transform: scale(1.06);
     }
 
     .cmd-search-box:focus-within .csb-shortcut {
       color: var(--cr-bright);
       border-color: var(--cr);
       background: var(--cr-soft);
+      box-shadow: 0 0 14px var(--cr-soft);
     }
 
     [data-theme="light"] .cmd-search-box:hover .csb-shortcut {
       color: #000;
-      background: rgba(0, 0, 0, 0.07);
-      border-color: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.09);
+      border-color: rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
 
     .csb-clear {
-      position: absolute;
-      right: 60px;
-      top: 50%;
-      transform: translateY(-50%);
       background: none;
       border: none;
       color: var(--ink-dim);
@@ -674,7 +650,6 @@
       font-size: 14px;
       display: none;
       padding: 4px;
-      z-index: 2;
       transition: color 0.2s;
     }
 
@@ -699,11 +674,11 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
       background: rgba(255, 255, 255, 0.025);
       border: 1px solid var(--rule-m);
       border-radius: 999px;
-      padding: 6px;
+      padding: 6px 12px;
       box-shadow: 0 4px 24px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.03);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
@@ -746,6 +721,7 @@
     .cmd-cat-btn:hover {
       color: var(--ink);
       background: rgba(255, 255, 255, 0.065);
+      transform: translateY(-1px);
     }
 
     [data-theme="light"] .cmd-cat-btn:hover {
@@ -774,184 +750,39 @@
        4. FEATURED MASTER MONOGRAPH (Asymmetric Spread № 01)
        ═══════════════════════════════════════════════════════════ */
     #featured-monograph {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: clamp(40px, 5vh, 64px) clamp(24px, 4vw, 64px);
+      padding: clamp(60px, 7.5vh, 92px) clamp(24px, 4vw, 64px) clamp(60px, 7.5vh, 92px);
       max-width: 1440px;
       margin: 0 auto;
       border-bottom: 1px solid var(--rule);
-      box-sizing: border-box;
-      position: relative;
     }
 
-    /* ── Editorial Header: Left Title, One-line Description & Right Corner Counter ── */
-    .featured-section-header {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-bottom: clamp(24px, 3.5vh, 40px);
-      padding-bottom: 22px;
-      border-bottom: 1px solid var(--rule);
-      position: relative;
-    }
-
-    .fsh-top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-    }
-
-    .fsh-sec-title {
-      font-family: var(--font-primary);
-      font-size: clamp(24px, 3vw, 38px);
-      font-weight: 900;
-      letter-spacing: -0.035em;
-      text-transform: uppercase;
-      color: var(--ink);
-      line-height: 1.1;
-      margin: 0;
-    }
-
-    .fsh-meta-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      width: 100%;
-      gap: 24px;
-    }
-
-    .fsh-desc-left {
-      font-size: clamp(13px, 1.05vw, 15px);
-      color: var(--ink-mid);
-      line-height: 1.5;
-      margin: 0;
-      letter-spacing: -0.01em;
-    }
-
-    .fsh-counter-wrap {
-      display: flex;
-      align-items: center;
-      margin-left: auto;
-      flex-shrink: 0;
-    }
-
-    .fsh-counter {
-      font-family: var(--font-mono);
-      font-size: 11.5px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      color: var(--ink-dim);
-      text-transform: uppercase;
-      padding: 5px 16px;
-      background: rgba(255, 255, 255, 0.035);
-      border: 1px solid var(--rule-m);
-      border-radius: 999px;
-      line-height: 1.2;
-      white-space: nowrap;
-      transition: color 0.3s var(--sp), border-color 0.3s var(--sp), opacity 0.2s var(--sp), transform 0.2s var(--sp);
-    }
-
-    [data-theme="light"] .fsh-counter {
-      background: rgba(0, 0, 0, 0.035);
-      border-color: var(--rule-m);
-    }
-
-    @media (max-width: 900px) {
-      .fsh-meta-bar {
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-    }
-
-    /* ── Carousel Viewport (Clean Palette) ── */
-    .latest-blogs-carousel {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border-radius: clamp(24px, 3vw, 36px);
-    }
-
-    .lbc-track {
-      display: flex;
-      width: 100%;
-      will-change: transform;
-      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .lbc-slide {
-      width: 100%;
-      flex: 0 0 100%;
-      box-sizing: border-box;
-      opacity: 1;
-      filter: none;
-      transform: none;
-      pointer-events: auto;
-    }
-
-    .lbc-slide.active {
-      opacity: 1;
-      filter: none;
-      transform: none;
-      pointer-events: auto;
-    }
-
-    /* ── Monograph Spread Card: Left Image, Right Content (Clean Luxury Palette) ── */
     .featured-monograph-spread {
       background: var(--card-bg);
       border: 1px solid var(--rule-m);
       border-radius: clamp(24px, 3vw, 36px);
-      padding: clamp(32px, 4.5vw, 56px);
+      padding: clamp(28px, 4vw, 56px);
       display: grid;
-      grid-template-columns: 1fr 1.18fr;
-      gap: clamp(36px, 5vw, 68px);
-      min-height: clamp(480px, 56vh, 600px);
-      align-items: stretch;
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(36px, 5vw, 70px);
       position: relative;
       cursor: pointer;
       overflow: hidden;
-      box-sizing: border-box;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-      transition: border-color 0.4s var(--sp), box-shadow 0.4s var(--sp), transform 0.4s var(--sp);
-    }
-
-    [data-theme="light"] .featured-monograph-spread {
-      background: var(--card-bg);
-      border-color: var(--rule-m);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+      transition: transform 0.4s var(--sp), border-color 0.4s var(--sp), box-shadow 0.4s var(--sp);
     }
 
     .featured-monograph-spread:hover {
+      transform: none;
       border-color: var(--cr);
-      box-shadow: 0 0 32px var(--cr-soft), 0 20px 56px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 36px var(--cr-soft), 0 24px 64px rgba(0, 0, 0, 0.5);
     }
 
-    /* Right-side Narrative Content */
     .fms-narrative {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100%;
-      min-height: clamp(360px, 46vh, 480px);
-      box-sizing: border-box;
-      padding: 8px 0 4px 0;
-      transform: none;
-      opacity: 1;
+      gap: 24px;
     }
 
-    .lbc-slide.active .fms-narrative {
-      transform: none;
-      opacity: 1;
-    }
-
-    .fms-text-block {
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* 1. TOP SECTION SPACING */
     .fms-top-spec {
       display: flex;
       align-items: center;
@@ -959,70 +790,43 @@
       font-family: var(--font-mono);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--cr-bright);
-      margin: 0;
-      margin-bottom: clamp(16px, 2.2vh, 24px);
+      transition: color 0.35s var(--sp);
     }
 
     .fms-numeral {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 800;
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 900;
       color: var(--ink-dim);
-      letter-spacing: 0.16em;
+      transition: color 0.35s var(--sp);
     }
 
-    .fms-spec-divider {
-      color: var(--rule-heavy);
-      font-size: 12px;
-      opacity: 0.6;
-    }
-
-    .fms-cat-name {
-      color: var(--cr-bright);
-      font-weight: 700;
-    }
-
-    .fms-read-time {
-      color: var(--ink-dim);
-      font-weight: 500;
-    }
-
-    /* 2. HEADER (TITLE) TOP & BOTTOM SPACING */
     .fms-title {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(28px, 3.2vw, 44px);
-      line-height: 1.2;
+      font-size: clamp(26px, 3vw, 44px);
+      line-height: 1.08;
       letter-spacing: -0.035em;
       color: var(--ink);
-      margin: 0;
-      margin-bottom: clamp(16px, 2.2vh, 24px);
-      max-width: 22ch;
     }
 
-    /* 3. DESCRIPTION PROPER SPACING */
     .fms-excerpt {
-      font-size: clamp(15px, 1.15vw, 17px);
+      font-size: clamp(15px, 1.15vw, 17.5px);
       color: var(--ink-mid);
-      line-height: 1.75;
-      margin: 0;
-      margin-bottom: clamp(26px, 3.5vh, 38px);
-      max-width: 52ch;
+      line-height: 1.7;
     }
 
-    /* Footer Meta */
     .fms-footer-meta {
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-top: 1px solid var(--rule);
-      padding-top: clamp(18px, 2.2vh, 24px);
+      padding-top: 20px;
       flex-wrap: wrap;
       gap: 16px;
-      margin-top: auto;
     }
 
     .fms-author-box {
@@ -1089,9 +893,8 @@
 
     .fms-blueprint-visual {
       width: 100%;
-      height: 100%;
-      min-height: clamp(360px, 46vh, 480px);
-      border-radius: clamp(18px, 2vw, 24px);
+      min-height: clamp(380px, 48vh, 520px);
+      border-radius: clamp(18px, 2vw, 26px);
       background: var(--card-alt);
       border: 1px dashed var(--rule-heavy);
       position: relative;
@@ -1100,20 +903,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      transform: none;
-      opacity: 1;
-      transition: border-color 0.4s var(--sp),
-        background 0.4s var(--sp);
-    }
-
-    [data-theme="light"] .fms-blueprint-visual {
-      background: var(--card-alt);
-      border-color: var(--rule-m);
-    }
-
-    .lbc-slide.active .fms-blueprint-visual {
-      transform: none;
-      opacity: 1;
+      transition: border-color 0.4s var(--sp), background 0.4s var(--sp);
     }
 
     .featured-monograph-spread:hover .fms-blueprint-visual {
@@ -1143,105 +933,38 @@
       transition: stroke 0.35s var(--sp);
     }
 
-    /* ── Carousel Pagination Dots (Bottom) ── */
-    .lbc-pagination {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: clamp(22px, 3vh, 34px);
-      width: 100%;
-      user-select: none;
-    }
-
-    .lbc-dot {
-      border: none;
-      padding: 0;
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--ink-dim);
-      opacity: 0.3;
-      cursor: pointer;
-      position: relative;
-      outline: none;
-      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-        opacity 0.4s ease,
-        background-color 0.4s ease,
-        transform 0.4s ease,
-        box-shadow 0.4s ease;
-    }
-
-    .lbc-dot:hover {
-      opacity: 0.75;
-      transform: scale(1.2);
-    }
-
-    .lbc-dot.active {
-      width: 32px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--ink);
-      opacity: 1;
-      box-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
-      transform: scale(1);
-    }
-
-    [data-theme="light"] .lbc-dot {
-      background: rgba(0, 0, 0, 0.28);
-    }
-
-    [data-theme="light"] .lbc-dot.active {
-      background: #0a0a0a;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    }
-
     /* ═══════════════════════════════════════════════════════════
        5. PERSPECTIVES ARCHIVE (Horizontal Kinetic Scroll Codex)
        ═══════════════════════════════════════════════════════════ */
     #perspectives-grid-sec {
-      --pga-inset: max(clamp(24px, 4vw, 64px), calc((100vw - 1440px) / 2 + clamp(24px, 4vw, 64px)));
-      --pga-gap: clamp(20px, 2.2vw, 28px);
       position: relative;
-      min-height: 280vh;
+      min-height: 360vh;
       padding: 0;
       margin: 0;
     }
 
     .pga-sticky-wrap {
       position: sticky;
-      top: 0;
-      height: 100vh;
+      top: var(--dock-h, 120px);
+      height: calc(100vh - var(--dock-h, 120px));
       display: flex;
       flex-direction: column;
       justify-content: center;
       overflow: hidden;
       box-sizing: border-box;
-      padding: clamp(20px, 3vh, 36px) 0 clamp(16px, 2.5vh, 28px);
+      padding: clamp(14px, 2vh, 22px) 0;
     }
 
     .pga-header-bar {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      max-width: 1440px;
       width: 100%;
-      margin: 0 0 clamp(14px, 1.8vh, 22px);
-      padding: 0 var(--pga-inset) 14px;
-      border-bottom: none;
-      position: relative;
+      margin: 0 auto clamp(14px, 1.8vh, 22px);
+      padding: 0 clamp(24px, 4vw, 64px) 14px;
+      border-bottom: 1px solid var(--rule);
       box-sizing: border-box;
-    }
-
-    /* Horizontal line starts from the exact left line of The Editorial Codex and goes off-screen to the right */
-    .pga-header-bar::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: var(--pga-inset);
-      right: 0;
-      height: 1px;
-      background: var(--rule);
-      pointer-events: none;
     }
 
     .pga-sec-title {
@@ -1279,43 +1002,25 @@
     .pga-drift-hint {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-family: var(--font-secondary);
-      font-size: 12.5px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       color: var(--ink);
-      background: rgba(255, 255, 255, 0.04);
-      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 4px 12px;
       border-radius: 999px;
       border: 1px solid var(--rule-m);
     }
 
-    [data-theme="light"] .pga-drift-hint {
-      background: rgba(0, 0, 0, 0.04);
-      border-color: rgba(0, 0, 0, 0.1);
-    }
-
     .pdh-dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
       background: var(--cr-bright);
       box-shadow: 0 0 8px var(--cr-glow);
-    }
-
-    .pdh-text {
-      font-family: var(--font-secondary);
-      font-size: 12.5px;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      text-transform: none;
-      color: var(--ink);
-    }
-
-    .pdh-arrow {
-      font-size: 13px;
-      color: var(--ink-mid);
     }
 
     .pga-track-viewport {
@@ -1328,26 +1033,26 @@
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-      gap: var(--pga-gap);
+      gap: clamp(22px, 2.8vw, 34px);
       padding: 8px var(--pga-inset) 24px;
       width: max-content;
       will-change: transform;
       transition: transform 0.08s ease-out;
     }
 
-    /* ── Editorial Codex Card: 16:9 Image Box with Image Icon & Size, Heading, Brief Description, Footer ── */
+    /* ── Editorial Codex Card (Bottom-Right Image Layout) ── */
     .codex-card {
-      width: calc((100vw - (2 * var(--pga-inset)) - (2 * var(--pga-gap))) / 3);
-      min-width: 320px;
-      height: clamp(480px, 56vh, 530px);
+      width: clamp(420px, 35vw, 490px);
+      height: clamp(480px, 58vh, 540px);
       flex-shrink: 0;
       background: var(--card-bg);
       border: 1px solid var(--rule-m);
-      border-radius: clamp(18px, 1.8vw, 24px);
+      border-radius: clamp(20px, 2vw, 28px);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      padding: clamp(18px, 1.8vw, 22px);
+      justify-content: space-between;
+      padding: clamp(22px, 2.4vw, 30px);
       box-sizing: border-box;
       cursor: pointer;
       text-decoration: none;
@@ -1361,204 +1066,200 @@
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 255, 255, 0.05);
     }
 
-    /* ── Top: Image Box (16:9 Ratio with Image Icon & Dimensions) ── */
-    .card-image-box {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px dashed var(--rule-heavy);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      margin-bottom: 14px;
-      transition: border-color 0.35s var(--sp), background 0.35s var(--sp);
-    }
-
-    [data-theme="light"] .card-image-box {
-      background: rgba(0, 0, 0, 0.025);
-      border-color: rgba(0, 0, 0, 0.16);
-    }
-
-    .codex-card:hover .card-image-box {
-      border-color: var(--cr);
-      background: rgba(230, 57, 70, 0.04);
-    }
-
-    .cib-placeholder {
+    .card-narrative-top {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
       gap: 10px;
-      pointer-events: none;
-      user-select: none;
     }
 
-    .cib-icon-wrap {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--rule-m);
-      display: grid;
-      place-items: center;
-      color: var(--ink-mid);
-      transition: color 0.3s, border-color 0.3s, transform 0.3s;
-    }
-
-    [data-theme="light"] .cib-icon-wrap {
-      background: rgba(0, 0, 0, 0.04);
-      border-color: rgba(0, 0, 0, 0.08);
-    }
-
-    .codex-card:hover .cib-icon-wrap {
-      color: var(--cr-bright);
-      border-color: var(--cr);
-      transform: scale(1.06);
-    }
-
-    .cib-image-icon {
-      width: 22px;
-      height: 22px;
-      stroke: currentColor;
-    }
-
-    .cib-meta {
+    .cbc-meta-row {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 8px;
-    }
-
-    .cib-ratio-badge {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--rule);
-      padding: 3px 8px;
-      border-radius: 4px;
-    }
-
-    [data-theme="light"] .cib-ratio-badge {
-      background: rgba(0, 0, 0, 0.04);
-    }
-
-    .cib-dims {
       font-family: var(--font-mono);
       font-size: 10.5px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
+      font-weight: 700;
       color: var(--ink-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
-    .card-image-box img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 14px;
-      z-index: 2;
+    .card-cat-pill {
+      position: static;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--rule-m);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
     }
 
-    /* ── Middle: Body with Title + Brief Description ── */
-    .card-body-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    [data-theme="light"] .card-cat-pill {
+      background: rgba(0, 0, 0, 0.04);
+      color: #111114;
+      border-color: var(--rule-m);
+    }
+
+    .cbc-read-time {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      color: var(--ink-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .cbc-title {
       font-family: var(--font-primary);
       font-weight: 800;
-      font-size: clamp(17px, 1.4vw, 20px);
-      line-height: 1.25;
+      font-size: clamp(20px, 1.8vw, 24px);
+      line-height: 1.22;
       letter-spacing: -0.025em;
       color: var(--ink);
-      margin: 0;
     }
 
-    .cbc-desc {
-      font-family: var(--font-secondary);
-      font-size: clamp(12px, 1vw, 13px);
-      line-height: 1.55;
+    .cbc-excerpt {
+      font-size: 13.5px;
       color: var(--ink-mid);
-      margin: 10px 0 0;
+      line-height: 1.6;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
-      line-clamp: 3;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    /* ── Bottom: Footer Row (City + Arrow) ── */
-    .card-footer-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding-top: 14px;
+    /* Bottom Deck: Left Author Column & Right Tall Blueprint Image */
+    .card-bottom-deck {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 14px;
+      padding-top: 16px;
       border-top: 1px solid var(--rule);
+    }
+
+    .cbc-author-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .cbc-author-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .cbc-avatar-initials {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--card-alt);
+      border: 1px solid var(--rule-m);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .cbc-author-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cbc-aname {
+      font-family: var(--font-primary);
+      font-size: 12.5px;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    .cbc-adate {
+      font-size: 10.5px;
+      color: var(--ink-dim);
+    }
+
+    .cbc-action-arrow {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-m);
+      display: grid;
+      place-items: center;
+      color: var(--ink-mid);
+      transition: all 0.3s;
       margin-top: auto;
     }
 
-    .card-city {
-      font-family: var(--font-mono);
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-
-    .card-city::before {
-      content: "";
-      display: inline-block;
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--ink-dim);
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .codex-card:hover .card-city::before {
-      background: var(--cr);
-      transform: scale(1.4);
-    }
-
-    .card-action-arrow {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      border: 1px solid var(--rule-m);
-      background: rgba(255, 255, 255, 0.03);
-      display: grid;
-      place-items: center;
-      color: var(--ink);
-      transition: all 0.3s var(--sp);
-      flex-shrink: 0;
-    }
-
-    [data-theme="light"] .card-action-arrow {
-      background: rgba(0, 0, 0, 0.03);
-    }
-
-    .codex-card:hover .card-action-arrow {
+    .codex-card:hover .cbc-action-arrow {
       border-color: var(--cr);
       background: var(--cr);
       color: #fff;
-      transform: scale(1.08) rotate(-45deg);
+      transform: scale(1.08);
+    }
+
+    /* Tall Blueprint Image Frame on the Bottom Right */
+    .card-blueprint-stage {
+      width: 100%;
+      height: clamp(190px, 24vh, 230px);
+      background: var(--card-alt);
+      border: 1px dashed var(--rule-m);
+      border-radius: 16px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .codex-card:hover .card-blueprint-stage {
+      border-color: var(--rule-heavy);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .card-asset-glyph {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink-mid);
+      transition: transform 0.4s var(--sp), color 0.3s;
+    }
+
+    .codex-card:hover .card-asset-glyph {
+      transform: scale(1.08);
+      color: var(--ink);
+    }
+
+    .cag-svg {
+      width: 52px;
+      height: 52px;
+      stroke: currentColor;
+    }
+
+    .cag-badge {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim);
+      background: rgba(255, 255, 255, 0.04);
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--rule);
     }
 
     /* Empty Search State */
@@ -1632,297 +1333,262 @@
     }
 
     /* ═══════════════════════════════════════════════════════════
-       7. EDITORIAL NEWSLETTER (The Sunday Memorandum // Pure Editorial Monolith)
+       7. EDITORIAL NEWSLETTER (The Sealed Memorandum)
        ═══════════════════════════════════════════════════════════ */
     #newsletter-sec {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: clamp(60px, 8vh, 100px) clamp(24px, 4vw, 64px);
+      padding: clamp(50px, 7vh, 84px) clamp(24px, 4vw, 64px);
       max-width: 1440px;
       margin: 0 auto;
-      box-sizing: border-box;
-      position: relative;
     }
 
-    .newsletter-editorial-monolith {
-      width: 100%;
-      background: radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.12) 0%, rgba(12, 12, 16, 0.97) 65%), var(--card-bg);
+    .newsletter-codex-card {
+      background: radial-gradient(circle at 100% 0%, rgba(200, 16, 46, 0.16) 0%, transparent 60%), var(--card-bg);
       border: 1px solid var(--rule-m);
-      border-radius: clamp(28px, 3.5vw, 44px);
-      padding: clamp(48px, 6.5vh, 84px) clamp(28px, 5vw, 72px);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
+      border-radius: clamp(24px, 3vw, 36px);
+      padding: clamp(36px, 6vw, 64px);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(32px, 5vw, 64px);
       align-items: center;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 32px 100px rgba(0, 0, 0, 0.6), 0 0 60px rgba(200, 16, 46, 0.04);
-      box-sizing: border-box;
-      transition: border-color 0.4s var(--sp), box-shadow 0.4s var(--sp);
     }
 
-    [data-theme="light"] .newsletter-editorial-monolith {
-      background: radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.06) 0%, #ffffff 70%);
-      border-color: rgba(0, 0, 0, 0.1);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.06);
-    }
-
-    .nem-eyebrow {
+    .ncc-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--cr-bright);
-      margin-bottom: clamp(16px, 2.5vh, 24px);
+      margin-bottom: 12px;
     }
 
-    .nem-dot {
-      font-size: 8px;
-      animation: nemPulse 2.2s infinite ease-in-out;
-    }
-
-    @keyframes nemPulse {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 0.4;
-        transform: scale(0.85);
-      }
-    }
-
-    .nem-title {
+    .ncc-title {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(32px, 4.2vw, 60px);
-      line-height: 1.15;
-      letter-spacing: -0.035em;
+      font-size: clamp(26px, 2.8vw, 40px);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
       color: var(--ink);
-      margin: 0 0 clamp(18px, 2.8vh, 28px);
-      max-width: 100%;
-      width: 100%;
+      margin-bottom: 14px;
     }
 
-    @media (min-width: 680px) {
-      .nem-title {
-        white-space: nowrap;
-      }
-    }
-
-    .nem-desc {
-      font-family: var(--font-secondary);
-      font-size: clamp(15px, 1.15vw, 17.5px);
+    .ncc-desc {
+      font-size: clamp(14.5px, 1.1vw, 16.5px);
       color: var(--ink-mid);
-      line-height: 1.7;
-      max-width: 780px;
-      margin: 0 0 clamp(32px, 4.5vh, 48px);
+      line-height: 1.65;
     }
 
-    .nem-form {
-      width: 100%;
+    .ncc-form-wrap {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      gap: 14px;
     }
 
-    .nem-input-capsule {
+    .ncc-input-box {
       display: flex;
       align-items: center;
       background: rgba(255, 255, 255, 0.04);
-      border: 1.5px solid var(--rule-heavy);
+      border: 1.5px solid var(--rule-m);
       border-radius: 999px;
-      padding: 6px 6px 6px 28px;
-      width: 100%;
-      max-width: 580px;
-      box-sizing: border-box;
-      transition: all 0.35s var(--sp);
-      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
+      padding: 6px 6px 6px 24px;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
 
-    [data-theme="light"] .nem-input-capsule {
-      background: #ffffff;
-      border-color: rgba(0, 0, 0, 0.16);
-      box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.03), 0 8px 24px rgba(0, 0, 0, 0.04);
+    [data-theme="light"] .ncc-input-box {
+      background: rgba(0, 0, 0, 0.03);
     }
 
-    .nem-input-capsule:focus-within {
+    .ncc-input-box:focus-within {
       border-color: var(--cr);
-      background: rgba(255, 255, 255, 0.06);
-      box-shadow: 0 0 32px var(--cr-soft), inset 0 1px 4px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 24px var(--cr-soft);
     }
 
-    [data-theme="light"] .nem-input-capsule:focus-within {
-      border-color: var(--cr);
-      background: #ffffff;
-      box-shadow: 0 0 24px rgba(200, 16, 46, 0.14);
-    }
-
-    .nem-input {
-      flex: 1;
+    .ncc-input {
+      flex-grow: 1;
       background: transparent;
       border: none;
       outline: none;
       font-family: var(--font-secondary);
-      font-size: 14.5px;
+      font-size: 14px;
       color: var(--ink);
-      min-width: 0;
     }
 
-    .nem-input::placeholder {
-      color: var(--ink-dim);
-      opacity: 0.65;
-    }
-
-    .nem-submit-btn {
-      padding: 14px 30px;
+    .ncc-submit-btn {
+      padding: 14px 28px;
       border-radius: 999px;
       border: none;
       background: var(--cr);
-      color: #ffffff;
+      color: #fff;
       font-family: var(--font-mono);
       font-size: 11.5px;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.35s var(--sp);
-      box-shadow: 0 8px 24px var(--cr-glow);
+      transition: transform 0.3s var(--sp), box-shadow 0.3s;
       white-space: nowrap;
-      flex-shrink: 0;
     }
 
-    .nem-submit-btn:hover {
-      background: #f02242;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 36px rgba(200, 16, 46, 0.45);
+    .ncc-submit-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 8px 24px var(--cr-glow);
     }
 
-    .nem-submit-btn:active {
-      transform: translateY(0);
-    }
-
-    .nem-cadence-note {
-      margin-top: 14px;
+    .ncc-legal {
       font-family: var(--font-mono);
-      font-size: 11px;
+      font-size: 10.5px;
       color: var(--ink-dim);
-      letter-spacing: 0.06em;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
+      padding-left: 12px;
     }
 
-    .nem-sep {
-      color: var(--rule-heavy);
-    }
-
-    .nem-toast {
-      display: none;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 24px;
-      border-radius: 999px;
+    .ncc-toast {
+      padding: 12px 18px;
+      border-radius: 12px;
       background: rgba(200, 16, 46, 0.15);
       border: 1px solid var(--cr);
       color: var(--ink);
-      font-family: var(--font-secondary);
-      font-size: 13.5px;
-      font-weight: 600;
-      margin-top: 18px;
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 13px;
+      display: none;
     }
 
-    .nem-toast.show {
-      display: inline-flex;
+    .ncc-toast.show {
+      display: block;
       animation: fadeIn 0.4s var(--sp);
     }
 
-    .nem-toast-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--cr);
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-size: 11px;
-      font-weight: bold;
-      flex-shrink: 0;
+    /* ═══════════════════════════════════════════════════════════
+       8. DEDICATED STUDIO CALL-TO-ACTION SECTION (Before Footer)
+       ═══════════════════════════════════════════════════════════ */
+    #perspective-studio-cta {
+      padding: clamp(60px, 8vh, 100px) clamp(24px, 4vw, 64px);
+      max-width: 1440px;
+      margin: 0 auto;
     }
 
-    /* ── Bottom Editorial Triad Strip ── */
-    .nem-triad-strip {
-      width: 100%;
-      max-width: 900px;
-      margin-top: clamp(40px, 6vh, 64px);
-      padding-top: clamp(24px, 3vh, 36px);
-      border-top: 1px solid var(--rule);
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+    .psc-card {
+      background: radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.14) 0%, transparent 70%), var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: clamp(28px, 3.5vw, 44px);
+      padding: clamp(48px, 8vh, 84px) clamp(28px, 5vw, 72px);
       text-align: center;
-    }
-
-    .nem-triad-col {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
     }
 
-    .ntc-label {
+    .psc-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       font-family: var(--font-mono);
-      font-size: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+      margin-bottom: clamp(16px, 2.5vh, 24px);
+    }
+
+    .psc-headline {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(32px, 4.2vw, 60px);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: clamp(18px, 2.5vh, 28px);
+    }
+
+    .psc-manifesto {
+      max-width: 720px;
+      font-size: clamp(15px, 1.15vw, 18px);
+      color: var(--ink-mid);
+      line-height: 1.7;
+      margin-bottom: clamp(32px, 5vh, 48px);
+    }
+
+    .psc-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: clamp(28px, 4vh, 40px);
+    }
+
+    .psc-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 36px;
+      background: var(--cr);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
       font-weight: 700;
       letter-spacing: 0.14em;
-      color: var(--ink-dim);
       text-transform: uppercase;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 10px 30px var(--cr-glow);
+      transition: all 0.35s var(--sp);
     }
 
-    .ntc-val {
-      font-family: var(--font-secondary);
-      font-size: 13px;
-      font-weight: 600;
+    .psc-btn-primary:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 45px rgba(200, 16, 46, 0.45);
+      background: #e01436;
+    }
+
+    .psc-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--rule-m);
       color: var(--ink);
-      letter-spacing: 0.02em;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: all 0.3s var(--sp);
     }
 
-    @media (max-width: 768px) {
-      .nem-input-capsule {
-        flex-direction: column;
-        padding: 16px;
-        border-radius: 20px;
-        gap: 12px;
-      }
+    [data-theme="light"] .psc-btn-secondary {
+      background: rgba(0, 0, 0, 0.04);
+    }
 
-      .nem-input {
-        width: 100%;
-        text-align: center;
-      }
+    .psc-btn-secondary:hover {
+      border-color: var(--cr);
+      color: var(--cr);
+    }
 
-      .nem-submit-btn {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .nem-triad-strip {
-        grid-template-columns: 1fr;
-        gap: 18px;
-      }
+    .psc-telemetry-strip {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -2497,7 +2163,7 @@
     }
 
     /* ═══════════════════════════════════════════════════════════
-       §7 — MODERN EDITORIAL LUXURY FOOTER (Exact Home Page Property)
+       10. EXACT UNIFIED LUXURY FOOTER (Identical to Home Page)
        ═══════════════════════════════════════════════════════════ */
     #footer-driver {
       position: relative;
@@ -2509,323 +2175,92 @@
       padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
       box-sizing: border-box;
       z-index: 10;
+      border-top: 1px solid var(--rule);
     }
 
     .footer-luxury-card {
+      width: 100%;
+      max-width: 1440px;
       background: var(--card-bg);
-      border: 1px solid var(--rule);
-      border-radius: clamp(36px, 5vw, 64px);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
-      padding: clamp(52px, 6.5vh, 76px) clamp(40px, 5vw, 72px) clamp(16px, 2vh, 24px);
+      border: 1px solid var(--rule-m);
+      border-radius: clamp(24px, 3.5vw, 44px);
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      width: 100%;
-      max-width: 1640px;
-      min-height: clamp(560px, 78vh, 740px);
-      margin: auto;
-      gap: clamp(72px, 11vh, 130px);
-      overflow: hidden;
+      min-height: calc(100vh - clamp(64px, 9vh, 112px));
       position: relative;
-      box-sizing: border-box;
-    }
-
-    [data-theme="dark"] .footer-luxury-card {
-      background: #18181B;
-      border-color: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transition: background 0.4s var(--sp), border-color 0.4s var(--sp);
     }
 
     .f-header-grid {
       display: grid;
-      grid-template-columns: 1.8fr 1fr 1.3fr 1.4fr;
-      gap: clamp(28px, 4vw, 56px);
-      align-items: flex-start;
+      grid-template-columns: 2fr 1.1fr 1.4fr 1.3fr;
+      gap: clamp(20px, 3vw, 44px);
+      align-items: start;
     }
 
-    .f-desc-col .f-desc-text {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
-      line-height: 1.25;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      max-width: 340px;
+    .f-desc-text {
+      font-size: clamp(14px, 1.1vw, 16px);
+      line-height: 1.6;
+      color: var(--ink-mid);
+      max-width: 320px;
     }
 
     .f-col-label {
       font-family: var(--font-primary);
+      font-size: 11px;
       font-weight: 700;
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--ink-dim);
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .f-links-clean {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .f-links-clean a {
+    .f-links-clean li a {
       font-family: var(--font-primary);
-      font-weight: 500;
-      font-size: 0.94rem;
-      color: var(--ink-mid);
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--ink);
       text-decoration: none;
-      transition: color .2s, transform .2s;
-      display: inline-block;
+      transition: color 0.25s var(--sp);
     }
 
-    .f-links-clean a:hover {
+    .f-links-clean li a:hover {
       color: var(--cr);
-      transform: translateX(4px);
     }
 
     .f-social-chips {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      flex-direction: column;
+      gap: 8px;
     }
 
     .f-chip {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 7px 14px;
-      background: var(--bg);
-      border: 1px solid var(--rule);
-      border-radius: 999px;
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      font-weight: 600;
-      color: var(--ink);
-      text-decoration: none;
-      transition: all .25s var(--sp);
-    }
-
-    .f-chip:hover {
-      background: var(--ink);
-      color: var(--bg);
-      border-color: var(--ink);
-      transform: translateY(-2px);
-    }
-
-    .f-chip .f-chip-icon {
-      font-size: 0.82rem;
-      font-weight: 700;
-      line-height: 1;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .f-chip .f-chip-icon svg {
-      width: 13px;
-      height: 13px;
-      display: block;
-    }
-
-    .f-cta-column {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .f-action-pill {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 22px;
-      border-radius: 20px;
-      text-decoration: none;
-      transition: transform .25s var(--sp), box-shadow .25s;
-    }
-
-    .f-action-pill:hover {
-      transform: translateY(-3px);
-    }
-
-    .f-action-pill.cta-primary {
-      background: var(--cr);
-      color: #ffffff;
-      box-shadow: 0 10px 28px rgba(200, 16, 46, 0.22);
-    }
-
-    .f-action-pill.cta-secondary {
-      background: var(--bg);
-      border: 1px solid var(--rule);
-      color: var(--ink);
-    }
-
-    .f-action-pill.cta-secondary:hover {
-      border-color: var(--ink);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
-    }
-
-    .f-action-txt {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .f-action-heading {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: 0.96rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .f-action-sub {
-      font-family: var(--font-primary);
-      font-size: 0.74rem;
-      opacity: 0.78;
-    }
-
-    .f-action-arrow {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      display: grid;
-      place-items: center;
-      font-size: 0.95rem;
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .cta-primary .f-action-arrow {
-      background: rgba(255, 255, 255, 0.25);
-      color: #ffffff;
-    }
-
-    .cta-secondary .f-action-arrow {
-      background: var(--ink);
-      color: var(--bg);
-    }
-
-    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line ── */
-    .f-bottom-cluster {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      margin-top: auto;
-    }
-
-    .f-giant-cut-wrap {
-      width: 100%;
-      height: clamp(34px, 5.2vw, 84px);
-      overflow: hidden;
-      display: flex;
-      align-items: flex-start;
-      position: relative;
-      margin: 0;
-      padding: 0;
-      pointer-events: none;
-      user-select: none;
-      transform-origin: center bottom;
-      will-change: height, transform;
-    }
-
-    .f-giant-cut-svg {
-      width: 100%;
-      height: clamp(34px, 5.2vw, 84px);
-      display: block;
-      color: var(--ink);
-      overflow: hidden;
-      transform-origin: center bottom;
-      will-change: height, transform;
-    }
-
-    .f-giant-cut-svg text {
-      transform-origin: center bottom;
-      will-change: transform;
-    }
-
-    /* ── Minimal Sub-Footer Meta Bar with Horizontal Line ── */
-    .f-meta-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 18px;
-      border-top: 1.5px solid var(--rule);
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      color: var(--ink-dim);
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      margin: 0;
-    }
-
-    .f-meta-links {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .f-meta-links a {
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover {
-      color: var(--cr);
-    }
-
-    .f-credit-author {
-      font-weight: 700;
-      color: var(--ink-mid);
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover .f-credit-author {
-      color: var(--cr);
-    }
-
-    .f-live-status {
-      display: flex;
-      align-items: center;
       gap: 10px;
-    }
-
-    .f-status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      display: inline-block;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-      animation: fStatusPulse 2s infinite ease-in-out;
-    }
-
-    @keyframes fStatusPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-    }
-
-    @media (max-width: 1024px) {
-      .f-header-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 36px;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .f-header-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
-      .f-meta-bar {
-        flex-direction: column;
-        gap: 12px;
-        align-items: flex-start;
-      }
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-size: 12.5px;
+      font-weight: 700;
+      text-decoration: none;
+      width: fit-content;
+      transition: all 0.25s var(--sp);
     }
 
     [data-theme="light"] .f-chip {
@@ -2919,12 +2354,12 @@
       text-transform: uppercase;
     }
 
-    /* ── Floating Fixed Theme Toggle Button (Exact Home Page Property) ── */
+    /* ── Floating Theme Toggle Button ── */
     #theme-fab {
       position: fixed;
       bottom: 28px;
       right: 28px;
-      z-index: 999999;
+      z-index: 9990;
       width: 48px;
       height: 48px;
       border-radius: 50%;
@@ -2937,17 +2372,7 @@
       cursor: pointer;
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0) scale(1);
-      transition: opacity .4s var(--sp), transform .4s var(--sp), border-color .3s, box-shadow .3s, background .3s, color .3s;
-    }
-
-    [data-theme="light"] #theme-fab {
-      background: #ffffff;
-      border-color: rgba(0, 0, 0, 0.16);
-      color: #0a0a0c;
-      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.3s;
     }
 
     #theme-fab:hover {
@@ -2964,32 +2389,24 @@
       stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
-      transition: transform .4s var(--sp);
-      pointer-events: none;
-    }
-
-    #theme-fab:hover svg {
-      transform: rotate(25deg);
     }
 
     [data-theme="dark"] #theme-fab .icon-moon,
     [data-theme="light"] #theme-fab .icon-sun {
-      display: none !important;
+      display: none;
     }
 
     [data-theme="dark"] #theme-fab .icon-sun,
     [data-theme="light"] #theme-fab .icon-moon {
-      display: block !important;
+      display: block;
     }
 
     /* ── Responsive Media Queries ── */
-    @media (max-width: 1024px) and (min-width: 769px) {
-      .codex-card {
-        width: calc((100vw - (2 * var(--pga-inset)) - var(--pga-gap)) / 2);
-      }
-    }
-
     @media (max-width: 1180px) {
+      .pga-editorial-matrix {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
       .f-header-grid {
         grid-template-columns: 1fr 1fr;
         gap: 36px;
@@ -3020,7 +2437,6 @@
     }
 
     @media (max-width: 768px) {
-
       .c-dot,
       .c-ring {
         display: none !important;
@@ -3050,11 +2466,6 @@
         width: 100%;
       }
 
-      #featured-monograph {
-        min-height: auto;
-        padding: clamp(36px, 5vh, 48px) 16px;
-      }
-
       #perspectives-grid-sec {
         min-height: auto;
         padding: clamp(40px, 5vh, 60px) 0;
@@ -3080,10 +2491,8 @@
         scroll-snap-align: start;
         width: 82vw;
         height: auto;
-        min-height: 500px;
+        min-height: 460px;
       }
-
-
 
       .command-dock-container {
         flex-direction: column;
@@ -3138,10 +2547,10 @@
 
     <!-- Minimalist Sculptural Canvas (Mathematically Centered in 100vh Viewport) -->
     <div class="hero-minimal-canvas">
-
+      
       <!-- Monumental Architectural Display Typography (Editorial Monograph Title) -->
       <h1 class="hm-monument-title">
-        <span class="hm-title-word">ARCHITECTURE OF THOUGHT</span>
+        <span class="hm-title-word">THE ARCHITECTURE OF THOUGHT</span><span class="hm-period">.</span>
       </h1>
 
       <!-- Critical Dispatch: Left Fixed Label + Right Rotating Blog Topics -->
@@ -3199,253 +2608,251 @@
 
       <!-- Exact Editorial Description (Preserved as Requested) -->
       <p class="hm-manifesto-lead">
-        A provocative codex exploring mathematical brand geometry, spatial physical resonance, and luxury dominance by
-        1928 Creative Studio.
+        A provocative codex exploring mathematical brand geometry, spatial physical resonance, and luxury dominance by 1928 Creative Studio.
+      </p>
       </p>
 
     </div>
   </section>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       RECENT ARTICLES: DUAL-DIRECTION KINETIC EDITORIAL RADAR
+       (Row 1: Left to Right · Row 2: Right to Left / Left Again)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="recent-articles-marquee" class="recent-articles-section" aria-label="Recent Articles Radar">
+    <!-- Top Architectural Meta Bar -->
+    <div class="ram-header-bar">
+      <div class="ram-header-left">
+        <span class="ram-pulse-dot"></span>
+        <span>RECENT ARTICLES &amp; MONOGRAPHS // VOLUME 2026</span>
+      </div>
+      <div class="ram-header-right">
+        <span>DUAL-AXIS KINETIC FLOW · CLICK TO LAUNCH READER ↗</span>
+      </div>
+    </div>
+
+    <!-- Row 1: Moves Smoothly Left to Right -->
+    <div class="ram-marquee-row" aria-label="Recent Articles Row 1">
+      <div class="ram-track ram-track-ltr">
+        <!-- Loop Set A -->
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-monogram">
+          <span class="ram-num">№ 01</span>
+          <span class="ram-title">The Monolithic Monogram: Geometric Gravity in Luxury</span>
+          <span class="ram-cat">BRAND ARCHITECTURE</span>
+          <span class="ram-read">7 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-spatial">
+          <span class="ram-num">№ 02</span>
+          <span class="ram-title">Spatial Choreography in Flagship Retail: Raw Concrete &amp; Photons</span>
+          <span class="ram-cat">SPATIAL DESIGN</span>
+          <span class="ram-read">6 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-webgl">
+          <span class="ram-num">№ 03</span>
+          <span class="ram-title">Zero-Latency Real-Time Raytracing in Three.js WebGL</span>
+          <span class="ram-cat">COMPUTATIONAL WEBGL</span>
+          <span class="ram-read">5 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-fluted">
+          <span class="ram-num">№ 04</span>
+          <span class="ram-title">Tactile Acoustic Snaps &amp; Travertine in Bespoke Packaging</span>
+          <span class="ram-cat">PACKAGING &amp; SPATIAL</span>
+          <span class="ram-read">8 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <!-- Duplicate Loop Set for Infinite Wrap -->
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-monogram">
+          <span class="ram-num">№ 01</span>
+          <span class="ram-title">The Monolithic Monogram: Geometric Gravity in Luxury</span>
+          <span class="ram-cat">BRAND ARCHITECTURE</span>
+          <span class="ram-read">7 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-spatial">
+          <span class="ram-num">№ 02</span>
+          <span class="ram-title">Spatial Choreography in Flagship Retail: Raw Concrete &amp; Photons</span>
+          <span class="ram-cat">SPATIAL DESIGN</span>
+          <span class="ram-read">6 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-webgl">
+          <span class="ram-num">№ 03</span>
+          <span class="ram-title">Zero-Latency Real-Time Raytracing in Three.js WebGL</span>
+          <span class="ram-cat">COMPUTATIONAL WEBGL</span>
+          <span class="ram-read">5 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-fluted">
+          <span class="ram-num">№ 04</span>
+          <span class="ram-title">Tactile Acoustic Snaps &amp; Travertine in Bespoke Packaging</span>
+          <span class="ram-cat">PACKAGING &amp; SPATIAL</span>
+          <span class="ram-read">8 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Row 2: Moves Smoothly Left Again (Right to Left) -->
+    <div class="ram-marquee-row" aria-label="Recent Articles Row 2">
+      <div class="ram-track ram-track-rtl">
+        <!-- Loop Set A -->
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-monochrome">
+          <span class="ram-num">№ 05</span>
+          <span class="ram-title">The 99% Black Spectrum Hierarchy &amp; Luxury Semiotics</span>
+          <span class="ram-cat">LUXURY SEMIOTICS</span>
+          <span class="ram-read">6 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-kinetic">
+          <span class="ram-num">№ 06</span>
+          <span class="ram-title">Generative Fluid Shaders in Neural Creative Interfaces</span>
+          <span class="ram-cat">KINETIC CODE</span>
+          <span class="ram-read">9 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-quiet">
+          <span class="ram-num">№ 07</span>
+          <span class="ram-title">The Anti-Algorithmic Luxury Paradigm: Intentional Friction</span>
+          <span class="ram-cat">CULTURAL CRITIQUE</span>
+          <span class="ram-read">7 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-monogram">
+          <span class="ram-num">№ 08</span>
+          <span class="ram-title">Mathematical Grids &amp; Kinetic Symmetry in Identity Systems</span>
+          <span class="ram-cat">BRAND ARCHITECTURE</span>
+          <span class="ram-read">6 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <!-- Duplicate Loop Set for Infinite Wrap -->
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-monochrome">
+          <span class="ram-num">№ 05</span>
+          <span class="ram-title">The 99% Black Spectrum Hierarchy &amp; Luxury Semiotics</span>
+          <span class="ram-cat">LUXURY SEMIOTICS</span>
+          <span class="ram-read">6 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-kinetic">
+          <span class="ram-num">№ 06</span>
+          <span class="ram-title">Generative Fluid Shaders in Neural Creative Interfaces</span>
+          <span class="ram-cat">KINETIC CODE</span>
+          <span class="ram-read">9 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-quiet">
+          <span class="ram-num">№ 07</span>
+          <span class="ram-title">The Anti-Algorithmic Luxury Paradigm: Intentional Friction</span>
+          <span class="ram-cat">CULTURAL CRITIQUE</span>
+          <span class="ram-read">7 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+        <a href="#featured-monograph" class="ram-card" data-article-id="art-monogram">
+          <span class="ram-num">№ 08</span>
+          <span class="ram-title">Mathematical Grids &amp; Kinetic Symmetry in Identity Systems</span>
+          <span class="ram-cat">BRAND ARCHITECTURE</span>
+          <span class="ram-read">6 MIN READ</span>
+          <span class="ram-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
 
   <!-- ═══════════════════════════════════════════════════════════
-       2. FEATURED MASTER MONOGRAPH — LATEST BLOG (Full Screen Carousel)
+       2 & 3. COMMAND DOCK: SEARCH & CATEGORIES (Sticky to top)
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="command-dock-wrap">
+    <div class="command-dock-container">
+      <!-- Minimalist Search Input -->
+      <div class="cmd-search-box">
+        <svg class="csb-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="searchInput" class="csb-input" placeholder="Search archive..." autocomplete="off" />
+        <span class="csb-shortcut">/</span>
+        <button id="searchClear" class="csb-clear" aria-label="Clear Search">✕</button>
+      </div>
+
+      <!-- Categories Filter Tabs -->
+      <div class="cmd-category-group" id="filterTabsGroup">
+        <button class="cmd-cat-btn active" data-category="all">
+          <span>ALL</span>
+          <span class="ccb-count">(08)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="brand-architecture">
+          <span>BRAND ARCHITECTURE</span>
+          <span class="ccb-count">(02)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="spatial-design">
+          <span>SPATIAL DESIGN</span>
+          <span class="ccb-count">(02)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="computational-webgl">
+          <span>COMPUTATIONAL WEBGL</span>
+          <span class="ccb-count">(02)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="luxury-semiotics">
+          <span>LUXURY SEMIOTICS</span>
+          <span class="ccb-count">(01)</span>
+        </button>
+        <button class="cmd-cat-btn" data-category="cultural-critique">
+          <span>CULTURAL CRITIQUE</span>
+          <span class="ccb-count">(01)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       4. FEATURED MASTER MONOGRAPH (Asymmetric Spread № 01)
        ═══════════════════════════════════════════════════════════ -->
   <section id="featured-monograph">
-    <!-- Section Top Header: Left-aligned with Counter -->
-    <!-- Section Top Header: Left Title, Single Line Description & Right Corner Counter -->
-    <div class="featured-section-header">
-      <div class="fsh-top-row">
-        <h3 class="fsh-sec-title">The Latest Blog</h3>
+    <div class="featured-monograph-spread" data-article-id="art-monogram">
+      <!-- Narrative Left Column -->
+      <div class="fms-narrative">
+        <div>
+          <div class="fms-top-spec">
+            <span class="fms-numeral">SPREAD № 01</span>
+            <span>·</span>
+            <span>BRAND ARCHITECTURE</span>
+            <span>·</span>
+            <span style="color:var(--ink-dim)">7 MIN READ</span>
+          </div>
+          <h2 class="fms-title">The Monolithic Luxury Monogram</h2>
+          <p class="fms-excerpt">
+            How high-growth luxury houses abandon serif complexity for mathematically rigorous monolithic marks commanding cross-surface brand authority.
+          </p>
+        </div>
+
+        <div class="fms-footer-meta">
+          <div class="fms-author-box">
+            <div class="fab-avatar">JT</div>
+            <div class="fab-info">
+              <span class="fab-name">Jay Thaker</span>
+              <span class="fab-role">Studio Principal &amp; Brand Architect</span>
+            </div>
+          </div>
+          <div class="fms-launch-btn">
+            <span>Launch Monograph ↗</span>
+          </div>
+        </div>
       </div>
-      <div class="fsh-meta-bar">
-        <p class="fsh-desc-left">Flagship editorial monograph and architectural research dispatch authored by 1928
-          Creative Studio.</p>
+
+      <!-- Architectural Blueprint Visual Frame (Only Image Icon) -->
+      <div class="fms-blueprint-visual">
+        <div class="asset-blueprint-icon">
+          <svg viewBox="0 0 64 64" fill="none" class="abi-svg">
+            <rect x="8" y="12" width="48" height="40" rx="6" stroke="currentColor" stroke-width="2" />
+            <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="2" />
+            <path d="M12 44L26 30L38 42L44 36L52 44" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+
+        <div class="corner-crosshair cc-tl">+</div>
+        <div class="corner-crosshair cc-tr">+</div>
+        <div class="corner-crosshair cc-bl">+</div>
+        <div class="corner-crosshair cc-br">+</div>
       </div>
-    </div>
-
-    <!-- Carousel Viewport & Track -->
-    <div class="latest-blogs-carousel" id="latestBlogsCarousel">
-      <div class="lbc-track" id="lbcTrack">
-
-        <!-- Slide 01: Brand Architecture -->
-        <div class="lbc-slide active" data-index="0">
-          <div class="featured-monograph-spread" data-article-id="art-monogram">
-            <!-- Left Side: Blueprint Image Visual -->
-            <div class="fms-blueprint-visual">
-              <div class="asset-blueprint-icon">
-                <svg viewBox="0 0 64 64" fill="none" class="abi-svg">
-                  <rect x="8" y="12" width="48" height="40" rx="6" stroke="currentColor" stroke-width="2" />
-                  <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="2" />
-                  <path d="M12 44L26 30L38 42L44 36L52 44" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                </svg>
-              </div>
-              <div class="corner-crosshair cc-tl">+</div>
-              <div class="corner-crosshair cc-tr">+</div>
-              <div class="corner-crosshair cc-bl">+</div>
-              <div class="corner-crosshair cc-br">+</div>
-            </div>
-
-            <!-- Right Side: Content Narrative -->
-            <div class="fms-narrative">
-              <div class="fms-text-block">
-                <div class="fms-top-spec">
-                  <span class="fms-numeral">SPREAD № 01</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-cat-name">BRAND ARCHITECTURE</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-read-time">7 MIN READ</span>
-                </div>
-                <h2 class="fms-title">The Monolithic Luxury Monogram</h2>
-                <p class="fms-excerpt">
-                  How high-growth luxury houses abandon serif complexity for mathematically rigorous monolithic marks
-                  commanding cross-surface brand authority.
-                </p>
-              </div>
-
-              <div class="fms-footer-meta">
-                <div class="fms-author-box">
-                  <div class="fab-avatar">JT</div>
-                  <div class="fab-info">
-                    <span class="fab-name">Jay Thaker</span>
-                    <span class="fab-role">Studio Principal &amp; Brand Architect</span>
-                  </div>
-                </div>
-                <div class="fms-launch-btn">
-                  <span>Launch Monograph ↗</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Slide 02: Spatial Design -->
-        <div class="lbc-slide" data-index="1">
-          <div class="featured-monograph-spread" data-article-id="art-spatial">
-            <!-- Left Side: Blueprint Image Visual -->
-            <div class="fms-blueprint-visual">
-              <div class="asset-blueprint-icon">
-                <svg viewBox="0 0 64 64" fill="none" class="abi-svg">
-                  <rect x="8" y="8" width="48" height="48" rx="6" stroke="currentColor" stroke-width="2" />
-                  <path d="M8 24h48M24 24v32M40 8v16M24 40h24" stroke="currentColor" stroke-width="1.8"
-                    stroke-dasharray="3 3" />
-                  <circle cx="24" cy="24" r="3.5" fill="currentColor" />
-                  <circle cx="40" cy="40" r="3.5" fill="currentColor" />
-                </svg>
-              </div>
-              <div class="corner-crosshair cc-tl">+</div>
-              <div class="corner-crosshair cc-tr">+</div>
-              <div class="corner-crosshair cc-bl">+</div>
-              <div class="corner-crosshair cc-br">+</div>
-            </div>
-
-            <!-- Right Side: Content Narrative -->
-            <div class="fms-narrative">
-              <div class="fms-text-block">
-                <div class="fms-top-spec">
-                  <span class="fms-numeral">SPREAD № 02</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-cat-name">SPATIAL DESIGN</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-read-time">9 MIN READ</span>
-                </div>
-                <h2 class="fms-title">Spatial Choreography in Flagship Retail</h2>
-                <p class="fms-excerpt">
-                  Choreographing visitor trajectories through brutalist travertine monoliths, directional acoustics, and
-                  negative-space compression.
-                </p>
-              </div>
-
-              <div class="fms-footer-meta">
-                <div class="fms-author-box">
-                  <div class="fab-avatar">JT</div>
-                  <div class="fab-info">
-                    <span class="fab-name">Jay Thaker</span>
-                    <span class="fab-role">Studio Principal &amp; Brand Architect</span>
-                  </div>
-                </div>
-                <div class="fms-launch-btn">
-                  <span>Launch Monograph ↗</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Slide 03: Computational WebGL -->
-        <div class="lbc-slide" data-index="2">
-          <div class="featured-monograph-spread" data-article-id="art-webgl">
-            <!-- Left Side: Blueprint Image Visual -->
-            <div class="fms-blueprint-visual">
-              <div class="asset-blueprint-icon">
-                <svg viewBox="0 0 64 64" fill="none" class="abi-svg">
-                  <polygon points="32,8 56,22 56,50 32,56 8,50 8,22" stroke="currentColor" stroke-width="2" />
-                  <circle cx="32" cy="32" r="14" stroke="currentColor" stroke-width="1.8" stroke-dasharray="3 3" />
-                  <line x1="32" y1="8" x2="32" y2="56" stroke="currentColor" stroke-width="1.5" />
-                  <line x1="8" y1="22" x2="56" y2="50" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-              </div>
-              <div class="corner-crosshair cc-tl">+</div>
-              <div class="corner-crosshair cc-tr">+</div>
-              <div class="corner-crosshair cc-bl">+</div>
-              <div class="corner-crosshair cc-br">+</div>
-            </div>
-
-            <!-- Right Side: Content Narrative -->
-            <div class="fms-narrative">
-              <div class="fms-text-block">
-                <div class="fms-top-spec">
-                  <span class="fms-numeral">SPREAD № 03</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-cat-name">COMPUTATIONAL WEBGL</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-read-time">12 MIN READ</span>
-                </div>
-                <h2 class="fms-title">Zero-Latency Real-Time Raytracing</h2>
-                <p class="fms-excerpt">
-                  Synthesizing custom GLSL physically-based surface shaders for real-time metallic reflections at native
-                  120 FPS on luxury brand platforms.
-                </p>
-              </div>
-
-              <div class="fms-footer-meta">
-                <div class="fms-author-box">
-                  <div class="fab-avatar">JT</div>
-                  <div class="fab-info">
-                    <span class="fab-name">Jay Thaker</span>
-                    <span class="fab-role">Studio Principal &amp; Brand Architect</span>
-                  </div>
-                </div>
-                <div class="fms-launch-btn">
-                  <span>Launch Monograph ↗</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Slide 04: Packaging & Spatial -->
-        <div class="lbc-slide" data-index="3">
-          <div class="featured-monograph-spread" data-article-id="art-fluted">
-            <!-- Left Side: Blueprint Image Visual -->
-            <div class="fms-blueprint-visual">
-              <div class="asset-blueprint-icon">
-                <svg viewBox="0 0 64 64" fill="none" class="abi-svg">
-                  <rect x="12" y="14" width="40" height="36" rx="4" stroke="currentColor" stroke-width="2" />
-                  <path d="M12 26h40M22 14v36M32 14v36M42 14v36" stroke="currentColor" stroke-width="1.5"
-                    stroke-dasharray="2 2" />
-                  <circle cx="32" cy="40" r="4" fill="currentColor" />
-                </svg>
-              </div>
-              <div class="corner-crosshair cc-tl">+</div>
-              <div class="corner-crosshair cc-tr">+</div>
-              <div class="corner-crosshair cc-bl">+</div>
-              <div class="corner-crosshair cc-br">+</div>
-            </div>
-
-            <!-- Right Side: Content Narrative -->
-            <div class="fms-narrative">
-              <div class="fms-text-block">
-                <div class="fms-top-spec">
-                  <span class="fms-numeral">SPREAD № 04</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-cat-name">PACKAGING &amp; SPATIAL</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-read-time">8 MIN READ</span>
-                </div>
-                <h2 class="fms-title">Tactile Acoustic Snaps &amp; Travertine</h2>
-                <p class="fms-excerpt">
-                  The psychophysics of 45-decibel acoustic closures, haptic friction coefficients, and unboxing rituals
-                  in ultra-luxury product design.
-                </p>
-              </div>
-
-              <div class="fms-footer-meta">
-                <div class="fms-author-box">
-                  <div class="fab-avatar">JT</div>
-                  <div class="fab-info">
-                    <span class="fab-name">Jay Thaker</span>
-                    <span class="fab-role">Studio Principal &amp; Brand Architect</span>
-                  </div>
-                </div>
-                <div class="fms-launch-btn">
-                  <span>Launch Monograph ↗</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-
-    <!-- Small Pagination Dots at Bottom -->
-    <div class="lbc-pagination" id="lbcPagination">
-      <button class="lbc-dot active" data-index="0" aria-label="Go to Slide 1"></button>
-      <button class="lbc-dot" data-index="1" aria-label="Go to Slide 2"></button>
-      <button class="lbc-dot" data-index="2" aria-label="Go to Slide 3"></button>
-      <button class="lbc-dot" data-index="3" aria-label="Go to Slide 4"></button>
     </div>
   </section>
 
@@ -3457,14 +2864,13 @@
       <div class="pga-header-bar">
         <div>
           <h3 class="pga-sec-title">The Editorial Codex</h3>
-          <p class="pga-sec-desc">A curated codex of recently published studio dispatches, architectural research, and
-            design monographs.</p>
+          <p class="pga-sec-desc">A curated codex of recently published studio dispatches, architectural research, and design monographs.</p>
         </div>
         <div class="pga-header-meta">
-          <span class="pga-counter" id="resultCounter" style="display: none;">Showing 7 of 7 Perspectives</span>
+          <span class="pga-counter" id="resultCounter">Showing 7 of 7 Perspectives</span>
           <div class="pga-drift-hint">
             <span class="pdh-dot"></span>
-            <span class="pdh-text">Scroll to drift</span>
+            <span class="pdh-text">SCROLL TO DRIFT</span>
             <span class="pdh-arrow">→</span>
           </div>
         </div>
@@ -3473,331 +2879,378 @@
       <div class="pga-track-viewport" id="pgaTrackViewport">
         <div class="pga-editorial-matrix" id="articlesGrid">
 
-          <article class="codex-card" data-category="spatial-design" data-article-id="art-spatial">
-            <div class="card-image-box">
-              <div class="cib-placeholder">
-                <div class="cib-icon-wrap">
-                  <svg class="cib-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.8"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                </div>
-                <div class="cib-meta">
-                  <span class="cib-ratio-badge">16 : 9 Ratio</span>
-                  <span class="cib-dims">800 × 450 px</span>
-                </div>
+      <!-- 01 SPATIAL DESIGN -->
+      <article class="codex-card" data-category="spatial-design" data-article-id="art-spatial">
+        <div class="card-narrative-top">
+          <div class="cbc-meta-row">
+            <span class="card-cat-pill">Spatial Design</span>
+            <span class="cbc-read-time">6 Min · Aug 2026</span>
+          </div>
+          <h4 class="cbc-title">Spatial Choreography in Flagship Retail</h4>
+          <p class="cbc-excerpt">
+            Analyzing atmospheric lighting, tactile stone surfaces, and acoustically isolated consultation chambers on luxury conversion.
+          </p>
+        </div>
+
+        <div class="card-bottom-deck">
+          <div class="cbc-author-col">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">EV</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Elena Vance</span>
+                <span class="cbc-adate">Spatial Director</span>
               </div>
             </div>
-
-            <div class="card-body-content">
-              <h4 class="cbc-title">Spatial Choreography in Flagship Retail</h4>
-              <p class="cbc-desc">Analyzing the psychological impact of atmospheric lighting, tactile monolithic stone
-                surfaces, and acoustically isolated consultation chambers on high-ticket luxury conversion.</p>
+            <div class="cbc-action-arrow" title="Read Monograph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
             </div>
-
-            <div class="card-footer-row">
-              <span class="card-city">MILAN, ITALY</span>
-              <div class="card-action-arrow" title="Read Monograph">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-          </article>
-
-          <article class="codex-card" data-category="computational-webgl" data-article-id="art-webgl">
-            <div class="card-image-box">
-              <div class="cib-placeholder">
-                <div class="cib-icon-wrap">
-                  <svg class="cib-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.8"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                </div>
-                <div class="cib-meta">
-                  <span class="cib-ratio-badge">16 : 9 Ratio</span>
-                  <span class="cib-dims">800 × 450 px</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-body-content">
-              <h4 class="cbc-title">Real-Time Generative Three.js Dimensions</h4>
-              <p class="cbc-desc">Why modern luxury consumers demand interactive WebGL digital twins over pre-rendered
-                marketing video renders, and how GLSL shaders deliver emotional brand depth.</p>
-            </div>
-
-            <div class="card-footer-row">
-              <span class="card-city">TOKYO, JAPAN</span>
-              <div class="card-action-arrow" title="Read Monograph">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-          </article>
-
-          <article class="codex-card" data-category="spatial-design" data-article-id="art-fluted">
-            <div class="card-image-box">
-              <div class="cib-placeholder">
-                <div class="cib-icon-wrap">
-                  <svg class="cib-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.8"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                </div>
-                <div class="cib-meta">
-                  <span class="cib-ratio-badge">16 : 9 Ratio</span>
-                  <span class="cib-dims">800 × 450 px</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-body-content">
-              <h4 class="cbc-title">Tactile Physics of Luxury Glass</h4>
-              <p class="cbc-desc">An empirical investigation into fluted crystal glass tolerances, brushed brass collar
-                engineering, and the acoustic snap of weighted magnetic closures.</p>
-            </div>
-
-            <div class="card-footer-row">
-              <span class="card-city">PARIS, FRANCE</span>
-              <div class="card-action-arrow" title="Read Monograph">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-          </article>
-
-          <article class="codex-card" data-category="cultural-critique" data-article-id="art-kinetic">
-            <div class="card-image-box">
-              <div class="cib-placeholder">
-                <div class="cib-icon-wrap">
-                  <svg class="cib-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.8"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                </div>
-                <div class="cib-meta">
-                  <span class="cib-ratio-badge">16 : 9 Ratio</span>
-                  <span class="cib-dims">800 × 450 px</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-body-content">
-              <h4 class="cbc-title">Kinetic Typography as Omnichannel Authority</h4>
-              <p class="cbc-desc">Deconstructing our viral runway takeover that synchronized architectural projection
-                mapping with high-velocity social motion graphics to capture 18.4M impressions.</p>
-            </div>
-
-            <div class="card-footer-row">
-              <span class="card-city">MILAN, ITALY</span>
-              <div class="card-action-arrow" title="Read Monograph">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-          </article>
-
-          <article class="codex-card" data-category="computational-webgl" data-article-id="art-neural">
-            <div class="card-image-box">
-              <div class="cib-placeholder">
-                <div class="cib-icon-wrap">
-                  <svg class="cib-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.8"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                </div>
-                <div class="cib-meta">
-                  <span class="cib-ratio-badge">16 : 9 Ratio</span>
-                  <span class="cib-dims">800 × 450 px</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-body-content">
-              <h4 class="cbc-title">Neural Aesthetics &amp; Liquid Interfaces</h4>
-              <p class="cbc-desc">Moving beyond sterile flat SaaS dashboards into dynamic, organic liquid chrome shaders
-                that visualize deep neural network state transitions in real time.</p>
-            </div>
-
-            <div class="card-footer-row">
-              <span class="card-city">ZURICH, SWITZERLAND</span>
-              <div class="card-action-arrow" title="Read Monograph">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-          </article>
-
-          <article class="codex-card" data-category="luxury-semiotics" data-article-id="art-monochrome">
-            <div class="card-image-box">
-              <div class="cib-placeholder">
-                <div class="cib-icon-wrap">
-                  <svg class="cib-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.8"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                </div>
-                <div class="cib-meta">
-                  <span class="cib-ratio-badge">16 : 9 Ratio</span>
-                  <span class="cib-dims">800 × 450 px</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-body-content">
-              <h4 class="cbc-title">The 99% Black Spectrum</h4>
-              <p class="cbc-desc">Why restrained monochrome palettes with solitary crimson accents create an
-                impenetrable aura of institutional prestige that multi-color brand systems cannot replicate.</p>
-            </div>
-
-            <div class="card-footer-row">
-              <span class="card-city">LONDON, UK</span>
-              <div class="card-action-arrow" title="Read Monograph">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-          </article>
-
-          <article class="codex-card" data-category="brand-architecture" data-article-id="art-sensory">
-            <div class="card-image-box">
-              <div class="cib-placeholder">
-                <div class="cib-icon-wrap">
-                  <svg class="cib-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.8"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                </div>
-                <div class="cib-meta">
-                  <span class="cib-ratio-badge">16 : 9 Ratio</span>
-                  <span class="cib-dims">800 × 450 px</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-body-content">
-              <h4 class="cbc-title">Architecture of Hospitality Onboarding</h4>
-              <p class="cbc-desc">Translating five-star European boutique hotel rituals into high-touch luxury digital
-                onboarding flows that eliminate buyer remorse and accelerate client retention.</p>
-            </div>
-
-            <div class="card-footer-row">
-              <span class="card-city">MUMBAI, INDIA</span>
-              <div class="card-action-arrow" title="Read Monograph">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </div>
-            </div>
-          </article>
-
-          <!-- Empty State Card -->
-          <div class="empty-search-state" id="emptySearchState">
-            <h4 class="ess-title">No Monographs Matched Your Query</h4>
-            <p class="ess-sub">Try searching for terms like "monogram", "spatial", "WebGL", "semiotics", or "concrete".
-            </p>
-            <button class="nav-cta" id="resetSearchBtn"
-              style="border:none; cursor:pointer; background:var(--cr); color:#fff; padding:10px 24px; border-radius:999px; font-family:var(--font-mono); font-size:11px; font-weight:700;">Reset
-              Search &amp; Filters</button>
           </div>
 
+          <div class="card-blueprint-stage">
+            <div class="card-asset-glyph">
+              <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+                <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+            </div>
+            <div class="corner-crosshair cc-tl">+</div>
+            <div class="corner-crosshair cc-tr">+</div>
+            <div class="corner-crosshair cc-bl">+</div>
+            <div class="corner-crosshair cc-br">+</div>
+          </div>
         </div>
+      </article>
+
+      <!-- 02 COMPUTATIONAL WEBGL -->
+      <article class="codex-card" data-category="computational-webgl" data-article-id="art-webgl">
+        <div class="card-narrative-top">
+          <div class="cbc-meta-row">
+            <span class="card-cat-pill">Computational WebGL</span>
+            <span class="cbc-read-time">5 Min · Aug 2026</span>
+          </div>
+          <h4 class="cbc-title">Real-Time Generative Three.js Dimensions</h4>
+          <p class="cbc-excerpt">
+            Why modern luxury brands deploy interactive WebGL digital twins and GLSL shaders for emotional brand depth.
+          </p>
+        </div>
+
+        <div class="card-bottom-deck">
+          <div class="cbc-author-col">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">KT</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Kaito Tanaka</span>
+                <span class="cbc-adate">Lead Shader Engineer</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow" title="Read Monograph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+
+          <div class="card-blueprint-stage">
+            <div class="card-asset-glyph">
+              <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+                <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+            </div>
+            <div class="corner-crosshair cc-tl">+</div>
+            <div class="corner-crosshair cc-tr">+</div>
+            <div class="corner-crosshair cc-bl">+</div>
+            <div class="corner-crosshair cc-br">+</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 SPATIAL DESIGN & PACKAGING -->
+      <article class="codex-card" data-category="spatial-design" data-article-id="art-fluted">
+        <div class="card-narrative-top">
+          <div class="cbc-meta-row">
+            <span class="card-cat-pill">Spatial Design</span>
+            <span class="cbc-read-time">8 Min · Jul 2026</span>
+          </div>
+          <h4 class="cbc-title">Tactile Physics of Luxury Glass</h4>
+          <p class="cbc-excerpt">
+            An empirical investigation into fluted crystal glass tolerances, brushed brass collar engineering, and weighted closures.
+          </p>
+        </div>
+
+        <div class="card-bottom-deck">
+          <div class="cbc-author-col">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">AP</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Ami Patel</span>
+                <span class="cbc-adate">Materials Specialist</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow" title="Read Monograph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+
+          <div class="card-blueprint-stage">
+            <div class="card-asset-glyph">
+              <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+                <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+            </div>
+            <div class="corner-crosshair cc-tl">+</div>
+            <div class="corner-crosshair cc-tr">+</div>
+            <div class="corner-crosshair cc-bl">+</div>
+            <div class="corner-crosshair cc-br">+</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 CULTURAL CRITIQUE -->
+      <article class="codex-card" data-category="cultural-critique" data-article-id="art-kinetic">
+        <div class="card-narrative-top">
+          <div class="cbc-meta-row">
+            <span class="card-cat-pill">Cultural Critique</span>
+            <span class="cbc-read-time">4 Min · Jul 2026</span>
+          </div>
+          <h4 class="cbc-title">Kinetic Typography as Omnichannel Authority</h4>
+          <p class="cbc-excerpt">
+            Deconstructing our runway takeover synchronizing architectural projection mapping with high-velocity motion graphics.
+          </p>
+        </div>
+
+        <div class="card-bottom-deck">
+          <div class="cbc-author-col">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">JT</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Jay Thaker</span>
+                <span class="cbc-adate">Studio Principal</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow" title="Read Monograph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+
+          <div class="card-blueprint-stage">
+            <div class="card-asset-glyph">
+              <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+                <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+            </div>
+            <div class="corner-crosshair cc-tl">+</div>
+            <div class="corner-crosshair cc-tr">+</div>
+            <div class="corner-crosshair cc-bl">+</div>
+            <div class="corner-crosshair cc-br">+</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 05 COMPUTATIONAL WEBGL & AI -->
+      <article class="codex-card" data-category="computational-webgl" data-article-id="art-neural">
+        <div class="card-narrative-top">
+          <div class="cbc-meta-row">
+            <span class="card-cat-pill">Computational WebGL</span>
+            <span class="cbc-read-time">7 Min · Jun 2026</span>
+          </div>
+          <h4 class="cbc-title">Neural Aesthetics &amp; Liquid Interfaces</h4>
+          <p class="cbc-excerpt">
+            Dynamic liquid chrome shaders that visualize deep neural network state transitions in real time.
+          </p>
+        </div>
+
+        <div class="card-bottom-deck">
+          <div class="cbc-author-col">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">KT</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Kaito Tanaka</span>
+                <span class="cbc-adate">Shader Engineer</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow" title="Read Monograph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+
+          <div class="card-blueprint-stage">
+            <div class="card-asset-glyph">
+              <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+                <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+            </div>
+            <div class="corner-crosshair cc-tl">+</div>
+            <div class="corner-crosshair cc-tr">+</div>
+            <div class="corner-crosshair cc-bl">+</div>
+            <div class="corner-crosshair cc-br">+</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 06 LUXURY SEMIOTICS -->
+      <article class="codex-card" data-category="luxury-semiotics" data-article-id="art-monochrome">
+        <div class="card-narrative-top">
+          <div class="cbc-meta-row">
+            <span class="card-cat-pill">Luxury Semiotics</span>
+            <span class="cbc-read-time">6 Min · Jun 2026</span>
+          </div>
+          <h4 class="cbc-title">The 99% Black Spectrum</h4>
+          <p class="cbc-excerpt">
+            Why restrained monochrome palettes with solitary crimson accents create an impenetrable aura of institutional prestige.
+          </p>
+        </div>
+
+        <div class="card-bottom-deck">
+          <div class="cbc-author-col">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">AP</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Ami Patel</span>
+                <span class="cbc-adate">Design Director</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow" title="Read Monograph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+
+          <div class="card-blueprint-stage">
+            <div class="card-asset-glyph">
+              <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+                <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+            </div>
+            <div class="corner-crosshair cc-tl">+</div>
+            <div class="corner-crosshair cc-tr">+</div>
+            <div class="corner-crosshair cc-bl">+</div>
+            <div class="corner-crosshair cc-br">+</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 07 BRAND ARCHITECTURE -->
+      <article class="codex-card" data-category="brand-architecture" data-article-id="art-sensory">
+        <div class="card-narrative-top">
+          <div class="cbc-meta-row">
+            <span class="card-cat-pill">Brand Architecture</span>
+            <span class="cbc-read-time">5 Min · May 2026</span>
+          </div>
+          <h4 class="cbc-title">Architecture of Hospitality Onboarding</h4>
+          <p class="cbc-excerpt">
+            Bespoke tactile collateral systems leveraging handcrafted gold foil debossing and custom calligraphy for VIP retention.
+          </p>
+        </div>
+
+        <div class="card-bottom-deck">
+          <div class="cbc-author-col">
+            <div class="cbc-author-row">
+              <div class="cbc-avatar-initials">JT</div>
+              <div class="cbc-author-text">
+                <span class="cbc-aname">Jay Thaker</span>
+                <span class="cbc-adate">Studio Principal</span>
+              </div>
+            </div>
+            <div class="cbc-action-arrow" title="Read Monograph">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+            </div>
+          </div>
+
+          <div class="card-blueprint-stage">
+            <div class="card-asset-glyph">
+              <svg viewBox="0 0 48 48" fill="none" class="cag-svg">
+                <rect x="6" y="8" width="36" height="32" rx="4" stroke="currentColor" stroke-width="1.8" />
+                <circle cx="18" cy="18" r="4" stroke="currentColor" stroke-width="1.8" />
+                <path d="M10 34L20 24L30 34L34 30L38 34" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="cag-badge">[ ASSET BLUEPRINT ]</span>
+            </div>
+            <div class="corner-crosshair cc-tl">+</div>
+            <div class="corner-crosshair cc-tr">+</div>
+            <div class="corner-crosshair cc-bl">+</div>
+            <div class="corner-crosshair cc-br">+</div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Empty State Card -->
+      <div class="empty-search-state" id="emptySearchState">
+        <h4 class="ess-title">No Monographs Matched Your Query</h4>
+        <p class="ess-sub">Try searching for terms like "monogram", "spatial", "WebGL", "semiotics", or "concrete".</p>
+        <button class="nav-cta" id="resetSearchBtn" style="border:none; cursor:pointer; background:var(--cr); color:#fff; padding:10px 24px; border-radius:999px; font-family:var(--font-mono); font-size:11px; font-weight:700;">Reset Search &amp; Filters</button>
+      </div>
+
+      </div>
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
-       7. EDITORIAL NEWSLETTER (The Sunday Memorandum // Pure Editorial Monolith)
+       7. EDITORIAL NEWSLETTER (The Sealed Memorandum)
        ═══════════════════════════════════════════════════════════ -->
   <section id="newsletter-sec">
-    <div class="newsletter-editorial-monolith">
-
-      <!-- Top Eyebrow -->
-      <div class="nem-eyebrow">
-        <span class="nem-dot">●</span>
-        <span>THE SUNDAY MEMORANDUM // ISSUE № 0928</span>
+    <div class="newsletter-codex-card">
+      <div>
+        <div class="ncc-badge">● PRIVATE DISPATCH // WEEKLY MEMORANDUM</div>
+        <h3 class="ncc-title">Intelligence for Ambitious Design Leaders</h3>
+        <p class="ncc-desc">
+          Join 8,400+ creative founders, architects, and luxury brand directors receiving our private Sunday essays on design critique, computational brand physics, and market positioning.
+        </p>
       </div>
+      <div class="ncc-form-wrap">
+        <form id="newsletterForm" onsubmit="event.preventDefault(); handleNewsletterSubmit();">
+          <div class="ncc-input-box">
+            <input type="email" id="nlEmail" class="ncc-input" placeholder="Enter executive email address..." required />
+            <button type="submit" class="ncc-submit-btn">Subscribe ↗</button>
+          </div>
+        </form>
+        <span class="ncc-legal">Dispatched every Sunday at 08:00 CET. Instant unsubscribe anytime.</span>
+        <div class="ncc-toast" id="nlToast">✓ Successfully subscribed. Welcome to the 1928 Intelligence Dispatch.</div>
+      </div>
+    </div>
+  </section>
 
-      <!-- Main Headline -->
-      <h2 class="nem-title">
-        Ideas Shaping Modern Design.
+  <!-- ═══════════════════════════════════════════════════════════
+       8. DEDICATED STUDIO CALL-TO-ACTION SECTION (Before Footer)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="perspective-studio-cta">
+    <div class="psc-card">
+      <div class="psc-eyebrow">
+        <span>●</span>
+        <span>STUDIO ADVISORY &amp; COMMISSIONS</span>
+      </div>
+      <h2 class="psc-headline">
+        <span>READY TO SHAPE</span><br>
+        <span class="text-crimson">CATEGORY AUTHORITY?</span>
       </h2>
-
-      <!-- Refined Prose -->
-      <p class="nem-desc">
-        Every Sunday, we dispatch a single uncompromised essay on brand physics, spatial luxury, and cultural theorems.
-        No noise, zero marketing. Read by 8,400+ founders and design directors globally.
+      <p class="psc-manifesto">
+        We partner with ambitious founders, established luxury maisons, and visionary institutional leaders to build uncompromising visual architectures that command gravity for decades.
       </p>
-
-      <!-- Minimalist Luxury Input Capsule -->
-      <form id="newsletterForm" onsubmit="event.preventDefault(); handleNewsletterSubmit();" class="nem-form">
-        <div class="nem-input-capsule">
-          <input type="email" id="nlEmail" class="nem-input" placeholder="Enter your email address..." required
-            autocomplete="email" />
-          <button type="submit" class="nem-submit-btn">
-            <span>Subscribe</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="nem-cadence-note">
-          <span>Weekly on Sunday at 08:00 CET</span>
-          <span class="nem-sep">·</span>
-          <span>Private &amp; Instant 1-Click Unsubscribe</span>
-        </div>
-      </form>
-
-      <!-- Verified Success Toast -->
-      <div class="nem-toast" id="nlToast">
-        <span class="nem-toast-icon">✓</span>
-        <span>Subscription confirmed. Welcome to the Sunday Memorandum.</span>
+      <div class="psc-actions-row">
+        <a href="contact.html" class="psc-btn-primary">Initiate Project Commission ↗</a>
+        <a href="portfolio.html" class="psc-btn-secondary">Explore Curated Work Archive →</a>
       </div>
-
-      <!-- Bottom Editorial Triad Strip -->
-      <div class="nem-triad-strip">
-        <div class="nem-triad-col">
-          <span class="ntc-label">01. LATEST DISPATCH</span>
-          <span class="ntc-val">The Architecture of Silence</span>
-        </div>
-        <div class="nem-triad-col">
-          <span class="ntc-label">02. CADENCE</span>
-          <span class="ntc-val">Weekly · Sunday 08:00 CET</span>
-        </div>
-        <div class="nem-triad-col">
-          <span class="ntc-label">03. READERSHIP</span>
-          <span class="ntc-val">8,400+ Founders &amp; Directors</span>
-        </div>
+      <div class="psc-telemetry-strip">
+        <span>AHMEDABAD HEADQUARTERS</span>
+        <span>·</span>
+        <span>GLOBAL CLIENT ELEVATION</span>
+        <span>·</span>
+        <span>SELECTIVE ANNUAL SLOTS</span>
       </div>
-
     </div>
   </section>
 
@@ -3807,7 +3260,7 @@
        ═══════════════════════════════════════════════════════════ -->
   <div class="reader-modal-backdrop" id="perspectiveModal" aria-hidden="true">
     <div class="reader-modal-stage">
-
+      
       <!-- Top Sticky Reader Bar -->
       <div class="reader-top-bar">
         <span class="reader-cat-pill" id="mReaderCat">Brand Architecture</span>
@@ -3824,7 +3277,7 @@
 
       <!-- Main Reader Content Area -->
       <div class="reader-body-wrap">
-
+        
         <!-- Header Info -->
         <div class="reader-hero-box">
           <h2 class="reader-hero-title" id="mReaderTitle">The Monolithic Monogram</h2>
@@ -3847,10 +3300,8 @@
             <svg viewBox="0 0 64 64" fill="none" class="hfs-svg-icon">
               <rect x="6" y="10" width="52" height="44" rx="8" stroke="currentColor" stroke-width="1.8" />
               <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.8" />
-              <path d="M12 46L26 32L38 44L44 38L52 46" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <circle cx="32" cy="32" r="20" stroke="var(--cr)" stroke-width="1.5" stroke-dasharray="3 3"
-                class="hfs-radar-ring" />
+              <path d="M12 46L26 32L38 44L44 38L52 46" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="32" cy="32" r="20" stroke="var(--cr)" stroke-width="1.5" stroke-dasharray="3 3" class="hfs-radar-ring" />
             </svg>
             <div class="hfs-badge">[ FULL MONOGRAPH ASSET SPECIMEN ]</div>
             <div class="hfs-prompt">1928 EDITORIAL PROVENANCE CAPTURE</div>
@@ -3864,7 +3315,7 @@
 
         <!-- Two-Column Editorial Layout -->
         <div class="reader-editorial-layout">
-
+          
           <!-- Sticky Table of Contents -->
           <aside class="reader-toc-sidebar">
             <div class="toc-label">Table of Contents</div>
@@ -3896,8 +3347,7 @@
             <span class="rabc-role">Author Monograph</span>
             <h4 class="rabc-name" id="mBioName">Jay Thaker</h4>
             <p class="rabc-bio" id="mBioText">
-              Founder &amp; Principal Brand Strategist at 1928 Creative Studio. Advising high-growth luxury maisons,
-              architectural firms, and deep-tech enterprises on enduring visual authority and spatial physics.
+              Founder &amp; Principal Brand Strategist at 1928 Creative Studio. Advising high-growth luxury maisons, architectural firms, and deep-tech enterprises on enduring visual authority and spatial physics.
             </p>
           </div>
         </div>
@@ -3906,8 +3356,7 @@
         <div class="reader-cta-deck">
           <div>
             <h3 class="reader-cta-title">Ready to implement these strategic principles?</h3>
-            <p class="reader-cta-sub">Let’s sculpt an enduring, category-defining visual architecture for your brand.
-            </p>
+            <p class="reader-cta-sub">Let’s sculpt an enduring, category-defining visual architecture for your brand.</p>
           </div>
           <a href="contact.html" class="reader-cta-btn">Initiate Project Commission ↗</a>
         </div>
@@ -3919,64 +3368,89 @@
   <!-- Share Toast -->
   <div id="shareToast">✓ Monograph Link Copied to Clipboard</div>
 
-  <!-- §7 — MODERN EDITORIAL LUXURY FOOTER (Referenced from footer.html) -->
-  <div id="footer-placeholder"></div>
-  <script src="footer-loader.js"></script>
+  <!-- ═══════════════════════════════════════════════════════════
+       10. EXACT UNIFIED LUXURY FOOTER (Identical to Home Page)
+       ═══════════════════════════════════════════════════════════ -->
+  <footer id="footer-driver">
+    <div class="footer-luxury-card">
 
+      <!-- Top Grid: Statement, Links, Socials, CTA -->
+      <div class="f-header-grid">
+        <div class="f-desc-col">
+          <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in
+            Ahmedabad.</p>
+        </div>
 
-  <!-- Floating Bottom-Right Theme Toggle Button (Exact Home Page Property) -->
-  <button id="theme-fab" aria-label="Toggle light/dark theme" title="Toggle Theme">
-    <!-- Sun Icon (shown in Dark mode to prompt switching to Light) -->
-    <svg class="icon-sun" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="5"></circle>
-      <line x1="12" y1="1" x2="12" y2="3"></line>
-      <line x1="12" y1="21" x2="12" y2="23"></line>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-      <line x1="1" y1="12" x2="3" y2="12"></line>
-      <line x1="21" y1="12" x2="23" y2="12"></line>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    </svg>
-    <!-- Moon Icon (shown in Light mode to prompt switching to Dark) -->
-    <svg class="icon-moon" viewBox="0 0 24 24">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-    </svg>
+        <div class="f-nav-col">
+          <div class="f-col-label">Explore</div>
+          <ul class="f-links-clean">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="blogs.html">Perspectives</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="f-social-col">
+          <div class="f-col-label">Follow us</div>
+          <div class="f-social-chips">
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">𝕏</span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">ig</span>
+              <span>@1928creativestudio</span>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="f-chip">
+              <span class="f-chip-icon">in</span>
+              <span>1928 Creative Studio</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="f-cta-col">
+          <div class="f-col-label">Ready to collaborate?</div>
+          <div class="f-cta-box">
+            <a href="contact.html" class="f-cta-pill">Initiate Project Commission ↗</a>
+            <a href="about.html" class="f-cta-sublink">Learn about our studio</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Giant Cut Sliced Interactive Logo Area -->
+      <div class="f-giant-logo-area" title="Drag vertically to stretch typography">
+        <div class="f-giant-cut-wrap">
+          <svg class="f-giant-cut-svg" viewBox="0 0 1440 280" xmlns="http://www.w3.org/2000/svg">
+            <text x="50%" y="270" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900"
+              font-size="290" fill="currentColor" letter-spacing="-0.04em">1928</text>
+          </svg>
+        </div>
+        <div class="f-cut-h-line"></div>
+      </div>
+
+      <!-- Bottom Meta Bar: Time, Year, Copyright -->
+      <div class="f-meta-bar">
+        <div class="f-meta-item" id="footer-live-clock">Ahmedabad, India · 12:00 PM · 28°C ☀</div>
+        <div class="f-meta-item">© 2026 1928 Creative Studio. All Rights Reserved.</div>
+        <div class="f-meta-item">Sculpting Brand Architecture Worldwide</div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- Floating Dark / Light Theme FAB -->
+  <button id="theme-fab" aria-label="Toggle Dark and Light Theme" title="Toggle Dark / Light Theme">
+    <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
   </button>
 
   <!-- ═══════════════════════════════════════════════════════════
        INTERACTIVE JAVASCRIPT ENGINE
        ═══════════════════════════════════════════════════════════ -->
   <script>
-    /* ── Floating Theme Toggle Engine (Exact Home Page Behavior) ── */
-    const DR = document.documentElement;
-    const initTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
-    DR.setAttribute('data-theme', initTheme);
-    if (document.body) document.body.setAttribute('data-theme', initTheme);
-
-    function toggleTheme() {
-      const current = DR.getAttribute('data-theme') || 'dark';
-      const n = current === 'dark' ? 'light' : 'dark';
-      DR.setAttribute('data-theme', n);
-      if (document.body) document.body.setAttribute('data-theme', n);
-      try {
-        localStorage.setItem('t28', n);
-        localStorage.setItem('theme-1928', n);
-        localStorage.setItem('theme', n);
-      } catch (e) {}
-    }
-
-    window.toggleTheme = toggleTheme;
-
     document.addEventListener('DOMContentLoaded', () => {
-      const themeFab = document.getElementById('theme-fab');
-      if (themeFab) {
-        themeFab.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleTheme();
-        });
-      }
 
       /* ── Custom Mouse Follower Physics ── */
       const dot = document.getElementById('cDot');
@@ -4619,7 +4093,24 @@
           return matchesCat && matchesQuery;
         });
 
-        const totalVisible = matchingCards.length;
+        // Featured spread check
+        let featuredVisible = false;
+        if (featuredSpread) {
+          const fTitle = featuredSpread.querySelector('.fms-title').textContent.toLowerCase();
+          const fExcerpt = featuredSpread.querySelector('.fms-excerpt').textContent.toLowerCase();
+          const fCat = 'brand-architecture';
+          const fMatchesCat = (currentCategory === 'all' || currentCategory === fCat);
+          const fMatchesQuery = !currentQuery || fTitle.includes(currentQuery) || fExcerpt.includes(currentQuery);
+          // Only show featured spread on page 1 when query matches
+          if (fMatchesCat && fMatchesQuery && currentPage === 1) {
+            featuredSpread.style.display = 'grid';
+            featuredVisible = true;
+          } else {
+            featuredSpread.style.display = 'none';
+          }
+        }
+
+        const totalVisible = matchingCards.length + (featuredVisible ? 1 : 0);
 
         // Display all matching cards in the continuous horizontal scroll stream
         cards.forEach(c => c.style.display = 'none');
@@ -4656,24 +4147,23 @@
           return;
         }
 
+        const dock = document.getElementById('command-dock-wrap');
+        const dockH = dock ? dock.offsetHeight : 120;
         const rect = driverSec.getBoundingClientRect();
         const winH = window.innerHeight;
 
-        // Cards start moving ONLY after the top line reaches the very top of the screen (rect.top <= 0)
-        if (rect.top > 0) {
-          matrixTrack.style.transform = 'translateX(0)';
-          return;
-        }
-
-        const scrolledPastTop = -rect.top;
+        // Section stays in place pinned under the dock; horizontal scroll starts exactly when it arrives at dock
+        const scrolledPastDock = dockH - rect.top;
         const totalDist = driverSec.offsetHeight - winH;
 
-        if (totalDist <= 0 || scrolledPastTop <= 0) {
+        if (totalDist <= 0 || scrolledPastDock <= 0) {
           matrixTrack.style.transform = 'translateX(0)';
           return;
         }
 
-        const progress = Math.max(0, Math.min(1, scrolledPastTop / totalDist));
+        const scrollBudget = Math.max(100, totalDist - dockH);
+        const progress = Math.max(0, Math.min(1, scrolledPastDock / scrollBudget));
+
         const trackW = matrixTrack.scrollWidth;
         const viewW = window.innerWidth;
         const maxTranslate = Math.max(0, trackW - viewW);
@@ -4763,204 +4253,11 @@
         });
       }
 
-      /* ── Infinite Rolling Queue Carousel Engine (Continuous Right-to-Left, Zero Glitch) ── */
-      const lbcCarousel = document.getElementById('latestBlogsCarousel');
-      const lbcTrack = document.getElementById('lbcTrack');
-      const lbcPagination = document.getElementById('lbcPagination');
-      const lbcDots = Array.from(document.querySelectorAll('.lbc-dot'));
-      const originalLbcSlides = Array.from(document.querySelectorAll('.lbc-slide'));
-      const totalOriginalLbc = originalLbcSlides.length; // 4
-
-      let isLbcAnimating = false;
-      let lbcIntervalId = null;
-      let lbcSafetyTimer = null;
-      let isHoveredOrInteracting = false;
-
-      // Ensure cards have proper initial classes
-      if (lbcTrack && lbcTrack.children.length > 0) {
-        Array.from(lbcTrack.children).forEach((slide, i) => {
-          if (i === 0) slide.classList.add('active');
-          else slide.classList.remove('active');
-        });
-      }
-
-      function updateActiveDots(activeIdx) {
-        lbcDots.forEach((dot) => {
-          const dotIdx = parseInt(dot.getAttribute('data-index'), 10);
-          if (dotIdx === activeIdx) dot.classList.add('active');
-          else dot.classList.remove('active');
-        });
-      }
-
-      function onSlideComplete() {
-        clearTimeout(lbcSafetyTimer);
-        if (!isLbcAnimating || !lbcTrack) return;
-
-        // Move the front slide to the end of the track (seamless infinite cyclic queue)
-        lbcTrack.appendChild(lbcTrack.firstElementChild);
-
-        // Instantly reset track transform to 0 without animation
-        lbcTrack.style.transition = 'none';
-        lbcTrack.style.transform = 'translateX(0%)';
-
-        // Force browser layout flush so the reset is 100% invisible
-        void lbcTrack.offsetWidth;
-
-        isLbcAnimating = false;
-      }
-
-      function advanceRightToLeft() {
-        if (!lbcTrack || isHoveredOrInteracting || isLbcAnimating) return;
-        if (lbcTrack.children.length < 2) return;
-
-        isLbcAnimating = true;
-
-        const nextSlide = lbcTrack.children[1];
-        const nextIndex = parseInt(nextSlide.getAttribute('data-index'), 10);
-
-        // Update dot indicator and active slide class immediately for smooth visual cue
-        updateActiveDots(nextIndex);
-        lbcTrack.children[0].classList.remove('active');
-        nextSlide.classList.add('active');
-
-        // Animate track to slide the next card into view from right to left
-        lbcTrack.style.transition = 'transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)';
-        lbcTrack.style.transform = 'translateX(-100%)';
-
-        // Safety fallback: guarantee lock release even if transitionend is missed
-        clearTimeout(lbcSafetyTimer);
-        lbcSafetyTimer = setTimeout(onSlideComplete, 950);
-      }
-
-      function goToLbcSlide(targetIdx) {
-        if (!lbcTrack || isLbcAnimating || lbcTrack.children.length < 2) return;
-
-        const currentVisibleIndex = parseInt(lbcTrack.firstElementChild.getAttribute('data-index'), 10);
-        if (targetIdx === currentVisibleIndex) return;
-
-        // Find the target slide in the track
-        const targetSlide = Array.from(lbcTrack.children).find(
-          (slide) => parseInt(slide.getAttribute('data-index'), 10) === targetIdx
-        );
-
-        if (!targetSlide) return;
-
-        // Place target slide directly after current visible slide so it smoothly slides in from right
-        if (lbcTrack.children[1] !== targetSlide) {
-          lbcTrack.insertBefore(targetSlide, lbcTrack.children[1]);
-        }
-
-        isLbcAnimating = true;
-        updateActiveDots(targetIdx);
-        lbcTrack.children[0].classList.remove('active');
-        targetSlide.classList.add('active');
-
-        lbcTrack.style.transition = 'transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)';
-        lbcTrack.style.transform = 'translateX(-100%)';
-
-        clearTimeout(lbcSafetyTimer);
-        lbcSafetyTimer = setTimeout(onSlideComplete, 950);
-      }
-
-      // Transition end listener on track
-      if (lbcTrack) {
-        lbcTrack.addEventListener('transitionend', (e) => {
-          if (e.target !== lbcTrack || e.propertyName !== 'transform') return;
-          onSlideComplete();
-        });
-
-        // Event delegation for opening articles from any slide at any time
-        lbcTrack.addEventListener('click', (e) => {
-          const spread = e.target.closest('[data-article-id]');
-          if (spread) {
-            const aid = spread.getAttribute('data-article-id');
-            if (aid && typeof openReader === 'function') openReader(aid);
-          }
-        });
-      }
-
-      function startLbcAutoplay() {
-        stopLbcAutoplay();
-        isHoveredOrInteracting = false;
-        // Wait the decided 2.5s timing before starting to move
-        lbcIntervalId = setInterval(() => {
-          advanceRightToLeft();
-        }, 2500);
-      }
-
-      function stopLbcAutoplay() {
-        if (lbcIntervalId) {
-          clearInterval(lbcIntervalId);
-          lbcIntervalId = null;
-        }
-      }
-
-      function pauseCarousel() {
-        isHoveredOrInteracting = true;
-        stopLbcAutoplay();
-      }
-
-      function resumeCarousel() {
-        isHoveredOrInteracting = false;
-        // Start moving after the decided timing (2.5s)
-        startLbcAutoplay();
-      }
-
-      // Dot click handler
-      lbcDots.forEach((dot) => {
-        dot.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const idx = parseInt(dot.getAttribute('data-index'), 10);
-          goToLbcSlide(idx);
-          // When a dot is clicked, restart the 2.5s timer from that moment
-          startLbcAutoplay();
-        });
-      });
-
-      // Pause on hover over the carousel card or pagination dots, resume on release
-      if (lbcCarousel) {
-        lbcCarousel.addEventListener('mouseenter', pauseCarousel);
-        lbcCarousel.addEventListener('mouseleave', resumeCarousel);
-        lbcCarousel.addEventListener('mousedown', pauseCarousel);
-      }
-
-      if (lbcPagination) {
-        lbcPagination.addEventListener('mouseenter', pauseCarousel);
-        lbcPagination.addEventListener('mouseleave', resumeCarousel);
-      }
-
-      window.addEventListener('mouseup', () => {
-        if (isHoveredOrInteracting && (!lbcCarousel || !lbcCarousel.matches(':hover'))) {
-          resumeCarousel();
-        }
-      });
-
-      // Touch Swipe Support (Swipe left: swipe right-to-left to next card)
-      let touchStartX = 0;
-      let touchEndX = 0;
-      if (lbcCarousel) {
-        lbcCarousel.addEventListener('touchstart', (e) => {
-          pauseCarousel();
-          touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        lbcCarousel.addEventListener('touchend', (e) => {
-          touchEndX = e.changedTouches[0].screenX;
-          const diff = touchStartX - touchEndX;
-          if (Math.abs(diff) > 45) {
-            if (diff > 0) advanceRightToLeft();
-          }
-          resumeCarousel();
-        }, { passive: true });
-      }
-
-      startLbcAutoplay();
-
       // Initial Render
       renderArticles();
 
       /* ── Newsletter Dispatch Handler ── */
-      window.handleNewsletterSubmit = function () {
+      window.handleNewsletterSubmit = function() {
         const input = document.getElementById('nlEmail');
         const toast = document.getElementById('nlToast');
         if (input && input.value) {
@@ -4972,206 +4269,54 @@
         }
       };
 
+      /* ── Theme Switcher Engine (Synced across site) ── */
+      const themeFab = document.getElementById('theme-fab');
+      const root = document.documentElement;
 
+      function setTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('t28', theme);
+        localStorage.setItem('theme-1928', theme);
+        localStorage.setItem('theme', theme);
+      }
 
-      /* ── Footer Elastic Logo Physics (Exact Home Page Property) ── */
+      const initialTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
+      setTheme(initialTheme);
+
+      if (themeFab) {
+        themeFab.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          setTheme(next);
+        });
+      }
+
+      /* ── Footer Elastic Logo Physics ── */
       const footerCutWrap = document.querySelector('.f-giant-cut-wrap');
       const footerCutSvg = document.querySelector('.f-giant-cut-svg');
-      const footerCutText = document.querySelector('.f-giant-cut-svg text');
-
-      let logoPull = 0; // -0.35 to 1.0
-      let logoVelocity = 0;
-      let isInteractingLogo = false;
-      let logoWheelTimer = null;
-      let springRunning = false;
 
       function applyLogoPhysics(p) {
         if (!footerCutWrap || !footerCutSvg) return;
-
         const baseH = footerCutWrap.offsetWidth * 0.052;
         const safeBaseH = Math.max(34, Math.min(84, baseH));
-
-        if (p >= 0) {
-          const targetH = safeBaseH * (1 + p * 1.05);
-          footerCutWrap.style.height = `${targetH}px`;
-          footerCutSvg.style.height = `${targetH}px`;
-
-          const targetVbH = 65 + p * 65;
-          footerCutSvg.setAttribute('viewBox', `0 0 1600 ${targetVbH}`);
-
-          const liftY = p * 4;
-          if (footerCutText) {
-            footerCutText.style.transform = `translateY(${liftY}px)`;
-          }
-          footerCutWrap.style.transform = `scaleY(1) scaleX(1)`;
-        } else {
-          const absP = Math.abs(p);
-          const targetH = safeBaseH * (1 - absP * 0.16);
-          footerCutWrap.style.height = `${targetH}px`;
-          footerCutSvg.style.height = `${targetH}px`;
-
-          const targetVbH = 65 - absP * 10;
-          footerCutSvg.setAttribute('viewBox', `0 0 1600 ${targetVbH}`);
-
-          footerCutWrap.style.transform = `scaleY(${1 - absP * 0.10}) scaleX(${1 + absP * 0.025})`;
-          if (footerCutText) {
-            footerCutText.style.transform = `translateY(0)`;
-          }
-        }
+        const maxH = footerCutWrap.offsetWidth * 0.19;
+        const targetH = safeBaseH + (maxH - safeBaseH) * Math.min(p, 1.0);
+        footerCutWrap.style.height = `${targetH}px`;
       }
 
-      function stepLogoSpring() {
-        if (!isInteractingLogo) {
-          const stiffness = 0.14;
-          const damping = 0.78;
-          const force = -stiffness * logoPull;
-          logoVelocity = (logoVelocity + force) * damping;
-          logoPull += logoVelocity;
-
-          if (Math.abs(logoPull) < 0.001 && Math.abs(logoVelocity) < 0.001) {
-            logoPull = 0;
-            logoVelocity = 0;
-            applyLogoPhysics(0);
-            springRunning = false;
-            return;
-          }
-        }
-
-        applyLogoPhysics(logoPull);
-        requestAnimationFrame(stepLogoSpring);
-      }
-
-      function triggerLogoSpring() {
-        if (!springRunning) {
-          springRunning = true;
-          requestAnimationFrame(stepLogoSpring);
-        }
-      }
-
-      const footerDriver = document.getElementById('footer-driver');
-
-      // Wheel listener for interactive scroll over footer
-      window.addEventListener('wheel', (e) => {
-        if (!footerDriver) return;
-        const rect = footerDriver.getBoundingClientRect();
-        const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
-
-        if (rect.top <= window.innerHeight * 0.35 || isAtBottom) {
-          if (e.deltaY > 0 || (e.deltaY < 0 && logoPull > 0.05)) {
-            if (e.cancelable) e.preventDefault();
-          }
-
-          isInteractingLogo = true;
-          if (e.deltaY > 0) {
-            logoPull = Math.min(1.0, logoPull + Math.abs(e.deltaY) * 0.006);
-          } else if (e.deltaY < 0) {
-            logoPull = Math.max(-0.35, logoPull - Math.abs(e.deltaY) * 0.005);
-          }
-
-          triggerLogoSpring();
-
-          clearTimeout(logoWheelTimer);
-          logoWheelTimer = setTimeout(() => {
-            isInteractingLogo = false;
-            triggerLogoSpring();
-          }, 180);
-        }
-      }, { passive: false });
-
-      // Touch listener for mobile devices
-      let touchStartY = 0;
-      window.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-      }, { passive: true });
-
-      window.addEventListener('touchmove', (e) => {
-        if (!footerDriver) return;
-        const rect = footerDriver.getBoundingClientRect();
-        const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
-        if (rect.top <= window.innerHeight * 0.35 || isAtBottom) {
-          const deltaY = touchStartY - e.touches[0].clientY;
-          if (deltaY > 0 || (deltaY < 0 && logoPull > 0.05)) {
-            if (e.cancelable) e.preventDefault();
-          }
-          isInteractingLogo = true;
-          if (deltaY > 0) {
-            logoPull = Math.min(1.0, logoPull + deltaY * 0.006);
-          } else {
-            logoPull = Math.max(-0.35, logoPull + deltaY * 0.005);
-          }
-          triggerLogoSpring();
-        }
-      }, { passive: false });
-
-      window.addEventListener('touchend', () => {
-        clearTimeout(logoWheelTimer);
-        logoWheelTimer = setTimeout(() => {
-          isInteractingLogo = false;
-          triggerLogoSpring();
-        }, 140);
-      }, { passive: true });
-
-      // Mouse drag hold support on the footer card
-      const luxuryCard = document.querySelector('.footer-luxury-card');
-      if (luxuryCard) {
-        let isMouseDownCard = false;
-        let dragStartY = 0;
-        luxuryCard.addEventListener('mousedown', (e) => {
-          isMouseDownCard = true;
-          dragStartY = e.clientY;
-          isInteractingLogo = true;
-        });
-
-        window.addEventListener('mousemove', (e) => {
-          if (!isMouseDownCard) return;
-          const deltaY = dragStartY - e.clientY;
-          if (deltaY > 0) {
-            logoPull = Math.min(1.0, logoPull + deltaY * 0.01);
-          } else {
-            logoPull = Math.max(-0.35, logoPull + deltaY * 0.01);
-          }
-          triggerLogoSpring();
-        });
-
-        window.addEventListener('mouseup', () => {
-          if (isMouseDownCard) {
-            isMouseDownCard = false;
-            clearTimeout(logoWheelTimer);
-            logoWheelTimer = setTimeout(() => {
-              isInteractingLogo = false;
-              triggerLogoSpring();
-            }, 120);
-          }
-        });
-      }
-
-      // Auto emergence on scroll
       window.addEventListener('scroll', () => {
-        if (!footerDriver) return;
-        const rect = footerDriver.getBoundingClientRect();
-        const vh = window.innerHeight;
-        if (rect.top <= vh) {
-          const footerInViewP = Math.max(0, Math.min(1, (vh - rect.top) / (rect.height * 0.75)));
-          const autoEmergence = Math.max(0, Math.min(1, (footerInViewP - 0.55) / 0.45));
-          if (!isInteractingLogo) {
-            applyLogoPhysics(autoEmergence);
-          }
+        const scrollBottom = window.innerHeight + window.scrollY;
+        const docHeight = document.documentElement.scrollHeight;
+        const dist = docHeight - scrollBottom;
+        if (dist < 300) {
+          const progress = 1 - (dist / 300);
+          applyLogoPhysics(progress);
+        } else {
+          applyLogoPhysics(0);
         }
       }, { passive: true });
 
       applyLogoPhysics(0);
-
-      // Live Ahmedabad Clock in Footer
-      function updateFooterTime() {
-        const clockEl = document.getElementById('footer-live-clock');
-        if (!clockEl) return;
-        const now = new Date();
-        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
-        const timeStr = now.toLocaleTimeString('en-US', options);
-        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
-      }
-      updateFooterTime();
-      setInterval(updateFooterTime, 15000);
     });
   </script>
 </body>
