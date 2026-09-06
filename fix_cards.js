@@ -28,14 +28,23 @@ const newCardCSS = `/* ── Editorial Codex Card: 16:9 Image Box with Image Ic
       box-sizing: border-box;
       cursor: pointer;
       text-decoration: none;
-      position: relative;
       transition: transform 0.4s var(--sp), border-color 0.4s var(--sp), box-shadow 0.4s var(--sp);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
     }
 
     .codex-card:hover {
       transform: translateY(-6px);
       border-color: var(--rule-heavy);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5), 0 0 24px rgba(255, 255, 255, 0.05);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45), 0 0 24px rgba(255, 255, 255, 0.04);
+    }
+
+    [data-theme="light"] .codex-card {
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    [data-theme="light"] .codex-card:hover {
+      border-color: var(--rule-heavy);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08), 0 4px 12px rgba(0, 0, 0, 0.03);
     }
 
     /* ── Top: Image Box (16:9 Ratio with Image Icon & Dimensions) ── */
