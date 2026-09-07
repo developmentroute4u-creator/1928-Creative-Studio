@@ -4,16 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Under Development · 1928 Creative Studio</title>
-  <meta name="description" content="1928 Creative Studio — This page is currently under development." />
+  <title>Start a Project · 1928 Creative Studio</title>
+  <meta name="description"
+    content="1928 Creative Studio — Initiate project commissions, strategic advisory, and direct executive dialogues." />
+
+  <!-- Google Fonts: Montserrat & Raleway -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&display=swap"
     rel="stylesheet" />
 
   <style>
-    /* ── Gotham Primary & Raleway Secondary Font System ── */
+    /* ═══════════════════════════════════════════════════════════
+       1. CORE DESIGN SYSTEM & TYPOGRAPHY
+       ═══════════════════════════════════════════════════════════ */
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
@@ -21,6 +26,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
@@ -28,6 +34,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
@@ -35,6 +42,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
@@ -43,54 +51,73 @@
       font-display: swap;
     }
 
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
 
     :root {
-      --bg: #ffffff;
-      --card-bg: #ffffff;
-      --ink: #111111;
-      --ink-dim: #888888;
-      --rule: rgba(0, 0, 0, 0.08);
-      --rule-m: rgba(0, 0, 0, 0.15);
+      --bg: #09090d;
+      --card-bg: #111117;
+      --card-hover: #171722;
+      --card-alt: #15151e;
+      --card-rail: #0e0e14;
+      --ink: #f8f8fa;
+      --ink-mid: #9a9ab0;
+      --ink-dim: #5c5c6e;
+      --rule: rgba(255, 255, 255, 0.08);
+      --rule-m: rgba(255, 255, 255, 0.14);
+      --rule-heavy: rgba(255, 255, 255, 0.26);
       --cr: #c8102e;
-      --cr-glow: rgba(200, 16, 46, 0.20);
+      --cr-bright: #e61937;
+      --cr-glow: rgba(200, 16, 46, 0.28);
+      --cr-lo: rgba(200, 16, 46, 0.10);
       --sp: cubic-bezier(0.16, 1, 0.3, 1);
       --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
-    [data-theme="dark"] {
-      --bg: #0a0a0a;
-      --card-bg: #141414;
-      --ink: #f2f2f2;
-      --ink-dim: #777777;
-      --rule: rgba(255, 255, 255, 0.10);
-      --rule-m: rgba(255, 255, 255, 0.18);
-      --cr: #e62343;
-      --cr-glow: rgba(230, 35, 67, 0.25);
+    [data-theme="light"] {
+      --bg: #f9f9f7;
+      --card-bg: #ffffff;
+      --card-hover: #f3f3ef;
+      --card-alt: #f6f6f2;
+      --card-rail: #f1f1ec;
+      --ink: #0d0d10;
+      --ink-mid: #525260;
+      --ink-dim: #8c8c9a;
+      --rule: rgba(0, 0, 0, 0.07);
+      --rule-m: rgba(0, 0, 0, 0.14);
+      --rule-heavy: rgba(0, 0, 0, 0.25);
+      --cr: #c8102e;
+      --cr-bright: #d91434;
+      --cr-glow: rgba(200, 16, 46, 0.16);
+      --cr-lo: rgba(200, 16, 46, 0.06);
+    }
+
+    html {
+      font-size: 16px;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--ink);
     }
 
     body {
       background: var(--bg);
       color: var(--ink);
       font-family: var(--font-secondary);
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: clamp(24px, 4vh, 48px) clamp(24px, 4vw, 56px);
-      transition: background .3s, color .3s;
+      overflow-x: hidden;
+      transition: background 0.35s ease, color 0.35s ease;
       position: relative;
+      min-height: 100vh;
+      line-height: 1.6;
     }
 
-    /* ── Custom Cursor ── */
+    /* ── Custom Mouse Cursor ── */
     .c-dot {
       width: 6px;
       height: 6px;
@@ -103,52 +130,18 @@
     }
 
     .c-ring {
-      width: 32px;
-      height: 32px;
+      width: 34px;
+      height: 34px;
       border: 1.5px solid var(--cr);
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
       z-index: 9998;
       transform: translate(-50%, -50%);
-      transition: transform .12s ease-out, width .25s, height .25s;
+      transition: width 0.25s, height 0.25s, border-color 0.25s, transform 0.1s ease-out;
     }
 
-    /* ── Minimal Top Navigation ── */
-    .top-bar {
-      width: 100%;
-      max-width: 1500px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 2;
-    }
-
-    .brand-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--ink);
-    }
-
-    .brand-title {
-      font-family: var(--font-primary);
-      font-weight: 900;
-      font-size: 1.25rem;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-    }
-
-    .brand-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--cr);
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    /* ── Floating Fixed Theme Toggle Button (Bottom-Right Corner) ── */
+    /* ── Floating Fixed Theme Toggle Button ── */
     #theme-fab {
       position: fixed;
       bottom: 28px;
@@ -192,175 +185,2647 @@
 
     [data-theme="dark"] #theme-fab .icon-moon,
     [data-theme="light"] #theme-fab .icon-sun {
-      display: none;
+      display: none !important;
     }
 
     [data-theme="dark"] #theme-fab .icon-sun,
     [data-theme="light"] #theme-fab .icon-moon {
+      display: block !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       2. HERO SECTION (100VH IMMERSIVE SCULPTURAL BANNER)
+       ═══════════════════════════════════════════════════════════ */
+    #contact-hero {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(40px, 6vh, 72px) clamp(24px, 4vw, 64px);
+      position: relative;
+      overflow: hidden;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .hero-grid-backdrop {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(var(--rule) 1px, transparent 1px),
+        linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+      background-size: 72px 72px;
+      background-position: center center;
+      opacity: 0.45;
+      mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-monument-wrap {
+      max-width: 1080px;
+      width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-tagline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cr);
+      background: var(--cr-lo);
+      border: 1px solid rgba(200, 16, 46, 0.28);
+      padding: 8px 24px;
+      border-radius: 999px;
+      margin-bottom: clamp(20px, 3vh, 32px);
+    }
+
+    .hero-dot-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cr);
+      box-shadow: 0 0 8px var(--cr);
+      display: inline-block;
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.6); opacity: 0.35; }
+    }
+
+    .hero-main-title {
+      font-family: var(--font-primary);
+      font-size: clamp(42px, 7.6vw, 108px);
+      font-weight: 900;
+      line-height: 0.94;
+      letter-spacing: -0.045em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: clamp(18px, 2.8vh, 28px);
+      text-align: center;
+    }
+
+    .hero-main-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--cr);
+      font-family: var(--font-secondary);
+      letter-spacing: -0.01em;
+      display: inline-block;
+    }
+
+    .hero-subtitle-text {
+      font-size: clamp(16px, 1.25vw, 20px);
+      color: var(--ink-mid);
+      max-width: 720px;
+      line-height: 1.65;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    .hero-explore-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: clamp(32px, 4.5vh, 48px);
+      padding: 18px 42px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 10px 30px var(--cr-glow);
+      transition: transform 0.3s var(--sp), background 0.3s, box-shadow 0.3s;
+    }
+
+    .hero-explore-btn:hover {
+      background: var(--cr-bright);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 40px var(--cr-glow);
+    }
+
+    .hero-explore-btn .arr {
+      transition: transform 0.3s var(--sp);
+      font-size: 1.1rem;
+    }
+
+    .hero-explore-btn:hover .arr {
+      transform: translateY(3px);
+    }
+
+    /* ── Subtle Clean Section Divider Line ── */
+    .section-divider-line {
+      width: 100%;
+      height: 1px;
+      background: var(--rule-m);
+      border: none;
+      margin: 0;
+      opacity: 0.9;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       3. 100VH FULL-SCREEN SECTION: PROPORTIONED MONOLITHIC CARD
+       ═══════════════════════════════════════════════════════════ */
+    #start-project-sec {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(28px, 4.5vh, 52px) clamp(24px, 4vw, 68px);
+      box-sizing: border-box;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .fullscreen-project-container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(16px, 2.6vh, 26px);
+    }
+
+    /* Section Top Header */
+    .fs-sec-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 14px;
+    }
+
+    .header-left-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .fs-sec-title {
+      font-family: var(--font-primary);
+      font-size: clamp(28px, 3.2vw, 42px);
+      font-weight: 900;
+      letter-spacing: -0.035em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .fs-sec-desc {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+    }
+
+    .fs-right-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-primary);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cr);
+      background: var(--cr-lo);
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 16, 46, 0.22);
+    }
+
+    /* ── Proportioned Monolithic Card (Integrated Left Rail) ── */
+    .unified-monolith-card {
+      position: relative;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 26px;
+      box-shadow: 0 18px 52px rgba(0, 0, 0, 0.24);
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      min-height: 520px;
+      overflow: hidden;
+      contain: paint;
+    }
+
+    [data-theme="light"] .unified-monolith-card {
+      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.06);
+    }
+
+    @media (max-width: 860px) {
+      .unified-monolith-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+    }
+
+    /* ── Integrated Left Rail ── */
+    .integrated-left-rail {
+      background: var(--card-rail);
+      border-right: 1px solid var(--rule);
+      padding: clamp(26px, 3.8vh, 42px) 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    @media (max-width: 860px) {
+      .integrated-left-rail {
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+        padding: 14px 16px;
+        overflow-x: auto;
+      }
+    }
+
+    .rail-step-tab {
+      display: inline-flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 999px;
+      padding: 11px 18px;
+      cursor: pointer;
+      transition: all 0.35s var(--sp);
+      user-select: none;
+      width: fit-content;
+      text-decoration: none;
+      color: var(--ink-dim);
+    }
+
+    .rail-step-tab:hover {
+      border-color: var(--rule-heavy);
+      color: var(--ink);
+      transform: translateX(4px);
+    }
+
+    .rail-step-tab.active {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+      transform: translateX(6px);
+    }
+
+    .rail-step-num {
+      font-family: var(--font-primary);
+      font-size: 0.88rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+
+    /* Expanding / Collapsing Word Label Animation */
+    .rail-step-word {
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      transition: max-width 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin 0.3s ease;
+      font-family: var(--font-primary);
+      font-size: 0.84rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-left: 0;
+    }
+
+    .rail-step-tab.active .rail-step-word {
+      max-width: 140px;
+      opacity: 1;
+      margin-left: 10px;
+    }
+
+    /* ── Right Content Viewport ── */
+    .main-form-viewport {
+      padding: clamp(26px, 3.5vw, 42px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .form-scroll-inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-grow: 1;
+    }
+
+    .step-pane-section {
+      display: none;
+      animation: fadeInStep 0.35s var(--sp) forwards;
+    }
+
+    .step-pane-section.active {
       display: block;
     }
 
-    /* ── Creative Centered Hero Statement ── */
-    .center-container {
+    @keyframes fadeInStep {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .pane-headline {
+      font-family: var(--font-primary);
+      font-size: clamp(20px, 2.2vw, 26px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .pane-caption {
+      font-size: 0.88rem;
+      color: var(--ink-mid);
+      margin-bottom: clamp(18px, 2.4vh, 26px);
+    }
+
+    /* ── STEP 1: Engagement Scope Horizontal Cards ── */
+    .scope-options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .scope-option-card {
+      background: var(--card-alt);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 14px;
+      padding: 13px 20px;
+      cursor: pointer;
+      transition: all 0.25s var(--sp);
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .scope-option-card:hover {
+      border-color: var(--rule-heavy);
+      transform: translateX(4px);
+    }
+
+    .scope-option-card.active {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateX(6px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+    }
+
+    .soc-left-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 180px;
+      flex-shrink: 0;
+    }
+
+    .soc-index {
+      font-family: var(--font-primary);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      opacity: 0.6;
+      text-transform: uppercase;
+    }
+
+    .soc-title {
+      font-family: var(--font-primary);
+      font-size: 0.98rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+    }
+
+    .soc-desc {
+      font-size: 0.82rem;
+      opacity: 0.8;
+      line-height: 1.35;
+      flex-grow: 1;
+    }
+
+    .soc-status-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--rule-m);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 800;
+      opacity: 0.3;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .scope-option-card.active .soc-status-icon {
+      opacity: 1;
+      background: var(--cr);
+      color: #fff;
+      border-color: var(--cr);
+    }
+
+    @media (max-width: 680px) {
+      .scope-option-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .soc-left-group {
+        min-width: auto;
+      }
+    }
+
+    /* ── STEP 2: Creative Disciplines Chips ── */
+    .disciplines-chips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 10px;
+    }
+
+    .disc-item-chip {
+      padding: 13px 18px;
+      border-radius: 14px;
+      border: 1.5px solid var(--rule-m);
+      background: var(--card-alt);
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s var(--sp);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+    }
+
+    .disc-item-chip:hover {
+      border-color: var(--rule-heavy);
+      transform: translateY(-2px);
+    }
+
+    .disc-item-chip.selected {
+      background: rgba(200, 16, 46, 0.12);
+      border-color: var(--cr);
+      color: var(--cr-bright);
+    }
+
+    .disc-dot-check {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1.5px solid currentColor;
+      display: grid;
+      place-items: center;
+      font-size: 9px;
+      flex-shrink: 0;
+    }
+
+    .disc-item-chip.selected .disc-dot-check {
+      background: var(--cr);
+      color: #fff;
+      border-color: var(--cr);
+    }
+
+    /* ── STEP 3: Capital Allocation & Session Window ── */
+    .tiers-horizontal-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 680px) {
+      .tiers-horizontal-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .tier-option-box {
+      padding: 16px 12px;
+      border-radius: 14px;
+      border: 1.5px solid var(--rule-m);
+      background: var(--card-alt);
+      color: var(--ink);
+      cursor: pointer;
+      transition: all 0.25s var(--sp);
+      text-align: center;
+    }
+
+    .tier-option-box:hover {
+      border-color: var(--rule-heavy);
+      transform: translateY(-2px);
+    }
+
+    .tier-option-box.active {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+    }
+
+    .tob-amount {
+      font-family: var(--font-primary);
+      font-size: 0.98rem;
+      font-weight: 900;
+      margin-bottom: 3px;
+    }
+
+    .tob-tier-name {
+      font-size: 0.74rem;
+      opacity: 0.75;
+    }
+
+    .timeline-container-wrap {
+      margin-top: 6px;
+    }
+
+    .timeline-label-title {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 8px;
+    }
+
+    .timeline-pills-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .timeline-pill {
+      padding: 10px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--rule-m);
+      background: var(--card-alt);
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .timeline-pill:hover {
+      border-color: var(--rule-heavy);
+      transform: translateY(-2px);
+    }
+
+    .timeline-pill.active {
+      background: var(--cr);
+      color: #fff;
+      border-color: var(--cr);
+    }
+
+    /* ── STEP 4: Principal Credentials Inputs ── */
+    .principal-inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    @media (max-width: 600px) {
+      .principal-inputs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .input-field-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .in-label {
+      font-family: var(--font-primary);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+
+    .text-input-luxury {
+      width: 100%;
+      background: var(--card-alt);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 12px;
+      padding: 12px 16px;
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      outline: none;
+      transition: all 0.25s;
+    }
+
+    .text-input-luxury::placeholder {
+      font-family: var(--font-primary);
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--ink-dim);
+      opacity: 0.7;
+      letter-spacing: -0.01em;
+    }
+
+    .text-input-luxury::-webkit-input-placeholder {
+      font-family: var(--font-primary);
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--ink-dim);
+      opacity: 0.7;
+      letter-spacing: -0.01em;
+    }
+
+    .text-input-luxury::-moz-placeholder {
+      font-family: var(--font-primary);
+      font-size: 0.86rem;
+      font-weight: 500;
+      color: var(--ink-dim);
+      opacity: 0.7;
+      letter-spacing: -0.01em;
+    }
+
+    .text-input-luxury:focus {
+      border-color: var(--cr);
+      background: var(--card-bg);
+      box-shadow: 0 0 0 3px var(--cr-glow);
+    }
+
+    /* ── Country Code + Phone Input Combo ── */
+    .phone-input-combo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      width: 100%;
+    }
+
+    .country-code-picker {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .country-code-btn {
+      height: 48px;
+      padding: 0 12px;
+      background: var(--card-alt);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 12px;
+      color: var(--ink-mid);
+      font-family: var(--font-primary);
+      font-size: 0.84rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.25s var(--sp);
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .country-code-btn:hover {
+      border-color: var(--rule-heavy);
+      background: var(--card-hover);
+      color: var(--ink);
+    }
+
+    .country-code-btn.open {
+      border-color: var(--cr);
+      background: var(--card-bg);
+      box-shadow: 0 0 0 3px var(--cr-glow);
+    }
+
+    .cc-flag {
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--ink-dim);
+    }
+
+    .cc-code {
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: var(--ink-mid);
+      transition: color 0.2s ease;
+    }
+
+    .country-code-btn:hover .cc-code,
+    .country-code-btn.open .cc-code {
+      color: var(--ink);
+    }
+
+    .cc-chevron {
+      color: var(--ink-dim);
+      transition: transform 0.25s var(--sp), color 0.2s;
+    }
+
+    .country-code-btn.open .cc-chevron {
+      transform: rotate(180deg);
+      color: var(--cr);
+    }
+
+    .country-code-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      width: 220px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-heavy);
+      border-radius: 12px;
+      padding: 6px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s var(--sp), transform 0.2s var(--sp), visibility 0.2s;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      max-height: 240px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .country-code-dropdown::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .country-code-dropdown.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .cc-option {
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: all 0.16s;
+    }
+
+    .cc-option:hover {
+      background: var(--card-hover);
+      color: var(--ink);
+    }
+
+    .cc-option.active {
+      background: var(--cr-lo);
+      color: var(--cr);
+      font-weight: 600;
+    }
+
+    .cco-flag {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-dim);
+    }
+
+    .cco-name {
+      flex-grow: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cco-code {
+      font-weight: 500;
+      color: var(--ink-dim);
+      opacity: 0.85;
+    }
+
+    .phone-number-field {
+      flex-grow: 1;
+      width: 100% !important;
+    }
+
+    textarea.text-input-luxury {
+      resize: none;
+      height: 72px;
+      line-height: 1.5;
+    }
+
+    .nda-agreement-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+      font-size: 0.82rem;
+      color: var(--ink-mid);
+    }
+
+    .nda-sq-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      border: 1.5px solid var(--rule-heavy);
+      background: var(--card-alt);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 10px;
+    }
+
+    .nda-agreement-line.checked .nda-sq-box {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+    }
+
+    /* Form Action Nav Row */
+    .form-action-nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule);
+      margin-top: 16px;
+    }
+
+    .btn-step-prev {
+      padding: 12px 26px;
+      border-radius: 999px;
+      border: 1.5px solid var(--rule-m);
+      background: transparent;
+      color: var(--ink-mid);
+      font-family: var(--font-primary);
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-step-prev:hover {
+      color: var(--ink);
+      border-color: var(--rule-heavy);
+    }
+
+    .btn-step-next {
+      padding: 14px 38px;
+      border-radius: 999px;
+      border: none;
+      background: var(--cr);
+      color: #fff;
+      font-family: var(--font-primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px var(--cr-glow);
+      transition: all 0.25s var(--sp);
+      margin-left: auto;
+    }
+
+    .btn-step-next:hover {
+      background: var(--cr-bright);
+      transform: none;
+      box-shadow: 0 10px 28px var(--cr-glow);
+    }
+
+    .btn-step-next:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* ── Input Validation Error States ── */
+    .text-input-luxury.input-error {
+      border-color: var(--cr) !important;
+      background: rgba(200, 16, 46, 0.04) !important;
+      box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.18) !important;
+      animation: fieldShake 0.35s ease;
+    }
+
+    @keyframes fieldShake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-4px); }
+      40%, 80% { transform: translateX(4px); }
+    }
+
+    .field-error-msg {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--cr);
+      letter-spacing: 0.03em;
+      margin-top: 2px;
+      display: none;
+    }
+
+    .input-field-group.has-error .field-error-msg {
+      display: block;
+      animation: fadeInError 0.2s ease;
+    }
+
+    @keyframes fadeInError {
+      from { opacity: 0; transform: translateY(-2px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Full Monolithic Card Success Overlay (Covering Complete Card + Left Rail) ── */
+    .monolith-success-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 26px;
+      overflow: hidden;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: visibility 0.4s ease, opacity 0.35s ease;
+    }
+
+    .monolith-success-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Softly Expanding Crimson Morph Surface */
+    .mso-expand-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #c8102e 0%, #a00b22 55%, #7a0416 100%);
+      clip-path: circle(0% at 85% 90%);
+      transition: clip-path 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1;
+    }
+
+    .monolith-success-overlay.expanded .mso-expand-bg {
+      clip-path: circle(160% at 85% 90%);
+    }
+
+    .mso-ambient-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.16), transparent 70%);
+      opacity: 0;
+      z-index: 2;
+      transition: opacity 0.6s ease 0.35s;
+      pointer-events: none;
+    }
+
+    .monolith-success-overlay.expanded .mso-ambient-glow {
+      opacity: 1;
+    }
+
+    /* Centered Success Content with Staggered Fade Entrance */
+    .mso-content-box {
+      position: relative;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      max-width: 900px;
+      padding: clamp(28px, 4vh, 48px) clamp(24px, 3vw, 44px);
+      gap: 18px;
+      max-width: 580px;
       margin: auto;
-      z-index: 2;
+      opacity: 0;
+      transform: translateY(18px) scale(0.96);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
     }
 
-    .status-pill {
-      display: inline-flex;
+    .monolith-success-overlay.expanded .mso-content-box {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .mso-badge-circle {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 36px rgba(255, 255, 255, 0.32), 0 10px 26px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      animation: pulseCheckGlow 3.2s infinite ease-in-out;
+    }
+
+    @keyframes pulseCheckGlow {
+      0%, 100% { box-shadow: 0 0 28px rgba(255, 255, 255, 0.3), 0 10px 26px rgba(0, 0, 0, 0.28); transform: scale(1); }
+      50% { box-shadow: 0 0 44px rgba(255, 255, 255, 0.55), 0 12px 30px rgba(0, 0, 0, 0.35); transform: scale(1.03); }
+    }
+
+    .mso-header-block {
+      display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 10px;
-      font-family: 'Space Mono', var(--font-secondary), monospace;
-      font-size: clamp(0.72rem, 0.9vw, 0.82rem);
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--cr);
-      padding: 8px 18px;
-      background: var(--cr-glow);
-      border-radius: 999px;
-      margin-bottom: clamp(24px, 3.5vh, 36px);
     }
 
-    .pulse-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--cr);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--cr);
-      animation: pulse 2s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.8); opacity: 0.3; }
-    }
-
-    .statement-title {
+    .mso-title {
       font-family: var(--font-primary);
-      font-size: clamp(38px, 6.5vw, 92px);
+      font-size: clamp(26px, 3.2vw, 38px);
       font-weight: 900;
-      line-height: 0.98;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.03em;
       text-transform: uppercase;
-      color: var(--ink);
-      margin-bottom: clamp(28px, 4vh, 44px);
+      color: #ffffff;
+      line-height: 1.1;
+      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+      margin: 0;
     }
 
-    .statement-title em {
-      font-style: italic;
+    .mso-desc {
+      font-size: clamp(0.9rem, 1.15vw, 1rem);
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.94);
       font-weight: 400;
-      color: var(--cr);
-      display: inline-block;
-      letter-spacing: -0.02em;
+      margin: 0;
+      max-width: 480px;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .return-pill {
+    .btn-reset-brief-luxury {
+      height: 44px;
+      padding: 0 28px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      font-family: var(--font-primary);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      padding: 16px 32px;
+      gap: 8px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: all 0.25s var(--sp);
+      margin-top: 6px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .btn-reset-brief-luxury:hover {
+      background: #ffffff;
+      color: #b30c23;
+      border-color: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: none;
+    }
+
+    /* Loading micro-spinner in submit button */
+    .btn-step-next.is-loading {
+      pointer-events: none;
+      opacity: 0.92;
+    }
+
+    .btn-spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spinLoader 0.6s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spinLoader {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ── Ultra-Clean Minimal Strategy Session Confirmation View ── */
+    .sb-success-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100%;
+      min-height: 420px;
+      padding: clamp(24px, 4vh, 48px) clamp(20px, 3vw, 40px);
+      gap: 16px;
+      animation: fadeInSuccess 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      box-sizing: border-box;
+    }
+
+    @keyframes fadeInSuccess {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .bsv-badge-circle {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--cr);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px var(--cr-glow);
+    }
+
+    .bsv-header-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      max-width: 520px;
+    }
+
+    .bsv-title {
+      font-family: var(--font-primary);
+      font-size: clamp(24px, 2.8vw, 34px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+
+    .bsv-desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
+    }
+
+    .bsv-highlight {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .btn-reset-brief {
+      height: 42px;
+      padding: 0 26px;
+      border-radius: 999px;
+      border: 1.5px solid var(--rule-m);
+      background: var(--card-alt);
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s var(--sp);
+      margin-top: 8px;
+    }
+
+    .btn-reset-brief:hover {
+      border-color: var(--ink);
+      background: var(--card-hover);
+      transform: none;
+    }
+
+    .btn-book-session-link {
+      height: 40px;
+      padding: 0 24px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 20px var(--cr-glow);
+      transition: all 0.25s var(--sp);
+    }
+
+    .btn-book-session-link:hover {
+      background: var(--cr-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px var(--cr-glow);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       4. TOAST NOTIFICATION
+       ═══════════════════════════════════════════════════════════ */
+    .toast-pill {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
       background: var(--ink);
       color: var(--bg);
+      padding: 14px 28px;
       border-radius: 999px;
-      text-decoration: none;
       font-family: var(--font-primary);
+      font-size: 0.84rem;
       font-weight: 700;
-      font-size: 0.92rem;
       letter-spacing: 0.04em;
-      transition: all .25s var(--sp);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.4s var(--sp), opacity 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .return-pill:hover {
-      background: var(--cr);
-      transform: translateY(-3px);
-      box-shadow: 0 14px 36px var(--cr-glow);
+    /* ═══════════════════════════════════════════════════════════
+       4. DEDICATED 30-MINUTE STRATEGY SESSION SECTION
+       ═══════════════════════════════════════════════════════════ */
+    #session-booking-sec {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(28px, 4.5vh, 52px) clamp(24px, 4vw, 68px);
+      box-sizing: border-box;
+      background: var(--bg);
+      position: relative;
     }
 
-    .return-pill .arr {
-      transition: transform .25s var(--sp);
-    }
-
-    .return-pill:hover .arr {
-      transform: translate(3px, -3px);
-    }
-
-    /* ── Minimal Bottom Sub-Bar ── */
-    .bottom-bar {
+    .session-booking-container {
       width: 100%;
-      max-width: 1500px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(16px, 2.6vh, 26px);
+    }
+
+    .session-booking-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 26px;
+      box-shadow: 0 18px 52px rgba(0, 0, 0, 0.24);
+      display: grid;
+      grid-template-columns: 375px 1fr;
+      min-height: 460px;
+      overflow: visible;
+      position: relative;
+    }
+
+    [data-theme="light"] .session-booking-card {
+      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Left Column: Calendar */
+    .sb-calendar-col {
+      padding: clamp(20px, 2.8vh, 30px) clamp(18px, 2.2vw, 26px);
+      background: var(--card-rail);
+      border-right: 1px solid var(--rule);
+      border-top-left-radius: 26px;
+      border-bottom-left-radius: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .sb-cal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: 'Space Mono', var(--font-secondary), monospace;
-      font-size: 0.74rem;
-      color: var(--ink-dim);
-      letter-spacing: 0.08em;
-      z-index: 2;
+      gap: 8px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--rule);
+      white-space: nowrap;
     }
 
-    .bottom-bar a {
+    .sb-month-title {
+      font-family: var(--font-primary);
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sb-tz-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--ink-dim);
+      font-family: var(--font-primary);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sb-tz-badge span {
+      white-space: nowrap;
+    }
+
+    .sb-tz-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+
+    .sb-weekdays-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-family: var(--font-primary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--ink-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .sb-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    .sb-day-cell {
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink);
+      background: transparent;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .sb-day-cell:hover:not(.disabled) {
+      background: var(--card-hover);
+      border-color: var(--rule-m);
+      transform: scale(1.05);
+    }
+
+    .sb-day-cell.active {
+      background: var(--cr) !important;
+      color: #fff !important;
+      font-weight: 800;
+      border-color: var(--cr) !important;
+      box-shadow: 0 4px 14px var(--cr-glow);
+    }
+
+    .sb-day-cell.today {
+      border-color: var(--cr-glow);
+      font-weight: 700;
+    }
+
+    .sb-day-cell.disabled {
+      color: var(--ink-dim);
+      opacity: 0.22;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .sb-day-cell.booked {
+      color: var(--ink-dim);
+      opacity: 0.42;
+      text-decoration: line-through;
+      cursor: not-allowed;
+      position: relative;
+    }
+
+    .sb-day-cell.booked::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--cr);
+      opacity: 0.9;
+    }
+
+    .sb-selected-date-banner {
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sdb-date-label {
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-dim);
+    }
+
+    .sdb-date-val {
+      font-family: var(--font-primary);
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--ink);
+    }
+
+    /* Right Column: Time Slots & Inputs */
+    .sb-form-col {
+      padding: clamp(20px, 2.8vh, 30px) clamp(22px, 2.8vw, 34px);
+      border-top-right-radius: 26px;
+      border-bottom-right-radius: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+      position: relative;
+    }
+
+    .sb-slots-block {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sb-slots-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .sb-slots-title {
+      font-family: var(--font-primary);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .sb-slots-count {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--cr);
+      background: var(--cr-lo);
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .sb-times-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sb-time-chip {
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--rule-m);
+      background: var(--card-alt);
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sb-time-chip:hover {
+      border-color: var(--rule-heavy);
+      transform: translateY(-2px);
+    }
+
+    .sb-time-chip.active {
+      background: var(--cr);
+      color: #fff;
+      border-color: var(--cr);
+      box-shadow: 0 4px 16px var(--cr-glow);
+    }
+
+    .sb-booking-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sb-inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 14px;
+    }
+
+    .sb-inputs-grid .input-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .sb-inputs-grid .in-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--ink-dim);
+    }
+
+    .sb-inputs-grid .text-input-luxury {
+      height: 40px;
+      padding: 0 14px;
+      font-size: 0.84rem;
+      border-radius: 10px;
+    }
+
+    /* ── Luxury Custom Select Dropdown ── */
+    .luxury-custom-select {
+      position: relative;
+      width: 100%;
+    }
+
+    .luxury-select-trigger {
+      width: 100%;
+      height: 40px;
+      padding: 0 14px;
+      background: var(--card-alt);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 10px;
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.25s var(--sp);
+      text-align: left;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .luxury-select-trigger:hover {
+      border-color: var(--rule-heavy);
+      background: var(--card-hover);
+    }
+
+    .luxury-select-trigger.open {
+      border-color: var(--cr);
+      background: var(--card-bg);
+      box-shadow: 0 0 0 3px var(--cr-glow);
+    }
+
+    .lst-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lst-chevron {
+      color: var(--ink-dim);
+      transition: transform 0.25s var(--sp), color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .luxury-select-trigger.open .lst-chevron {
+      transform: rotate(180deg);
+      color: var(--cr);
+    }
+
+    .luxury-select-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-heavy);
+      border-radius: 12px;
+      padding: 5px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-6px);
+      transition: opacity 0.2s var(--sp), transform 0.2s var(--sp), visibility 0.2s;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+    }
+
+    .luxury-select-dropdown.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .luxury-select-opt {
+      padding: 9px 12px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-mid);
+      cursor: pointer;
+      transition: all 0.16s;
+      user-select: none;
+    }
+
+    .luxury-select-opt:hover {
+      background: var(--card-hover);
+      color: var(--ink);
+    }
+
+    .luxury-select-opt.active {
+      background: var(--cr-lo);
+      color: var(--cr);
+      font-weight: 700;
+    }
+
+    .lso-check {
+      opacity: 0;
+      font-size: 0.8rem;
+      color: var(--cr);
+      transition: opacity 0.16s;
+    }
+
+    .luxury-select-opt.active .lso-check {
+      opacity: 1;
+    }
+
+    .btn-confirm-session {
+      height: 44px;
+      padding: 0 32px;
+      border-radius: 999px;
+      border: none;
+      background: var(--cr);
+      color: #fff;
+      font-family: var(--font-primary);
+      font-size: 0.86rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 8px 24px var(--cr-glow);
+      transition: all 0.25s var(--sp);
+      margin-top: 2px;
+      width: fit-content;
+    }
+
+    .btn-confirm-session:hover {
+      background: var(--cr-bright);
+      transform: none;
+      box-shadow: 0 10px 28px var(--cr-glow);
+    }
+
+    @media (max-width: 860px) {
+      #session-booking-sec {
+        height: auto;
+        min-height: 100vh;
+        padding: 48px 20px;
+      }
+      .session-booking-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .sb-calendar-col {
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 26px;
+      }
+      .sb-form-col {
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 26px;
+      }
+      .sb-inputs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       5. MODERN EDITORIAL LUXURY EXIT FOOTER
+       ═══════════════════════════════════════════════════════════ */
+    #footer-driver {
+      position: relative;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(48px, 6vh, 80px) clamp(24px, 3.5vw, 52px);
+      box-sizing: border-box;
+      z-index: 10;
+    }
+
+    .footer-luxury-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: clamp(36px, 5vw, 64px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
+      padding: clamp(52px, 6.5vh, 76px) clamp(40px, 5vw, 72px) clamp(16px, 2vh, 24px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1640px;
+      min-height: clamp(560px, 78vh, 740px);
+      margin: auto;
+      gap: clamp(72px, 11vh, 130px);
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .f-header-grid {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr 1.3fr 1.4fr;
+      gap: clamp(28px, 4vw, 56px);
+      align-items: flex-start;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      max-width: 340px;
+    }
+
+    .f-col-label {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 20px;
+    }
+
+    .f-links-clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .f-links-clean a {
+      font-family: var(--font-primary);
+      font-weight: 500;
+      font-size: 0.94rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color .2s, transform .2s;
+      display: inline-block;
+    }
+
+    .f-links-clean a:hover {
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    .f-social-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .f-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all .25s var(--sp);
+    }
+
+    .f-chip:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .f-chip .f-chip-icon {
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .f-chip .f-chip-icon svg {
+      width: 13px;
+      height: 13px;
+      display: block;
+    }
+
+    .f-cta-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f-action-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: transform .25s var(--sp), box-shadow .25s;
+    }
+
+    .f-action-pill:hover {
+      transform: translateY(-3px);
+    }
+
+    .f-action-pill.cta-primary {
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(200, 16, 46, 0.22);
+    }
+
+    .f-action-pill.cta-secondary {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+    }
+
+    .f-action-pill.cta-secondary:hover {
+      border-color: var(--ink);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .f-action-txt {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .f-action-heading {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.96rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f-action-sub {
+      font-family: var(--font-primary);
+      font-size: 0.74rem;
+      opacity: 0.78;
+    }
+
+    .f-action-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .cta-primary .f-action-arrow {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .cta-secondary .f-action-arrow {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line ── */
+    .f-bottom-cluster {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: auto;
+    }
+
+    .f-giant-cut-wrap {
+      width: 100%;
+      height: clamp(34px, 5.2vw, 84px);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-start;
+      position: relative;
+      margin: 0;
+      padding: 0;
+      pointer-events: none;
+      user-select: none;
+      transform-origin: center bottom;
+      will-change: height, transform;
+    }
+
+    .f-giant-cut-svg {
+      width: 100%;
+      height: clamp(34px, 5.2vw, 84px);
+      display: block;
+      color: var(--ink);
+      overflow: hidden;
+      transform-origin: center bottom;
+      will-change: height, transform;
+    }
+
+    .f-giant-cut-svg text {
+      transform-origin: center bottom;
+      will-change: transform;
+    }
+
+    /* ── Minimal Sub-Footer Meta Bar with Horizontal Line ── */
+    .f-meta-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 18px;
+      border-top: 1.5px solid var(--rule);
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin: 0;
+    }
+
+    .f-meta-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .f-meta-links a {
       color: var(--ink-dim);
       text-decoration: none;
       transition: color .2s;
     }
 
-    .bottom-bar a:hover {
+    .f-meta-links a:hover {
       color: var(--cr);
     }
 
-    @media (max-width: 600px) {
-      .bottom-bar {
+    .f-credit-author {
+      font-weight: 700;
+      color: var(--ink-mid);
+      transition: color .2s;
+    }
+
+    .f-meta-links a:hover .f-credit-author {
+      color: var(--cr);
+    }
+
+    .f-live-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .f-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      display: inline-block;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      animation: fStatusPulse 2s infinite ease-in-out;
+    }
+
+    @keyframes fStatusPulse {
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.4;
+        transform: scale(0.85);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .f-header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .f-header-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .f-meta-bar {
         flex-direction: column;
-        gap: 8px;
-        text-align: center;
+        gap: 12px;
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- Custom Cursor -->
+  <!-- Custom Mouse Cursor -->
   <div class="c-dot" id="cDot"></div>
   <div class="c-ring" id="cRing"></div>
 
-  <!-- Minimal Top Bar -->
-  <header class="top-bar">
-    <a href="index.html" class="brand-link">
-      <span class="brand-title">1928</span>
-      <span class="brand-dot"></span>
-    </a>
+  <!-- ═══════════════════════════════════════════════════════════
+       1. HERO SECTION (CENTERED 100VH CANVAS - INTACT)
+       ═══════════════════════════════════════════════════════════ -->
+  <header id="contact-hero">
+    <div class="hero-grid-backdrop"></div>
+
+    <div class="hero-monument-wrap">
+      <div class="hero-tagline-pill">
+        <span class="hero-dot-pulse"></span> ARCHITECTURAL COMMISSIONS &amp; ADVISORY
+      </div>
+
+      <h1 class="hero-main-title">
+        WE SHAPE THE <br />
+        <em>UNPRECEDENTED.</em>
+      </h1>
+
+      <p class="hero-subtitle-text">
+        We partner with visionary founders and category-defining enterprises across India and worldwide. Configure your project parameters below to initiate a confidential brief.
+      </p>
+
+      <a href="#start-project-sec" class="hero-explore-btn">
+        <span>Start Project</span>
+        <span class="arr">↓</span>
+      </a>
+    </div>
   </header>
 
-  <!-- Creative Centered Label Statement -->
-  <main class="center-container">
-    <div class="status-pill">
-      <span class="pulse-dot"></span>
-      <span>1928 Creative Studio</span>
+  <!-- Clean Subtle Section Divider Line -->
+  <div class="section-divider-line"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. FULL-SCREEN COMMISSION SECTION (BALANCED HEIGHT)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="start-project-sec">
+    <div class="fullscreen-project-container">
+
+      <!-- Header Row with One-Line Description & Right Badge -->
+      <div class="fs-sec-header">
+        <div class="header-left-group">
+          <h2 class="fs-sec-title">Start a Project.</h2>
+          <p class="fs-sec-desc">Specify your engagement parameters to initiate a confidential studio brief.</p>
+        </div>
+        <div class="fs-right-badge">
+          <span class="hero-dot-pulse"></span>
+          <span>Confidential Brief · Partner Review</span>
+        </div>
+      </div>
+
+      <!-- Proportioned Monolithic Stepper Card (Integrated Left Rail) -->
+      <div class="unified-monolith-card" id="briefMonolithCard">
+
+        <!-- ── Integrated Left Rail: Animated Expanding Word Stepper ── -->
+        <nav class="integrated-left-rail" aria-label="Project stages">
+          <button type="button" class="rail-step-tab active" data-step="1">
+            <span class="rail-step-num">01</span>
+            <span class="rail-step-word">Scope</span>
+          </button>
+
+          <button type="button" class="rail-step-tab" data-step="2">
+            <span class="rail-step-num">02</span>
+            <span class="rail-step-word">Disciplines</span>
+          </button>
+
+          <button type="button" class="rail-step-tab" data-step="3">
+            <span class="rail-step-num">03</span>
+            <span class="rail-step-word">Allocation</span>
+          </button>
+
+          <button type="button" class="rail-step-tab" data-step="4">
+            <span class="rail-step-num">04</span>
+            <span class="rail-step-word">Credentials</span>
+          </button>
+        </nav>
+
+        <!-- ── Main Form Viewport ── -->
+        <div class="main-form-viewport">
+
+          <!-- Inner Form Stage Body -->
+          <div class="form-scroll-inner">
+
+            <!-- ══ STEP 1: Engagement Scope ══ -->
+            <div class="step-pane-section active" id="stepPane1">
+              <h3 class="pane-headline">Engagement Classification</h3>
+              <p class="pane-caption">Select the primary strategic horizon for this commission.</p>
+
+              <div class="scope-options-grid" id="scopeGrid">
+                <div class="scope-option-card active" data-mandate="Brand Transformation">
+                  <div class="soc-left-group">
+                    <div class="soc-index">01 / BRANDING</div>
+                    <div class="soc-title">Brand Identity</div>
+                  </div>
+                  <div class="soc-desc">Comprehensive brand architecture, visual identity &amp; semiotics.</div>
+                  <div class="soc-status-icon">✓</div>
+                </div>
+
+                <div class="scope-option-card" data-mandate="Computational WebGL &amp; 3D">
+                  <div class="soc-left-group">
+                    <div class="soc-index">02 / DIGITAL</div>
+                    <div class="soc-title">3D &amp; Digital</div>
+                  </div>
+                  <div class="soc-desc">Custom GLSL shaders, kinetic 3D platforms &amp; real-time engines.</div>
+                  <div class="soc-status-icon">✓</div>
+                </div>
+
+                <div class="scope-option-card" data-mandate="Spatial &amp; Retail Flagship">
+                  <div class="soc-left-group">
+                    <div class="soc-index">03 / SPATIAL</div>
+                    <div class="soc-title">Spatial Design</div>
+                  </div>
+                  <div class="soc-desc">Flagship retail environments &amp; tactile spatial lighting systems.</div>
+                  <div class="soc-status-icon">✓</div>
+                </div>
+
+                <div class="scope-option-card" data-mandate="Creative Director Retainer">
+                  <div class="soc-left-group">
+                    <div class="soc-index">04 / ADVISORY</div>
+                    <div class="soc-title">CD Retainer</div>
+                  </div>
+                  <div class="soc-desc">Fractional creative direction, brand stewardship &amp; quarterly sprints.</div>
+                  <div class="soc-status-icon">✓</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ STEP 2: Creative Disciplines ══ -->
+            <div class="step-pane-section" id="stepPane2">
+              <h3 class="pane-headline">Specialized Disciplines</h3>
+              <p class="pane-caption">Choose all disciplines required for this engagement.</p>
+
+              <div class="disciplines-chips-grid" id="discGrid">
+                <div class="disc-item-chip selected" data-disc="Brand Architecture &amp; Identity">
+                  <span>Brand Architecture</span>
+                  <span class="disc-dot-check">✓</span>
+                </div>
+                <div class="disc-item-chip selected" data-disc="Computational WebGL &amp; 3D">
+                  <span>Computational 3D &amp; WebGL</span>
+                  <span class="disc-dot-check">✓</span>
+                </div>
+                <div class="disc-item-chip" data-disc="Spatial Systems &amp; Flagship">
+                  <span>Spatial Systems</span>
+                  <span class="disc-dot-check">✓</span>
+                </div>
+                <div class="disc-item-chip" data-disc="Kinetic Motion Graphics">
+                  <span>Kinetic Motion</span>
+                  <span class="disc-dot-check">✓</span>
+                </div>
+                <div class="disc-item-chip" data-disc="Luxury Packaging Physics">
+                  <span>Luxury Packaging</span>
+                  <span class="disc-dot-check">✓</span>
+                </div>
+                <div class="disc-item-chip" data-disc="Enterprise Digital Platform">
+                  <span>Digital Flagship Platform</span>
+                  <span class="disc-dot-check">✓</span>
+                </div>
+                <div class="disc-item-chip" data-disc="Generative AI &amp; Sound">
+                  <span>Generative AI &amp; Sound</span>
+                  <span class="disc-dot-check">✓</span>
+                </div>
+                <div class="disc-item-chip" data-disc="Editorial &amp; Print">
+                  <span>Editorial &amp; Print</span>
+                  <span class="disc-dot-check">✓</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ STEP 3: Capital Allocation (INR Only) ══ -->
+            <div class="step-pane-section" id="stepPane3">
+              <h3 class="pane-headline">Capital Allocation (INR ₹)</h3>
+              <p class="pane-caption">Select your target budget tier and optional consultation window.</p>
+
+              <div class="tiers-horizontal-row" id="tierGrid">
+                <div class="tier-option-box" data-tier="&lt; ₹15 Lakhs">
+                  <div class="tob-amount">&lt; ₹15 Lakhs</div>
+                  <div class="tob-tier-name">Targeted Sprint</div>
+                </div>
+                <div class="tier-option-box active" data-tier="₹15L – ₹30 Lakhs">
+                  <div class="tob-amount">₹15L – ₹30 Lakhs</div>
+                  <div class="tob-tier-name">Core Evolution</div>
+                </div>
+                <div class="tier-option-box" data-tier="₹30L – ₹60 Lakhs">
+                  <div class="tob-amount">₹30L – ₹60 Lakhs</div>
+                  <div class="tob-tier-name">Flagship Venture</div>
+                </div>
+                <div class="tier-option-box" data-tier="₹60 Lakhs+">
+                  <div class="tob-amount">₹60 Lakhs+</div>
+                  <div class="tob-tier-name">Comprehensive</div>
+                </div>
+              </div>
+
+              <div class="timeline-container-wrap">
+                <div class="timeline-label-title">Target Engagement Timeline</div>
+                <div class="timeline-pills-flow" id="timelinePills">
+                  <button type="button" class="timeline-pill active">&lt; 1 Month (Immediate)</button>
+                  <button type="button" class="timeline-pill">1 – 3 Months (Standard)</button>
+                  <button type="button" class="timeline-pill">3 – 6 Months (Strategic)</button>
+                  <button type="button" class="timeline-pill">Flexible / Exploring</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ STEP 4: Credentials & Brief ══ -->
+            <div class="step-pane-section" id="stepPane4">
+              <h3 class="pane-headline">Credentials &amp; Brief</h3>
+              <p class="pane-caption">Your particulars and project brief.</p>
+
+              <form id="directBriefForm" onsubmit="return false;" novalidate>
+                <div class="principal-inputs-grid">
+                  <div class="input-field-group" id="grpName">
+                    <label class="in-label" for="fName">Full Name *</label>
+                    <input type="text" id="fName" class="text-input-luxury" placeholder="e.g. Alexander Vance" required />
+                    <span class="field-error-msg">Please enter your full name</span>
+                  </div>
+
+                  <div class="input-field-group" id="grpEmail">
+                    <label class="in-label" for="fEmail">Corporate Email *</label>
+                    <input type="email" id="fEmail" class="text-input-luxury" placeholder="e.g. example@gmail.com" required />
+                    <span class="field-error-msg">Please enter a valid email address</span>
+                  </div>
+
+                  <div class="input-field-group" id="grpOrg">
+                    <label class="in-label" for="fOrg">Enterprise / Brand *</label>
+                    <input type="text" id="fOrg" class="text-input-luxury" placeholder="e.g. 1928 Creative Studio" required />
+                    <span class="field-error-msg">Please enter your brand or enterprise name</span>
+                  </div>
+
+                  <div class="input-field-group" id="grpPhone">
+                    <label class="in-label" for="fPhone">Contact Number *</label>
+                    <div class="phone-input-combo" id="phoneCombo">
+                      <!-- Country Code Selector Trigger -->
+                      <div class="country-code-picker" id="countryCodePicker">
+                        <button type="button" class="country-code-btn" id="countryCodeBtn" aria-haspopup="listbox" aria-expanded="false">
+                          <span class="cc-flag" id="ccFlag">🇮🇳</span>
+                          <span class="cc-code" id="ccCode">+91</span>
+                          <svg class="cc-chevron" viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                          </svg>
+                        </button>
+                        <!-- Country Code Dropdown -->
+                        <div class="country-code-dropdown" id="countryCodeDropdown" role="listbox">
+                          <div class="cc-option active" data-code="+91" data-flag="🇮🇳" data-country="India">
+                            <span class="cco-flag">🇮🇳</span>
+                            <span class="cco-name">India</span>
+                            <span class="cco-code">+91</span>
+                          </div>
+                          <div class="cc-option" data-code="+1" data-flag="🇺🇸" data-country="United States">
+                            <span class="cco-flag">🇺🇸</span>
+                            <span class="cco-name">USA</span>
+                            <span class="cco-code">+1</span>
+                          </div>
+                          <div class="cc-option" data-code="+44" data-flag="🇬🇧" data-country="United Kingdom">
+                            <span class="cco-flag">🇬🇧</span>
+                            <span class="cco-name">UK</span>
+                            <span class="cco-code">+44</span>
+                          </div>
+                          <div class="cc-option" data-code="+971" data-flag="🇦🇪" data-country="UAE">
+                            <span class="cco-flag">🇦🇪</span>
+                            <span class="cco-name">UAE</span>
+                            <span class="cco-code">+971</span>
+                          </div>
+                          <div class="cc-option" data-code="+65" data-flag="🇸🇬" data-country="Singapore">
+                            <span class="cco-flag">🇸🇬</span>
+                            <span class="cco-name">Singapore</span>
+                            <span class="cco-code">+65</span>
+                          </div>
+                          <div class="cc-option" data-code="+49" data-flag="🇩🇪" data-country="Germany">
+                            <span class="cco-flag">🇩🇪</span>
+                            <span class="cco-name">Germany</span>
+                            <span class="cco-code">+49</span>
+                          </div>
+                          <div class="cc-option" data-code="+61" data-flag="🇦🇺" data-country="Australia">
+                            <span class="cco-flag">🇦🇺</span>
+                            <span class="cco-name">Australia</span>
+                            <span class="cco-code">+61</span>
+                          </div>
+                          <div class="cc-option" data-code="+41" data-flag="🇨🇭" data-country="Switzerland">
+                            <span class="cco-flag">🇨🇭</span>
+                            <span class="cco-name">Switzerland</span>
+                            <span class="cco-code">+41</span>
+                          </div>
+                        </div>
+                      </div>
+                      <input type="tel" id="fPhone" class="text-input-luxury phone-number-field" placeholder="98765 00000" maxlength="10" inputmode="numeric" required />
+                    </div>
+                    <span class="field-error-msg">Please enter a valid 10-digit number</span>
+                  </div>
+
+                  <div class="input-field-group full" id="grpVision">
+                    <label class="in-label" for="fVision">Project Vision &amp; Strategic Ambition *</label>
+                    <textarea id="fVision" class="text-input-luxury" placeholder="Describe the strategic objectives, core challenges, and architectural scale..." required></textarea>
+                    <span class="field-error-msg">Please describe your project objectives</span>
+                  </div>
+                </div>
+
+                <!-- NDA Toggle -->
+                <div class="nda-agreement-line checked" id="ndaCheck">
+                  <div class="nda-sq-box">✓</div>
+                  <div>Execute <strong>Bilateral Non-Disclosure Agreement (NDA)</strong> prior to review.</div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+          <!-- Form Bottom Action Navigation -->
+          <div class="form-action-nav-row" id="formActionRow">
+            <button type="button" class="btn-step-prev" id="btnPrev" style="visibility:hidden;">← Back</button>
+            <button type="button" class="btn-step-next" id="btnNext">
+              <span>Continue</span>
+              <span>→</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- ── Full-Card Monolith Success Overlay (Covers Entire Card + Left Rail) ── -->
+        <div class="monolith-success-overlay" id="monolithSuccessOverlay">
+          <!-- Expanding Crimson Surface Layer -->
+          <div class="mso-expand-bg" id="msoExpandBg"></div>
+
+          <!-- Ambient Glass / Light Refraction Layer -->
+          <div class="mso-ambient-glow"></div>
+
+          <!-- Centered Success Content -->
+          <div class="mso-content-box" id="msoContentBox">
+            <div class="mso-badge-circle">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="mso-header-block">
+              <h3 class="mso-title">BRIEF SUBMITTED.</h3>
+              <p class="mso-desc">Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.</p>
+            </div>
+            <button type="button" class="btn-reset-brief-luxury" id="btnResetBrief">
+              <span>Submit Another Brief</span>
+              <span class="arr">↺</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
     </div>
+  </section>
 
-    <h1 class="statement-title">
-      This page is under <br />
-      <em>development.</em>
-    </h1>
+  <!-- Clean Subtle Section Divider Line -->
+  <div class="section-divider-line"></div>
 
-    <a href="index.html" class="return-pill">
-      <span>Return to Homepage</span>
-      <span class="arr">↗</span>
-    </a>
-  </main>
+  <!-- ═══════════════════════════════════════════════════════════
+       3. DEDICATED 30-MINUTE STRATEGY SESSION SECTION
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="session-booking-sec">
+    <div class="session-booking-container">
 
+      <!-- Section Top Header -->
+      <div class="fs-sec-header">
+        <div class="header-left-group">
+          <h2 class="fs-sec-title">Strategy Session.</h2>
+          <p class="fs-sec-desc">Schedule a 30-minute direct dialogue with our design leadership to evaluate project scope.</p>
+        </div>
+        <div class="fs-right-badge">
+          <span class="hero-dot-pulse"></span>
+          <span>30 Min · Direct Executive Line</span>
+        </div>
+      </div>
+
+      <!-- Monolithic Luxury Booking Card -->
+      <div class="session-booking-card">
+
+        <!-- Left Column: Interactive Calendar & Date Details -->
+        <div class="sb-calendar-col">
+          <div class="sb-cal-header">
+            <div class="sb-month-title" id="calMonthTitle">September 2026</div>
+            <div class="sb-tz-badge">
+              <span class="sb-tz-dot"></span>
+              <span>Asia/Kolkata (GMT+5:30)</span>
+            </div>
+          </div>
+
+          <!-- Calendar Weekday Names -->
+          <div class="sb-weekdays-row">
+            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+          </div>
+
+          <!-- Calendar Days Grid -->
+          <div class="sb-days-grid" id="sbDaysGrid">
+            <!-- Populated dynamically with interactive dates -->
+          </div>
+
+          <!-- Selected Date Info Summary Banner -->
+          <div class="sb-selected-date-banner" id="selectedDateBanner">
+            <div class="sdb-date-label">Selected Session Window</div>
+            <div class="sdb-date-val" id="sdbDateVal">Monday, Sep 7, 2026 · 02:30 PM IST</div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Time Slots & Confirmation Form -->
+        <div class="sb-form-col">
+          <div class="sb-slots-block" id="sbSlotsBlock">
+            <div class="sb-slots-header">
+              <span class="sb-slots-title">Available Windows (30 Min)</span>
+              <span class="sb-slots-count" id="sbSlotsCount">5 Slots Open</span>
+            </div>
+
+            <div class="sb-times-grid" id="sbTimesGrid">
+              <button type="button" class="sb-time-chip" data-time="11:00 AM IST">11:00 AM IST</button>
+              <button type="button" class="sb-time-chip active" data-time="02:30 PM IST">02:30 PM IST</button>
+              <button type="button" class="sb-time-chip" data-time="04:30 PM IST">04:30 PM IST</button>
+              <button type="button" class="sb-time-chip" data-time="06:00 PM IST">06:00 PM IST</button>
+              <button type="button" class="sb-time-chip" data-time="08:00 PM IST">08:00 PM IST</button>
+            </div>
+          </div>
+
+          <form id="sessionBookingForm" class="sb-booking-form" onsubmit="return false;" novalidate>
+            <div class="sb-inputs-grid">
+              <div class="input-field-group" id="grpSbName">
+                <label class="in-label" for="sbName">Full Name *</label>
+                <input type="text" id="sbName" class="text-input-luxury" placeholder="e.g. Alexander Vance" required />
+                <span class="field-error-msg">Please enter your full name</span>
+              </div>
+              <div class="input-field-group" id="grpSbEmail">
+                <label class="in-label" for="sbEmail">Corporate Email *</label>
+                <input type="email" id="sbEmail" class="text-input-luxury" placeholder="e.g. example@gmail.com" required />
+                <span class="field-error-msg">Please enter a valid corporate email</span>
+              </div>
+              <div class="input-field-group" id="grpSbBrand">
+                <label class="in-label" for="sbBrand">Brand / Venture *</label>
+                <input type="text" id="sbBrand" class="text-input-luxury" placeholder="e.g. 1928 Creative Studio" required />
+                <span class="field-error-msg">Please enter your brand name</span>
+              </div>
+              <div class="input-field-group">
+                <label class="in-label">Discussion Focus</label>
+                <div class="luxury-custom-select" id="luxurySelectTopic">
+                  <input type="hidden" id="sbTopic" value="Brand Identity & Strategy" />
+                  <button type="button" class="luxury-select-trigger" id="selectTopicTrigger" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="lst-label" id="selectTopicLabel">Brand Identity &amp; Strategy</span>
+                    <svg class="lst-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                  <div class="luxury-select-dropdown" id="selectTopicDropdown" role="listbox">
+                    <div class="luxury-select-opt active" data-value="Brand Identity & Strategy">
+                      <span class="lso-text">Brand Identity &amp; Strategy</span>
+                      <span class="lso-check">✓</span>
+                    </div>
+                    <div class="luxury-select-opt" data-value="Digital Experience & UI/UX">
+                      <span class="lso-text">Digital Experience &amp; UI/UX</span>
+                      <span class="lso-check">✓</span>
+                    </div>
+                    <div class="luxury-select-opt" data-value="Performance Marketing Creative">
+                      <span class="lso-text">Performance Marketing Creative</span>
+                      <span class="lso-check">✓</span>
+                    </div>
+                    <div class="luxury-select-opt" data-value="Full Studio Retainer / Advisory">
+                      <span class="lso-text">Full Studio Retainer / Advisory</span>
+                      <span class="lso-check">✓</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="btn-confirm-session" id="btnConfirmSession">
+              <span>Confirm Strategy Session</span>
+              <span class="arr">↗</span>
+            </button>
+          </form>
+
+          <!-- Strategy Session Success Confirmation View (Ultra-Clean Minimal) -->
+          <div class="sb-success-view" id="sbSuccessView" style="display:none;">
+            <div class="bsv-badge-circle">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <div class="bsv-header-block">
+              <h3 class="bsv-title">SESSION CONFIRMED.</h3>
+              <p class="bsv-desc">Thank you. Your 30-minute dialogue with our design leadership is scheduled. Calendar invitation delivered to your corporate email.</p>
+            </div>
+            <button type="button" class="btn-reset-brief" id="btnResetSession">
+              <span>Book Another Session</span>
+              <span class="arr">↺</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       GLOBAL FOOTER PLACEHOLDER (Shared Footer Loader)
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="footer-placeholder"></div>
+
+  <!-- Toast Notification Element -->
+  <div class="toast-pill" id="toastPill">
+    <span class="toast-dot"></span>
+    <span id="toastMsg">Copied to clipboard</span>
+  </div>
 
   <!-- Floating Bottom-Right Theme Toggle Button -->
   <button id="theme-fab" aria-label="Toggle light/dark theme" title="Toggle Theme">
-    <!-- Sun Icon (shown in Dark mode to prompt switching to Light) -->
     <svg class="icon-sun" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="5"></circle>
       <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -372,29 +2837,63 @@
       <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
       <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
     </svg>
-    <!-- Moon Icon (shown in Light mode to prompt switching to Dark) -->
     <svg class="icon-moon" viewBox="0 0 24 24">
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
     </svg>
   </button>
 
+  <!-- Dynamic Footer Loader -->
+  <script src="footer-loader.js"></script>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PAGE SCRIPT: SMOOTH STEPPER & INTERACTIVE LOGIC
+       ═══════════════════════════════════════════════════════════ -->
   <script>
     (function () {
       'use strict';
 
-      // Live Clock
-      function updateClock() {
-        const clockEl = document.getElementById('liveClock');
-        if (!clockEl) return;
-        const now = new Date();
-        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
-        const timeStr = now.toLocaleTimeString('en-US', options);
-        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
+      // ── Web Audio Synthesizer for Luxury Haptic Feedback ──
+      let audioCtx = null;
+      function playLuxuryHaptic(freq = 520, type = 'sine', duration = 0.04) {
+        try {
+          if (!audioCtx) {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          }
+          if (audioCtx.state === 'suspended') {
+            audioCtx.resume();
+          }
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+          gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {
+          // Silent fallback
+        }
       }
-      updateClock();
-      setInterval(updateClock, 30000);
 
-      // Custom Cursor
+      // ── Toast Notification System ──
+      const toast = document.getElementById('toastPill');
+      const toastMsg = document.getElementById('toastMsg');
+      let toastTimer = null;
+
+      function showToast(text) {
+        if (!toast) return;
+        toastMsg.textContent = text;
+        toast.classList.add('show');
+        playLuxuryHaptic(880, 'sine', 0.08);
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2800);
+      }
+
+      // ── Custom Mouse Cursor ──
       const cDot = document.getElementById('cDot');
       const cRing = document.getElementById('cRing');
       let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
@@ -420,7 +2919,622 @@
       }
       renderCursor();
 
-      // Floating Theme Toggle Sync
+      // Magnetic Cursor Hover
+      function attachCursorHover() {
+        document.querySelectorAll('button, a, .scope-option-card, .disc-item-chip, .tier-option-box, .timeline-pill, .sb-day-cell, .sb-time-chip, .btn-confirm-session, .rail-step-tab, .luxury-select-trigger, .luxury-select-opt, .f-chip, .f-action-pill').forEach(btn => {
+          if (btn.dataset.cursorBound) return;
+          btn.dataset.cursorBound = 'true';
+          btn.addEventListener('mouseenter', () => {
+            if (cRing) {
+              cRing.style.width = '52px';
+              cRing.style.height = '52px';
+              cRing.style.borderColor = 'var(--cr-bright)';
+            }
+          });
+          btn.addEventListener('mouseleave', () => {
+            if (cRing) {
+              cRing.style.width = '34px';
+              cRing.style.height = '34px';
+              cRing.style.borderColor = 'var(--cr)';
+            }
+          });
+        });
+      }
+      attachCursorHover();
+      window.addEventListener('footerLoaded', attachCursorHover);
+
+      // ── Stepper Logic with Expanding Word Animation ──
+      let currentStep = 1;
+      const totalSteps = 4;
+
+      const btnPrev = document.getElementById('btnPrev');
+      const btnNext = document.getElementById('btnNext');
+
+      function navigateToStep(step) {
+        currentStep = step;
+
+        // Update Left Tabs (Expanding word on active, collapsed number on inactive)
+        document.querySelectorAll('.rail-step-tab').forEach((tab) => {
+          const tabStep = parseInt(tab.getAttribute('data-step'), 10);
+          tab.classList.toggle('active', tabStep === step);
+        });
+
+        // Update Right Form Panes
+        for (let i = 1; i <= totalSteps; i++) {
+          const pane = document.getElementById(`stepPane${i}`);
+          if (pane) pane.classList.toggle('active', i === step);
+        }
+
+        // Update Navigation Buttons
+        if (btnPrev) {
+          btnPrev.style.visibility = step === 1 ? 'hidden' : 'visible';
+        }
+
+        if (btnNext) {
+          if (step === totalSteps) {
+            btnNext.innerHTML = `<span>Submit Project Brief</span> <span>↗</span>`;
+          } else {
+            btnNext.innerHTML = `<span>Continue</span> <span>→</span>`;
+          }
+        }
+      }
+
+      // Input helper to clear error state on typing & Country Code Picker Logic
+      function setupFieldValidationClear() {
+        const fields = [
+          { id: 'fName', grpId: 'grpName' },
+          { id: 'fEmail', grpId: 'grpEmail' },
+          { id: 'fOrg', grpId: 'grpOrg' },
+          { id: 'fPhone', grpId: 'grpPhone' },
+          { id: 'fVision', grpId: 'grpVision' },
+          { id: 'sbName', grpId: 'grpSbName' },
+          { id: 'sbEmail', grpId: 'grpSbEmail' },
+          { id: 'sbBrand', grpId: 'grpSbBrand' }
+        ];
+
+        fields.forEach(f => {
+          const el = document.getElementById(f.id);
+          const grp = document.getElementById(f.grpId);
+          if (el && grp) {
+            el.addEventListener('input', () => {
+              el.classList.remove('input-error');
+              grp.classList.remove('has-error');
+            });
+          }
+        });
+
+        // Contact Line: Strict 10-Digit Numeric Input Filter (No letters, max 10 digits)
+        const phoneInput = document.getElementById('fPhone');
+        if (phoneInput) {
+          phoneInput.addEventListener('input', (e) => {
+            const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+            if (e.target.value !== digitsOnly) {
+              e.target.value = digitsOnly;
+              playLuxuryHaptic(360, 'sine', 0.02);
+            }
+          });
+        }
+
+        // Country Code Picker Logic
+        const ccBtn = document.getElementById('countryCodeBtn');
+        const ccDropdown = document.getElementById('countryCodeDropdown');
+        const ccFlag = document.getElementById('ccFlag');
+        const ccCode = document.getElementById('ccCode');
+
+        if (ccBtn && ccDropdown) {
+          ccBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = ccDropdown.classList.contains('open');
+            ccDropdown.classList.toggle('open', !isOpen);
+            ccBtn.classList.toggle('open', !isOpen);
+            ccBtn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+            playLuxuryHaptic(560, 'sine', 0.03);
+          });
+
+          document.querySelectorAll('.cc-option').forEach(opt => {
+            opt.addEventListener('click', (e) => {
+              e.stopPropagation();
+              const code = opt.getAttribute('data-code');
+              const flag = opt.getAttribute('data-flag');
+
+              if (ccCode) ccCode.textContent = code;
+              if (ccFlag) ccFlag.textContent = flag;
+
+              document.querySelectorAll('.cc-option').forEach(o => o.classList.remove('active'));
+              opt.classList.add('active');
+
+              ccDropdown.classList.remove('open');
+              ccBtn.classList.remove('open');
+              ccBtn.setAttribute('aria-expanded', 'false');
+              playLuxuryHaptic(620, 'sine', 0.03);
+
+              if (phoneInput) phoneInput.focus();
+            });
+          });
+
+          document.addEventListener('click', (e) => {
+            if (!document.getElementById('countryCodePicker')?.contains(e.target)) {
+              ccDropdown.classList.remove('open');
+              ccBtn.classList.remove('open');
+              ccBtn.setAttribute('aria-expanded', 'false');
+            }
+          });
+        }
+      }
+      setupFieldValidationClear();
+
+      // Email Validator Helper
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      // Next / Submit Button Action
+      if (btnNext) {
+        btnNext.addEventListener('click', () => {
+          if (currentStep < totalSteps) {
+            playLuxuryHaptic(640, 'sine', 0.04);
+            navigateToStep(currentStep + 1);
+          } else {
+            // Validate all Step 4 required fields
+            const nameEl = document.getElementById('fName');
+            const emailEl = document.getElementById('fEmail');
+            const orgEl = document.getElementById('fOrg');
+            const phoneEl = document.getElementById('fPhone');
+            const visionEl = document.getElementById('fVision');
+
+            const name = nameEl ? nameEl.value.trim() : '';
+            const email = emailEl ? emailEl.value.trim() : '';
+            const org = orgEl ? orgEl.value.trim() : '';
+            const phone = phoneEl ? phoneEl.value.trim() : '';
+            const vision = visionEl ? visionEl.value.trim() : '';
+
+            let hasError = false;
+            let firstInvalid = null;
+
+            function markInvalid(el, grpId) {
+              if (el) el.classList.add('input-error');
+              const grp = document.getElementById(grpId);
+              if (grp) grp.classList.add('has-error');
+              hasError = true;
+              if (!firstInvalid) firstInvalid = el;
+            }
+
+            if (!name) markInvalid(nameEl, 'grpName');
+            if (!email || !isValidEmail(email)) markInvalid(emailEl, 'grpEmail');
+            if (!org) markInvalid(orgEl, 'grpOrg');
+            if (!phone || phone.length !== 10) markInvalid(phoneEl, 'grpPhone');
+            if (!vision) markInvalid(visionEl, 'grpVision');
+
+            if (hasError) {
+              showToast('Please complete all required fields with valid details.');
+              playLuxuryHaptic(380, 'triangle', 0.08);
+              if (firstInvalid) firstInvalid.focus();
+              return;
+            }
+
+            btnNext.disabled = true;
+            btnNext.classList.add('is-loading');
+            btnNext.innerHTML = `<span class="btn-spinner"></span><span>Transmitting Brief...</span>`;
+            playLuxuryHaptic(720, 'sine', 0.08);
+
+            const monolithCard = document.getElementById('briefMonolithCard');
+            const successOverlay = document.getElementById('monolithSuccessOverlay');
+            const msoExpandBg = document.getElementById('msoExpandBg');
+
+            let originX = 85;
+            let originY = 90;
+            if (monolithCard && msoExpandBg) {
+              const cardRect = monolithCard.getBoundingClientRect();
+              const btnRect = btnNext.getBoundingClientRect();
+              originX = Math.max(0, Math.min(100, ((btnRect.left + btnRect.width / 2 - cardRect.left) / cardRect.width) * 100));
+              originY = Math.max(0, Math.min(100, ((btnRect.top + btnRect.height / 2 - cardRect.top) / cardRect.height) * 100));
+              msoExpandBg.style.clipPath = `circle(0% at ${originX.toFixed(1)}% ${originY.toFixed(1)}%)`;
+            }
+
+            if (successOverlay) {
+              successOverlay.classList.add('active');
+            }
+
+            // Soft expansion transition from submit button across entire card
+            setTimeout(() => {
+              if (msoExpandBg) {
+                msoExpandBg.style.clipPath = `circle(160% at ${originX.toFixed(1)}% ${originY.toFixed(1)}%)`;
+              }
+              if (successOverlay) {
+                successOverlay.classList.add('expanded');
+              }
+              showToast('Brief successfully submitted to studio partners.');
+              playLuxuryHaptic(880, 'triangle', 0.12);
+            }, 380);
+          }
+        });
+      }
+
+      // Reset Brief Handler
+      const btnResetBrief = document.getElementById('btnResetBrief');
+      if (btnResetBrief) {
+        btnResetBrief.addEventListener('click', () => {
+          const successOverlay = document.getElementById('monolithSuccessOverlay');
+          const msoExpandBg = document.getElementById('msoExpandBg');
+
+          if (successOverlay && msoExpandBg) {
+            successOverlay.classList.remove('expanded');
+            setTimeout(() => {
+              successOverlay.classList.remove('active');
+              msoExpandBg.style.clipPath = '';
+            }, 420);
+          }
+
+          const briefForm = document.getElementById('directBriefForm');
+          if (briefForm) briefForm.reset();
+
+          btnNext.classList.remove('is-loading');
+          btnNext.disabled = false;
+          btnNext.innerHTML = `<span>Submit Project Brief</span> <span>↗</span>`;
+
+          navigateToStep(1);
+          playLuxuryHaptic(580, 'sine', 0.03);
+        });
+      }
+
+      // Prev Button Action
+      if (btnPrev) {
+        btnPrev.addEventListener('click', () => {
+          if (currentStep > 1) {
+            playLuxuryHaptic(520, 'sine', 0.03);
+            navigateToStep(currentStep - 1);
+          }
+        });
+      }
+
+      // Left Stepper Click Action (Direct Jump)
+      document.querySelectorAll('.rail-step-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const step = parseInt(tab.getAttribute('data-step'), 10);
+          if (step) {
+            playLuxuryHaptic(580, 'sine', 0.03);
+            navigateToStep(step);
+          }
+        });
+      });
+
+      // Step 1: Scope Cards
+      document.querySelectorAll('#scopeGrid .scope-option-card').forEach(card => {
+        card.addEventListener('click', () => {
+          document.querySelectorAll('#scopeGrid .scope-option-card').forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+          playLuxuryHaptic(620, 'sine', 0.03);
+        });
+      });
+
+      // Step 2: Capabilities Chips
+      document.querySelectorAll('#discGrid .disc-item-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          chip.classList.toggle('selected');
+          playLuxuryHaptic(580, 'sine', 0.03);
+        });
+      });
+
+      // Step 3: Tiers
+      document.querySelectorAll('#tierGrid .tier-option-box').forEach(tier => {
+        tier.addEventListener('click', () => {
+          document.querySelectorAll('#tierGrid .tier-option-box').forEach(t => t.classList.remove('active'));
+          tier.classList.add('active');
+          playLuxuryHaptic(620, 'sine', 0.03);
+        });
+      });
+
+      // Step 3: Timeline Engagement Pills
+      document.querySelectorAll('#timelinePills .timeline-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          document.querySelectorAll('#timelinePills .timeline-pill').forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+          playLuxuryHaptic(600, 'sine', 0.03);
+        });
+      });
+
+      // Step 4: NDA Toggle
+      const ndaCheck = document.getElementById('ndaCheck');
+      if (ndaCheck) {
+        ndaCheck.addEventListener('click', () => {
+          ndaCheck.classList.toggle('checked');
+          playLuxuryHaptic(540, 'sine', 0.03);
+        });
+      }
+
+      // ═══════════════════════════════════════════════════════════
+      // DEDICATED 30-MIN STRATEGY SESSION: CALENDAR & BOOKING LOGIC
+      // ═══════════════════════════════════════════════════════════
+      const todayDay = 7; // Today is Sep 7, 2026
+      const bookedDays = [8, 9]; // Studio Admin backend integration: Fully booked dates
+
+      // Studio Admin backend integration: Available time windows per date
+      const dateSlotsRegistry = {
+        7: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'], // 5 slots
+        10: ['10:30 AM IST', '02:00 PM IST', '04:30 PM IST', '07:00 PM IST'], // 4 slots
+        11: ['11:00 AM IST', '01:30 PM IST', '03:30 PM IST', '05:30 PM IST', '08:00 PM IST'], // 5 slots
+        12: ['12:00 PM IST', '03:00 PM IST', '05:30 PM IST'], // 3 slots
+        14: ['10:00 AM IST', '01:00 PM IST', '03:30 PM IST', '06:00 PM IST', '08:30 PM IST'], // 5 slots
+        15: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:30 PM IST'], // 4 slots
+        16: ['10:30 AM IST', '01:30 PM IST', '04:00 PM IST', '06:00 PM IST', '08:00 PM IST'], // 5 slots
+        17: ['11:30 AM IST', '03:00 PM IST', '05:00 PM IST', '07:30 PM IST'], // 4 slots
+        18: ['10:00 AM IST', '01:00 PM IST', '03:00 PM IST', '05:30 PM IST', '08:00 PM IST'], // 5 slots
+        19: ['12:00 PM IST', '02:30 PM IST', '05:00 PM IST'], // 3 slots
+      };
+
+      function getSlotsForDay(day) {
+        if (dateSlotsRegistry[day]) return dateSlotsRegistry[day];
+        if (day % 3 === 0) {
+          return ['10:30 AM IST', '01:30 PM IST', '04:00 PM IST', '06:30 PM IST']; // 4 slots
+        } else if (day % 2 === 0) {
+          return ['11:00 AM IST', '02:30 PM IST', '05:00 PM IST', '07:30 PM IST']; // 4 slots
+        } else {
+          return ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST']; // 5 slots
+        }
+      }
+
+      let selectedCalDate = { day: 7, weekday: 'Monday', month: 'Sep', year: 2026 };
+      let selectedCalTime = '02:30 PM IST';
+
+      const sbDaysGrid = document.getElementById('sbDaysGrid');
+      const sdbDateVal = document.getElementById('sdbDateVal');
+      const sbSlotsCount = document.getElementById('sbSlotsCount');
+      const sbTimesGrid = document.getElementById('sbTimesGrid');
+
+      function updateSessionBanner() {
+        if (sdbDateVal) {
+          sdbDateVal.textContent = `${selectedCalDate.weekday}, ${selectedCalDate.month} ${selectedCalDate.day}, ${selectedCalDate.year} · ${selectedCalTime}`;
+        }
+      }
+
+      function renderStrategyTimeSlots(day) {
+        if (!sbTimesGrid) return;
+        const availableSlots = getSlotsForDay(day);
+
+        // Update Slot Badge count exactly matching available slots
+        if (sbSlotsCount) {
+          sbSlotsCount.textContent = `${availableSlots.length} Slots Open`;
+        }
+
+        sbTimesGrid.innerHTML = '';
+
+        // If previously selected time is still in new slots, keep it; otherwise default to first available slot
+        if (!availableSlots.includes(selectedCalTime)) {
+          selectedCalTime = availableSlots[0];
+          updateSessionBanner();
+        }
+
+        availableSlots.forEach(timeStr => {
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.className = 'sb-time-chip' + (timeStr === selectedCalTime ? ' active' : '');
+          chip.setAttribute('data-time', timeStr);
+          chip.textContent = timeStr;
+
+          chip.addEventListener('click', () => {
+            document.querySelectorAll('#sbTimesGrid .sb-time-chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            selectedCalTime = timeStr;
+            updateSessionBanner();
+            playLuxuryHaptic(600, 'sine', 0.03);
+          });
+
+          sbTimesGrid.appendChild(chip);
+        });
+
+        attachCursorHover();
+      }
+
+      function buildStrategyCalendar() {
+        if (!sbDaysGrid) return;
+        sbDaysGrid.innerHTML = '';
+
+        // September 2026 starts on Tuesday (1 leading day from August)
+        const leadingDays = [{ day: 31, disabled: true }];
+        leadingDays.forEach(d => {
+          const cell = document.createElement('div');
+          cell.className = 'sb-day-cell disabled';
+          cell.textContent = d.day;
+          sbDaysGrid.appendChild(cell);
+        });
+
+        const weekdaysMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+        for (let day = 1; day <= 30; day++) {
+          const dateObj = new Date(2026, 8, day); // Month 8 is September
+          const dayOfWeek = dateObj.getDay(); // 0 is Sunday
+          const isSunday = dayOfWeek === 0;
+          const isPast = day < todayDay;
+          const isBooked = bookedDays.includes(day);
+          const isSelected = day === selectedCalDate.day;
+          const isToday = day === todayDay;
+
+          const cell = document.createElement('button');
+          cell.type = 'button';
+          
+          let classList = ['sb-day-cell'];
+          if (isSelected) classList.push('active');
+          if (isToday) classList.push('today');
+          if (isSunday || isPast) classList.push('disabled');
+          if (isBooked) classList.push('booked');
+
+          cell.className = classList.join(' ');
+          cell.textContent = day;
+          cell.setAttribute('data-day', day);
+          cell.setAttribute('data-weekday', weekdaysMap[dayOfWeek]);
+          if (isBooked) {
+            cell.setAttribute('title', `September ${day}, 2026 · Fully Booked`);
+          }
+
+          if (!isSunday && !isPast) {
+            cell.addEventListener('click', () => {
+              if (isBooked) {
+                showToast(`September ${day}, 2026 is fully committed. Please select an open date.`);
+                playLuxuryHaptic(420, 'triangle', 0.05);
+                return;
+              }
+              document.querySelectorAll('#sbDaysGrid .sb-day-cell').forEach(c => c.classList.remove('active'));
+              cell.classList.add('active');
+              selectedCalDate = {
+                day: day,
+                weekday: weekdaysMap[dayOfWeek],
+                month: 'Sep',
+                year: 2026
+              };
+              updateSessionBanner();
+              renderStrategyTimeSlots(day); // Exact synchronization
+              playLuxuryHaptic(640, 'sine', 0.03);
+            });
+          }
+
+          sbDaysGrid.appendChild(cell);
+        }
+
+        // Trailing days for October
+        for (let trail = 1; trail <= 4; trail++) {
+          const cell = document.createElement('div');
+          cell.className = 'sb-day-cell disabled';
+          cell.textContent = trail;
+          sbDaysGrid.appendChild(cell);
+        }
+      }
+
+      buildStrategyCalendar();
+      renderStrategyTimeSlots(selectedCalDate.day);
+      updateSessionBanner();
+      attachCursorHover();
+
+      // Strategy Session Confirmation Action
+      const btnConfirmSession = document.getElementById('btnConfirmSession');
+      if (btnConfirmSession) {
+        btnConfirmSession.addEventListener('click', () => {
+          const nameInput = document.getElementById('sbName');
+          const emailInput = document.getElementById('sbEmail');
+          const brandInput = document.getElementById('sbBrand');
+
+          const name = nameInput ? nameInput.value.trim() : '';
+          const email = emailInput ? emailInput.value.trim() : '';
+          const brand = brandInput ? brandInput.value.trim() : '';
+
+          let hasError = false;
+          let firstInvalid = null;
+
+          function markSbInvalid(el, grpId) {
+            if (el) el.classList.add('input-error');
+            const grp = document.getElementById(grpId);
+            if (grp) grp.classList.add('has-error');
+            hasError = true;
+            if (!firstInvalid) firstInvalid = el;
+          }
+
+          if (!name) markSbInvalid(nameInput, 'grpSbName');
+          if (!email || !isValidEmail(email)) markSbInvalid(emailInput, 'grpSbEmail');
+          if (!brand) markSbInvalid(brandInput, 'grpSbBrand');
+
+          if (hasError) {
+            showToast('Please complete all required fields with valid details.');
+            playLuxuryHaptic(380, 'triangle', 0.08);
+            if (firstInvalid) firstInvalid.focus();
+            return;
+          }
+
+          btnConfirmSession.disabled = true;
+          btnConfirmSession.innerHTML = `<span>Securing Session Window...</span>`;
+          playLuxuryHaptic(700, 'sine', 0.06);
+
+          setTimeout(() => {
+            const sbSuccessName = document.getElementById('sbSuccessName');
+            const sbSuccessWindow = document.getElementById('sbSuccessWindow');
+            const sbSuccessEmail = document.getElementById('sbSuccessEmail');
+            const sbSuccessTopic = document.getElementById('sbSuccessTopic');
+            const topicInput = document.getElementById('sbTopic');
+            const topicVal = topicInput ? topicInput.value : 'Brand Identity & Strategy';
+
+            if (sbSuccessName) sbSuccessName.textContent = name;
+            if (sbSuccessWindow) sbSuccessWindow.textContent = `${selectedCalDate.weekday}, Sep ${selectedCalDate.day} at ${selectedCalTime}`;
+            if (sbSuccessEmail) sbSuccessEmail.textContent = email;
+            if (sbSuccessTopic) sbSuccessTopic.textContent = topicVal;
+
+            const sbSlotsBlock = document.getElementById('sbSlotsBlock');
+            const sessionForm = document.getElementById('sessionBookingForm');
+            const sbSuccessView = document.getElementById('sbSuccessView');
+
+            if (sbSlotsBlock) sbSlotsBlock.style.display = 'none';
+            if (sessionForm) sessionForm.style.display = 'none';
+            if (sbSuccessView) sbSuccessView.style.display = 'flex';
+
+            showToast(`30-Min Session Confirmed for ${selectedCalDate.weekday}, Sep ${selectedCalDate.day} at ${selectedCalTime}`);
+            playLuxuryHaptic(880, 'triangle', 0.12);
+
+            btnConfirmSession.disabled = false;
+            btnConfirmSession.innerHTML = `<span>Confirm Strategy Session</span> <span class="arr">↗</span>`;
+          }, 800);
+        });
+      }
+
+      // Reset Strategy Session View
+      const btnResetSession = document.getElementById('btnResetSession');
+      if (btnResetSession) {
+        btnResetSession.addEventListener('click', () => {
+          const sbSlotsBlock = document.getElementById('sbSlotsBlock');
+          const sessionForm = document.getElementById('sessionBookingForm');
+          const sbSuccessView = document.getElementById('sbSuccessView');
+
+          if (sbSlotsBlock) sbSlotsBlock.style.display = '';
+          if (sessionForm) sessionForm.style.display = '';
+          if (sbSuccessView) sbSuccessView.style.display = 'none';
+
+          const sForm = document.getElementById('sessionBookingForm');
+          if (sForm) sForm.reset();
+
+          playLuxuryHaptic(580, 'sine', 0.03);
+        });
+      }
+
+      // Luxury Custom Select Dropdown Logic
+      const selectTopicTrigger = document.getElementById('selectTopicTrigger');
+      const selectTopicDropdown = document.getElementById('selectTopicDropdown');
+      const selectTopicLabel = document.getElementById('selectTopicLabel');
+      const hiddenTopicInput = document.getElementById('sbTopic');
+
+      if (selectTopicTrigger && selectTopicDropdown) {
+        selectTopicTrigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = selectTopicDropdown.classList.contains('open');
+          selectTopicDropdown.classList.toggle('open', !isOpen);
+          selectTopicTrigger.classList.toggle('open', !isOpen);
+          selectTopicTrigger.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+          playLuxuryHaptic(560, 'sine', 0.03);
+        });
+
+        document.querySelectorAll('.luxury-select-opt').forEach(opt => {
+          opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const val = opt.getAttribute('data-value');
+            if (hiddenTopicInput) hiddenTopicInput.value = val;
+            if (selectTopicLabel) selectTopicLabel.textContent = val;
+
+            document.querySelectorAll('.luxury-select-opt').forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+
+            selectTopicDropdown.classList.remove('open');
+            selectTopicTrigger.classList.remove('open');
+            selectTopicTrigger.setAttribute('aria-expanded', 'false');
+            playLuxuryHaptic(620, 'sine', 0.03);
+          });
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+          if (!document.getElementById('luxurySelectTopic')?.contains(e.target)) {
+            selectTopicDropdown.classList.remove('open');
+            selectTopicTrigger.classList.remove('open');
+            selectTopicTrigger.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
+      // ── Floating Theme Toggle Sync ──
       const themeFab = document.getElementById('theme-fab');
       const savedTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
@@ -432,8 +3546,12 @@
           document.documentElement.setAttribute('data-theme', nextTheme);
           localStorage.setItem('t28', nextTheme);
           localStorage.setItem('theme-1928', nextTheme);
+          playLuxuryHaptic(640, 'triangle', 0.05);
         });
       }
+
+      // Initial Render
+      navigateToStep(1);
     })();
   </script>
 </body>
