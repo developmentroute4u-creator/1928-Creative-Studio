@@ -1836,179 +1836,197 @@
     }
 
     /* ═══════════════════════════════════════════════════════════
-       8. EDITORIAL LUXURY CALL-TO-ACTION (Pre-Footer Stage)
+       8. SECTION 8: READY TO BUILD CTA (Full Viewport Card Showcase)
        ═══════════════════════════════════════════════════════════ */
-    #about-cta-section {
+    #cta {
       position: relative;
-      background: var(--bg);
-      padding: clamp(100px, 14vh, 160px) clamp(24px, 5vw, 80px);
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      padding: clamp(60px, 8vh, 100px) clamp(24px, 4vw, 64px);
+      border: none;
+      background: var(--bg);
       text-align: center;
       overflow: hidden;
-      z-index: 5;
+      box-sizing: border-box;
     }
 
-    .about-cta-stage {
-      position: relative;
-      max-width: 1140px;
+    [data-theme="light"] #cta {
+      background: var(--bg);
+    }
+
+    .fcta-container {
       width: 100%;
-      margin: 0 auto;
+      max-width: 1280px;
+      background: radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.22) 0%, var(--card-bg) 65%);
+      border: 1px solid var(--rule-m);
+      border-top: 1.5px solid rgba(255, 255, 255, 0.24);
+      border-radius: clamp(32px, 4.5vw, 56px);
+      padding: clamp(64px, 8vh, 100px) clamp(32px, 5vw, 76px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), 0 -12px 40px rgba(200, 16, 46, 0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      z-index: 2;
+      position: relative;
+      overflow: hidden;
     }
 
-    .about-cta-glow {
+    [data-theme="light"] .fcta-container {
+      background: radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.12) 0%, #FFFFFF 65%);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 -10px 30px rgba(200, 16, 46, 0.12);
+    }
+
+    .fcta-laser-glow {
       position: absolute;
-      top: 50%;
+      top: 0;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: clamp(340px, 50vw, 720px);
-      height: clamp(340px, 50vw, 720px);
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--cr-glow) 0%, rgba(200, 16, 46, 0.04) 45%, transparent 70%);
-      pointer-events: none;
-      z-index: 1;
-      filter: blur(40px);
+      transform: translateX(-50%);
+      width: 55%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cr), transparent);
+      box-shadow: 0 0 24px var(--cr), 0 0 8px #FFFFFF;
     }
 
-    .acta-pill {
+    .fcta-content {
+      width: 100%;
+      max-width: 960px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .fcta-pill {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      padding: 8px 22px;
-      border-radius: 999px;
-      border: 1px solid var(--rule-m);
-      background: var(--card-bg);
+      gap: 9px;
       font-family: var(--font-mono);
-      font-size: clamp(0.7rem, 0.82vw, 0.82rem);
+      font-size: clamp(0.68rem, 0.8vw, 0.78rem);
       font-weight: 700;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.24em;
       text-transform: uppercase;
       color: var(--cr);
-      margin-bottom: clamp(24px, 3.5vh, 36px);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
-      z-index: 2;
+      background: rgba(200, 16, 46, 0.12);
+      border: 1.5px solid rgba(200, 16, 46, 0.45);
+      padding: 8px 22px;
+      border-radius: 999px;
+      box-shadow: 0 0 20px rgba(200, 16, 46, 0.25);
+      margin-bottom: clamp(16px, 2.4vh, 26px);
     }
 
-    .acta-dot {
+    .fcta-pill .fcta-dot {
       width: 7px;
       height: 7px;
       border-radius: 50%;
       background: var(--cr);
-      box-shadow: 0 0 10px var(--cr);
-      animation: pulseDot 2s ease-in-out infinite;
+      box-shadow: 0 0 10px var(--cr), 0 0 4px #FFFFFF;
+      animation: fctaPulse 2s infinite ease-in-out;
     }
 
-    .acta-title {
+    @keyframes fctaPulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 0.75;
+      }
+    }
+
+    .fcta-title {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(38px, 6.2vw, 88px);
-      line-height: 0.98;
+      font-size: clamp(30px, 4.4vw, 68px);
+      line-height: 1.08;
       letter-spacing: -0.04em;
       color: var(--ink);
       text-transform: uppercase;
-      margin: 0 0 clamp(20px, 2.8vh, 32px);
-      z-index: 2;
+      margin: 0 0 clamp(16px, 2.2vh, 26px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .acta-title em {
+    .fcta-line-1 {
+      display: block;
+      white-space: nowrap;
+      color: var(--ink);
+    }
+
+    .fcta-line-2 {
+      display: block;
+      color: var(--cr);
       font-style: italic;
       font-weight: 300;
-      color: var(--cr);
+      white-space: nowrap;
     }
 
-    .acta-desc {
-      font-family: var(--font-primary);
-      font-size: clamp(16px, 1.35vw, 21px);
+    .fcta-sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(15px, 1.25vw, 19px);
       line-height: 1.6;
-      color: var(--ink-dim);
+      color: var(--ink-mid);
       max-width: 680px;
-      margin: 0 auto clamp(36px, 5vh, 52px);
-      z-index: 2;
+      margin-bottom: clamp(24px, 3.5vh, 38px);
     }
 
-    .acta-actions {
+    .fcta-actions {
       display: flex;
-      gap: 18px;
+      gap: 16px;
       align-items: center;
       justify-content: center;
       flex-wrap: wrap;
-      z-index: 2;
-      margin-bottom: clamp(32px, 4.5vh, 48px);
     }
 
-    .acta-btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
+    .fcta-actions .btn-primary {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 999px;
       background: var(--cr);
       color: #FFFFFF;
-      padding: clamp(16px, 2vh, 20px) clamp(32px, 3vw, 44px);
-      border-radius: 999px;
-      text-decoration: none;
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(0.92rem, 1vw, 1.05rem);
-      letter-spacing: 0.04em;
-      transition: transform 0.35s var(--sp), box-shadow 0.35s, background 0.35s;
-      box-shadow: 0 10px 28px var(--cr-glow);
-    }
-
-    .acta-btn-primary:hover {
-      transform: translateY(-3px) scale(1.03);
-      box-shadow: 0 16px 36px var(--cr-glow);
-      background: #b50e28;
-    }
-
-    .acta-btn-ghost {
+      box-shadow: 0 10px 28px rgba(200, 16, 46, 0.32);
+      transition: transform 0.25s var(--sp), box-shadow 0.25s;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: transparent;
+      gap: 8px;
+    }
+
+    .fcta-actions .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 38px rgba(200, 16, 46, 0.5);
+    }
+
+    .fcta-actions .btn-ghost {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 999px;
+      background: var(--card-bg);
       color: var(--ink);
       border: 1.5px solid var(--rule-m);
-      padding: clamp(16px, 2vh, 20px) clamp(30px, 2.8vw, 40px);
-      border-radius: 999px;
-      text-decoration: none;
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(0.92rem, 1vw, 1.05rem);
-      letter-spacing: 0.04em;
-      transition: border-color 0.3s, color 0.3s, transform 0.3s var(--sp);
-    }
-
-    .acta-btn-ghost:hover {
-      border-color: var(--cr);
-      color: var(--cr);
-      transform: translateY(-3px);
-    }
-
-    .acta-meta-row {
+      transition: all 0.25s var(--sp);
       display: inline-flex;
       align-items: center;
-      gap: 16px;
-      font-family: var(--font-mono);
-      font-size: clamp(0.72rem, 0.85vw, 0.82rem);
-      color: var(--ink-dim);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      z-index: 2;
+      gap: 8px;
     }
 
-    .acta-meta-row a {
-      color: var(--ink);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .acta-meta-row a:hover {
-      color: var(--cr);
+    .fcta-actions .btn-ghost:hover {
+      border-color: var(--ink);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
     }
 
 
@@ -2018,6 +2036,7 @@
     #footer-driver {
       position: relative;
       background: var(--bg);
+      min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -3571,27 +3590,27 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
-       8. EDITORIAL LUXURY CALL-TO-ACTION (Pre-Footer Stage)
+       8. SECTION 8: READY TO BUILD CTA (Full Viewport Showcase)
        ═══════════════════════════════════════════════════════════ -->
-  <section id="about-cta-section">
-    <div class="about-cta-glow"></div>
-    <div class="about-cta-stage">
-      <div class="acta-pill"><span class="acta-dot"></span> INITIATE DIALOGUE</div>
-      <h2 class="acta-title">
-        READY TO BUILD WORK <br />
-        <em>THAT ENDURES?</em>
-      </h2>
-      <p class="acta-desc">
-        We partner with select category-defining founders, institutions, and enterprises each quarter. Let's engineer your legacy.
-      </p>
-      <div class="acta-actions">
-        <a href="contact.html" class="acta-btn-primary">Start a Project →</a>
-        <a href="portfolio.html" class="acta-btn-ghost">Explore Archive ↗</a>
-      </div>
-      <div class="acta-meta-row">
-        <span><a href="mailto:hello@1928creativestudio.com">hello@1928creativestudio.com</a></span>
-        <span>·</span>
-        <span>Ahmedabad, India</span>
+  <section id="cta">
+    <div class="fcta-container">
+      <div class="fcta-laser-glow"></div>
+      <div class="fcta-content">
+        <div class="fcta-pill">
+          <span class="fcta-dot"></span> INITIATE DIALOGUE
+        </div>
+        <h2 class="fcta-title">
+          <span class="fcta-line-1">READY TO BUILD WORK</span>
+          <span class="fcta-line-2">THAT ENDURES?</span>
+        </h2>
+        <p class="fcta-sub">
+          We partner with select category-defining founders, institutions, and enterprises each quarter. Let's engineer
+          your legacy.
+        </p>
+        <div class="fcta-actions">
+          <a href="contact.html" class="btn-primary">Start a Project →</a>
+          <a href="portfolio.html" class="btn-ghost">Explore Archive</a>
+        </div>
       </div>
     </div>
   </section>

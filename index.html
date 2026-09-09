@@ -3177,6 +3177,19 @@
     }
 
     /* ── Smooth scrollbar ─────────────────────────────────── */
+    html.hide-scrollbar,
+    body.hide-scrollbar {
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+
+    html.hide-scrollbar::-webkit-scrollbar,
+    body.hide-scrollbar::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
     ::-webkit-scrollbar {
       width: 6px;
     }
@@ -3192,7 +3205,7 @@
   </style>
 </head>
 
-<body>
+<body class="hide-scrollbar">
 
   <!-- ══ CUSTOM CURSOR ══ -->
   <div id="cur"></div>
@@ -4619,6 +4632,7 @@
       const r1Outer = document.getElementById('r1Outer');
       const r1Inner = document.getElementById('r1Inner');
       const r1Rays = ['r1Ray1', 'r1Ray2', 'r1Ray3', 'r1Ray4'].map(id => document.getElementById(id));
+      const heroAmbient = document.querySelector('.hero-loading-ambient');
 
       // §2 Story Elements
       const storyDriver = document.getElementById('story-driver');
@@ -4752,12 +4766,29 @@
             themeFab.classList.remove('vis');
           }
         }
+
+        // Scrollbar (Sidebar) Visibility: Removed from hero section to eliminate text/card shifting glitch; restored once video section is reached
+        if (isVideoOrPast) {
+          document.documentElement.classList.remove('hide-scrollbar');
+          document.body.classList.remove('hide-scrollbar');
+        } else {
+          document.documentElement.classList.add('hide-scrollbar');
+          document.body.classList.add('hide-scrollbar');
+        }
         lastSY = sy;
 
         /* ═══ §1 HERO — 3D Room Walkthrough & Differentiated Parallax ═══ */
         if (heroDriver && heroTitle && roomCube && heroReel) {
           const heroH = heroDriver.offsetHeight - vh;
           const hp = clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1);
+
+          // Ambient Red Glow Fade-Out: Fades out smoothly as video expands in the center (hp: 0.45 -> 0.68)
+          // When card is fully expanded in center and when it moves to right, the reddish glow is completely gone (opacity 0)
+          if (heroAmbient) {
+            heroAmbient.style.transition = (hp > 0.02) ? 'none' : '';
+            const ambientFadeP = clamp((hp - 0.45) / 0.23, 0, 1);
+            heroAmbient.style.opacity = (1 - ambientFadeP) + '';
+          }
 
           // Phase 1 & 2: 3D Locomotion with Differentiated Speeds
           const zoomP = clamp(hp / 0.52, 0, 1);
