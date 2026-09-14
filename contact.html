@@ -7,6 +7,9 @@
   <title>Start a Project · 1928 Creative Studio</title>
   <meta name="description"
     content="1928 Creative Studio — Initiate project commissions, strategic advisory, and direct executive dialogues." />
+  <script>
+    try { sessionStorage.setItem('1928_site_visited', 'true'); } catch (e) { }
+  </script>
 
   <!-- Google Fonts: Montserrat & Raleway -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -244,13 +247,13 @@
       font-family: var(--font-primary);
       font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--cr);
-      background: var(--cr-lo);
-      border: 1px solid rgba(200, 16, 46, 0.28);
-      padding: 8px 24px;
-      border-radius: 999px;
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
       margin-bottom: clamp(20px, 3vh, 32px);
     }
 
@@ -404,13 +407,13 @@
       font-family: var(--font-primary);
       font-size: 0.74rem;
       font-weight: 800;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--cr);
-      background: var(--cr-lo);
-      padding: 7px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(200, 16, 46, 0.22);
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      border: none;
     }
 
     /* ── Proportioned Monolithic Card (Integrated Left Rail) ── */
@@ -419,7 +422,7 @@
       background: var(--card-bg);
       border: 1.5px solid var(--rule-m);
       border-radius: 26px;
-      box-shadow: 0 18px 52px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       display: grid;
       grid-template-columns: 210px 1fr;
       min-height: 520px;
@@ -428,7 +431,7 @@
     }
 
     [data-theme="light"] .unified-monolith-card {
-      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 16px 40px rgba(0, 0, 0, 0.06);
     }
 
     @media (max-width: 860px) {
@@ -810,7 +813,151 @@
       border-color: var(--cr);
     }
 
-    /* ── STEP 4: Principal Credentials Inputs ── */
+    /* ── STEP 4: Mandatory Strategy Session Booking ── */
+    .step-booking-integrated-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 16px;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .step-booking-integrated-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+    }
+
+    .sbi-cal-block {
+      background: var(--card-alt);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .sbi-cal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .sbi-cal-month {
+      font-family: var(--font-primary);
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .sbi-tz-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--ink-dim);
+      font-family: var(--font-primary);
+    }
+
+    .sbi-weekdays-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--ink-dim);
+      letter-spacing: 0.04em;
+    }
+
+    .sbi-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+
+    .sbi-days-grid .sb-day-cell {
+      height: 28px;
+      font-size: 0.76rem;
+    }
+
+    .sbi-selected-slot-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      font-family: var(--font-primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-top: 2px;
+    }
+
+    .sbi-selected-slot-pill .ssp-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cr);
+      box-shadow: 0 0 8px var(--cr-glow);
+    }
+
+    .sbi-slots-block {
+      background: var(--card-alt);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 12px;
+    }
+
+    .sbi-slots-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .sbi-slots-title {
+      font-family: var(--font-primary);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .sbi-times-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .sbi-times-grid .sb-time-chip {
+      padding: 7px 13px;
+      font-size: 0.72rem;
+      border-radius: 999px;
+    }
+
+    .sbi-focus-select-wrap {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    /* ── STEP 5: Principal Credentials Inputs (Final Step) ── */
     .principal-inputs-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -971,10 +1118,10 @@
       left: 0;
       width: 220px;
       background: var(--card-bg);
-      border: 1.5px solid var(--rule-heavy);
-      border-radius: 12px;
+      border: 1px solid var(--rule-m);
+      border-radius: 14px;
       padding: 6px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
       z-index: 999;
       display: flex;
       flex-direction: column;
@@ -989,6 +1136,11 @@
       overflow-y: auto;
       scrollbar-width: none;
       -ms-overflow-style: none;
+    }
+
+    [data-theme="dark"] .country-code-dropdown {
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      border-color: var(--rule-heavy);
     }
 
     .country-code-dropdown::-webkit-scrollbar {
@@ -1869,10 +2021,10 @@
       left: 0;
       right: 0;
       background: var(--card-bg);
-      border: 1.5px solid var(--rule-heavy);
-      border-radius: 12px;
-      padding: 5px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--rule-m);
+      border-radius: 14px;
+      padding: 6px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
       z-index: 999;
       display: flex;
       flex-direction: column;
@@ -1883,6 +2035,11 @@
       transition: opacity 0.2s var(--sp), transform 0.2s var(--sp), visibility 0.2s;
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
+    }
+
+    [data-theme="dark"] .luxury-select-dropdown {
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08);
+      border-color: var(--rule-heavy);
     }
 
     .luxury-select-dropdown.open {
@@ -1983,16 +2140,174 @@
     }
 
     /* ═══════════════════════════════════════════════════════════
-       5. MODERN EDITORIAL LUXURY EXIT FOOTER
+       5. FREQUENTLY ASKED QUESTIONS (FAQ) SECTION
+       ═══════════════════════════════════════════════════════════ */
+    #faq {
+      position: relative;
+      padding: clamp(80px, 10vh, 130px) clamp(24px, 4vw, 64px);
+      border-top: 1px solid var(--rule);
+      background: var(--bg);
+    }
+
+    .faq-wrap {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .faq-sec-header {
+      text-align: center;
+      margin-bottom: clamp(36px, 5vh, 56px);
+    }
+
+    .faq-sec-title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 3.2vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.1;
+      margin: 0 0 12px 0;
+    }
+
+    .faq-sec-title span {
+      color: var(--cr);
+    }
+
+    .faq-sec-desc {
+      font-size: clamp(0.92rem, 1.1vw, 1.05rem);
+      color: var(--ink-dim);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .faq-item {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .faq-item:hover {
+      border-color: var(--rule-m);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="dark"] .faq-item:hover {
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+    }
+
+    .faq-item.active {
+      border-color: var(--rule-m);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] .faq-item.active {
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .faq-trigger {
+      width: 100%;
+      padding: clamp(20px, 2.5vh, 26px) clamp(22px, 3vw, 32px);
+      background: transparent;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      cursor: pointer;
+      color: var(--ink);
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: clamp(16px, 1.25vw, 19px);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+
+    .faq-trigger-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .faq-num {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--cr);
+    }
+
+    .faq-icon-wrap {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.35s var(--sp), background 0.3s, border-color 0.3s, color 0.3s;
+      color: var(--ink-mid);
+    }
+
+    .faq-icon-svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+      transition: transform 0.35s var(--sp);
+    }
+
+    .faq-item.active .faq-icon-wrap {
+      transform: rotate(45deg);
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #FFFFFF;
+    }
+
+    .faq-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s var(--sp), padding 0.4s var(--sp);
+      padding: 0 clamp(22px, 3vw, 32px);
+    }
+
+    .faq-item.active .faq-content {
+      max-height: 300px;
+      padding-bottom: clamp(22px, 2.5vh, 28px);
+    }
+
+    .faq-content p {
+      font-family: var(--font-primary);
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       6. MODERN EDITORIAL LUXURY EXIT FOOTER
        ═══════════════════════════════════════════════════════════ */
     #footer-driver {
       position: relative;
       background: var(--bg);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px) clamp(24px, 3.5vh, 40px);
       box-sizing: border-box;
       z-index: 10;
     }
@@ -2002,24 +2317,56 @@
       border: 1px solid var(--rule);
       border-radius: clamp(36px, 5vw, 64px);
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
-      padding: clamp(52px, 6.5vh, 76px) clamp(40px, 5vw, 72px) clamp(16px, 2vh, 24px);
+      padding: clamp(48px, 6vh, 68px) clamp(40px, 5vw, 72px) 0px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       width: 100%;
       max-width: 1640px;
-      min-height: clamp(560px, 78vh, 740px);
-      margin: auto;
-      gap: clamp(72px, 11vh, 130px);
+      min-height: clamp(500px, 68vh, 640px);
+      margin: 0 auto;
+      gap: clamp(48px, 7vh, 80px);
       overflow: hidden;
       position: relative;
       box-sizing: border-box;
     }
 
+    .f-outer-bar {
+      width: 100%;
+      max-width: 1640px;
+      margin: clamp(16px, 2.2vh, 24px) auto 0;
+      padding: 0 clamp(16px, 2.5vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .f-outer-copyright,
+    .f-outer-dev {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .f-outer-dev a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .f-outer-dev a:hover {
+      color: var(--cr);
+    }
+
     .f-header-grid {
       display: grid;
-      grid-template-columns: 1.8fr 1fr 1.3fr 1.4fr;
-      gap: clamp(28px, 4vw, 56px);
+      grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+      gap: clamp(28px, 3.5vw, 52px);
       align-items: flex-start;
     }
 
@@ -2031,6 +2378,7 @@
       letter-spacing: -0.02em;
       color: var(--ink);
       max-width: 340px;
+      margin-bottom: 24px;
     }
 
     .f-col-label {
@@ -2065,48 +2413,34 @@
       transform: translateX(4px);
     }
 
-    .f-social-chips {
+    .f-social-circles {
       display: flex;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
     }
 
-    .f-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 14px;
+    .f-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       background: var(--bg);
       border: 1px solid var(--rule);
-      border-radius: 999px;
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      font-weight: 600;
       color: var(--ink);
-      text-decoration: none;
-      transition: all .25s var(--sp);
-    }
-
-    .f-chip:hover {
-      background: var(--ink);
-      color: var(--bg);
-      border-color: var(--ink);
-      transform: translateY(-2px);
-    }
-
-    .f-chip .f-chip-icon {
-      font-size: 0.82rem;
-      font-weight: 700;
-      line-height: 1;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
+      transition: all 0.25s var(--sp);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
-    .f-chip .f-chip-icon svg {
-      width: 13px;
-      height: 13px;
-      display: block;
+    .f-circle-btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     }
 
     .f-cta-column {
@@ -2188,12 +2522,13 @@
       color: var(--bg);
     }
 
-    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line ── */
+    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line reaching very bottom ── */
     .f-bottom-cluster {
       width: 100%;
       display: flex;
       flex-direction: column;
       margin-top: auto;
+      margin-bottom: 0;
     }
 
     .f-giant-cut-wrap {
@@ -2205,10 +2540,16 @@
       position: relative;
       margin: 0;
       padding: 0;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: grab;
       user-select: none;
       transform-origin: center bottom;
       will-change: height, transform;
+      transition: color 0.3s;
+    }
+
+    .f-giant-cut-wrap:active {
+      cursor: grabbing;
     }
 
     .f-giant-cut-svg {
@@ -2226,74 +2567,14 @@
       will-change: transform;
     }
 
-    /* ── Minimal Sub-Footer Meta Bar with Horizontal Line ── */
-    .f-meta-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 18px;
-      border-top: 1.5px solid var(--rule);
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      color: var(--ink-dim);
-      font-weight: 500;
-      letter-spacing: 0.02em;
+    .f-bottom-line {
+      width: 100%;
+      height: 1.5px;
+      background: var(--rule);
       margin: 0;
-    }
-
-    .f-meta-links {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .f-meta-links a {
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover {
-      color: var(--cr);
-    }
-
-    .f-credit-author {
-      font-weight: 700;
-      color: var(--ink-mid);
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover .f-credit-author {
-      color: var(--cr);
-    }
-
-    .f-live-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .f-status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      display: inline-block;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-      animation: fStatusPulse 2s infinite ease-in-out;
-    }
-
-    @keyframes fStatusPulse {
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 0.4;
-        transform: scale(0.85);
-      }
+      transform-origin: center center;
+      transition: background 0.3s;
+      will-change: transform, background;
     }
 
     @media (max-width: 1024px) {
@@ -2309,11 +2590,217 @@
         gap: 32px;
       }
 
-      .f-meta-bar {
+      .f-outer-bar {
         flex-direction: column;
-        gap: 12px;
         align-items: flex-start;
+        gap: 8px;
       }
+    }
+
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      padding: 14px clamp(20px, 3.5vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 248, 250, 0.82);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      will-change: transform, opacity;
+    }
+
+    [data-theme="dark"] #nav {
+      background: rgba(10, 10, 14, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+    }
+
+    .nav-logo svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.8vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: all .25s ease;
+      position: relative;
+      padding: 5px 8px;
+      border-radius: 20px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 0px;
+      height: 1.5px;
+      background: var(--cr);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .25s var(--sm);
+    }
+
+    .nav-links a:hover {
+      color: var(--cr);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* ── Editorial Active Page Header Link Indicator ── */
+    .nav-links a.active {
+      font-weight: 800;
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 5px 6px;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 6px;
+      right: 6px;
+      height: 2px;
+      background: var(--cr);
+      border-radius: 2px;
+      transform: scaleX(1);
+      box-shadow: none;
+    }
+
+    .nav-links a.active:hover {
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active,
+    [data-theme="dark"] .nav-links a.active {
+      color: #ffffff;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active::after,
+    [data-theme="dark"] .nav-links a.active::after {
+      background: var(--cr);
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active:hover,
+    [data-theme="dark"] .nav-links a.active:hover {
+      color: #ffffff;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-cta {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    /* Light Theme: hover becomes darker */
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    /* Dark Theme: CTA turns white on hover */
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .nav-logo svg .nl,
+    .nav-logo svg .ns {
+      fill: var(--cr);
+      transition: fill 0.3s;
+    }
+
+    /* ── Smooth scrollbar ─────────────────────────────────── */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--cr) var(--bg);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cr);
+      border-radius: 3px;
     }
   </style>
 </head>
@@ -2322,6 +2809,42 @@
   <!-- Custom Mouse Cursor -->
   <div class="c-dot" id="cDot"></div>
   <div class="c-ring" id="cRing"></div>
+
+  <!-- ══ FIXED NAVIGATION ══ -->
+  <nav id="nav" class="visible">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:32px;width:auto;">
+        <style>
+          .nl {
+            font-family: var(--font-secondary);
+            font-weight: 700;
+            fill: var(--cr);
+          }
+
+          .ns {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            fill: var(--cr);
+            letter-spacing: 6px;
+          }
+        </style>
+        <text x="0" y="52" class="nl" font-size="52">1928</text>
+        <text x="218" y="38" class="ns" font-size="18">CREATIVE</text>
+        <text x="218" y="58" class="ns" font-size="18">STUDIO</text>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Work</a></li>
+      <li><a href="blogs.html">Perspectives</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="contact.html" class="nav-cta">Start Project</a>
+    </div>
+  </nav>
 
   <!-- ═══════════════════════════════════════════════════════════
        1. HERO SECTION (CENTERED 100VH CANVAS - INTACT)
@@ -2393,6 +2916,11 @@
 
           <button type="button" class="rail-step-tab" data-step="4">
             <span class="rail-step-num">04</span>
+            <span class="rail-step-word">Session</span>
+          </button>
+
+          <button type="button" class="rail-step-tab" data-step="5">
+            <span class="rail-step-num">05</span>
             <span class="rail-step-word">Credentials</span>
           </button>
         </nav>
@@ -2523,8 +3051,83 @@
               </div>
             </div>
 
-            <!-- ══ STEP 4: Credentials & Brief ══ -->
+            <!-- ══ STEP 4: Mandatory Strategy Session Booking ══ -->
             <div class="step-pane-section" id="stepPane4">
+              <h3 class="pane-headline">Strategy Session Window</h3>
+              <p class="pane-caption">Select your preferred 30-minute consultation window with our design leadership.</p>
+
+              <div class="step-booking-integrated-grid">
+                <!-- Left: Calendar Block -->
+                <div class="sbi-cal-block">
+                  <div class="sbi-cal-header">
+                    <span class="sbi-cal-month" id="stepCalMonthTitle">September 2026</span>
+                    <div class="sbi-tz-badge">
+                      <span class="sb-tz-dot"></span>
+                      <span>Asia/Kolkata (GMT+5:30)</span>
+                    </div>
+                  </div>
+
+                  <div class="sbi-weekdays-row">
+                    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                  </div>
+
+                  <div class="sbi-days-grid" id="stepSbDaysGrid">
+                    <!-- Populated dynamically via JS -->
+                  </div>
+
+                  <div class="sbi-selected-slot-pill" id="stepSelectedSlotPill">
+                    <span class="ssp-dot"></span>
+                    <span id="stepSlotSummaryText">Monday, Sep 7, 2026 · 02:30 PM IST</span>
+                  </div>
+                </div>
+
+                <!-- Right: Time Slots & Focus Block -->
+                <div class="sbi-slots-block">
+                  <div class="sbi-slots-header">
+                    <span class="sbi-slots-title">Available 30-Min Windows</span>
+                    <span class="sb-slots-count" id="stepSlotsCount">5 Slots Open</span>
+                  </div>
+
+                  <div class="sbi-times-grid" id="stepSbTimesGrid">
+                    <!-- Dynamic interactive time chips -->
+                  </div>
+
+                  <div class="sbi-focus-select-wrap">
+                    <label class="in-label" style="margin-bottom: 6px;">Consultation Focus Area</label>
+                    <div class="luxury-custom-select" id="stepLuxurySelectTopic">
+                      <input type="hidden" id="stepSbTopic" value="Brand Identity & Strategy" />
+                      <button type="button" class="luxury-select-trigger" id="stepSelectTopicTrigger" aria-haspopup="listbox" aria-expanded="false">
+                        <span class="lst-label" id="stepSelectTopicLabel">Brand Identity &amp; Strategy</span>
+                        <svg class="lst-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </button>
+                      <div class="luxury-select-dropdown" id="stepSelectTopicDropdown" role="listbox">
+                        <div class="luxury-select-opt active" data-value="Brand Identity & Strategy">
+                          <span class="lso-text">Brand Identity &amp; Strategy</span>
+                          <span class="lso-check">✓</span>
+                        </div>
+                        <div class="luxury-select-opt" data-value="Digital Experience & UI/UX">
+                          <span class="lso-text">Digital Experience &amp; UI/UX</span>
+                          <span class="lso-check">✓</span>
+                        </div>
+                        <div class="luxury-select-opt" data-value="Performance Marketing Creative">
+                          <span class="lso-text">Performance Marketing Creative</span>
+                          <span class="lso-check">✓</span>
+                        </div>
+                        <div class="luxury-select-opt" data-value="Full Studio Retainer / Advisory">
+                          <span class="lso-text">Full Studio Retainer / Advisory</span>
+                          <span class="lso-check">✓</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ══ STEP 5: Credentials & Brief (Final Step) ══ -->
+            <div class="step-pane-section" id="stepPane5">
               <h3 class="pane-headline">Credentials &amp; Brief</h3>
               <p class="pane-caption">Your particulars and project brief.</p>
 
@@ -2668,148 +3271,122 @@
     </div>
   </section>
 
-  <!-- Clean Subtle Section Divider Line -->
-  <div class="section-divider-line"></div>
-
   <!-- ═══════════════════════════════════════════════════════════
-       3. DEDICATED 30-MINUTE STRATEGY SESSION SECTION
+       5. FREQUENTLY ASKED QUESTIONS (FAQ) SECTION
        ═══════════════════════════════════════════════════════════ -->
-  <section id="session-booking-sec">
-    <div class="session-booking-container">
-
-      <!-- Section Top Header -->
-      <div class="fs-sec-header">
-        <div class="header-left-group">
-          <h2 class="fs-sec-title">Strategy Session.</h2>
-          <p class="fs-sec-desc">Schedule a 30-minute direct dialogue with our design leadership to evaluate project scope.</p>
-        </div>
-        <div class="fs-right-badge">
-          <span class="hero-dot-pulse"></span>
-          <span>30 Min · Direct Executive Line</span>
-        </div>
+  <section id="faq">
+    <div class="faq-wrap">
+      <div class="faq-sec-header">
+        <h2 class="faq-sec-title">FREQUENTLY ASKED <span>QUESTIONS</span></h2>
+        <p class="faq-sec-desc">Direct insights into our engagement structures, timelines, and deliverables.</p>
       </div>
 
-      <!-- Monolithic Luxury Booking Card -->
-      <div class="session-booking-card">
-
-        <!-- Left Column: Interactive Calendar & Date Details -->
-        <div class="sb-calendar-col">
-          <div class="sb-cal-header">
-            <div class="sb-month-title" id="calMonthTitle">September 2026</div>
-            <div class="sb-tz-badge">
-              <span class="sb-tz-dot"></span>
-              <span>Asia/Kolkata (GMT+5:30)</span>
+      <div class="faq-list">
+        <!-- FAQ 1 -->
+        <div class="faq-item active">
+          <button class="faq-trigger" aria-expanded="true">
+            <div class="faq-trigger-left">
+              <span class="faq-num">01</span>
+              <span>How does the confidential studio brief process work?</span>
             </div>
-          </div>
-
-          <!-- Calendar Weekday Names -->
-          <div class="sb-weekdays-row">
-            <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-          </div>
-
-          <!-- Calendar Days Grid -->
-          <div class="sb-days-grid" id="sbDaysGrid">
-            <!-- Populated dynamically with interactive dates -->
-          </div>
-
-          <!-- Selected Date Info Summary Banner -->
-          <div class="sb-selected-date-banner" id="selectedDateBanner">
-            <div class="sdb-date-label">Selected Session Window</div>
-            <div class="sdb-date-val" id="sdbDateVal">Monday, Sep 7, 2026 · 02:30 PM IST</div>
-          </div>
-        </div>
-
-        <!-- Right Column: Interactive Time Slots & Confirmation Form -->
-        <div class="sb-form-col">
-          <div class="sb-slots-block" id="sbSlotsBlock">
-            <div class="sb-slots-header">
-              <span class="sb-slots-title">Available Windows (30 Min)</span>
-              <span class="sb-slots-count" id="sbSlotsCount">5 Slots Open</span>
-            </div>
-
-            <div class="sb-times-grid" id="sbTimesGrid">
-              <button type="button" class="sb-time-chip" data-time="11:00 AM IST">11:00 AM IST</button>
-              <button type="button" class="sb-time-chip active" data-time="02:30 PM IST">02:30 PM IST</button>
-              <button type="button" class="sb-time-chip" data-time="04:30 PM IST">04:30 PM IST</button>
-              <button type="button" class="sb-time-chip" data-time="06:00 PM IST">06:00 PM IST</button>
-              <button type="button" class="sb-time-chip" data-time="08:00 PM IST">08:00 PM IST</button>
-            </div>
-          </div>
-
-          <form id="sessionBookingForm" class="sb-booking-form" onsubmit="return false;" novalidate>
-            <div class="sb-inputs-grid">
-              <div class="input-field-group" id="grpSbName">
-                <label class="in-label" for="sbName">Full Name *</label>
-                <input type="text" id="sbName" class="text-input-luxury" placeholder="e.g. Alexander Vance" required />
-                <span class="field-error-msg">Please enter your full name</span>
-              </div>
-              <div class="input-field-group" id="grpSbEmail">
-                <label class="in-label" for="sbEmail">Corporate Email *</label>
-                <input type="email" id="sbEmail" class="text-input-luxury" placeholder="e.g. example@gmail.com" required />
-                <span class="field-error-msg">Please enter a valid corporate email</span>
-              </div>
-              <div class="input-field-group" id="grpSbBrand">
-                <label class="in-label" for="sbBrand">Brand / Venture *</label>
-                <input type="text" id="sbBrand" class="text-input-luxury" placeholder="e.g. 1928 Creative Studio" required />
-                <span class="field-error-msg">Please enter your brand name</span>
-              </div>
-              <div class="input-field-group">
-                <label class="in-label">Discussion Focus</label>
-                <div class="luxury-custom-select" id="luxurySelectTopic">
-                  <input type="hidden" id="sbTopic" value="Brand Identity & Strategy" />
-                  <button type="button" class="luxury-select-trigger" id="selectTopicTrigger" aria-haspopup="listbox" aria-expanded="false">
-                    <span class="lst-label" id="selectTopicLabel">Brand Identity &amp; Strategy</span>
-                    <svg class="lst-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </button>
-                  <div class="luxury-select-dropdown" id="selectTopicDropdown" role="listbox">
-                    <div class="luxury-select-opt active" data-value="Brand Identity & Strategy">
-                      <span class="lso-text">Brand Identity &amp; Strategy</span>
-                      <span class="lso-check">✓</span>
-                    </div>
-                    <div class="luxury-select-opt" data-value="Digital Experience & UI/UX">
-                      <span class="lso-text">Digital Experience &amp; UI/UX</span>
-                      <span class="lso-check">✓</span>
-                    </div>
-                    <div class="luxury-select-opt" data-value="Performance Marketing Creative">
-                      <span class="lso-text">Performance Marketing Creative</span>
-                      <span class="lso-check">✓</span>
-                    </div>
-                    <div class="luxury-select-opt" data-value="Full Studio Retainer / Advisory">
-                      <span class="lso-text">Full Studio Retainer / Advisory</span>
-                      <span class="lso-check">✓</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <button type="button" class="btn-confirm-session" id="btnConfirmSession">
-              <span>Confirm Strategy Session</span>
-            </button>
-          </form>
-
-          <!-- Strategy Session Success Confirmation View (Ultra-Clean Minimal) -->
-          <div class="sb-success-view" id="sbSuccessView" style="display:none;">
-            <div class="bsv-badge-circle">
-              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
+            <div class="faq-icon-wrap" aria-hidden="true">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="8" y1="3" x2="8" y2="13"></line>
+                <line x1="3" y1="8" x2="13" y2="8"></line>
               </svg>
             </div>
-            <div class="bsv-header-block">
-              <h3 class="bsv-title">SESSION CONFIRMED.</h3>
-              <p class="bsv-desc">Thank you. Your 30-minute dialogue with our design leadership is scheduled. Calendar invitation delivered to your corporate email.</p>
-            </div>
-            <button type="button" class="btn-reset-brief" id="btnResetSession">
-              <span>Book Another Session</span>
-              <span class="arr">↺</span>
-            </button>
+          </button>
+          <div class="faq-content">
+            <p>
+              After submitting your parameters through our 5-step wizard, our leadership team conducts a conflict-of-interest and capacity audit within 24 hours. We then confirm your selected 30-minute strategy session to review scope, milestones, and deliverables.
+            </p>
           </div>
         </div>
 
-      </div>
+        <!-- FAQ 2 -->
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <div class="faq-trigger-left">
+              <span class="faq-num">02</span>
+              <span>Can we engage for a single service or only bundled packages?</span>
+            </div>
+            <div class="faq-icon-wrap" aria-hidden="true">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="8" y1="3" x2="8" y2="13"></line>
+                <line x1="3" y1="8" x2="13" y2="8"></line>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content">
+            <p>
+              You can engage 1928 Creative Studio for standalone individual services (such as Brand Architecture, Custom WebGL 3D, Flagship Spatial Design, or Meta Performance Marketing) as well as integrated multi-disciplinary partnerships. Every engagement receives direct partner-level attention.
+            </p>
+          </div>
+        </div>
 
+        <!-- FAQ 3 -->
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <div class="faq-trigger-left">
+              <span class="faq-num">03</span>
+              <span>What are the typical turnaround timelines and budget allocations?</span>
+            </div>
+            <div class="faq-icon-wrap" aria-hidden="true">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="8" y1="3" x2="8" y2="13"></line>
+                <line x1="3" y1="8" x2="13" y2="8"></line>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content">
+            <p>
+              Engagements typically range from targeted 3–4 week sprint milestones to multi-quarter brand transformations. Capital allocation begins at ₹15 Lakhs for focused scopes, scaling based on technical depth and deliverables.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <div class="faq-trigger-left">
+              <span class="faq-num">04</span>
+              <span>Who owns the intellectual property and master project deliverables?</span>
+            </div>
+            <div class="faq-icon-wrap" aria-hidden="true">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="8" y1="3" x2="8" y2="13"></line>
+                <line x1="3" y1="8" x2="13" y2="8"></line>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content">
+            <p>
+              Upon completion and final sign-off, <strong>100% of master vector files, raw video footage, web source code repositories, and brand assets</strong> are transferred directly to your company with full commercial rights under mutual NDA.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <div class="faq-trigger-left">
+              <span class="faq-num">05</span>
+              <span>How are the 30-minute strategy sessions conducted?</span>
+            </div>
+            <div class="faq-icon-wrap" aria-hidden="true">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="8" y1="3" x2="8" y2="13"></line>
+                <line x1="3" y1="8" x2="13" y2="8"></line>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content">
+            <p>
+              Sessions are hosted securely over encrypted video conferencing directly with our Creative Directors. We review your vision, clarify technical constraints, and define actionable next steps for contract execution.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -2921,7 +3498,7 @@
 
       // Magnetic Cursor Hover
       function attachCursorHover() {
-        document.querySelectorAll('button, a, .scope-option-card, .disc-item-chip, .tier-option-box, .timeline-pill, .sb-day-cell, .sb-time-chip, .btn-confirm-session, .rail-step-tab, .luxury-select-trigger, .luxury-select-opt, .f-chip, .f-action-pill').forEach(btn => {
+        document.querySelectorAll('button, a, .scope-option-card, .disc-item-chip, .tier-option-box, .timeline-pill, .sb-day-cell, .sb-time-chip, .btn-confirm-session, .rail-step-tab, .luxury-select-trigger, .luxury-select-opt, .f-chip, .f-action-pill, .faq-trigger').forEach(btn => {
           if (btn.dataset.cursorBound) return;
           btn.dataset.cursorBound = 'true';
           btn.addEventListener('mouseenter', () => {
@@ -2945,7 +3522,7 @@
 
       // ── Stepper Logic with Expanding Word Animation ──
       let currentStep = 1;
-      const totalSteps = 4;
+      const totalSteps = 5;
 
       const btnPrev = document.getElementById('btnPrev');
       const btnNext = document.getElementById('btnNext');
@@ -3273,61 +3850,62 @@
         }
       }
 
-      let selectedCalDate = { day: 7, weekday: 'Monday', month: 'Sep', year: 2026 };
-      let selectedCalTime = '02:30 PM IST';
+      // ═══════════════════════════════════════════════════════════
+      // STEP 4 INTEGRATED STRATEGY SESSION CALENDAR & SLOTS
+      // ═══════════════════════════════════════════════════════════
+      const stepSbDaysGrid = document.getElementById('stepSbDaysGrid');
+      const stepSlotSummaryText = document.getElementById('stepSlotSummaryText');
+      const stepSlotsCount = document.getElementById('stepSlotsCount');
+      const stepSbTimesGrid = document.getElementById('stepSbTimesGrid');
 
-      const sbDaysGrid = document.getElementById('sbDaysGrid');
-      const sdbDateVal = document.getElementById('sdbDateVal');
-      const sbSlotsCount = document.getElementById('sbSlotsCount');
-      const sbTimesGrid = document.getElementById('sbTimesGrid');
+      let stepSelectedCalDate = { day: 7, weekday: 'Monday', month: 'Sep', year: 2026 };
+      let stepSelectedCalTime = '02:30 PM IST';
 
-      function updateSessionBanner() {
-        if (sdbDateVal) {
-          sdbDateVal.textContent = `${selectedCalDate.weekday}, ${selectedCalDate.month} ${selectedCalDate.day}, ${selectedCalDate.year} · ${selectedCalTime}`;
+      function updateStepSessionBanner() {
+        if (stepSlotSummaryText) {
+          stepSlotSummaryText.textContent = `${stepSelectedCalDate.weekday}, ${stepSelectedCalDate.month} ${stepSelectedCalDate.day}, ${stepSelectedCalDate.year} · ${stepSelectedCalTime}`;
         }
       }
 
-      function renderStrategyTimeSlots(day) {
-        if (!sbTimesGrid) return;
+      function renderStepTimeSlots(day) {
+        if (!stepSbTimesGrid) return;
         const availableSlots = getSlotsForDay(day);
 
-        // Update Slot Badge count exactly matching available slots
-        if (sbSlotsCount) {
-          sbSlotsCount.textContent = `${availableSlots.length} Slots Open`;
+        if (stepSlotsCount) {
+          stepSlotsCount.textContent = `${availableSlots.length} Slots Open`;
         }
 
-        sbTimesGrid.innerHTML = '';
+        stepSbTimesGrid.innerHTML = '';
 
-        // If previously selected time is still in new slots, keep it; otherwise default to first available slot
-        if (!availableSlots.includes(selectedCalTime)) {
-          selectedCalTime = availableSlots[0];
-          updateSessionBanner();
+        if (!availableSlots.includes(stepSelectedCalTime)) {
+          stepSelectedCalTime = availableSlots[0];
+          updateStepSessionBanner();
         }
 
         availableSlots.forEach(timeStr => {
           const chip = document.createElement('button');
           chip.type = 'button';
-          chip.className = 'sb-time-chip' + (timeStr === selectedCalTime ? ' active' : '');
+          chip.className = 'sb-time-chip' + (timeStr === stepSelectedCalTime ? ' active' : '');
           chip.setAttribute('data-time', timeStr);
           chip.textContent = timeStr;
 
           chip.addEventListener('click', () => {
-            document.querySelectorAll('#sbTimesGrid .sb-time-chip').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('#stepSbTimesGrid .sb-time-chip').forEach(c => c.classList.remove('active'));
             chip.classList.add('active');
-            selectedCalTime = timeStr;
-            updateSessionBanner();
+            stepSelectedCalTime = timeStr;
+            updateStepSessionBanner();
             playLuxuryHaptic(600, 'sine', 0.03);
           });
 
-          sbTimesGrid.appendChild(chip);
+          stepSbTimesGrid.appendChild(chip);
         });
 
         attachCursorHover();
       }
 
-      function buildStrategyCalendar() {
-        if (!sbDaysGrid) return;
-        sbDaysGrid.innerHTML = '';
+      function buildStepStrategyCalendar() {
+        if (!stepSbDaysGrid) return;
+        stepSbDaysGrid.innerHTML = '';
 
         // September 2026 starts on Tuesday (1 leading day from August)
         const leadingDays = [{ day: 31, disabled: true }];
@@ -3335,18 +3913,18 @@
           const cell = document.createElement('div');
           cell.className = 'sb-day-cell disabled';
           cell.textContent = d.day;
-          sbDaysGrid.appendChild(cell);
+          stepSbDaysGrid.appendChild(cell);
         });
 
         const weekdaysMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
         for (let day = 1; day <= 30; day++) {
-          const dateObj = new Date(2026, 8, day); // Month 8 is September
-          const dayOfWeek = dateObj.getDay(); // 0 is Sunday
+          const dateObj = new Date(2026, 8, day);
+          const dayOfWeek = dateObj.getDay();
           const isSunday = dayOfWeek === 0;
           const isPast = day < todayDay;
           const isBooked = bookedDays.includes(day);
-          const isSelected = day === selectedCalDate.day;
+          const isSelected = day === stepSelectedCalDate.day;
           const isToday = day === todayDay;
 
           const cell = document.createElement('button');
@@ -3373,21 +3951,21 @@
                 playLuxuryHaptic(420, 'triangle', 0.05);
                 return;
               }
-              document.querySelectorAll('#sbDaysGrid .sb-day-cell').forEach(c => c.classList.remove('active'));
+              document.querySelectorAll('#stepSbDaysGrid .sb-day-cell').forEach(c => c.classList.remove('active'));
               cell.classList.add('active');
-              selectedCalDate = {
+              stepSelectedCalDate = {
                 day: day,
                 weekday: weekdaysMap[dayOfWeek],
                 month: 'Sep',
                 year: 2026
               };
-              updateSessionBanner();
-              renderStrategyTimeSlots(day); // Exact synchronization
+              updateStepSessionBanner();
+              renderStepTimeSlots(day);
               playLuxuryHaptic(640, 'sine', 0.03);
             });
           }
 
-          sbDaysGrid.appendChild(cell);
+          stepSbDaysGrid.appendChild(cell);
         }
 
         // Trailing days for October
@@ -3395,141 +3973,52 @@
           const cell = document.createElement('div');
           cell.className = 'sb-day-cell disabled';
           cell.textContent = trail;
-          sbDaysGrid.appendChild(cell);
+          stepSbDaysGrid.appendChild(cell);
         }
       }
 
-      buildStrategyCalendar();
-      renderStrategyTimeSlots(selectedCalDate.day);
-      updateSessionBanner();
-      attachCursorHover();
+      buildStepStrategyCalendar();
+      renderStepTimeSlots(stepSelectedCalDate.day);
+      updateStepSessionBanner();
 
-      // Strategy Session Confirmation Action
-      const btnConfirmSession = document.getElementById('btnConfirmSession');
-      if (btnConfirmSession) {
-        btnConfirmSession.addEventListener('click', () => {
-          const nameInput = document.getElementById('sbName');
-          const emailInput = document.getElementById('sbEmail');
-          const brandInput = document.getElementById('sbBrand');
+      // Step 4 Topic Dropdown
+      const stepSelectTopicTrigger = document.getElementById('stepSelectTopicTrigger');
+      const stepSelectTopicDropdown = document.getElementById('stepSelectTopicDropdown');
+      const stepSelectTopicLabel = document.getElementById('stepSelectTopicLabel');
+      const stepHiddenTopicInput = document.getElementById('stepSbTopic');
 
-          const name = nameInput ? nameInput.value.trim() : '';
-          const email = emailInput ? emailInput.value.trim() : '';
-          const brand = brandInput ? brandInput.value.trim() : '';
-
-          let hasError = false;
-          let firstInvalid = null;
-
-          function markSbInvalid(el, grpId) {
-            if (el) el.classList.add('input-error');
-            const grp = document.getElementById(grpId);
-            if (grp) grp.classList.add('has-error');
-            hasError = true;
-            if (!firstInvalid) firstInvalid = el;
-          }
-
-          if (!name) markSbInvalid(nameInput, 'grpSbName');
-          if (!email || !isValidEmail(email)) markSbInvalid(emailInput, 'grpSbEmail');
-          if (!brand) markSbInvalid(brandInput, 'grpSbBrand');
-
-          if (hasError) {
-            showToast('Please complete all required fields with valid details.');
-            playLuxuryHaptic(380, 'triangle', 0.08);
-            if (firstInvalid) firstInvalid.focus();
-            return;
-          }
-
-          btnConfirmSession.disabled = true;
-          btnConfirmSession.innerHTML = `<span>Securing Session Window...</span>`;
-          playLuxuryHaptic(700, 'sine', 0.06);
-
-          setTimeout(() => {
-            const sbSuccessName = document.getElementById('sbSuccessName');
-            const sbSuccessWindow = document.getElementById('sbSuccessWindow');
-            const sbSuccessEmail = document.getElementById('sbSuccessEmail');
-            const sbSuccessTopic = document.getElementById('sbSuccessTopic');
-            const topicInput = document.getElementById('sbTopic');
-            const topicVal = topicInput ? topicInput.value : 'Brand Identity & Strategy';
-
-            if (sbSuccessName) sbSuccessName.textContent = name;
-            if (sbSuccessWindow) sbSuccessWindow.textContent = `${selectedCalDate.weekday}, Sep ${selectedCalDate.day} at ${selectedCalTime}`;
-            if (sbSuccessEmail) sbSuccessEmail.textContent = email;
-            if (sbSuccessTopic) sbSuccessTopic.textContent = topicVal;
-
-            const sbSlotsBlock = document.getElementById('sbSlotsBlock');
-            const sessionForm = document.getElementById('sessionBookingForm');
-            const sbSuccessView = document.getElementById('sbSuccessView');
-
-            if (sbSlotsBlock) sbSlotsBlock.style.display = 'none';
-            if (sessionForm) sessionForm.style.display = 'none';
-            if (sbSuccessView) sbSuccessView.style.display = 'flex';
-
-            showToast(`30-Min Session Confirmed for ${selectedCalDate.weekday}, Sep ${selectedCalDate.day} at ${selectedCalTime}`);
-            playLuxuryHaptic(880, 'triangle', 0.12);
-
-            btnConfirmSession.disabled = false;
-            btnConfirmSession.innerHTML = `<span>Confirm Strategy Session</span>`;
-          }, 800);
-        });
-      }
-
-      // Reset Strategy Session View
-      const btnResetSession = document.getElementById('btnResetSession');
-      if (btnResetSession) {
-        btnResetSession.addEventListener('click', () => {
-          const sbSlotsBlock = document.getElementById('sbSlotsBlock');
-          const sessionForm = document.getElementById('sessionBookingForm');
-          const sbSuccessView = document.getElementById('sbSuccessView');
-
-          if (sbSlotsBlock) sbSlotsBlock.style.display = '';
-          if (sessionForm) sessionForm.style.display = '';
-          if (sbSuccessView) sbSuccessView.style.display = 'none';
-
-          const sForm = document.getElementById('sessionBookingForm');
-          if (sForm) sForm.reset();
-
-          playLuxuryHaptic(580, 'sine', 0.03);
-        });
-      }
-
-      // Luxury Custom Select Dropdown Logic
-      const selectTopicTrigger = document.getElementById('selectTopicTrigger');
-      const selectTopicDropdown = document.getElementById('selectTopicDropdown');
-      const selectTopicLabel = document.getElementById('selectTopicLabel');
-      const hiddenTopicInput = document.getElementById('sbTopic');
-
-      if (selectTopicTrigger && selectTopicDropdown) {
-        selectTopicTrigger.addEventListener('click', (e) => {
+      if (stepSelectTopicTrigger && stepSelectTopicDropdown) {
+        stepSelectTopicTrigger.addEventListener('click', (e) => {
           e.stopPropagation();
-          const isOpen = selectTopicDropdown.classList.contains('open');
-          selectTopicDropdown.classList.toggle('open', !isOpen);
-          selectTopicTrigger.classList.toggle('open', !isOpen);
-          selectTopicTrigger.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+          const isOpen = stepSelectTopicDropdown.classList.contains('open');
+          stepSelectTopicDropdown.classList.toggle('open', !isOpen);
+          stepSelectTopicTrigger.classList.toggle('open', !isOpen);
+          stepSelectTopicTrigger.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
           playLuxuryHaptic(560, 'sine', 0.03);
         });
 
-        document.querySelectorAll('.luxury-select-opt').forEach(opt => {
+        document.querySelectorAll('#stepSelectTopicDropdown .luxury-select-opt').forEach(opt => {
           opt.addEventListener('click', (e) => {
             e.stopPropagation();
             const val = opt.getAttribute('data-value');
-            if (hiddenTopicInput) hiddenTopicInput.value = val;
-            if (selectTopicLabel) selectTopicLabel.textContent = val;
+            if (stepHiddenTopicInput) stepHiddenTopicInput.value = val;
+            if (stepSelectTopicLabel) stepSelectTopicLabel.textContent = val;
 
-            document.querySelectorAll('.luxury-select-opt').forEach(o => o.classList.remove('active'));
+            document.querySelectorAll('#stepSelectTopicDropdown .luxury-select-opt').forEach(o => o.classList.remove('active'));
             opt.classList.add('active');
 
-            selectTopicDropdown.classList.remove('open');
-            selectTopicTrigger.classList.remove('open');
-            selectTopicTrigger.setAttribute('aria-expanded', 'false');
+            stepSelectTopicDropdown.classList.remove('open');
+            stepSelectTopicTrigger.classList.remove('open');
+            stepSelectTopicTrigger.setAttribute('aria-expanded', 'false');
             playLuxuryHaptic(620, 'sine', 0.03);
           });
         });
 
-        // Close when clicking outside
         document.addEventListener('click', (e) => {
-          if (!document.getElementById('luxurySelectTopic')?.contains(e.target)) {
-            selectTopicDropdown.classList.remove('open');
-            selectTopicTrigger.classList.remove('open');
-            selectTopicTrigger.setAttribute('aria-expanded', 'false');
+          if (!document.getElementById('stepLuxurySelectTopic')?.contains(e.target)) {
+            stepSelectTopicDropdown.classList.remove('open');
+            stepSelectTopicTrigger.classList.remove('open');
+            stepSelectTopicTrigger.setAttribute('aria-expanded', 'false');
           }
         });
       }
@@ -3549,6 +4038,48 @@
           playLuxuryHaptic(640, 'triangle', 0.05);
         });
       }
+
+      // Nav Directional Scroll Behavior
+      let lastContactScrollY = window.scrollY;
+      const navEl = document.getElementById('nav');
+
+      window.addEventListener('scroll', () => {
+        const sy = window.scrollY;
+        if (navEl) {
+          if (sy <= 40 || sy < lastContactScrollY - 3) {
+            // Scrolling UP (or at top): header comes down smoothly
+            navEl.classList.add('visible');
+            navEl.classList.remove('hidden');
+          } else if (sy > lastContactScrollY + 3) {
+            // Scrolling DOWN: header animates up out of view
+            navEl.classList.remove('visible');
+            navEl.classList.add('hidden');
+          }
+        }
+        lastContactScrollY = sy;
+      }, { passive: true });
+
+      // ── Interactive FAQ Accordion Logic ──
+      const faqItems = document.querySelectorAll('#faq .faq-item');
+      faqItems.forEach(item => {
+        const trigger = item.querySelector('.faq-trigger');
+        if (!trigger) return;
+        trigger.addEventListener('click', () => {
+          const isOpen = item.classList.contains('active');
+          faqItems.forEach(other => {
+            other.classList.remove('active');
+            const otherBtn = other.querySelector('.faq-trigger');
+            if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+          });
+          if (!isOpen) {
+            item.classList.add('active');
+            trigger.setAttribute('aria-expanded', 'true');
+            playLuxuryHaptic(580, 'sine', 0.03);
+          } else {
+            playLuxuryHaptic(500, 'sine', 0.03);
+          }
+        });
+      });
 
       // Initial Render
       navigateToStep(1);

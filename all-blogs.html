@@ -144,9 +144,38 @@
       transition: width 0.25s, height 0.25s, border-color 0.25s, transform 0.08s ease-out;
     }
 
-    /* ── FIXED NAVIGATION (Hidden on Dedicated Blog Detail View) ── */
+    /* ── FIXED NAVIGATION ── */
     #nav {
-      display: none !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 76px;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(24px, 4.5vw, 64px);
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--rule);
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background-color 0.4s var(--sp), border-color 0.4s var(--sp);
+    }
+
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
     }
 
     .nav-logo {
@@ -1045,6 +1074,15 @@
     .reader-drawer-overlay.active {
       opacity: 1;
       visibility: visible;
+    }
+
+    body.reader-open #nav,
+    .reader-drawer-overlay.active ~ #nav {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+      transform: translateY(-100%) !important;
     }
 
     .reader-drawer-panel {
@@ -2448,11 +2486,13 @@
         rdrAuthorAvatar.textContent = article.initials || 'JT';
 
         readerOverlay.classList.add('active');
+        document.body.classList.add('reader-open');
         document.body.style.overflow = 'hidden';
       }
 
       function closeReader() {
         readerOverlay.classList.remove('active');
+        document.body.classList.remove('reader-open');
         document.body.style.overflow = '';
       }
 
@@ -2481,23 +2521,27 @@
       }
 
       // Nav Directional Scroll Behavior
-      let lastBlogDetailScrollY = window.scrollY;
+      let lastAllBlogScrollY = window.scrollY;
       const navEl = document.getElementById('nav');
 
       window.addEventListener('scroll', () => {
         const sy = window.scrollY;
         if (navEl) {
-          if (sy <= 40 || sy < lastBlogDetailScrollY - 3) {
-            // Scrolling UP (or at top): header comes down smoothly
+          if (sy <= 10) {
+            // At the very top resting position: header is visible
             navEl.classList.add('visible');
             navEl.classList.remove('hidden');
-          } else if (sy > lastBlogDetailScrollY + 3) {
-            // Scrolling DOWN: header animates up out of view
+          } else if (sy > lastAllBlogScrollY + 2) {
+            // Scrolling DOWN: header comes down smoothly from the top
+            navEl.classList.add('visible');
+            navEl.classList.remove('hidden');
+          } else if (sy < lastAllBlogScrollY - 2) {
+            // Scrolling UP: header animates up away into the top
             navEl.classList.remove('visible');
             navEl.classList.add('hidden');
           }
         }
-        lastBlogDetailScrollY = sy;
+        lastAllBlogScrollY = sy;
       }, { passive: true });
     });
   </script>

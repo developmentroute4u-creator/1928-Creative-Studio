@@ -222,9 +222,9 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--cr);
-      padding: 8px 18px;
-      background: var(--cr-glow);
-      border-radius: 999px;
+      padding: 0;
+      background: none;
+      border-radius: 0;
       margin-bottom: clamp(24px, 3.5vh, 36px);
     }
 
@@ -322,6 +322,25 @@
         gap: 8px;
         text-align: center;
       }
+    }
+
+    /* ── Smooth scrollbar ─────────────────────────────────── */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--cr) var(--bg);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cr);
+      border-radius: 3px;
     }
   </style>
 </head>

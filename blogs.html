@@ -16,6 +16,7 @@
   <script>
     (function () {
       try {
+        sessionStorage.setItem('1928_site_visited', 'true');
         const saved = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
         document.documentElement.setAttribute('data-theme', saved);
       } catch (e) {}
@@ -166,8 +167,13 @@
       padding: 0;
       margin: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 48%, rgba(200, 16, 46, 0.10) 0%, transparent 72%),
-        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.015) 0%, transparent 50%),
+        radial-gradient(ellipse 80% 60% at 50% 48%, rgba(200, 16, 46, 0.08) 0%, transparent 72%),
+        var(--bg);
+    }
+
+    [data-theme="light"] #perspectives-hero {
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 48%, rgba(200, 16, 46, 0.035) 0%, transparent 70%),
         var(--bg);
     }
 
@@ -179,10 +185,14 @@
       background-image:
         linear-gradient(to right, var(--rule) 1px, transparent 1px),
         linear-gradient(to bottom, var(--rule) 1px, transparent 1px);
-      opacity: 0.28;
+      opacity: 0.22;
       pointer-events: none;
-      mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 85%);
-      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 85%);
+      mask-image: radial-gradient(circle at 50% 50%, black 25%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at 50% 50%, black 25%, transparent 80%);
+    }
+
+    [data-theme="light"] .hero-grid-overlay {
+      opacity: 0.12;
     }
 
     /* Minimalist Central Stage (Mathematically Centered in 100vh Viewport) */
@@ -251,7 +261,7 @@
       border-radius: 999px;
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       margin: 0 0 clamp(24px, 3.4vh, 38px);
       max-width: 880px;
       width: 100%;
@@ -259,10 +269,21 @@
       transition: border-color 0.35s var(--sp), box-shadow 0.35s var(--sp), transform 0.35s var(--sp);
     }
 
+    [data-theme="light"] .critical-dispatch-bar {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.03);
+    }
+
     .critical-dispatch-bar:hover {
       border-color: var(--cr);
-      box-shadow: 0 16px 48px var(--cr-soft), 0 0 24px var(--cr-glow);
+      box-shadow: 0 12px 36px rgba(200, 16, 46, 0.18);
       transform: translateY(-1px);
+    }
+
+    [data-theme="light"] .critical-dispatch-bar:hover {
+      border-color: var(--cr);
+      box-shadow: 0 8px 24px rgba(200, 16, 46, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
     }
 
     .cdb-left {
@@ -369,6 +390,12 @@
       border: 1px solid var(--rule-m);
       margin-left: auto;
       flex-shrink: 0;
+    }
+
+    [data-theme="light"] .cdb-cat-tag {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: rgba(0, 0, 0, 0.08);
+      color: var(--ink-dim);
     }
 
     /* Minimal Sharp Manifesto Lead */
@@ -920,12 +947,17 @@
     [data-theme="light"] .featured-monograph-spread {
       background: var(--card-bg);
       border-color: var(--rule-m);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 16px 40px rgba(0, 0, 0, 0.06);
     }
 
     .featured-monograph-spread:hover {
       border-color: var(--cr);
       box-shadow: 0 0 32px var(--cr-soft), 0 20px 56px rgba(0, 0, 0, 0.5);
+    }
+
+    [data-theme="light"] .featured-monograph-spread:hover {
+      border-color: rgba(200, 16, 46, 0.32);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), 0 28px 60px rgba(0, 0, 0, 0.08), 0 0 24px rgba(200, 16, 46, 0.09);
     }
 
     /* Right-side Narrative Content */
@@ -951,73 +983,55 @@
       flex-direction: column;
     }
 
-    /* 1. TOP SECTION SPACING */
+    /* 1. TOP SECTION SPACING (Single Red Tag Only) */
     .fms-top-spec {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
       font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
+      font-size: 11.5px;
+      font-weight: 800;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--cr-bright);
+      color: var(--cr);
       margin: 0;
-      margin-bottom: clamp(16px, 2.2vh, 24px);
-    }
-
-    .fms-numeral {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--ink-dim);
-      letter-spacing: 0.16em;
-    }
-
-    .fms-spec-divider {
-      color: var(--rule-heavy);
-      font-size: 12px;
-      opacity: 0.6;
+      margin-bottom: clamp(14px, 2vh, 20px);
     }
 
     .fms-cat-name {
-      color: var(--cr-bright);
-      font-weight: 700;
+      color: var(--cr);
+      font-weight: 800;
+      letter-spacing: 0.14em;
     }
 
-    .fms-read-time {
-      color: var(--ink-dim);
-      font-weight: 500;
-    }
-
-    /* 2. HEADER (TITLE) TOP & BOTTOM SPACING */
+    /* 2. HEADER (TITLE) - 7 to 8 Words, Prominent Scale */
     .fms-title {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(28px, 3.2vw, 44px);
-      line-height: 1.2;
+      font-size: clamp(30px, 3.4vw, 48px);
+      line-height: 1.14;
       letter-spacing: -0.035em;
       color: var(--ink);
       margin: 0;
-      margin-bottom: clamp(16px, 2.2vh, 24px);
-      max-width: 22ch;
+      margin-bottom: clamp(14px, 2vh, 20px);
+      max-width: 28ch;
     }
 
-    /* 3. DESCRIPTION PROPER SPACING */
+    /* 3. DESCRIPTION (Clean 1-2 Lines) */
     .fms-excerpt {
-      font-size: clamp(15px, 1.15vw, 17px);
+      font-size: clamp(15px, 1.12vw, 17px);
       color: var(--ink-mid);
-      line-height: 1.75;
+      line-height: 1.65;
       margin: 0;
-      margin-bottom: clamp(26px, 3.5vh, 38px);
-      max-width: 52ch;
+      margin-bottom: clamp(22px, 3vh, 32px);
+      max-width: 54ch;
     }
 
-    /* Footer Meta */
+    /* Footer Meta (Clean Aligned Launch Button) */
     .fms-footer-meta {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       border-top: 1px solid var(--rule);
       padding-top: clamp(18px, 2.2vh, 24px);
       flex-wrap: wrap;
@@ -1289,11 +1303,29 @@
       padding: 6px 14px;
       border-radius: 999px;
       border: 1px solid var(--rule-m);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.35s var(--sp);
+    }
+
+    .pga-drift-hint:hover {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 0 20px var(--cr-glow), 0 4px 14px rgba(200, 16, 46, 0.35);
+      transform: translateY(-2px);
     }
 
     [data-theme="light"] .pga-drift-hint {
       background: rgba(0, 0, 0, 0.04);
       border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="light"] .pga-drift-hint:hover {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 4px 18px rgba(200, 16, 46, 0.25);
     }
 
     .pdh-dot {
@@ -1302,6 +1334,12 @@
       border-radius: 50%;
       background: var(--cr-bright);
       box-shadow: 0 0 8px var(--cr-glow);
+      transition: background 0.3s ease;
+    }
+
+    .pga-drift-hint:hover .pdh-dot {
+      background: #ffffff;
+      box-shadow: 0 0 8px #ffffff;
     }
 
     .pdh-text {
@@ -1310,12 +1348,17 @@
       font-weight: 600;
       letter-spacing: 0.03em;
       text-transform: none;
-      color: var(--ink);
+      color: inherit;
     }
 
     .pdh-arrow {
       font-size: 13px;
-      color: var(--ink-mid);
+      color: inherit;
+      transition: transform 0.3s var(--sp);
+    }
+
+    .pga-drift-hint:hover .pdh-arrow {
+      transform: translate(2px, -2px);
     }
 
     .pga-track-viewport {
@@ -1942,7 +1985,7 @@
     .reader-modal-backdrop {
       position: fixed;
       inset: 0;
-      z-index: 9990;
+      z-index: 100000;
       background: rgba(0, 0, 0, 0.88);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
@@ -1957,6 +2000,15 @@
     .reader-modal-backdrop.active {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    body.reader-open #nav,
+    .reader-modal-backdrop.active ~ #nav {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+      transform: translateY(-100%) !important;
     }
 
     .reader-modal-stage {
@@ -2514,9 +2566,10 @@
       background: var(--bg);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px) clamp(24px, 3.5vh, 40px);
       box-sizing: border-box;
       z-index: 10;
     }
@@ -2526,15 +2579,15 @@
       border: 1px solid var(--rule);
       border-radius: clamp(36px, 5vw, 64px);
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
-      padding: clamp(52px, 6.5vh, 76px) clamp(40px, 5vw, 72px) clamp(16px, 2vh, 24px);
+      padding: clamp(48px, 6vh, 68px) clamp(40px, 5vw, 72px) 0px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       width: 100%;
       max-width: 1640px;
-      min-height: clamp(560px, 78vh, 740px);
-      margin: auto;
-      gap: clamp(72px, 11vh, 130px);
+      min-height: clamp(500px, 68vh, 640px);
+      margin: 0 auto;
+      gap: clamp(48px, 7vh, 80px);
       overflow: hidden;
       position: relative;
       box-sizing: border-box;
@@ -2546,10 +2599,42 @@
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
     }
 
+    .f-outer-bar {
+      width: 100%;
+      max-width: 1640px;
+      margin: clamp(16px, 2.2vh, 24px) auto 0;
+      padding: 0 clamp(16px, 2.5vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .f-outer-copyright,
+    .f-outer-dev {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .f-outer-dev a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .f-outer-dev a:hover {
+      color: var(--cr);
+    }
+
     .f-header-grid {
       display: grid;
-      grid-template-columns: 1.8fr 1fr 1.3fr 1.4fr;
-      gap: clamp(28px, 4vw, 56px);
+      grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+      gap: clamp(28px, 3.5vw, 52px);
       align-items: flex-start;
     }
 
@@ -2561,6 +2646,7 @@
       letter-spacing: -0.02em;
       color: var(--ink);
       max-width: 340px;
+      margin-bottom: 24px;
     }
 
     .f-col-label {
@@ -2595,48 +2681,34 @@
       transform: translateX(4px);
     }
 
-    .f-social-chips {
+    .f-social-circles {
       display: flex;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
     }
 
-    .f-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 14px;
+    .f-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       background: var(--bg);
       border: 1px solid var(--rule);
-      border-radius: 999px;
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      font-weight: 600;
       color: var(--ink);
-      text-decoration: none;
-      transition: all .25s var(--sp);
-    }
-
-    .f-chip:hover {
-      background: var(--ink);
-      color: var(--bg);
-      border-color: var(--ink);
-      transform: translateY(-2px);
-    }
-
-    .f-chip .f-chip-icon {
-      font-size: 0.82rem;
-      font-weight: 700;
-      line-height: 1;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
+      transition: all 0.25s var(--sp);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
-    .f-chip .f-chip-icon svg {
-      width: 13px;
-      height: 13px;
-      display: block;
+    .f-circle-btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     }
 
     .f-cta-column {
@@ -2718,12 +2790,13 @@
       color: var(--bg);
     }
 
-    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line ── */
+    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line reaching very bottom ── */
     .f-bottom-cluster {
       width: 100%;
       display: flex;
       flex-direction: column;
       margin-top: auto;
+      margin-bottom: 0;
     }
 
     .f-giant-cut-wrap {
@@ -2735,10 +2808,16 @@
       position: relative;
       margin: 0;
       padding: 0;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: grab;
       user-select: none;
       transform-origin: center bottom;
       will-change: height, transform;
+      transition: color 0.3s;
+    }
+
+    .f-giant-cut-wrap:active {
+      cursor: grabbing;
     }
 
     .f-giant-cut-svg {
@@ -2756,66 +2835,14 @@
       will-change: transform;
     }
 
-    /* ── Minimal Sub-Footer Meta Bar with Horizontal Line ── */
-    .f-meta-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 18px;
-      border-top: 1.5px solid var(--rule);
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      color: var(--ink-dim);
-      font-weight: 500;
-      letter-spacing: 0.02em;
+    .f-bottom-line {
+      width: 100%;
+      height: 1.5px;
+      background: var(--rule);
       margin: 0;
-    }
-
-    .f-meta-links {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .f-meta-links a {
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover {
-      color: var(--cr);
-    }
-
-    .f-credit-author {
-      font-weight: 700;
-      color: var(--ink-mid);
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover .f-credit-author {
-      color: var(--cr);
-    }
-
-    .f-live-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .f-status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      display: inline-block;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-      animation: fStatusPulse 2s infinite ease-in-out;
-    }
-
-    @keyframes fStatusPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
+      transform-origin: center center;
+      transition: background 0.3s;
+      will-change: transform, background;
     }
 
     @media (max-width: 1024px) {
@@ -2831,10 +2858,10 @@
         gap: 32px;
       }
 
-      .f-meta-bar {
+      .f-outer-bar {
         flex-direction: column;
-        gap: 12px;
         align-items: flex-start;
+        gap: 8px;
       }
     }
 
@@ -3131,6 +3158,210 @@
         align-items: flex-start;
       }
     }
+
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      padding: 14px clamp(20px, 3.5vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 248, 250, 0.82);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      will-change: transform, opacity;
+    }
+
+    [data-theme="dark"] #nav {
+      background: rgba(10, 10, 14, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+    }
+
+    body.reader-open #nav {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .nav-logo svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.8vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: all .25s ease;
+      position: relative;
+      padding: 5px 8px;
+      border-radius: 20px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 0px;
+      height: 1.5px;
+      background: var(--cr);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .25s var(--sm);
+    }
+
+    .nav-links a:hover {
+      color: var(--cr);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* ── Clean Minimal Luxury Active Page Header Link ── */
+    .nav-links a.active {
+      font-weight: 800;
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 5px 6px;
+    }
+
+    .nav-links a.active::after {
+      transform: scaleX(1);
+      height: 2px;
+      background: var(--cr);
+      left: 6px;
+      right: 6px;
+      bottom: -2px;
+      border-radius: 2px;
+      box-shadow: none;
+    }
+
+    .nav-links a.active:hover {
+      color: #0A0A0A;
+    }
+
+    body.dark .nav-links a.active,
+    [data-theme="dark"] .nav-links a.active {
+      color: #ffffff;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active::after,
+    [data-theme="dark"] .nav-links a.active::after {
+      background: var(--cr);
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active:hover,
+    [data-theme="dark"] .nav-links a.active:hover {
+      color: #ffffff;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-cta {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    /* Light Theme: hover becomes darker */
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    /* Dark Theme: CTA turns white on hover */
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .nav-logo svg .nl,
+    .nav-logo svg .ns {
+      fill: var(--cr);
+      transition: fill 0.3s;
+    }
+
+    /* ── Smooth scrollbar ─────────────────────────────────── */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--cr) var(--bg);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cr);
+      border-radius: 3px;
+    }
   </style>
 </head>
 
@@ -3138,6 +3369,42 @@
   <!-- Custom Mouse Cursor -->
   <div class="c-dot" id="cDot"></div>
   <div class="c-ring" id="cRing"></div>
+
+  <!-- ══ FIXED NAVIGATION ══ -->
+  <nav id="nav" class="visible">
+    <a href="index.html" class="nav-logo">
+      <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:32px;width:auto;">
+        <style>
+          .nl {
+            font-family: var(--font-secondary);
+            font-weight: 700;
+            fill: #C8102E;
+          }
+
+          .ns {
+            font-family: var(--font-secondary);
+            font-weight: 600;
+            fill: #C8102E;
+            letter-spacing: 6px;
+          }
+        </style>
+        <text x="0" y="52" class="nl" font-size="52">1928</text>
+        <text x="218" y="38" class="ns" font-size="18">CREATIVE</text>
+        <text x="218" y="58" class="ns" font-size="18">STUDIO</text>
+      </svg>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Work</a></li>
+      <li><a href="blogs.html" class="active">Perspectives</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="contact.html" class="nav-cta">Start Project</a>
+    </div>
+  </nav>
 
   <!-- ═══════════════════════════════════════════════════════════
        1. HERO: MINIMALIST AVANT-GARDE EDITORIAL ARCHIVE
@@ -3260,27 +3527,15 @@
             <div class="fms-narrative">
               <div class="fms-text-block">
                 <div class="fms-top-spec">
-                  <span class="fms-numeral">SPREAD № 01</span>
-                  <span class="fms-spec-divider">·</span>
                   <span class="fms-cat-name">BRAND ARCHITECTURE</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-read-time">7 MIN READ</span>
                 </div>
-                <h2 class="fms-title">The Monolithic Luxury Monogram</h2>
+                <h2 class="fms-title">The Monolithic Luxury Monogram as an Enduring Landmark</h2>
                 <p class="fms-excerpt">
-                  How high-growth luxury houses abandon serif complexity for mathematically rigorous monolithic marks
-                  commanding cross-surface brand authority.
+                  How high-growth luxury houses engineer mathematically rigorous marks to command enduring global authority.
                 </p>
               </div>
 
               <div class="fms-footer-meta">
-                <div class="fms-author-box">
-                  <div class="fab-avatar">JT</div>
-                  <div class="fab-info">
-                    <span class="fab-name">Jay Thaker</span>
-                    <span class="fab-role">Studio Principal &amp; Brand Architect</span>
-                  </div>
-                </div>
                 <div class="fms-launch-btn">
                   <span>Launch Monograph ↗</span>
                 </div>
@@ -3313,27 +3568,15 @@
             <div class="fms-narrative">
               <div class="fms-text-block">
                 <div class="fms-top-spec">
-                  <span class="fms-numeral">SPREAD № 02</span>
-                  <span class="fms-spec-divider">·</span>
                   <span class="fms-cat-name">SPATIAL DESIGN</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-read-time">9 MIN READ</span>
                 </div>
-                <h2 class="fms-title">Spatial Choreography in Flagship Retail</h2>
+                <h2 class="fms-title">Spatial Choreography Across Modern Architectural Luxury Flagship Retail</h2>
                 <p class="fms-excerpt">
-                  Choreographing visitor trajectories through brutalist travertine monoliths, directional acoustics, and
-                  negative-space compression.
+                  Choreographing visitor trajectories through brutalist travertine monoliths, directional acoustics, and negative-space compression.
                 </p>
               </div>
 
               <div class="fms-footer-meta">
-                <div class="fms-author-box">
-                  <div class="fab-avatar">JT</div>
-                  <div class="fab-info">
-                    <span class="fab-name">Jay Thaker</span>
-                    <span class="fab-role">Studio Principal &amp; Brand Architect</span>
-                  </div>
-                </div>
                 <div class="fms-launch-btn">
                   <span>Launch Monograph ↗</span>
                 </div>
@@ -3365,27 +3608,15 @@
             <div class="fms-narrative">
               <div class="fms-text-block">
                 <div class="fms-top-spec">
-                  <span class="fms-numeral">SPREAD № 03</span>
-                  <span class="fms-spec-divider">·</span>
                   <span class="fms-cat-name">COMPUTATIONAL WEBGL</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-read-time">12 MIN READ</span>
                 </div>
-                <h2 class="fms-title">Zero-Latency Real-Time Raytracing</h2>
+                <h2 class="fms-title">Zero Latency Computational Raytracing in WebGL Interactive Ecosystems</h2>
                 <p class="fms-excerpt">
-                  Synthesizing custom GLSL physically-based surface shaders for real-time metallic reflections at native
-                  120 FPS on luxury brand platforms.
+                  Synthesizing custom GLSL physically-based surface shaders for real-time metallic reflections at native 120 FPS.
                 </p>
               </div>
 
               <div class="fms-footer-meta">
-                <div class="fms-author-box">
-                  <div class="fab-avatar">JT</div>
-                  <div class="fab-info">
-                    <span class="fab-name">Jay Thaker</span>
-                    <span class="fab-role">Studio Principal &amp; Brand Architect</span>
-                  </div>
-                </div>
                 <div class="fms-launch-btn">
                   <span>Launch Monograph ↗</span>
                 </div>
@@ -3417,27 +3648,15 @@
             <div class="fms-narrative">
               <div class="fms-text-block">
                 <div class="fms-top-spec">
-                  <span class="fms-numeral">SPREAD № 04</span>
-                  <span class="fms-spec-divider">·</span>
                   <span class="fms-cat-name">PACKAGING &amp; SPATIAL</span>
-                  <span class="fms-spec-divider">·</span>
-                  <span class="fms-read-time">8 MIN READ</span>
                 </div>
-                <h2 class="fms-title">Tactile Acoustic Snaps &amp; Travertine</h2>
+                <h2 class="fms-title">Tactile Acoustic Snaps and Travertine in Bespoke Packaging</h2>
                 <p class="fms-excerpt">
-                  The psychophysics of 45-decibel acoustic closures, haptic friction coefficients, and unboxing rituals
-                  in ultra-luxury product design.
+                  The psychophysics of 45-decibel acoustic closures, haptic friction coefficients, and unboxing rituals in ultra-luxury design.
                 </p>
               </div>
 
               <div class="fms-footer-meta">
-                <div class="fms-author-box">
-                  <div class="fab-avatar">JT</div>
-                  <div class="fab-info">
-                    <span class="fab-name">Jay Thaker</span>
-                    <span class="fab-role">Studio Principal &amp; Brand Architect</span>
-                  </div>
-                </div>
                 <div class="fms-launch-btn">
                   <span>Launch Monograph ↗</span>
                 </div>
@@ -3472,11 +3691,11 @@
         </div>
         <div class="pga-header-meta">
           <span class="pga-counter" id="resultCounter" style="display: none;">Showing 7 of 7 Perspectives</span>
-          <div class="pga-drift-hint">
+          <a href="blog-detail.html" class="pga-drift-hint" id="exploreBlogBtn" title="Open Complete Blog Repository">
             <span class="pdh-dot"></span>
-            <span class="pdh-text">Scroll to drift</span>
-            <span class="pdh-arrow">→</span>
-          </div>
+            <span class="pdh-text">Explore All Blogs</span>
+            <span class="pdh-arrow">↗</span>
+          </a>
         </div>
       </div>
 
@@ -4524,12 +4743,14 @@
         }
 
         modal.classList.add('active');
+        document.body.classList.add('reader-open');
         document.body.style.overflow = 'hidden';
         if (modalStage) modalStage.scrollTop = 0;
       }
 
       function closeReader() {
         modal.classList.remove('active');
+        document.body.classList.remove('reader-open');
         document.body.style.overflow = '';
       }
 
@@ -4622,8 +4843,10 @@
         // Filter matching cards
         const matchingCards = cards.filter(card => {
           const cat = card.getAttribute('data-category');
-          const title = card.querySelector('.cbc-title').textContent.toLowerCase();
-          const excerpt = card.querySelector('.cbc-excerpt').textContent.toLowerCase();
+          const titleEl = card.querySelector('.cbc-title');
+          const descEl = card.querySelector('.cbc-desc') || card.querySelector('.cbc-excerpt');
+          const title = titleEl ? titleEl.textContent.toLowerCase() : '';
+          const excerpt = descEl ? descEl.textContent.toLowerCase() : '';
           const matchesCat = (currentCategory === 'all' || cat === currentCategory);
           const matchesQuery = !currentQuery || title.includes(currentQuery) || excerpt.includes(currentQuery);
           return matchesCat && matchesQuery;
@@ -5155,8 +5378,25 @@
         });
       }
 
-      // Auto emergence on scroll
+      // Auto emergence on scroll & Nav directional scroll (Perspectives page)
+      let lastBlogScrollY = window.scrollY;
+      const navEl = document.getElementById('nav');
+
       window.addEventListener('scroll', () => {
+        const sy = window.scrollY;
+        if (navEl) {
+          if (sy <= 40 || sy < lastBlogScrollY - 3) {
+            // Scrolling UP (or at top): header comes down smoothly into view
+            navEl.classList.add('visible');
+            navEl.classList.remove('hidden');
+          } else if (sy > lastBlogScrollY + 3) {
+            // Scrolling DOWN: header animates up out of view
+            navEl.classList.remove('visible');
+            navEl.classList.add('hidden');
+          }
+        }
+        lastBlogScrollY = sy;
+
         if (!footerDriver) return;
         const rect = footerDriver.getBoundingClientRect();
         const vh = window.innerHeight;

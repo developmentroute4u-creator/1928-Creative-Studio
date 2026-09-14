@@ -7,6 +7,9 @@
   <title>Services &amp; Capabilities · 1928 Creative Studio</title>
   <meta name="description"
     content="1928 Creative Studio Services — Logo Design, Brand Identity Development, Website Design & Development, Social Media & Digital Marketing, and Content Creation & Influencer Marketing." />
+  <script>
+    try { sessionStorage.setItem('1928_site_visited', 'true'); } catch (e) { }
+  </script>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -144,17 +147,17 @@
     .sec-tag-pill {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--cr);
-      background: var(--cr-lo);
-      border: 1px solid rgba(200, 16, 46, 0.3);
-      padding: 7px 18px;
-      border-radius: 999px;
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
       margin-bottom: clamp(14px, 2vh, 22px);
     }
 
@@ -163,7 +166,6 @@
       height: 6px;
       border-radius: 50%;
       background: var(--cr);
-      box-shadow: 0 0 8px var(--cr);
       display: inline-block;
     }
 
@@ -192,108 +194,187 @@
       margin-top: 14px;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       2. FIXED NAVIGATION (Hidden in Hero · Revealed on Scroll)
-       ═══════════════════════════════════════════════════════════ */
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
     #nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      z-index: 1000;
+      z-index: 999;
+      padding: 14px clamp(20px, 3.5vw, 48px);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: clamp(16px, 2.2vh, 24px) clamp(24px, 4vw, 64px);
-      background: rgba(7, 7, 10, 0.82);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--rule);
+      justify-content: space-between;
+      background: rgba(248, 248, 250, 0.75);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      opacity: 0;
+      pointer-events: none;
       transform: translateY(-100%);
-      /* Initial Hidden in Hero */
-      transition: transform 0.4s var(--sp), background 0.3s;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      will-change: transform, opacity;
     }
 
-    [data-theme="light"] #nav {
-      background: rgba(250, 250, 248, 0.88);
+    [data-theme="dark"] #nav {
+      background: rgba(10, 10, 14, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
     }
 
-    #nav.nav-visible {
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
       transform: translateY(0);
     }
 
-    #nav.nav-hidden {
+    #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
       transform: translateY(-100%);
     }
 
-    .nav-logo {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
+    .nav-logo svg {
+      height: 32px;
+      width: auto;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: clamp(20px, 2.8vw, 42px);
+      gap: clamp(12px, 1.8vw, 24px);
       list-style: none;
     }
 
     .nav-links a {
       font-family: var(--font-primary);
-      font-size: 13.5px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--ink-mid);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
       text-decoration: none;
-      transition: color 0.2s, transform 0.2s;
+      color: var(--ink-mid);
+      transition: all .25s ease;
       position: relative;
+      padding: 5px 8px;
+      border-radius: 20px;
     }
 
-    .nav-links a:hover,
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 0px;
+      height: 1.5px;
+      background: var(--cr);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .25s var(--sm);
+    }
+
+    .nav-links a:hover {
+      color: var(--cr);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* ── Clean Minimal Luxury Active Page Header Link ── */
     .nav-links a.active {
-      color: var(--ink);
+      font-weight: 800;
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 5px 6px;
     }
 
     .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 100%;
+      transform: scaleX(1);
       height: 2px;
       background: var(--cr);
+      left: 6px;
+      right: 6px;
+      bottom: -2px;
       border-radius: 2px;
+      box-shadow: none;
+    }
+
+    .nav-links a.active:hover {
+      color: #0A0A0A;
+    }
+
+    body.dark .nav-links a.active,
+    [data-theme="dark"] .nav-links a.active {
+      color: #ffffff;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active::after,
+    [data-theme="dark"] .nav-links a.active::after {
+      background: var(--cr);
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active:hover,
+    [data-theme="dark"] .nav-links a.active:hover {
+      color: #ffffff;
     }
 
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
     .nav-cta {
       font-family: var(--font-primary);
-      font-size: 12.5px;
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
       text-decoration: none;
-      padding: 10px 22px;
+      padding: 9px 22px;
       border-radius: 999px;
       background: var(--cr);
-      color: #FFFFFF;
-      box-shadow: 0 4px 18px rgba(200, 16, 46, 0.25);
-      transition: transform 0.25s var(--sp), box-shadow 0.25s;
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+      cursor: pointer;
+      display: inline-block;
     }
 
-    .nav-cta:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(200, 16, 46, 0.4);
+    /* Light Theme: hover becomes darker */
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    /* Dark Theme: CTA turns white on hover */
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .nav-logo svg .nl,
+    .nav-logo svg .ns {
+      fill: var(--cr);
+      transition: fill 0.3s;
     }
 
     /* ═══════════════════════════════════════════════════════════
-       3. 1928 ATELIER KINETIC SERVICES HERO (3-Line Clean & Proper)
+       3. 1928 ATELIER KINETIC SERVICES HERO (Orbital & Dynamic 2-Line)
        ═══════════════════════════════════════════════════════════ */
     #hero {
       position: relative;
@@ -301,11 +382,24 @@
       width: 100%;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      padding: clamp(54px, 8vh, 88px) clamp(24px, 4vw, 64px) clamp(32px, 4.5vh, 48px);
+      padding: clamp(60px, 9vh, 100px) clamp(20px, 3.5vw, 60px);
       box-sizing: border-box;
-      background: radial-gradient(circle at 50% 30%, rgba(200, 16, 46, 0.08) 0%, transparent 65%);
+      background: radial-gradient(circle at 50% 50%, rgba(200, 16, 46, 0.08) 0%, transparent 68%);
+      overflow: hidden;
+    }
+
+    /* Orbital Dynamic Realm */
+    .hero-orbit-stage {
+      position: relative;
+      width: 100%;
+      max-width: 1400px;
+      height: clamp(520px, 75vh, 720px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto 0;
     }
 
     /* Central 2-Line Editorial Lockup */
@@ -316,55 +410,16 @@
       align-items: center;
       text-align: center;
       max-width: 1100px;
-      margin: auto 0;
-    }
-
-    .hcl-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: clamp(0.66rem, 0.78vw, 0.74rem);
-      font-weight: 700;
-      letter-spacing: 0.26em;
-      text-transform: uppercase;
-      color: var(--cr);
-      background: var(--cr-lo);
-      border: 1px solid rgba(200, 16, 46, 0.3);
-      padding: 6px 20px;
-      border-radius: 999px;
-      box-shadow: 0 0 20px rgba(200, 16, 46, 0.15);
-      margin-bottom: clamp(16px, 2.4vh, 24px);
-    }
-
-    .hcl-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--cr);
-      box-shadow: 0 0 8px var(--cr);
-      animation: hclPulse 2s infinite ease-in-out;
-    }
-
-    @keyframes hclPulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-
-      50% {
-        transform: scale(1.3);
-        opacity: 0.6;
-      }
+      z-index: 10;
+      pointer-events: none;
+      user-select: none;
     }
 
     .hcl-headline {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(32px, 4.4vw, 68px);
-      line-height: 1.12;
+      font-size: clamp(32px, 4.6vw, 70px);
+      line-height: 1.14;
       letter-spacing: -0.04em;
       text-transform: uppercase;
       color: var(--ink);
@@ -377,11 +432,12 @@
       display: block;
       color: var(--ink);
       white-space: nowrap;
+      letter-spacing: -0.03em;
     }
 
     .hcl-dynamic-wrap {
       display: inline-block;
-      min-height: 1.15em;
+      min-height: 1.18em;
       margin-top: 4px;
     }
 
@@ -390,8 +446,9 @@
       color: var(--cr);
       font-style: italic;
       font-weight: 300;
+      letter-spacing: -0.02em;
       position: relative;
-      transition: opacity 0.3s var(--sp), transform 0.3s var(--sp), filter 0.3s var(--sp);
+      transition: opacity 0.28s var(--sp), transform 0.28s var(--sp), filter 0.28s var(--sp);
       will-change: transform, opacity, filter;
       white-space: nowrap;
     }
@@ -402,309 +459,108 @@
       transform: translateY(8px) scale(0.97);
     }
 
-    /* ── The 5 Proper Editorial Architectural Cards ── */
-    .hero-proper-cards {
-      position: relative;
-      width: 100%;
-      max-width: 1480px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: clamp(10px, 1.2vw, 18px);
-    }
-
-    .h-proper-card {
-      background: var(--card-bg);
-      border: 1.5px solid var(--rule);
-      border-radius: 22px;
-      padding: clamp(20px, 2.5vh, 26px) clamp(18px, 1.6vw, 24px);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: clamp(170px, 22vh, 205px);
-      text-decoration: none;
-      color: var(--ink);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      opacity: 0.38;
-      filter: grayscale(0.25);
-      transform: translateY(0);
-      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-        border-color 0.45s ease,
-        box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-        filter 0.55s ease;
-      will-change: transform, opacity, box-shadow;
-    }
-
-    .h-proper-card::before {
-      content: '';
+    /* Floating / Revolving Service Icon Discs */
+    .hero-orbit-icons {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle 260px at var(--mx, 50%) var(--my, 50%), rgba(200, 16, 46, 0.12) 0%, rgba(200, 16, 46, 0.025) 50%, transparent 80%);
-      opacity: 0;
-      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 20;
       pointer-events: none;
-      border-radius: 22px;
     }
 
-    .h-proper-card.active-card::before {
-      opacity: 0.1;
-    }
-
-    .h-proper-card:hover::before,
-    .h-proper-card.active-card:hover::before {
-      opacity: 1;
-    }
-
-    .h-proper-card.active-card,
-    .h-proper-card:hover {
-      opacity: 1;
-      filter: grayscale(0);
-      transform: translateY(-8px);
-      border-color: rgba(200, 16, 46, 0.35);
-      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28), 0 0 18px rgba(200, 16, 46, 0.12);
-    }
-
-    .hpc-laser-bar {
+    .orbit-icon-node {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(200, 16, 46, 0.8), transparent);
-      opacity: 0;
-      transform: scaleX(0);
-      transform-origin: center;
-      transition: transform 0.45s var(--sp), opacity 0.45s ease;
-    }
-
-    .h-proper-card:hover .hpc-laser-bar,
-    .h-proper-card.active-card .hpc-laser-bar {
-      opacity: 1;
-      transform: scaleX(1);
-    }
-
-    .hpc-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .hpc-num {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      color: var(--cr);
-    }
-
-    .hpc-icon {
-      width: 18px;
-      height: 18px;
-      color: var(--ink-dim);
-      transition: color 0.35s ease, transform 0.35s var(--sp);
-    }
-
-    .h-proper-card:hover .hpc-icon,
-    .h-proper-card.active-card .hpc-icon {
-      color: var(--cr);
-      transform: scale(1.12);
-    }
-
-    /* ── Kinetic Choreographed Entrance Animations ── */
-    @keyframes headlineSoftGlide {
-      0% {
-        opacity: 0;
-        transform: translate3d(0, -32px, 0);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translate3d(0, 0, 0);
-      }
-    }
-
-    .hero-clean-lockup {
-      animation: headlineSoftGlide 1.25s cubic-bezier(0.19, 1, 0.22, 1) 0.05s both;
-      will-change: transform, opacity;
-    }
-
-    /* ── The 5-Card Deck Fan/Split Animation (Originating behind Card 3) ── */
-    @keyframes cardFan01 {
-      0% {
-        opacity: 0;
-        transform: translate3d(calc(200% + clamp(20px, 2.4vw, 36px)), 12px, 0) scale(0.94);
-      }
-
-      25% {
-        opacity: 0.75;
-      }
-
-      100% {
-        opacity: 1;
-        transform: translate3d(0, -8px, 0) scale(1);
-      }
-    }
-
-    @keyframes cardFan02 {
-      0% {
-        opacity: 0;
-        transform: translate3d(calc(100% + clamp(10px, 1.2vw, 18px)), 8px, 0) scale(0.96);
-      }
-
-      25% {
-        opacity: 0.55;
-      }
-
-      100% {
-        opacity: 0.38;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-    }
-
-    @keyframes cardFan03 {
-      0% {
-        opacity: 0;
-        transform: translate3d(0, 16px, 0) scale(0.96);
-      }
-
-      100% {
-        opacity: 0.38;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-    }
-
-    @keyframes cardFan04 {
-      0% {
-        opacity: 0;
-        transform: translate3d(calc(-100% - clamp(10px, 1.2vw, 18px)), 8px, 0) scale(0.96);
-      }
-
-      25% {
-        opacity: 0.55;
-      }
-
-      100% {
-        opacity: 0.38;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-    }
-
-    @keyframes cardFan05 {
-      0% {
-        opacity: 0;
-        transform: translate3d(calc(-200% - clamp(20px, 2.4vw, 36px)), 12px, 0) scale(0.94);
-      }
-
-      25% {
-        opacity: 0.75;
-      }
-
-      100% {
-        opacity: 0.38;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-    }
-
-    .h-proper-card {
-      backface-visibility: hidden;
-      -webkit-backface-visibility: hidden;
-      transform: translate3d(0, 0, 0);
-    }
-
-    .h-proper-card:nth-child(1) {
-      animation: cardFan01 1.35s cubic-bezier(0.19, 1, 0.22, 1) 0.25s both;
-    }
-
-    .h-proper-card:nth-child(2) {
-      animation: cardFan02 1.35s cubic-bezier(0.19, 1, 0.22, 1) 0.28s both;
-    }
-
-    .h-proper-card:nth-child(3) {
-      animation: cardFan03 1.25s cubic-bezier(0.19, 1, 0.22, 1) 0.22s both;
-    }
-
-    .h-proper-card:nth-child(4) {
-      animation: cardFan04 1.35s cubic-bezier(0.19, 1, 0.22, 1) 0.28s both;
-    }
-
-    .h-proper-card:nth-child(5) {
-      animation: cardFan05 1.35s cubic-bezier(0.19, 1, 0.22, 1) 0.25s both;
-    }
-
-    .hpc-body {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin: 8px 0;
-    }
-
-    .hpc-title {
-      font-family: var(--font-primary);
-      font-weight: 800;
-      font-size: clamp(0.95rem, 1.18vw, 1.14rem);
-      line-height: 1.15;
-      letter-spacing: -0.025em;
-      color: var(--ink);
-    }
-
-    .hpc-desc {
-      font-family: var(--font-secondary);
-      font-size: clamp(0.74rem, 0.88vw, 0.82rem);
-      color: var(--ink-mid);
-      line-height: 1.35;
-    }
-
-    .hpc-footer {
+      top: 50%;
+      left: 50%;
+      width: clamp(56px, 5.2vw, 76px);
+      height: clamp(56px, 5.2vw, 76px);
+      margin-top: calc(-1 * clamp(56px, 5.2vw, 76px) / 2);
+      margin-left: calc(-1 * clamp(56px, 5.2vw, 76px) / 2);
+      border-radius: 50%;
       display: flex;
       align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      pointer-events: auto;
+      cursor: pointer;
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+      color: var(--cr);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.3s ease;
+      will-change: transform;
+      z-index: 22;
     }
 
-    .hpc-pill {
+    body.dark .orbit-icon-node,
+    [data-theme="dark"] .orbit-icon-node {
+      background: rgba(18, 18, 25, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      color: #ff334b;
+    }
+
+    .orbit-icon-node svg {
+      width: clamp(22px, 2.2vw, 28px);
+      height: clamp(22px, 2.2vw, 28px);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Minimal numeral tag */
+    .oin-tag {
+      position: absolute;
+      top: -3px;
+      right: -3px;
       font-family: var(--font-mono);
       font-size: 0.62rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      background: var(--bg);
-      border: 1px solid var(--rule-m);
-      padding: 4px 10px;
-      border-radius: 999px;
-      transition: color 0.25s, border-color 0.25s;
-    }
-
-    .h-proper-card:hover .hpc-pill,
-    .h-proper-card.active-card .hpc-pill {
       color: var(--cr);
-      border-color: rgba(200, 16, 46, 0.35);
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      padding: 1px 5px;
+      line-height: 1.1;
+      pointer-events: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     }
 
-    @media (max-width: 1024px) {
-      .hero-proper-cards {
-        grid-template-columns: repeat(3, 1fr);
+    /* Refined Clean Luxury Hover State */
+    .orbit-icon-node:hover,
+    .orbit-icon-node.is-active {
+      background: #ffffff;
+      border-color: var(--cr);
+      color: var(--cr);
+      box-shadow: 0 12px 32px rgba(200, 16, 46, 0.18), 0 2px 10px rgba(0, 0, 0, 0.06);
+      z-index: 30;
+    }
+
+    body.dark .orbit-icon-node:hover,
+    body.dark .orbit-icon-node.is-active,
+    [data-theme="dark"] .orbit-icon-node:hover,
+    [data-theme="dark"] .orbit-icon-node.is-active {
+      background: rgba(26, 26, 36, 0.95);
+      border-color: var(--cr-bright);
+      color: #ffffff;
+      box-shadow: 0 14px 38px rgba(200, 16, 46, 0.35), 0 0 16px rgba(230, 25, 55, 0.25);
+    }
+
+    .orbit-icon-node:hover svg,
+    .orbit-icon-node.is-active svg {
+      transform: scale(1.12);
+    }
+
+    @media (max-width: 768px) {
+      .hero-orbit-stage {
+        height: clamp(420px, 65vh, 520px);
       }
-    }
 
-    @media (max-width: 680px) {
-      .hero-proper-cards {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 1024px) {
-      .hero-service-keys {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    @media (max-width: 680px) {
-      .hero-service-keys {
-        grid-template-columns: 1fr;
+      .hcl-headline {
+        font-size: clamp(26px, 6vw, 42px);
       }
     }
 
@@ -724,7 +580,11 @@
       border-radius: clamp(24px, 3.5vw, 40px);
       padding: clamp(36px, 5vh, 60px) clamp(28px, 4vw, 56px);
       margin-top: clamp(28px, 4vh, 48px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 20px 48px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] .overview-card-wrap {
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
     }
 
     .overview-statement {
@@ -823,18 +683,20 @@
       gap: clamp(20px, 2.8vw, 44px);
       align-items: center;
       overflow: hidden;
-      box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.6), 0 32px 70px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       transform-origin: center top;
-      transition: border-color 0.35s ease, box-shadow 0.35s ease;
+      transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
       will-change: transform, opacity, filter;
       opacity: 1;
     }
 
     [data-theme="light"] .svc-card {
       background: #FFFFFF;
-      box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.12), 0 24px 60px rgba(0, 0, 0, 0.16);
+      border: 1.5px solid rgba(0, 0, 0, 0.08);
+      border-top: 1.5px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 20px 50px rgba(0, 0, 0, 0.06);
     }
 
     .svc-card:nth-child(1) {
@@ -863,7 +725,12 @@
 
     .svc-card:hover {
       border-color: rgba(200, 16, 46, 0.45);
-      box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.65), 0 36px 76px rgba(0, 0, 0, 0.75), 0 0 28px var(--cr-glow);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 0 32px rgba(200, 16, 46, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    }
+
+    [data-theme="light"] .svc-card:hover {
+      border-color: rgba(200, 16, 46, 0.32);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), 0 28px 60px rgba(0, 0, 0, 0.08), 0 0 24px rgba(200, 16, 46, 0.09);
     }
 
     .svc-card-left {
@@ -879,12 +746,24 @@
     }
 
     .svc-num-label {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
+      font-family: var(--font-primary);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
       color: var(--cr);
       text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .svc-num-label::before {
+      content: "";
+      display: inline-block;
+      width: 14px;
+      height: 2px;
+      background: var(--cr);
+      border-radius: 2px;
     }
 
     .svc-title-main {
@@ -913,15 +792,17 @@
     .svc-deliv-wrap {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-top: 4px;
+      gap: 12px;
+      margin-top: 6px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule);
     }
 
     .svc-deliv-title {
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      font-weight: 700;
-      letter-spacing: 0.16em;
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-dim);
     }
@@ -929,34 +810,38 @@
     .svc-chips-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      align-items: center;
+      gap: 10px 24px;
     }
 
     .svc-chip-item {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 7px 15px;
-      background: var(--bg);
-      border: 1px solid var(--rule-m);
-      border-radius: 999px;
+      gap: 8px;
+      padding: 0 !important;
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
       font-family: var(--font-primary);
-      font-size: 0.78rem;
+      font-size: 0.86rem;
       font-weight: 600;
-      color: var(--ink);
-      transition: all 0.25s;
+      color: var(--ink-mid);
+      transition: color 0.2s ease, transform 0.2s ease;
+      cursor: default;
     }
 
     .svc-chip-item:hover {
-      border-color: var(--cr);
-      color: var(--cr);
+      color: var(--ink);
+      transform: translateX(2px);
     }
 
     .svc-chip-dot {
-      width: 5px;
-      height: 5px;
+      width: 4px;
+      height: 4px;
       border-radius: 50%;
       background: var(--cr);
+      flex-shrink: 0;
     }
 
     .svc-card-actions {
@@ -1292,18 +1177,29 @@
     .faq-item {
       background: var(--card-bg);
       border: 1px solid var(--rule);
-      border-radius: 20px;
+      border-radius: 18px;
       overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
       transition: border-color 0.3s, box-shadow 0.3s;
     }
 
     .faq-item:hover {
       border-color: var(--rule-m);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="dark"] .faq-item:hover {
+      box-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
     }
 
     .faq-item.active {
-      border-color: rgba(200, 16, 46, 0.45);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 0 20px var(--cr-glow);
+      border-color: var(--rule-m);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] .faq-item.active {
+      border-color: rgba(255, 255, 255, 0.16);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
     }
 
     .faq-trigger {
@@ -1331,10 +1227,10 @@
     }
 
     .faq-num {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
       color: var(--cr);
     }
 
@@ -1407,37 +1303,114 @@
       background: var(--bg);
     }
 
+    /* ── Luxury Animated Perimeter Red Line CTA ── */
     .fcta-container {
       width: 100%;
       max-width: 1280px;
-      background: radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.22) 0%, var(--card-bg) 65%);
-      border: 1px solid var(--rule-m);
-      border-top: 1.5px solid rgba(255, 255, 255, 0.24);
+      position: relative;
       border-radius: clamp(32px, 4.5vw, 56px);
+      background: var(--card-bg);
+      border: none;
       padding: clamp(64px, 8vh, 100px) clamp(32px, 5vw, 76px);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), 0 -12px 40px rgba(200, 16, 46, 0.2);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      position: relative;
+      box-sizing: border-box;
       overflow: hidden;
     }
 
     [data-theme="light"] .fcta-container {
-      background: radial-gradient(circle at 50% 0%, rgba(200, 16, 46, 0.12) 0%, #FFFFFF 65%);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 -10px 30px rgba(200, 16, 46, 0.12);
+      background: #FFFFFF;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
     }
 
-    .fcta-laser-glow {
+    .fcta-beam-svg {
       position: absolute;
       top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 55%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--cr), transparent);
-      box-shadow: 0 0 24px var(--cr), 0 0 8px #FFFFFF;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 3;
+    }
+
+    .fcta-beam-svg rect {
+      rx: clamp(32px, 4.5vw, 56px);
+      ry: clamp(32px, 4.5vw, 56px);
+    }
+
+    /* Soft Gray Base Border Track inside the box */
+    .fcta-beam-track {
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 1px;
+    }
+
+    [data-theme="light"] .fcta-beam-track {
+      stroke: rgba(10, 10, 10, 0.08);
+      stroke-width: 1px;
+    }
+
+    /* Soft Reddish Inner Shadow (Ultra-soft, deep inward depth, exact 1:1 span from line start to end only) */
+    .fcta-inner-shadow {
+      stroke: var(--cr);
+      stroke-width: 68px;
+      stroke-linecap: round;
+      stroke-dasharray: 170 830;
+      filter: blur(14px);
+      opacity: 0.38;
+      animation: fctaShadowMove 7.5s linear infinite;
+    }
+
+    [data-theme="light"] .fcta-inner-shadow {
+      stroke: var(--cr);
+      stroke-width: 62px;
+      stroke-linecap: round;
+      stroke-dasharray: 170 830;
+      filter: blur(14px);
+      opacity: 0.22;
+      animation: fctaShadowMove 7.5s linear infinite;
+    }
+
+    /* Single Pure Red Moving Line (One unified line: thick center, softly tapered thin ends) */
+    .fcta-beam-line {
+      stroke: var(--cr);
+      stroke-width: 2.5px;
+      stroke-linecap: round;
+      stroke-dasharray: 200 800;
+      filter: drop-shadow(0 0 5px rgba(200, 16, 46, 0.65));
+      animation: fctaBeamMove 7.5s linear infinite;
+    }
+
+    [data-theme="light"] .fcta-beam-line {
+      stroke: var(--cr);
+      stroke-width: 2.5px;
+      stroke-linecap: round;
+      stroke-dasharray: 200 800;
+      filter: drop-shadow(0 0 4px rgba(200, 16, 46, 0.45));
+      animation: fctaBeamMove 7.5s linear infinite;
+    }
+
+    @keyframes fctaBeamMove {
+      0% {
+        stroke-dashoffset: 0;
+      }
+
+      100% {
+        stroke-dashoffset: -1000;
+      }
+    }
+
+    @keyframes fctaShadowMove {
+      0% {
+        stroke-dashoffset: -15;
+      }
+
+      100% {
+        stroke-dashoffset: -1015;
+      }
     }
 
     .fcta-content {
@@ -1447,47 +1420,8 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-    }
-
-    .fcta-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      font-family: var(--font-mono);
-      font-size: clamp(0.68rem, 0.8vw, 0.78rem);
-      font-weight: 700;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--cr);
-      background: rgba(200, 16, 46, 0.12);
-      border: 1.5px solid rgba(200, 16, 46, 0.45);
-      padding: 8px 22px;
-      border-radius: 999px;
-      box-shadow: 0 0 20px rgba(200, 16, 46, 0.25);
-      margin-bottom: clamp(16px, 2.4vh, 26px);
-    }
-
-    .fcta-pill .fcta-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--cr);
-      box-shadow: 0 0 10px var(--cr), 0 0 4px #FFFFFF;
-      animation: fctaPulse 2s infinite ease-in-out;
-    }
-
-    @keyframes fctaPulse {
-
-      0%,
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
-
-      50% {
-        transform: scale(1.3);
-        opacity: 0.75;
-      }
+      position: relative;
+      z-index: 2;
     }
 
     .fcta-title {
@@ -1590,9 +1524,10 @@
       background: var(--bg);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px) clamp(24px, 3.5vh, 40px);
       box-sizing: border-box;
       z-index: 10;
     }
@@ -1602,24 +1537,56 @@
       border: 1px solid var(--rule);
       border-radius: clamp(36px, 5vw, 64px);
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
-      padding: clamp(52px, 6.5vh, 76px) clamp(40px, 5vw, 72px) clamp(16px, 2vh, 24px);
+      padding: clamp(48px, 6vh, 68px) clamp(40px, 5vw, 72px) 0px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       width: 100%;
       max-width: 1640px;
-      min-height: clamp(560px, 78vh, 740px);
-      margin: auto;
-      gap: clamp(72px, 11vh, 130px);
+      min-height: clamp(500px, 68vh, 640px);
+      margin: 0 auto;
+      gap: clamp(48px, 7vh, 80px);
       overflow: hidden;
       position: relative;
       box-sizing: border-box;
     }
 
+    .f-outer-bar {
+      width: 100%;
+      max-width: 1640px;
+      margin: clamp(16px, 2.2vh, 24px) auto 0;
+      padding: 0 clamp(16px, 2.5vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .f-outer-copyright,
+    .f-outer-dev {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .f-outer-dev a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .f-outer-dev a:hover {
+      color: var(--cr);
+    }
+
     .f-header-grid {
       display: grid;
-      grid-template-columns: 1.8fr 1fr 1.3fr 1.4fr;
-      gap: clamp(28px, 4vw, 56px);
+      grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+      gap: clamp(28px, 3.5vw, 52px);
       align-items: flex-start;
     }
 
@@ -1631,6 +1598,7 @@
       letter-spacing: -0.02em;
       color: var(--ink);
       max-width: 340px;
+      margin-bottom: 24px;
     }
 
     .f-col-label {
@@ -1665,48 +1633,34 @@
       transform: translateX(4px);
     }
 
-    .f-social-chips {
+    .f-social-circles {
       display: flex;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
     }
 
-    .f-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 14px;
+    .f-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       background: var(--bg);
       border: 1px solid var(--rule);
-      border-radius: 999px;
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      font-weight: 600;
       color: var(--ink);
-      text-decoration: none;
-      transition: all .25s var(--sp);
-    }
-
-    .f-chip:hover {
-      background: var(--ink);
-      color: var(--bg);
-      border-color: var(--ink);
-      transform: translateY(-2px);
-    }
-
-    .f-chip .f-chip-icon {
-      font-size: 0.82rem;
-      font-weight: 700;
-      line-height: 1;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
+      transition: all 0.25s var(--sp);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
-    .f-chip .f-chip-icon svg {
-      width: 13px;
-      height: 13px;
-      display: block;
+    .f-circle-btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     }
 
     .f-cta-column {
@@ -1788,11 +1742,13 @@
       color: var(--bg);
     }
 
+    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line reaching very bottom ── */
     .f-bottom-cluster {
       width: 100%;
       display: flex;
       flex-direction: column;
       margin-top: auto;
+      margin-bottom: 0;
     }
 
     .f-giant-cut-wrap {
@@ -1804,10 +1760,16 @@
       position: relative;
       margin: 0;
       padding: 0;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: grab;
       user-select: none;
       transform-origin: center bottom;
       will-change: height, transform;
+      transition: color 0.3s;
+    }
+
+    .f-giant-cut-wrap:active {
+      cursor: grabbing;
     }
 
     .f-giant-cut-svg {
@@ -1825,80 +1787,33 @@
       will-change: transform;
     }
 
-    .f-meta-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 18px;
-      border-top: 1.5px solid var(--rule);
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      color: var(--ink-dim);
-      font-weight: 500;
-      letter-spacing: 0.02em;
+    .f-bottom-line {
+      width: 100%;
+      height: 1.5px;
+      background: var(--rule);
       margin: 0;
+      transform-origin: center center;
+      transition: background 0.3s;
+      will-change: transform, background;
     }
 
-    .f-meta-links {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .f-meta-links a {
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover {
-      color: var(--cr);
-    }
-
-    .f-credit-author {
-      font-weight: 700;
-      color: var(--ink-mid);
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover .f-credit-author {
-      color: var(--cr);
-    }
-
-    .f-live-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .f-status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      display: inline-block;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-    }
-
-    @media (max-width: 991px) {
+    @media (max-width: 1024px) {
       .f-header-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 40px;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .f-header-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
       }
 
-      .f-desc-col {
-        grid-column: 1 / -1;
-      }
-
-      .footer-luxury-card {
-        padding: 40px 28px 18px;
-        gap: 50px;
-      }
-
-      .f-meta-bar {
+      .f-outer-bar {
         flex-direction: column;
-        gap: 12px;
         align-items: flex-start;
+        gap: 8px;
       }
     }
 
@@ -1949,16 +1864,164 @@
       display: block;
     }
 
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      padding: 14px clamp(20px, 3.5vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 248, 250, 0.82);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      will-change: transform, opacity;
+    }
+
+    [data-theme="dark"] #nav {
+      background: rgba(10, 10, 14, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+    }
+
+    .nav-logo svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.8vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: all .25s ease;
+      position: relative;
+      padding: 5px 8px;
+      border-radius: 20px;
+    }
+
+    .nav-links a:hover {
+      color: var(--cr);
+    }
+
+    .nav-links a.active {
+      font-weight: 800;
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 5px 6px;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      transform: scaleX(1);
+      height: 2px;
+      background: var(--cr);
+      left: 6px;
+      right: 6px;
+      bottom: -2px;
+      border-radius: 2px;
+    }
+
+    [data-theme="dark"] .nav-links a.active {
+      color: #ffffff;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-cta {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
     @media (max-width: 768px) {
-
-      .c-dot,
-      .c-ring {
-        display: none !important;
-      }
-
       .nav-links {
         display: none;
       }
+    }
+
+    /* ── Smooth scrollbar ─────────────────────────────────── */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--cr) var(--bg);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cr);
+      border-radius: 3px;
     }
   </style>
 </head>
@@ -1969,7 +2032,7 @@
   <div class="c-dot" id="cDot"></div>
   <div class="c-ring" id="cRing"></div>
 
-  <!-- ══ FIXED NAVIGATION (Reveals on Scroll) ══ -->
+  <!-- ══ FIXED NAVIGATION ══ -->
   <nav id="nav">
     <a href="index.html" class="nav-logo">
       <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:34px;width:auto;">
@@ -1995,6 +2058,7 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="about.html">About</a></li>
+      <li><a href="services.html" class="active">Services</a></li>
       <li><a href="portfolio.html">Work</a></li>
       <li><a href="blogs.html">Perspectives</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -2005,127 +2069,80 @@
   </nav>
 
   <!-- ═══════════════════════════════════════════════════════════
-       1. 1928 ATELIER KINETIC SERVICES HERO (2-Line Proper)
+       1. 1928 ATELIER KINETIC SERVICES HERO (Orbital & Dynamic 2-Line)
        ═══════════════════════════════════════════════════════════ -->
   <section id="hero">
-    <!-- Centerpiece: Clean 2-Line Dynamic Headline -->
-    <div class="hero-clean-lockup">
-      <div class="hcl-tag">
-        <span class="hcl-dot"></span> STUDIO DISCIPLINES
+    <div class="hero-orbit-stage" id="heroOrbitStage">
+      <!-- Centerpiece: Clean 2-Line Dynamic Headline (No Tag) -->
+      <div class="hero-clean-lockup">
+        <h1 class="hcl-headline">
+          <span class="hcl-line-1">WE ENGINEER BESPOKE</span>
+          <span class="hcl-dynamic-wrap">
+            <span class="hcl-dynamic-word" id="dynamicServiceWord">DIGITAL EXPERIENCES</span>
+          </span>
+        </h1>
       </div>
-      <h1 class="hcl-headline">
-        <span class="hcl-line-1">WE ENGINEER BESPOKE</span>
-        <span class="hcl-dynamic-wrap">
-          <span class="hcl-dynamic-word" id="dynamicServiceWord">LOGO DESIGN</span>
-        </span>
-      </h1>
-    </div>
 
-    <!-- The 5 Proper Editorial Architectural Cards -->
-    <div class="hero-proper-cards" id="heroServiceKeys">
-      <!-- 01 Logo Design -->
-      <a href="#service-01" class="h-proper-card active-card" data-service="LOGO DESIGN">
-        <div class="hpc-top">
-          <span class="hpc-num">01</span>
-          <svg class="hpc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round">
+      <!-- Revolving Floating Service Icon Discs -->
+      <div class="hero-orbit-icons" id="heroOrbitIcons">
+        <!-- 01 Logo Design -->
+        <a href="#service-01" class="orbit-icon-node" data-service="LOGO DESIGN" data-idx="0" aria-label="Logo Design">
+          <span class="oin-tag">01</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
             <path d="M12 19l7-7 3 3-7 7-3-3z" />
             <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
             <path d="M2 2l7.586 7.586" />
             <circle cx="11" cy="11" r="2" />
           </svg>
-        </div>
-        <div class="hpc-body">
-          <h3 class="hpc-title">Logo Design</h3>
-          <p class="hpc-desc">Mark &amp; Typography</p>
-        </div>
-        <div class="hpc-footer">
-          <span class="hpc-pill">Vector Master Files</span>
-        </div>
-        <div class="hpc-laser-bar"></div>
-      </a>
+        </a>
 
-      <!-- 02 Brand Identity -->
-      <a href="#service-02" class="h-proper-card" data-service="BRAND IDENTITY">
-        <div class="hpc-top">
-          <span class="hpc-num">02</span>
-          <svg class="hpc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round">
+        <!-- 02 Brand Identity -->
+        <a href="#service-02" class="orbit-icon-node" data-service="BRAND IDENTITY" data-idx="1"
+          aria-label="Brand Identity">
+          <span class="oin-tag">02</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
             <rect x="3" y="3" width="7" height="7" rx="1.5" />
             <rect x="14" y="3" width="7" height="7" rx="1.5" />
             <rect x="14" y="14" width="7" height="7" rx="1.5" />
             <rect x="3" y="14" width="7" height="7" rx="1.5" />
           </svg>
-        </div>
-        <div class="hpc-body">
-          <h3 class="hpc-title">Brand Identity</h3>
-          <p class="hpc-desc">Visual Architecture</p>
-        </div>
-        <div class="hpc-footer">
-          <span class="hpc-pill">Brand Guidelines</span>
-        </div>
-        <div class="hpc-laser-bar"></div>
-      </a>
+        </a>
 
-      <!-- 03 Web Design & Dev -->
-      <a href="#service-03" class="h-proper-card" data-service="WEB DESIGN & DEV">
-        <div class="hpc-top">
-          <span class="hpc-num">03</span>
-          <svg class="hpc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round">
+        <!-- 03 Web Design & Dev -->
+        <a href="#service-03" class="orbit-icon-node" data-service="WEB DESIGN & DEV" data-idx="2"
+          aria-label="Web Design & Dev">
+          <span class="oin-tag">03</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
             <polyline points="16 18 22 12 16 6" />
             <polyline points="8 6 2 12 8 18" />
           </svg>
-        </div>
-        <div class="hpc-body">
-          <h3 class="hpc-title">Web Design &amp; Dev</h3>
-          <p class="hpc-desc">UI/UX &amp; Engineering</p>
-        </div>
-        <div class="hpc-footer">
-          <span class="hpc-pill">Kinetic UI &amp; WebGL</span>
-        </div>
-        <div class="hpc-laser-bar"></div>
-      </a>
+        </a>
 
-      <!-- 04 Social & Digital Marketing -->
-      <a href="#service-04" class="h-proper-card" data-service="SOCIAL MEDIA & ADS">
-        <div class="hpc-top">
-          <span class="hpc-num">04</span>
-          <svg class="hpc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round">
+        <!-- 04 Social & Digital -->
+        <a href="#service-04" class="orbit-icon-node" data-service="SOCIAL & DIGITAL" data-idx="3"
+          aria-label="Social & Digital">
+          <span class="oin-tag">04</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
             <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
             <polyline points="17 6 23 6 23 12" />
           </svg>
-        </div>
-        <div class="hpc-body">
-          <h3 class="hpc-title">Social &amp; Digital</h3>
-          <p class="hpc-desc">Performance &amp; Growth</p>
-        </div>
-        <div class="hpc-footer">
-          <span class="hpc-pill">Meta Ads Engine</span>
-        </div>
-        <div class="hpc-laser-bar"></div>
-      </a>
+        </a>
 
-      <!-- 05 Content & Influencers -->
-      <a href="#service-05" class="h-proper-card" data-service="CONTENT & INFLUENCERS">
-        <div class="hpc-top">
-          <span class="hpc-num">05</span>
-          <svg class="hpc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
-            stroke-linecap="round" stroke-linejoin="round">
+        <!-- 05 Content & Creators -->
+        <a href="#service-05" class="orbit-icon-node" data-service="CONTENT & CREATORS" data-idx="4"
+          aria-label="Content & Creators">
+          <span class="oin-tag">05</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round">
             <path d="M23 7l-7 5 7 5V7z" />
             <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
           </svg>
-        </div>
-        <div class="hpc-body">
-          <h3 class="hpc-title">Content &amp; Creators</h3>
-          <p class="hpc-desc">Cinema &amp; Influencers</p>
-        </div>
-        <div class="hpc-footer">
-          <span class="hpc-pill">Campaigns &amp; UGC</span>
-        </div>
-        <div class="hpc-laser-bar"></div>
-      </a>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -2137,7 +2154,6 @@
       <div class="section-container">
         <!-- Static Unmoving Pinned Header -->
         <div class="services-sticky-header">
-          <div class="sec-tag-pill"><span class="sec-dot"></span> DISCIPLINE ARCHITECTURE</div>
           <h2 class="sec-heading">CORE STUDIO <span>PRACTICES</span></h2>
           <p class="sec-desc">Architectural rigor applied across branding, kinetic digital engineering, high-conversion
             growth, and cinematic media.</p>
@@ -2149,7 +2165,7 @@
           <article class="svc-card" id="service-01">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">01 // VISUAL MARK</span>
+                <span class="svc-num-label">01 · VISUAL IDENTITY</span>
               </div>
               <h3 class="svc-title-main">01. Logo <span>Design</span></h3>
               <p class="svc-card-desc">
@@ -2185,7 +2201,7 @@
           <article class="svc-card" id="service-02">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">02 // BRAND ARCHITECTURE</span>
+                <span class="svc-num-label">02 · BRAND ARCHITECTURE</span>
               </div>
               <h3 class="svc-title-main">02. Brand Identity <span>Development</span></h3>
               <p class="svc-card-desc">
@@ -2221,7 +2237,7 @@
           <article class="svc-card" id="service-03">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">03 // DIGITAL ENGINE</span>
+                <span class="svc-num-label">03 · DIGITAL ENGINEERING</span>
               </div>
               <h3 class="svc-title-main">03. Website Design &amp; <span>Development</span></h3>
               <p class="svc-card-desc">
@@ -2259,7 +2275,7 @@
           <article class="svc-card" id="service-04">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">04 // GROWTH ENGINE</span>
+                <span class="svc-num-label">04 · GROWTH &amp; PERFORMANCE</span>
               </div>
               <h3 class="svc-title-main">04. Social Media &amp; <span>Digital Marketing</span></h3>
               <p class="svc-card-desc">
@@ -2295,7 +2311,7 @@
           <article class="svc-card" id="service-05">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">05 // CINEMATIC MEDIA</span>
+                <span class="svc-num-label">05 · CINEMATIC PRODUCTION</span>
               </div>
               <h3 class="svc-title-main">05. Content Creation &amp; <span>Influencer Marketing</span></h3>
               <p class="svc-card-desc">
@@ -2342,7 +2358,6 @@
   <section id="faq">
     <div class="section-container">
       <div class="faq-wrap">
-        <div class="sec-tag-pill"><span class="sec-dot"></span> CLARITY &amp; TIMELINES</div>
         <h2 class="sec-heading">FREQUENTLY ASKED <span>QUESTIONS</span></h2>
         <p class="sec-desc">Direct insights into our engagement structures, timelines, and deliverables.</p>
 
@@ -2453,11 +2468,17 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="cta">
     <div class="fcta-container">
-      <div class="fcta-laser-glow"></div>
+      <!-- Animated Perimeter Red Line & Soft Reddish Inner Shadow (Strictly inside the card) -->
+      <svg class="fcta-beam-svg" width="100%" height="100%">
+        <rect class="fcta-beam-track" x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="48" ry="48"
+          fill="none" />
+        <rect class="fcta-inner-shadow" x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="48"
+          ry="48" pathLength="1000" fill="none" />
+        <rect class="fcta-beam-line" x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="48" ry="48"
+          pathLength="1000" fill="none" />
+      </svg>
+
       <div class="fcta-content">
-        <div class="fcta-pill">
-          <span class="fcta-dot"></span> INITIATE DIALOGUE
-        </div>
         <h2 class="fcta-title">
           <span class="fcta-line-1">READY TO BUILD WORK</span>
           <span class="fcta-line-2">THAT ENDURES?</span>
@@ -2507,73 +2528,161 @@
       /* ── Mathematical Helper Utilities ── */
       function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
-      /* ── Interactive 5-Service Dynamic Word & Switcher Control with Soft Spotlight ── */
+      /* ── Organic Random Orbital Floating Engine for Service Icons ── */
+      const stage = document.getElementById('heroOrbitStage');
+      const iconNodes = document.querySelectorAll('.orbit-icon-node');
       const dynamicWord = document.getElementById('dynamicServiceWord');
-      const properCards = document.querySelectorAll('.h-proper-card');
+      const defaultHeadlineText = 'DIGITAL EXPERIENCES';
 
-      properCards.forEach((card, idx) => {
-        // Spotlight tracking
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / rect.width) * 100;
-          const y = ((e.clientY - rect.top) / rect.height) * 100;
-          card.style.setProperty('--mx', `${x}%`);
-          card.style.setProperty('--my', `${y}%`);
+      if (stage && iconNodes.length) {
+        // Spatially expanded & evenly distributed orbital parametric configuration
+        const nodeConfigs = [
+          { baseAngle: 0.0, speed: 0.00030, rxScale: 0.72, ryScale: 0.65, wobbleX: 1.1, wobbleY: 1.5, ampX: 48, ampY: 38, tilt: -0.14 },
+          { baseAngle: 1.256, speed: -0.00028, rxScale: 0.78, ryScale: 0.72, wobbleX: 1.6, wobbleY: 1.1, ampX: 56, ampY: 44, tilt: 0.18 },
+          { baseAngle: 2.513, speed: 0.00032, rxScale: 0.68, ryScale: 0.62, wobbleX: 0.9, wobbleY: 1.8, ampX: 44, ampY: 36, tilt: -0.08 },
+          { baseAngle: 3.770, speed: -0.00034, rxScale: 0.76, ryScale: 0.70, wobbleX: 1.9, wobbleY: 1.3, ampX: 52, ampY: 42, tilt: 0.14 },
+          { baseAngle: 5.026, speed: 0.00031, rxScale: 0.70, ryScale: 0.66, wobbleX: 1.4, wobbleY: 1.7, ampX: 46, ampY: 40, tilt: -0.16 }
+        ];
+
+        const nodeStates = Array.from(iconNodes).map((node, i) => {
+          const cfg = nodeConfigs[i % nodeConfigs.length];
+          return {
+            el: node,
+            idx: i,
+            service: node.getAttribute('data-service'),
+            cfg,
+            curX: 0,
+            curY: 0,
+            targetX: 0,
+            targetY: 0,
+            isHovered: false,
+            scale: 1
+          };
         });
 
-        // Hover switcher & instant spotlight initialization
-        card.addEventListener('mouseenter', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = ((e.clientX - rect.left) / rect.width) * 100;
-          const y = ((e.clientY - rect.top) / rect.height) * 100;
-          card.style.setProperty('--mx', `${x}%`);
-          card.style.setProperty('--my', `${y}%`);
+        let mouseX = 0;
+        let mouseY = 0;
+        let isMouseOverStage = false;
 
-          properCards.forEach(c => c.classList.remove('active-card'));
-          card.classList.add('active-card');
-
-          const serviceName = card.getAttribute('data-service');
-
-          if (dynamicWord && serviceName && dynamicWord.textContent !== serviceName) {
-            dynamicWord.classList.add('switching');
-            setTimeout(() => {
-              dynamicWord.textContent = serviceName;
-              dynamicWord.classList.remove('switching');
-            }, 120);
-          }
+        stage.addEventListener('mousemove', (e) => {
+          const rect = stage.getBoundingClientRect();
+          mouseX = (e.clientX - (rect.left + rect.width / 2));
+          mouseY = (e.clientY - (rect.top + rect.height / 2));
+          isMouseOverStage = true;
         });
 
-        // Smooth scroll redirection directly to the specific card in Core Studio Practices
-        card.addEventListener('click', (e) => {
-          e.preventDefault();
-          const servicesSection = document.getElementById('services');
-          if (servicesSection) {
-            const vh = window.innerHeight;
-            const secRect = servicesSection.getBoundingClientRect();
-            const secTop = window.scrollY + secRect.top;
-            const secHeight = servicesSection.offsetHeight;
-            const totalScrollable = secHeight - vh;
-            const cardCount = properCards.length;
-            const step = 1 / (cardCount - 1);
+        stage.addEventListener('mouseleave', () => {
+          isMouseOverStage = false;
+        });
 
-            // Target exact scroll position that makes card `idx` active and open
-            const targetProgress = idx * step;
-            const targetScrollY = secTop + (totalScrollable * targetProgress);
+        function switchHeadline(newWord) {
+          if (!dynamicWord) return;
+          if (dynamicWord.textContent === newWord) return;
+          dynamicWord.classList.add('switching');
+          setTimeout(() => {
+            dynamicWord.textContent = newWord;
+            dynamicWord.classList.remove('switching');
+          }, 120);
+        }
 
-            window.scrollTo({
-              top: targetScrollY,
-              behavior: 'smooth'
+        nodeStates.forEach((state) => {
+          state.el.addEventListener('mouseenter', () => {
+            state.isHovered = true;
+            state.scale = 1.14;
+            nodeStates.forEach(s => {
+              if (s !== state) s.el.classList.remove('is-active');
             });
-          }
-        });
-      });
+            state.el.classList.add('is-active');
+            switchHeadline(state.service);
+          });
 
-      // Seamless animation hand-off so hover transitions are 100% fluid
-      setTimeout(() => {
-        properCards.forEach(c => {
-          c.style.animation = 'none';
+          state.el.addEventListener('mouseleave', () => {
+            state.isHovered = false;
+            state.scale = 1;
+            // Sticky behavior: the second-line word remains stuck to the last hovered service!
+          });
+
+          state.el.addEventListener('click', (e) => {
+            e.preventDefault();
+            const servicesSection = document.getElementById('services');
+            if (servicesSection) {
+              const vh = window.innerHeight;
+              const secRect = servicesSection.getBoundingClientRect();
+              const secTop = window.scrollY + secRect.top;
+              const secHeight = servicesSection.offsetHeight;
+              const totalScrollable = secHeight - vh;
+              const cardCount = nodeStates.length;
+              const step = 1 / (cardCount - 1);
+
+              const targetProgress = state.idx * step;
+              const targetScrollY = secTop + (totalScrollable * targetProgress);
+
+              window.scrollTo({
+                top: targetScrollY,
+                behavior: 'smooth'
+              });
+            }
+          });
         });
-      }, 1750);
+
+        let startTime = performance.now();
+
+        function animateOrbit(now) {
+          const elapsed = now - startTime;
+          const rect = stage.getBoundingClientRect();
+          const halfW = rect.width / 2;
+          const halfH = rect.height / 2;
+
+          nodeStates.forEach((state) => {
+            const { cfg } = state;
+            if (!state.isHovered) {
+              const t = elapsed * cfg.speed + cfg.baseAngle;
+              const rx = halfW * cfg.rxScale;
+              const ry = halfH * cfg.ryScale;
+
+              // Primary elliptical coordinates
+              let x0 = Math.cos(t) * rx;
+              let y0 = Math.sin(t) * ry;
+
+              // Rotate by orbital tilt angle
+              const cosTilt = Math.cos(cfg.tilt);
+              const sinTilt = Math.sin(cfg.tilt);
+              let xRot = x0 * cosTilt - y0 * sinTilt;
+              let yRot = x0 * sinTilt + y0 * cosTilt;
+
+              // Organic wandering perturbation so path is never a repetitive static loop
+              const wobbleX = Math.sin(elapsed * 0.001 * cfg.wobbleX) * cfg.ampX;
+              const wobbleY = Math.cos(elapsed * 0.001 * cfg.wobbleY) * cfg.ampY;
+
+              state.targetX = xRot + wobbleX;
+              state.targetY = yRot + wobbleY;
+
+              // Subtle magnetic deflection with mouse
+              if (isMouseOverStage) {
+                const dx = state.targetX - mouseX;
+                const dy = state.targetY - mouseY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 180 && dist > 10) {
+                  const force = (1 - dist / 180) * 16;
+                  state.targetX += (dx / dist) * force;
+                  state.targetY += (dy / dist) * force;
+                }
+              }
+            }
+
+            // Silky smooth Lerp interpolation
+            const lerpSpeed = state.isHovered ? 0.2 : 0.05;
+            state.curX += (state.targetX - state.curX) * lerpSpeed;
+            state.curY += (state.targetY - state.curY) * lerpSpeed;
+
+            state.el.style.transform = `translate3d(${state.curX}px, ${state.curY}px, 0) scale(${state.scale})`;
+          });
+
+          requestAnimationFrame(animateOrbit);
+        }
+
+        requestAnimationFrame(animateOrbit);
+      }
 
       /* ── Custom Cursor ── */
       const dot = document.getElementById('cDot');
@@ -2600,7 +2709,7 @@
       }
       animateCursor();
 
-      document.querySelectorAll('a, button, .faq-trigger, .h-proper-card, .svc-chip-item').forEach(el => {
+      document.querySelectorAll('a, button, .faq-trigger, .orbit-icon-node, .svc-chip-item').forEach(el => {
         el.addEventListener('mouseenter', () => {
           if (ring) {
             ring.style.width = '54px';
@@ -2673,32 +2782,15 @@
 
       window.addEventListener('scroll', () => {
         const sy = window.scrollY;
-        const heroHeight = window.innerHeight * 0.6;
-        const servicesSec = document.getElementById('services');
-
         if (nav) {
-          // Check if currently inside Section 3 (#services pinned deck)
-          let inServicesSection = false;
-          if (servicesSec) {
-            const rect = servicesSec.getBoundingClientRect();
-            if (rect.top <= 120 && rect.bottom >= 50) {
-              inServicesSection = true;
-            }
-          }
-
-          // Inside the Hero section OR Section 3: Keep Nav Header completely hidden
-          if (sy < heroHeight || inServicesSection) {
-            nav.classList.remove('nav-visible');
-            nav.classList.add('nav-hidden');
-          } else {
-            // Outside Hero and Section 3: Show on scroll up, hide on scroll down
-            if (sy < lastScrollY - 4) {
-              nav.classList.add('nav-visible');
-              nav.classList.remove('nav-hidden');
-            } else if (sy > lastScrollY + 4) {
-              nav.classList.remove('nav-visible');
-              nav.classList.add('nav-hidden');
-            }
+          if (sy <= 40 || sy < lastScrollY - 3) {
+            // Scrolling UP (or at top): header comes down smoothly
+            nav.classList.add('visible');
+            nav.classList.remove('hidden');
+          } else if (sy > lastScrollY + 3) {
+            // Scrolling DOWN: header animates up out of view
+            nav.classList.remove('visible');
+            nav.classList.add('hidden');
           }
         }
         lastScrollY = sy;
@@ -2949,6 +3041,14 @@
           }
         });
       }
+
+      // Initial Smooth Slide-Down Entrance
+      setTimeout(() => {
+        if (nav && window.scrollY <= 40) {
+          nav.classList.add('visible');
+          nav.classList.remove('hidden');
+        }
+      }, 100);
 
     })();
   </script>

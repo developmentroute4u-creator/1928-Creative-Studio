@@ -7,6 +7,18 @@
   <title>1928 Creative Studio — Ideas Take Shape</title>
   <meta name="description"
     content="1928 Creative Studio is an independent brand consultancy and design practice. We craft iconic identities, spatial experiences, and digital ecosystems." />
+  <script>
+    (function () {
+      try {
+        var navEntries = performance.getEntriesByType('navigation');
+        var isReload = (navEntries && navEntries.length > 0 && navEntries[0].type === 'reload') || (performance.navigation && performance.navigation.type === 1);
+        var hasVisited = sessionStorage.getItem('1928_site_visited');
+        if (hasVisited && !isReload) {
+          document.documentElement.classList.add('hero-skip-anim');
+        }
+      } catch (e) { }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -286,6 +298,20 @@
       text-align: right;
     }
 
+    [data-theme="light"] .hero-loading-hud {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(10, 10, 10, 0.14);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .hl-text {
+      color: rgba(10, 10, 10, 0.6);
+    }
+
+    [data-theme="light"] .hl-count {
+      color: #0A0A0A;
+    }
+
     /* ── STEP 1: Only "1928" Comes First ── */
     .hero-title {
       position: absolute;
@@ -478,29 +504,71 @@
       filter: none !important;
     }
 
-    /* ── Fixed Navigation Header (Hidden on Hero Landing) ── */
+    /* ── Immediate Soft Entry (When Navigating Between Internal Pages) ── */
+    html.hero-skip-anim body {
+      overflow: auto !important;
+      height: auto !important;
+    }
+
+    html.hero-skip-anim .hero-loading-ambient {
+      opacity: 1 !important;
+      transition: opacity 0.6s ease;
+    }
+
+    html.hero-skip-anim .hero-title h1 span.hero-part-1,
+    html.hero-skip-anim .hero-title h1 span.hero-part-2 {
+      opacity: 1 !important;
+      transform: translateY(0) scale(1.0) !important;
+      filter: blur(0px) !important;
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    }
+
+    html.hero-skip-anim .hero-title .hero-sub {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+      filter: blur(0px) !important;
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    }
+
+    html.hero-skip-anim .hero-box-line,
+    html.hero-skip-anim .hero-corner-ray,
+    html.hero-skip-anim .hero-outer-border {
+      opacity: 1 !important;
+      stroke-dashoffset: 0 !important;
+      transition: opacity 0.6s ease;
+    }
+
+    html.hero-skip-anim .hero-loading-hud {
+      display: none !important;
+    }
+
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
     #nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      z-index: 900;
-      padding: 18px 48px;
+      z-index: 9999;
+      padding: 14px clamp(20px, 3.5vw, 48px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(245, 244, 240, 0.88);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--rule);
+      background: rgba(248, 248, 250, 0.75);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
       opacity: 0;
       pointer-events: none;
       transform: translateY(-100%);
-      transition: opacity .5s, transform .5s var(--sm), background .4s, border-color .4s;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      will-change: transform, opacity;
     }
 
     [data-theme="dark"] #nav {
-      background: rgba(10, 10, 12, 0.88);
+      background: rgba(10, 10, 14, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
     }
 
     #nav.visible {
@@ -510,41 +578,48 @@
     }
 
     #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
       transform: translateY(-100%);
     }
 
     .nav-logo svg {
-      height: 36px;
+      height: 32px;
       width: auto;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: clamp(12px, 1.8vw, 24px);
       list-style: none;
     }
 
     .nav-links a {
       font-family: var(--font-primary);
-      font-size: .78rem;
-      font-weight: 600;
-      letter-spacing: .06em;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
+      text-decoration: none;
       color: var(--ink-mid);
-      transition: color .25s;
+      transition: all .25s ease;
       position: relative;
+      padding: 5px 8px;
+      border-radius: 20px;
     }
 
     .nav-links a::after {
       content: '';
       position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 0;
+      left: 8px;
+      right: 8px;
+      bottom: 0px;
       height: 1.5px;
       background: var(--cr);
-      transition: width .3s var(--sm);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .25s var(--sm);
     }
 
     .nav-links a:hover {
@@ -552,7 +627,51 @@
     }
 
     .nav-links a:hover::after {
-      width: 100%;
+      transform: scaleX(1);
+    }
+
+    /* ── Clean Minimal Luxury Active Page Header Link ── */
+    .nav-links a.active {
+      font-weight: 800;
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 5px 6px;
+    }
+
+    .nav-links a.active::after {
+      transform: scaleX(1);
+      height: 2px;
+      background: var(--cr);
+      left: 6px;
+      right: 6px;
+      bottom: -2px;
+      border-radius: 2px;
+      box-shadow: none;
+    }
+
+    .nav-links a.active:hover {
+      color: #0A0A0A;
+    }
+
+    body.dark .nav-links a.active,
+    [data-theme="dark"] .nav-links a.active {
+      color: #ffffff;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active::after,
+    [data-theme="dark"] .nav-links a.active::after {
+      background: var(--cr);
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active:hover,
+    [data-theme="dark"] .nav-links a.active:hover {
+      color: #ffffff;
     }
 
     .nav-right {
@@ -624,21 +743,43 @@
 
     .nav-cta {
       font-family: var(--font-primary);
-      font-size: .72rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      letter-spacing: .1em;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
-      padding: 10px 24px;
+      text-decoration: none;
+      padding: 9px 22px;
       border-radius: 999px;
       background: var(--cr);
-      color: #fff;
-      transition: background .25s, transform .25s;
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
       cursor: pointer;
+      display: inline-block;
     }
 
-    .nav-cta:hover {
-      background: var(--cr-dk);
+    /* Light Theme: hover becomes darker */
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
       transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    /* Dark Theme: CTA turns white on hover */
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .nav-logo svg .nl,
+    .nav-logo svg .ns {
+      fill: var(--cr);
+      transition: fill 0.3s;
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -646,7 +787,7 @@
    ═══════════════════════════════════════════════════════════ */
     #hero-driver {
       position: relative;
-      height: 700vh;
+      height: 550vh;
     }
 
     #hero-sticky {
@@ -674,9 +815,55 @@
       overflow: visible;
     }
 
+    .hero-corner-rays rect,
+    .hero-corner-rays line {
+      stroke: rgba(10, 10, 10, 0.22);
+    }
+
+    .hero-box-line {
+      stroke: rgba(10, 10, 10, 0.28);
+    }
+
+    .hero-corner-ray {
+      stroke: rgba(10, 10, 10, 0.22);
+    }
+
+    .hero-outer-border {
+      stroke: rgba(10, 10, 10, 0.18);
+    }
+
+    [data-theme="light"] .hero-corner-rays rect,
+    [data-theme="light"] .hero-corner-rays line {
+      stroke: rgba(10, 10, 10, 0.22);
+    }
+
+    [data-theme="light"] .hero-corner-rays .hero-box-line {
+      stroke: rgba(10, 10, 10, 0.28);
+    }
+
+    [data-theme="light"] .hero-corner-rays .hero-corner-ray {
+      stroke: rgba(10, 10, 10, 0.22);
+    }
+
+    [data-theme="light"] .hero-corner-rays .hero-outer-border {
+      stroke: rgba(10, 10, 10, 0.18);
+    }
+
     [data-theme="dark"] .hero-corner-rays rect,
     [data-theme="dark"] .hero-corner-rays line {
       stroke: rgba(245, 244, 240, 0.16);
+    }
+
+    [data-theme="dark"] .hero-corner-rays .hero-box-line {
+      stroke: rgba(255, 255, 255, 0.38);
+    }
+
+    [data-theme="dark"] .hero-corner-rays .hero-corner-ray {
+      stroke: rgba(255, 255, 255, 0.32);
+    }
+
+    [data-theme="dark"] .hero-corner-rays .hero-outer-border {
+      stroke: rgba(255, 255, 255, 0.28);
     }
 
     /* ── Inner Rectangle Box (Clear Text Zone) ── */
@@ -910,7 +1097,7 @@
 
     /* ── Video / Showreel Pop-up & Right Docking ── */
     .hero-reel {
-      position: fixed;
+      position: absolute;
       z-index: 25;
       width: clamp(560px, 46vw, 740px);
       height: clamp(340px, 28vw, 448px);
@@ -970,35 +1157,23 @@
     /* ═══════════════════════════════════════════════════════════
    §2 — BRAND STORY (Split Layout with Right Docked Video & Word Reveal)
    ═══════════════════════════════════════════════════════════ */
-    #story-driver {
-      position: relative;
-      height: 380vh;
-      /* Extended runway so each scroll tick reveals only 1 or 2 words calmly and smoothly */
-    }
-
-    #story-sticky {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      background: var(--bg);
-      z-index: 8;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 8vw;
-      gap: 5vw;
+    .hero-story-wrap {
+      position: absolute;
+      left: clamp(32px, 6vw, 84px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(360px, 48vw, 640px);
+      max-width: 640px;
+      z-index: 20;
+      pointer-events: none;
     }
 
     .story-block {
-      flex: 1;
-      max-width: 620px;
-      will-change: transform;
-    }
-
-    .story-right-anchor {
-      width: 520px;
-      height: 330px;
-      flex-shrink: 0;
+      width: 100%;
+      will-change: transform, opacity;
+      opacity: 0;
+      transform: translate3d(0, 120px, 0);
+      transition: opacity .28s cubic-bezier(0.16, 1, 0.3, 1), transform .28s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .story-tag {
@@ -1024,7 +1199,7 @@
       font-family: var(--font-primary);
       font-weight: 600;
       font-size: clamp(24px, 2.8vw, 38px);
-      line-height: 1.45;
+      line-height: 1.68;
       letter-spacing: -.015em;
       color: var(--ink);
       text-align: justify;
@@ -1127,7 +1302,7 @@
       z-index: 5;
       margin-top: -100vh;
       padding-top: 100vh;
-      padding-bottom: calc(100vh + 560px);
+      padding-bottom: 100vh;
       display: flex;
       flex-direction: column;
       gap: clamp(80px, 14vh, 180px);
@@ -1276,28 +1451,30 @@
 
     .pcv-num {
       font-family: 'Space Mono', monospace;
-      font-size: .65rem;
+      font-size: .75rem;
       font-weight: 700;
       color: #fff;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: none;
+      backdrop-filter: none;
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
     }
 
     .pcv-client {
       font-family: var(--font-primary);
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .08em;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .12em;
       color: #fff;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(10px);
-      padding: 4px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: none;
+      backdrop-filter: none;
+      padding: 0;
+      border-radius: 0;
+      border: none;
       text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
     }
 
     .pcv-info {
@@ -1314,26 +1491,37 @@
 
     .pcv-tags {
       display: flex;
-      gap: 8px;
+      align-items: center;
+      gap: 0;
       flex-wrap: wrap;
     }
 
     .pcv-tags span {
       font-family: 'Space Mono', monospace;
-      font-size: .62rem;
-      font-weight: 600;
-      color: var(--ink-dim);
-      background: rgba(0, 0, 0, 0.04);
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--rule);
+      font-size: .68rem;
+      font-weight: 700;
+      color: var(--cr);
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      border: none;
       text-transform: uppercase;
-      letter-spacing: .04em;
+      letter-spacing: .12em;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .pcv-tags span:not(:last-child)::after {
+      content: '·';
+      margin: 0 8px;
+      color: var(--ink-dim);
+      font-weight: 700;
     }
 
     [data-theme="dark"] .pcv-tags span {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.1);
+      background: none;
+      border-color: transparent;
+      color: var(--cr);
     }
 
     .pcv-title {
@@ -1404,14 +1592,15 @@
       position: relative;
       height: 1600vh;
       background: var(--bg);
+      overflow-x: clip;
     }
 
     #svc-sticky {
       position: sticky;
       top: 0;
       height: 100vh;
-      overflow: hidden;
-      background: var(--bg);
+      overflow: visible;
+      background: transparent;
       z-index: 6;
       display: flex;
       align-items: center;
@@ -1531,15 +1720,15 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      padding: 8px 16px;
-      border-radius: 12px;
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
       font-family: var(--font-primary);
-      font-size: .82rem;
+      font-size: .84rem;
       color: #FFFFFF;
       align-self: flex-start;
-      margin-top: 2px;
+      margin-top: 8px;
     }
 
     /* ═══ 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER ═══ */
@@ -1559,6 +1748,7 @@
       position: relative;
       width: 100%;
       height: 100%;
+      clip-path: inset(-300px 0 0 0 round 0 0 22px 22px);
     }
 
     .svc-folder-back {
@@ -1577,6 +1767,8 @@
       right: 14px;
       height: 220px;
       z-index: 2;
+      perspective: 1200px;
+      transform-style: preserve-3d;
     }
 
     .svc-sheet {
@@ -1587,51 +1779,26 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      gap: 10px;
-      padding: 14px 18px;
+      gap: 6px;
+      padding: 16px 20px;
       color: #FFFFFF;
       will-change: transform, opacity, z-index;
+      transform-origin: bottom center;
+      backface-visibility: hidden;
       transition: transform .45s cubic-bezier(0.16, 1, 0.3, 1), opacity .35s ease;
-    }
-
-    .svc-punch-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .svc-hole {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #FFFFFF;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.2);
-      flex-shrink: 0;
-    }
-
-    .svc-sheet-tag {
-      font-family: 'Space Mono', monospace;
-      font-size: .58rem;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: #FFFFFF;
-      opacity: 0.95;
-      text-align: center;
     }
 
     .svc-sheet-header-block {
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      margin-top: 2px;
+      gap: 4px;
+      margin-top: 0;
     }
 
     .svc-sheet-title {
       font-family: var(--font-primary);
       font-weight: 700;
-      font-size: 1.08rem;
+      font-size: 1.15rem;
       line-height: 1.2;
       color: #FFFFFF;
       margin: 0;
@@ -1640,8 +1807,8 @@
 
     .svc-sheet-sub {
       font-family: 'Space Mono', monospace;
-      font-size: .56rem;
-      color: rgba(255, 255, 255, 0.7);
+      font-size: .60rem;
+      color: rgba(255, 255, 255, 0.78);
       letter-spacing: .08em;
       text-transform: uppercase;
     }
@@ -1807,15 +1974,15 @@
     .svc-why-points {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       border-top: 1px solid var(--rule);
       border-bottom: 1px solid var(--rule);
-      padding: 14px 0;
+      padding: 18px 0;
     }
 
     .svc-why-point {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: 14px;
     }
 
@@ -1825,45 +1992,44 @@
       font-weight: 700;
       color: var(--cr);
       background: var(--cr-lo);
-      padding: 2px 6px;
+      padding: 3px 8px;
       border-radius: 6px;
       line-height: 1.2;
-      margin-top: 2px;
+      flex-shrink: 0;
     }
 
     .svc-why-point strong {
       display: block;
       font-family: var(--font-primary);
-      font-size: 0.88rem;
+      font-size: 0.94rem;
       font-weight: 700;
       color: var(--ink);
-      letter-spacing: -0.01em;
-      line-height: 1.2;
-    }
-
-    .svc-why-point p {
-      font-family: var(--font-secondary);
-      font-size: 0.78rem;
-      color: var(--ink-dim);
-      margin-top: 2px;
-      line-height: 1.35;
-      text-align: justify;
-      text-justify: inter-word;
+      letter-spacing: -0.015em;
+      line-height: 1.25;
     }
 
     .svc-why-footer {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      font-family: 'Space Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--ink-dim);
-      letter-spacing: 0.06em;
+      justify-content: flex-start;
+      font-family: var(--font-primary);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
     }
 
     .swp-foot-arrow {
       color: var(--cr);
       font-weight: 700;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap 0.25s var(--sp), color 0.25s;
+    }
+
+    .swp-foot-arrow:hover {
+      color: var(--cr-bright);
+      gap: 10px;
     }
 
     /* ═══ 4. DETAIL SHOWCASE DECK (Phase 3 Right) ═══ */
@@ -2052,14 +2218,14 @@
 
     .svc-badge {
       font-family: 'Space Mono', monospace;
-      font-size: .65rem;
+      font-size: .68rem;
       font-weight: 700;
-      letter-spacing: .08em;
+      letter-spacing: .16em;
       color: var(--cr);
-      background: rgba(200, 16, 46, 0.08);
-      border: 1px solid rgba(200, 16, 46, 0.22);
-      padding: 5px 12px;
-      border-radius: 999px;
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
       text-transform: uppercase;
       display: inline-block;
     }
@@ -2222,12 +2388,12 @@
       font-family: 'Space Mono', monospace;
       font-size: .68rem;
       font-weight: 700;
-      letter-spacing: .08em;
+      letter-spacing: .16em;
       color: var(--cr);
-      background: rgba(200, 16, 46, 0.08);
-      border: 1px solid rgba(200, 16, 46, 0.22);
-      padding: 5px 14px;
-      border-radius: 999px;
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
       text-transform: uppercase;
       display: inline-block;
     }
@@ -2251,7 +2417,7 @@
     .svc-deliverables {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 0;
       margin-top: 2px;
     }
 
@@ -2260,14 +2426,24 @@
       font-size: .75rem;
       font-weight: 600;
       color: var(--ink-dim);
-      background: rgba(0, 0, 0, 0.03);
-      border: 1px solid var(--rule);
-      padding: 6px 14px;
-      border-radius: 12px;
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .svc-deliv-pill:not(:last-child)::after {
+      content: '·';
+      margin: 0 8px;
+      color: var(--ink-dim);
+      font-weight: 700;
     }
 
     [data-theme="dark"] .svc-deliv-pill {
-      background: rgba(255, 255, 255, 0.04);
+      background: none;
+      color: rgba(255, 255, 255, 0.65);
     }
 
     .svc-card-footer {
@@ -2849,9 +3025,10 @@
       background: var(--bg);
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px);
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px) clamp(24px, 3.5vh, 40px);
       box-sizing: border-box;
       z-index: 10;
     }
@@ -2861,24 +3038,56 @@
       border: 1px solid var(--rule);
       border-radius: clamp(36px, 5vw, 64px);
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
-      padding: clamp(52px, 6.5vh, 76px) clamp(40px, 5vw, 72px) clamp(16px, 2vh, 24px);
+      padding: clamp(48px, 6vh, 68px) clamp(40px, 5vw, 72px) 0px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       width: 100%;
       max-width: 1640px;
-      min-height: clamp(560px, 78vh, 740px);
-      margin: auto;
-      gap: clamp(72px, 11vh, 130px);
+      min-height: clamp(500px, 68vh, 640px);
+      margin: 0 auto;
+      gap: clamp(48px, 7vh, 80px);
       overflow: hidden;
       position: relative;
       box-sizing: border-box;
     }
 
+    .f-outer-bar {
+      width: 100%;
+      max-width: 1640px;
+      margin: clamp(16px, 2.2vh, 24px) auto 0;
+      padding: 0 clamp(16px, 2.5vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .f-outer-copyright,
+    .f-outer-dev {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .f-outer-dev a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .f-outer-dev a:hover {
+      color: var(--cr);
+    }
+
     .f-header-grid {
       display: grid;
-      grid-template-columns: 1.8fr 1fr 1.3fr 1.4fr;
-      gap: clamp(28px, 4vw, 56px);
+      grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+      gap: clamp(28px, 3.5vw, 52px);
       align-items: flex-start;
     }
 
@@ -2890,6 +3099,7 @@
       letter-spacing: -0.02em;
       color: var(--ink);
       max-width: 340px;
+      margin-bottom: 24px;
     }
 
     .f-col-label {
@@ -2924,48 +3134,34 @@
       transform: translateX(4px);
     }
 
-    .f-social-chips {
+    .f-social-circles {
       display: flex;
+      align-items: center;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 10px;
     }
 
-    .f-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 14px;
+    .f-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       background: var(--bg);
       border: 1px solid var(--rule);
-      border-radius: 999px;
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      font-weight: 600;
       color: var(--ink);
-      text-decoration: none;
-      transition: all .25s var(--sp);
-    }
-
-    .f-chip:hover {
-      background: var(--ink);
-      color: var(--bg);
-      border-color: var(--ink);
-      transform: translateY(-2px);
-    }
-
-    .f-chip .f-chip-icon {
-      font-size: 0.82rem;
-      font-weight: 700;
-      line-height: 1;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
+      transition: all 0.25s var(--sp);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
-    .f-chip .f-chip-icon svg {
-      width: 13px;
-      height: 13px;
-      display: block;
+    .f-circle-btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     }
 
     .f-cta-column {
@@ -3047,12 +3243,13 @@
       color: var(--bg);
     }
 
-    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line ── */
+    /* ── Bottom Cluster: Aligned 50% Sliced Headline + Horizontal Line reaching very bottom ── */
     .f-bottom-cluster {
       width: 100%;
       display: flex;
       flex-direction: column;
       margin-top: auto;
+      margin-bottom: 0;
     }
 
     .f-giant-cut-wrap {
@@ -3064,10 +3261,16 @@
       position: relative;
       margin: 0;
       padding: 0;
-      pointer-events: none;
+      pointer-events: auto;
+      cursor: grab;
       user-select: none;
       transform-origin: center bottom;
       will-change: height, transform;
+      transition: color 0.3s;
+    }
+
+    .f-giant-cut-wrap:active {
+      cursor: grabbing;
     }
 
     .f-giant-cut-svg {
@@ -3085,75 +3288,14 @@
       will-change: transform;
     }
 
-    /* ── Minimal Sub-Footer Meta Bar with Horizontal Line ── */
-    .f-meta-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 18px;
-      border-top: 1.5px solid var(--rule);
-      font-family: var(--font-primary);
-      font-size: 0.76rem;
-      color: var(--ink-dim);
-      font-weight: 500;
-      letter-spacing: 0.02em;
+    .f-bottom-line {
+      width: 100%;
+      height: 1.5px;
+      background: var(--rule);
       margin: 0;
-    }
-
-    .f-meta-links {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .f-meta-links a {
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover {
-      color: var(--cr);
-    }
-
-    .f-credit-author {
-      font-weight: 700;
-      color: var(--ink-mid);
-      transition: color .2s;
-    }
-
-    .f-meta-links a:hover .f-credit-author {
-      color: var(--cr);
-    }
-
-    .f-live-status {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .f-status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-      display: inline-block;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-      animation: fStatusPulse 2s infinite ease-in-out;
-    }
-
-    @keyframes fStatusPulse {
-
-      0%,
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      50% {
-        opacity: 0.4;
-        transform: scale(0.85);
-      }
+      transform-origin: center center;
+      transition: background 0.3s;
+      will-change: transform, background;
     }
 
     @media (max-width: 1024px) {
@@ -3169,10 +3311,10 @@
         gap: 32px;
       }
 
-      .f-meta-bar {
+      .f-outer-bar {
         flex-direction: column;
-        gap: 12px;
         align-items: flex-start;
+        gap: 8px;
       }
     }
 
@@ -3188,6 +3330,11 @@
       display: none !important;
       width: 0 !important;
       height: 0 !important;
+    }
+
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--cr) var(--bg);
     }
 
     ::-webkit-scrollbar {
@@ -3211,7 +3358,7 @@
   <div id="cur"></div>
   <div id="cur-r"></div>
 
-                <!-- ══ FIXED NAVIGATION ══ -->
+  <!-- ══ FIXED NAVIGATION ══ -->
   <nav id="nav">
     <a href="index.html" class="nav-logo">
       <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:36px;width:auto;">
@@ -3235,6 +3382,7 @@
       </svg>
     </a>
     <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="services.html">Services</a></li>
       <li><a href="portfolio.html">Work</a></li>
@@ -3364,6 +3512,27 @@
         opacity:0;pointer-events:none;z-index:22;will-change:opacity;
       "></div>
 
+      <!-- LAYER 4.8 (z:20) — Brand Story Block (Left Split inside Viewport) -->
+      <div class="hero-story-wrap" id="heroStoryWrap">
+        <div class="story-block" id="storyBlock">
+          <div class="story-tag" id="storyTag">Who We Are</div>
+          <div class="story-words-block" id="storyWordsBlock">
+            <span class="sw">Design</span> <span class="sw">on</span> <span class="sw">the</span> <span
+              class="sw">web</span> <span class="sw">isn't</span> <span class="sw">static</span> <span
+              class="sw">anymore.</span> <span class="sw">Today's</span> <span class="sw">brands</span> <span
+              class="sw">need</span> <span class="sw highlight">energy,</span> <span
+              class="sw highlight">personality</span> <span class="sw">and</span> <span
+              class="sw highlight">meaning.</span> <span class="sw">We</span> <span class="sw">bring</span> <span
+              class="sw">together</span> <span class="sw">strategy,</span> <span class="sw">design</span> <span
+              class="sw">and</span> <span class="sw">storytelling</span> <span class="sw">to</span> <span
+              class="sw">build</span> <span class="sw">digital</span> <span class="sw">experiences</span> <span
+              class="sw">that</span> <span class="sw highlight">grab</span> <span class="sw highlight">attention,</span>
+            <span class="sw">move</span> <span class="sw">fast</span> <span class="sw">and</span> <span
+              class="sw">make</span> <span class="sw highlight">people</span> <span class="sw highlight">feel.</span>
+          </div>
+        </div>
+      </div>
+
       <!-- LAYER 5 (z:25) — Video Showreel -->
       <div class="hero-reel" id="heroReel">
         <div class="reel-inner">
@@ -3373,30 +3542,6 @@
         </div>
       </div>
 
-    </div>
-  </section>
-
-  <!-- §2 — BRAND STORY (Split Layout with Right Docked Video & Word Reveal) -->
-  <section id="story-driver">
-    <div id="story-sticky">
-      <div class="story-block" id="storyBlock">
-        <div class="story-tag" id="storyTag">Who We Are</div>
-        <div class="story-words-block" id="storyWordsBlock">
-          <span class="sw">Design</span> <span class="sw">on</span> <span class="sw">the</span> <span
-            class="sw">web</span> <span class="sw">isn't</span> <span class="sw">static</span> <span
-            class="sw">anymore.</span> <span class="sw">Today's</span> <span class="sw">brands</span> <span
-            class="sw">need</span> <span class="sw highlight">energy,</span> <span
-            class="sw highlight">personality</span> <span class="sw">and</span> <span
-            class="sw highlight">meaning.</span> <span class="sw">We</span> <span class="sw">bring</span> <span
-            class="sw">together</span> <span class="sw">strategy,</span> <span class="sw">design</span> <span
-            class="sw">and</span> <span class="sw">storytelling</span> <span class="sw">to</span> <span
-            class="sw">build</span> <span class="sw">digital</span> <span class="sw">experiences</span> <span
-            class="sw">that</span> <span class="sw highlight">grab</span> <span class="sw highlight">attention,</span>
-          <span class="sw">move</span> <span class="sw">fast</span> <span class="sw">and</span> <span
-            class="sw">make</span> <span class="sw highlight">people</span> <span class="sw highlight">feel.</span>
-        </div>
-      </div>
-      <div class="story-right-anchor" id="storyRightAnchor"></div>
     </div>
   </section>
 
@@ -3562,11 +3707,6 @@
             <div class="svc-sheets-stack" id="svcSheetsStack">
               <!-- Default Overview Sheet (Card 0 / Cover) -->
               <div class="svc-sheet svc-sheet-default" id="svcSheetDefault">
-                <div class="svc-punch-row">
-                  <div class="svc-hole"></div>
-                  <div class="svc-sheet-tag">1928 // STUDIO SERVICES</div>
-                  <div class="svc-hole"></div>
-                </div>
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Capabilities Index</div>
                   <div class="svc-sheet-sub">05 Disciplines · Full Spectrum</div>
@@ -3574,11 +3714,6 @@
               </div>
               <!-- Service Card 1 -->
               <div class="svc-sheet svc-sheet-s1" id="svcSheet0">
-                <div class="svc-punch-row">
-                  <div class="svc-hole"></div>
-                  <div class="svc-sheet-tag">01 // LOGO DESIGN</div>
-                  <div class="svc-hole"></div>
-                </div>
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Logo Design</div>
                   <div class="svc-sheet-sub">Visual Foundation &amp; Typography</div>
@@ -3586,11 +3721,6 @@
               </div>
               <!-- Service Card 2 -->
               <div class="svc-sheet svc-sheet-s2" id="svcSheet1">
-                <div class="svc-punch-row">
-                  <div class="svc-hole"></div>
-                  <div class="svc-sheet-tag">02 // BRAND IDENTITY</div>
-                  <div class="svc-hole"></div>
-                </div>
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Brand Identity</div>
                   <div class="svc-sheet-sub">Strategy &amp; Visual Architecture</div>
@@ -3598,11 +3728,6 @@
               </div>
               <!-- Service Card 3 -->
               <div class="svc-sheet svc-sheet-s3" id="svcSheet2">
-                <div class="svc-punch-row">
-                  <div class="svc-hole"></div>
-                  <div class="svc-sheet-tag">03 // WEBSITE DESIGN</div>
-                  <div class="svc-hole"></div>
-                </div>
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Website Design</div>
                   <div class="svc-sheet-sub">Digital Platforms &amp; UI/UX</div>
@@ -3610,11 +3735,6 @@
               </div>
               <!-- Service Card 4 -->
               <div class="svc-sheet svc-sheet-s4" id="svcSheet3">
-                <div class="svc-punch-row">
-                  <div class="svc-hole"></div>
-                  <div class="svc-sheet-tag">04 // DIGITAL MARKETING</div>
-                  <div class="svc-hole"></div>
-                </div>
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Digital Marketing</div>
                   <div class="svc-sheet-sub">Performance &amp; Social Media</div>
@@ -3622,11 +3742,6 @@
               </div>
               <!-- Service Card 5 -->
               <div class="svc-sheet svc-sheet-s5" id="svcSheet4">
-                <div class="svc-punch-row">
-                  <div class="svc-hole"></div>
-                  <div class="svc-sheet-tag">05 // CONTENT CREATION</div>
-                  <div class="svc-hole"></div>
-                </div>
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Content Creation</div>
                   <div class="svc-sheet-sub">Media Production &amp; UGC</div>
@@ -3661,29 +3776,19 @@
             <div class="svc-why-points">
               <div class="svc-why-point">
                 <span class="swp-num">01</span>
-                <div>
-                  <strong>End-to-End Brand Architecture</strong>
-                  <p>From identity &amp; spatial frameworks to digital ecosystems.</p>
-                </div>
+                <strong>End-to-End Brand Architecture</strong>
               </div>
               <div class="svc-why-point">
                 <span class="swp-num">02</span>
-                <div>
-                  <strong>Bespoke Craft &amp; Zero Templates</strong>
-                  <p>Tailored typography, motion graphics &amp; 3D spatial visuals.</p>
-                </div>
+                <strong>Bespoke Craft &amp; Zero Templates</strong>
               </div>
               <div class="svc-why-point">
                 <span class="swp-num">03</span>
-                <div>
-                  <strong>High-Impact Market Velocity</strong>
-                  <p>Measurable commercial distinction and conversion design.</p>
-                </div>
+                <strong>High-Impact Market Velocity</strong>
               </div>
             </div>
             <div class="svc-why-footer">
-              <span>85+ Disciplines · Full Spectrum Studio</span>
-              <span class="swp-foot-arrow">Explore Capabilities →</span>
+              <a href="services.html" class="swp-foot-arrow">Explore Capabilities →</a>
             </div>
           </div>
         </div>
@@ -3691,42 +3796,8 @@
         <!-- ═══ 4. DETAIL SHOWCASE DECK (Phase 3 Right) ═══ -->
         <div class="svc-detail-deck" id="svcDetailDeck">
 
-          <!-- Card 0: 1928 Studio Services Capabilities Index -->
+          <!-- Card 0: 01 Logo Design -->
           <div class="svc-showcase-card" id="svcCard0">
-            <div class="svc-s3-art-frame">
-              <div class="svc-art-orbit">
-                <div class="svc-orbit-ring ring-1"></div>
-                <div class="svc-orbit-ring ring-2"></div>
-                <div class="svc-orbit-core"></div>
-              </div>
-            </div>
-            <div class="svc-card-num-watermark">1928</div>
-            <div class="svc-card-header">
-              <span class="svc-badge">1928 Creative Studio · Capabilities Index</span>
-            </div>
-            <h3>Studio Disciplines &amp; Capabilities</h3>
-            <p>Five multidisciplinary practices engineered to build iconic brand identities, bespoke digital platforms,
-              and high-impact cultural campaigns.</p>
-            <div class="svc-deliverables">
-              <span class="svc-deliv-pill">Brand Strategy &amp; Identity</span>
-              <span class="svc-deliv-pill">Web Design &amp; Development</span>
-              <span class="svc-deliv-pill">Digital Marketing</span>
-              <span class="svc-deliv-pill">Social Media</span>
-              <span class="svc-deliv-pill">Content &amp; Production</span>
-            </div>
-            <div class="svc-card-footer">
-              <a href="service-detail.html" class="svc-action-link">
-                Explore Studio Capabilities <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor"
-                  fill="none" stroke-width="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </a>
-              <div class="svc-pagination">00 / 05</div>
-            </div>
-          </div>
-
-          <!-- Card 1: 01 Logo Design -->
-          <div class="svc-showcase-card" id="svcCard1">
             <div class="svc-s3-art-frame">
               <div class="svc-art-torus">
                 <div class="svc-torus-shape s1"></div>
@@ -3756,8 +3827,8 @@
             </div>
           </div>
 
-          <!-- Card 2: 02 Brand Identity Development -->
-          <div class="svc-showcase-card" id="svcCard2">
+          <!-- Card 1: 02 Brand Identity Development -->
+          <div class="svc-showcase-card" id="svcCard1">
             <div class="svc-s3-art-frame">
               <div class="svc-art-torus">
                 <div class="svc-torus-shape s2"></div>
@@ -3787,8 +3858,8 @@
             </div>
           </div>
 
-          <!-- Card 3: 03 Website Design & Development -->
-          <div class="svc-showcase-card" id="svcCard3">
+          <!-- Card 2: 03 Website Design & Development -->
+          <div class="svc-showcase-card" id="svcCard2">
             <div class="svc-s3-art-frame">
               <div class="svc-art-torus">
                 <div class="svc-torus-shape s3"></div>
@@ -3818,8 +3889,8 @@
             </div>
           </div>
 
-          <!-- Card 4: 04 Social Media & Digital Marketing -->
-          <div class="svc-showcase-card" id="svcCard4">
+          <!-- Card 3: 04 Social Media & Digital Marketing -->
+          <div class="svc-showcase-card" id="svcCard3">
             <div class="svc-s3-art-frame">
               <div class="svc-art-torus">
                 <div class="svc-torus-shape s4"></div>
@@ -3849,8 +3920,8 @@
             </div>
           </div>
 
-          <!-- Card 5: 05 Content Creation & Influencer Marketing -->
-          <div class="svc-showcase-card" id="svcCard5">
+          <!-- Card 4: 05 Content Creation & Influencer Marketing -->
+          <div class="svc-showcase-card" id="svcCard4">
             <div class="svc-s3-art-frame">
               <div class="svc-art-torus">
                 <div class="svc-torus-shape s5"></div>
@@ -4635,7 +4706,7 @@
       const heroAmbient = document.querySelector('.hero-loading-ambient');
 
       // §2 Story Elements
-      const storyDriver = document.getElementById('story-driver');
+      const heroStoryWrap = document.getElementById('heroStoryWrap');
       const storyBlock = document.getElementById('storyBlock');
       const storyTag = document.getElementById('storyTag');
       const storyWords = document.querySelectorAll('.story-words-block .sw');
@@ -4650,9 +4721,10 @@
       const svcDriver = document.getElementById('svc-driver');
       const svcHeroCapsule = document.getElementById('svcHeroCapsule');
       const svcHeroRight = document.getElementById('svcHeroRight');
+      const svcSpotlight = document.querySelector('.svc-spotlight');
       const mainSvcFolder = document.getElementById('mainSvcFolder');
+      const defaultCoverSheet = document.getElementById('svcSheetDefault');
       const allDossierCards = [
-        document.getElementById('svcSheetDefault'),
         document.getElementById('svcSheet0'),
         document.getElementById('svcSheet1'),
         document.getElementById('svcSheet2'),
@@ -4666,10 +4738,9 @@
         document.getElementById('svcCard1'),
         document.getElementById('svcCard2'),
         document.getElementById('svcCard3'),
-        document.getElementById('svcCard4'),
-        document.getElementById('svcCard5')
+        document.getElementById('svcCard4')
       ];
-      const totalSvcCards = 6;
+      const totalSvcCards = 5;
 
       // §5 Brands Elements
       const brandsDriver = document.getElementById('brands-driver');
@@ -4695,17 +4766,16 @@
 
       // Services Helper Functions
       function resetFolderSheetsDefault(offsetY = 0) {
-        allDossierCards.forEach((sheet, idx) => {
+        if (defaultCoverSheet) {
+          defaultCoverSheet.style.transform = `translateY(${offsetY}px) scale(1.0) rotateX(0deg)`;
+          defaultCoverSheet.style.zIndex = '5';
+          defaultCoverSheet.style.opacity = '1';
+        }
+        allDossierCards.forEach((sheet) => {
           if (sheet) {
-            if (idx === 0) {
-              sheet.style.transform = `translateY(${offsetY}px) scale(1.0)`;
-              sheet.style.zIndex = '3';
-              sheet.style.opacity = '1';
-            } else {
-              sheet.style.transform = `translateY(${offsetY + 165}px) scale(0.93)`;
-              sheet.style.zIndex = '2';
-              sheet.style.opacity = '1';
-            }
+            sheet.style.transform = `translateY(${offsetY + 220}px) scale(0.93)`;
+            sheet.style.zIndex = '2';
+            sheet.style.opacity = '1';
           }
         });
       }
@@ -4740,23 +4810,36 @@
       function onScroll(forcedSY) {
         const sy = (typeof forcedSY === 'number') ? forcedSY : window.scrollY;
         const vh = window.innerHeight;
-        const portTopCheck = portDriver ? portDriver.offsetTop : 3000;
 
-        // Global Nav Visibility (Only appears after video section is gone)
-        const isPastVideo = sy >= portTopCheck - 250;
+        // Global Nav Visibility:
+        // - In Hero 3D room (heroHp < 0.70): always hidden.
+        // - Starting from "Who We Are" (heroHp >= 0.70):
+        //   * Scrolling UP (sy < lastSY - 2): appears / slides down into view.
+        //   * Scrolling DOWN (sy > lastSY + 2): hides / slides up out of view.
+        const heroH = heroDriver ? (heroDriver.offsetHeight - vh) : 1;
+        const heroHp = heroDriver ? clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1) : 1;
+        // Header starts ONLY after leaving the hero section (starting from the second section)
+        const isPastHero = heroHp >= 0.80 || sy >= (heroDriver ? heroDriver.offsetHeight - 60 : 0);
+
         if (nav) {
-          if (isPastVideo) {
-            nav.classList.add('visible');
-            nav.classList.toggle('hidden', sy > lastSY && sy > portTopCheck + 200);
+          if (isPastHero) {
+            if (sy < lastSY - 2) {
+              // Scrolling UP: header comes down smoothly from the top
+              nav.classList.add('visible');
+              nav.classList.remove('hidden');
+            } else if (sy > lastSY + 2) {
+              // Scrolling DOWN: header animates up out of view
+              nav.classList.remove('visible');
+              nav.classList.add('hidden');
+            }
           } else {
+            // Strictly hidden inside the home page hero section
             nav.classList.remove('visible');
-            nav.classList.remove('hidden');
+            nav.classList.add('hidden');
           }
         }
 
         // Theme Button Visibility: Appears the moment the video pops out of the screen (hp >= 0.60) & stays for all subsequent sections
-        const heroH = heroDriver ? (heroDriver.offsetHeight - vh) : 1;
-        const heroHp = heroDriver ? clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1) : 1;
         const isVideoOrPast = heroHp >= 0.60 || sy >= (heroDriver ? heroDriver.offsetHeight : 0);
 
         if (themeFab) {
@@ -4777,21 +4860,20 @@
         }
         lastSY = sy;
 
-        /* ═══ §1 HERO — 3D Room Walkthrough & Differentiated Parallax ═══ */
+        /* ═══ §1 HERO & BRAND STORY ═══ */
         if (heroDriver && heroTitle && roomCube && heroReel) {
           const heroH = heroDriver.offsetHeight - vh;
           const hp = clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1);
 
-          // Ambient Red Glow Fade-Out: Fades out smoothly as video expands in the center (hp: 0.45 -> 0.68)
-          // When card is fully expanded in center and when it moves to right, the reddish glow is completely gone (opacity 0)
+          // Ambient Red Glow Fade-Out: Fades out smoothly as video expands in the center (hp: 0.40 -> 0.60)
           if (heroAmbient) {
             heroAmbient.style.transition = (hp > 0.02) ? 'none' : '';
-            const ambientFadeP = clamp((hp - 0.45) / 0.23, 0, 1);
+            const ambientFadeP = clamp((hp - 0.40) / 0.20, 0, 1);
             heroAmbient.style.opacity = (1 - ambientFadeP) + '';
           }
 
-          // Phase 1 & 2: 3D Locomotion with Differentiated Speeds
-          const zoomP = clamp(hp / 0.52, 0, 1);
+          // Phase 1: 3D Locomotion with Differentiated Speeds (hp: 0.00 -> 0.48)
+          const zoomP = clamp(hp / 0.48, 0, 1);
           
           // Background Room zoom curve (steady depth locomotion)
           const bgZoomE = Math.pow(zoomP, 1.18);
@@ -4812,21 +4894,21 @@
           const titleOpacity = Math.pow(1 - titleFadeP, 1.5);
           const titleBlur = lerp(0, 5, titleFadeP);
 
-          // Whiteout Flash / Portal Transition (hp: 0.48 -> 0.62)
+          // Whiteout Flash / Portal Transition (hp: 0.45 -> 0.56)
           let whiteoutOpacity = 0;
-          if (hp >= 0.48 && hp <= 0.62) {
-            if (hp < 0.55) {
-              whiteoutOpacity = clamp((hp - 0.48) / 0.07, 0, 1);
-            } else if (hp <= 0.57) {
+          if (hp >= 0.45 && hp <= 0.56) {
+            if (hp < 0.50) {
+              whiteoutOpacity = clamp((hp - 0.45) / 0.05, 0, 1);
+            } else if (hp <= 0.52) {
               whiteoutOpacity = 1;
             } else {
-              whiteoutOpacity = clamp(1 - (hp - 0.57) / 0.05, 0, 1);
+              whiteoutOpacity = clamp(1 - (hp - 0.52) / 0.04, 0, 1);
             }
           }
           if (heroWhiteout) heroWhiteout.style.opacity = whiteoutOpacity + '';
 
           // Room 1 Elements
-          if (hp < 0.58) {
+          if (hp < 0.52) {
             if (heroRaysSvg) {
               heroRaysSvg.style.transform = `scale(${svgScaleR1})`;
               heroRaysSvg.style.opacity = svgFadeR1 + '';
@@ -4851,81 +4933,94 @@
             r1Cards.forEach(c => { c.style.opacity = '0'; });
           }
 
-          // Video Showreel & Story Section Coordination
-          const storyTop = storyDriver ? storyDriver.offsetTop : (heroDriver.offsetTop + heroDriver.offsetHeight);
-          const storyH = storyDriver ? (storyDriver.offsetHeight - vh) : 1;
-          const portTop = portDriver ? portDriver.offsetTop : (storyTop + 2000);
+          // Phase 2: Video Showreel & Story Section Coordination
+          const vidP = clamp((hp - 0.50) / 0.16, 0, 1);
+          const vidE = eoq(vidP);
 
-          if (sy < storyTop) {
-            const vidP = clamp((hp - 0.62) / 0.20, 0, 1);
-            const vidE = eoq(vidP);
-
-            if (vidP <= 0) {
-              heroReel.style.opacity = '0';
-              heroReel.style.transform = 'translate(-50%,-50%) scale(0.04)';
-              heroReel.style.pointerEvents = 'none';
-            } else if (hp < 0.82) {
-              // 1. Center Pop-up: Expands significantly to cover more space in the center (scale up to 1.52)
-              const rScale = lerp(0.04, 1.52, vidE);
-              heroReel.style.opacity = clamp(vidP * 3.5, 0, 1) + '';
-              heroReel.style.left = '50%';
-              heroReel.style.top = '50%';
-              heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
-              heroReel.style.pointerEvents = vidP > 0.3 ? 'auto' : 'none';
-            } else {
-              // 2. Glides to the right side while smoothly decreasing in size (scale 1.52 -> 0.82)
-              const dockP = clamp((hp - 0.82) / 0.18, 0, 1);
-              const dockE = eioq(dockP);
-              const rScale = lerp(1.52, 0.82, dockE);
-              const tLeft = lerp(50, 73, dockE);
-              heroReel.style.opacity = '1';
-              heroReel.style.left = `${tLeft}%`;
-              heroReel.style.top = '50%';
-              heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
-              heroReel.style.pointerEvents = 'auto';
-            }
-
-            if (storyBlock) {
-              storyBlock.style.transform = 'none';
-              storyBlock.style.opacity = '1';
-            }
+          if (vidP <= 0) {
+            heroReel.style.opacity = '0';
+            heroReel.style.transform = 'translate(-50%,-50%) scale(0.04)';
+            heroReel.style.pointerEvents = 'none';
             if (storyTag) storyTag.classList.remove('vis');
+            if (storyBlock) {
+              storyBlock.style.opacity = '0';
+              storyBlock.style.transform = 'translate3d(-50px, 30px, 0)';
+            }
             storyWords.forEach(word => word.classList.remove('active'));
-          } else if (sy < portTop - vh) {
+          } else if (hp < 0.66) {
+            // 1. Center Pop-up: expands in center (scale up to 1.58)
+            const rScale = lerp(0.04, 1.58, vidE);
+            heroReel.style.opacity = clamp(vidP * 3.5, 0, 1) + '';
+            heroReel.style.left = '50%';
+            heroReel.style.top = '50%';
+            heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
+            heroReel.style.pointerEvents = vidP > 0.3 ? 'auto' : 'none';
+
+            if (storyTag) storyTag.classList.remove('vis');
+            if (storyBlock) {
+              storyBlock.style.opacity = '0';
+              storyBlock.style.transform = 'translate3d(0, 120px, 0)';
+            }
+            storyWords.forEach(word => word.classList.remove('active'));
+          } else if (hp < 0.78) {
+            // 2. Glides to right side & becomes smaller in size (scale 1.58 -> 0.64)
+            const dockP = clamp((hp - 0.66) / 0.12, 0, 1);
+            const dockE = eioq(dockP);
+            const rScale = lerp(1.58, 0.64, dockE);
+            const tLeft = lerp(50, 73, dockE);
+            heroReel.style.opacity = '1';
+            heroReel.style.left = `${tLeft}%`;
+            heroReel.style.top = '50%';
+            heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
+            heroReel.style.pointerEvents = 'auto';
+
+            // Text remains completely invisible while card is in center; starts coming from bottom up halfway during glide
+            if (hp < 0.72) {
+              if (storyTag) storyTag.classList.remove('vis');
+              if (storyBlock) {
+                storyBlock.style.opacity = '0';
+                storyBlock.style.transform = 'translate3d(0, 120px, 0)';
+              }
+            } else {
+              // Swift bottom-up entrance as card reaches right side
+              const textEnterP = clamp((hp - 0.72) / 0.06, 0, 1);
+              const textEnterE = eoq(textEnterP);
+              const textY = lerp(120, 0, textEnterE);
+              const textOpacity = clamp(textEnterP * 1.8, 0, 1);
+
+              if (storyBlock) {
+                storyBlock.style.opacity = textOpacity + '';
+                storyBlock.style.transform = `translate3d(0, ${textY}px, 0)`;
+              }
+
+              if (textEnterP > 0.35 && storyTag) {
+                storyTag.classList.add('vis');
+              } else if (storyTag) {
+                storyTag.classList.remove('vis');
+              }
+            }
+
+            storyWords.forEach(word => word.classList.remove('active'));
+          } else {
+            // 3. Card is docked cleanly on right (scale 0.64, left 73%), text is stuck on center-left: progressive one-by-one unblur reveal
+            heroReel.style.opacity = '1';
+            heroReel.style.left = '73%';
+            heroReel.style.top = '50%';
+            heroReel.style.transform = 'translate(-50%,-50%) scale(0.64)';
+            heroReel.style.pointerEvents = 'auto';
+
             if (storyTag) storyTag.classList.add('vis');
             if (storyBlock) {
-              storyBlock.style.transform = 'none';
               storyBlock.style.opacity = '1';
+              storyBlock.style.transform = 'translate3d(0, 0, 0)';
             }
 
-            const sp = clamp((sy - storyTop) / (storyH || 1), 0, 1);
-            const activeCount = Math.floor(clamp(sp / 0.80, 0, 1) * storyWords.length);
+            const wordP = clamp((hp - 0.78) / 0.18, 0, 1);
+            const activeCount = Math.floor(wordP * storyWords.length);
             storyWords.forEach((word, idx) => {
               if (idx <= activeCount) word.classList.add('active');
               else word.classList.remove('active');
             });
-
-            heroReel.style.opacity = '1';
-            heroReel.style.left = '73%';
-            heroReel.style.top = '50%';
-            heroReel.style.transform = 'translate(-50%,-50%) scale(0.82)';
-            heroReel.style.pointerEvents = 'auto';
-          } else {
-            if (storyTag) storyTag.classList.add('vis');
-            storyWords.forEach(word => word.classList.add('active'));
-
-            const exitOffset = sy - (portTop - vh);
-
-            if (sy >= portTop) {
-              heroReel.style.opacity = '0';
-              heroReel.style.pointerEvents = 'none';
-            } else {
-              heroReel.style.opacity = '1';
-              heroReel.style.left = '73%';
-              heroReel.style.top = '50%';
-              heroReel.style.transform = `translate(-50%, calc(-50% - ${exitOffset}px)) scale(0.82)`;
-              heroReel.style.pointerEvents = 'none';
-            }
           }
         }
 
@@ -4943,16 +5038,20 @@
             } else if (lastPortCard) {
               const card6Rect = lastPortCard.getBoundingClientRect();
               if (card6Rect.bottom > 0) {
+                // Card 6 is still visible or passing through: keep SELECTED WORK firmly pinned in center
                 portStickyCenter.style.transform = 'translateY(0px)';
+                portStickyCenter.style.opacity = '1';
               } else {
-                const scrollPastCard6 = -card6Rect.bottom;
-                const exitRange = vh;
-                const exitP = clamp(scrollPastCard6 / exitRange, 0, 1);
+                // Card 6 has completely passed the top of the viewport!
+                // Now scroll SELECTED WORK upward smoothly towards the top:
+                const scrollPast = -card6Rect.bottom;
+                const exitRange = vh * 0.85;
+                const exitP = clamp(scrollPast / exitRange, 0, 1);
                 const exitE = eioq(exitP);
-                const textY = lerp(0, -vh, exitE);
+                const textY = lerp(0, -vh * 0.85, exitE);
                 portStickyCenter.style.transform = `translateY(${textY}px)`;
+                portStickyCenter.style.opacity = '1';
               }
-              portStickyCenter.style.opacity = '1';
             } else {
               portStickyCenter.style.transform = 'translateY(0px)';
               portStickyCenter.style.opacity = '1';
@@ -4984,11 +5083,11 @@
           const svcH = svcDriver.offsetHeight - vh;
 
           if (sy < svcTop) {
-            const approachP = clamp((sy - (svcTop - vh * 0.75)) / (vh * 0.75), 0, 1);
+            const approachP = clamp((sy - (svcTop - vh * 0.85)) / (vh * 0.85), 0, 1);
             if (approachP > 0) {
               const enterE = eoq(approachP);
-              const curY = lerp(120, 0, enterE);
-              const opacVal = clamp(approachP * 2.5, 0, 1);
+              const curY = lerp(vh * 0.5, 0, enterE);
+              const opacVal = clamp(approachP * 1.8, 0, 1);
 
               svcHeroCapsule.style.width = '340px';
               svcHeroCapsule.style.transform = `translate(-50%, -50%) translateY(${curY}px) translateX(0px)`;
@@ -4996,6 +5095,8 @@
 
               mainSvcFolder.style.transform = `translate(-50%, -50%) translateY(${curY}px) translateX(0px)`;
               mainSvcFolder.style.opacity = opacVal + '';
+
+              if (svcSpotlight) svcSpotlight.style.opacity = opacVal + '';
 
               resetFolderSheetsDefault(0);
 
@@ -5007,6 +5108,7 @@
             } else {
               svcHeroCapsule.style.opacity = '0';
               mainSvcFolder.style.opacity = '0';
+              if (svcSpotlight) svcSpotlight.style.opacity = '0';
             }
             if (svcFiveMenu) {
               svcFiveMenu.style.opacity = '0';
@@ -5017,6 +5119,7 @@
               svcDetailDeck.classList.remove('active-events');
             }
           } else {
+            if (svcSpotlight) svcSpotlight.style.opacity = '1';
             const svp = clamp((sy - svcTop) / (svcH || 1), 0, 1);
             const maxW = Math.min(960, window.innerWidth * 0.94);
             const stageOffset = 260;
@@ -5144,14 +5247,28 @@
               mainSvcFolder.style.transform = `translate(-50%, -50%) translateX(${folderX}px)`;
               mainSvcFolder.style.opacity = '1';
 
+              // Synchronized In/Out Transition:
+              // Capability Index starts going DOWN (0px -> 220px) at the exact same point Logo Design starts going UP (220px -> -75px)
+              if (defaultCoverSheet) {
+                const coverY = lerp(0, 220, morphE);
+                const coverScale = lerp(1.0, 0.93, morphE);
+                const coverOpac = lerp(1, 0, clamp((morphP - 0.55) / 0.35, 0, 1));
+                defaultCoverSheet.style.transform = `translateY(${coverY}px) scale(${coverScale})`;
+                defaultCoverSheet.style.opacity = coverOpac + '';
+                defaultCoverSheet.style.zIndex = morphP < 0.5 ? '4' : '2';
+              }
+
+              // Behind it, Card 0 (Logo Design) simultaneously starts going UP and OUT from 220px to -75px
               if (allDossierCards[0]) {
-                allDossierCards[0].style.transform = `translateY(${lerp(0, -75, morphE)}px) scale(${lerp(1.0, 1.02, morphE)})`;
-                allDossierCards[0].style.zIndex = '3';
+                const logoY = lerp(220, -75, morphE);
+                const logoScale = lerp(0.93, 1.02, morphE);
+                allDossierCards[0].style.transform = `translateY(${logoY}px) scale(${logoScale})`;
+                allDossierCards[0].style.zIndex = morphP >= 0.5 ? '4' : '2';
                 allDossierCards[0].style.opacity = '1';
               }
               allDossierCards.slice(1).forEach((sheet) => {
                 if (sheet) {
-                  sheet.style.transform = 'translateY(165px) scale(0.93)';
+                  sheet.style.transform = 'translateY(220px) scale(0.93)';
                   sheet.style.zIndex = '2';
                   sheet.style.opacity = '1';
                 }
@@ -5169,7 +5286,7 @@
                 resetShowcaseDeckDefault();
               }
             }
-            // Phase 3: Extraction of 6 cards in sequence (svp: 0.60 -> 1.00)
+            // Phase 3: Extraction of 5 cards in sequence (svp: 0.60 -> 1.00)
             else {
               svcHeroCapsule.style.opacity = '1';
               svcHeroCapsule.style.width = '330px';
@@ -5182,6 +5299,11 @@
 
               mainSvcFolder.style.transform = `translate(-50%, -50%) translateX(-${stageOffset}px)`;
               mainSvcFolder.style.opacity = '1';
+
+              if (defaultCoverSheet) {
+                defaultCoverSheet.style.opacity = '0';
+                defaultCoverSheet.style.zIndex = '1';
+              }
 
               if (svcDetailDeck) {
                 svcDetailDeck.style.transform = `translate(-50%, -50%) translateX(${stageOffset}px)`;
@@ -5199,23 +5321,23 @@
                 const delta = idx - u;
 
                 if (delta <= -1) {
-                  sheet.style.transform = 'translateY(165px) scale(0.93)';
+                  sheet.style.transform = 'translateY(220px) scale(0.93)';
                   sheet.style.zIndex = '2';
                   sheet.style.opacity = '1';
                 } else if (delta < 0) {
                   const d = -delta;
                   const dE = eioq(d);
-                  sheet.style.transform = `translateY(${lerp(-75, 165, dE)}px) scale(${lerp(1.02, 0.93, dE)})`;
+                  sheet.style.transform = `translateY(${lerp(-75, 220, dE)}px) scale(${lerp(1.02, 0.93, dE)})`;
                   sheet.style.zIndex = '2';
                   sheet.style.opacity = '1';
                 } else if (delta <= 1) {
                   const p = 1 - delta;
                   const pE = eioq(p);
-                  sheet.style.transform = `translateY(${lerp(165, -75, pE)}px) scale(${lerp(0.93, 1.02, pE)})`;
+                  sheet.style.transform = `translateY(${lerp(220, -75, pE)}px) scale(${lerp(0.93, 1.02, pE)})`;
                   sheet.style.zIndex = p > 0.5 ? '4' : '2';
                   sheet.style.opacity = '1';
                 } else {
-                  sheet.style.transform = 'translateY(165px) scale(0.93)';
+                  sheet.style.transform = 'translateY(220px) scale(0.93)';
                   sheet.style.zIndex = '2';
                   sheet.style.opacity = '1';
                 }
@@ -5459,9 +5581,54 @@
          1928 CREATIVE STUDIO — CINEMATIC 3D HERO LOADING JS
          ═══════════════════════════════════════════════════════════ */
       (function initHeroLoadingAssembly() {
-        document.body.classList.add('hero-loading-active');
+        let isReload = false;
+        try {
+          const navEntries = performance.getEntriesByType('navigation');
+          if (navEntries && navEntries.length > 0) {
+            isReload = navEntries[0].type === 'reload';
+          } else if (performance.navigation) {
+            isReload = performance.navigation.type === 1;
+          }
+        } catch (e) { }
+
+        const hasVisited = sessionStorage.getItem('1928_site_visited');
+        const shouldSkip = hasVisited && !isReload;
+
+        // Mark visit in session for subsequent page transitions
+        try {
+          sessionStorage.setItem('1928_site_visited', 'true');
+        } catch (e) { }
 
         const hud = document.getElementById('heroLoadingHud');
+
+        if (shouldSkip) {
+          // Internal page switch: Titles, manifesto, wireframe box, rays & ambient ready immediately
+          document.body.classList.remove('hero-loading-active');
+          document.body.classList.add(
+            'step-1-1928-only',
+            'step-2-studio',
+            'step-3-description',
+            'step-4-create-box',
+            'step-5-rays-to-screen'
+          );
+          if (hud) {
+            hud.style.display = 'none';
+          }
+
+          // Soft incoming animation for cards docking into the home page
+          setTimeout(() => {
+            document.body.classList.add('step-6-cards-slow');
+            setTimeout(() => {
+              document.body.classList.add('hero-loading-complete');
+              onScroll();
+            }, 1600);
+          }, 60);
+          return;
+        }
+
+        // Full cinematic loading assembly for first visit or page refresh
+        document.body.classList.add('hero-loading-active');
+
         const statusText = document.getElementById('hlStatusText');
         const counterEl = document.getElementById('hlCounter');
         const progressFill = document.getElementById('hlProgressFill');

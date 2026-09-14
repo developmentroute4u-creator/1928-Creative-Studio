@@ -46,8 +46,9 @@ const ROUTE_ALIASES = {
   '/agency': '/about.html',
   '/contact': '/contact.html',
   '/inquiry': '/contact.html',
-  '/start-project': '/contact.html',
   '/blog-detail': '/blog-detail.html',
+  '/all-blogs': '/blog-detail.html',
+  '/all-perspectives': '/blog-detail.html',
   '/service-detail': '/service-detail.html',
   '/project-detail': '/project-detail.html'
 };
