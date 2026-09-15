@@ -871,23 +871,33 @@
     }
 
     .card-arrow-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: var(--card-alt);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--font-primary);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       border: 1px solid var(--rule-m);
-      display: grid;
-      place-items: center;
+      background: var(--card-alt);
       color: var(--ink);
       transition: all 0.3s var(--sp);
+      flex-shrink: 0;
     }
 
     .blog-card:hover .card-arrow-btn {
       background: var(--cr);
       border-color: var(--cr);
       color: #ffffff;
-      transform: scale(1.1);
-      box-shadow: 0 0 16px var(--cr-glow);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px var(--cr-glow);
+    }
+
+    .blog-card:hover .card-arrow-btn svg {
+      transform: translateX(2px);
     }
 
     /* ── LOAD MORE BUTTON SECTION ── */
@@ -2364,8 +2374,9 @@
                 <span class="card-loc-dot"></span>
                 ${item.city}
               </span>
-              <div class="card-arrow-btn" title="Read Complete Monograph">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+              <div class="card-arrow-btn" title="Open Complete Monograph">
+                <span class="cab-open-text">Open</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
                   <path d="M5 12h14"></path>
                   <path d="m12 5 7 7-7 7"></path>
                 </svg>
@@ -2514,11 +2525,17 @@
         if (e.key === 'Escape') closeReader();
       });
 
-      // Auto-open reader if URL has hash (e.g., #art-monogram)
-      if (window.location.hash) {
-        const hashId = window.location.hash.replace('#', '');
-        openReader(hashId);
+      // Auto-open reader if URL has query parameter ?article=... or hash #...
+      function checkUrlAndOpenArticle() {
+        const params = new URLSearchParams(window.location.search);
+        const articleParam = params.get('article') || params.get('id') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+        if (articleParam) {
+          setTimeout(() => {
+            openReader(articleParam);
+          }, 80);
+        }
       }
+      checkUrlAndOpenArticle();
 
       // Nav Directional Scroll Behavior
       let lastAllBlogScrollY = window.scrollY;
