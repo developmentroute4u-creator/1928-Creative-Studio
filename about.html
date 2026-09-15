@@ -661,9 +661,14 @@
       border: 1.5px solid var(--rule-m);
       border-radius: clamp(24px, 3vw, 40px);
       padding: clamp(36px, 5vw, 70px);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.04), 0 20px 50px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.02);
       position: relative;
       overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+
+    [data-theme="dark"] .story-card-wrap {
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.30), 0 20px 60px rgba(0, 0, 0, 0.40), 0 4px 16px rgba(0, 0, 0, 0.25);
     }
 
     .story-card-wrap::after {
@@ -1193,11 +1198,11 @@
       font-size: clamp(9px, 0.8vw, 11px);
       font-weight: 700;
       letter-spacing: 0.12em;
-      color: #FFFFFF;
-      background: rgba(200, 16, 46, 0.28);
-      border: 1px solid rgba(200, 16, 46, 0.6);
-      padding: 4px 12px;
-      border-radius: 999px;
+      color: var(--cr);
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
       text-transform: uppercase;
     }
 
@@ -1258,8 +1263,9 @@
     /* Staggered Element 4: Tags Row */
     .val-exp-bottom {
       display: flex;
-      gap: 8px;
+      gap: 0;
       flex-wrap: wrap;
+      align-items: center;
       border-top: 1px solid var(--rule);
       padding-top: 14px;
       opacity: 0;
@@ -1279,14 +1285,23 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       color: var(--ink-mid);
-      background: rgba(255, 255, 255, 0.06);
-      padding: 4px 12px;
-      border-radius: 6px;
+      background: none;
+      padding: 0;
+      border-radius: 0;
       text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .val-exp-tag:not(:last-child)::after {
+      content: '·';
+      margin: 0 10px;
+      color: var(--cr);
+      font-weight: 700;
     }
 
     [data-theme="light"] .val-exp-tag {
-      background: rgba(0, 0, 0, 0.05);
+      background: none;
     }
 
     @media (max-width: 860px) {
@@ -1542,15 +1557,15 @@
     .process-bg-path {
       fill: none;
       stroke: var(--rule);
-      stroke-width: 2px;
-      stroke-dasharray: 6 6;
-      opacity: 0.5;
+      stroke-width: 1.25px;
+      stroke-dasharray: 5 5;
+      opacity: 0.45;
     }
 
     .process-active-path {
       fill: none;
       stroke: url(#laserGrad);
-      stroke-width: 3.5px;
+      stroke-width: 1.75px;
       stroke-linecap: round;
       filter: url(#laserGlow);
     }
@@ -1577,22 +1592,27 @@
     .proc-node-wrapper {
       flex-shrink: 0;
       position: relative;
+      z-index: 5;
     }
 
     .proc-node-circle {
       width: clamp(54px, 5.2vw, 72px);
       height: clamp(54px, 5.2vw, 72px);
       border-radius: 50%;
-      border: 2px solid var(--rule);
+      border: 1.5px solid var(--rule);
       background: var(--bg);
       display: grid;
       place-items: center;
       position: relative;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
       transition: border-color 0.45s var(--sp), background 0.45s var(--sp), box-shadow 0.45s var(--sp), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: default;
     }
 
     .proc-node-num {
+      position: relative;
+      z-index: 3;
       font-family: var(--font-mono);
       font-weight: 800;
       font-size: clamp(17px, 1.7vw, 22px);
@@ -1631,14 +1651,14 @@
     /* Active Node Styling */
     .proc-step-item.active .proc-node-circle {
       border-color: var(--cr);
-      background: rgba(200, 16, 46, 0.14);
-      box-shadow: 0 0 28px var(--cr-glow), inset 0 0 16px rgba(200, 16, 46, 0.22);
-      transform: scale(1.06);
+      background: var(--bg);
+      box-shadow: 0 0 18px rgba(200, 16, 46, 0.20), 0 4px 16px rgba(0, 0, 0, 0.04);
+      transform: scale(1.04);
     }
 
     .proc-step-item.active .proc-node-num {
       color: var(--cr);
-      text-shadow: 0 0 12px var(--cr-glow);
+      text-shadow: 0 0 10px rgba(200, 16, 46, 0.25);
     }
 
     .proc-step-item.active .proc-node-pulse {
@@ -1650,26 +1670,39 @@
     .proc-step-card {
       width: min(520px, 75vw);
       background: var(--card-bg);
-      border: 1.5px solid var(--rule);
+      border: 1px solid var(--rule);
       border-radius: 22px;
       padding: clamp(22px, 2.6vw, 34px);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      opacity: 0.2;
+      opacity: 0.25;
       transform: translateY(22px) scale(0.98);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.03), 0 10px 25px rgba(0, 0, 0, 0.04);
       transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s;
     }
 
     .proc-step-item.active .proc-step-card {
       opacity: 1;
       transform: translateY(0) scale(1);
-      border-color: rgba(200, 16, 46, 0.38);
-      box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45), 0 0 24px rgba(200, 16, 46, 0.12);
+      border-color: rgba(200, 16, 46, 0.28);
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.04), 0 14px 35px rgba(0, 0, 0, 0.06), 0 0 20px rgba(200, 16, 46, 0.04);
+    }
+
+    [data-theme="dark"] .proc-step-card {
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.25), 0 14px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    [data-theme="dark"] .proc-step-item.active .proc-step-card {
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.30), 0 16px 45px rgba(0, 0, 0, 0.40), 0 0 24px rgba(200, 16, 46, 0.12);
     }
 
     .proc-step-card:hover {
       border-color: var(--cr);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 35px var(--cr-glow);
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 0 24px rgba(200, 16, 46, 0.08);
+    }
+
+    [data-theme="dark"] .proc-step-card:hover {
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.35), 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 30px rgba(200, 16, 46, 0.20);
     }
 
     .proc-card-header {
@@ -1708,24 +1741,34 @@
     .proc-card-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      align-items: center;
+      gap: 0;
     }
 
     .proc-card-tags span {
       font-family: var(--font-mono);
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.08em;
       color: var(--ink-mid);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--rule);
-      padding: 4px 10px;
-      border-radius: 4px;
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
       text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .proc-card-tags span:not(:last-child)::after {
+      content: '·';
+      margin: 0 8px;
+      color: var(--cr);
+      font-weight: 700;
     }
 
     [data-theme="light"] .proc-card-tags span {
-      background: rgba(0, 0, 0, 0.04);
+      background: none;
     }
 
     @media (max-width: 768px) {
@@ -2008,7 +2051,7 @@
       stroke-dasharray: 170 830;
       filter: blur(14px);
       opacity: 0.38;
-      animation: fctaShadowMove 7.5s linear infinite;
+      animation: fctaShadowMove 15s linear infinite;
     }
 
     [data-theme="light"] .fcta-inner-shadow {
@@ -2018,7 +2061,7 @@
       stroke-dasharray: 170 830;
       filter: blur(14px);
       opacity: 0.22;
-      animation: fctaShadowMove 7.5s linear infinite;
+      animation: fctaShadowMove 15s linear infinite;
     }
 
     /* Single Pure Red Moving Line (One unified line: thick center, softly tapered thin ends) */
@@ -2028,7 +2071,7 @@
       stroke-linecap: round;
       stroke-dasharray: 200 800;
       filter: drop-shadow(0 0 5px rgba(200, 16, 46, 0.65));
-      animation: fctaBeamMove 7.5s linear infinite;
+      animation: fctaBeamMove 15s linear infinite;
     }
 
     [data-theme="light"] .fcta-beam-line {
@@ -2037,7 +2080,7 @@
       stroke-linecap: round;
       stroke-dasharray: 200 800;
       filter: drop-shadow(0 0 4px rgba(200, 16, 46, 0.45));
-      animation: fctaBeamMove 7.5s linear infinite;
+      animation: fctaBeamMove 15s linear infinite;
     }
 
     @keyframes fctaBeamMove {
@@ -3181,7 +3224,7 @@
               <stop offset="100%" stop-color="var(--cr)" stop-opacity="1" />
             </linearGradient>
             <filter id="laserGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="3.5" result="blur" />
+              <feGaussianBlur stdDeviation="1.5" result="blur" />
               <feMerge>
                 <feMergeNode in="blur" />
                 <feMergeNode in="SourceGraphic" />

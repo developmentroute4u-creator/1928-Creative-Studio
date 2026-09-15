@@ -148,44 +148,46 @@
       const safeBaseH = Math.max(34, Math.min(88, baseH));
 
       if (p > 0.001) {
-        // Emerges upwards towards the Contact item in Explore
-        const targetH = safeBaseH * (1 + p * 2.65);
+        // Emerges upwards towards the Contact item in Explore with smooth, stable elevation
+        const targetH = safeBaseH * (1 + p * 2.15);
         footerCutWrap.style.height = `${targetH}px`;
         footerCutSvg.style.height = `${targetH}px`;
 
-        const targetVbH = 65 + p * 155;
+        const targetVbH = 65 + p * 130;
         footerCutSvg.setAttribute('viewBox', `0 0 1600 ${targetVbH}`);
 
-        const liftY = p * 16;
+        const liftY = p * 12;
         if (footerCutText) {
           footerCutText.style.transform = `translateY(${liftY}px)`;
         }
 
-        if (isStruggling) {
-          // Progressive shakiness: The higher it moves up, the shakier it becomes
-          tensionPhase += 0.32;
-          const shakeIntensity = p * p; // Non-linear progression: gentle at bottom, very shaky at top
-          const shakeX = (Math.sin(tensionPhase * 13.0) * 3.8 + Math.cos(tensionPhase * 21.0) * 1.6) * shakeIntensity;
-          const shakeY = (Math.sin(tensionPhase * 16.0) * 2.2) * shakeIntensity;
-          const shakeRot = (Math.sin(tensionPhase * 10.5) * 0.95) * shakeIntensity;
+        if (isStruggling && p > 0.08) {
+          // Progressive tension vibration: subtle at low stretch, escalating smoothly towards the peak
+          tensionPhase += 0.28;
+          const tension = Math.min(1, Math.max(0, p));
+          const intensity = Math.pow(tension, 2.2);
+
+          const shakeX = Math.sin(tensionPhase * 15.0) * 1.35 * intensity;
+          const shakeY = Math.cos(tensionPhase * 20.0) * 0.85 * intensity;
+          const shakeRot = Math.sin(tensionPhase * 11.0) * 0.18 * intensity;
 
           footerCutWrap.style.transformOrigin = 'center bottom';
-          footerCutWrap.style.transform = `translate3d(${shakeX}px, ${shakeY}px, 0) rotate(${shakeRot}deg) scale(1)`;
+          footerCutWrap.style.transform = `translate3d(${shakeX.toFixed(2)}px, ${shakeY.toFixed(2)}px, 0) rotate(${shakeRot.toFixed(2)}deg) scale(1)`;
 
           if (bottomLine) {
-            const linePulse = Math.sin(tensionPhase * 16.0) * 0.6 * p;
-            bottomLine.style.transform = `scaleY(${1.8 + p * 1.5 + Math.abs(linePulse)})`;
+            const linePulse = Math.sin(tensionPhase * 14.0) * 0.12 * intensity;
+            bottomLine.style.transform = `scaleY(${1 + p * 1.2 + linePulse})`;
             bottomLine.style.background = 'var(--cr)';
-            bottomLine.style.boxShadow = `0 0 ${10 + p * 12}px var(--cr), 0 0 3px var(--cr)`;
+            bottomLine.style.boxShadow = `0 0 ${8 + p * 12}px var(--cr)`;
           }
         } else {
-          // Word remains completely unstretched (scale 1) and resting on its vertical baseline
+          footerCutWrap.style.transformOrigin = 'center bottom';
           footerCutWrap.style.transform = `translate3d(0, 0, 0) rotate(0deg) scale(1)`;
 
           if (bottomLine) {
-            bottomLine.style.transform = `scaleY(${1 + p * 0.9})`;
+            bottomLine.style.transform = `scaleY(${1 + p * 1.2})`;
             bottomLine.style.background = 'var(--cr)';
-            bottomLine.style.boxShadow = '0 0 10px var(--cr)';
+            bottomLine.style.boxShadow = `0 0 ${8 + p * 12}px var(--cr)`;
           }
         }
       } else {
@@ -208,8 +210,8 @@
     function stepLogoSpring() {
       if (!isInteractingLogo) {
         // Soft, smooth deceleration return to resting position
-        const stiffness = 0.095;
-        const damping = 0.86;
+        const stiffness = 0.12;
+        const damping = 0.82;
         const force = -stiffness * logoPull;
         logoVelocity = (logoVelocity + force) * damping;
         logoPull += logoVelocity;
@@ -257,17 +259,15 @@
         isInteractingLogo = true;
 
         if (e.deltaY > 0) {
-          // Scroll up towards Contact: rises higher & shakiness amplifies
-          logoPull = Math.min(1.0, logoPull + Math.abs(e.deltaY) * (isDiscreteWheel ? 0.28 : 0.0065));
+          logoPull = Math.min(1.0, logoPull + Math.abs(e.deltaY) * (isDiscreteWheel ? 0.08 : 0.0035));
         } else if (e.deltaY < 0) {
-          // Scrolling back down: reduces shakiness and smoothly slides back down
-          logoPull = Math.max(0, logoPull - Math.abs(e.deltaY) * (isDiscreteWheel ? 0.24 : 0.0065));
+          logoPull = Math.max(0, logoPull - Math.abs(e.deltaY) * (isDiscreteWheel ? 0.08 : 0.0035));
         }
 
         triggerLogoSpring();
 
         clearTimeout(logoWheelTimer);
-        const timeoutMs = isDiscreteWheel ? 220 : 750; // Touchpad stays stuck while touched, mouse wheel returns softly
+        const timeoutMs = isDiscreteWheel ? 180 : 350;
         logoWheelTimer = setTimeout(() => {
           isInteractingLogo = false;
           triggerLogoSpring();

@@ -1744,20 +1744,27 @@
       pointer-events: none;
     }
 
-    .svc-folder-wrap {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      clip-path: inset(-300px 0 0 0 round 0 0 22px 22px);
-    }
-
     .svc-folder-back {
       position: absolute;
       inset: 0;
       background: #141416;
-      border-radius: 22px;
+      border-radius: 28px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.05), 0 16px 45px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.03);
+      transition: box-shadow .3s ease;
+      z-index: 1;
+    }
+
+    [data-theme="dark"] .svc-folder-back {
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.30), 0 20px 60px rgba(0, 0, 0, 0.40), 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .svc-folder-wrap {
+      position: absolute;
+      inset: 0;
+      clip-path: inset(-300px 0 0 0 round 0 0 28px 28px);
+      z-index: 2;
+      pointer-events: none;
     }
 
     .svc-sheets-stack {
@@ -1775,7 +1782,7 @@
       position: absolute;
       inset: 0;
       border-radius: 16px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+      box-shadow: none;
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
@@ -1813,30 +1820,19 @@
       text-transform: uppercase;
     }
 
-    /* Distinct Brand Crimson Gradient Palettes for Each Discipline */
-    .svc-sheet-default {
-      background: linear-gradient(135deg, #C8102E 0%, #8A0B1E 100%);
-      z-index: 6;
-    }
-
-    .svc-sheet-s1 {
-      background: linear-gradient(135deg, #D41434 0%, #940C20 100%);
-    }
-
-    .svc-sheet-s2 {
-      background: linear-gradient(135deg, #C8102E 0%, #850A1B 100%);
-    }
-
-    .svc-sheet-s3 {
-      background: linear-gradient(135deg, #B50D27 0%, #720817 100%);
-    }
-
-    .svc-sheet-s4 {
-      background: linear-gradient(135deg, #A00B22 0%, #5E0713 100%);
-    }
-
+    /* Consistent Brand Crimson Gradient Palette across all Service Cards */
+    .svc-sheet,
+    .svc-sheet-default,
+    .svc-sheet-s1,
+    .svc-sheet-s2,
+    .svc-sheet-s3,
+    .svc-sheet-s4,
     .svc-sheet-s5 {
-      background: linear-gradient(135deg, #8C091D 0%, #4D050F 100%);
+      background: linear-gradient(135deg, #C8102E 0%, #8A0B1E 100%);
+    }
+
+    .svc-sheet-default {
+      z-index: 6;
     }
 
     /* Front Jacket Pocket with Tab Silhouette */
@@ -1847,9 +1843,9 @@
       bottom: 0;
       height: 250px;
       background: #1A1A1E;
-      border-radius: 0 0 22px 22px;
+      border-radius: 0 0 28px 28px;
       border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
       z-index: 4;
       display: flex;
       flex-direction: column;
@@ -1910,19 +1906,19 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       padding: clamp(22px, 2.5vw, 30px) clamp(24px, 3vw, 36px);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.05), 0 16px 45px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       color: var(--ink);
-      transition: border-color .3s, transform .3s, background .3s;
+      transition: border-color .3s, transform .3s, background .3s, box-shadow .3s;
       box-sizing: border-box;
     }
 
     [data-theme="dark"] .svc-why-card {
       background: rgba(20, 20, 24, 0.78);
       border-color: rgba(255, 255, 255, 0.09);
-      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.30), 0 20px 60px rgba(0, 0, 0, 0.40), 0 4px 16px rgba(0, 0, 0, 0.25);
     }
 
     .svc-why-badge {
@@ -2056,20 +2052,20 @@
       border: 1px solid var(--rule);
       border-radius: 28px;
       padding: 26px 30px;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.05), 0 16px 45px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.03);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       overflow: hidden;
       will-change: transform, opacity, filter;
-      transition: border-color .3s ease;
+      transition: border-color .3s ease, box-shadow .3s ease;
       font-family: var(--font-primary);
     }
 
     [data-theme="dark"] .svc-showcase-card {
       background: #18181C;
       border-color: rgba(255, 255, 255, 0.1);
-      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.30), 0 20px 60px rgba(0, 0, 0, 0.40), 0 4px 16px rgba(0, 0, 0, 0.25);
     }
 
     /* 3D Visual Art Display for each discipline */
@@ -2321,164 +2317,7 @@
       color: rgba(255, 255, 255, 0.45);
     }
 
-    /* Front Jacket Pocket is Lower so Top Cards are Clearly Visible */
-    .svc-jacket {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 250px;
-      background: #1A1A1E;
-      border-radius: 0 0 24px 24px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-      z-index: 4;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 20px 24px;
-      overflow: hidden;
-    }
 
-    .svc-jacket-notch {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 30px;
-      background: #1A1A1E;
-      clip-path: path("M 0 0 L 100 0 Q 112 0 120 10 L 128 18 Q 136 24 148 24 L 320 24 L 320 0 Z");
-    }
-
-    .svc-jacket-title {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: 1.5rem;
-      letter-spacing: -.02em;
-      color: #FFFFFF;
-      margin-top: auto;
-      line-height: 1;
-    }
-
-    .svc-jacket-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: .6rem;
-      color: rgba(255, 255, 255, 0.5);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-top: 6px;
-    }
-
-    /* Right Detail Card Typography & Elements */
-    .svc-card-num-watermark {
-      font-family: var(--font-secondary);
-      font-weight: 700;
-      font-size: 5.5rem;
-      color: var(--cr);
-      opacity: .07;
-      position: absolute;
-      top: 12px;
-      right: 32px;
-      line-height: 1;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .svc-badge {
-      font-family: 'Space Mono', monospace;
-      font-size: .68rem;
-      font-weight: 700;
-      letter-spacing: .16em;
-      color: var(--cr);
-      background: none;
-      border: none;
-      padding: 0;
-      border-radius: 0;
-      text-transform: uppercase;
-      display: inline-block;
-    }
-
-    .svc-s3-right-card h3 {
-      font-family: var(--font-secondary);
-      font-weight: 700;
-      font-size: clamp(26px, 2.6vw, 36px);
-      line-height: 1.1;
-      color: var(--ink);
-      margin: 0;
-    }
-
-    .svc-s3-right-card p {
-      font-size: .94rem;
-      line-height: 1.65;
-      color: var(--ink-mid);
-      margin: 0;
-    }
-
-    .svc-deliverables {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      margin-top: 2px;
-    }
-
-    .svc-deliv-pill {
-      font-family: var(--font-primary);
-      font-size: .75rem;
-      font-weight: 600;
-      color: var(--ink-dim);
-      background: none;
-      border: none;
-      padding: 0;
-      border-radius: 0;
-      display: inline-flex;
-      align-items: center;
-    }
-
-    .svc-deliv-pill:not(:last-child)::after {
-      content: '·';
-      margin: 0 8px;
-      color: var(--ink-dim);
-      font-weight: 700;
-    }
-
-    [data-theme="dark"] .svc-deliv-pill {
-      background: none;
-      color: rgba(255, 255, 255, 0.65);
-    }
-
-    .svc-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 12px;
-      border-top: 1px solid var(--rule);
-      margin-top: 4px;
-    }
-
-    .svc-action-link {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: .82rem;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--cr);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: gap .3s;
-    }
-
-    .svc-action-link:hover {
-      gap: 14px;
-    }
-
-    .svc-pagination {
-      font-family: 'Space Mono', monospace;
-      font-size: .78rem;
-      color: var(--ink-dim);
-      letter-spacing: .1em;
-    }
 
     /* ═══════════════════════════════════════════════════════════
        §5 — BRAND PARTNERS (3-Row Infinite Dual-Direction Logo Marquee)
@@ -3702,8 +3541,8 @@
 
         <!-- ═══ 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER ═══ -->
         <div class="svc-main-folder" id="mainSvcFolder">
+          <div class="svc-folder-back"></div>
           <div class="svc-folder-wrap">
-            <div class="svc-folder-back"></div>
             <div class="svc-sheets-stack" id="svcSheetsStack">
               <!-- Default Overview Sheet (Card 0 / Cover) -->
               <div class="svc-sheet svc-sheet-default" id="svcSheetDefault">

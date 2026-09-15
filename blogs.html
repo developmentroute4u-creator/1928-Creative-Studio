@@ -898,12 +898,16 @@
       position: relative;
       width: 100%;
       overflow: hidden;
-      border-radius: clamp(24px, 3vw, 36px);
+      padding: 24px 0 32px 0;
+      margin: -24px 0 -32px 0;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 2.5%, black 97.5%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 2.5%, black 97.5%, transparent 100%);
     }
 
     .lbc-track {
       display: flex;
       width: 100%;
+      align-items: stretch;
       will-change: transform;
       transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -912,6 +916,9 @@
       width: 100%;
       flex: 0 0 100%;
       box-sizing: border-box;
+      padding: 0 8px;
+      display: flex;
+      flex-direction: column;
       opacity: 1;
       filter: none;
       transform: none;
@@ -934,30 +941,30 @@
       display: grid;
       grid-template-columns: 1fr 1.18fr;
       gap: clamp(36px, 5vw, 68px);
-      min-height: clamp(480px, 56vh, 600px);
+      height: clamp(480px, 54vh, 560px);
       align-items: stretch;
       position: relative;
       cursor: pointer;
       overflow: hidden;
       box-sizing: border-box;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 55px rgba(0, 0, 0, 0.25), 0 16px 50px rgba(0, 0, 0, 0.32), 0 4px 14px rgba(0, 0, 0, 0.20);
       transition: border-color 0.4s var(--sp), box-shadow 0.4s var(--sp), transform 0.4s var(--sp);
     }
 
     [data-theme="light"] .featured-monograph-spread {
       background: var(--card-bg);
       border-color: var(--rule-m);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 16px 40px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 0 55px rgba(0, 0, 0, 0.03), 0 14px 40px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.015);
     }
 
     .featured-monograph-spread:hover {
       border-color: var(--cr);
-      box-shadow: 0 0 32px var(--cr-soft), 0 20px 56px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 40px var(--cr-soft), 0 20px 56px rgba(0, 0, 0, 0.45);
     }
 
     [data-theme="light"] .featured-monograph-spread:hover {
       border-color: rgba(200, 16, 46, 0.32);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), 0 28px 60px rgba(0, 0, 0, 0.08), 0 0 24px rgba(200, 16, 46, 0.09);
+      box-shadow: 0 0 45px rgba(200, 16, 46, 0.08), 0 18px 45px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.02);
     }
 
     /* Right-side Narrative Content */
@@ -966,9 +973,9 @@
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
-      min-height: clamp(360px, 46vh, 480px);
+      min-height: 0;
       box-sizing: border-box;
-      padding: 8px 0 4px 0;
+      padding: 4px 0;
       transform: none;
       opacity: 1;
     }
@@ -1104,7 +1111,7 @@
     .fms-blueprint-visual {
       width: 100%;
       height: 100%;
-      min-height: clamp(360px, 46vh, 480px);
+      min-height: 0;
       border-radius: clamp(18px, 2vw, 24px);
       background: var(--card-alt);
       border: 1px dashed var(--rule-heavy);
