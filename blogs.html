@@ -381,21 +381,24 @@
     }
 
     .cdb-cat-tag {
-      font-size: 10px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
       letter-spacing: 0.12em;
-      color: var(--ink-dim);
-      background: rgba(255, 255, 255, 0.06);
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid var(--rule-m);
+      color: var(--cr);
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      border: none;
       margin-left: auto;
       flex-shrink: 0;
+      text-transform: uppercase;
     }
 
     [data-theme="light"] .cdb-cat-tag {
-      background: rgba(0, 0, 0, 0.04);
-      border-color: rgba(0, 0, 0, 0.08);
-      color: var(--ink-dim);
+      background: none;
+      border: none;
+      color: var(--cr);
     }
 
     /* Minimal Sharp Manifesto Lead */
@@ -1011,76 +1014,44 @@
       letter-spacing: 0.14em;
     }
 
-    /* 2. HEADER (TITLE) - 7 to 8 Words, Prominent Scale */
+    /* 2. HEADER (TITLE) - 5 to 8 Words, Structured & Balanced */
     .fms-title {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(30px, 3.4vw, 48px);
-      line-height: 1.14;
-      letter-spacing: -0.035em;
+      font-size: clamp(24px, 2.35vw, 34px);
+      line-height: 1.18;
+      letter-spacing: -0.03em;
       color: var(--ink);
-      margin: 0;
-      margin-bottom: clamp(14px, 2vh, 20px);
-      max-width: 28ch;
+      margin: 0 0 12px 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      max-width: 32ch;
     }
 
     /* 3. DESCRIPTION (Clean 1-2 Lines) */
     .fms-excerpt {
-      font-size: clamp(15px, 1.12vw, 17px);
+      font-size: clamp(13px, 0.95vw, 15px);
       color: var(--ink-mid);
-      line-height: 1.65;
+      line-height: 1.6;
       margin: 0;
-      margin-bottom: clamp(22px, 3vh, 32px);
-      max-width: 54ch;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      max-width: 48ch;
     }
 
-    /* Footer Meta (Clean Aligned Launch Button) */
+    /* Footer Meta (Clean Aligned Launch Button Pinned at Bottom) */
     .fms-footer-meta {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       border-top: 1px solid var(--rule);
-      padding-top: clamp(18px, 2.2vh, 24px);
-      flex-wrap: wrap;
-      gap: 16px;
+      padding-top: 16px;
       margin-top: auto;
-    }
-
-    .fms-author-box {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .fab-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--cr-soft);
-      border: 1.5px solid var(--cr);
-      display: grid;
-      place-items: center;
-      color: var(--cr);
-      font-family: var(--font-primary);
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .fab-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .fab-name {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: 13.5px;
-      color: var(--ink);
-    }
-
-    .fab-role {
-      font-size: 11px;
-      color: var(--ink-dim);
+      width: 100%;
     }
 
     .fms-launch-btn {
@@ -1089,23 +1060,37 @@
       gap: 8px;
       padding: 10px 22px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--rule-m);
-      color: var(--ink);
+      background: var(--cr);
+      border: 1px solid var(--cr);
+      color: #ffffff;
       font-family: var(--font-mono);
       font-size: 10.5px;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      box-shadow: 0 4px 14px rgba(200, 16, 46, 0.35);
       transition: all 0.35s var(--sp);
+      text-decoration: none;
+    }
+
+    .flb-icon {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      flex-shrink: 0;
+      transition: transform 0.3s var(--sp);
     }
 
     .featured-monograph-spread:hover .fms-launch-btn {
-      background: var(--cr);
-      border-color: var(--cr);
-      color: #fff;
-      box-shadow: 0 0 24px var(--cr-soft), 0 4px 14px rgba(200, 16, 46, 0.4);
-      transform: scale(1.05);
+      background: var(--cr-bright);
+      border-color: var(--cr-bright);
+      color: #ffffff;
+      box-shadow: 0 0 24px var(--cr-soft), 0 6px 18px rgba(200, 16, 46, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .featured-monograph-spread:hover .flb-icon {
+      transform: translateX(3px);
     }
 
     .fms-blueprint-visual {
@@ -1358,14 +1343,16 @@
       color: inherit;
     }
 
-    .pdh-arrow {
-      font-size: 13px;
-      color: inherit;
+    .pdh-icon {
+      width: 12px;
+      height: 12px;
+      stroke: currentColor;
+      flex-shrink: 0;
       transition: transform 0.3s var(--sp);
     }
 
-    .pga-drift-hint:hover .pdh-arrow {
-      transform: translate(2px, -2px);
+    .pga-drift-hint:hover .pdh-icon {
+      transform: translateX(3px);
     }
 
     .pga-track-viewport {
@@ -3536,15 +3523,19 @@
                 <div class="fms-top-spec">
                   <span class="fms-cat-name">BRAND ARCHITECTURE</span>
                 </div>
-                <h2 class="fms-title">The Monolithic Luxury Monogram as an Enduring Landmark</h2>
+                <h2 class="fms-title">The Monolithic Luxury Monogram as Enduring Landmark</h2>
                 <p class="fms-excerpt">
-                  How high-growth luxury houses engineer mathematically rigorous marks to command enduring global authority.
+                  How high-growth luxury houses engineer mathematically rigorous marks to command global authority.
                 </p>
               </div>
 
               <div class="fms-footer-meta">
                 <div class="fms-launch-btn">
-                  <span>Launch Monograph ↗</span>
+                  <span>Launch Monograph</span>
+                  <svg class="flb-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
                 </div>
               </div>
             </div>
@@ -3577,15 +3568,19 @@
                 <div class="fms-top-spec">
                   <span class="fms-cat-name">SPATIAL DESIGN</span>
                 </div>
-                <h2 class="fms-title">Spatial Choreography Across Modern Architectural Luxury Flagship Retail</h2>
+                <h2 class="fms-title">Spatial Choreography Across Luxury Flagship Retail</h2>
                 <p class="fms-excerpt">
-                  Choreographing visitor trajectories through brutalist travertine monoliths, directional acoustics, and negative-space compression.
+                  Choreographing visitor trajectories through brutalist travertine monoliths, directional acoustics, and compression.
                 </p>
               </div>
 
               <div class="fms-footer-meta">
                 <div class="fms-launch-btn">
-                  <span>Launch Monograph ↗</span>
+                  <span>Launch Monograph</span>
+                  <svg class="flb-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
                 </div>
               </div>
             </div>
@@ -3617,15 +3612,19 @@
                 <div class="fms-top-spec">
                   <span class="fms-cat-name">COMPUTATIONAL WEBGL</span>
                 </div>
-                <h2 class="fms-title">Zero Latency Computational Raytracing in WebGL Interactive Ecosystems</h2>
+                <h2 class="fms-title">Zero Latency Computational Raytracing in WebGL</h2>
                 <p class="fms-excerpt">
-                  Synthesizing custom GLSL physically-based surface shaders for real-time metallic reflections at native 120 FPS.
+                  Synthesizing custom GLSL physically-based surface shaders for real-time metallic reflections at 120 FPS.
                 </p>
               </div>
 
               <div class="fms-footer-meta">
                 <div class="fms-launch-btn">
-                  <span>Launch Monograph ↗</span>
+                  <span>Launch Monograph</span>
+                  <svg class="flb-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
                 </div>
               </div>
             </div>
@@ -3657,15 +3656,19 @@
                 <div class="fms-top-spec">
                   <span class="fms-cat-name">PACKAGING &amp; SPATIAL</span>
                 </div>
-                <h2 class="fms-title">Tactile Acoustic Snaps and Travertine in Bespoke Packaging</h2>
+                <h2 class="fms-title">Tactile Acoustic Snaps in Bespoke Packaging</h2>
                 <p class="fms-excerpt">
-                  The psychophysics of 45-decibel acoustic closures, haptic friction coefficients, and unboxing rituals in ultra-luxury design.
+                  The psychophysics of 45-decibel acoustic closures, haptic friction coefficients, and luxury unboxing rituals.
                 </p>
               </div>
 
               <div class="fms-footer-meta">
                 <div class="fms-launch-btn">
-                  <span>Launch Monograph ↗</span>
+                  <span>Launch Monograph</span>
+                  <svg class="flb-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
                 </div>
               </div>
             </div>
@@ -3701,7 +3704,10 @@
           <a href="blog-detail.html" class="pga-drift-hint" id="exploreBlogBtn" title="Open Complete Blog Repository">
             <span class="pdh-dot"></span>
             <span class="pdh-text">Explore All Blogs</span>
-            <span class="pdh-arrow">↗</span>
+            <svg class="pdh-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <line x1="4" y1="12" x2="19" y2="12"></line>
+              <polyline points="13 6 19 12 13 18"></polyline>
+            </svg>
           </a>
         </div>
       </div>
