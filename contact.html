@@ -197,16 +197,17 @@
     }
 
     /* ═══════════════════════════════════════════════════════════
-       2. HERO SECTION (100VH IMMERSIVE SCULPTURAL BANNER)
+       2. HERO SECTION (IMMERSIVE SCULPTURAL BANNER)
        ═══════════════════════════════════════════════════════════ */
     #contact-hero {
       width: 100vw;
+      height: 100vh;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: clamp(40px, 6vh, 72px) clamp(24px, 4vw, 64px);
+      padding: clamp(32px, 5vh, 64px) clamp(20px, 3.5vw, 48px);
       position: relative;
       overflow: hidden;
       box-sizing: border-box;
@@ -229,7 +230,7 @@
     }
 
     .hero-monument-wrap {
-      max-width: 1080px;
+      max-width: 1240px;
       width: 100%;
       margin: 0 auto;
       position: relative;
@@ -245,16 +246,16 @@
       align-items: center;
       gap: 10px;
       font-family: var(--font-primary);
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.22em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--cr);
       background: none;
       border: none;
       padding: 0;
       border-radius: 0;
-      margin-bottom: clamp(20px, 3vh, 32px);
+      margin-bottom: clamp(12px, 1.8vh, 18px);
     }
 
     .hero-dot-pulse {
@@ -274,13 +275,13 @@
 
     .hero-main-title {
       font-family: var(--font-primary);
-      font-size: clamp(42px, 7.6vw, 108px);
+      font-size: clamp(28px, 4.3vw, 68px);
       font-weight: 900;
-      line-height: 0.94;
-      letter-spacing: -0.045em;
+      line-height: 1.06;
+      letter-spacing: -0.035em;
       text-transform: uppercase;
       color: var(--ink);
-      margin-bottom: clamp(18px, 2.8vh, 28px);
+      margin-bottom: clamp(12px, 1.8vh, 18px);
       text-align: center;
     }
 
@@ -291,13 +292,14 @@
       font-family: var(--font-secondary);
       letter-spacing: -0.01em;
       display: inline-block;
+      white-space: nowrap;
     }
 
     .hero-subtitle-text {
-      font-size: clamp(16px, 1.25vw, 20px);
+      font-size: clamp(13.5px, 0.98vw, 16px);
       color: var(--ink-mid);
-      max-width: 720px;
-      line-height: 1.65;
+      max-width: 620px;
+      line-height: 1.55;
       text-align: center;
       margin: 0 auto;
     }
@@ -305,31 +307,31 @@
     .hero-explore-btn {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      margin-top: clamp(32px, 4.5vh, 48px);
-      padding: 18px 42px;
+      gap: 10px;
+      margin-top: clamp(18px, 2.6vh, 26px);
+      padding: 13px 32px;
       border-radius: 999px;
       background: var(--cr);
       color: #ffffff;
       font-family: var(--font-primary);
-      font-size: 0.9rem;
+      font-size: 0.78rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      box-shadow: 0 10px 30px var(--cr-glow);
+      box-shadow: 0 8px 24px var(--cr-glow);
       transition: transform 0.3s var(--sp), background 0.3s, box-shadow 0.3s;
     }
 
     .hero-explore-btn:hover {
       background: var(--cr-bright);
       transform: translateY(-3px);
-      box-shadow: 0 14px 40px var(--cr-glow);
+      box-shadow: 0 12px 32px var(--cr-glow);
     }
 
     .hero-explore-btn .arr {
       transition: transform 0.3s var(--sp);
-      font-size: 1.1rem;
+      font-size: 1rem;
     }
 
     .hero-explore-btn:hover .arr {
@@ -2370,15 +2372,35 @@
       align-items: flex-start;
     }
 
-    .f-desc-col .f-desc-text {
+    .f-desc-col .f-statement-title {
       font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
-      line-height: 1.25;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 1.85vw, 1.9rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
       color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 380px;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-secondary);
+      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
       max-width: 340px;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+    }
+
+    .f-desc-col .f-location-tag {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim, var(--ink-mid));
+      margin: 0 0 18px 0;
+      text-transform: uppercase;
     }
 
     .f-col-label {
@@ -2854,20 +2876,20 @@
 
     <div class="hero-monument-wrap">
       <div class="hero-tagline-pill">
-        <span class="hero-dot-pulse"></span> ARCHITECTURAL COMMISSIONS &amp; ADVISORY
+        <span class="hero-dot-pulse"></span> START A CONVERSATION // 1928
       </div>
 
       <h1 class="hero-main-title">
-        WE SHAPE THE <br />
-        <em>UNPRECEDENTED.</em>
+        HAVE AN IDEA? <br />
+        <em>LET’S MAKE IT MATTER.</em>
       </h1>
 
       <p class="hero-subtitle-text">
-        We partner with visionary founders and category-defining enterprises across India and worldwide. Configure your project parameters below to initiate a confidential brief.
+        Whether you're launching a new brand, elevating an existing one, or looking for an ongoing creative partner — we'd love to hear what you're building.
       </p>
 
       <a href="#start-project-sec" class="hero-explore-btn">
-        <span>Start Project</span>
+        <span>START A PROJECT</span>
         <span class="arr">↓</span>
       </a>
     </div>

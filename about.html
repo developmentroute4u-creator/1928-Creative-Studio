@@ -2270,15 +2270,35 @@
       align-items: flex-start;
     }
 
-    .f-desc-col .f-desc-text {
+    .f-desc-col .f-statement-title {
       font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
-      line-height: 1.25;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 1.85vw, 1.9rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
       color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 380px;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-secondary);
+      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
       max-width: 340px;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+    }
+
+    .f-desc-col .f-location-tag {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim, var(--ink-mid));
+      margin: 0 0 18px 0;
+      text-transform: uppercase;
     }
 
     .f-col-label {
@@ -2759,24 +2779,23 @@
     <div class="section-container hero-content">
       <div class="hero-tag-wrap">
         <div class="sec-tag-pill" style="margin-bottom:0;">
-          <span class="sec-dot"></span> ESTABLISHED IN 1928 // ABOUT THE STUDIO
+          <span class="sec-dot"></span> ABOUT 1928 // THE STUDIO
         </div>
       </div>
 
       <h1 class="hero-headline">
-        <span class="anim-mask"><span class="hero-line-1">WE SHAPE IDEAS.</span></span>
-        <span class="anim-mask"><span class="hero-line-2">INTO GREAT BRANDS.</span></span>
+        <span class="anim-mask"><span class="hero-line-1">WE TURN IDEAS</span></span>
+        <span class="anim-mask"><span class="hero-line-2">INTO BRANDS THAT GROW.</span></span>
       </h1>
 
       <p class="hero-sub">
-        <span class="hl">1928 Creative Studio</span> is an independent brand engineering practice. We synthesize <span
-          class="hl">architectural design rigor</span>, sensory spatial systems, and <span class="hl">high-velocity
-          digital craft</span> to build category-defining enterprises.
+        <span class="hl">1928 Creative Studio</span> is a creative partner for ambitious businesses, bringing together <span
+          class="hl">strategy, design, digital and storytelling</span> to build brands with character and businesses with greater potential.
       </p>
 
       <div class="hero-actions">
-        <a href="#story" class="btn-primary">Explore Studio Story ↓</a>
-        <a href="contact.html" class="btn-ghost">Initiate Dialogue →</a>
+        <a href="#story" class="btn-primary">EXPLORE OUR STORY ↓</a>
+        <a href="contact.html" class="btn-ghost">START A CONVERSATION →</a>
       </div>
     </div>
 
@@ -2795,22 +2814,22 @@
   <section id="story">
     <div class="section-container">
       <div class="sec-tag-pill"><span class="sec-dot"></span> ORIGINS &amp; ESSENCE</div>
-      <h2 class="sec-heading">THE <span>1928</span> STUDIO STORY</h2>
-      <p class="sec-desc">A nearly century-old legacy of architectural design rigor, reimagined for modern cultural
-        leadership.</p>
+      <h2 class="sec-heading">THE STORY BEHIND <span>1928</span></h2>
+      <p class="sec-desc">Built by people who believe every business has the potential to become a meaningful brand.</p>
 
       <div class="story-card-wrap">
         <h3 class="story-statement">
-          "Great design is never decoration. It is the <span>gravitational center</span> of market authority."
+          "WE TURN AMBITION INTO <span>MOMENTUM.</span>"
         </h3>
         <div class="story-paragraphs">
           <p>
-            Founded on the principle that enduring brands require architectural discipline rather than fleeting trends,
-            1928 operates at the convergence of identity systems, spatial design, and high-velocity digital technology.
+            1928 Creative Studio was founded by Ami Panchal and Tushar Panchal with a shared belief: that good design is not just aesthetic — it is strategic, commercial, and deeply human.
           </p>
           <p>
-            From our headquarters in Ahmedabad to collaborations across London, Milan, Tokyo, and New York, our studio
-            engineers timeless visual authority for ambitious founders and global icons.
+            With over a decade of hands-on experience across brand strategy, visual identity, digital experiences, performance marketing, and creative production, we have worked with brands across sectors and scales — from early-stage businesses finding their voice to established enterprises reimagining their market presence.
+          </p>
+          <p>
+            From identity and digital experiences to content, marketing, and spatial design — we build brands that look right, feel right, and perform at the highest level.
           </p>
         </div>
       </div>
@@ -2823,10 +2842,9 @@
   <section id="works-driver" class="works-driver">
     <div class="works-sticky-stage" id="worksStickyStage">
       <div class="section-container works-stage-container">
-        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> CURATED
-          ARCHIVE</div>
-        <h2 class="sec-heading" style="margin-bottom:clamp(6px, 1vh, 12px);">BEST <span>WORKS</span></h2>
-        <p class="sec-desc">Flagship partnerships engineered to command prestige and set new industry benchmarks.</p>
+        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> SELECTED PROJECTS // 1928</div>
+        <h2 class="sec-heading" style="margin-bottom:clamp(6px, 1vh, 12px);">WORK WORTH <span>SHOWING.</span></h2>
+        <p class="sec-desc">A selection of identities, digital experiences and creative work created for businesses with ambition.</p>
 
         <div class="works-card-stage" id="worksCardStage">
           <!-- ── SET 1: First 2 Cards (Active Initially) ── -->
@@ -2848,118 +2866,123 @@
                 </div>
                 <div class="work-bottom-meta">
                   <div class="work-pills">
-                    <span class="work-pill">IDENTITY</span>
-                    <span class="work-pill">SPATIAL</span>
-                    <span class="work-pill">SYSTEMS</span>
+                    <span>Identity</span>
+                    <span>Guidelines</span>
+                    <span>Signage</span>
                   </div>
-                  <span class="work-arrow">Case Study →</span>
+                  <span class="work-view-link">View Case Study ↗</span>
                 </div>
               </div>
             </a>
 
-            <!-- 02 BUGATTI -->
+            <!-- 02 BALENCIAGA -->
             <a href="project-detail.html" class="work-duo-card" id="workCard2">
               <div class="work-card-media">
-                <img src="img/wc-r1.jpg" alt="Bugatti WebGL Configurator" class="work-card-img" />
+                <img src="img/wc-mid.jpg" alt="Balenciaga Flagship Architecture" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">02 // AUTOMOTIVE</span>
-                  <span class="work-tag-pill">WEBGL 3D</span>
+                  <span class="work-num">02 // COUTURE SPATIAL</span>
+                  <span class="work-tag-pill">SPATIAL &amp; DIGITAL</span>
                 </div>
                 <div class="work-mid-body">
-                  <h3 class="work-title">BUGATTI</h3>
-                  <p class="work-desc">Bespoke hypercar digital ecosystem, WebGL 3D configurator, and high-prestige UI
-                    craft.</p>
+                  <h3 class="work-title">BALENCIAGA</h3>
+                  <p class="work-desc">Architectural spatial system, monolithic retail fixtures, and kinetic runway
+                    scenography.</p>
                 </div>
                 <div class="work-bottom-meta">
                   <div class="work-pills">
-                    <span class="work-pill">WEBGL</span>
-                    <span class="work-pill">3D ENGINE</span>
-                    <span class="work-pill">LUXURY UI</span>
+                    <span>Spatial</span>
+                    <span>Retail</span>
+                    <span>Runway</span>
                   </div>
-                  <span class="work-arrow">Case Study →</span>
+                  <span class="work-view-link">View Case Study ↗</span>
                 </div>
               </div>
             </a>
           </div>
 
-          <!-- ── SET 2: Second 2 Cards (Revealed on Scroll from Bottom) ── -->
+          <!-- ── SET 2: Next 2 Cards (Swapped In on Scroll) ── -->
           <div class="works-card-set" id="worksSet2">
-            <!-- 03 MINI BRAND -->
+            <!-- 03 POLENE PARIS -->
             <a href="project-detail.html" class="work-duo-card" id="workCard3">
               <div class="work-card-media">
-                <img src="img/wc-l1.jpg" alt="Mini Brand Spatial Architecture" class="work-card-img" />
+                <img src="img/wc-bot.jpg" alt="Polène Paris Leather Goods" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">03 // SPATIAL</span>
-                  <span class="work-tag-pill">RETAIL CODES</span>
+                  <span class="work-num">03 // LUXURY ATELIER</span>
+                  <span class="work-tag-pill">PACKAGING &amp; 3D</span>
                 </div>
                 <div class="work-mid-body">
-                  <h3 class="work-title">MINI BRAND</h3>
-                  <p class="work-desc">Next-generation spatial architecture, flagship design codes, and sensory retail
-                    environments.</p>
+                  <h3 class="work-title">POLÈNE PARIS</h3>
+                  <p class="work-desc">Sculptural leather goods packaging, tactile materiality, and 3D architectural
+                    campaign assets.</p>
                 </div>
                 <div class="work-bottom-meta">
                   <div class="work-pills">
-                    <span class="work-pill">SPATIAL</span>
-                    <span class="work-pill">FLAGSHIP</span>
-                    <span class="work-pill">ENVIRONMENT</span>
+                    <span>Packaging</span>
+                    <span>Tactile</span>
+                    <span>3D Assets</span>
                   </div>
-                  <span class="work-arrow">Case Study →</span>
+                  <span class="work-view-link">View Case Study ↗</span>
                 </div>
               </div>
             </a>
 
-            <!-- 04 ZERODHA -->
+            <!-- 04 RIMOWA -->
             <a href="project-detail.html" class="work-duo-card" id="workCard4">
               <div class="work-card-media">
-                <img src="img/wc-bot.jpg" alt="Zerodha Trading Platform Design" class="work-card-img" />
+                <img src="img/f-brand-3.jpg" alt="Rimowa Monolith Archive" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">04 // FINTECH</span>
-                  <span class="work-tag-pill">UI SYSTEMS</span>
+                  <span class="work-num">04 // INDUSTRIAL LUXURY</span>
+                  <span class="work-tag-pill">ECOMMERCE &amp; WEBGL</span>
                 </div>
                 <div class="work-mid-body">
-                  <h3 class="work-title">ZERODHA</h3>
-                  <p class="work-desc">High-performance trading platform design system, micro-interactions, and visual
-                    architecture.</p>
+                  <h3 class="work-title">RIMOWA</h3>
+                  <p class="work-desc">Monolithic digital flagship, aluminum 3D configurator, and high-velocity global
+                    checkout.</p>
                 </div>
                 <div class="work-bottom-meta">
                   <div class="work-pills">
-                    <span class="work-pill">FINTECH</span>
-                    <span class="work-pill">DESIGN SYSTEM</span>
-                    <span class="work-pill">PLATFORM</span>
+                    <span>WebGL</span>
+                    <span>Configurator</span>
+                    <span>Flagship</span>
                   </div>
-                  <span class="work-arrow">Case Study →</span>
+                  <span class="work-view-link">View Case Study ↗</span>
                 </div>
               </div>
             </a>
           </div>
+        </div>
+
+        <!-- Dynamic Indicator Dots for Set 1 / Set 2 -->
+        <div class="works-set-indicators" id="worksSetIndicators">
+          <span class="works-dot active" data-set="1"></span>
+          <span class="works-dot" data-set="2"></span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
-       4. CORE VALUES (Kinetic Architectural Monolith Accordion)
+       4. OUR PRINCIPLES (Accordion)
        ═══════════════════════════════════════════════════════════ -->
   <section id="values">
     <div class="section-container">
-      <div class="sec-tag-pill"><span class="sec-dot"></span> IMMUTABLE STANDARDS</div>
-      <h2 class="sec-heading">CORE <span>VALUES</span></h2>
-      <p class="sec-desc">The four foundational pillars that govern our architectural craft, design rigor, and strategic
-        executions.</p>
+      <div class="sec-tag-pill"><span class="sec-dot"></span> 1928 CREATIVE STUDIO // OUR PRINCIPLES</div>
+      <h2 class="sec-heading">WHAT WE <span>BELIEVE IN.</span></h2>
+      <p class="sec-desc">The principles that shape how we think, create, collaborate, and build brands for meaningful growth.</p>
 
       <div class="values-accordion" id="valuesAccordion">
-        <!-- ── 01 OBSESSIVE CRAFT ── -->
+        <!-- ── 01 STRATEGIC THINKING ── -->
         <div class="val-panel active" data-val="1">
           <!-- Collapsed Strip View -->
           <div class="val-collapsed-content">
             <span class="val-col-num">01</span>
-            <span class="val-col-title">Obsessive Craft</span>
+            <span class="val-col-title">Think With Purpose</span>
             <div class="val-col-glyph">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2L12 0Z" />
@@ -2972,7 +2995,7 @@
             <div class="val-exp-top">
               <div class="val-exp-meta">
                 <span class="val-exp-num">01 // PRINCIPLE</span>
-                <span class="val-exp-pill">PRECISION ENGINEERING</span>
+                <span class="val-exp-pill">STRATEGIC THINKING</span>
               </div>
               <div class="val-exp-glyph">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
@@ -2982,25 +3005,24 @@
             </div>
 
             <div class="val-exp-body">
-              <h3 class="val-exp-title">Obsessive Craft</h3>
-              <p class="val-exp-desc">Microscopic precision across typography, materials, and motion. We operate with
-                zero tolerance for average execution, treating every pixel as an immutable artifact.</p>
+              <h3 class="val-exp-title">Think With Purpose</h3>
+              <p class="val-exp-desc">We believe every creative decision should be grounded in strategic clarity. Beautiful design without clear purpose is just decoration. We build brands that make commercial sense as much as they make an impression.</p>
             </div>
 
             <div class="val-exp-bottom">
-              <span class="val-exp-tag">0.01mm Precision</span>
-              <span class="val-exp-tag">Kinetic Motion</span>
-              <span class="val-exp-tag">Custom Kerning</span>
+              <span class="val-exp-tag">Commercial Clarity</span>
+              <span class="val-exp-tag">Strategic Rigor</span>
+              <span class="val-exp-tag">Intentional Design</span>
             </div>
           </div>
         </div>
 
-        <!-- ── 02 RADICAL CLARITY ── -->
+        <!-- ── 02 DISTINCTIVE CRAFT ── -->
         <div class="val-panel" data-val="2">
           <!-- Collapsed Strip View -->
           <div class="val-collapsed-content">
             <span class="val-col-num">02</span>
-            <span class="val-col-title">Radical Clarity</span>
+            <span class="val-col-title">Make It Matter</span>
             <div class="val-col-glyph">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <circle cx="12" cy="12" r="9" />
@@ -3014,7 +3036,7 @@
             <div class="val-exp-top">
               <div class="val-exp-meta">
                 <span class="val-exp-num">02 // PRINCIPLE</span>
-                <span class="val-exp-pill">REDUCTIONIST PURITY</span>
+                <span class="val-exp-pill">DISTINCTIVE CRAFT</span>
               </div>
               <div class="val-exp-glyph">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -3025,25 +3047,24 @@
             </div>
 
             <div class="val-exp-body">
-              <h3 class="val-exp-title">Radical Clarity</h3>
-              <p class="val-exp-desc">Stripping away clutter, noise, and superfluous decoration to reveal pure brand
-                truth, articulated with unapologetic geometric focus and editorial conviction.</p>
+              <h3 class="val-exp-title">Make It Matter</h3>
+              <p class="val-exp-desc">In a crowded world, ordinary does not work. We push for ideas that are original, identities that are unmistakable, and executions that make people stop, remember, and care.</p>
             </div>
 
             <div class="val-exp-bottom">
-              <span class="val-exp-tag">Pure Signal</span>
-              <span class="val-exp-tag">Zero Noise</span>
-              <span class="val-exp-tag">Geometric Intent</span>
+              <span class="val-exp-tag">Original Ideas</span>
+              <span class="val-exp-tag">Unmistakable Identity</span>
+              <span class="val-exp-tag">High Craft</span>
             </div>
           </div>
         </div>
 
-        <!-- ── 03 SPATIAL RIGOR ── -->
+        <!-- ── 03 HUMAN CONNECTION ── -->
         <div class="val-panel" data-val="3">
           <!-- Collapsed Strip View -->
           <div class="val-collapsed-content">
             <span class="val-col-num">03</span>
-            <span class="val-col-title">Spatial Rigor</span>
+            <span class="val-col-title">Create Real Connection</span>
             <div class="val-col-glyph">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" />
@@ -3058,7 +3079,7 @@
             <div class="val-exp-top">
               <div class="val-exp-meta">
                 <span class="val-exp-num">03 // PRINCIPLE</span>
-                <span class="val-exp-pill">STRUCTURAL INTEGRITY</span>
+                <span class="val-exp-pill">HUMAN CONNECTION</span>
               </div>
               <div class="val-exp-glyph">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -3070,25 +3091,24 @@
             </div>
 
             <div class="val-exp-body">
-              <h3 class="val-exp-title">Spatial Rigor</h3>
-              <p class="val-exp-desc">Treating brand identity as architectural engineering — building robust, modular
-                design systems that scale across flagships, spatial environments, and digital monoliths.</p>
+              <h3 class="val-exp-title">Create Real Connection</h3>
+              <p class="val-exp-desc">The strongest brands are not just seen — they are felt. We design and communicate with an understanding of what moves people, building brands that earn genuine trust and lasting loyalty.</p>
             </div>
 
             <div class="val-exp-bottom">
-              <span class="val-exp-tag">Modular Grid</span>
-              <span class="val-exp-tag">Spatial Codes</span>
-              <span class="val-exp-tag">Built Longevity</span>
+              <span class="val-exp-tag">Audience Resonance</span>
+              <span class="val-exp-tag">Authentic Trust</span>
+              <span class="val-exp-tag">Lasting Loyalty</span>
             </div>
           </div>
         </div>
 
-        <!-- ── 04 CULTURAL PRESTIGE ── -->
+        <!-- ── 04 BUILT FOR GROWTH ── -->
         <div class="val-panel" data-val="4">
           <!-- Collapsed Strip View -->
           <div class="val-collapsed-content">
             <span class="val-col-num">04</span>
-            <span class="val-col-title">Cultural Prestige</span>
+            <span class="val-col-title">Create Lasting Value</span>
             <div class="val-col-glyph">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
@@ -3104,7 +3124,7 @@
             <div class="val-exp-top">
               <div class="val-exp-meta">
                 <span class="val-exp-num">04 // PRINCIPLE</span>
-                <span class="val-exp-pill">GLOBAL AUTHORITY</span>
+                <span class="val-exp-pill">BUILT FOR GROWTH</span>
               </div>
               <div class="val-exp-glyph">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -3117,15 +3137,14 @@
             </div>
 
             <div class="val-exp-body">
-              <h3 class="val-exp-title">Cultural Prestige</h3>
-              <p class="val-exp-desc">Creating work that commands genuine market leadership, elevates valuation, and
-                shapes contemporary culture with enduring timeless authority.</p>
+              <h3 class="val-exp-title">Create Lasting Value</h3>
+              <p class="val-exp-desc">We don't build for short-lived trends. We create identities, platforms, and content systems designed to scale with your business and deliver enduring value over time.</p>
             </div>
 
             <div class="val-exp-bottom">
-              <span class="val-exp-tag">Category Authority</span>
-              <span class="val-exp-tag">Brand Valuation</span>
-              <span class="val-exp-tag">Timeless Legacy</span>
+              <span class="val-exp-tag">Built to Scale</span>
+              <span class="val-exp-tag">Trend Resilience</span>
+              <span class="val-exp-tag">Long-term Value</span>
             </div>
           </div>
         </div>
@@ -3145,54 +3164,80 @@
       </div>
 
       <div class="team-minimal-index" id="teamMinimalIndex">
-        <!-- 01 AMI -->
-        <div class="team-index-row" data-member="ami" data-name="Ami" data-role="Principal &amp; Creative Director"
+        <!-- 01 AMI PANCHAL -->
+        <div class="team-index-row" data-member="ami" data-name="Ami Panchal" data-role="Founder &amp; Creative + Strategy Head"
           data-photo="img/team-ami.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Ami</span>
+              <span class="team-row-name">Ami Panchal</span>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Principal &amp; Creative Director</span>
+              <span class="team-row-role">Founder &amp; Creative + Strategy Head</span>
             </div>
           </div>
         </div>
 
-        <!-- 02 TUSAR PANCHAL -->
-        <div class="team-index-row" data-member="tusar" data-name="Tusar Panchal" data-role="Head of Brand Architecture"
+        <!-- 02 TUSHAR PANCHAL -->
+        <div class="team-index-row" data-member="tushar" data-name="Tushar Panchal" data-role="Founder &amp; Marketing Head"
           data-photo="img/team-tusar.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Tusar Panchal</span>
+              <span class="team-row-name">Tushar Panchal</span>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Head of Brand Architecture</span>
+              <span class="team-row-role">Founder &amp; Marketing Head</span>
             </div>
           </div>
         </div>
 
-        <!-- 03 ELENA ROSTOVA -->
-        <div class="team-index-row" data-member="elena" data-name="Elena Rostova" data-role="Lead Spatial Architect"
+        <!-- 03 TRUSHA PANCHAL -->
+        <div class="team-index-row" data-member="trusha" data-name="Trusha Panchal" data-role="Senior Graphic Designer"
           data-photo="img/team-elena.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Elena Rostova</span>
+              <span class="team-row-name">Trusha Panchal</span>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Spatial Systems &amp; Flagships</span>
+              <span class="team-row-role">Senior Graphic Designer</span>
             </div>
           </div>
         </div>
 
-        <!-- 04 KAITO TANAKA -->
-        <div class="team-index-row" data-member="kaito" data-name="Kaito Tanaka" data-role="Lead Creative Technologist"
+        <!-- 04 HARSH PATEL -->
+        <div class="team-index-row" data-member="harsh" data-name="Harsh Patel" data-role="Senior Video Editor"
           data-photo="img/team-kaito.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Kaito Tanaka</span>
+              <span class="team-row-name">Harsh Patel</span>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Generative 3D &amp; WebGL Engines</span>
+              <span class="team-row-role">Senior Video Editor</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 URVISH MISTRY -->
+        <div class="team-index-row" data-member="urvish" data-name="Urvish Mistry" data-role="Junior Video Editor + Community Manager"
+          data-photo="img/team-ami.jpg">
+          <div class="team-row-main">
+            <div class="team-row-left">
+              <span class="team-row-name">Urvish Mistry</span>
+            </div>
+            <div class="team-row-right">
+              <span class="team-row-role">Junior Video Editor + Community Manager</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 06 PRIYAL LUNKAR -->
+        <div class="team-index-row" data-member="priyal" data-name="Priyal Lunkar" data-role="Social Media Manager"
+          data-photo="img/team-elena.jpg">
+          <div class="team-row-main">
+            <div class="team-row-left">
+              <span class="team-row-name">Priyal Lunkar</span>
+            </div>
+            <div class="team-row-right">
+              <span class="team-row-role">Social Media Manager</span>
             </div>
           </div>
         </div>
@@ -3210,9 +3255,9 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="process">
     <div class="section-container">
-      <div class="sec-tag-pill"><span class="sec-dot"></span> WORKFLOW FRAMEWORK</div>
-      <h2 class="sec-heading">CREATIVE <span>PROCESS</span></h2>
-      <p class="sec-desc">A disciplined 5-phase framework ensuring uncompromising fidelity from discovery to launch.</p>
+      <div class="sec-tag-pill"><span class="sec-dot"></span> WORKFLOW FRAMEWORK // 1928</div>
+      <h2 class="sec-heading">HOW WE BUILD <span>TOGETHER.</span></h2>
+      <p class="sec-desc">A disciplined 5-phase framework ensuring clarity, creativity, and momentum from day one.</p>
 
       <div class="process-serpentine-track" id="processTrack">
         <!-- Connecting SVG Laser Path -->
@@ -3246,14 +3291,13 @@
           <div class="proc-step-card">
             <div class="proc-card-header">
               <span class="proc-card-phase">PHASE 01 // DISCOVERY</span>
-              <h3 class="proc-card-title">Immersion &amp; Diagnostic Discovery</h3>
+              <h3 class="proc-card-title">Understand Before We Build</h3>
             </div>
-            <p class="proc-card-desc">Uncovering market anomalies, competitive white space, audience psychology, and
-              core brand DNA.</p>
+            <p class="proc-card-desc">Every great brand begins with deep listening and sharp inquiry. We immerse ourselves in your business, your market, your competitors, and your customers to find the authentic truths that will define everything that follows.</p>
             <div class="proc-card-tags">
-              <span>Diagnostic Audit</span>
-              <span>Market Psychology</span>
-              <span>DNA Extraction</span>
+              <span>Deep Immersion</span>
+              <span>Market Analysis</span>
+              <span>Core Brand DNA</span>
             </div>
           </div>
         </div>
@@ -3262,15 +3306,14 @@
         <div class="proc-step-item proc-item-right" data-step="2">
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 02 // ARCHITECTURE</span>
-              <h3 class="proc-card-title">Strategic Blueprint &amp; Positioning</h3>
+              <span class="proc-card-phase">PHASE 02 // STRATEGY &amp; DIRECTION</span>
+              <h3 class="proc-card-title">Shape the Direction</h3>
             </div>
-            <p class="proc-card-desc">Defining the category-defining narrative, foundational pillars, and architectural
-              design roadmap.</p>
+            <p class="proc-card-desc">We translate insights into a clear strategic and creative direction. We define who your brand is, what it stands for, how it should sound, and how it will differentiate itself in a crowded market.</p>
             <div class="proc-card-tags">
-              <span>Brand Narrative</span>
-              <span>Positioning Matrix</span>
-              <span>Design Roadmap</span>
+              <span>Brand Strategy</span>
+              <span>Distinctive Positioning</span>
+              <span>Creative Direction</span>
             </div>
           </div>
           <div class="proc-node-wrapper">
@@ -3291,15 +3334,14 @@
           </div>
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 03 // DESIGN LAB</span>
-              <h3 class="proc-card-title">Prototyping &amp; Visual Design</h3>
+              <span class="proc-card-phase">PHASE 03 // DESIGN &amp; BUILD</span>
+              <h3 class="proc-card-title">Bring the Brand to Life</h3>
             </div>
-            <p class="proc-card-desc">Iterating bespoke typography, spatial scale models, motion choreography, and
-              digital interactive systems.</p>
+            <p class="proc-card-desc">This is where strategy becomes tangible. We design identities, create content, build websites, and craft every visual and verbal asset with meticulous attention to detail, craft, and consistency.</p>
             <div class="proc-card-tags">
-              <span>Bespoke Type</span>
-              <span>Spatial Prototypes</span>
-              <span>Motion Choreography</span>
+              <span>Visual Identity</span>
+              <span>Digital Build</span>
+              <span>Creative Craft</span>
             </div>
           </div>
         </div>
@@ -3308,15 +3350,14 @@
         <div class="proc-step-item proc-item-right" data-step="4">
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 04 // ENGINEERING</span>
-              <h3 class="proc-card-title">Precision Engineering &amp; Craft</h3>
+              <span class="proc-card-phase">PHASE 04 // LAUNCH &amp; SCALE</span>
+              <h3 class="proc-card-title">Take It to the Right People</h3>
             </div>
-            <p class="proc-card-desc">Developing production-ready code, token design systems, spatial construction
-              specifications, and guidelines.</p>
+            <p class="proc-card-desc">A brand needs to be seen by the people who matter. We design and execute launch campaigns, social media strategies, and performance marketing to build awareness and generate real momentum.</p>
             <div class="proc-card-tags">
-              <span>Token Systems</span>
-              <span>Spatial Specs</span>
-              <span>WebGL Frameworks</span>
+              <span>Launch Campaign</span>
+              <span>Social Media</span>
+              <span>Performance Marketing</span>
             </div>
           </div>
           <div class="proc-node-wrapper">
@@ -3337,15 +3378,14 @@
           </div>
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 05 // LAUNCH &amp; SCALE</span>
-              <h3 class="proc-card-title">Activation &amp; Brand Velocity</h3>
+              <span class="proc-card-phase">PHASE 05 // EVOLUTION &amp; EXPANSION</span>
+              <h3 class="proc-card-title">Build What Comes Next</h3>
             </div>
-            <p class="proc-card-desc">Orchestrating high-impact market launch, cultural campaign rollouts, and ongoing
-              brand stewardship.</p>
+            <p class="proc-card-desc">Great brands never stand still. We remain an ongoing creative partner to our clients, helping them evolve their content, enter new markets, launch new initiatives, and stay ahead of change.</p>
             <div class="proc-card-tags">
-              <span>Cultural Launch</span>
-              <span>Brand Stewardship</span>
-              <span>Market Velocity</span>
+              <span>Ongoing Partnership</span>
+              <span>Content Evolution</span>
+              <span>Scale &amp; Growth</span>
             </div>
           </div>
         </div>
@@ -3359,9 +3399,9 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="clients-section">
     <div class="brands-header-block">
-      <div class="bph-label"><span class="bph-dot"></span> PARTNERSHIPS // SELECTED CLIENTS</div>
-      <h2 class="brands-title">SELECTED <span>CLIENTS.</span></h2>
-      <p class="brands-subtitle">Engineering category leadership and enduring prestige alongside market-defining enterprises.</p>
+      <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY // 1928 CLIENTS</div>
+      <h2 class="brands-title">BRANDS THAT TRUST <span>1928.</span></h2>
+      <p class="brands-subtitle">From fast-growing ventures to established market leaders across diverse industries.</p>
     </div>
 
     <div class="brands-marquee-stage">
@@ -3440,14 +3480,14 @@
                 <text x="78" y="24" font-family="'Montserrat', sans-serif" font-weight="600" font-size="11" fill="#8C3B78">Foundation</text>
               </svg>
             </div>
-            <div class="brand-logo-card" title="CREDAI">
+            <div class="brand-logo-card" title="Credai">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
                 <path d="M 22 18 L 34 8 L 46 18 L 40 18 L 34 13 L 28 18 Z" fill="#0A7C42" />
                 <text x="52" y="23" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#0A7C42" letter-spacing="1.5px">CREDAÎ</text>
                 <text x="53" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="var(--ink-dim)" letter-spacing="1px">NASHIK METRO</text>
               </svg>
             </div>
-            <div class="brand-logo-card" title="LOFY">
+            <div class="brand-logo-card" title="Lofy">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
                 <text x="80" y="22" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="19" fill="currentColor" letter-spacing="4px">LOFY</text>
                 <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">HOME STORE</text>
@@ -3548,10 +3588,10 @@
         <div class="marquee-track">
           <!-- Group 1 -->
           <div class="marquee-group">
-            <div class="brand-logo-card" title="Haldiram's">
+            <div class="brand-logo-card" title="Mahindra Tractors">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <ellipse cx="80" cy="20" rx="60" ry="14" fill="#FFC72C" stroke="#8B0000" stroke-width="1.8" />
-                <text x="80" y="24" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="700" font-size="17" fill="#8B0000">Haldiram's</text>
+                <text x="80" y="19" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="#E51937" letter-spacing="0.5px">mahindra</text>
+                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#E51937" letter-spacing="3px">TRACTORS</text>
               </svg>
             </div>
             <div class="brand-logo-card" title="Cult Store">
@@ -3602,6 +3642,20 @@
                 <text x="22" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TASTE THE ORIGINAL</text>
               </svg>
             </div>
+            <div class="brand-logo-card" title="Skoda Stellar">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="25" cy="20" r="10" fill="none" stroke="#4BA82E" stroke-width="2" />
+                <path d="M 22 17 L 28 20 L 22 23 Z" fill="#4BA82E" />
+                <text x="42" y="21" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="1.5px">SKODA</text>
+                <text x="42" y="30" font-family="'Montserrat', sans-serif" font-weight="900" font-size="12" fill="#4BA82E" letter-spacing="2px">STELLAR</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card" title="Qutone Ceramic">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#008080" letter-spacing="3px">QUTONE</text>
+                <text x="80" y="33" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="2px">CERAMIC INNOVATIONS</text>
+              </svg>
+            </div>
             <div class="brand-logo-card" title="Thakkers">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
                 <rect x="20" y="8" width="18" height="24" rx="2" fill="#1E4E79" />
@@ -3625,7 +3679,7 @@
                 <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
               </svg>
             </div>
-            <div class="brand-logo-card" title="Reneev">
+            <div class="brand-logo-card" title="Reneev Developers">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
                 <path d="M 28 8 L 34 16 L 34 32 L 28 32 Z M 36 12 L 42 18 L 42 32 L 36 32 Z" fill="#1B6B93" />
                 <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="#1B6B93" letter-spacing="2.5px">RENEEV</text>
@@ -3637,8 +3691,8 @@
           <div class="marquee-group" aria-hidden="true">
             <div class="brand-logo-card">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <ellipse cx="80" cy="20" rx="60" ry="14" fill="#FFC72C" stroke="#8B0000" stroke-width="1.8" />
-                <text x="80" y="24" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="700" font-size="17" fill="#8B0000">Haldiram's</text>
+                <text x="80" y="19" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="#E51937" letter-spacing="0.5px">mahindra</text>
+                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#E51937" letter-spacing="3px">TRACTORS</text>
               </svg>
             </div>
             <div class="brand-logo-card">
@@ -3691,6 +3745,20 @@
             </div>
             <div class="brand-logo-card">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <circle cx="25" cy="20" r="10" fill="none" stroke="#4BA82E" stroke-width="2" />
+                <path d="M 22 17 L 28 20 L 22 23 Z" fill="#4BA82E" />
+                <text x="42" y="21" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="1.5px">SKODA</text>
+                <text x="42" y="30" font-family="'Montserrat', sans-serif" font-weight="900" font-size="12" fill="#4BA82E" letter-spacing="2px">STELLAR</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
+                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#008080" letter-spacing="3px">QUTONE</text>
+                <text x="80" y="33" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="2px">CERAMIC INNOVATIONS</text>
+              </svg>
+            </div>
+            <div class="brand-logo-card">
+              <svg viewBox="0 0 160 40" class="brand-logo-svg">
                 <rect x="20" y="8" width="18" height="24" rx="2" fill="#1E4E79" />
                 <path d="M 29 11 L 29 29 M 23 18 L 35 18" stroke="#FFFFFF" stroke-width="1.5" />
                 <text x="46" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="13" fill="#1E4E79" letter-spacing="1.5px">THAKKERS</text>
@@ -3728,46 +3796,6 @@
         <div class="marquee-track">
           <!-- Group 1 -->
           <div class="marquee-group">
-            <div class="brand-logo-card" title="Mahindra Tractors">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="19" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="#E51937" letter-spacing="0.5px">mahindra</text>
-                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#E51937" letter-spacing="3px">TRACTORS</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card" title="Palladium Ahmedabad">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 80 5 L 84 13 L 90 9 L 86 16 L 93 16 L 87 20 L 80 16 L 73 20 L 67 16 L 74 16 L 70 9 L 76 13 Z" fill="#C59B27" />
-                <text x="80" y="28" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="9.5" fill="currentColor" letter-spacing="2px">PALLADIUM</text>
-                <text x="80" y="35" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1.5px">AHMEDABAD</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card" title="Space Arcade">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="26" cy="20" r="9" fill="none" stroke="#E5A93C" stroke-width="2" />
-                <text x="44" y="21" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="1.5px">SPACE</text>
-                <text x="45" y="30" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7.5" fill="#E5A93C" letter-spacing="2px">ARCADE</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card" title="Spectra">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 22 28 L 32 10 L 42 28 Z M 32 14 L 38 24 L 26 24 Z" fill="none" stroke="currentColor" stroke-width="2" />
-                <text x="50" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="currentColor" letter-spacing="3px">SPECTRA</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card" title="Skoda Stellar">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="25" cy="20" r="10" fill="none" stroke="#4BA82E" stroke-width="2" />
-                <path d="M 22 17 L 28 20 L 22 23 Z" fill="#4BA82E" />
-                <text x="42" y="21" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="1.5px">SKODA</text>
-                <text x="42" y="30" font-family="'Montserrat', sans-serif" font-weight="900" font-size="12" fill="#4BA82E" letter-spacing="2px">STELLAR</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card" title="Qutone">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#008080" letter-spacing="3px">QUTONE</text>
-                <text x="80" y="33" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="2px">CERAMIC INNOVATIONS</text>
-              </svg>
-            </div>
             <div class="brand-logo-card" title="Istana">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
                 <circle cx="24" cy="20" r="8" fill="none" stroke="#007A87" stroke-width="1.8" stroke-dasharray="3 2" />
@@ -3780,7 +3808,7 @@
                 <text x="80" y="25" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="600" font-size="22" fill="currentColor">oberoi mall</text>
               </svg>
             </div>
-            <div class="brand-logo-card" title="Clear Water">
+            <div class="brand-logo-card" title="Clear">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
                 <rect x="25" y="8" width="110" height="24" rx="4" fill="#E51937" />
                 <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF" letter-spacing="2.5px">CLEAR</text>
@@ -3809,46 +3837,6 @@
           </div>
           <!-- Group 2 (Duplicate for Infinite Loop) -->
           <div class="marquee-group" aria-hidden="true">
-            <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="19" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="#E51937" letter-spacing="0.5px">mahindra</text>
-                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#E51937" letter-spacing="3px">TRACTORS</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 80 5 L 84 13 L 90 9 L 86 16 L 93 16 L 87 20 L 80 16 L 73 20 L 67 16 L 74 16 L 70 9 L 76 13 Z" fill="#C59B27" />
-                <text x="80" y="28" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="9.5" fill="currentColor" letter-spacing="2px">PALLADIUM</text>
-                <text x="80" y="35" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1.5px">AHMEDABAD</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="26" cy="20" r="9" fill="none" stroke="#E5A93C" stroke-width="2" />
-                <text x="44" y="21" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="1.5px">SPACE</text>
-                <text x="45" y="30" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7.5" fill="#E5A93C" letter-spacing="2px">ARCADE</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 22 28 L 32 10 L 42 28 Z M 32 14 L 38 24 L 26 24 Z" fill="none" stroke="currentColor" stroke-width="2" />
-                <text x="50" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="currentColor" letter-spacing="3px">SPECTRA</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="25" cy="20" r="10" fill="none" stroke="#4BA82E" stroke-width="2" />
-                <path d="M 22 17 L 28 20 L 22 23 Z" fill="#4BA82E" />
-                <text x="42" y="21" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="1.5px">SKODA</text>
-                <text x="42" y="30" font-family="'Montserrat', sans-serif" font-weight="900" font-size="12" fill="#4BA82E" letter-spacing="2px">STELLAR</text>
-              </svg>
-            </div>
-            <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#008080" letter-spacing="3px">QUTONE</text>
-                <text x="80" y="33" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="2px">CERAMIC INNOVATIONS</text>
-              </svg>
-            </div>
             <div class="brand-logo-card">
               <svg viewBox="0 0 160 40" class="brand-logo-svg">
                 <circle cx="24" cy="20" r="8" fill="none" stroke="#007A87" stroke-width="1.8" stroke-dasharray="3 2" />
@@ -3910,16 +3898,15 @@
 
       <div class="fcta-content">
         <h2 class="fcta-title">
-          <span class="fcta-line-1">READY TO BUILD WORK</span>
-          <span class="fcta-line-2">THAT ENDURES?</span>
+          <span class="fcta-line-1">YOUR NEXT BIG MOVE</span>
+          <span class="fcta-line-2">STARTS HERE.</span>
         </h2>
         <p class="fcta-sub">
-          We partner with select category-defining founders, institutions, and enterprises each quarter. Let's engineer
-          your legacy.
+          Whether you’re building a new brand or taking an existing one further, we’re here to shape what comes next.
         </p>
         <div class="fcta-actions">
-          <a href="contact.html" class="btn-primary">Start a Project →</a>
-          <a href="portfolio.html" class="btn-ghost">Explore Archive</a>
+          <a href="contact.html" class="btn-primary">START A CONVERSATION →</a>
+          <a href="portfolio.html" class="btn-ghost">VIEW OUR WORK →</a>
         </div>
       </div>
     </div>

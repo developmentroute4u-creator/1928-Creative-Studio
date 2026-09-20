@@ -1421,16 +1421,35 @@
       align-items: flex-start;
     }
 
-    .f-desc-col .f-desc-text {
+    .f-desc-col .f-statement-title {
       font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
-      line-height: 1.25;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 1.85vw, 1.9rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
       color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 380px;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-secondary);
+      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
       max-width: 340px;
-      margin-bottom: 24px;
-      transition: color 0.4s var(--sp);
+      margin-bottom: 12px;
+    }
+
+    .f-desc-col .f-location-tag {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim, var(--ink-mid));
+      margin: 0 0 18px 0;
+      text-transform: uppercase;
     }
 
     .f-col-label {

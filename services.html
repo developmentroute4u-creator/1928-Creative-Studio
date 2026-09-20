@@ -1590,15 +1590,35 @@
       align-items: flex-start;
     }
 
-    .f-desc-col .f-desc-text {
+    .f-desc-col .f-statement-title {
       font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
-      line-height: 1.25;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 1.85vw, 1.9rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
       color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 380px;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-secondary);
+      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
       max-width: 340px;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+    }
+
+    .f-desc-col .f-location-tag {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim, var(--ink-mid));
+      margin: 0 0 18px 0;
+      text-transform: uppercase;
     }
 
     .f-col-label {
@@ -2076,7 +2096,7 @@
       <!-- Centerpiece: Clean 2-Line Dynamic Headline (No Tag) -->
       <div class="hero-clean-lockup">
         <h1 class="hcl-headline">
-          <span class="hcl-line-1">WE ENGINEER BESPOKE</span>
+          <span class="hcl-line-1">WE BUILD</span>
           <span class="hcl-dynamic-wrap">
             <span class="hcl-dynamic-word" id="dynamicServiceWord">DIGITAL EXPERIENCES</span>
           </span>
@@ -2085,8 +2105,8 @@
 
       <!-- Revolving Floating Service Icon Discs -->
       <div class="hero-orbit-icons" id="heroOrbitIcons">
-        <!-- 01 Logo Design -->
-        <a href="#service-01" class="orbit-icon-node" data-service="LOGO DESIGN" data-idx="0" aria-label="Logo Design">
+        <!-- 01 Distinctive Logos -->
+        <a href="#service-01" class="orbit-icon-node" data-service="DISTINCTIVE LOGOS" data-idx="0" aria-label="Distinctive Logos">
           <span class="oin-tag">01</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2097,9 +2117,9 @@
           </svg>
         </a>
 
-        <!-- 02 Brand Identity -->
-        <a href="#service-02" class="orbit-icon-node" data-service="BRAND IDENTITY" data-idx="1"
-          aria-label="Brand Identity">
+        <!-- 02 Complete Brand Identities -->
+        <a href="#service-02" class="orbit-icon-node" data-service="COMPLETE BRAND IDENTITIES" data-idx="1"
+          aria-label="Complete Brand Identities">
           <span class="oin-tag">02</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2110,9 +2130,9 @@
           </svg>
         </a>
 
-        <!-- 03 Web Design & Dev -->
-        <a href="#service-03" class="orbit-icon-node" data-service="WEB DESIGN & DEV" data-idx="2"
-          aria-label="Web Design & Dev">
+        <!-- 03 Digital Experiences -->
+        <a href="#service-03" class="orbit-icon-node" data-service="DIGITAL EXPERIENCES" data-idx="2"
+          aria-label="Digital Experiences">
           <span class="oin-tag">03</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2121,9 +2141,9 @@
           </svg>
         </a>
 
-        <!-- 04 Social & Digital -->
-        <a href="#service-04" class="orbit-icon-node" data-service="SOCIAL & DIGITAL" data-idx="3"
-          aria-label="Social & Digital">
+        <!-- 04 Digital Growth -->
+        <a href="#service-04" class="orbit-icon-node" data-service="DIGITAL GROWTH" data-idx="3"
+          aria-label="Digital Growth">
           <span class="oin-tag">04</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2132,9 +2152,9 @@
           </svg>
         </a>
 
-        <!-- 05 Content & Creators -->
-        <a href="#service-05" class="orbit-icon-node" data-service="CONTENT & CREATORS" data-idx="4"
-          aria-label="Content & Creators">
+        <!-- 05 Content & Influence -->
+        <a href="#service-05" class="orbit-icon-node" data-service="CONTENT & INFLUENCE" data-idx="4"
+          aria-label="Content & Influence">
           <span class="oin-tag">05</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2154,9 +2174,8 @@
       <div class="section-container">
         <!-- Static Unmoving Pinned Header -->
         <div class="services-sticky-header">
-          <h2 class="sec-heading">CORE STUDIO <span>PRACTICES</span></h2>
-          <p class="sec-desc">Architectural rigor applied across branding, kinetic digital engineering, high-conversion
-            growth, and cinematic media.</p>
+          <h2 class="sec-heading">OUR <span>SERVICES</span></h2>
+          <p class="sec-desc">End-to-end creative and digital capabilities designed to build, launch, and grow meaningful brands.</p>
         </div>
 
         <div class="services-deck-stage" id="servicesStackDeck">
@@ -2165,21 +2184,21 @@
           <article class="svc-card" id="service-01">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">01 · VISUAL IDENTITY</span>
+                <span class="svc-num-label">01 · LOGO DESIGN</span>
               </div>
               <h3 class="svc-title-main">01. Logo <span>Design</span></h3>
               <p class="svc-card-desc">
-                Precision-crafted logomarks, typography systems, and iconic symbol design engineered to give your brand
-                an indelible signature across all media.
+                Your logo is often the first thing people see — and the one thing they remember. We design distinctive, versatile, and enduring logos that give your brand an unmistakable identity from day one.
               </p>
 
               <div class="svc-deliv-wrap">
                 <span class="svc-deliv-title">Deliverables &amp; Scope</span>
                 <div class="svc-chips-row">
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Custom Wordmarks</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Monogram &amp; Logomark</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Vector Master Files</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Usage &amp; Color System</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Custom Wordmarks &amp; Logotypes</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Brand Marks &amp; Symbols</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Primary &amp; Secondary Logo Variations</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Complete Vector &amp; Digital Asset Suite</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Basic Logo Usage &amp; Color Guidelines</span>
                 </div>
               </div>
 
@@ -2201,21 +2220,21 @@
           <article class="svc-card" id="service-02">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">02 · BRAND ARCHITECTURE</span>
+                <span class="svc-num-label">02 · BRAND IDENTITY</span>
               </div>
               <h3 class="svc-title-main">02. Brand Identity <span>Development</span></h3>
               <p class="svc-card-desc">
-                Complete brand universe construction — defining visual voice, color palettes, packaging specifications,
-                and comprehensive brand guidelines that establish market dominance.
+                A great brand is more than just a logo — it is an entire visual and verbal world. We build comprehensive brand identity systems that give your business clarity, consistency, and a powerful market presence across every touchpoint.
               </p>
 
               <div class="svc-deliv-wrap">
                 <span class="svc-deliv-title">Deliverables &amp; Scope</span>
                 <div class="svc-chips-row">
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Brand Positioning &amp; Strategy</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Complete Brand Guidelines</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Packaging &amp; Stationary</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Art Direction</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Brand Strategy &amp; Core Positioning</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Color Palette &amp; Typography System</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Visual Language &amp; Design Elements</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Packaging, Print &amp; Collateral Design</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Comprehensive Brand Guidelines (Brand Bible)</span>
                 </div>
               </div>
 
@@ -2237,21 +2256,21 @@
           <article class="svc-card" id="service-03">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">03 · DIGITAL ENGINEERING</span>
+                <span class="svc-num-label">03 · WEB DESIGN &amp; DEV</span>
               </div>
               <h3 class="svc-title-main">03. Website Design &amp; <span>Development</span></h3>
               <p class="svc-card-desc">
-                High-conversion digital experiences combining editorial beauty with world-class performance, bespoke
-                motion graphics, headless engineering, and fluid responsive design.
+                Your website is your most important digital storefront. We design and build high-performance, beautifully crafted websites that tell your story, engage your visitors, and convert interest into action.
               </p>
 
               <div class="svc-deliv-wrap">
                 <span class="svc-deliv-title">Deliverables &amp; Scope</span>
                 <div class="svc-chips-row">
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> UI/UX Architecture</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Web Development</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Interaction Design</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Performance Optimization</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> UI/UX Design &amp; Wireframing</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Custom Website Development (Responsive &amp; Fast)</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> E-Commerce &amp; Shopify / WooCommerce Builds</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Interaction Design &amp; Motion Details</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> SEO Foundation &amp; Performance Optimization</span>
                 </div>
               </div>
 
@@ -2275,21 +2294,21 @@
           <article class="svc-card" id="service-04">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">04 · GROWTH &amp; PERFORMANCE</span>
+                <span class="svc-num-label">04 · DIGITAL MARKETING</span>
               </div>
               <h3 class="svc-title-main">04. Social Media &amp; <span>Digital Marketing</span></h3>
               <p class="svc-card-desc">
-                Full-funnel digital marketing engine and high-impact social media management to capture market share,
-                deploy targeted Meta ad campaigns, and convert audiences into loyal brand advocates.
+                Building a great brand is only half the battle — people need to know it exists. We create and manage strategic digital marketing and social media campaigns that build community, drive engagement, and deliver measurable business growth.
               </p>
 
               <div class="svc-deliv-wrap">
                 <span class="svc-deliv-title">Deliverables &amp; Scope</span>
                 <div class="svc-chips-row">
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Social Media Management</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Digital Marketing Services</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Meta Ads</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Performance Marketing</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Social Media Strategy &amp; Content Calendars</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Meta Ads (Facebook &amp; Instagram Ads Management)</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Performance Marketing &amp; Paid Growth Campaigns</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Audience Targeting, Retargeting &amp; Optimization</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Monthly Analytics, Reporting &amp; Insights</span>
                 </div>
               </div>
 
@@ -2311,22 +2330,21 @@
           <article class="svc-card" id="service-05">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">05 · CINEMATIC PRODUCTION</span>
+                <span class="svc-num-label">05 · CONTENT &amp; CREATORS</span>
               </div>
               <h3 class="svc-title-main">05. Content Creation &amp; <span>Influencer Marketing</span></h3>
               <p class="svc-card-desc">
-                End-to-end multimedia creation, museum-grade photography, cinematic videography, viral reels, and
-                strategic creator collaborations that ignite cultural resonance and amplify brand prestige.
+                In a world dominated by visual media, compelling content is how brands stay relevant. We produce high-quality photography, video, reels, and influencer collaborations that capture attention, build trust, and tell your brand story with style.
               </p>
 
               <div class="svc-deliv-wrap">
                 <span class="svc-deliv-title">Deliverables &amp; Scope</span>
                 <div class="svc-chips-row">
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Photography</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Videography</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Reels</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Influencer Campaigns</span>
-                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> UGC</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Brand Photography &amp; Product Shoots</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> High-Quality Video Production &amp; Editing</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Instagram Reels &amp; Short-Form Video Content</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> Influencer Campaign Strategy &amp; Management</span>
+                  <span class="svc-chip-item"><span class="svc-chip-dot"></span> User-Generated Content (UGC) Strategy</span>
                 </div>
               </div>
 
@@ -2359,7 +2377,7 @@
     <div class="section-container">
       <div class="faq-wrap">
         <h2 class="sec-heading">FREQUENTLY ASKED <span>QUESTIONS</span></h2>
-        <p class="sec-desc">Direct insights into our engagement structures, timelines, and deliverables.</p>
+        <p class="sec-desc">Everything you need to know about working with 1928 Creative Studio.</p>
 
         <div class="faq-list">
           <!-- FAQ 1 -->
@@ -2367,7 +2385,7 @@
             <button class="faq-trigger" aria-expanded="true">
               <div class="faq-trigger-left">
                 <span class="faq-num">01</span>
-                <span>Can we engage for a single service or only bundled packages?</span>
+                <span>Can we work with 1928 for a single service, or do we have to hire for everything?</span>
               </div>
               <div class="faq-icon-wrap" aria-hidden="true">
                 <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
@@ -2379,9 +2397,7 @@
             </button>
             <div class="faq-content">
               <p>
-                You can engage 1928 Creative Studio for standalone individual services (such as Logo Design, Website
-                Design &amp; Development, or Meta Ads) as well as integrated multi-service partnerships. Every project
-                receives direct partner-level attention.
+                You can absolutely engage us for a single service — whether that's a logo design, a website build, or Meta ads management. We also offer integrated packages for brands looking for complete, end-to-end solutions.
               </p>
             </div>
           </div>
@@ -2391,7 +2407,7 @@
             <button class="faq-trigger" aria-expanded="false">
               <div class="faq-trigger-left">
                 <span class="faq-num">02</span>
-                <span>What are the typical turnaround timelines across each service?</span>
+                <span>What is the typical timeline for a branding or website project?</span>
               </div>
               <div class="faq-icon-wrap" aria-hidden="true">
                 <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
@@ -2403,11 +2419,7 @@
             </button>
             <div class="faq-content">
               <p>
-                <strong>Logo Design:</strong> 3–4 weeks.<br />
-                <strong>Brand Identity Development:</strong> 6–10 weeks.<br />
-                <strong>Website Design &amp; Development:</strong> 8–12 weeks.<br />
-                <strong>Social Media &amp; Performance:</strong> Monthly rolling retainers.<br />
-                <strong>Content Creation &amp; Campaigns:</strong> 2–4 weeks per production cycle.
+                Timelines depend on the scope: Logo design typically takes 2–3 weeks; Complete brand identity development takes 4–6 weeks; Website design and development takes 4–8 weeks depending on complexity; Social media and performance marketing run on ongoing monthly retainers.
               </p>
             </div>
           </div>
@@ -2417,7 +2429,7 @@
             <button class="faq-trigger" aria-expanded="false">
               <div class="faq-trigger-left">
                 <span class="faq-num">03</span>
-                <span>Who owns the intellectual property and master project deliverables?</span>
+                <span>How does the collaboration process work?</span>
               </div>
               <div class="faq-icon-wrap" aria-hidden="true">
                 <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
@@ -2429,9 +2441,7 @@
             </button>
             <div class="faq-content">
               <p>
-                Upon completion and final sign-off, <strong>100% of master vector files, raw video footage, web source
-                  code repositories, and brand assets</strong> are transferred directly to your company with full
-                commercial rights.
+                We follow a structured 5-phase process: Discover, Define, Create, Connect, and Grow. Throughout every project, you'll have direct communication with the founders and our core creative team, with regular check-ins, presentations, and feedback rounds.
               </p>
             </div>
           </div>
@@ -2441,7 +2451,7 @@
             <button class="faq-trigger" aria-expanded="false">
               <div class="faq-trigger-left">
                 <span class="faq-num">04</span>
-                <span>How do you approach Meta Ads and Performance Marketing?</span>
+                <span>Do you work with startups or only established businesses?</span>
               </div>
               <div class="faq-icon-wrap" aria-hidden="true">
                 <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
@@ -2453,8 +2463,73 @@
             </button>
             <div class="faq-content">
               <p>
-                We pair high-conversion creative production with rigorous audience segmentation and daily bidding
-                telemetry. We focus on ROAS and customer acquisition efficiency rather than vanity metrics.
+                We work with both. From ambitious founders launching their very first venture to established brands looking to refresh or scale — we tailor our approach to where you are and where you want to go.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <div class="faq-trigger-left">
+                <span class="faq-num">05</span>
+                <span>Who owns the final design files and deliverables?</span>
+              </div>
+              <div class="faq-icon-wrap" aria-hidden="true">
+                <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round">
+                  <line x1="8" y1="3" x2="8" y2="13"></line>
+                  <line x1="3" y1="8" x2="13" y2="8"></line>
+                </svg>
+              </div>
+            </button>
+            <div class="faq-content">
+              <p>
+                You do. Once final payment is completed, 100% of the rights and all final master files (vector logos, website source files, brand guidelines, content assets) are transferred to you.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 6 -->
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <div class="faq-trigger-left">
+                <span class="faq-num">06</span>
+                <span>How do you measure success for digital marketing and ad campaigns?</span>
+              </div>
+              <div class="faq-icon-wrap" aria-hidden="true">
+                <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round">
+                  <line x1="8" y1="3" x2="8" y2="13"></line>
+                  <line x1="3" y1="8" x2="13" y2="8"></line>
+                </svg>
+              </div>
+            </button>
+            <div class="faq-content">
+              <p>
+                We focus on real business metrics — not vanity numbers. For performance marketing, we track ROAS (Return on Ad Spend), cost per lead/acquisition, conversion rates, and revenue impact. We provide clear, transparent monthly reports with actionable insights.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ 7 -->
+          <div class="faq-item">
+            <button class="faq-trigger" aria-expanded="false">
+              <div class="faq-trigger-left">
+                <span class="faq-num">07</span>
+                <span>How do we get started with 1928 Creative Studio?</span>
+              </div>
+              <div class="faq-icon-wrap" aria-hidden="true">
+                <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round">
+                  <line x1="8" y1="3" x2="8" y2="13"></line>
+                  <line x1="3" y1="8" x2="13" y2="8"></line>
+                </svg>
+              </div>
+            </button>
+            <div class="faq-content">
+              <p>
+                The easiest way is to reach out through our Contact page or send us a WhatsApp message. We'll set up a discovery call to understand your requirements, explain how we can help, and share a tailored proposal.
               </p>
             </div>
           </div>
@@ -2480,16 +2555,15 @@
 
       <div class="fcta-content">
         <h2 class="fcta-title">
-          <span class="fcta-line-1">READY TO BUILD WORK</span>
-          <span class="fcta-line-2">THAT ENDURES?</span>
+          <span class="fcta-line-1">YOUR NEXT BIG MOVE</span>
+          <span class="fcta-line-2">STARTS HERE.</span>
         </h2>
         <p class="fcta-sub">
-          We partner with select category-defining founders, institutions, and enterprises each quarter. Let's engineer
-          your legacy.
+          Whether you're launching a new venture or elevating an existing one, let's build something exceptional together.
         </p>
         <div class="fcta-actions">
-          <a href="contact.html" class="btn-primary">Start a Project →</a>
-          <a href="portfolio.html" class="btn-ghost">Explore Archive</a>
+          <a href="contact.html" class="btn-primary">START A CONVERSATION →</a>
+          <a href="portfolio.html" class="btn-ghost">VIEW OUR WORK →</a>
         </div>
       </div>
     </div>

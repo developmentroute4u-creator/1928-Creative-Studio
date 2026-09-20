@@ -17,9 +17,9 @@
     <!-- Top Grid: Statement + Socials, Explore Links, Legal & Policy, CTA -->
     <div class="f-header-grid">
       <div class="f-desc-col">
-        <h3 class="f-statement-title" style="font-family:var(--font-primary);font-size:1.15rem;font-weight:700;margin-bottom:8px;color:var(--ink);letter-spacing:-0.01em;">We build brands that create value.</h3>
+        <h3 class="f-statement-title">We build brands that create value.</h3>
         <p class="f-desc-text">1928 Creative Studio is an independent creative studio helping ambitious businesses shape distinctive brands, digital experiences, and meaningful connections.</p>
-        <div class="f-location-tag" style="font-family:var(--font-mono);font-size:0.75rem;letter-spacing:1px;color:var(--ink-mid);margin:12px 0 16px;text-transform:uppercase;">India · Global</div>
+        <div class="f-location-tag">India · Global</div>
         <div class="f-social-circles">
           <a href="https://instagram.com" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

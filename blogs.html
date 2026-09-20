@@ -2656,15 +2656,35 @@
       align-items: flex-start;
     }
 
-    .f-desc-col .f-desc-text {
+    .f-desc-col .f-statement-title {
       font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: clamp(1.2rem, 1.55vw, 1.6rem);
-      line-height: 1.25;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      font-size: clamp(1.4rem, 1.85vw, 1.9rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
       color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 380px;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-secondary);
+      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
       max-width: 340px;
-      margin-bottom: 24px;
+      margin-bottom: 12px;
+    }
+
+    .f-desc-col .f-location-tag {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim, var(--ink-mid));
+      margin: 0 0 18px 0;
+      text-transform: uppercase;
     }
 
     .f-col-label {
@@ -3436,14 +3456,14 @@
 
       <!-- Monumental Architectural Display Typography (Editorial Monograph Title) -->
       <h1 class="hm-monument-title">
-        <span class="hm-title-word">ARCHITECTURE OF THOUGHT</span>
+        <span class="hm-title-word">THINK BEYOND THE BRAND.</span>
       </h1>
 
       <!-- Critical Dispatch: Left Fixed Label + Right Rotating Blog Topics -->
       <div class="critical-dispatch-bar" id="criticalDispatchBar">
         <div class="cdb-left">
           <span class="cdb-indicator"></span>
-          <span class="cdb-label">CRITICAL DISPATCH</span>
+          <span class="cdb-label">STUDIO PERSPECTIVES</span>
           <span class="cdb-arrow">→</span>
         </div>
         <div class="cdb-right">
@@ -3492,10 +3512,9 @@
         </div>
       </div>
 
-      <!-- Exact Editorial Description (Preserved as Requested) -->
+      <!-- Exact Editorial Description -->
       <p class="hm-manifesto-lead">
-        A provocative codex exploring mathematical brand geometry, spatial physical resonance, and luxury dominance by
-        1928 Creative Studio.
+        Insights, essays, and critical thinking on brand strategy, design craft, digital culture, and the business of building brands that last.
       </p>
 
     </div>
@@ -3503,18 +3522,16 @@
 
 
   <!-- ═══════════════════════════════════════════════════════════
-       2. FEATURED MASTER MONOGRAPH — LATEST BLOG (Full Screen Carousel)
+       2. FEATURED MASTER MONOGRAPH — LATEST BLOGS (Full Screen Carousel)
        ═══════════════════════════════════════════════════════════ -->
   <section id="featured-monograph">
-    <!-- Section Top Header: Left-aligned with Counter -->
     <!-- Section Top Header: Left Title, Single Line Description & Right Corner Counter -->
     <div class="featured-section-header">
       <div class="fsh-top-row">
-        <h3 class="fsh-sec-title">The Latest Blog</h3>
+        <h3 class="fsh-sec-title">LATEST BLOGS</h3>
       </div>
       <div class="fsh-meta-bar">
-        <p class="fsh-desc-left">Flagship editorial monograph and architectural research dispatch authored by 1928
-          Creative Studio.</p>
+        <p class="fsh-desc-left">Explore our most recent thinking on brand building, digital experiences, and creative strategy.</p>
       </div>
     </div>
 
@@ -3719,15 +3736,14 @@
     <div class="pga-sticky-wrap">
       <div class="pga-header-bar">
         <div>
-          <h3 class="pga-sec-title">The Editorial Codex</h3>
-          <p class="pga-sec-desc">A curated codex of recently published studio dispatches, architectural research, and
-            design monographs.</p>
+          <h3 class="pga-sec-title">More Editorial</h3>
+          <p class="pga-sec-desc">A curated collection of ideas, observations and strategies for businesses building stronger brands and creating meaningful growth.</p>
         </div>
         <div class="pga-header-meta">
           <span class="pga-counter" id="resultCounter" style="display: none;">Showing 7 of 7 Perspectives</span>
           <a href="blog-detail.html" class="pga-drift-hint" id="exploreBlogBtn" title="Open Complete Blog Repository">
             <span class="pdh-dot"></span>
-            <span class="pdh-text">Explore All Blogs</span>
+            <span class="pdh-text">EXPLORE ALL BLOGS</span>
             <svg class="pdh-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="4" y1="12" x2="19" y2="12"></line>
               <polyline points="13 6 19 12 13 18"></polyline>
@@ -4007,7 +4023,7 @@
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
-       7. EDITORIAL NEWSLETTER (The Sunday Memorandum // Pure Editorial Monolith)
+       7. EDITORIAL NEWSLETTER (Stay In The Loop // 1928 Perspectives)
        ═══════════════════════════════════════════════════════════ -->
   <section id="newsletter-sec">
     <div class="newsletter-editorial-monolith">
@@ -4015,18 +4031,17 @@
       <!-- Top Eyebrow -->
       <div class="nem-eyebrow">
         <span class="nem-dot">●</span>
-        <span>THE SUNDAY MEMORANDUM // ISSUE № 0928</span>
+        <span>NEWSLETTER // 1928 PERSPECTIVES</span>
       </div>
 
       <!-- Main Headline -->
       <h2 class="nem-title">
-        Ideas Shaping Modern Design.
+        KEEP YOUR THINKING MOVING.
       </h2>
 
       <!-- Refined Prose -->
       <p class="nem-desc">
-        Every Sunday, we dispatch a single uncompromised essay on brand physics, spatial luxury, and cultural theorems.
-        No noise, zero marketing. Read by 8,400+ founders and design directors globally.
+        Join our newsletter for sharp insights, creative perspectives, and thoughtful essays on branding, design, and digital growth — delivered straight to your inbox.
       </p>
 
       <!-- Minimalist Luxury Input Capsule -->
@@ -4043,7 +4058,7 @@
           </button>
         </div>
         <div class="nem-cadence-note">
-          <span>Weekly on Sunday at 08:00 CET</span>
+          <span>Fortnightly Delivery</span>
           <span class="nem-sep">·</span>
           <span>Private &amp; Instant 1-Click Unsubscribe</span>
         </div>
@@ -4052,22 +4067,22 @@
       <!-- Verified Success Toast -->
       <div class="nem-toast" id="nlToast">
         <span class="nem-toast-icon">✓</span>
-        <span>Subscription confirmed. Welcome to the Sunday Memorandum.</span>
+        <span>Subscription confirmed. Welcome to 1928 Perspectives.</span>
       </div>
 
       <!-- Bottom Editorial Triad Strip -->
       <div class="nem-triad-strip">
         <div class="nem-triad-col">
-          <span class="ntc-label">01. LATEST DISPATCH</span>
-          <span class="ntc-val">The Architecture of Silence</span>
+          <span class="ntc-label">01. TOPICS</span>
+          <span class="ntc-val">Brand Strategy, Design &amp; Growth</span>
         </div>
         <div class="nem-triad-col">
-          <span class="ntc-label">02. CADENCE</span>
-          <span class="ntc-val">Weekly · Sunday 08:00 CET</span>
+          <span class="ntc-label">02. FORMAT</span>
+          <span class="ntc-val">Short &amp; Insightful · No Noise</span>
         </div>
         <div class="nem-triad-col">
-          <span class="ntc-label">03. READERSHIP</span>
-          <span class="ntc-val">8,400+ Founders &amp; Directors</span>
+          <span class="ntc-label">03. FREQUENCY</span>
+          <span class="ntc-val">Fortnightly · 1-Click Unsubscribe</span>
         </div>
       </div>
 
