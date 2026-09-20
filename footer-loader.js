@@ -17,14 +17,10 @@
     <!-- Top Grid: Statement + Socials, Explore Links, Legal & Policy, CTA -->
     <div class="f-header-grid">
       <div class="f-desc-col">
-        <p class="f-desc-text">1928 Creative Studio is an independent branding &amp; design consultancy based in
-          Ahmedabad.</p>
+        <h3 class="f-statement-title" style="font-family:var(--font-primary);font-size:1.15rem;font-weight:700;margin-bottom:8px;color:var(--ink);letter-spacing:-0.01em;">We build brands that create value.</h3>
+        <p class="f-desc-text">1928 Creative Studio is an independent creative studio helping ambitious businesses shape distinctive brands, digital experiences, and meaningful connections.</p>
+        <div class="f-location-tag" style="font-family:var(--font-mono);font-size:0.75rem;letter-spacing:1px;color:var(--ink-mid);margin:12px 0 16px;text-transform:uppercase;">India · Global</div>
         <div class="f-social-circles">
-          <a href="https://twitter.com" target="_blank" rel="noopener" class="f-circle-btn" aria-label="X (Twitter)">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </a>
           <a href="https://instagram.com" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Instagram">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -40,6 +36,11 @@
           <a href="https://behance.net" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Behance">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
               <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.084 0-5.625-3.003-5.625-6 0-3.328 1.979-6 5.625-6 3.747 0 5.154 2.662 4.943 5.485h-7.697c.071 1.626.966 3.515 3.013 3.515 1.554 0 2.457-.866 2.842-1.5h2zm-2.884-5c-.073-1.04-.694-2.515-2.217-2.515-1.572 0-2.22 1.378-2.348 2.515h4.565zm-14.842 8h-6v-16h6.732c3.489 0 5.268 1.705 5.268 4.398 0 1.616-.867 2.889-2.027 3.559 1.547.625 2.527 2.057 2.527 3.864 0 2.825-2.037 4.179-5.5 4.179zm-3.5-13.5v4.5h3.048c1.556 0 2.452-.697 2.452-2.25 0-1.553-.896-2.25-2.452-2.25h-3.048zm0 7v4.5h3.297c1.785 0 2.703-.787 2.703-2.25 0-1.463-.918-2.25-2.703-2.25h-3.297z"/>
+            </svg>
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="f-circle-btn" aria-label="X (Twitter)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </a>
         </div>
@@ -70,24 +71,24 @@
       <div class="f-cta-column">
         <a href="contact.html" class="f-action-pill cta-primary">
           <div class="f-action-txt">
-            <span class="f-action-heading">Call 1928 Creative Studio</span>
-            <span class="f-action-sub">Let's work together</span>
+            <span class="f-action-heading">Have a brand to build?</span>
+            <span class="f-action-sub">START A PROJECT →</span>
           </div>
           <div class="f-action-arrow">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </div>
         </a>
 
-        <a href="services.html" class="f-action-pill cta-secondary">
+        <a href="contact.html" class="f-action-pill cta-secondary">
           <div class="f-action-txt">
-            <span class="f-action-heading">Studio Work &amp; Inquiry</span>
-            <span class="f-action-sub">Creative capabilities</span>
+            <span class="f-action-heading">Let’s talk about your project</span>
+            <span class="f-action-sub">Tell us what you're building →</span>
           </div>
           <div class="f-action-arrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </div>
         </a>

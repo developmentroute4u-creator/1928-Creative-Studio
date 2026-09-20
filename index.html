@@ -1198,8 +1198,8 @@
     .story-words-block {
       font-family: var(--font-primary);
       font-weight: 600;
-      font-size: clamp(24px, 2.8vw, 38px);
-      line-height: 1.68;
+      font-size: clamp(21px, 2.35vw, 32px);
+      line-height: 1.56;
       letter-spacing: -.015em;
       color: var(--ink);
       text-align: justify;
@@ -1978,7 +1978,7 @@
 
     .svc-why-point {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       gap: 14px;
     }
 
@@ -1992,16 +1992,30 @@
       border-radius: 6px;
       line-height: 1.2;
       flex-shrink: 0;
+      margin-top: 2px;
     }
 
     .svc-why-point strong {
       display: block;
       font-family: var(--font-primary);
-      font-size: 0.94rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: var(--ink);
-      letter-spacing: -0.015em;
-      line-height: 1.25;
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .swp-desc {
+      font-family: var(--font-secondary);
+      font-size: 0.80rem;
+      line-height: 1.45;
+      color: var(--ink-mid);
+      margin: 4px 0 0 0;
+    }
+
+    [data-theme="dark"] .swp-desc {
+      color: rgba(255, 255, 255, 0.65);
     }
 
     .svc-why-footer {
@@ -2253,10 +2267,10 @@
     }
 
     .svc-deliverables {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 7px 14px;
-      padding: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      padding: 8px 0;
       border-top: 1px solid var(--rule);
       border-bottom: 1px solid var(--rule);
       margin: 4px 0;
@@ -3356,7 +3370,7 @@
           <span class="hero-part-2" id="hPart2">Creative Studio.</span>
         </h1>
         <div class="hero-sub" id="heroSub">
-          Ahmedabad's premier brand engineering studio.<br />Crafting iconic visual identities for market leaders, <em>infinitely.</em>
+          We build brands designed to grow.<br />And businesses ready to create greater value.
         </div>
       </div>
 
@@ -3374,18 +3388,23 @@
         <div class="story-block" id="storyBlock">
           <div class="story-tag" id="storyTag">Who We Are</div>
           <div class="story-words-block" id="storyWordsBlock">
-            <span class="sw">Design</span> <span class="sw">on</span> <span class="sw">the</span> <span
-              class="sw">web</span> <span class="sw">isn't</span> <span class="sw">static</span> <span
-              class="sw">anymore.</span> <span class="sw">Today's</span> <span class="sw">brands</span> <span
-              class="sw">need</span> <span class="sw highlight">energy,</span> <span
-              class="sw highlight">personality</span> <span class="sw">and</span> <span
-              class="sw highlight">meaning.</span> <span class="sw">We</span> <span class="sw">bring</span> <span
-              class="sw">together</span> <span class="sw">strategy,</span> <span class="sw">design</span> <span
-              class="sw">and</span> <span class="sw">storytelling</span> <span class="sw">to</span> <span
-              class="sw">build</span> <span class="sw">digital</span> <span class="sw">experiences</span> <span
-              class="sw">that</span> <span class="sw highlight">grab</span> <span class="sw highlight">attention,</span>
-            <span class="sw">move</span> <span class="sw">fast</span> <span class="sw">and</span> <span
-              class="sw">make</span> <span class="sw highlight">people</span> <span class="sw highlight">feel.</span>
+            <span class="sw">Great</span> <span class="sw">brands</span> <span class="sw">create</span> <span
+              class="sw">recognition.</span> <span class="sw">Great</span> <span class="sw">businesses</span> <span
+              class="sw">create</span> <span class="sw">value.</span> <span class="sw">We</span> <span
+              class="sw">bring</span> <span class="sw">the</span> <span class="sw">two</span> <span
+              class="sw">together.</span> <span class="sw">1928</span> <span class="sw">Creative</span> <span
+              class="sw">Studio</span> <span class="sw">is</span> <span class="sw">where</span> <span
+              class="sw highlight">strategy,</span> <span class="sw highlight">creativity</span> <span
+              class="sw">and</span> <span class="sw highlight">digital</span> <span class="sw highlight">thinking</span>
+            <span class="sw">come</span> <span class="sw">together</span> <span class="sw">to</span> <span
+              class="sw">shape</span> <span class="sw">brands</span> <span class="sw">with</span> <span
+              class="sw">purpose.</span> <span class="sw">We</span> <span class="sw">create</span> <span
+              class="sw">identities,</span> <span class="sw">experiences</span> <span class="sw">and</span> <span
+              class="sw">content</span> <span class="sw">that</span> <span class="sw">give</span> <span
+              class="sw">ambitious</span> <span class="sw">businesses</span> <span class="sw">a</span> <span
+              class="sw">stronger</span> <span class="sw">presence,</span> <span class="sw">deeper</span> <span
+              class="sw">connection</span> <span class="sw">and</span> <span class="sw highlight">room</span> <span
+              class="sw highlight">to</span> <span class="sw highlight">grow.</span>
           </div>
         </div>
       </div>
@@ -3407,9 +3426,8 @@
 
     <!-- STICKY BACKGROUND CENTER HEADLINE (Pinned in Viewport Center) -->
     <div class="port-sticky-center" id="portStickyCenter">
-      <div class="psc-badge">PORTFOLIO // 2024 — 2026</div>
       <h2 class="psc-title">SELECTED<br /><span class="psc-accent">WORK.</span></h2>
-      <p class="psc-sub">Transforming ambitious brands into market icons.</p>
+      <p class="psc-sub">A collection of brands, identities and digital experiences built to create impact.</p>
     </div>
 
     <!-- FOREGROUND VERTICAL STAGGERED PARALLAX CARDS (Gliding Over Sticky Center Text with Dynamic Offsets) -->
@@ -3533,26 +3551,19 @@
         <div class="svc-hero-capsule" id="svcHeroCapsule">
           <div class="svc-capsule-folder-placeholder"></div>
           <div class="svc-hero-right-content" id="svcHeroRight">
-            <div class="svc-s1-tag">Studio Capabilities Index</div>
+            <div class="svc-s1-tag">WHAT WE CREATE // 1928 STUDIO</div>
 
             <h2 class="svc-s1-headline">
-              <span>Shaping Culture.</span><br />
-              <span style="color: rgba(255, 255, 255, 0.65);">Building Prestige.</span>
+              <span>Built around ideas.</span><br />
+              <span style="color: rgba(255, 255, 255, 0.65);">Designed for growth.</span>
             </h2>
 
             <p class="svc-s1-desc">
-              <span>Five multidisciplinary practices delivering bespoke brand identities,</span><br />
-              <span>high-conversion digital platforms, and cultural campaigns.</span>
+              <span>From the first idea to the final experience, we bring strategy and creativity together to build brands that connect with people, stand apart in the market, and create lasting business value.</span>
             </p>
 
             <div class="svc-s1-pill">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
-                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-              </svg>
-              <span>1928 Creative Studio</span>
-              <span style="opacity:0.4;">|</span>
-              <span style="color:#FFFFFF; font-weight:700;">05 Studio Services</span>
+              <span>Branding · Digital · Content · Growth</span>
             </div>
           </div>
         </div>
@@ -3566,42 +3577,42 @@
               <div class="svc-sheet svc-sheet-default" id="svcSheetDefault">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Capabilities Index</div>
-                  <div class="svc-sheet-sub">05 Disciplines · Full Spectrum</div>
+                  <div class="svc-sheet-sub">06 CORE DISCIPLINES - ONE CREATIVE PARTNER</div>
                 </div>
               </div>
               <!-- Service Card 1 -->
               <div class="svc-sheet svc-sheet-s1" id="svcSheet0">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Logo Design</div>
-                  <div class="svc-sheet-sub">Visual Foundation &amp; Typography</div>
+                  <div class="svc-sheet-sub">VISUAL IDENTITY · FIRST IMPRESSION</div>
                 </div>
               </div>
               <!-- Service Card 2 -->
               <div class="svc-sheet svc-sheet-s2" id="svcSheet1">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Brand Identity</div>
-                  <div class="svc-sheet-sub">Strategy &amp; Visual Architecture</div>
+                  <div class="svc-sheet-sub">STRATEGY · GUIDELINE · SYSTEM</div>
                 </div>
               </div>
               <!-- Service Card 3 -->
               <div class="svc-sheet svc-sheet-s3" id="svcSheet2">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Website Design</div>
-                  <div class="svc-sheet-sub">Digital Platforms &amp; UI/UX</div>
+                  <div class="svc-sheet-sub">DIGITAL · EXPERIENCE · MOTION</div>
                 </div>
               </div>
               <!-- Service Card 4 -->
               <div class="svc-sheet svc-sheet-s4" id="svcSheet3">
                 <div class="svc-sheet-header-block">
-                  <div class="svc-sheet-title">Digital Marketing</div>
-                  <div class="svc-sheet-sub">Performance &amp; Social Media</div>
+                  <div class="svc-sheet-title">Social &amp; Digital</div>
+                  <div class="svc-sheet-sub">VISIBILITY · CONNECTION · GROWTH</div>
                 </div>
               </div>
               <!-- Service Card 5 -->
               <div class="svc-sheet svc-sheet-s5" id="svcSheet4">
                 <div class="svc-sheet-header-block">
-                  <div class="svc-sheet-title">Content Creation</div>
-                  <div class="svc-sheet-sub">Media Production &amp; UGC</div>
+                  <div class="svc-sheet-title">Content &amp; Influence</div>
+                  <div class="svc-sheet-sub">STORY · CREATORS · CONNECTION</div>
                 </div>
               </div>
             </div>
@@ -3620,32 +3631,40 @@
           <div class="svc-why-card">
             <div class="svc-why-badge">
               <span class="svc-why-dot"></span>
-              <span>1928 Studio · Distinction &amp; Craft</span>
+              <span>WHY 1928 // OUR APPROACH</span>
             </div>
             <h3 class="svc-why-title">
               Why choose <br />
-              <em>1928 Creative Studio?</em>
+              <em>1928 Creative Studio</em>
             </h3>
             <p class="svc-why-desc">
-              We bridge high-precision strategic architecture with obsessive visual craft. Category-defining brands
-              demand bespoke systems built to command prestige and enduring market authority.
+              We believe great creative should do more than look good. It should give your business clarity, build recognition, strengthen connection, and create opportunities for growth.
             </p>
             <div class="svc-why-points">
               <div class="svc-why-point">
                 <span class="swp-num">01</span>
-                <strong>End-to-End Brand Architecture</strong>
+                <div>
+                  <strong>STRATEGIC THINKING</strong>
+                  <p class="swp-desc">Every creative decision starts with understanding your business, audience and ambition.</p>
+                </div>
               </div>
               <div class="svc-why-point">
                 <span class="swp-num">02</span>
-                <strong>Bespoke Craft &amp; Zero Templates</strong>
+                <div>
+                  <strong>DISTINCTIVE CRAFT</strong>
+                  <p class="swp-desc">We create identities and experiences with character, clarity and a point of view.</p>
+                </div>
               </div>
               <div class="svc-why-point">
                 <span class="swp-num">03</span>
-                <strong>High-Impact Market Velocity</strong>
+                <div>
+                  <strong>BUILT FOR GROWTH</strong>
+                  <p class="swp-desc">From brand identity to digital presence and content, every touchpoint is designed to move your business forward.</p>
+                </div>
               </div>
             </div>
             <div class="svc-why-footer">
-              <a href="services.html" class="swp-foot-arrow">Explore Capabilities →</a>
+              <a href="services.html" class="swp-foot-arrow">Explore capabilities →</a>
             </div>
           </div>
         </div>
@@ -3662,16 +3681,16 @@
             </div>
             <div class="svc-card-num-watermark">01</div>
             <div class="svc-card-header">
-              <span class="svc-badge">Visual Foundation · Mark &amp; Typography</span>
+              <span class="svc-badge">VISUAL IDENTITY · FIRST IMPRESSION</span>
             </div>
             <h3>01. Logo Design</h3>
-            <p>Precision-crafted logomarks, typography systems, and iconic symbol design engineered to give your brand
-              an indelible signature across all media.</p>
+            <p><strong>A distinctive mark that gives your business a memorable identity.</strong> We create thoughtful logos that capture your brand’s character and give it a strong visual presence across every touchpoint.</p>
             <div class="svc-deliverables">
-              <span class="svc-deliv-pill">Custom Wordmarks</span>
-              <span class="svc-deliv-pill">Monogram &amp; Logomark</span>
-              <span class="svc-deliv-pill">Vector Master Files</span>
-              <span class="svc-deliv-pill">Usage &amp; Color System</span>
+              <span class="svc-deliv-pill">Custom Logos</span>
+              <span class="svc-deliv-pill">Wordmarks</span>
+              <span class="svc-deliv-pill">Monograms</span>
+              <span class="svc-deliv-pill">Symbols</span>
+              <span class="svc-deliv-pill">Typography</span>
             </div>
             <div class="svc-card-footer">
               <a href="service-detail.html" class="svc-action-link">
@@ -3693,16 +3712,16 @@
             </div>
             <div class="svc-card-num-watermark">02</div>
             <div class="svc-card-header">
-              <span class="svc-badge">Strategy · Visual Architecture · Guidelines</span>
+              <span class="svc-badge">BRAND STRATEGY · IDENTITY SYSTEM</span>
             </div>
             <h3>02. Brand Identity Development</h3>
-            <p>Complete brand universe construction — defining visual voice, color palettes, motion principles, and
-              comprehensive brand books that establish market dominance.</p>
+            <p><strong>A complete identity built around what makes your business different.</strong> We turn your story, positioning and personality into a cohesive brand system designed to build recognition and lasting value.</p>
             <div class="svc-deliverables">
-              <span class="svc-deliv-pill">Brand Positioning &amp; Strategy</span>
-              <span class="svc-deliv-pill">Complete Brand Guidelines</span>
-              <span class="svc-deliv-pill">Packaging &amp; Stationary</span>
-              <span class="svc-deliv-pill">Art Direction</span>
+              <span class="svc-deliv-pill">Brand Strategy</span>
+              <span class="svc-deliv-pill">Visual Identity</span>
+              <span class="svc-deliv-pill">Colour</span>
+              <span class="svc-deliv-pill">Typography</span>
+              <span class="svc-deliv-pill">Guidelines</span>
             </div>
             <div class="svc-card-footer">
               <a href="service-detail.html" class="svc-action-link">
@@ -3724,16 +3743,16 @@
             </div>
             <div class="svc-card-num-watermark">03</div>
             <div class="svc-card-header">
-              <span class="svc-badge">Digital Platforms · UI/UX · Conversion Engine</span>
+              <span class="svc-badge">DIGITAL EXPERIENCE · DESIGN &amp; DEVELOPMENT</span>
             </div>
             <h3>03. Website Design &amp; Development</h3>
-            <p>High-conversion digital experiences combining editorial beauty with world-class performance, bespoke
-              motion graphics, and fluid responsive design.</p>
+            <p><strong>Digital experiences that make your brand feel as good as it looks.</strong> We design and develop purposeful websites that bring your story to life, create meaningful interactions and turn attention into action.</p>
             <div class="svc-deliverables">
-              <span class="svc-deliv-pill">UI/UX Architecture</span>
-              <span class="svc-deliv-pill">Web Development</span>
-              <span class="svc-deliv-pill">Interaction Design</span>
-              <span class="svc-deliv-pill">Performance Optimization</span>
+              <span class="svc-deliv-pill">UI/UX</span>
+              <span class="svc-deliv-pill">Web Design</span>
+              <span class="svc-deliv-pill">Development</span>
+              <span class="svc-deliv-pill">E-commerce</span>
+              <span class="svc-deliv-pill">Motion</span>
             </div>
             <div class="svc-card-footer">
               <a href="service-detail.html" class="svc-action-link">
@@ -3755,16 +3774,16 @@
             </div>
             <div class="svc-card-num-watermark">04</div>
             <div class="svc-card-header">
-              <span class="svc-badge">Performance · Growth · Paid Media</span>
+              <span class="svc-badge">DIGITAL PRESENCE · STRATEGY &amp; GROWTH</span>
             </div>
             <h3>04. Social Media &amp; Digital Marketing</h3>
-            <p>Full-funnel digital marketing engine and high-impact social media management to capture market share and
-              convert audiences into loyal brand advocates.</p>
+            <p><strong>A digital presence designed to keep your brand moving forward.</strong> We combine creative thinking with strategic marketing to build visibility, meaningful engagement and stronger connections with your audience.</p>
             <div class="svc-deliverables">
-              <span class="svc-deliv-pill">Social Media Management</span>
-              <span class="svc-deliv-pill">Digital Marketing Services</span>
+              <span class="svc-deliv-pill">Social Strategy</span>
+              <span class="svc-deliv-pill">Content</span>
               <span class="svc-deliv-pill">Meta Ads</span>
-              <span class="svc-deliv-pill">Performance Marketing</span>
+              <span class="svc-deliv-pill">Google Ads</span>
+              <span class="svc-deliv-pill">SEO</span>
             </div>
             <div class="svc-card-footer">
               <a href="service-detail.html" class="svc-action-link">
@@ -3786,17 +3805,16 @@
             </div>
             <div class="svc-card-num-watermark">05</div>
             <div class="svc-card-header">
-              <span class="svc-badge">Campaigns · Production · Creator Network</span>
+              <span class="svc-badge">CAMPAIGNS · PRODUCTION · CREATOR NETWORK</span>
             </div>
             <h3>05. Content Creation &amp; Influencer Marketing</h3>
-            <p>End-to-end multimedia creation and strategic creator collaborations that ignite viral cultural resonance
-              and amplify brand prestige.</p>
+            <p><strong>We create stories worth seeing and partnerships worth remembering.</strong> From original content to carefully chosen creator collaborations, we build campaigns that give your brand a stronger voice, wider reach, and lasting audience connection.</p>
             <div class="svc-deliverables">
-              <span class="svc-deliv-pill">Photography</span>
-              <span class="svc-deliv-pill">Videography</span>
-              <span class="svc-deliv-pill">Reels &amp; Short Form</span>
-              <span class="svc-deliv-pill">Influencer Campaigns</span>
-              <span class="svc-deliv-pill">UGC Production</span>
+              <span class="svc-deliv-pill">Content Strategy</span>
+              <span class="svc-deliv-pill">Creative Production</span>
+              <span class="svc-deliv-pill">Creator Partnerships</span>
+              <span class="svc-deliv-pill">Campaigns</span>
+              <span class="svc-deliv-pill">Social Content</span>
             </div>
             <div class="svc-card-footer">
               <a href="service-detail.html" class="svc-action-link">
@@ -3820,9 +3838,9 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="brands-driver">
     <div class="brands-header-block">
-      <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY // 05</div>
-      <h2 class="brands-title">BRANDS THAT<br /><em>TRUST US.</em></h2>
-      <p class="brands-subtitle">Engineering category leadership and enduring prestige alongside market-defining enterprises.</p>
+      <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY // 1928 CLIENTS</div>
+      <h2 class="brands-title">BRANDS THAT<br /><em>TRUST 1928.</em></h2>
+      <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their ambitions, and the brands they’re building.</p>
     </div>
 
     <div class="brands-marquee-stage">
@@ -4420,8 +4438,9 @@
     <div class="fbc-content">
       <div class="fbc-header">
         <div>
-          <div class="fbc-tag">✦ Studio Perspectives // 06</div>
-          <h2>Fresh Perspectives<br /><em>&amp; Insights.</em></h2>
+          <div class="fbc-tag">✦ 1928 Insights // Ideas &amp; Perspectives</div>
+          <h2>A Different<br /><em>Point of View.</em></h2>
+          <p style="font-family:var(--font-secondary);font-size:0.95rem;color:var(--ink-mid);margin-top:8px;max-width:560px;line-height:1.5;">Ideas, insights and perspectives on branding, design, digital and the business behind great brands.</p>
         </div>
         <a href="blogs.html" class="fbc-all">Explore All Insights <span>→</span></a>
       </div>
@@ -4474,8 +4493,115 @@
     </div>
   </section>
 
-  <!-- §7 — MODERN EDITORIAL LUXURY FOOTER (Referenced from footer.html) -->
-  <div id="footer-placeholder"></div>
+  <!-- §7 — MODERN EDITORIAL LUXURY FOOTER -->
+  <footer id="footer-driver">
+    <div class="footer-luxury-card">
+
+      <!-- Top Grid: Statement + Socials, Explore Links, Legal & Policy, CTA -->
+      <div class="f-header-grid">
+        <div class="f-desc-col">
+          <h3 class="f-statement-title" style="font-family:var(--font-primary);font-size:1.15rem;font-weight:700;margin-bottom:8px;color:var(--ink);letter-spacing:-0.01em;">We build brands that create value.</h3>
+          <p class="f-desc-text">1928 Creative Studio is an independent creative studio helping ambitious businesses shape distinctive brands, digital experiences, and meaningful connections.</p>
+          <div class="f-location-tag" style="font-family:var(--font-mono);font-size:0.75rem;letter-spacing:1px;color:var(--ink-mid);margin:12px 0 16px;text-transform:uppercase;">India · Global</div>
+          <div class="f-social-circles">
+            <a href="https://instagram.com" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener" class="f-circle-btn" aria-label="LinkedIn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0 0-3.28 1.64 1.64 0 0 0 0 3.28m1.39 9.74v-8.37H5.07v8.37h2.78z"/>
+              </svg>
+            </a>
+            <a href="https://behance.net" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Behance">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.084 0-5.625-3.003-5.625-6 0-3.328 1.979-6 5.625-6 3.747 0 5.154 2.662 4.943 5.485h-7.697c.071 1.626.966 3.515 3.013 3.515 1.554 0 2.457-.866 2.842-1.5h2zm-2.884-5c-.073-1.04-.694-2.515-2.217-2.515-1.572 0-2.22 1.378-2.348 2.515h4.565zm-14.842 8h-6v-16h6.732c3.489 0 5.268 1.705 5.268 4.398 0 1.616-.867 2.889-2.027 3.559 1.547.625 2.527 2.057 2.527 3.864 0 2.825-2.037 4.179-5.5 4.179zm-3.5-13.5v4.5h3.048c1.556 0 2.452-.697 2.452-2.25 0-1.553-.896-2.25-2.452-2.25h-3.048zm0 7v4.5h3.297c1.785 0 2.703-.787 2.703-2.25 0-1.463-.918-2.25-2.703-2.25h-3.297z"/>
+              </svg>
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener" class="f-circle-btn" aria-label="X (Twitter)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="f-nav-col">
+          <div class="f-col-label">Explore</div>
+          <ul class="f-links-clean">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="portfolio.html">Work</a></li>
+            <li><a href="blogs.html">Perspectives</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="f-nav-col">
+          <div class="f-col-label">Studio &amp; Legal</div>
+          <ul class="f-links-clean">
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Studio Terms</a></li>
+            <li><a href="#">Client Agreement</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="f-cta-column">
+          <a href="contact.html" class="f-action-pill cta-primary">
+            <div class="f-action-txt">
+              <span class="f-action-heading">Have a brand to build?</span>
+              <span class="f-action-sub">START A PROJECT →</span>
+            </div>
+            <div class="f-action-arrow">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+
+          <a href="contact.html" class="f-action-pill cta-secondary">
+            <div class="f-action-txt">
+              <span class="f-action-heading">Let’s talk about your project</span>
+              <span class="f-action-sub">Tell us what you're building →</span>
+            </div>
+            <div class="f-action-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Bottom Cluster: Full-Bleed 50% Sliced Headline reaching the very bottom of the card -->
+      <div class="f-bottom-cluster">
+        <div class="f-giant-cut-wrap" id="footerCutWrap">
+          <svg class="f-giant-cut-svg" id="footerCutSvg" viewBox="0 0 1600 65" preserveAspectRatio="none">
+            <text x="0" y="115" font-family="'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900"
+              font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs"
+              letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
+          </svg>
+        </div>
+        <div class="f-bottom-line"></div>
+      </div>
+
+    </div>
+
+    <!-- Below/outside the luxury card: Copyright on left, Developer attribution on right -->
+    <div class="f-outer-bar">
+      <div class="f-outer-copyright">
+        <span>1928 Creative Studio © 2026</span>
+      </div>
+      <div class="f-outer-dev">
+        <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener" class="f-outer-author">UXWITHJAYTHAKER</a></span>
+      </div>
+    </div>
+  </footer>
   <script src="footer-loader.js"></script>
 
 
