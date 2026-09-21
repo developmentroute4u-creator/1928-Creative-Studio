@@ -1677,8 +1677,8 @@
     }
 
     .svc-s1-desc span {
-      display: inline-block;
-      white-space: nowrap;
+      display: block;
+      line-height: 1.5;
     }
 
     .svc-s1-pill {

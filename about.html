@@ -660,7 +660,7 @@
       background: var(--card-bg);
       border: 1.5px solid var(--rule-m);
       border-radius: clamp(24px, 3vw, 40px);
-      padding: clamp(36px, 5vw, 70px);
+      padding: clamp(32px, 4vw, 56px);
       box-shadow: 0 0 50px rgba(0, 0, 0, 0.04), 0 20px 50px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.02);
       position: relative;
       overflow: hidden;
@@ -688,11 +688,11 @@
     .story-statement {
       font-family: var(--font-primary);
       font-weight: 800;
-      font-size: clamp(24px, 3vw, 44px);
-      line-height: 1.3;
+      font-size: clamp(22px, 2.7vw, 40px);
+      line-height: 1.25;
       letter-spacing: -0.025em;
       color: var(--ink);
-      margin-bottom: clamp(24px, 3.5vh, 40px);
+      margin-bottom: clamp(18px, 2.4vh, 28px);
     }
 
     .story-statement span {
@@ -702,17 +702,29 @@
     .story-paragraphs {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: clamp(28px, 4vw, 60px);
+      column-gap: clamp(28px, 4vw, 56px);
+      row-gap: clamp(14px, 1.8vh, 20px);
       font-family: var(--font-secondary);
-      font-size: clamp(15.5px, 1.25vw, 18px);
-      line-height: 1.75;
+      font-size: clamp(15px, 1.15vw, 17.5px);
+      line-height: 1.7;
       color: var(--ink-mid);
+    }
+
+    .story-paragraphs p:nth-child(3) {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin-top: clamp(2px, 0.4vh, 4px);
     }
 
     @media (max-width: 768px) {
       .story-paragraphs {
         grid-template-columns: 1fr;
-        gap: 20px;
+        gap: 16px;
+      }
+
+      .story-paragraphs p:nth-child(3) {
+        grid-column: auto;
+        margin-top: 0;
       }
     }
 
@@ -1127,22 +1139,12 @@
       writing-mode: vertical-rl;
       transform: rotate(180deg);
       white-space: nowrap;
+      margin: auto 0;
       transition: color 0.3s;
     }
 
     .val-panel:hover .val-col-title {
       color: var(--ink);
-    }
-
-    .val-col-glyph {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(200, 16, 46, 0.12);
-      border: 1px solid rgba(200, 16, 46, 0.35);
-      display: grid;
-      place-items: center;
-      color: var(--cr);
     }
 
     /* ── Expanded Content (Soft Staggered Cinematic Text Reveal) ── */
@@ -1204,17 +1206,6 @@
       padding: 0;
       border-radius: 0;
       text-transform: uppercase;
-    }
-
-    .val-exp-glyph {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: var(--cr);
-      color: #FFFFFF;
-      display: grid;
-      place-items: center;
-      box-shadow: 0 0 16px var(--cr-glow);
     }
 
     .val-exp-body {
@@ -1471,11 +1462,21 @@
       overflow: hidden;
       border: 3px solid #ffffff;
       background: #0a0a0e;
-      box-shadow: 0 0 45px var(--cr-glow), 0 25px 65px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.06);
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.2);
       transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
       will-change: transform, left, top, opacity;
+    }
+
+    [data-theme="dark"] .team-floating-circle {
+      border-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.45), 0 0 24px rgba(200, 16, 46, 0.18);
+    }
+
+    [data-theme="light"] .team-floating-circle {
+      border-color: #ffffff;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
     }
 
     .team-floating-circle.active {
@@ -2823,13 +2824,13 @@
         </h3>
         <div class="story-paragraphs">
           <p>
-            1928 Creative Studio was founded by Ami Panchal and Tushar Panchal with a shared belief: that good design is not just aesthetic — it is strategic, commercial, and deeply human.
+            1928 Creative Studio was founded by Ami and Tushar, bringing together creative thinking, strategic direction and digital expertise under one roof.
           </p>
           <p>
-            With over a decade of hands-on experience across brand strategy, visual identity, digital experiences, performance marketing, and creative production, we have worked with brands across sectors and scales — from early-stage businesses finding their voice to established enterprises reimagining their market presence.
+            With 10+ years of experience, we work with businesses to shape how they look, how they communicate, and how they grow.
           </p>
           <p>
-            From identity and digital experiences to content, marketing, and spatial design — we build brands that look right, feel right, and perform at the highest level.
+            From identity and digital experiences to content, marketing and influence, we help businesses move closer to their goals, with every part of the brand working together.
           </p>
         </div>
       </div>
@@ -2982,12 +2983,7 @@
           <!-- Collapsed Strip View -->
           <div class="val-collapsed-content">
             <span class="val-col-num">01</span>
-            <span class="val-col-title">Think With Purpose</span>
-            <div class="val-col-glyph">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2L12 0Z" />
-              </svg>
-            </div>
+            <span class="val-col-title">STRATEGIC THINKING</span>
           </div>
 
           <!-- Expanded Rich Manifesto View -->
@@ -2995,24 +2991,19 @@
             <div class="val-exp-top">
               <div class="val-exp-meta">
                 <span class="val-exp-num">01 // PRINCIPLE</span>
-                <span class="val-exp-pill">STRATEGIC THINKING</span>
-              </div>
-              <div class="val-exp-glyph">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0L14.8 9.2L24 12L14.8 14.8L12 24L9.2 14.8L0 12L9.2 9.2L12 0Z" />
-                </svg>
+                <span class="val-exp-pill">Think With Purpose</span>
               </div>
             </div>
 
             <div class="val-exp-body">
-              <h3 class="val-exp-title">Think With Purpose</h3>
-              <p class="val-exp-desc">We believe every creative decision should be grounded in strategic clarity. Beautiful design without clear purpose is just decoration. We build brands that make commercial sense as much as they make an impression.</p>
+              <h3 class="val-exp-title">STRATEGIC THINKING</h3>
+              <p class="val-exp-desc">We start with the bigger picture. Your goals, audience, market and ambition shape every creative decision we make.</p>
             </div>
 
             <div class="val-exp-bottom">
-              <span class="val-exp-tag">Commercial Clarity</span>
-              <span class="val-exp-tag">Strategic Rigor</span>
-              <span class="val-exp-tag">Intentional Design</span>
+              <span class="val-exp-tag">BUSINESS FIRST</span>
+              <span class="val-exp-tag">CLEAR DIRECTION</span>
+              <span class="val-exp-tag">PURPOSEFUL IDEAS</span>
             </div>
           </div>
         </div>
@@ -3022,13 +3013,7 @@
           <!-- Collapsed Strip View -->
           <div class="val-collapsed-content">
             <span class="val-col-num">02</span>
-            <span class="val-col-title">Make It Matter</span>
-            <div class="val-col-glyph">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <circle cx="12" cy="12" r="9" />
-                <circle cx="12" cy="12" r="3.5" fill="currentColor" />
-              </svg>
-            </div>
+            <span class="val-col-title">DISTINCTIVE CRAFT</span>
           </div>
 
           <!-- Expanded Rich Manifesto View -->
@@ -3036,25 +3021,19 @@
             <div class="val-exp-top">
               <div class="val-exp-meta">
                 <span class="val-exp-num">02 // PRINCIPLE</span>
-                <span class="val-exp-pill">DISTINCTIVE CRAFT</span>
-              </div>
-              <div class="val-exp-glyph">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <circle cx="12" cy="12" r="9" />
-                  <circle cx="12" cy="12" r="3.5" fill="currentColor" />
-                </svg>
+                <span class="val-exp-pill">Make It Matter</span>
               </div>
             </div>
 
             <div class="val-exp-body">
-              <h3 class="val-exp-title">Make It Matter</h3>
-              <p class="val-exp-desc">In a crowded world, ordinary does not work. We push for ideas that are original, identities that are unmistakable, and executions that make people stop, remember, and care.</p>
+              <h3 class="val-exp-title">DISTINCTIVE CRAFT</h3>
+              <p class="val-exp-desc">Every detail has a role. We create identities and experiences with clarity, character and a visual point of view that people remember.</p>
             </div>
 
             <div class="val-exp-bottom">
-              <span class="val-exp-tag">Original Ideas</span>
-              <span class="val-exp-tag">Unmistakable Identity</span>
-              <span class="val-exp-tag">High Craft</span>
+              <span class="val-exp-tag">DETAIL</span>
+              <span class="val-exp-tag">CHARACTER</span>
+              <span class="val-exp-tag">RECOGNITION</span>
             </div>
           </div>
         </div>
@@ -3064,14 +3043,7 @@
           <!-- Collapsed Strip View -->
           <div class="val-collapsed-content">
             <span class="val-col-num">03</span>
-            <span class="val-col-title">Create Real Connection</span>
-            <div class="val-col-glyph">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2L2 7L12 12L22 7L12 2Z" />
-                <path d="M2 17L12 22L22 17" />
-                <path d="M2 12L12 17L22 12" />
-              </svg>
-            </div>
+            <span class="val-col-title">HUMAN CONNECTION</span>
           </div>
 
           <!-- Expanded Rich Manifesto View -->
@@ -3079,26 +3051,19 @@
             <div class="val-exp-top">
               <div class="val-exp-meta">
                 <span class="val-exp-num">03 // PRINCIPLE</span>
-                <span class="val-exp-pill">HUMAN CONNECTION</span>
-              </div>
-              <div class="val-exp-glyph">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M12 2L2 7L12 12L22 7L12 2Z" />
-                  <path d="M2 17L12 22L22 17" />
-                  <path d="M2 12L12 17L22 12" />
-                </svg>
+                <span class="val-exp-pill">Create Real Connection</span>
               </div>
             </div>
 
             <div class="val-exp-body">
-              <h3 class="val-exp-title">Create Real Connection</h3>
-              <p class="val-exp-desc">The strongest brands are not just seen — they are felt. We design and communicate with an understanding of what moves people, building brands that earn genuine trust and lasting loyalty.</p>
+              <h3 class="val-exp-title">HUMAN CONNECTION</h3>
+              <p class="val-exp-desc">Great brands connect before they convert. We build stories, content and experiences that feel relevant, natural and human.</p>
             </div>
 
             <div class="val-exp-bottom">
-              <span class="val-exp-tag">Audience Resonance</span>
-              <span class="val-exp-tag">Authentic Trust</span>
-              <span class="val-exp-tag">Lasting Loyalty</span>
+              <span class="val-exp-tag">STORY</span>
+              <span class="val-exp-tag">CULTURE</span>
+              <span class="val-exp-tag">CONNECTION</span>
             </div>
           </div>
         </div>
@@ -3108,15 +3073,7 @@
           <!-- Collapsed Strip View -->
           <div class="val-collapsed-content">
             <span class="val-col-num">04</span>
-            <span class="val-col-title">Create Lasting Value</span>
-            <div class="val-col-glyph">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M6 3h12l4 6-10 13L2 9z" />
-                <path d="M11 3L8 9l4 13 4-13-3-6" />
-                <path d="M2 9h20" />
-              </svg>
-            </div>
+            <span class="val-col-title">BUILT FOR GROWTH</span>
           </div>
 
           <!-- Expanded Rich Manifesto View -->
@@ -3124,27 +3081,19 @@
             <div class="val-exp-top">
               <div class="val-exp-meta">
                 <span class="val-exp-num">04 // PRINCIPLE</span>
-                <span class="val-exp-pill">BUILT FOR GROWTH</span>
-              </div>
-              <div class="val-exp-glyph">
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                  stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M6 3h12l4 6-10 13L2 9z" />
-                  <path d="M11 3L8 9l4 13 4-13-3-6" />
-                  <path d="M2 9h20" />
-                </svg>
+                <span class="val-exp-pill">Create Lasting Value</span>
               </div>
             </div>
 
             <div class="val-exp-body">
-              <h3 class="val-exp-title">Create Lasting Value</h3>
-              <p class="val-exp-desc">We don't build for short-lived trends. We create identities, platforms, and content systems designed to scale with your business and deliver enduring value over time.</p>
+              <h3 class="val-exp-title">BUILT FOR GROWTH</h3>
+              <p class="val-exp-desc">A stronger brand should create opportunities for a stronger business. We design every touchpoint with growth, relevance and long-term value in mind.</p>
             </div>
 
             <div class="val-exp-bottom">
-              <span class="val-exp-tag">Built to Scale</span>
-              <span class="val-exp-tag">Trend Resilience</span>
-              <span class="val-exp-tag">Long-term Value</span>
+              <span class="val-exp-tag">BRAND</span>
+              <span class="val-exp-tag">BUSINESS</span>
+              <span class="val-exp-tag">GROWTH</span>
             </div>
           </div>
         </div>
@@ -3257,7 +3206,7 @@
     <div class="section-container">
       <div class="sec-tag-pill"><span class="sec-dot"></span> WORKFLOW FRAMEWORK // 1928</div>
       <h2 class="sec-heading">HOW WE BUILD <span>TOGETHER.</span></h2>
-      <p class="sec-desc">A disciplined 5-phase framework ensuring clarity, creativity, and momentum from day one.</p>
+      <p class="sec-desc">A thoughtful process that brings strategy, creativity and execution together, from the first conversation to meaningful growth.</p>
 
       <div class="process-serpentine-track" id="processTrack">
         <!-- Connecting SVG Laser Path -->
@@ -3290,14 +3239,15 @@
           </div>
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 01 // DISCOVERY</span>
+              <span class="proc-card-phase">PHASE 01 // DISCOVER</span>
               <h3 class="proc-card-title">Understand Before We Build</h3>
             </div>
-            <p class="proc-card-desc">Every great brand begins with deep listening and sharp inquiry. We immerse ourselves in your business, your market, your competitors, and your customers to find the authentic truths that will define everything that follows.</p>
+            <p class="proc-card-desc">We get close to your business, audience, market and ambitions to understand what makes your opportunity unique.</p>
             <div class="proc-card-tags">
-              <span>Deep Immersion</span>
-              <span>Market Analysis</span>
-              <span>Core Brand DNA</span>
+              <span>BUSINESS DISCOVERY</span>
+              <span>AUDIENCE</span>
+              <span>MARKET</span>
+              <span>GOALS</span>
             </div>
           </div>
         </div>
@@ -3306,14 +3256,14 @@
         <div class="proc-step-item proc-item-right" data-step="2">
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 02 // STRATEGY &amp; DIRECTION</span>
+              <span class="proc-card-phase">PHASE 02 // DEFINE</span>
               <h3 class="proc-card-title">Shape the Direction</h3>
             </div>
-            <p class="proc-card-desc">We translate insights into a clear strategic and creative direction. We define who your brand is, what it stands for, how it should sound, and how it will differentiate itself in a crowded market.</p>
+            <p class="proc-card-desc">We turn insights into a clear creative and strategic direction that gives your brand a strong foundation.</p>
             <div class="proc-card-tags">
-              <span>Brand Strategy</span>
-              <span>Distinctive Positioning</span>
-              <span>Creative Direction</span>
+              <span>POSITIONING</span>
+              <span>BRAND DIRECTION</span>
+              <span>CREATIVE STRATEGY</span>
             </div>
           </div>
           <div class="proc-node-wrapper">
@@ -3334,14 +3284,15 @@
           </div>
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 03 // DESIGN &amp; BUILD</span>
+              <span class="proc-card-phase">PHASE 03 // CREATE</span>
               <h3 class="proc-card-title">Bring the Brand to Life</h3>
             </div>
-            <p class="proc-card-desc">This is where strategy becomes tangible. We design identities, create content, build websites, and craft every visual and verbal asset with meticulous attention to detail, craft, and consistency.</p>
+            <p class="proc-card-desc">This is where ideas become identities, digital experiences, content and campaigns designed around your brand.</p>
             <div class="proc-card-tags">
-              <span>Visual Identity</span>
-              <span>Digital Build</span>
-              <span>Creative Craft</span>
+              <span>IDENTITY</span>
+              <span>DESIGN</span>
+              <span>DIGITAL</span>
+              <span>CONTENT</span>
             </div>
           </div>
         </div>
@@ -3350,14 +3301,15 @@
         <div class="proc-step-item proc-item-right" data-step="4">
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 04 // LAUNCH &amp; SCALE</span>
+              <span class="proc-card-phase">PHASE 04 // CONNECT</span>
               <h3 class="proc-card-title">Take It to the Right People</h3>
             </div>
-            <p class="proc-card-desc">A brand needs to be seen by the people who matter. We design and execute launch campaigns, social media strategies, and performance marketing to build awareness and generate real momentum.</p>
+            <p class="proc-card-desc">We bring your brand into the market through thoughtful content, digital marketing, social media and creator partnerships.</p>
             <div class="proc-card-tags">
-              <span>Launch Campaign</span>
-              <span>Social Media</span>
-              <span>Performance Marketing</span>
+              <span>SOCIAL</span>
+              <span>MARKETING</span>
+              <span>CONTENT</span>
+              <span>INFLUENCE</span>
             </div>
           </div>
           <div class="proc-node-wrapper">
@@ -3378,14 +3330,14 @@
           </div>
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 05 // EVOLUTION &amp; EXPANSION</span>
+              <span class="proc-card-phase">PHASE 05 // GROW</span>
               <h3 class="proc-card-title">Build What Comes Next</h3>
             </div>
-            <p class="proc-card-desc">Great brands never stand still. We remain an ongoing creative partner to our clients, helping them evolve their content, enter new markets, launch new initiatives, and stay ahead of change.</p>
+            <p class="proc-card-desc">We look beyond the launch to help your brand stay relevant, create value and keep moving towards its business goals.</p>
             <div class="proc-card-tags">
-              <span>Ongoing Partnership</span>
-              <span>Content Evolution</span>
-              <span>Scale &amp; Growth</span>
+              <span>OPTIMISATION</span>
+              <span>GROWTH</span>
+              <span>LONG-TERM VALUE</span>
             </div>
           </div>
         </div>
@@ -3401,7 +3353,7 @@
     <div class="brands-header-block">
       <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY // 1928 CLIENTS</div>
       <h2 class="brands-title">BRANDS THAT TRUST <span>1928.</span></h2>
-      <p class="brands-subtitle">From fast-growing ventures to established market leaders across diverse industries.</p>
+      <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their ambitions, and the brands they’re building.</p>
     </div>
 
     <div class="brands-marquee-stage">
