@@ -1855,27 +1855,35 @@
       clip-path: path("M 0 0 L 115 0 Q 128 0 138 12 L 152 26 Q 162 34 178 34 L 300 34 L 300 250 L 0 250 Z");
     }
 
-    .svc-jacket-notch {
-      display: none;
-    }
-
-    .svc-jacket-title {
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: 1.35rem;
-      letter-spacing: -.02em;
-      color: #FFFFFF;
+    .svc-jacket-footer {
       margin-top: auto;
-      line-height: 1;
+      padding: 0 0 6px 4px;
+      z-index: 5;
     }
 
-    .svc-jacket-sub {
-      font-family: 'Space Mono', monospace;
-      font-size: .56rem;
-      color: rgba(255, 255, 255, 0.5);
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      margin-top: 5px;
+    .svc-jacket-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: rgba(255, 255, 255, 0.75);
+      background: transparent;
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      text-decoration: none;
+      transition: color 0.25s ease, gap 0.25s var(--sp);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
+    .svc-jacket-btn:hover {
+      color: #FFFFFF;
+      gap: 9px;
     }
 
     /* ═══ 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) ═══ */
@@ -3639,9 +3647,8 @@
             </div>
             <div class="svc-jacket">
               <div></div>
-              <div>
-                <div class="svc-jacket-title">1928</div>
-                <div class="svc-jacket-sub">Creative Studio // Services</div>
+              <div class="svc-jacket-footer">
+                <a href="services.html" class="svc-jacket-btn">Explore our capabilities →</a>
               </div>
             </div>
           </div>
