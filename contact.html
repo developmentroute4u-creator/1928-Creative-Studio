@@ -573,7 +573,7 @@
     .scope-options-grid {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
     }
 
@@ -581,14 +581,14 @@
       background: var(--card-alt);
       border: 1.5px solid var(--rule-m);
       border-radius: 14px;
-      padding: 13px 20px;
+      padding: 10px 18px;
       cursor: pointer;
       transition: all 0.25s var(--sp);
       text-align: left;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 18px;
       width: 100%;
       box-sizing: border-box;
     }
@@ -610,7 +610,6 @@
       display: flex;
       flex-direction: column;
       gap: 2px;
-      min-width: 180px;
       flex-shrink: 0;
     }
 
@@ -625,17 +624,55 @@
 
     .soc-title {
       font-family: var(--font-primary);
-      font-size: 0.98rem;
+      font-size: 0.94rem;
       font-weight: 800;
       letter-spacing: -0.01em;
       white-space: nowrap;
     }
 
-    .soc-desc {
+    .soc-keywords {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-primary);
       font-size: 0.82rem;
-      opacity: 0.8;
-      line-height: 1.35;
-      flex-grow: 1;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      opacity: 0.75;
+      margin-left: auto;
+      white-space: nowrap;
+      transition: opacity 0.25s ease;
+    }
+
+    .soc-keywords span {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      color: inherit;
+    }
+
+    .soc-kw-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cr);
+      opacity: 1;
+      flex-shrink: 0;
+      display: inline-block;
+      box-shadow: 0 0 5px rgba(200, 16, 46, 0.4);
+      transition: all 0.25s var(--sp);
+    }
+
+    .scope-option-card.active .soc-keywords {
+      opacity: 0.95;
+      color: #ffffff;
+    }
+
+    .scope-option-card.active .soc-kw-dot {
+      background: var(--cr);
+      opacity: 1;
+      box-shadow: 0 0 8px var(--cr-glow);
     }
 
     .soc-status-icon {
@@ -643,31 +680,59 @@
       height: 22px;
       border-radius: 50%;
       border: 1.5px solid var(--rule-m);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.7rem;
-      font-weight: 800;
-      opacity: 0.3;
-      transition: all 0.2s;
+      display: grid;
+      place-items: center;
+      color: transparent;
+      transition: all 0.25s var(--sp);
       flex-shrink: 0;
+      background: transparent;
+    }
+
+    .soc-status-icon svg {
+      width: 11px;
+      height: 11px;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.2s var(--sp);
+      transform: scale(0.85);
+      opacity: 0;
+    }
+
+    .scope-option-card:hover .soc-status-icon {
+      border-color: var(--rule-heavy);
+      color: transparent;
     }
 
     .scope-option-card.active .soc-status-icon {
-      opacity: 1;
       background: var(--cr);
-      color: #fff;
       border-color: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(220, 20, 60, 0.4);
     }
 
-    @media (max-width: 680px) {
+    .scope-option-card.active .soc-status-icon svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @media (max-width: 768px) {
       .scope-option-card {
         flex-direction: column;
         align-items: flex-start;
-        gap: 8px;
+        gap: 10px;
       }
       .soc-left-group {
-        min-width: auto;
+        width: 100%;
+      }
+      .soc-keywords {
+        margin-left: 0;
+        flex-wrap: wrap;
+        gap: 10px;
+        white-space: normal;
+      }
+      .soc-status-icon {
+        align-self: flex-end;
       }
     }
 
@@ -2956,43 +3021,102 @@
             <!-- ══ STEP 1: Engagement Scope ══ -->
             <div class="step-pane-section active" id="stepPane1">
               <h3 class="pane-headline">Engagement Classification</h3>
-              <p class="pane-caption">Select the primary strategic horizon for this commission.</p>
+              <p class="pane-caption">Select the primary service for this project.</p>
 
               <div class="scope-options-grid" id="scopeGrid">
-                <div class="scope-option-card active" data-mandate="Brand Transformation">
+                <div class="scope-option-card active" data-mandate="Logo Design">
                   <div class="soc-left-group">
-                    <div class="soc-index">01 / BRANDING</div>
-                    <div class="soc-title">Brand Identity</div>
+                    <div class="soc-index">01 / VISUAL IDENTITY</div>
+                    <div class="soc-title">Logo Design</div>
                   </div>
-                  <div class="soc-desc">Comprehensive brand architecture, visual identity &amp; semiotics.</div>
-                  <div class="soc-status-icon">✓</div>
+                  <div class="soc-keywords">
+                    <span>Logos</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>Wordmarks</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>Direction</span>
+                  </div>
+                  <div class="soc-status-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                      <polyline points="3.5 8.5 6.5 11.5 12.5 4.5"></polyline>
+                    </svg>
+                  </div>
                 </div>
 
-                <div class="scope-option-card" data-mandate="Computational WebGL &amp; 3D">
+                <div class="scope-option-card" data-mandate="Brand Identity Development">
                   <div class="soc-left-group">
-                    <div class="soc-index">02 / DIGITAL</div>
-                    <div class="soc-title">3D &amp; Digital</div>
+                    <div class="soc-index">02 / BRAND SYSTEM</div>
+                    <div class="soc-title">Brand Identity Development</div>
                   </div>
-                  <div class="soc-desc">Custom GLSL shaders, kinetic 3D platforms &amp; real-time engines.</div>
-                  <div class="soc-status-icon">✓</div>
+                  <div class="soc-keywords">
+                    <span>Strategy</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>Guidelines</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>Systems</span>
+                  </div>
+                  <div class="soc-status-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                      <polyline points="3.5 8.5 6.5 11.5 12.5 4.5"></polyline>
+                    </svg>
+                  </div>
                 </div>
 
-                <div class="scope-option-card" data-mandate="Spatial &amp; Retail Flagship">
+                <div class="scope-option-card" data-mandate="Website Design & Development">
                   <div class="soc-left-group">
-                    <div class="soc-index">03 / SPATIAL</div>
-                    <div class="soc-title">Spatial Design</div>
+                    <div class="soc-index">03 / DIGITAL EXPERIENCE</div>
+                    <div class="soc-title">Website Design &amp; Development</div>
                   </div>
-                  <div class="soc-desc">Flagship retail environments &amp; tactile spatial lighting systems.</div>
-                  <div class="soc-status-icon">✓</div>
+                  <div class="soc-keywords">
+                    <span>UI/UX</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>Websites</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>E-Commerce</span>
+                  </div>
+                  <div class="soc-status-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                      <polyline points="3.5 8.5 6.5 11.5 12.5 4.5"></polyline>
+                    </svg>
+                  </div>
                 </div>
 
-                <div class="scope-option-card" data-mandate="Creative Director Retainer">
+                <div class="scope-option-card" data-mandate="Social Media & Digital Marketing">
                   <div class="soc-left-group">
-                    <div class="soc-index">04 / ADVISORY</div>
-                    <div class="soc-title">CD Retainer</div>
+                    <div class="soc-index">04 / DIGITAL GROWTH</div>
+                    <div class="soc-title">Social Media &amp; Digital Marketing</div>
                   </div>
-                  <div class="soc-desc">Fractional creative direction, brand stewardship &amp; quarterly sprints.</div>
-                  <div class="soc-status-icon">✓</div>
+                  <div class="soc-keywords">
+                    <span>Social Media</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>Meta Ads</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>SEO</span>
+                  </div>
+                  <div class="soc-status-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                      <polyline points="3.5 8.5 6.5 11.5 12.5 4.5"></polyline>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="scope-option-card" data-mandate="Content Creation & Influencer Marketing">
+                  <div class="soc-left-group">
+                    <div class="soc-index">05 / CONTENT &amp; INFLUENCE</div>
+                    <div class="soc-title">Content Creation &amp; Influencer Marketing</div>
+                  </div>
+                  <div class="soc-keywords">
+                    <span>Reels</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>Video</span>
+                    <span class="soc-kw-dot"></span>
+                    <span>Campaigns</span>
+                  </div>
+                  <div class="soc-status-icon">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                      <polyline points="3.5 8.5 6.5 11.5 12.5 4.5"></polyline>
+                    </svg>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3000,39 +3124,39 @@
             <!-- ══ STEP 2: Creative Disciplines ══ -->
             <div class="step-pane-section" id="stepPane2">
               <h3 class="pane-headline">Specialized Disciplines</h3>
-              <p class="pane-caption">Choose all disciplines required for this engagement.</p>
+              <p class="pane-caption">Choose all deliverables and capabilities required for this engagement.</p>
 
               <div class="disciplines-chips-grid" id="discGrid">
-                <div class="disc-item-chip selected" data-disc="Brand Architecture &amp; Identity">
-                  <span>Brand Architecture</span>
+                <div class="disc-item-chip selected" data-disc="Logo Concept &amp; Wordmark">
+                  <span>Logo &amp; Symbol Design</span>
                   <span class="disc-dot-check">✓</span>
                 </div>
-                <div class="disc-item-chip selected" data-disc="Computational WebGL &amp; 3D">
-                  <span>Computational 3D &amp; WebGL</span>
+                <div class="disc-item-chip selected" data-disc="Brand Identity &amp; Guidelines">
+                  <span>Brand Guidelines &amp; Systems</span>
                   <span class="disc-dot-check">✓</span>
                 </div>
-                <div class="disc-item-chip" data-disc="Spatial Systems &amp; Flagship">
-                  <span>Spatial Systems</span>
+                <div class="disc-item-chip" data-disc="UI/UX &amp; Website Design">
+                  <span>UI/UX &amp; Web Design</span>
                   <span class="disc-dot-check">✓</span>
                 </div>
-                <div class="disc-item-chip" data-disc="Kinetic Motion Graphics">
-                  <span>Kinetic Motion</span>
+                <div class="disc-item-chip" data-disc="WordPress &amp; E-Commerce Development">
+                  <span>WordPress &amp; E-Commerce</span>
                   <span class="disc-dot-check">✓</span>
                 </div>
-                <div class="disc-item-chip" data-disc="Luxury Packaging Physics">
-                  <span>Luxury Packaging</span>
+                <div class="disc-item-chip" data-disc="Social Media Management &amp; Content">
+                  <span>Social Media Management</span>
                   <span class="disc-dot-check">✓</span>
                 </div>
-                <div class="disc-item-chip" data-disc="Enterprise Digital Platform">
-                  <span>Digital Flagship Platform</span>
+                <div class="disc-item-chip" data-disc="Meta Ads &amp; Digital Campaigns">
+                  <span>Meta Ads &amp; Performance</span>
                   <span class="disc-dot-check">✓</span>
                 </div>
-                <div class="disc-item-chip" data-disc="Generative AI &amp; Sound">
-                  <span>Generative AI &amp; Sound</span>
+                <div class="disc-item-chip" data-disc="Reels &amp; Video Production">
+                  <span>Reels &amp; Video Production</span>
                   <span class="disc-dot-check">✓</span>
                 </div>
-                <div class="disc-item-chip" data-disc="Editorial &amp; Print">
-                  <span>Editorial &amp; Print</span>
+                <div class="disc-item-chip" data-disc="Creator &amp; Influencer Marketing">
+                  <span>Influencer Collaborations</span>
                   <span class="disc-dot-check">✓</span>
                 </div>
               </div>
@@ -3117,28 +3241,36 @@
                   <div class="sbi-focus-select-wrap">
                     <label class="in-label" style="margin-bottom: 6px;">Consultation Focus Area</label>
                     <div class="luxury-custom-select" id="stepLuxurySelectTopic">
-                      <input type="hidden" id="stepSbTopic" value="Brand Identity & Strategy" />
+                      <input type="hidden" id="stepSbTopic" value="Logo Design & Visual Identity" />
                       <button type="button" class="luxury-select-trigger" id="stepSelectTopicTrigger" aria-haspopup="listbox" aria-expanded="false">
-                        <span class="lst-label" id="stepSelectTopicLabel">Brand Identity &amp; Strategy</span>
+                        <span class="lst-label" id="stepSelectTopicLabel">Logo Design &amp; Visual Identity</span>
                         <svg class="lst-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                           <polyline points="6 9 12 15 18 9"></polyline>
                         </svg>
                       </button>
                       <div class="luxury-select-dropdown" id="stepSelectTopicDropdown" role="listbox">
-                        <div class="luxury-select-opt active" data-value="Brand Identity & Strategy">
-                          <span class="lso-text">Brand Identity &amp; Strategy</span>
+                        <div class="luxury-select-opt active" data-value="Logo Design & Visual Identity">
+                          <span class="lso-text">Logo Design &amp; Visual Identity</span>
                           <span class="lso-check">✓</span>
                         </div>
-                        <div class="luxury-select-opt" data-value="Digital Experience & UI/UX">
-                          <span class="lso-text">Digital Experience &amp; UI/UX</span>
+                        <div class="luxury-select-opt" data-value="Brand Identity Development">
+                          <span class="lso-text">Brand Identity Development</span>
                           <span class="lso-check">✓</span>
                         </div>
-                        <div class="luxury-select-opt" data-value="Performance Marketing Creative">
-                          <span class="lso-text">Performance Marketing Creative</span>
+                        <div class="luxury-select-opt" data-value="Website Design & Development">
+                          <span class="lso-text">Website Design &amp; Development</span>
                           <span class="lso-check">✓</span>
                         </div>
-                        <div class="luxury-select-opt" data-value="Full Studio Retainer / Advisory">
-                          <span class="lso-text">Full Studio Retainer / Advisory</span>
+                        <div class="luxury-select-opt" data-value="Social Media & Digital Marketing">
+                          <span class="lso-text">Social Media &amp; Digital Marketing</span>
+                          <span class="lso-check">✓</span>
+                        </div>
+                        <div class="luxury-select-opt" data-value="Content Creation & Influencer Marketing">
+                          <span class="lso-text">Content Creation &amp; Influencer Marketing</span>
+                          <span class="lso-check">✓</span>
+                        </div>
+                        <div class="luxury-select-opt" data-value="Full 360° Studio Creative Partnership">
+                          <span class="lso-text">Full 360° Studio Creative Partnership</span>
                           <span class="lso-check">✓</span>
                         </div>
                       </div>
@@ -3300,7 +3432,7 @@
     <div class="faq-wrap">
       <div class="faq-sec-header">
         <h2 class="faq-sec-title">FREQUENTLY ASKED <span>QUESTIONS</span></h2>
-        <p class="faq-sec-desc">Direct insights into our engagement structures, timelines, and deliverables.</p>
+        <p class="faq-sec-desc">Clear answers about our services, process, timelines, and working approach.</p>
       </div>
 
       <div class="faq-list">
@@ -3309,10 +3441,11 @@
           <button class="faq-trigger" aria-expanded="true">
             <div class="faq-trigger-left">
               <span class="faq-num">01</span>
-              <span>How does the confidential studio brief process work?</span>
+              <span>What services does 1928 Creative Studio provide?</span>
             </div>
             <div class="faq-icon-wrap" aria-hidden="true">
-              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
                 <line x1="8" y1="3" x2="8" y2="13"></line>
                 <line x1="3" y1="8" x2="13" y2="8"></line>
               </svg>
@@ -3320,7 +3453,7 @@
           </button>
           <div class="faq-content">
             <p>
-              After submitting your parameters through our 5-step wizard, our leadership team conducts a conflict-of-interest and capacity audit within 24 hours. We then confirm your selected 30-minute strategy session to review scope, milestones, and deliverables.
+              We offer Logo Design, Brand Identity, Website Development, Digital Marketing, Social Media, Content Creation and Influencer Marketing.
             </p>
           </div>
         </div>
@@ -3330,10 +3463,11 @@
           <button class="faq-trigger" aria-expanded="false">
             <div class="faq-trigger-left">
               <span class="faq-num">02</span>
-              <span>Can we engage for a single service or only bundled packages?</span>
+              <span>Can you handle branding, digital marketing, content, and website development together?</span>
             </div>
             <div class="faq-icon-wrap" aria-hidden="true">
-              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
                 <line x1="8" y1="3" x2="8" y2="13"></line>
                 <line x1="3" y1="8" x2="13" y2="8"></line>
               </svg>
@@ -3341,7 +3475,7 @@
           </button>
           <div class="faq-content">
             <p>
-              You can engage 1928 Creative Studio for standalone individual services (such as Brand Architecture, Custom WebGL 3D, Flagship Spatial Design, or Meta Performance Marketing) as well as integrated multi-disciplinary partnerships. Every engagement receives direct partner-level attention.
+              Yes. We bring strategy, creativity and digital execution together under one creative partner.
             </p>
           </div>
         </div>
@@ -3351,10 +3485,11 @@
           <button class="faq-trigger" aria-expanded="false">
             <div class="faq-trigger-left">
               <span class="faq-num">03</span>
-              <span>What are the typical turnaround timelines and budget allocations?</span>
+              <span>Can I hire you for a single service or do you offer complete solutions?</span>
             </div>
             <div class="faq-icon-wrap" aria-hidden="true">
-              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
                 <line x1="8" y1="3" x2="8" y2="13"></line>
                 <line x1="3" y1="8" x2="13" y2="8"></line>
               </svg>
@@ -3362,7 +3497,7 @@
           </button>
           <div class="faq-content">
             <p>
-              Engagements typically range from targeted 3–4 week sprint milestones to multi-quarter brand transformations. Capital allocation begins at ₹15 Lakhs for focused scopes, scaling based on technical depth and deliverables.
+              Both. Choose a single service or combine multiple capabilities based on your business needs.
             </p>
           </div>
         </div>
@@ -3372,10 +3507,11 @@
           <button class="faq-trigger" aria-expanded="false">
             <div class="faq-trigger-left">
               <span class="faq-num">04</span>
-              <span>Who owns the intellectual property and master project deliverables?</span>
+              <span>How does your branding and creative process work?</span>
             </div>
             <div class="faq-icon-wrap" aria-hidden="true">
-              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
                 <line x1="8" y1="3" x2="8" y2="13"></line>
                 <line x1="3" y1="8" x2="13" y2="8"></line>
               </svg>
@@ -3383,7 +3519,7 @@
           </button>
           <div class="faq-content">
             <p>
-              Upon completion and final sign-off, <strong>100% of master vector files, raw video footage, web source code repositories, and brand assets</strong> are transferred directly to your company with full commercial rights under mutual NDA.
+              We understand your business and goals first, then build a strategic creative direction around them.
             </p>
           </div>
         </div>
@@ -3393,10 +3529,11 @@
           <button class="faq-trigger" aria-expanded="false">
             <div class="faq-trigger-left">
               <span class="faq-num">05</span>
-              <span>How are the 30-minute strategy sessions conducted?</span>
+              <span>How long does a typical project take?</span>
             </div>
             <div class="faq-icon-wrap" aria-hidden="true">
-              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
                 <line x1="8" y1="3" x2="8" y2="13"></line>
                 <line x1="3" y1="8" x2="13" y2="8"></line>
               </svg>
@@ -3404,7 +3541,51 @@
           </button>
           <div class="faq-content">
             <p>
-              Sessions are hosted securely over encrypted video conferencing directly with our Creative Directors. We review your vision, clarify technical constraints, and define actionable next steps for contract execution.
+              Timelines depend on the scope and complexity. We define a clear timeline before every project begins.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 6 -->
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <div class="faq-trigger-left">
+              <span class="faq-num">06</span>
+              <span>Do you work with both new and established businesses?</span>
+            </div>
+            <div class="faq-icon-wrap" aria-hidden="true">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
+                <line x1="8" y1="3" x2="8" y2="13"></line>
+                <line x1="3" y1="8" x2="13" y2="8"></line>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content">
+            <p>
+              Yes. We work with businesses at every stage, from launching new brands to driving existing growth.
+            </p>
+          </div>
+        </div>
+
+        <!-- FAQ 7 -->
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            <div class="faq-trigger-left">
+              <span class="faq-num">07</span>
+              <span>How do we get started with 1928 Creative Studio?</span>
+            </div>
+            <div class="faq-icon-wrap" aria-hidden="true">
+              <svg class="faq-icon-svg" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round">
+                <line x1="8" y1="3" x2="8" y2="13"></line>
+                <line x1="3" y1="8" x2="13" y2="8"></line>
+              </svg>
+            </div>
+          </button>
+          <div class="faq-content">
+            <p>
+              Start a conversation with us. Tell us your goals, and we’ll recommend the right direction for your brand.
             </p>
           </div>
         </div>
