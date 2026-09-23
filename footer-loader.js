@@ -72,11 +72,11 @@
         <a href="contact.html" class="f-action-pill cta-primary">
           <div class="f-action-txt">
             <span class="f-action-heading">Have a brand to build?</span>
-            <span class="f-action-sub">START A PROJECT →</span>
+            <span class="f-action-sub">START A PROJECT</span>
           </div>
-          <div class="f-action-arrow">
+          <div class="f-action-arrow" aria-label="Message">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
             </svg>
           </div>
         </a>
@@ -84,25 +84,33 @@
         <a href="contact.html" class="f-action-pill cta-secondary">
           <div class="f-action-txt">
             <span class="f-action-heading">Let’s talk about your project</span>
-            <span class="f-action-sub">Tell us what you're building →</span>
+            <span class="f-action-sub">Tell us what you're building</span>
           </div>
-          <div class="f-action-arrow">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
+          <div class="f-action-arrow" aria-label="Call">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
             </svg>
           </div>
         </a>
       </div>
     </div>
 
-    <!-- Bottom Cluster: Full-Bleed 50% Sliced Headline reaching the very bottom of the card -->
+    <!-- Bottom Cluster: Full Brand Headline with Staggered Character Emergence -->
     <div class="f-bottom-cluster">
-      <div class="f-giant-cut-wrap" id="footerCutWrap">
-        <svg class="f-giant-cut-svg" id="footerCutSvg" viewBox="0 0 1600 65" preserveAspectRatio="none">
-          <text x="0" y="115" font-family="'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900"
-            font-size="140" fill="currentColor" textLength="1600" lengthAdjust="spacingAndGlyphs"
-            letter-spacing="-0.03em">1928 CREATIVE STUDIO</text>
-        </svg>
+      <div class="f-brand-title-wrap" id="footerBrandWrap">
+        <h2 class="f-brand-giant-text" id="footerGiantText" aria-label="1928 CREATIVE STUDIO">
+          <span class="f-char-word">
+            <span class="f-char">1</span><span class="f-char">9</span><span class="f-char">2</span><span class="f-char">8</span>
+          </span>
+          <span class="f-char-space">&nbsp;</span>
+          <span class="f-char-word">
+            <span class="f-char">C</span><span class="f-char">R</span><span class="f-char">E</span><span class="f-char">A</span><span class="f-char">T</span><span class="f-char">I</span><span class="f-char">V</span><span class="f-char">E</span>
+          </span>
+          <span class="f-char-space">&nbsp;</span>
+          <span class="f-char-word">
+            <span class="f-char">S</span><span class="f-char">T</span><span class="f-char">U</span><span class="f-char">D</span><span class="f-char">I</span><span class="f-char">O</span>
+          </span>
+        </h2>
       </div>
       <div class="f-bottom-line"></div>
     </div>
@@ -126,226 +134,32 @@
 
   function initFooterAnimation() {
     const footerDriver = document.getElementById('footer-driver');
-    const footerCutWrap = document.querySelector('.f-giant-cut-wrap') || document.getElementById('footerCutWrap');
-    const footerCutSvg = document.querySelector('.f-giant-cut-svg') || document.getElementById('footerCutSvg');
-    const footerCutText = footerCutSvg ? footerCutSvg.querySelector('text') : null;
-    const luxuryCard = document.querySelector('.footer-luxury-card');
-    const bottomCluster = document.querySelector('.f-bottom-cluster');
-    const bottomLine = document.querySelector('.f-bottom-line');
+    const luxuryCard = footerDriver ? (footerDriver.querySelector('.footer-luxury-card') || footerDriver) : null;
+    const footerGiantText = document.getElementById('footerGiantText') || document.querySelector('.f-brand-giant-text');
+    if (!footerDriver || !footerGiantText || !luxuryCard) return;
 
-    if (!footerDriver || !footerCutWrap || !footerCutSvg) return;
+    // Apply soft staggered transition delays character-by-character for a fast, ultra-soft wave
+    const chars = footerGiantText.querySelectorAll('.f-char');
+    chars.forEach((char, index) => {
+      char.style.transitionDelay = `${(index * 0.026).toFixed(3)}s`;
+    });
 
-    let logoPull = 0; // 0 to 1.0
-    let logoVelocity = 0;
-    let isInteractingLogo = false;
-    let logoWheelTimer = null;
-    let springRunning = false;
-    let tensionPhase = 0;
+    function checkFooterScroll() {
+      const cardRect = luxuryCard.getBoundingClientRect();
+      const cardCenterY = cardRect.top + (cardRect.height * 0.5);
+      const viewportCenterY = window.innerHeight * 0.5;
 
-    function applyLogoPhysics(p, isStruggling = false) {
-      if (!footerCutWrap || !footerCutSvg) return;
-
-      const baseH = footerCutWrap.offsetWidth * 0.052;
-      const safeBaseH = Math.max(34, Math.min(88, baseH));
-
-      if (p > 0.001) {
-        // Emerges upwards towards the Contact item in Explore with smooth, stable elevation
-        const targetH = safeBaseH * (1 + p * 2.15);
-        footerCutWrap.style.height = `${targetH}px`;
-        footerCutSvg.style.height = `${targetH}px`;
-
-        const targetVbH = 65 + p * 130;
-        footerCutSvg.setAttribute('viewBox', `0 0 1600 ${targetVbH}`);
-
-        const liftY = p * 12;
-        if (footerCutText) {
-          footerCutText.style.transform = `translateY(${liftY}px)`;
-        }
-
-        if (isStruggling && p > 0.08) {
-          // Progressive tension vibration: subtle at low stretch, escalating smoothly towards the peak
-          tensionPhase += 0.28;
-          const tension = Math.min(1, Math.max(0, p));
-          const intensity = Math.pow(tension, 2.2);
-
-          const shakeX = Math.sin(tensionPhase * 15.0) * 1.35 * intensity;
-          const shakeY = Math.cos(tensionPhase * 20.0) * 0.85 * intensity;
-          const shakeRot = Math.sin(tensionPhase * 11.0) * 0.18 * intensity;
-
-          footerCutWrap.style.transformOrigin = 'center bottom';
-          footerCutWrap.style.transform = `translate3d(${shakeX.toFixed(2)}px, ${shakeY.toFixed(2)}px, 0) rotate(${shakeRot.toFixed(2)}deg) scale(1)`;
-
-          if (bottomLine) {
-            const linePulse = Math.sin(tensionPhase * 14.0) * 0.12 * intensity;
-            bottomLine.style.transform = `scaleY(${1 + p * 1.2 + linePulse})`;
-            bottomLine.style.background = 'var(--cr)';
-            bottomLine.style.boxShadow = `0 0 ${8 + p * 12}px var(--cr)`;
-          }
-        } else {
-          footerCutWrap.style.transformOrigin = 'center bottom';
-          footerCutWrap.style.transform = `translate3d(0, 0, 0) rotate(0deg) scale(1)`;
-
-          if (bottomLine) {
-            bottomLine.style.transform = `scaleY(${1 + p * 1.2})`;
-            bottomLine.style.background = 'var(--cr)';
-            bottomLine.style.boxShadow = `0 0 ${8 + p * 12}px var(--cr)`;
-          }
-        }
+      // Trigger ONLY when the white section (card center) reaches the center of the viewport
+      if (cardCenterY <= viewportCenterY + 40) {
+        footerGiantText.classList.add('revealed');
       } else {
-        // Original half-cut resting state (exact 50% sliced logo & word on the bottom line)
-        footerCutWrap.style.height = `${safeBaseH}px`;
-        footerCutSvg.style.height = `${safeBaseH}px`;
-        footerCutSvg.setAttribute('viewBox', '0 0 1600 65');
-        footerCutWrap.style.transform = 'translate3d(0, 0, 0) rotate(0deg) scale(1)';
-        if (footerCutText) {
-          footerCutText.style.transform = 'translateY(0)';
-        }
-        if (bottomLine) {
-          bottomLine.style.transform = 'none';
-          bottomLine.style.background = 'var(--rule)';
-          bottomLine.style.boxShadow = 'none';
-        }
+        footerGiantText.classList.remove('revealed');
       }
     }
 
-    function stepLogoSpring() {
-      if (!isInteractingLogo) {
-        // Soft, smooth deceleration return to resting position
-        const stiffness = 0.12;
-        const damping = 0.82;
-        const force = -stiffness * logoPull;
-        logoVelocity = (logoVelocity + force) * damping;
-        logoPull += logoVelocity;
-
-        if (Math.abs(logoPull) < 0.001 && Math.abs(logoVelocity) < 0.001) {
-          logoPull = 0;
-          logoVelocity = 0;
-          applyLogoPhysics(0, false);
-          springRunning = false;
-          return;
-        }
-        applyLogoPhysics(logoPull, false);
-      } else {
-        applyLogoPhysics(logoPull, true);
-      }
-
-      requestAnimationFrame(stepLogoSpring);
-    }
-
-    function triggerLogoSpring() {
-      if (!springRunning) {
-        springRunning = true;
-        requestAnimationFrame(stepLogoSpring);
-      }
-    }
-
-    // Initial resting state (exact 50% sliced logo)
-    applyLogoPhysics(0, false);
-
-    // ── Touchpad Scroll vs. Mouse Wheel Listener ─────────────────────
-    window.addEventListener('wheel', (e) => {
-      if (!footerDriver) return;
-      const rect = footerDriver.getBoundingClientRect();
-      const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 70);
-      const isCenterScreen = rect.top <= window.innerHeight * 0.52 || isAtBottom;
-
-      // Only starts when footer reaches the center of the screen
-      if (isCenterScreen) {
-        const isDiscreteWheel = e.deltaMode !== 0 || Math.abs(e.deltaY) >= 80 || (Math.abs(e.deltaY) % 100 === 0 && Math.abs(e.deltaY) > 0);
-
-        if (e.deltaY > 0 || (e.deltaY < 0 && logoPull > 0.02)) {
-          if (e.cancelable && isAtBottom) e.preventDefault();
-        }
-
-        isInteractingLogo = true;
-
-        if (e.deltaY > 0) {
-          logoPull = Math.min(1.0, logoPull + Math.abs(e.deltaY) * (isDiscreteWheel ? 0.08 : 0.0035));
-        } else if (e.deltaY < 0) {
-          logoPull = Math.max(0, logoPull - Math.abs(e.deltaY) * (isDiscreteWheel ? 0.08 : 0.0035));
-        }
-
-        triggerLogoSpring();
-
-        clearTimeout(logoWheelTimer);
-        const timeoutMs = isDiscreteWheel ? 180 : 350;
-        logoWheelTimer = setTimeout(() => {
-          isInteractingLogo = false;
-          triggerLogoSpring();
-        }, timeoutMs);
-      }
-    }, { passive: false });
-
-    // ── Touchscreen & Touchpad Touch Gestures ────────────────────────
-    const targets = [footerCutWrap, bottomCluster, luxuryCard].filter(Boolean);
-
-    let touchStartY = 0;
-    targets.forEach(target => {
-      target.addEventListener('touchstart', (e) => {
-        if (!e.target.closest('a, button, input, textarea')) {
-          touchStartY = e.touches[0].clientY;
-          isInteractingLogo = true;
-          triggerLogoSpring();
-        }
-      }, { passive: true });
-
-      target.addEventListener('mousedown', (e) => {
-        if (e.button === 0 && !e.target.closest('a, button, input, textarea')) {
-          isInteractingLogo = true;
-          touchStartY = e.clientY;
-          triggerLogoSpring();
-        }
-      });
-    });
-
-    window.addEventListener('touchmove', (e) => {
-      if (!isInteractingLogo || !e.touches.length) return;
-      const deltaY = touchStartY - e.touches[0].clientY;
-      if (deltaY > 0) {
-        logoPull = Math.min(1.0, deltaY * 0.006);
-      } else {
-        logoPull = Math.max(-0.35, deltaY * 0.005);
-      }
-      triggerLogoSpring();
-    }, { passive: true });
-
-    window.addEventListener('touchend', () => {
-      if (isInteractingLogo) {
-        clearTimeout(logoWheelTimer);
-        logoWheelTimer = setTimeout(() => {
-          isInteractingLogo = false;
-          triggerLogoSpring();
-        }, 140);
-      }
-    }, { passive: true });
-
-    window.addEventListener('touchcancel', () => {
-      if (isInteractingLogo) {
-        isInteractingLogo = false;
-        triggerLogoSpring();
-      }
-    }, { passive: true });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isInteractingLogo || e.buttons !== 1) return;
-      const deltaY = touchStartY - e.clientY;
-      if (deltaY > 0) {
-        logoPull = Math.min(1.0, deltaY * 0.006);
-      } else {
-        logoPull = Math.max(-0.35, deltaY * 0.005);
-      }
-      triggerLogoSpring();
-    });
-
-    window.addEventListener('mouseup', () => {
-      if (isInteractingLogo) {
-        clearTimeout(logoWheelTimer);
-        logoWheelTimer = setTimeout(() => {
-          isInteractingLogo = false;
-          triggerLogoSpring();
-        }, 140);
-      }
-    });
+    window.addEventListener('scroll', checkFooterScroll, { passive: true });
+    window.addEventListener('resize', checkFooterScroll, { passive: true });
+    checkFooterScroll();
   }
 
   function initActiveNavLinks() {

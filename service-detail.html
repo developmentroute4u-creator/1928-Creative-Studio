@@ -12,6 +12,8 @@
     href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet" />
 
+  <link rel="stylesheet" href="style.css" />
+
   <style>
     /* ── Gotham Primary & Raleway Secondary Font System ── */
     @font-face {
@@ -49,50 +51,33 @@
       padding: 0;
     }
 
-    :root {
-      --bg: #ffffff;
-      --card-bg: #ffffff;
-      --ink: #111111;
-      --ink-dim: #888888;
-      --rule: rgba(0, 0, 0, 0.08);
-      --rule-m: rgba(0, 0, 0, 0.15);
-      --cr: #c8102e;
-      --cr-glow: rgba(200, 16, 46, 0.20);
-      --sp: cubic-bezier(0.16, 1, 0.3, 1);
-      --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    [data-theme="dark"] {
-      --bg: #0a0a0a;
-      --card-bg: #141414;
-      --ink: #f2f2f2;
-      --ink-dim: #777777;
-      --rule: rgba(255, 255, 255, 0.10);
-      --rule-m: rgba(255, 255, 255, 0.18);
-      --cr: #e62343;
-      --cr-glow: rgba(230, 35, 67, 0.25);
-    }
-
     body {
       background: var(--bg);
       color: var(--ink);
       font-family: var(--font-secondary);
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
+      min-height: 100vh;
+      width: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      padding: clamp(24px, 4vh, 48px) clamp(24px, 4vw, 56px);
+      padding: clamp(24px, 4vh, 48px) 0 0 0;
       transition: background .3s, color .3s;
       position: relative;
     }
 
-    /* ── Custom Cursor ── */
-    .c-dot {
-      width: 6px;
+    .dev-page-hero {
+      width: 100%;
+      min-height: 75vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(24px, 4vw, 56px);
+      box-sizing: border-box;
+    }
       height: 6px;
       background: var(--cr);
       border-radius: 50%;
@@ -350,31 +335,33 @@
   <div class="c-dot" id="cDot"></div>
   <div class="c-ring" id="cRing"></div>
 
-  <!-- Minimal Top Bar -->
-  <header class="top-bar">
-    <a href="index.html" class="brand-link">
-      <span class="brand-title">1928</span>
-      <span class="brand-dot"></span>
-    </a>
-  </header>
+  <div class="dev-page-hero">
+    <!-- Minimal Top Bar -->
+    <header class="top-bar">
+      <a href="index.html" class="brand-link">
+        <span class="brand-title">1928</span>
+        <span class="brand-dot"></span>
+      </a>
+    </header>
 
-  <!-- Creative Centered Label Statement -->
-  <main class="center-container">
-    <div class="status-pill">
-      <span class="pulse-dot"></span>
-      <span>1928 Creative Studio</span>
-    </div>
+    <!-- Creative Centered Label Statement -->
+    <main class="center-container">
+      <div class="status-pill">
+        <span class="pulse-dot"></span>
+        <span>1928 Creative Studio</span>
+      </div>
 
-    <h1 class="statement-title">
-      This page is under <br />
-      <em>development.</em>
-    </h1>
+      <h1 class="statement-title">
+        This page is under <br />
+        <em>development.</em>
+      </h1>
 
-    <a href="index.html" class="return-pill">
-      <span>Return to Homepage</span>
-      <span class="arr">↗</span>
-    </a>
-  </main>
+      <a href="index.html" class="return-pill">
+        <span>Return to Homepage</span>
+        <span class="arr">↗</span>
+      </a>
+    </main>
+  </div>
 
   <!-- Footer (Referenced from footer.html) -->
   <div id="footer-placeholder"></div>
