@@ -50,7 +50,9 @@ const ROUTE_ALIASES = {
   '/all-blogs': '/blog-detail.html',
   '/all-perspectives': '/blog-detail.html',
   '/service-detail': '/service-detail.html',
-  '/project-detail': '/project-detail.html'
+  '/project-detail': '/project-detail.html',
+  '/admin': '/admin.html',
+  '/cms': '/admin.html'
 };
 
 function renderBranded404(requestedUrl) {
