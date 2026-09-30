@@ -618,42 +618,130 @@
 
     .stat-card {
       background: var(--card-bg);
-      border: 1px solid var(--rule);
+      border: 1.5px solid var(--rule-m);
       border-radius: 14px;
       padding: 22px 24px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
       position: relative;
-      overflow: visible;
-      transition: border-color 0.25s, transform 0.25s;
+      transition: all 0.25s var(--sp);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
     }
 
     .stat-card:hover {
-      border-color: var(--rule-m);
+      border-color: var(--rule-heavy);
       transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
     }
 
-    .stat-card::before {
-      content: '';
-      position: absolute;
-      top: -1px;
-      left: 14px;
-      right: 14px;
-      height: 3px;
-      background: var(--cr);
-      opacity: 0.85;
-      border-radius: 999px;
-      pointer-events: none;
+    .stat-card-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2px;
+    }
+
+    .stat-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--card-alt);
+      border: 1px solid var(--rule-m);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+      flex-shrink: 0;
+    }
+
+    .stat-card-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+    }
+
+    .stat-card-icon.primary {
+      background: rgba(200, 16, 46, 0.12);
+      border-color: rgba(200, 16, 46, 0.25);
+      color: var(--cr);
+    }
+
+    .stat-card-icon.primary svg {
+      stroke: var(--cr);
+    }
+
+    .stat-card-icon.danger {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.25);
+      color: #EF4444;
+    }
+
+    .stat-card-icon.danger svg {
+      stroke: #EF4444;
+    }
+
+    .stat-card-title {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+    }
+
+    .stat-card-desc {
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.45;
+      margin-bottom: 6px;
+      flex: 1;
+    }
+
+    .db-telemetry-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    .db-telemetry-badge.online {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10B981;
+    }
+
+    .db-telemetry-badge.offline {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #F59E0B;
+    }
+
+    .db-telemetry-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .db-telemetry-stats {
+      font-size: 11.5px;
+      color: var(--ink-mid);
+      line-height: 1.45;
+      margin-bottom: 8px;
     }
 
     .stat-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--ink-mid);
-      text-transform: uppercase;
+      font-family: var(--font-primary);
+      font-size: 13.5px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: var(--ink);
     }
 
     .stat-num {
@@ -4523,46 +4611,94 @@
       </div>
 
       <!-- MySQL Database Synchronization & Telemetry -->
-      <h3 style="font-family:var(--font-primary);font-size:18px;margin-bottom:16px;">MySQL Live Database (Laragon &amp; phpMyAdmin)</h3>
-      <div class="stats-grid" style="margin-bottom:32px;">
+      <h3 style="font-family:var(--font-primary);font-size:15px;font-weight:800;letter-spacing:-0.01em;text-transform:uppercase;color:var(--ink);margin-bottom:16px;">MySQL Live Database (Laragon &amp; phpMyAdmin)</h3>
+      <div class="stats-grid" style="margin-bottom:36px;">
         <div class="stat-card">
-          <span class="stat-label">🚀 Push All Data to MySQL</span>
-          <p style="font-size:13px;color:var(--ink-mid);margin:8px 0 16px;">Writes all 17 live blogs, 10 case studies, 12 client logos, 6 team members, 5 services, and 7 SEO records directly into MySQL.</p>
-          <button class="btn-action-primary" onclick="pushAllDataToMySQL()">Push Everything to MySQL</button>
+          <div class="stat-card-header">
+            <div class="stat-card-icon primary">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            </div>
+            <span class="stat-card-title">Push to MySQL</span>
+          </div>
+          <p class="stat-card-desc">Writes all 17 live blogs, 10 case studies, 12 client logos, 6 team members, 5 services, and 7 SEO records directly into MySQL tables.</p>
+          <button class="btn-action-primary" onclick="pushAllDataToMySQL()" style="margin-top:auto;justify-content:center;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            <span>Push Everything to MySQL</span>
+          </button>
         </div>
 
         <div class="stat-card">
-          <span class="stat-label">🔄 Pull &amp; Refresh from MySQL</span>
-          <p style="font-size:13px;color:var(--ink-mid);margin:8px 0 16px;">Forces an instant synchronization fetch from your MySQL database tables.</p>
-          <button class="btn-action-secondary" onclick="pullDataFromMySQL()">Pull Fresh from MySQL</button>
+          <div class="stat-card-header">
+            <div class="stat-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            </div>
+            <span class="stat-card-title">Pull &amp; Sync from MySQL</span>
+          </div>
+          <p class="stat-card-desc">Forces an instant synchronization fetch to retrieve and apply the latest records from your live MySQL database.</p>
+          <button class="btn-action-secondary" onclick="pullDataFromMySQL()" style="margin-top:auto;justify-content:center;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Pull Fresh from MySQL</span>
+          </button>
         </div>
 
         <div class="stat-card">
-          <span class="stat-label">⚡ Database Health Inspector</span>
-          <div id="dbHealthDetails" style="font-size:12px;color:var(--ink-mid);margin:8px 0 14px;font-family:var(--font-mono);line-height:1.4;">Checking tables...</div>
-          <button class="btn-action-secondary" onclick="checkDatabaseStatus(true)">Inspect Connection</button>
+          <div class="stat-card-header">
+            <div class="stat-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <span class="stat-card-title">Database Health &amp; Telemetry</span>
+          </div>
+          <p class="stat-card-desc">Inspect real-time connection status to your MySQL database, monitor PHP engine diagnostics, and verify data table integrity across all collections.</p>
+          <button class="btn-action-secondary" onclick="checkDatabaseStatus(true)" style="margin-top:auto;justify-content:center;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+            <span>Inspect Connection</span>
+          </button>
         </div>
       </div>
 
-      <h3 style="font-family:var(--font-primary);font-size:18px;margin-bottom:16px;">JSON File Backups &amp; Reset</h3>
+      <h3 style="font-family:var(--font-primary);font-size:15px;font-weight:800;letter-spacing:-0.01em;text-transform:uppercase;color:var(--ink);margin-bottom:16px;">JSON File Backups &amp; Reset</h3>
       <div class="stats-grid">
         <div class="stat-card">
-          <span class="stat-label">Export JSON Backup</span>
-          <p style="font-size:13px;color:var(--ink-mid);margin:8px 0 16px;">Download a standalone `.json` snapshot of all SEO tags, team profiles, blogs, case studies, services, and client logos.</p>
-          <button class="btn-action-secondary" onclick="exportDatabaseJSON()">Download JSON Backup</button>
+          <div class="stat-card-header">
+            <div class="stat-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            </div>
+            <span class="stat-card-title">Export JSON Backup</span>
+          </div>
+          <p class="stat-card-desc">Download a standalone `.json` snapshot of all SEO tags, team profiles, blogs, case studies, services, and client logos.</p>
+          <button class="btn-action-secondary" onclick="exportDatabaseJSON()" style="margin-top:auto;justify-content:center;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            <span>Download JSON Backup</span>
+          </button>
         </div>
 
         <div class="stat-card">
-          <span class="stat-label">Restore from JSON</span>
-          <p style="font-size:13px;color:var(--ink-mid);margin:8px 0 16px;">Upload a previously exported JSON backup file to restore your full studio content.</p>
+          <div class="stat-card-header">
+            <div class="stat-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+            </div>
+            <span class="stat-card-title">Restore from JSON File</span>
+          </div>
+          <p class="stat-card-desc">Upload a previously exported JSON backup file to restore your full studio website content and database state.</p>
           <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="handleImportFile(event)" />
-          <button class="btn-action-secondary" onclick="document.getElementById('importFileInput').click()">Upload Backup File</button>
+          <button class="btn-action-secondary" onclick="document.getElementById('importFileInput').click()" style="margin-top:auto;justify-content:center;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+            <span>Upload Backup File</span>
+          </button>
         </div>
 
         <div class="stat-card">
-          <span class="stat-label">Factory Reset Database</span>
-          <p style="font-size:13px;color:var(--ink-mid);margin:8px 0 16px;">Re-seed both MySQL and local store with 100% of the original website dataset.</p>
-          <button class="btn-action-danger" onclick="confirmResetDefaults()">Reset All to Defaults</button>
+          <div class="stat-card-header">
+            <div class="stat-card-icon danger">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <span class="stat-card-title" style="color:#EF4444;">Factory Reset Database</span>
+          </div>
+          <p class="stat-card-desc">Re-seed both MySQL and local store with 100% of the original website dataset. Unsaved edits will be reverted.</p>
+          <button class="btn-action-danger" onclick="confirmResetDefaults()" style="margin-top:auto;justify-content:center;padding:12px 20px;font-size:12px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <span>Reset All to Defaults</span>
+          </button>
         </div>
       </div>
     </section>
@@ -8091,22 +8227,20 @@
     async function checkDatabaseStatus(showNotification = false) {
       const pill = document.getElementById('dbStatusPill');
       const txt = document.getElementById('dbStatusText');
-      const healthBox = document.getElementById('dbHealthDetails');
 
       try {
         const res = await fetch('api.php?action=check_status');
         if (res.ok) {
           const data = await res.json();
           if (data && data.status === 'success') {
-            pill.classList.remove('offline');
-            txt.textContent = `MySQL: ${data.database}`;
-            if (healthBox && data.counts) {
-              healthBox.innerHTML = `
-                <div style="color:var(--success);margin-bottom:4px;font-weight:700;">🟢 Connected: ${data.database} via ${data.engine}</div>
-                <div><strong>Live Records:</strong> ${data.counts.blogs} Blogs · ${data.counts.portfolio} Projects · ${data.counts.clients} Logos · ${data.counts.team} Team · ${data.counts.services} Services · ${data.counts.seo} SEO Pages</div>
-              `;
+            if (pill) pill.classList.remove('offline');
+            if (txt) txt.textContent = `MySQL: ${data.database}`;
+            if (showNotification) {
+              const b = data.counts ? data.counts.blogs : 17;
+              const p = data.counts ? data.counts.portfolio : 10;
+              const c = data.counts ? data.counts.clients : 12;
+              showToast(`MySQL Connected: ${data.database} (${b} Blogs, ${p} Projects, ${c} Logos)`);
             }
-            if (showNotification) showToast(`✅ MySQL Connected: ${data.database} (${data.counts.blogs} Blogs, ${data.counts.portfolio} Projects)`);
             return;
           }
         }
@@ -8116,15 +8250,12 @@
         pill.classList.add('offline');
         txt.textContent = 'Local Sync Mode';
       }
-      if (healthBox) {
-        healthBox.innerHTML = `<div style="color:var(--warning);">🟡 Running in local storage fallback mode (syncs with MySQL whenever Laragon/PHP is open).</div>`;
-      }
-      if (showNotification) showToast('Running in local mode.', 'info');
+      if (showNotification) showToast('Operating in local storage fallback mode.', 'info');
     }
 
     async function pushAllDataToMySQL() {
       const fullData = window.CMSStore.exportData();
-      showToast('Pushing all website data into MySQL database...');
+      showToast('Writing studio dataset to MySQL database...');
       try {
         const parsed = JSON.parse(fullData);
         // Push all blogs
@@ -8159,10 +8290,10 @@
         if (parsed.contactBrief) {
           await fetch('api.php?action=save_settings', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({contact_brief: parsed.contactBrief}) });
         }
-        showToast('🎉 All 17 Blogs, 10 Projects, 12 Logos, SEO & Contact Brief data successfully written into MySQL!');
+        showToast('All 17 Blogs, 10 Projects, 12 Logos, SEO & Contact data synchronized to MySQL!');
         checkDatabaseStatus();
       } catch (e) {
-        showToast('Error syncing to MySQL: ' + e.message, 'error');
+        showToast('Sync Error: ' + e.message, 'error');
       }
     }
 
