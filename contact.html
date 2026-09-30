@@ -4042,31 +4042,42 @@
       // ═══════════════════════════════════════════════════════════
       // DEDICATED 30-MIN STRATEGY SESSION: CALENDAR & BOOKING LOGIC
       // ═══════════════════════════════════════════════════════════
-      const todayDay = 7; // Today is Sep 7, 2026
+      const _now = new Date();
+      const todayDay = _now.getDate();
+      const todayMonth = _now.getMonth();
+      const todayYear = _now.getFullYear();
       const bookedDays = [8, 9]; // Studio Admin backend integration: Fully booked dates
+
+      const monthNamesList = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      const monthShortNamesList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const weekdaysMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
       // Studio Admin backend integration: Available time windows per date
       const dateSlotsRegistry = {
-        7: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'], // 5 slots
-        10: ['10:30 AM IST', '02:00 PM IST', '04:30 PM IST', '07:00 PM IST'], // 4 slots
-        11: ['11:00 AM IST', '01:30 PM IST', '03:30 PM IST', '05:30 PM IST', '08:00 PM IST'], // 5 slots
-        12: ['12:00 PM IST', '03:00 PM IST', '05:30 PM IST'], // 3 slots
-        14: ['10:00 AM IST', '01:00 PM IST', '03:30 PM IST', '06:00 PM IST', '08:30 PM IST'], // 5 slots
-        15: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:30 PM IST'], // 4 slots
-        16: ['10:30 AM IST', '01:30 PM IST', '04:00 PM IST', '06:00 PM IST', '08:00 PM IST'], // 5 slots
-        17: ['11:30 AM IST', '03:00 PM IST', '05:00 PM IST', '07:30 PM IST'], // 4 slots
-        18: ['10:00 AM IST', '01:00 PM IST', '03:00 PM IST', '05:30 PM IST', '08:00 PM IST'], // 5 slots
-        19: ['12:00 PM IST', '02:30 PM IST', '05:00 PM IST'], // 3 slots
+        29: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'],
+        7: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'],
+        10: ['10:30 AM IST', '02:00 PM IST', '04:30 PM IST', '07:00 PM IST'],
+        11: ['11:00 AM IST', '01:30 PM IST', '03:30 PM IST', '05:30 PM IST', '08:00 PM IST'],
+        12: ['12:00 PM IST', '03:00 PM IST', '05:30 PM IST'],
+        14: ['10:00 AM IST', '01:00 PM IST', '03:30 PM IST', '06:00 PM IST', '08:30 PM IST'],
+        15: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:30 PM IST'],
+        16: ['10:30 AM IST', '01:30 PM IST', '04:00 PM IST', '06:00 PM IST', '08:00 PM IST'],
+        17: ['11:30 AM IST', '03:00 PM IST', '05:00 PM IST', '07:30 PM IST'],
+        18: ['10:00 AM IST', '01:00 PM IST', '03:00 PM IST', '05:30 PM IST', '08:00 PM IST'],
+        19: ['12:00 PM IST', '02:30 PM IST', '05:00 PM IST']
       };
 
       function getSlotsForDay(day) {
         if (dateSlotsRegistry[day]) return dateSlotsRegistry[day];
         if (day % 3 === 0) {
-          return ['10:30 AM IST', '01:30 PM IST', '04:00 PM IST', '06:30 PM IST']; // 4 slots
+          return ['10:30 AM IST', '01:30 PM IST', '04:00 PM IST', '06:30 PM IST'];
         } else if (day % 2 === 0) {
-          return ['11:00 AM IST', '02:30 PM IST', '05:00 PM IST', '07:30 PM IST']; // 4 slots
+          return ['11:00 AM IST', '02:30 PM IST', '05:00 PM IST', '07:30 PM IST'];
         } else {
-          return ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST']; // 5 slots
+          return ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'];
         }
       }
 
@@ -4077,8 +4088,18 @@
       const stepSlotSummaryText = document.getElementById('stepSlotSummaryText');
       const stepSlotsCount = document.getElementById('stepSlotsCount');
       const stepSbTimesGrid = document.getElementById('stepSbTimesGrid');
+      const stepCalMonthTitle = document.getElementById('stepCalMonthTitle');
 
-      let stepSelectedCalDate = { day: 7, weekday: 'Monday', month: 'Sep', year: 2026 };
+      if (stepCalMonthTitle) {
+        stepCalMonthTitle.textContent = `${monthNamesList[todayMonth]} ${todayYear}`;
+      }
+
+      let stepSelectedCalDate = {
+        day: todayDay,
+        weekday: weekdaysMap[_now.getDay()],
+        month: monthShortNamesList[todayMonth],
+        year: todayYear
+      };
       let stepSelectedCalTime = '02:30 PM IST';
 
       function updateStepSessionBanner() {
@@ -4127,19 +4148,22 @@
         if (!stepSbDaysGrid) return;
         stepSbDaysGrid.innerHTML = '';
 
-        // September 2026 starts on Tuesday (1 leading day from August)
-        const leadingDays = [{ day: 31, disabled: true }];
-        leadingDays.forEach(d => {
+        const firstDayObj = new Date(todayYear, todayMonth, 1);
+        let firstDayOfWeek = firstDayObj.getDay();
+        let leadCount = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1;
+
+        const prevMonthLastDate = new Date(todayYear, todayMonth, 0).getDate();
+        for (let i = leadCount - 1; i >= 0; i--) {
           const cell = document.createElement('div');
           cell.className = 'sb-day-cell disabled';
-          cell.textContent = d.day;
+          cell.textContent = prevMonthLastDate - i;
           stepSbDaysGrid.appendChild(cell);
-        });
+        }
 
-        const weekdaysMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const daysInMonth = new Date(todayYear, todayMonth + 1, 0).getDate();
 
-        for (let day = 1; day <= 30; day++) {
-          const dateObj = new Date(2026, 8, day);
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dateObj = new Date(todayYear, todayMonth, day);
           const dayOfWeek = dateObj.getDay();
           const isSunday = dayOfWeek === 0;
           const isPast = day < todayDay;
@@ -4161,13 +4185,13 @@
           cell.setAttribute('data-day', day);
           cell.setAttribute('data-weekday', weekdaysMap[dayOfWeek]);
           if (isBooked) {
-            cell.setAttribute('title', `September ${day}, 2026 · Fully Booked`);
+            cell.setAttribute('title', `${monthNamesList[todayMonth]} ${day}, ${todayYear} · Fully Booked`);
           }
 
           if (!isSunday && !isPast) {
             cell.addEventListener('click', () => {
               if (isBooked) {
-                showToast(`September ${day}, 2026 is fully committed. Please select an open date.`);
+                showToast(`${monthNamesList[todayMonth]} ${day}, ${todayYear} is fully committed. Please select an open date.`);
                 playLuxuryHaptic(420, 'triangle', 0.05);
                 return;
               }
@@ -4176,8 +4200,8 @@
               stepSelectedCalDate = {
                 day: day,
                 weekday: weekdaysMap[dayOfWeek],
-                month: 'Sep',
-                year: 2026
+                month: monthShortNamesList[todayMonth],
+                year: todayYear
               };
               updateStepSessionBanner();
               renderStepTimeSlots(day);
@@ -4188,8 +4212,10 @@
           stepSbDaysGrid.appendChild(cell);
         }
 
-        // Trailing days for October
-        for (let trail = 1; trail <= 4; trail++) {
+        const totalFilled = leadCount + daysInMonth;
+        const remainder = totalFilled % 7;
+        const trailCount = remainder === 0 ? 0 : 7 - remainder;
+        for (let trail = 1; trail <= trailCount; trail++) {
           const cell = document.createElement('div');
           cell.className = 'sb-day-cell disabled';
           cell.textContent = trail;

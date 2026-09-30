@@ -77,11 +77,11 @@
         { id: 'team-priyal', memberKey: 'priyal', name: 'Priyal Lunkar', role: 'Social Media Manager', photo: 'img/team-elena.jpg', order: 6 }
       ],
       process: [
-        { step: '01', phase: 'PHASE 01 // DISCOVER', title: 'Understand Before We Build', desc: 'We get close to your business, audience, market and ambitions to understand what makes your opportunity unique.', tags: ['BUSINESS DISCOVERY', 'AUDIENCE', 'MARKET', 'GOALS'] },
-        { step: '02', phase: 'PHASE 02 // DEFINE', title: 'Shape the Direction', desc: 'We turn insights into a clear creative and strategic direction that gives your brand a strong foundation.', tags: ['POSITIONING', 'BRAND DIRECTION', 'CREATIVE STRATEGY'] },
-        { step: '03', phase: 'PHASE 03 // CREATE', title: 'Bring the Brand to Life', desc: 'This is where ideas become identities, digital experiences, content and campaigns designed around your brand.', tags: ['IDENTITY', 'DIGITAL', 'CONTENT', 'CAMPAIGNS'] },
-        { step: '04', phase: 'PHASE 04 // DELIVER', title: 'Launch With Impact', desc: 'We deploy every asset with precision, ensuring consistent excellence across all physical and digital brand touchpoints.', tags: ['EXECUTION', 'GUIDELINES', 'FLAGSHIPS', 'ACTIVATION'] },
-        { step: '05', phase: 'PHASE 05 // GROW', title: 'Iterate & Expand', desc: 'A brand is living architecture. We continue collaborating to scale your reach and maximize market equity over time.', tags: ['SCALING', 'ANALYTICS', 'CULTURE', 'MOMENTUM'] }
+        { step: '01', phase: 'PHASE 01 / DISCOVER', title: 'Understand Before We Build', desc: 'We get close to your business, audience, market and ambitions to understand what makes your opportunity unique.', tags: ['BUSINESS DISCOVERY', 'AUDIENCE', 'MARKET', 'GOALS'] },
+        { step: '02', phase: 'PHASE 02 / DEFINE', title: 'Shape the Direction', desc: 'We turn insights into a clear creative and strategic direction that gives your brand a strong foundation.', tags: ['POSITIONING', 'BRAND DIRECTION', 'CREATIVE STRATEGY'] },
+        { step: '03', phase: 'PHASE 03 / CREATE', title: 'Bring the Brand to Life', desc: 'This is where ideas become identities, digital experiences, content and campaigns designed around your brand.', tags: ['IDENTITY', 'DIGITAL', 'CONTENT', 'CAMPAIGNS'] },
+        { step: '04', phase: 'PHASE 04 / DELIVER', title: 'Launch With Impact', desc: 'We deploy every asset with precision, ensuring consistent excellence across all physical and digital brand touchpoints.', tags: ['EXECUTION', 'GUIDELINES', 'FLAGSHIPS', 'ACTIVATION'] },
+        { step: '05', phase: 'PHASE 05 / GROW', title: 'Iterate & Expand', desc: 'A brand is living architecture. We continue collaborating to scale your reach and maximize market equity over time.', tags: ['SCALING', 'ANALYTICS', 'CULTURE', 'MOMENTUM'] }
       ]
     },
 
@@ -264,213 +264,363 @@
         id: 'aurora',
         title: 'Aurora Chronometer Systems',
         client: 'Aurora Horology Geneve',
+        subheading: 'Swiss Luxury Brand Identity & 3D Vault',
         category: 'brand-identity web-design logo-design',
         categoryDisplay: 'Swiss Luxury Brand Identity & 3D Vault',
         tagPill: 'Horology & WebGL',
+        sector: 'Swiss Luxury Horology',
+        deliverables: 'Identity, Packaging, 3D WebGL Vault',
+        timeline: '6 Months · Global Launch',
         gridSpan: 'bento-wide',
         year: '2025',
         coverImage: 'img/port-chronos.jpg',
+        bannerImage: 'img/port-chronos.jpg',
         featured: true,
         order: 1,
+        overview: 'Aurora Horology commissioned 1928 Creative Studio to architect an enduring brand ecosystem that honors Swiss horological precision while establishing commanding digital authority for the next generation of luxury collectors. Through monolithic typographic architecture, bespoke crimson color physics, and a zero-latency 3D WebGL boutique vault, we transformed the brand into an iconic collector centerpiece that sold out its inaugural batch within minutes.',
+        description: 'A complete haute horlogerie visual identity system, architectural physical packaging, and custom WebGL timekeeper showcase.',
         summary: 'A complete haute horlogerie visual identity system, architectural physical packaging, and custom WebGL timekeeper showcase.',
+        challenge: 'Positioning an independent Geneva watchmaker against century-old heritage conglomerates without diluting precision credentials.',
+        approach: 'Designed a monolithic titanium-grade visual identity system paired with an interactive 120fps WebGL virtual tourbillon configurator.',
+        impact: 'Sold out the inaugural 100-piece production run within 72 hours of global digital launch.',
+        galleryImages: [
+          'img/port-chronos.jpg',
+          'img/port-spectra.jpg',
+          'img/port-lumina.jpg',
+          'img/wc-l1.jpg',
+          'img/wc-r1.jpg',
+          'img/port-veloce.jpg'
+        ],
         metrics: [
           { label: 'Market Valuation Uplift', value: '+340%' },
           { label: 'Private Vault Inquiries', value: '4.8k' },
           { label: 'Global Design Accolades', value: '04' }
-        ],
-        challenge: 'Positioning an independent Geneva watchmaker against century-old heritage conglomerates without diluting precision credentials.',
-        approach: 'Designed a monolithic titanium-grade visual identity system paired with an interactive 120fps WebGL virtual tourbillon configurator.',
-        impact: 'Sold out the inaugural 100-piece production run within 72 hours of global digital launch.'
+        ]
       },
       {
         id: 'veloce',
         title: 'Veloce Hypercraft Platforms',
         client: 'Veloce Automobili Modena',
+        subheading: 'Automotive Digital Flagship & Raytraced Configurator',
         category: 'web-design brand-identity',
         categoryDisplay: 'Automotive Digital Flagship & Raytraced Configurator',
         tagPill: 'Automotive & 3D',
+        sector: 'Ultra-High Performance Automotive & EV',
+        deliverables: 'Curved Cockpit UI, 3D Vehicle Configurator',
+        timeline: '8 Months · Global Reveal',
         gridSpan: 'bento-compact',
         year: '2025',
         coverImage: 'img/port-veloce.jpg',
+        bannerImage: 'img/port-veloce.jpg',
         featured: true,
         order: 2,
+        overview: 'Designing the next-generation digital cockpit and companion mobile platform for an ultra-high performance electric hypercar capable of 0-100 km/h in 1.8 seconds. We synthesized dense telemetry parameters into a high-contrast dark mode visual hierarchy, procedural real-time raytraced shaders, and micro-haptic interactions running at 120fps on custom curved automotive displays.',
+        description: 'Digital ecosystem engineered for electric hypercar customization with real-time shader material simulation.',
         summary: 'Digital ecosystem engineered for electric hypercar customization with real-time shader material simulation.',
+        challenge: 'Overcoming web browser rendering bottlenecks to showcase real-time carbon-fiber weave finishes.',
+        approach: 'Developed custom GLSL fragment shaders simulating accurate photonic refractions across curved hypercar body panels.',
+        impact: 'Acquired 18 qualified bespoke hypercar custom orders prior to physical prototype reveals.',
+        galleryImages: [
+          'img/port-veloce.jpg',
+          'img/port-kroma.jpg',
+          'img/wc-r2.jpg',
+          'img/port-zenith.jpg',
+          'img/wc-top.jpg',
+          'assets/services/svc_4.jpg'
+        ],
         metrics: [
           { label: 'Avg Interactive Duration', value: '6.4 Min' },
           { label: 'VIP Allocations Reserved', value: '100%' },
           { label: 'Frame-Rate Target', value: '120 FPS' }
-        ],
-        challenge: 'Overcoming web browser rendering bottlenecks to showcase real-time carbon-fiber weave finishes.',
-        approach: 'Developed custom GLSL fragment shaders simulating accurate photonic refractions across curved hypercar body panels.',
-        impact: 'Acquired 18 qualified bespoke hypercar custom orders prior to physical prototype reveals.'
+        ]
       },
       {
         id: 'elysian',
         title: 'Elysian High Jewelry & Fragrance',
         client: 'Maison Elysian Paris',
+        subheading: 'Haute Parfumerie Flacon & Travertine Flagship',
         category: 'spatial-packaging brand-identity',
         categoryDisplay: 'Haute Parfumerie Flacon & Travertine Flagship',
         tagPill: 'Packaging & Spatial',
+        sector: 'Luxury Fragrance & Cosmetics',
+        deliverables: 'Glass Bottle Design, Logo Monogram, Box Suite',
+        timeline: '5 Months · European Flagships',
         gridSpan: 'bento-compact',
         year: '2025',
         coverImage: 'img/port-elysian.jpg',
+        bannerImage: 'img/port-elysian.jpg',
         featured: true,
         order: 3,
+        overview: 'Sculpting a bespoke fluted glass vessel and monolithic identity for a Paris-based luxury fragrance house featuring deep crimson gradients and pure geometry. The physical packaging pairs fluted frosted crystal with a custom brushed brass collar, creating an instantly recognizable silhouette that won Pentawards Gold and secured commanding flagship shelf presence across Europe.',
+        description: 'Fluted lead-free crystal flacon architecture, weighted magnetic closures, and Milan flagship sensory environment.',
         summary: 'Fluted lead-free crystal flacon architecture, weighted magnetic closures, and Milan flagship sensory environment.',
+        challenge: 'Transforming high perfumery into a sculptural tactile artifact that commands heirloom status.',
+        approach: 'Engineered a 480-gram crystal monolith with 1.2N acoustic magnetic snaps and brutalist travertine store fixtures.',
+        impact: 'Expanded across 14 premier luxury department stores in Paris, Tokyo, and New York.',
+        galleryImages: [
+          'img/port-elysian.jpg',
+          'img/port-chronos.jpg',
+          'assets/services/svc_3.jpg',
+          'img/wc-l2.jpg',
+          'assets/services/svc_1.jpg',
+          'img/wc-r1.jpg'
+        ],
         metrics: [
           { label: 'Retail Revenue per Sq.Ft', value: '€4,200' },
           { label: 'Packaging Retention Rate', value: '96%' }
-        ],
-        challenge: 'Transforming high perfumery into a sculptural tactile artifact that commands heirloom status.',
-        approach: 'Engineered a 480-gram crystal monolith with 1.2N acoustic magnetic snaps and brutalist travertine store fixtures.',
-        impact: 'Expanded across 14 premier luxury department stores in Paris, Tokyo, and New York.'
+        ]
       },
       {
         id: 'noir-atelier',
         title: 'Noir Spatial Architecture & Flagship',
         client: 'Noir Fashion Group Milan',
+        subheading: 'Brutalist Travertine Flagship Architecture',
         category: 'spatial-packaging brand-identity',
         categoryDisplay: 'Brutalist Travertine Flagship Architecture',
         tagPill: 'Spatial Architecture',
+        sector: 'High Fashion & Luxury Retail Architecture',
+        deliverables: 'Spatial Guidelines, Fixture Architecture, Soundscapes',
+        timeline: '6 Months · Milan Design Week',
         gridSpan: 'bento-wide',
         year: '2024',
         coverImage: 'img/port-noir.jpg',
+        bannerImage: 'img/port-noir.jpg',
         featured: true,
         order: 4,
+        overview: 'Monolithic interior architecture, directional soundscapes, and negative-space lighting choreography. Eliminating the commercial feel of traditional retail to create an immersive museum-grade sanctum with split-face Roman travertine walls and 2700K surgical beam spotlights.',
+        description: 'Monolithic interior architecture, directional soundscapes, and negative-space lighting choreography.',
         summary: 'Monolithic interior architecture, directional soundscapes, and negative-space lighting choreography.',
+        challenge: 'Eliminating the commercial feel of traditional retail to create an immersive museum-grade sanctum.',
+        approach: 'Incorporated unpolished split-face Roman travertine walls, 2700K surgical beam spotlights, and acoustic felt baffles.',
+        impact: 'Won Milan Retail Architecture Design of the Year.',
+        galleryImages: [
+          'img/port-noir.jpg',
+          'img/wc-mid.jpg',
+          'assets/services/svc_2.jpg',
+          'img/wc-bot.jpg',
+          'img/port-spectra.jpg',
+          'img/wc-top.jpg'
+        ],
         metrics: [
           { label: 'Footfall Dwell Duration', value: '+210%' },
           { label: 'Conversion Velocity', value: '38%' }
-        ],
-        challenge: 'Eliminating the commercial feel of traditional retail to create an immersive museum-grade sanctum.',
-        approach: 'Incorporated unpolished split-face Roman travertine walls, 2700K surgical beam spotlights, and acoustic felt baffles.',
-        impact: 'Won Milan Retail Architecture Design of the Year.'
+        ]
       },
       {
         id: 'lumina',
         title: 'Lumina Neural Aesthetics Platform',
         client: 'Lumina AI Zurich',
+        subheading: 'Liquid Metal UI & Generative Research Interface',
         category: 'web-design brand-identity',
         categoryDisplay: 'Liquid Metal UI & Generative Research Interface',
         tagPill: 'AI Interface & WebGL',
+        sector: 'Deep Tech & Generative AI',
+        deliverables: 'Brand System, 3D WebGL Platform, Visual Tokens',
+        timeline: '4 Months · Enterprise Launch',
         gridSpan: 'bento-wide',
         year: '2024',
         coverImage: 'img/port-lumina.jpg',
+        bannerImage: 'img/port-lumina.jpg',
         featured: true,
         order: 5,
+        overview: 'Generative liquid chrome shader interfaces representing deep neural state transformations. Making complex deep learning workflows feel human, organic, and visually captivating through custom GLSL shaders and responsive physics engines.',
+        description: 'Generative liquid chrome shader interfaces representing deep neural state transformations.',
         summary: 'Generative liquid chrome shader interfaces representing deep neural state transformations.',
+        challenge: 'Making complex deep learning workflows feel human, organic, and visually captivating.',
+        approach: 'Replaced sterile SaaS dashboard widgets with dynamic fluid simulations that adapt to computational confidence.',
+        impact: 'Positioned Lumina as the definitive luxury interface in enterprise artificial intelligence.',
+        galleryImages: [
+          'img/port-lumina.jpg',
+          'img/port-kroma.jpg',
+          'img/port-veloce.jpg',
+          'img/wc-top.jpg',
+          'assets/services/svc_5.jpg',
+          'img/wc-r1.jpg'
+        ],
         metrics: [
           { label: 'Series A Raised', value: '$24M' },
           { label: 'User Retention Rate', value: '88%' }
-        ],
-        challenge: 'Making complex deep learning workflows feel human, organic, and visually captivating.',
-        approach: 'Replaced sterile SaaS dashboard widgets with dynamic fluid simulations that adapt to computational confidence.',
-        impact: 'Positioned Lumina as the definitive luxury interface in enterprise artificial intelligence.'
+        ]
       },
       {
         id: 'bugatti',
         title: 'Bugatti Centodieci Collector Codex',
         client: 'Bugatti Automobiles Molsheim',
+        subheading: 'Aerospace Carbon Fiber Presentation Codex',
         category: 'spatial-packaging brand-identity',
         categoryDisplay: 'Aerospace Carbon Fiber Presentation Codex',
         tagPill: 'Collector Codex',
+        sector: 'Hypercar Collector Publishing',
+        deliverables: 'Monograph Codex, Milled Aluminum Slipcase',
+        timeline: '5 Months · Molsheim Atelier',
         gridSpan: 'bento-compact',
         year: '2024',
         coverImage: 'img/port-spectra.jpg',
+        bannerImage: 'img/port-spectra.jpg',
         featured: true,
         order: 6,
+        overview: 'Limited-edition bespoke carbon-bound hardcover monograph and archival collector packaging. Designing an archival asset worthy of a multi-million dollar hypercar acquisition using aerospace carbon fiber weaves and custom milled aluminum case.',
+        description: 'Limited-edition bespoke carbon-bound hardcover monograph and archival collector packaging.',
         summary: 'Limited-edition bespoke carbon-bound hardcover monograph and archival collector packaging.',
+        challenge: 'Designing an archival asset worthy of a multi-million dollar hypercar acquisition.',
+        approach: 'Handcrafted binding using aerospace carbon fiber weaves, silver-foil typography, and custom milled aluminum case.',
+        impact: 'Catalogued into premier private automotive archives globally.',
+        galleryImages: [
+          'img/port-spectra.jpg',
+          'img/wc-l1.jpg',
+          'img/wc-r1.jpg',
+          'img/port-lumina.jpg',
+          'img/wc-r2.jpg',
+          'img/port-chronos.jpg'
+        ],
         metrics: [
           { label: 'Limited Edition Print Run', value: '110 Copies' },
           { label: 'Collector Satisfaction', value: '100%' }
-        ],
-        challenge: 'Designing an archival asset worthy of a multi-million dollar hypercar acquisition.',
-        approach: 'Handcrafted binding using aerospace carbon fiber weaves, silver-foil typography, and custom milled aluminum case.',
-        impact: 'Catalogued into premier private automotive archives globally.'
+        ]
       },
       {
         id: 'juventus',
         title: 'Juventus Brand System',
         client: 'Juventus Football Club',
+        subheading: 'Global Iconic Identity & Sensory Stadium Experience',
         category: 'brand-identity logo-design',
         categoryDisplay: 'Global Iconic Identity & Sensory Stadium Experience',
         tagPill: 'Global Icon',
+        sector: 'Global Icon & Sports Entertainment',
+        deliverables: 'Monogram Architecture, Stadium Spatial, Merch System',
+        timeline: '8 Months · Global Rollout',
         gridSpan: 'bento-compact',
         year: '2024',
         coverImage: 'img/wc-top.jpg',
+        bannerImage: 'img/wc-top.jpg',
         featured: true,
         order: 7,
+        overview: 'Global visual identity system, brand guidelines, and sensory stadium experience touchpoints. Reinventing a century-old heritage sports club into a global lifestyle and entertainment brand with an iconic minimalist J-monogram.',
+        description: 'Global visual identity system, brand guidelines, and sensory stadium experience touchpoints.',
         summary: 'Global visual identity system, brand guidelines, and sensory stadium experience touchpoints.',
+        challenge: 'Reinventing a century-old heritage sports club into a global lifestyle and entertainment brand.',
+        approach: 'Stripped away legacy shields to introduce an iconic minimalist J-monogram and black/white architectural identity.',
+        impact: 'Became the most recognized contemporary sports rebrand of the decade.',
+        galleryImages: [
+          'img/wc-top.jpg',
+          'img/wc-mid.jpg',
+          'img/wc-bot.jpg',
+          'assets/services/svc_1.jpg',
+          'assets/services/svc_2.jpg',
+          'img/port-zenith.jpg'
+        ],
         metrics: [
           { label: 'Global Merchandise Uplift', value: '+42%' },
           { label: 'Brand Value Growth', value: '€180M' }
-        ],
-        challenge: 'Reinventing a century-old heritage sports club into a global lifestyle and entertainment brand.',
-        approach: 'Stripped away legacy shields to introduce an iconic minimalist J-monogram and black/white architectural identity.',
-        impact: 'Became the most recognized contemporary sports rebrand of the decade.'
+        ]
       },
       {
         id: 'balenciaga',
         title: 'Balenciaga Couture Spatial Architecture',
         client: 'Balenciaga Paris',
+        subheading: 'Monolithic Retail Fixtures & Runway Scenography',
         category: 'spatial-packaging brand-identity',
         categoryDisplay: 'Monolithic Retail Fixtures & Runway Scenography',
         tagPill: 'Couture Spatial',
-        gridSpan: 'bento-compact',
+        sector: 'Post-Luxury Couture Spatial',
+        deliverables: 'Runway Scenography, Raw Concrete Fixtures',
+        timeline: '4 Months · Paris Fashion Week',
+        gridSpan: 'bento-wide',
         year: '2024',
         coverImage: 'img/wc-mid.jpg',
+        bannerImage: 'img/wc-mid.jpg',
         featured: true,
         order: 8,
+        overview: 'Architectural spatial system, monolithic raw-concrete retail fixtures, and kinetic runway scenography translating post-luxury couture aesthetics into visceral physical and retail spaces across flagship stores.',
+        description: 'Architectural spatial system, monolithic raw-concrete retail fixtures, and kinetic runway scenography.',
         summary: 'Architectural spatial system, monolithic raw-concrete retail fixtures, and kinetic runway scenography.',
+        challenge: 'Translating post-luxury couture aesthetics into visceral physical and retail spaces.',
+        approach: 'Raw industrial concrete monoliths contrasted with razor-sharp dynamic LED grids and brushed steel display cases.',
+        impact: 'Implemented across premier flagships in Paris, New York, and Seoul.',
+        galleryImages: [
+          'img/wc-mid.jpg',
+          'img/wc-bot.jpg',
+          'img/port-noir.jpg',
+          'assets/services/svc_3.jpg',
+          'assets/services/svc_4.jpg',
+          'img/port-veloce.jpg'
+        ],
         metrics: [
           { label: 'Flagship Footfall Increase', value: '+65%' },
           { label: 'Runway Live Impressions', value: '18M' }
-        ],
-        challenge: 'Translating post-luxury couture aesthetics into visceral physical and retail spaces.',
-        approach: 'Raw industrial concrete monoliths contrasted with razor-sharp dynamic LED grids and brushed steel display cases.',
-        impact: 'Implemented across premier flagships in Paris, New York, and Seoul.'
+        ]
       },
       {
         id: 'polene',
         title: 'Polène Paris Leather Goods',
         client: 'Polène Paris',
+        subheading: 'Sculptural Leather Goods Packaging & 3D Assets',
         category: 'spatial-packaging brand-identity',
         categoryDisplay: 'Sculptural Leather Goods Packaging & 3D Assets',
         tagPill: 'Luxury Atelier',
-        gridSpan: 'bento-compact',
+        sector: 'Luxury Leather Atelier',
+        deliverables: 'Sculpted Presentation Boxes, Magnetic Closures',
+        timeline: '6 Months · Paris Atelier',
+        gridSpan: 'bento-wide',
         year: '2024',
         coverImage: 'img/wc-bot.jpg',
+        bannerImage: 'img/wc-bot.jpg',
         featured: true,
         order: 9,
+        overview: 'Sculptural leather goods packaging, tactile materiality, and 3D architectural campaign assets honoring organic curves and leather artisanry with hidden magnetic pivots and debossed metallic signatures.',
+        description: 'Sculptural leather goods packaging, tactile materiality, and 3D architectural campaign assets.',
         summary: 'Sculptural leather goods packaging, tactile materiality, and 3D architectural campaign assets.',
+        challenge: 'Crafting unboxing rituals that honor organic curves and leather artisanry.',
+        approach: 'Sculpted organic box architectures with hidden magnetic pivots and debossed metallic signatures.',
+        impact: 'Elevated brand perception into premier tier luxury leather goods.',
+        galleryImages: [
+          'img/wc-bot.jpg',
+          'img/port-elysian.jpg',
+          'assets/services/svc_1.jpg',
+          'assets/services/svc_2.jpg',
+          'assets/services/svc_5.jpg',
+          'img/port-spectra.jpg'
+        ],
         metrics: [
           { label: 'D2C Global Conversion', value: '+28%' },
           { label: 'Organic Viral Reach', value: '5.4M' }
-        ],
-        challenge: 'Crafting unboxing rituals that honor organic curves and leather artisanry.',
-        approach: 'Sculpted organic box architectures with hidden magnetic pivots and debossed metallic signatures.',
-        impact: 'Elevated brand perception into premier tier luxury leather goods.'
+        ]
       },
       {
         id: 'rimowa',
         title: 'Rimowa Monolith Archive',
         client: 'Rimowa Cologne',
+        subheading: 'Monolithic Digital Flagship & 3D WebGL Configurator',
         category: 'web-design brand-identity',
         categoryDisplay: 'Monolithic Digital Flagship & 3D WebGL Configurator',
         tagPill: 'Industrial Luxury',
+        sector: 'Industrial Luxury Travel',
+        deliverables: '3D Luggage Configurator, Global Checkout',
+        timeline: '6 Months · Cologne Flagship',
         gridSpan: 'bento-compact',
         year: '2024',
         coverImage: 'img/f-brand-3.jpg',
+        bannerImage: 'img/f-brand-3.jpg',
         featured: true,
         order: 10,
+        overview: 'Monolithic digital flagship, aluminum 3D configurator, and high-velocity global checkout experience reflecting the precision grooves and lifetime durability of aluminum travel cases.',
+        description: 'Monolithic digital flagship, aluminum 3D configurator, and high-velocity global checkout experience.',
         summary: 'Monolithic digital flagship, aluminum 3D configurator, and high-velocity global checkout experience.',
+        challenge: 'Building a digital flagship reflecting the precision grooves and lifetime durability of aluminum travel cases.',
+        approach: 'Engineered real-time WebGL grooved aluminum reflections with personalized laser-engraving simulations.',
+        impact: 'Highest online customizer engagement rate in brand history.',
+        galleryImages: [
+          'img/f-brand-3.jpg',
+          'img/port-chronos.jpg',
+          'img/port-veloce.jpg',
+          'img/wc-top.jpg',
+          'assets/services/svc_3.jpg',
+          'assets/services/svc_4.jpg'
+        ],
         metrics: [
           { label: 'Configurator Engagement', value: '4.8 Min' },
           { label: 'Mobile Checkout Speed', value: '1.2s' }
-        ],
-        challenge: 'Building a digital flagship reflecting the precision grooves and lifetime durability of aluminum travel cases.',
-        approach: 'Engineered real-time WebGL grooved aluminum reflections with personalized laser-engraving simulations.',
-        impact: 'Highest online customizer engagement rate in brand history.'
+        ]
       }
     ],
 
@@ -852,7 +1002,149 @@
         twitter: 'https://twitter.com'
       },
       ctaPrimaryText: 'Start a Project',
-      ctaSecondaryText: 'Tell us what you\'re building'
+      ctaSecondaryText: 'Tell us what you\'re building',
+      portfolioHero: {
+        eyebrow: 'PORTFOLIO // 1928 STUDIO',
+        titleLine1Prefix: 'WORK THAT',
+        pill1ProjectId: 'aurora',
+        pill1Img: 'img/port-chronos.jpg',
+        titleLine1Suffix: 'MOVES',
+        titleLine2Prefix: 'BRANDS',
+        pill2ProjectId: 'aetherion',
+        pill2Img: 'img/port-veloce.jpg',
+        titleLine2Suffix: 'FORWARD.',
+        manifesto: 'A curated selection of branding, digital experiences, content, and marketing work created to solve real business challenges and build stronger brands.',
+        ctaText: 'EXPLORE OUR WORK'
+      },
+      servicesHeader: {
+        headline: 'OUR CORE SERVICES',
+        description: 'From the first visual impression to the way your brand grows in the market, we bring strategy, creativity and execution together under one roof.'
+      },
+      homeSelectedProjects: ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir']
+    },
+
+    // ── 8. CONTACT & MULTI-STEP BRIEF CONFIGURATION ──
+    contactBrief: {
+      header: {
+        title: "Start a Project.",
+        desc: "Specify your engagement parameters to initiate a confidential studio brief.",
+        badge: "Confidential Brief · Partner Review"
+      },
+      step1: {
+        railWord: "Scope",
+        headline: "Engagement Classification",
+        caption: "Select the primary service for this project.",
+        cards: [
+          {
+            id: "scope-1",
+            index: "01 / VISUAL IDENTITY",
+            title: "Logo Design",
+            keywords: ["Logos", "Wordmarks", "Direction"],
+            mandate: "Logo Design"
+          },
+          {
+            id: "scope-2",
+            index: "02 / BRAND SYSTEM",
+            title: "Brand Identity Development",
+            keywords: ["Strategy", "Guidelines", "Systems"],
+            mandate: "Brand Identity Development"
+          },
+          {
+            id: "scope-3",
+            index: "03 / DIGITAL EXPERIENCE",
+            title: "Website Design & Development",
+            keywords: ["UI/UX", "Websites", "E-Commerce"],
+            mandate: "Website Design & Development"
+          },
+          {
+            id: "scope-4",
+            index: "04 / DIGITAL GROWTH",
+            title: "Social Media & Digital Marketing",
+            keywords: ["Social Media", "Meta Ads", "SEO"],
+            mandate: "Social Media & Digital Marketing"
+          },
+          {
+            id: "scope-5",
+            index: "05 / CONTENT & INFLUENCE",
+            title: "Content Creation & Influencer Marketing",
+            keywords: ["Reels", "Video", "Campaigns"],
+            mandate: "Content Creation & Influencer Marketing"
+          }
+        ]
+      },
+      step2: {
+        railWord: "Disciplines",
+        headline: "Specialized Disciplines",
+        caption: "Choose all deliverables and capabilities required for this engagement.",
+        disciplines: [
+          { id: "disc-1", label: "Logo & Symbol Design", defaultSelected: true },
+          { id: "disc-2", label: "Brand Guidelines & Systems", defaultSelected: true },
+          { id: "disc-3", label: "UI/UX & Web Design", defaultSelected: false },
+          { id: "disc-4", label: "WordPress & E-Commerce", defaultSelected: false },
+          { id: "disc-5", label: "Social Media Management", defaultSelected: false },
+          { id: "disc-6", label: "Meta Ads & Performance", defaultSelected: false },
+          { id: "disc-7", label: "Reels & Video Production", defaultSelected: false },
+          { id: "disc-8", label: "Influencer Collaborations", defaultSelected: false }
+        ]
+      },
+      step3: {
+        railWord: "Allocation",
+        headline: "Capital Allocation (INR ₹)",
+        caption: "Select your target budget tier and optional consultation window.",
+        tiers: [
+          { id: "tier-1", amount: "< ₹15 Lakhs", name: "Targeted Sprint", defaultSelected: false },
+          { id: "tier-2", amount: "₹15L – ₹30 Lakhs", name: "Core Evolution", defaultSelected: true },
+          { id: "tier-3", amount: "₹30L – ₹60 Lakhs", name: "Flagship Venture", defaultSelected: false },
+          { id: "tier-4", amount: "₹60 Lakhs+", name: "Comprehensive", defaultSelected: false }
+        ],
+        timelineTitle: "Target Engagement Timeline",
+        timelines: [
+          { id: "tl-1", label: "< 1 Month (Immediate)", defaultSelected: true },
+          { id: "tl-2", label: "1 – 3 Months (Standard)", defaultSelected: false },
+          { id: "tl-3", label: "3 – 6 Months (Strategic)", defaultSelected: false },
+          { id: "tl-4", label: "Flexible / Exploring", defaultSelected: false }
+        ]
+      },
+      step4: {
+        railWord: "Session",
+        headline: "Strategy Session Window",
+        caption: "Select your preferred 30-minute consultation window with our design leadership.",
+        defaultYear: 2026,
+        defaultMonth: 8, // 0 = Jan, 8 = Sep
+        defaultDay: 29,
+        timezone: "Asia/Kolkata (IST · GMT+5:30)",
+        slots: ["11:00 AM IST", "02:30 PM IST", "04:30 PM IST", "06:00 PM IST", "08:00 PM IST"],
+        bookedDays: [8, 9],
+        focusLabel: "Consultation Focus Area",
+        focusTopics: [
+          "Logo Design & Visual Identity",
+          "Brand Identity Development",
+          "Website Design & Development",
+          "Social Media & Digital Marketing",
+          "Content Creation & Influencer Marketing",
+          "Full 360° Studio Creative Partnership"
+        ]
+      },
+      step5: {
+        railWord: "Credentials",
+        headline: "Credentials & Brief",
+        caption: "Your particulars and project brief.",
+        nameLabel: "Full Name *",
+        namePlaceholder: "e.g. Alexander Vance",
+        emailLabel: "Corporate Email *",
+        emailPlaceholder: "e.g. example@gmail.com",
+        orgLabel: "Enterprise / Brand *",
+        orgPlaceholder: "e.g. 1928 Creative Studio",
+        phoneLabel: "Contact Number *",
+        phonePlaceholder: "98765 00000",
+        visionLabel: "Project Vision & Strategic Ambition *",
+        visionPlaceholder: "Describe the strategic objectives, core challenges, and architectural scale...",
+        ndaText: "Execute Bilateral Non-Disclosure Agreement (NDA) prior to review.",
+        submitBtnText: "Submit Project Brief",
+        successTitle: "BRIEF SUBMITTED.",
+        successDesc: "Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.",
+        resetBtnText: "Submit Another Brief"
+      }
     }
   };
 
@@ -886,7 +1178,22 @@
               clients: Array.isArray(json.data.clients) && json.data.clients.length ? json.data.clients : DEFAULT_CMS_DATA.clients,
               portfolio: Array.isArray(json.data.portfolio) && json.data.portfolio.length ? json.data.portfolio : DEFAULT_CMS_DATA.portfolio,
               blogs: Array.isArray(json.data.blogs) && json.data.blogs.length ? json.data.blogs : DEFAULT_CMS_DATA.blogs,
-              settings: { ...DEFAULT_CMS_DATA.settings, ...(json.data.settings || {}) }
+              settings: {
+                ...DEFAULT_CMS_DATA.settings,
+                ...(json.data.settings || {}),
+                servicesHeader: {
+                  ...DEFAULT_CMS_DATA.settings.servicesHeader,
+                  ...(json.data.settings?.services_header || json.data.settings?.servicesHeader || {})
+                }
+              },
+              contactBrief: json.data.contactBrief ? {
+                header: { ...DEFAULT_CMS_DATA.contactBrief.header, ...(json.data.contactBrief.header || {}) },
+                step1: { ...DEFAULT_CMS_DATA.contactBrief.step1, ...(json.data.contactBrief.step1 || {}) },
+                step2: { ...DEFAULT_CMS_DATA.contactBrief.step2, ...(json.data.contactBrief.step2 || {}) },
+                step3: { ...DEFAULT_CMS_DATA.contactBrief.step3, ...(json.data.contactBrief.step3 || {}) },
+                step4: { ...DEFAULT_CMS_DATA.contactBrief.step4, ...(json.data.contactBrief.step4 || {}) },
+                step5: { ...DEFAULT_CMS_DATA.contactBrief.step5, ...(json.data.contactBrief.step5 || {}) }
+              } : DEFAULT_CMS_DATA.contactBrief
             };
             this._saveLocalOnly();
             this._notify();
@@ -904,6 +1211,21 @@
         if (stored) {
           const parsed = JSON.parse(stored);
           const blogsList = (Array.isArray(parsed.blogs) && parsed.blogs.length >= 15) ? parsed.blogs : DEFAULT_CMS_DATA.blogs;
+          
+          const portfolioList = Array.isArray(parsed.portfolio) ? parsed.portfolio.map(p => {
+            const def = DEFAULT_CMS_DATA.portfolio.find(dp => dp.id === p.id) || {};
+            return {
+              ...def,
+              ...p,
+              overview: p.overview || p.strategicOverview || def.overview || p.summary || '',
+              subheading: p.subheading || p.categoryDisplay || def.subheading || '',
+              sector: p.sector || def.sector || 'Luxury Brand Strategy',
+              deliverables: p.deliverables || def.deliverables || 'Brand Identity, Spatial System',
+              timeline: p.timeline || def.timeline || '2025 · Global Reveal',
+              galleryImages: (Array.isArray(p.galleryImages) && p.galleryImages.length > 0) ? p.galleryImages : (def.galleryImages || [])
+            };
+          }) : DEFAULT_CMS_DATA.portfolio;
+
           return {
             seo: { ...DEFAULT_CMS_DATA.seo, ...(parsed.seo || {}) },
             profile: {
@@ -915,9 +1237,28 @@
             },
             services: Array.isArray(parsed.services) ? parsed.services : DEFAULT_CMS_DATA.services,
             clients: Array.isArray(parsed.clients) ? parsed.clients : DEFAULT_CMS_DATA.clients,
-            portfolio: Array.isArray(parsed.portfolio) ? parsed.portfolio : DEFAULT_CMS_DATA.portfolio,
+            portfolio: portfolioList,
             blogs: blogsList,
-            settings: { ...DEFAULT_CMS_DATA.settings, ...(parsed.settings || {}) }
+            settings: {
+              ...DEFAULT_CMS_DATA.settings,
+              ...(parsed.settings || {}),
+              portfolioHero: {
+                ...DEFAULT_CMS_DATA.settings.portfolioHero,
+                ...(parsed.settings?.portfolioHero || {})
+              },
+              servicesHeader: {
+                ...DEFAULT_CMS_DATA.settings.servicesHeader,
+                ...(parsed.settings?.services_header || parsed.settings?.servicesHeader || {})
+              }
+            },
+            contactBrief: parsed.contactBrief ? {
+              header: { ...DEFAULT_CMS_DATA.contactBrief.header, ...(parsed.contactBrief.header || {}) },
+              step1: { ...DEFAULT_CMS_DATA.contactBrief.step1, ...(parsed.contactBrief.step1 || {}) },
+              step2: { ...DEFAULT_CMS_DATA.contactBrief.step2, ...(parsed.contactBrief.step2 || {}) },
+              step3: { ...DEFAULT_CMS_DATA.contactBrief.step3, ...(parsed.contactBrief.step3 || {}) },
+              step4: { ...DEFAULT_CMS_DATA.contactBrief.step4, ...(parsed.contactBrief.step4 || {}) },
+              step5: { ...DEFAULT_CMS_DATA.contactBrief.step5, ...(parsed.contactBrief.step5 || {}) }
+            } : JSON.parse(JSON.stringify(DEFAULT_CMS_DATA.contactBrief))
           };
         }
       } catch (err) {
@@ -1044,6 +1385,7 @@
         this.data.profile.principles.push(principleData);
       }
       this._saveData();
+      this._sendToAPI('save_principle', principleData);
       return principleData;
     }
     getProcess() {
@@ -1063,6 +1405,18 @@
     // ── Services Methods ──
     getServices() {
       return [...(this.data.services || [])].sort((a, b) => (a.order || 0) - (b.order || 0));
+    }
+    getServicesHeader() {
+      return this.data.settings?.servicesHeader || DEFAULT_CMS_DATA.settings.servicesHeader;
+    }
+    saveServicesHeader(headerData) {
+      if (!this.data.settings) this.data.settings = {};
+      this.data.settings.servicesHeader = { ...this.getServicesHeader(), ...headerData };
+      this._saveData();
+      this._sendToAPI('save_settings', {
+        services_header: this.data.settings.servicesHeader
+      });
+      return this.data.settings.servicesHeader;
     }
     saveService(serviceData) {
       if (!serviceData.id) {
@@ -1124,6 +1478,9 @@
     getProjectById(id) {
       return this.data.portfolio.find(p => p.id === id) || null;
     }
+    getPortfolioById(id) {
+      return this.getProjectById(id);
+    }
     saveProject(projectData) {
       if (!projectData.id) {
         projectData.id = (projectData.title || 'project').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || ('proj-' + Date.now().toString(36));
@@ -1144,6 +1501,29 @@
       this._saveData();
       this._sendToAPI('delete_portfolio', { id });
       return true;
+    }
+    getPortfolioHero() {
+      return this.data.settings?.portfolioHero || DEFAULT_CMS_DATA.settings.portfolioHero;
+    }
+    savePortfolioHero(heroData) {
+      if (!this.data.settings) this.data.settings = {};
+      this.data.settings.portfolioHero = { ...this.getPortfolioHero(), ...heroData };
+      this._saveData();
+      return this.data.settings.portfolioHero;
+    }
+
+    getHomeSelectedProjects() {
+      const defaultSlots = ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'];
+      const saved = this.data.settings?.homeSelectedProjects;
+      if (Array.isArray(saved) && saved.length >= 6) return saved.slice(0, 6);
+      return defaultSlots;
+    }
+
+    saveHomeSelectedProjects(projectIdsArray) {
+      if (!this.data.settings) this.data.settings = {};
+      this.data.settings.homeSelectedProjects = Array.isArray(projectIdsArray) ? projectIdsArray.slice(0, 6) : ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'];
+      this._saveData();
+      return this.data.settings.homeSelectedProjects;
     }
 
     // ── Blogs / Perspectives Methods ──
@@ -1230,6 +1610,41 @@
       return curationData;
     }
 
+    // ── Contact & Brief Form Configuration Methods ──
+    getContactBrief() {
+      if (!this.data.contactBrief) {
+        this.data.contactBrief = JSON.parse(JSON.stringify(DEFAULT_CMS_DATA.contactBrief));
+      }
+      return this.data.contactBrief;
+    }
+
+    saveContactBrief(briefData) {
+      this.data.contactBrief = {
+        ...this.getContactBrief(),
+        ...(briefData || {})
+      };
+      this._saveData();
+      this._sendToAPI('save_settings', {
+        contact_brief: this.data.contactBrief
+      });
+      return this.data.contactBrief;
+    }
+
+    saveContactBriefStep(stepKey, stepData) {
+      if (!this.data.contactBrief) {
+        this.data.contactBrief = JSON.parse(JSON.stringify(DEFAULT_CMS_DATA.contactBrief));
+      }
+      this.data.contactBrief[stepKey] = {
+        ...(this.data.contactBrief[stepKey] || {}),
+        ...(stepData || {})
+      };
+      this._saveData();
+      this._sendToAPI('save_settings', {
+        contact_brief: this.data.contactBrief
+      });
+      return this.data.contactBrief[stepKey];
+    }
+
     // ── Backup, Export & Reset ──
     exportData() {
       return JSON.stringify(this.data, null, 2);
@@ -1251,7 +1666,15 @@
           clients: Array.isArray(parsed.clients) ? parsed.clients : DEFAULT_CMS_DATA.clients,
           portfolio: Array.isArray(parsed.portfolio) ? parsed.portfolio : DEFAULT_CMS_DATA.portfolio,
           blogs: Array.isArray(parsed.blogs) ? parsed.blogs : DEFAULT_CMS_DATA.blogs,
-          settings: { ...DEFAULT_CMS_DATA.settings, ...(parsed.settings || {}) }
+          settings: { ...DEFAULT_CMS_DATA.settings, ...(parsed.settings || {}) },
+          contactBrief: parsed.contactBrief ? {
+            header: { ...DEFAULT_CMS_DATA.contactBrief.header, ...(parsed.contactBrief.header || {}) },
+            step1: { ...DEFAULT_CMS_DATA.contactBrief.step1, ...(parsed.contactBrief.step1 || {}) },
+            step2: { ...DEFAULT_CMS_DATA.contactBrief.step2, ...(parsed.contactBrief.step2 || {}) },
+            step3: { ...DEFAULT_CMS_DATA.contactBrief.step3, ...(parsed.contactBrief.step3 || {}) },
+            step4: { ...DEFAULT_CMS_DATA.contactBrief.step4, ...(parsed.contactBrief.step4 || {}) },
+            step5: { ...DEFAULT_CMS_DATA.contactBrief.step5, ...(parsed.contactBrief.step5 || {}) }
+          } : JSON.parse(JSON.stringify(DEFAULT_CMS_DATA.contactBrief))
         };
         this._saveData();
         return { success: true };

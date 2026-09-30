@@ -322,7 +322,47 @@
   // ═══════════════════════════════════════════════════════════
   // 4. PORTFOLIO MATRIX RENDERER (PORTFOLIO.HTML & ABOUT.HTML)
   // ═══════════════════════════════════════════════════════════
+  function renderPortfolioHero() {
+    const heroSec = document.getElementById('portfolio-hero');
+    if (!heroSec || !window.CMSStore) return;
+    const heroData = window.CMSStore.getPortfolioHero ? window.CMSStore.getPortfolioHero() : null;
+    if (!heroData) return;
+
+    const allPills = heroSec.querySelectorAll('.hero-rounded-media');
+    const pill1 = document.getElementById('heroPill1Media') || allPills[0];
+    const pill2 = document.getElementById('heroPill2Media') || allPills[1];
+
+    if (pill1) {
+      const p1Id = heroData.pill1ProjectId || 'aurora';
+      const proj1 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p1Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p1Id) : null);
+      const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage || heroData.pill1Img || 'img/port-chronos.jpg') : (heroData.pill1Img || 'img/port-chronos.jpg');
+      const imgEl = pill1.querySelector('img') || document.getElementById('heroPill1Img');
+      if (imgEl) imgEl.src = img1;
+      pill1.setAttribute('data-project-id', p1Id);
+      if (proj1) pill1.setAttribute('title', `Explore ${proj1.title}`);
+      pill1.onclick = () => {
+        if (typeof window.openProjectModal === 'function') window.openProjectModal(p1Id);
+        else if (typeof window.openModal === 'function') window.openModal(p1Id);
+      };
+    }
+
+    if (pill2) {
+      const p2Id = heroData.pill2ProjectId || 'veloce';
+      const proj2 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p2Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p2Id) : null);
+      const img2 = proj2 ? (proj2.bannerImage || proj2.coverImage || heroData.pill2Img || 'img/port-veloce.jpg') : (heroData.pill2Img || 'img/port-veloce.jpg');
+      const imgEl = pill2.querySelector('img') || document.getElementById('heroPill2Img');
+      if (imgEl) imgEl.src = img2;
+      pill2.setAttribute('data-project-id', p2Id);
+      if (proj2) pill2.setAttribute('title', `Explore ${proj2.title}`);
+      pill2.onclick = () => {
+        if (typeof window.openProjectModal === 'function') window.openProjectModal(p2Id);
+        else if (typeof window.openModal === 'function') window.openModal(p2Id);
+      };
+    }
+  }
+
   function renderPortfolioProjects() {
+    renderPortfolioHero();
     if (!window.CMSStore) return;
     const projects = window.CMSStore.getPortfolio();
     if (!projects.length) return;
@@ -331,18 +371,22 @@
     const matrixGrid = document.getElementById('matrixGrid');
     if (matrixGrid) {
       let html = '';
-      projects.forEach(p => {
-        const spanClass = p.gridSpan || 'bento-compact';
+      projects.forEach((p, idx) => {
+        const pairIndex = Math.floor(idx / 2);
+        const isFirstInPair = (idx % 2 === 0);
+        const spanClass = (pairIndex % 2 === 0)
+          ? (isFirstInPair ? 'bento-wide' : 'bento-compact')
+          : (isFirstInPair ? 'bento-compact' : 'bento-wide');
         html += `
-          <div class="dzinr-project-card ${spanClass}" data-category="${p.category || 'brand-identity'}" data-project-id="${p.id}" style="cursor:pointer;" onclick="window.location.href='project-detail.html?id=${p.id}'">
+          <div class="dzinr-project-card ${spanClass}" data-category="${p.category || 'brand-identity'}" data-project-id="${p.id}" style="cursor:pointer;" onclick="if(typeof window.openProjectModal==='function'){window.openProjectModal('${p.id}');}else if(typeof window.openModal==='function'){window.openModal('${p.id}');}">
             <div class="dpc-img-wrap">
               <span class="dpc-tag-pill">${p.tagPill || p.categoryDisplay || 'Case Study'}</span>
-              <img src="${p.coverImage || 'img/port-chronos.jpg'}" alt="${p.title}" loading="lazy" onerror="this.src='img/port-chronos.jpg';" />
+              <img src="${p.bannerImage || p.coverImage || 'img/port-chronos.jpg'}" alt="${p.title}" loading="lazy" onerror="this.src='img/port-chronos.jpg';" />
             </div>
             <div class="dpc-body">
               <div class="dpc-info">
                 <h3 class="dpc-title">${p.title}</h3>
-                <p class="dpc-category-sub">${p.categoryDisplay || p.client || ''}</p>
+                <p class="dpc-category-sub">${p.subheading || p.categoryDisplay || p.client || ''}</p>
               </div>
               <div class="dpc-arrow-circle" aria-label="Explore project">
                 <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
@@ -352,6 +396,9 @@
         `;
       });
       matrixGrid.innerHTML = html;
+      if (typeof window.reapplyPortfolioFilter === 'function') {
+        window.reapplyPortfolioFilter();
+      }
     }
 
     // B. Best Works Sets on about.html (#worksSet1 and #worksSet2)
@@ -364,34 +411,37 @@
       const p4 = projects[3] || {};
 
       function makeWorkCard(p, numStr, subStr) {
+        const title = p.title || 'FEATURED WORK';
+        const subtitle = p.subheading || p.categoryDisplay || p.tagPill || p.client || subStr || 'Brand Identity & Digital';
+        const img = p.bannerImage || p.coverImage || 'img/port-chronos.jpg';
         return `
-          <a href="project-detail.html?id=${p.id || ''}" class="work-duo-card">
+          <a href="portfolio.html?project=${p.id || ''}" class="work-duo-card">
             <div class="work-card-media">
-              <img src="${p.coverImage || 'img/wc-top.jpg'}" alt="${p.title || 'Case Study'}" class="work-card-img" onerror="this.src='img/wc-top.jpg';" />
+              <img src="${img}" alt="${title}" class="work-card-img" onerror="this.src='img/port-chronos.jpg';" />
             </div>
             <div class="work-card-content">
               <div class="work-top-meta">
                 <span class="work-num">${numStr}</span>
-                <span class="work-tag-pill">${p.categoryDisplay || p.tagPill || 'BRAND IDENTITY'}</span>
               </div>
               <div class="work-mid-body">
-                <h3 class="work-title">${p.title || 'FEATURED WORK'}</h3>
-                <p class="work-desc">${p.summary || p.client || 'Visual identity system and spatial touchpoints.'}</p>
+                <h3 class="work-title">${title}</h3>
+                <div class="work-subtitle">${subtitle}</div>
               </div>
               <div class="work-bottom-meta">
-                <div class="work-pills">
-                  <span>${p.categoryDisplay || 'Identity'}</span>
-                  <span>Case Study</span>
+                <div class="work-cta-wrap">
+                  <span>View Case Study</span>
+                  <div class="work-cta-arrow">
+                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
                 </div>
-                <span class="work-view-link">View Case Study ↗</span>
               </div>
             </div>
           </a>
         `;
       }
 
-      if (p1.title) worksSet1.innerHTML = makeWorkCard(p1, '01 // ICON', 'BRAND IDENTITY') + makeWorkCard(p2, '02 // SPATIAL', 'SPATIAL & DIGITAL');
-      if (p3.title) worksSet2.innerHTML = makeWorkCard(p3, '03 // ATELIER', 'PACKAGING & 3D') + makeWorkCard(p4, '04 // LUXURY', 'ECOMMERCE & WEBGL');
+      if (p1.title) worksSet1.innerHTML = makeWorkCard(p1, '01 / GLOBAL ICON', 'Brand Identity & Vault') + makeWorkCard(p2, '02 / HYPERCRAFT', 'Automotive Platform & 3D');
+      if (p3.title) worksSet2.innerHTML = makeWorkCard(p3, '03 / ATELIER', 'Packaging & 3D Architecture') + makeWorkCard(p4, '04 / MONOLITH', 'Spatial Architecture & Flagship');
     }
 
     // C. Project Detail Page Direct Injection
@@ -408,6 +458,58 @@
         const projDesc = document.querySelector('.project-detail-summary, #projectDetailSummary');
         if (projDesc) projDesc.textContent = currentProj.summary;
       }
+    }
+
+    // D. Homepage Parallax Showcase (6 Curated Work Cards on index.html)
+    const portCardsFlow = document.getElementById('portCardsFlow');
+    if (portCardsFlow) {
+      const selectedIds = (typeof window.CMSStore.getHomeSelectedProjects === 'function')
+        ? window.CMSStore.getHomeSelectedProjects()
+        : ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'];
+
+      let cardsHtml = '';
+      for (let i = 0; i < 6; i++) {
+        const slotNum = i + 1;
+        const targetId = selectedIds[i] || projects[i]?.id || projects[0]?.id;
+        const proj = projects.find(p => p.id === targetId) || projects[i % projects.length];
+        if (!proj) continue;
+
+        const numStr = slotNum < 10 ? `0${slotNum}` : `${slotNum}`;
+        const clientStr = (proj.client || proj.title || 'CASE STUDY').toUpperCase();
+        const img = proj.bannerImage || proj.coverImage || 'img/port-chronos.jpg';
+        const titleText = proj.summary || proj.subheading || proj.title;
+
+        // Parse 2 tags cleanly
+        let tag1 = 'Branding';
+        let tag2 = 'Digital';
+        if (proj.tagPill) {
+          const parts = proj.tagPill.split(/[\/&,·]/).map(s => s.trim()).filter(Boolean);
+          if (parts[0]) tag1 = parts[0];
+          if (parts[1]) tag2 = parts[1];
+        } else if (proj.categoryDisplay) {
+          const parts = proj.categoryDisplay.split(/[\/&,·]/).map(s => s.trim()).filter(Boolean);
+          if (parts[0]) tag1 = parts[0];
+          if (parts[1]) tag2 = parts[1];
+        }
+
+        cardsHtml += `
+          <!-- CARD ${slotNum} (SLOT ${slotNum}) -->
+          <article class="p-flow-item p-item-${slotNum}">
+            <a href="portfolio.html?project=${proj.id}" class="p-card-v p-card-${slotNum}">
+              <div class="pcv-media">
+                <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.src='img/port-chronos.jpg';" />
+                <div class="pcv-badge-top"><span class="pcv-num">${numStr}</span><span class="pcv-client">${clientStr}</span></div>
+              </div>
+              <div class="pcv-info">
+                <div class="pcv-tags"><span>${tag1}</span><span>${tag2}</span></div>
+                <h3 class="pcv-title">${titleText}</h3>
+                <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+              </div>
+            </a>
+          </article>
+        `;
+      }
+      portCardsFlow.innerHTML = cardsHtml;
     }
 
     if (typeof window.rebindPortfolioInteractions === 'function') {
@@ -478,7 +580,7 @@
           <div class="val-expanded-content">
             <div class="val-exp-top">
               <div class="val-exp-meta">
-                <span class="val-exp-num">${p.num} // PRINCIPLE</span>
+                <span class="val-exp-num">${p.num} /</span>
                 <span class="val-exp-pill">${p.pill || 'Think With Purpose'}</span>
               </div>
             </div>
@@ -535,7 +637,7 @@
         const cardHtml = `
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">${s.phase || `PHASE 0${idx + 1}`}</span>
+              <span class="proc-card-phase">${(s.phase || `PHASE 0${idx + 1}`).replace('//', '/')}</span>
               <h3 class="proc-card-title">${s.title}</h3>
             </div>
             <p class="proc-card-desc">${s.desc}</p>
@@ -553,6 +655,9 @@
       }).join('');
 
       processTrack.innerHTML = svgHeader + stepsHtml;
+      if (typeof window.initProcessSerpentine === 'function') {
+        window.initProcessSerpentine();
+      }
     }
   }
 
@@ -598,16 +703,93 @@
   // ═══════════════════════════════════════════════════════════
   // 6. CORE SERVICES RENDERER (SERVICES.HTML)
   // ═══════════════════════════════════════════════════════════
+  function getServiceSculptureHTML(idx, num) {
+    switch (idx % 5) {
+      case 0:
+        return `
+          <div class="motion-sculpture sculpture-1">
+            <div class="ring-outer"></div>
+            <div class="ring-inner"></div>
+            <div class="core-mark">1928</div>
+          </div>`;
+      case 1:
+        return `
+          <div class="motion-sculpture sculpture-2">
+            <div class="prism-layer layer-1"></div>
+            <div class="prism-layer layer-2"></div>
+            <div class="prism-layer layer-3"></div>
+          </div>`;
+      case 2:
+        return `
+          <div class="motion-sculpture sculpture-3">
+            <div class="code-sphere">
+              <div class="sphere-meridian"></div>
+              <div class="sphere-equator"></div>
+              <div class="sphere-core"></div>
+            </div>
+          </div>`;
+      case 3:
+        return `
+          <div class="motion-sculpture sculpture-4">
+            <div class="wave-circle w1"></div>
+            <div class="wave-circle w2"></div>
+            <div class="wave-circle w3"></div>
+          </div>`;
+      case 4:
+        return `
+          <div class="motion-sculpture sculpture-5">
+            <div class="aperture-box">
+              <div class="rec-badge"><span class="rec-dot"></span> REC</div>
+              <div class="aperture-lens">
+                <div class="aperture-dot"></div>
+              </div>
+            </div>
+          </div>`;
+      default:
+        return `
+          <div class="motion-sculpture sculpture-1">
+            <div class="ring-outer"></div>
+            <div class="ring-inner"></div>
+            <div class="core-mark">${num || '1928'}</div>
+          </div>`;
+    }
+  }
+
   function renderServicesPage() {
     if (!window.CMSStore) return;
+
+    // A. Update Sticky Section Header
+    const headerData = (typeof window.CMSStore.getServicesHeader === 'function') ? window.CMSStore.getServicesHeader() : {
+      headline: 'OUR CORE SERVICES',
+      description: 'From the first visual impression to the way your brand grows in the market, we bring strategy, creativity and execution together under one roof.'
+    };
+
+    const stickyHeader = document.querySelector('.services-sticky-header');
+    if (stickyHeader) {
+      const headingEl = stickyHeader.querySelector('.sec-heading');
+      if (headingEl && headerData.headline) {
+        const words = headerData.headline.trim().split(' ');
+        if (words.length > 1) {
+          const lastWord = words.pop();
+          headingEl.innerHTML = `${words.join(' ')} <span>${lastWord}</span>`;
+        } else {
+          headingEl.textContent = headerData.headline;
+        }
+      }
+      const descEl = stickyHeader.querySelector('.sec-desc');
+      if (descEl && headerData.description) {
+        descEl.textContent = headerData.description;
+      }
+    }
+
     const services = window.CMSStore.getServices();
     if (!services || !services.length) return;
 
-    // A. Revolving Orbit Icons (#heroOrbitIcons)
+    // B. Revolving Orbit Icons (#heroOrbitIcons)
     const orbitContainer = document.getElementById('heroOrbitIcons');
-    if (orbitContainer) {
+    if (orbitContainer && !orbitContainer.children.length) {
       orbitContainer.innerHTML = services.map((s, idx) => `
-        <a href="#service-0${idx + 1}" class="orbit-icon-node" data-service="${s.title.toUpperCase()}" data-idx="${idx}" aria-label="${s.title}">
+        <a href="#service-0${idx + 1}" class="orbit-icon-node" data-service="${(s.title || '').toUpperCase()}" data-idx="${idx}" aria-label="${s.title}">
           <span class="oin-tag">0${idx + 1}</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -619,46 +801,499 @@
       `).join('');
     }
 
-    // B. Pinned Paged Deck (#servicesStackDeck)
+    // C. Pinned Paged Deck (#servicesStackDeck)
     const deck = document.getElementById('servicesStackDeck');
     if (deck) {
-      deck.innerHTML = services.map((s, idx) => `
-        <div class="svc-card" id="service-0${idx + 1}">
-          <div class="svc-card-left">
-            <div class="svc-card-top-row">
-              <span class="svc-num-label">${s.num || `0${idx + 1}`} // ${s.tagline || 'PRACTICE'}</span>
-            </div>
-            <h3 class="svc-title-main">${s.title}</h3>
-            <p class="svc-card-desc">${s.desc}</p>
-            <div class="svc-deliv-wrap">
-              <div class="svc-deliv-title">Core Deliverables & Capabilities</div>
-              <div class="svc-chips-row">
-                ${(s.deliverables || []).map(d => `
-                  <div class="svc-chip-item">
-                    <span class="svc-chip-dot"></span>
-                    <span>${d}</span>
+      const existingCards = deck.querySelectorAll('.svc-card');
+      if (existingCards.length === services.length) {
+        // Update in-place to preserve DOM nodes, listeners and pristine 3D sculptures
+        existingCards.forEach((card, idx) => {
+          const s = services[idx];
+          const tagEl = card.querySelector('.svc-num-label');
+          if (tagEl) {
+            const num = s.num || `0${idx + 1}`;
+            const rawTag = (s.tagline || 'PRACTICE').replace(/^\s*—?\s*/, '').replace(/^\s*0\d\s*[\/·-]?\s*/, '').replace('//', '/');
+            tagEl.textContent = `${num} / ${rawTag.toUpperCase()}`;
+          }
+          const titleEl = card.querySelector('.svc-title-main');
+          if (titleEl && s.title) titleEl.innerHTML = s.title.toUpperCase();
+          const descEl = card.querySelector('.svc-card-desc');
+          if (descEl && s.desc) descEl.textContent = s.desc;
+          const chipsRow = card.querySelector('.svc-chips-row');
+          if (chipsRow && s.deliverables && s.deliverables.length) {
+            chipsRow.innerHTML = s.deliverables.map(d => `
+              <span class="svc-chip-item"><span class="svc-chip-dot"></span> ${d}</span>
+            `).join('');
+          }
+          const rightEl = card.querySelector('.svc-card-right');
+          if (rightEl) {
+            if (s.image) {
+              rightEl.innerHTML = `<img src="${s.image}" alt="${s.title}" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />`;
+            } else {
+              rightEl.innerHTML = getServiceSculptureHTML(idx, s.num || `0${idx + 1}`);
+            }
+          }
+        });
+      } else {
+        // Render dynamically with accurate sculptures or custom image
+        deck.innerHTML = services.map((s, idx) => {
+          const num = s.num || `0${idx + 1}`;
+          const rawTag = (s.tagline || 'PRACTICE').replace(/^\s*—?\s*/, '').replace(/^\s*0\d\s*[\/·-]?\s*/, '').replace('//', '/');
+          return `
+            <article class="svc-card" id="service-0${idx + 1}">
+              <div class="svc-card-left">
+                <div class="svc-card-top-row">
+                  <span class="svc-num-label">${num} / ${rawTag.toUpperCase()}</span>
+                </div>
+                <h3 class="svc-title-main">${(s.title || '').toUpperCase()}</h3>
+                <p class="svc-card-desc">${s.desc}</p>
+                <div class="svc-deliv-wrap">
+                  <span class="svc-deliv-title">Deliverables &amp; Scope</span>
+                  <div class="svc-chips-row">
+                    ${(s.deliverables || []).map(d => `
+                      <span class="svc-chip-item"><span class="svc-chip-dot"></span> ${d}</span>
+                    `).join('')}
                   </div>
-                `).join('')}
+                </div>
+                <div class="svc-card-actions">
+                  <a href="contact.html" class="svc-btn-action">Inquire About This Service</a>
+                </div>
               </div>
-            </div>
-            <div class="svc-card-actions">
-              <a href="contact.html" class="svc-btn-action">Initiate Practice →</a>
-            </div>
-          </div>
-          <div class="svc-card-right">
-            <div class="motion-sculpture sculpture-${(idx % 4) + 1}">
-              <div class="ring-outer"></div>
-              <div class="ring-inner"></div>
-              <div class="core-mark">${s.num || `0${idx + 1}`}</div>
-            </div>
-          </div>
-        </div>
-      `).join('');
+              <div class="svc-card-right">
+                ${s.image ? `<img src="${s.image}" alt="${s.title}" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />` : getServiceSculptureHTML(idx, s.num || `0${idx + 1}`)}
+              </div>
+            </article>
+          `;
+        }).join('');
+      }
+
+      if (typeof window.updateStackDeckPhysics === 'function') {
+        window.updateStackDeckPhysics();
+      }
     }
   }
 
   // ═══════════════════════════════════════════════════════════
-  // 7. MASTER INITIALIZATION & MULTI-TAB BROADCAST
+  // 7. CONTACT & MULTI-STEP BRIEF RENDERER (CONTACT.HTML)
+  // ═══════════════════════════════════════════════════════════
+  function renderContactPage() {
+    if (!window.CMSStore || typeof window.CMSStore.getContactBrief !== 'function') return;
+    const brief = window.CMSStore.getContactBrief();
+    if (!brief) return;
+
+    // Header & Badge
+    const headerTitle = document.querySelector('#start-project-sec .fs-sec-title');
+    if (headerTitle && brief.header?.title) headerTitle.textContent = brief.header.title;
+
+    const headerDesc = document.querySelector('#start-project-sec .fs-sec-desc');
+    if (headerDesc && brief.header?.desc) headerDesc.textContent = brief.header.desc;
+
+    const headerBadge = document.querySelector('#start-project-sec .fs-right-badge span:last-child');
+    if (headerBadge && brief.header?.badge) headerBadge.textContent = brief.header.badge;
+
+    // Left Rail Step Words (01 to 05)
+    const railTabs = document.querySelectorAll('.integrated-left-rail .rail-step-tab');
+    if (railTabs.length >= 5) {
+      if (brief.step1?.railWord) {
+        const rw1 = railTabs[0].querySelector('.rail-step-word');
+        if (rw1) rw1.textContent = brief.step1.railWord;
+      }
+      if (brief.step2?.railWord) {
+        const rw2 = railTabs[1].querySelector('.rail-step-word');
+        if (rw2) rw2.textContent = brief.step2.railWord;
+      }
+      if (brief.step3?.railWord) {
+        const rw3 = railTabs[2].querySelector('.rail-step-word');
+        if (rw3) rw3.textContent = brief.step3.railWord;
+      }
+      if (brief.step4?.railWord) {
+        const rw4 = railTabs[3].querySelector('.rail-step-word');
+        if (rw4) rw4.textContent = brief.step4.railWord;
+      }
+      if (brief.step5?.railWord) {
+        const rw5 = railTabs[4].querySelector('.rail-step-word');
+        if (rw5) rw5.textContent = brief.step5.railWord;
+      }
+    }
+
+    // ── STEP 1: Scope ──
+    const p1 = document.getElementById('stepPane1');
+    if (p1) {
+      const h1 = p1.querySelector('.pane-headline');
+      if (h1 && brief.step1?.headline) h1.textContent = brief.step1.headline;
+      const c1 = p1.querySelector('.pane-caption');
+      if (c1 && brief.step1?.caption) c1.textContent = brief.step1.caption;
+
+      const grid = document.getElementById('scopeGrid');
+      if (grid && Array.isArray(brief.step1?.cards) && brief.step1.cards.length) {
+        const currentActive = grid.querySelector('.scope-option-card.active')?.getAttribute('data-mandate');
+        grid.innerHTML = brief.step1.cards.map((c, i) => {
+          const isActive = currentActive ? (c.mandate === currentActive || c.title === currentActive) : (i === 0);
+          return `
+            <div class="scope-option-card${isActive ? ' active' : ''}" data-mandate="${c.mandate || c.title}">
+              <div class="soc-left-group">
+                <div class="soc-index">${c.index || `0${i + 1} / PRACTICE`}</div>
+                <div class="soc-title">${c.title}</div>
+              </div>
+              <div class="soc-keywords">
+                ${(c.keywords || []).map((k, ki) => `<span>${k}</span>${ki < c.keywords.length - 1 ? '<span class="soc-kw-dot"></span>' : ''}`).join('')}
+              </div>
+              <div class="soc-status-icon">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor">
+                  <polyline points="3.5 8.5 6.5 11.5 12.5 4.5"></polyline>
+                </svg>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        grid.querySelectorAll('.scope-option-card').forEach(card => {
+          card.addEventListener('click', () => {
+            grid.querySelectorAll('.scope-option-card').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+          });
+        });
+      }
+    }
+
+    // ── STEP 2: Disciplines ──
+    const p2 = document.getElementById('stepPane2');
+    if (p2) {
+      const h2 = p2.querySelector('.pane-headline');
+      if (h2 && brief.step2?.headline) h2.textContent = brief.step2.headline;
+      const c2 = p2.querySelector('.pane-caption');
+      if (c2 && brief.step2?.caption) c2.textContent = brief.step2.caption;
+
+      const discGrid = document.getElementById('discGrid');
+      if (discGrid && Array.isArray(brief.step2?.disciplines) && brief.step2.disciplines.length) {
+        discGrid.innerHTML = brief.step2.disciplines.map(d => `
+          <div class="disc-item-chip${d.defaultSelected ? ' selected' : ''}" data-disc="${d.label}">
+            <span>${d.label}</span>
+            <span class="disc-dot-check">✓</span>
+          </div>
+        `).join('');
+
+        discGrid.querySelectorAll('.disc-item-chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            chip.classList.toggle('selected');
+          });
+        });
+      }
+    }
+
+    // ── STEP 3: Capital Allocation ──
+    const p3 = document.getElementById('stepPane3');
+    if (p3) {
+      const h3 = p3.querySelector('.pane-headline');
+      if (h3 && brief.step3?.headline) h3.textContent = brief.step3.headline;
+      const c3 = p3.querySelector('.pane-caption');
+      if (c3 && brief.step3?.caption) c3.textContent = brief.step3.caption;
+
+      const tierGrid = document.getElementById('tierGrid');
+      if (tierGrid && Array.isArray(brief.step3?.tiers) && brief.step3.tiers.length) {
+        tierGrid.innerHTML = brief.step3.tiers.map((t, idx) => `
+          <div class="tier-option-box${t.defaultSelected || idx === 1 ? ' active' : ''}" data-tier="${t.amount}">
+            <div class="tob-amount">${t.amount}</div>
+            <div class="tob-tier-name">${t.name}</div>
+          </div>
+        `).join('');
+
+        tierGrid.querySelectorAll('.tier-option-box').forEach(tier => {
+          tier.addEventListener('click', () => {
+            tierGrid.querySelectorAll('.tier-option-box').forEach(t => t.classList.remove('active'));
+            tier.classList.add('active');
+          });
+        });
+      }
+
+      const tlLabel = p3.querySelector('.timeline-label-title');
+      if (tlLabel && brief.step3?.timelineTitle) tlLabel.textContent = brief.step3.timelineTitle;
+
+      const tlPills = document.getElementById('timelinePills');
+      if (tlPills && Array.isArray(brief.step3?.timelines) && brief.step3.timelines.length) {
+        tlPills.innerHTML = brief.step3.timelines.map((tl, idx) => `
+          <button type="button" class="timeline-pill${tl.defaultSelected || idx === 0 ? ' active' : ''}">${tl.label}</button>
+        `).join('');
+
+        tlPills.querySelectorAll('.timeline-pill').forEach(pill => {
+          pill.addEventListener('click', () => {
+            tlPills.querySelectorAll('.timeline-pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+          });
+        });
+      }
+    }
+
+    // ── STEP 4: Strategy Session Window (Calendar & Configurable Month) ──
+    const p4 = document.getElementById('stepPane4');
+    if (p4) {
+      const h4 = p4.querySelector('.pane-headline');
+      if (h4 && brief.step4?.headline) h4.textContent = brief.step4.headline;
+      const c4 = p4.querySelector('.pane-caption');
+      if (c4 && brief.step4?.caption) c4.textContent = brief.step4.caption;
+
+      const tzBadge = p4.querySelector('.sbi-tz-badge span:last-child');
+      if (tzBadge && brief.step4?.timezone) tzBadge.textContent = brief.step4.timezone;
+
+      const now = new Date();
+      const s4 = brief.step4 || {};
+      const targetYear = (s4.defaultYear !== undefined && s4.defaultYear !== null) ? parseInt(s4.defaultYear, 10) : now.getFullYear();
+      const targetMonth = (s4.defaultMonth !== undefined && s4.defaultMonth !== null) ? parseInt(s4.defaultMonth, 10) : now.getMonth();
+      const defaultDay = (s4.defaultDay !== undefined && s4.defaultDay !== null) ? parseInt(s4.defaultDay, 10) : now.getDate();
+      const bookedList = Array.isArray(s4.bookedDays) ? s4.bookedDays.map(d => parseInt(d, 10)) : [8, 9];
+
+      const monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+      const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const weekdaysMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+      const monthTitleEl = document.getElementById('stepCalMonthTitle');
+      if (monthTitleEl) {
+        monthTitleEl.textContent = `${monthNames[targetMonth] || 'September'} ${targetYear}`;
+      }
+
+      const daysGrid = document.getElementById('stepSbDaysGrid');
+      const summaryText = document.getElementById('stepSlotSummaryText');
+      const slotsCount = document.getElementById('stepSlotsCount');
+      const timesGrid = document.getElementById('stepSbTimesGrid');
+
+      const customSlots = Array.isArray(s4.slots) && s4.slots.length ? s4.slots : [
+        '11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'
+      ];
+
+      let selectedDay = defaultDay;
+      let selectedWeekday = 'Monday';
+      let selectedTime = customSlots[0] || '02:30 PM IST';
+
+      function updateSummary() {
+        if (summaryText) {
+          summaryText.textContent = `${selectedWeekday}, ${monthShortNames[targetMonth]} ${selectedDay}, ${targetYear} · ${selectedTime}`;
+        }
+      }
+
+      function renderSlots(dayNum) {
+        if (!timesGrid) return;
+        const availableCount = customSlots.length;
+        if (slotsCount) {
+          slotsCount.textContent = `${availableCount} Slots Open`;
+        }
+
+        timesGrid.innerHTML = '';
+        customSlots.forEach((tStr, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'sb-time-chip' + (tStr === selectedTime || (!customSlots.includes(selectedTime) && idx === 0) ? ' active' : '');
+          btn.setAttribute('data-time', tStr);
+          btn.textContent = tStr;
+
+          if (!customSlots.includes(selectedTime) && idx === 0) {
+            selectedTime = tStr;
+            updateSummary();
+          }
+
+          btn.addEventListener('click', () => {
+            timesGrid.querySelectorAll('.sb-time-chip').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            selectedTime = tStr;
+            updateSummary();
+          });
+
+          timesGrid.appendChild(btn);
+        });
+      }
+
+      if (daysGrid) {
+        daysGrid.innerHTML = '';
+
+        // 1st day of target month (0=Sun, 1=Mon, ..., 6=Sat)
+        const firstDayObj = new Date(targetYear, targetMonth, 1);
+        let firstDayOfWeek = firstDayObj.getDay();
+        let leadCount = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1;
+
+        // Days in previous month
+        const prevMonthLastDate = new Date(targetYear, targetMonth, 0).getDate();
+        for (let i = leadCount - 1; i >= 0; i--) {
+          const cell = document.createElement('div');
+          cell.className = 'sb-day-cell disabled';
+          cell.textContent = prevMonthLastDate - i;
+          daysGrid.appendChild(cell);
+        }
+
+        // Days in target month
+        const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
+        const isCurrentMonthYear = (targetYear === now.getFullYear() && targetMonth === now.getMonth());
+        if (isCurrentMonthYear && selectedDay < now.getDate()) {
+          selectedDay = now.getDate();
+        } else if (selectedDay > daysInMonth) {
+          selectedDay = isCurrentMonthYear ? now.getDate() : 1;
+        }
+
+        const selDayObj = new Date(targetYear, targetMonth, selectedDay);
+        selectedWeekday = weekdaysMap[selDayObj.getDay()];
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const dObj = new Date(targetYear, targetMonth, day);
+          const dow = dObj.getDay();
+          const isSun = dow === 0;
+          const isPast = isCurrentMonthYear ? (day < now.getDate()) : (targetYear < now.getFullYear() || (targetYear === now.getFullYear() && targetMonth < now.getMonth()));
+          const isToday = isCurrentMonthYear && (day === now.getDate());
+          const isBooked = bookedList.includes(day);
+          const isSelected = day === selectedDay;
+
+          const cell = document.createElement('button');
+          cell.type = 'button';
+
+          let classes = ['sb-day-cell'];
+          if (isSelected) classes.push('active');
+          if (isToday) classes.push('today');
+          if (isSun || isPast) classes.push('disabled');
+          if (isBooked) classes.push('booked');
+
+          cell.className = classes.join(' ');
+          cell.textContent = day;
+          cell.setAttribute('data-day', day);
+          cell.setAttribute('data-weekday', weekdaysMap[dow]);
+          if (isBooked) {
+            cell.setAttribute('title', `${monthNames[targetMonth]} ${day}, ${targetYear} · Fully Booked`);
+          }
+
+          if (!isSun && !isPast) {
+            cell.addEventListener('click', () => {
+              if (isBooked) return;
+              daysGrid.querySelectorAll('.sb-day-cell').forEach(c => c.classList.remove('active'));
+              cell.classList.add('active');
+              selectedDay = day;
+              selectedWeekday = weekdaysMap[dow];
+              updateSummary();
+              renderSlots(day);
+            });
+          }
+
+          daysGrid.appendChild(cell);
+        }
+
+        const totalFilled = leadCount + daysInMonth;
+        const remainder = totalFilled % 7;
+        const trailCount = remainder === 0 ? 0 : 7 - remainder;
+        for (let t = 1; t <= trailCount; t++) {
+          const cell = document.createElement('div');
+          cell.className = 'sb-day-cell disabled';
+          cell.textContent = t;
+          daysGrid.appendChild(cell);
+        }
+
+        renderSlots(selectedDay);
+        updateSummary();
+      }
+
+      // Consultation Focus Topics
+      const focusLabel = p4.querySelector('.sbi-focus-select-wrap label');
+      if (focusLabel && s4.focusLabel) focusLabel.textContent = s4.focusLabel;
+
+      const topicDropdown = document.getElementById('stepSelectTopicDropdown');
+      const topicLabel = document.getElementById('stepSelectTopicLabel');
+      const hiddenTopic = document.getElementById('stepSbTopic');
+      const topicList = Array.isArray(s4.focusTopics) && s4.focusTopics.length ? s4.focusTopics : [
+        'Logo Design & Visual Identity',
+        'Brand Identity Development',
+        'Website Design & Development',
+        'Social Media & Digital Marketing',
+        'Content Creation & Influencer Marketing',
+        'Full 360° Studio Creative Partnership'
+      ];
+
+      if (topicDropdown) {
+        topicDropdown.innerHTML = topicList.map((top, idx) => `
+          <div class="luxury-select-opt${idx === 0 ? ' active' : ''}" data-value="${top}">
+            <span class="lso-text">${top}</span>
+            <span class="lso-check">✓</span>
+          </div>
+        `).join('');
+
+        if (topicLabel) topicLabel.textContent = topicList[0];
+        if (hiddenTopic) hiddenTopic.value = topicList[0];
+
+        topicDropdown.querySelectorAll('.luxury-select-opt').forEach(opt => {
+          opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const val = opt.getAttribute('data-value');
+            if (hiddenTopic) hiddenTopic.value = val;
+            if (topicLabel) topicLabel.textContent = val;
+
+            topicDropdown.querySelectorAll('.luxury-select-opt').forEach(o => o.classList.remove('active'));
+            opt.classList.add('active');
+
+            const trigger = document.getElementById('stepSelectTopicTrigger');
+            if (trigger) {
+              trigger.classList.remove('open');
+              trigger.setAttribute('aria-expanded', 'false');
+            }
+            topicDropdown.classList.remove('open');
+          });
+        });
+      }
+    }
+
+    // ── STEP 5: Credentials & Success Overlay ──
+    const p5 = document.getElementById('stepPane5');
+    if (p5) {
+      const h5 = p5.querySelector('.pane-headline');
+      if (h5 && brief.step5?.headline) h5.textContent = brief.step5.headline;
+      const c5 = p5.querySelector('.pane-caption');
+      if (c5 && brief.step5?.caption) c5.textContent = brief.step5.caption;
+
+      const s5 = brief.step5 || {};
+      const lblName = p5.querySelector('#grpName label');
+      if (lblName && s5.nameLabel) lblName.textContent = s5.nameLabel;
+      const inName = document.getElementById('fName');
+      if (inName && s5.namePlaceholder) inName.placeholder = s5.namePlaceholder;
+
+      const lblEmail = p5.querySelector('#grpEmail label');
+      if (lblEmail && s5.emailLabel) lblEmail.textContent = s5.emailLabel;
+      const inEmail = document.getElementById('fEmail');
+      if (inEmail && s5.emailPlaceholder) inEmail.placeholder = s5.emailPlaceholder;
+
+      const lblOrg = p5.querySelector('#grpOrg label');
+      if (lblOrg && s5.orgLabel) lblOrg.textContent = s5.orgLabel;
+      const inOrg = document.getElementById('fOrg');
+      if (inOrg && s5.orgPlaceholder) inOrg.placeholder = s5.orgPlaceholder;
+
+      const lblPhone = p5.querySelector('#grpPhone label');
+      if (lblPhone && s5.phoneLabel) lblPhone.textContent = s5.phoneLabel;
+      const inPhone = document.getElementById('fPhone');
+      if (inPhone && s5.phonePlaceholder) inPhone.placeholder = s5.phonePlaceholder;
+
+      const lblVision = p5.querySelector('#grpVision label');
+      if (lblVision && s5.visionLabel) lblVision.textContent = s5.visionLabel;
+      const inVision = document.getElementById('fVision');
+      if (inVision && s5.visionPlaceholder) inVision.placeholder = s5.visionPlaceholder;
+
+      const ndaLine = document.getElementById('ndaCheck');
+      if (ndaLine && s5.ndaText) {
+        const textDiv = ndaLine.querySelector('div:last-child');
+        if (textDiv) textDiv.innerHTML = s5.ndaText;
+      }
+    }
+
+    // Success Overlay
+    const s5 = brief.step5 || {};
+    const successTitle = document.querySelector('#monolithSuccessOverlay .mso-title');
+    if (successTitle && s5.successTitle) successTitle.textContent = s5.successTitle;
+
+    const successDesc = document.querySelector('#monolithSuccessOverlay .mso-desc');
+    if (successDesc && s5.successDesc) successDesc.textContent = s5.successDesc;
+
+    const btnReset = document.getElementById('btnResetBrief');
+    if (btnReset && s5.resetBtnText) {
+      const spanTxt = btnReset.querySelector('span:first-child');
+      if (spanTxt) spanTxt.textContent = s5.resetBtnText;
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // 8. MASTER INITIALIZATION & MULTI-TAB BROADCAST
   // ═══════════════════════════════════════════════════════════
   function initDynamicCMS() {
     applySEOMetadata();
@@ -667,6 +1302,7 @@
     renderPortfolioProjects();
     renderAboutPage();
     renderServicesPage();
+    renderContactPage();
   }
 
   if (document.readyState === 'loading') {

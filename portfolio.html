@@ -697,7 +697,7 @@
     .project-modal-backdrop {
       position: fixed;
       inset: 0;
-      z-index: 9990;
+      z-index: 100000;
       background: rgba(0, 0, 0, 0.85);
       backdrop-filter: blur(28px);
       -webkit-backdrop-filter: blur(28px);
@@ -716,6 +716,13 @@
     .project-modal-backdrop.active {
       opacity: 1;
       pointer-events: auto;
+    }
+
+    body.modal-open #nav,
+    body:has(.project-modal-backdrop.active) #nav {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translateY(-100%) !important;
     }
 
     .project-modal-stage {
@@ -1693,23 +1700,18 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="portfolio-hero">
     <div class="hero-stage-container">
-      <div class="hero-eyebrow-tag">
-        <span class="het-dot"></span>
-        <span>PORTFOLIO // 1928 STUDIO</span>
-      </div>
-
       <h1 class="hero-statement-title">
         <div class="hst-line">
           <span>WORK THAT</span>
-          <div class="hero-rounded-media" data-project-id="aurora" title="Explore Aurora Horology">
-            <img src="img/port-chronos.jpg" alt="Aurora Horology Preview" />
+          <div class="hero-rounded-media" id="heroPill1Media" data-project-id="aurora" title="Explore Aurora Horology">
+            <img id="heroPill1Img" src="img/port-chronos.jpg" alt="Hero Pill 1 Preview" onerror="this.src='img/port-chronos.jpg';" />
           </div>
           <span>MOVES</span>
         </div>
         <div class="hst-line" style="margin-top: 6px;">
           <span>BRANDS</span>
-          <div class="hero-rounded-media" data-project-id="aetherion" title="Explore Aetherion EV">
-            <img src="img/port-veloce.jpg" alt="Aetherion EV Preview" />
+          <div class="hero-rounded-media" id="heroPill2Media" data-project-id="veloce" title="Explore Veloce Hypercraft">
+            <img id="heroPill2Img" src="img/port-veloce.jpg" alt="Hero Pill 2 Preview" onerror="this.src='img/port-veloce.jpg';" />
           </div>
           <span>FORWARD<span class="hst-dot-red">.</span></span>
         </div>
@@ -1938,7 +1940,7 @@
         <!-- Overview & Client Meta Grid -->
         <div class="modal-info-grid">
           <div>
-            <h3 class="modal-section-title">Strategic Overview</h3>
+            <h3 class="modal-section-title" id="mOverviewTitle">Strategic Overview</h3>
             <p class="modal-desc-body" id="mOverviewText">
               Aurora Horology commissioned 1928 Creative Studio to architect an enduring brand ecosystem that honors Swiss horological precision while establishing commanding digital authority for the next generation of luxury collectors. Through monolithic typographic architecture, bespoke crimson color physics, and a zero-latency 3D WebGL boutique vault, we transformed the brand into an iconic collector centerpiece.
             </p>
@@ -2077,13 +2079,14 @@
 
       /* ── Dynamic Bento Re-Layout Filter Engine (DZ!NR Style with Zero Gaps) ── */
       const filterBtns = document.querySelectorAll('.filter-btn');
-      const projectCards = Array.from(document.querySelectorAll('.dzinr-project-card'));
 
       function applyFilter(filter) {
+        const allCards = Array.from(document.querySelectorAll('#matrixGrid .dzinr-project-card'));
         const visibleCards = [];
 
-        projectCards.forEach(card => {
-          const categories = card.getAttribute('data-category').split(' ');
+        allCards.forEach(card => {
+          const catAttr = card.getAttribute('data-category') || '';
+          const categories = catAttr.split(' ');
           if (filter === 'all' || categories.includes(filter)) {
             card.style.display = 'flex';
             visibleCards.push(card);
@@ -2093,7 +2096,11 @@
           }
         });
 
-        // Dynamically assign alternating 13/7 bento spans across all visible items
+        // Alternating zigzag layout:
+        // Row 1: Big Left (13 cols) + Small Right (7 cols)
+        // Row 2: Small Left (7 cols) + Big Right (13 cols)
+        // Row 3: Big Left (13 cols) + Small Right (7 cols)
+        // Row 4: Small Left (7 cols) + Big Right (13 cols)
         for (let i = 0; i < visibleCards.length; i++) {
           const card = visibleCards[i];
           card.classList.remove('bento-wide', 'bento-compact', 'bento-full');
@@ -2107,24 +2114,21 @@
 
           const pairIndex = Math.floor(i / 2);
           const isFirstInPair = (i % 2 === 0);
-
           if (pairIndex % 2 === 0) {
-            // Row pattern: Wide (13 cols) + Compact (7 cols)
-            if (isFirstInPair) {
-              card.classList.add('bento-wide');
-            } else {
-              card.classList.add('bento-compact');
-            }
+            // Even rows (Row 1, Row 3...): Big on Left, Small on Right
+            card.classList.add(isFirstInPair ? 'bento-wide' : 'bento-compact');
           } else {
-            // Row pattern: Compact (7 cols) + Wide (13 cols)
-            if (isFirstInPair) {
-              card.classList.add('bento-compact');
-            } else {
-              card.classList.add('bento-wide');
-            }
+            // Odd rows (Row 2, Row 4...): Small on Left, Big on Right
+            card.classList.add(isFirstInPair ? 'bento-compact' : 'bento-wide');
           }
         }
       }
+
+      window.reapplyPortfolioFilter = function() {
+        const activeBtn = document.querySelector('.filter-btn.active');
+        const filter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+        applyFilter(filter);
+      };
 
       filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -2318,37 +2322,77 @@
       const triggerCards = document.querySelectorAll('[data-project-id]');
 
       function openModal(id) {
-        const data = caseStudies[id] || caseStudies.aurora;
+        let cmsP = null;
+        if (window.CMSStore) {
+          if (typeof window.CMSStore.getPortfolioById === 'function') cmsP = window.CMSStore.getPortfolioById(id);
+          if (!cmsP && typeof window.CMSStore.getProjectById === 'function') cmsP = window.CMSStore.getProjectById(id);
+          if (!cmsP && typeof window.CMSStore.getPortfolio === 'function') {
+            cmsP = window.CMSStore.getPortfolio().find(p => p.id === id);
+          }
+        }
         
-        document.getElementById('mHeroImg').src = data.heroImg;
-        document.getElementById('mHeroTitle').textContent = data.title;
-        document.getElementById('mHeroCat').textContent = data.category;
-        document.getElementById('mOverviewText').textContent = data.overview;
-        document.getElementById('mClientName').textContent = data.client;
-        document.getElementById('mSector').textContent = data.sector;
-        document.getElementById('mDeliverables').textContent = data.deliverables;
-        document.getElementById('mTimeline').textContent = data.timeline;
+        const fallback = caseStudies[id] || caseStudies.aurora;
+        
+        const title = cmsP?.title || fallback?.title || 'Featured Project';
+        const category = cmsP?.subheading || cmsP?.categoryDisplay || cmsP?.tagPill || fallback?.category || 'Brand Architecture';
+        const overviewTitle = cmsP?.overviewTitle || cmsP?.strategicOverviewTitle || 'Strategic Overview';
+        const overview = cmsP?.overview || cmsP?.strategicOverview || cmsP?.description || cmsP?.summary || fallback?.overview || '';
+        const clientVal = (cmsP && cmsP.client !== undefined && cmsP.client !== null && cmsP.client !== '') ? cmsP.client : (fallback?.client || '');
+        const sectorVal = (cmsP && cmsP.sector !== undefined && cmsP.sector !== null && cmsP.sector !== '') ? cmsP.sector : (fallback?.sector || '');
+        const deliverablesVal = (cmsP && cmsP.deliverables !== undefined && cmsP.deliverables !== null && cmsP.deliverables !== '') ? cmsP.deliverables : (fallback?.deliverables || '');
+        const timelineVal = (cmsP && cmsP.timeline !== undefined && cmsP.timeline !== null && cmsP.timeline !== '') ? cmsP.timeline : (cmsP?.year ? `${cmsP.year} · Complete Archive` : (fallback?.timeline || '2025 · Global Reveal'));
+        const heroImg = cmsP?.bannerImage || cmsP?.coverImage || fallback?.heroImg || 'img/port-chronos.jpg';
+        const galleryImages = (cmsP?.galleryImages && Array.isArray(cmsP.galleryImages) && cmsP.galleryImages.length > 0)
+          ? cmsP.galleryImages
+          : [
+              fallback?.gal1 || cmsP?.coverImage || 'img/port-chronos.jpg',
+              fallback?.gal2 || 'img/port-spectra.jpg',
+              fallback?.gal3 || 'img/port-lumina.jpg',
+              fallback?.gal4 || 'img/wc-l1.jpg',
+              fallback?.gal5 || 'img/wc-r1.jpg',
+              fallback?.gal6 || 'img/port-veloce.jpg'
+            ];
+        
+        document.getElementById('mHeroImg').src = heroImg;
+        document.getElementById('mHeroTitle').textContent = title;
+        document.getElementById('mHeroCat').textContent = category;
+        
+        const mOverviewTitleEl = document.getElementById('mOverviewTitle');
+        if (mOverviewTitleEl) mOverviewTitleEl.textContent = overviewTitle;
+        
+        document.getElementById('mOverviewText').textContent = overview;
+        document.getElementById('mClientName').textContent = clientVal;
+        document.getElementById('mSector').textContent = sectorVal;
+        document.getElementById('mDeliverables').textContent = deliverablesVal;
+        document.getElementById('mTimeline').textContent = timelineVal;
 
-        if (data.gal1 && document.getElementById('mGal1')) document.getElementById('mGal1').src = data.gal1;
-        if (data.gal2 && document.getElementById('mGal2')) document.getElementById('mGal2').src = data.gal2;
-        if (data.galFull1 && document.getElementById('mGalFull1')) document.getElementById('mGalFull1').src = data.galFull1;
-        if (data.gal3 && document.getElementById('mGal3')) document.getElementById('mGal3').src = data.gal3;
-        if (data.gal4 && document.getElementById('mGal4')) document.getElementById('mGal4').src = data.gal4;
-        if (data.gal5 && document.getElementById('mGal5')) document.getElementById('mGal5').src = data.gal5;
-        if (data.galFull2 && document.getElementById('mGalFull2')) document.getElementById('mGalFull2').src = data.galFull2;
-        if (data.gal6 && document.getElementById('mGal6')) document.getElementById('mGal6').src = data.gal6;
-        if (data.gal7 && document.getElementById('mGal7')) document.getElementById('mGal7').src = data.gal7;
+        const imgs = galleryImages;
+        for (let g = 1; g <= 6; g++) {
+          const galEl = document.getElementById('mGal' + g);
+          if (galEl) {
+            galEl.src = imgs[g - 1] || heroImg || 'img/port-chronos.jpg';
+          }
+        }
 
         if (modalStage) modalStage.scrollTop = 0;
 
         modal.classList.add('active');
+        document.body.classList.add('modal-open');
+        const navEl = document.getElementById('nav');
+        if (navEl) navEl.classList.add('hidden');
         document.body.style.overflow = 'hidden';
       }
 
       function closeModal() {
         modal.classList.remove('active');
+        document.body.classList.remove('modal-open');
+        const navEl = document.getElementById('nav');
+        if (navEl) navEl.classList.remove('hidden');
         document.body.style.overflow = '';
       }
+
+      window.openProjectModal = openModal;
+      window.closeProjectModal = closeModal;
 
       triggerCards.forEach(card => {
         card.addEventListener('click', () => {
@@ -2407,6 +2451,7 @@
       const navEl = document.getElementById('nav');
 
       window.addEventListener('scroll', () => {
+        if (document.body.classList.contains('modal-open')) return;
         const sy = window.scrollY;
         if (navEl) {
           if (sy <= 40 || sy < lastPortScrollY - 3) {
@@ -2425,6 +2470,15 @@
         }
         lastPortScrollY = sy;
       }, { passive: true });
+
+      // Check for deep-link project URL param (?project=aurora or ?id=aurora)
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetProj = urlParams.get('project') || urlParams.get('id');
+      if (targetProj) {
+        setTimeout(() => {
+          openModal(targetProj);
+        }, 200);
+      }
 
     })();
   </script>

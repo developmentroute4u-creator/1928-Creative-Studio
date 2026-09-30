@@ -488,10 +488,9 @@
       border: 1.5px solid rgba(0, 0, 0, 0.08);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95);
       color: var(--cr);
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-        background 0.3s ease,
+      transition: background 0.3s ease,
         border-color 0.3s ease,
-        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
         color 0.3s ease;
       will-change: transform;
       z-index: 22;
@@ -687,8 +686,8 @@
       backdrop-filter: blur(24px);
       -webkit-backdrop-filter: blur(24px);
       transform-origin: center top;
-      transition: border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
-      will-change: transform, opacity, filter;
+      transition: border-color 0.35s ease, box-shadow 0.35s ease;
+      will-change: transform, opacity;
       opacity: 1;
     }
 
@@ -876,7 +875,7 @@
       box-shadow: 0 8px 24px rgba(200, 16, 46, 0.4);
     }
 
-    /* ── Right Column: 3D Motion Graphic Widget ── */
+    /* ── Right Column: 3D Motion Graphic Widget / Custom Visual Image ── */
     .svc-card-right {
       position: relative;
       height: clamp(240px, 30vh, 320px);
@@ -884,9 +883,19 @@
       border-radius: 20px;
       background: radial-gradient(circle at center, rgba(200, 16, 46, 0.07) 0%, rgba(15, 15, 20, 0.6) 70%);
       border: 1px solid var(--rule);
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+    }
+
+    .svc-card-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      border-radius: inherit;
+      display: block;
     }
 
     [data-theme="light"] .svc-card-right {
@@ -2201,7 +2210,7 @@
           <article class="svc-card" id="service-01">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">01 · VISUAL IDENTITY</span>
+                <span class="svc-num-label">01 / VISUAL IDENTITY</span>
               </div>
               <h3 class="svc-title-main">01. Logo <span>Design</span></h3>
               <p class="svc-card-desc">
@@ -2237,7 +2246,7 @@
           <article class="svc-card" id="service-02">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">02 · BRAND SYSTEM</span>
+                <span class="svc-num-label">02 / BRAND SYSTEM</span>
               </div>
               <h3 class="svc-title-main">02. Brand Identity <span>Development</span></h3>
               <p class="svc-card-desc">
@@ -2273,7 +2282,7 @@
           <article class="svc-card" id="service-03">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">03 · DIGITAL EXPERIENCE</span>
+                <span class="svc-num-label">03 / DIGITAL EXPERIENCE</span>
               </div>
               <h3 class="svc-title-main">03. Website Design &amp; <span>Development</span></h3>
               <p class="svc-card-desc">
@@ -2311,7 +2320,7 @@
           <article class="svc-card" id="service-04">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">04 · DIGITAL GROWTH</span>
+                <span class="svc-num-label">04 / DIGITAL GROWTH</span>
               </div>
               <h3 class="svc-title-main">04. Social Media &amp; <span>Digital Marketing</span></h3>
               <p class="svc-card-desc">
@@ -2347,7 +2356,7 @@
           <article class="svc-card" id="service-05">
             <div class="svc-card-left">
               <div class="svc-card-top-row">
-                <span class="svc-num-label">05 · CONTENT &amp; INFLUENCE</span>
+                <span class="svc-num-label">05 / CONTENT &amp; INFLUENCE</span>
               </div>
               <h3 class="svc-title-main">05. Content Creation &amp; <span>Influencer Marketing</span></h3>
               <p class="svc-card-desc">
@@ -2619,35 +2628,38 @@
       /* ── Mathematical Helper Utilities ── */
       function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
-      /* ── Organic Random Orbital Floating Engine for Service Icons ── */
+      /* ── Elegant Synchronized Orbital Floating Engine for Service Icons ── */
       const stage = document.getElementById('heroOrbitStage');
       const iconNodes = document.querySelectorAll('.orbit-icon-node');
       const dynamicWord = document.getElementById('dynamicServiceWord');
       const defaultHeadlineText = 'DIGITAL EXPERIENCES';
 
       if (stage && iconNodes.length) {
-        // Spatially expanded & evenly distributed orbital parametric configuration
-        const nodeConfigs = [
-          { baseAngle: 0.0, speed: 0.00030, rxScale: 0.72, ryScale: 0.65, wobbleX: 1.1, wobbleY: 1.5, ampX: 48, ampY: 38, tilt: -0.14 },
-          { baseAngle: 1.256, speed: -0.00028, rxScale: 0.78, ryScale: 0.72, wobbleX: 1.6, wobbleY: 1.1, ampX: 56, ampY: 44, tilt: 0.18 },
-          { baseAngle: 2.513, speed: 0.00032, rxScale: 0.68, ryScale: 0.62, wobbleX: 0.9, wobbleY: 1.8, ampX: 44, ampY: 36, tilt: -0.08 },
-          { baseAngle: 3.770, speed: -0.00034, rxScale: 0.76, ryScale: 0.70, wobbleX: 1.9, wobbleY: 1.3, ampX: 52, ampY: 42, tilt: 0.14 },
-          { baseAngle: 5.026, speed: 0.00031, rxScale: 0.70, ryScale: 0.66, wobbleX: 1.4, wobbleY: 1.7, ampX: 46, ampY: 40, tilt: -0.16 }
-        ];
+        const count = iconNodes.length; // 5 service nodes
+        const initialRect = stage.getBoundingClientRect();
+        const initHalfW = initialRect.width > 0 ? initialRect.width / 2 : 550;
+        const initHalfH = initialRect.height > 0 ? initialRect.height / 2 : 280;
+        const initRx = Math.max(initHalfW * 0.76, 360);
+        const initRy = Math.max(initHalfH * 0.72, 175);
 
         const nodeStates = Array.from(iconNodes).map((node, i) => {
-          const cfg = nodeConfigs[i % nodeConfigs.length];
+          // Perfectly spaced 72-degree angular offsets (2*PI/5)
+          const baseOffset = (i * 2 * Math.PI) / count;
+          const startX = Math.cos(baseOffset) * initRx;
+          const startY = Math.sin(baseOffset) * initRy;
+          node.style.transform = `translate3d(${startX.toFixed(2)}px, ${startY.toFixed(2)}px, 0) scale(1)`;
           return {
             el: node,
             idx: i,
             service: node.getAttribute('data-service'),
-            cfg,
-            curX: 0,
-            curY: 0,
-            targetX: 0,
-            targetY: 0,
+            baseOffset,
+            curX: startX,
+            curY: startY,
+            targetX: startX,
+            targetY: startY,
             isHovered: false,
-            scale: 1
+            scale: 1,
+            targetScale: 1
           };
         });
 
@@ -2676,12 +2688,18 @@
           }, 120);
         }
 
+        let isAnyHovered = false;
+
         nodeStates.forEach((state) => {
           state.el.addEventListener('mouseenter', () => {
             state.isHovered = true;
-            state.scale = 1.14;
+            state.targetScale = 1.18;
+            isAnyHovered = true;
             nodeStates.forEach(s => {
-              if (s !== state) s.el.classList.remove('is-active');
+              if (s !== state) {
+                s.el.classList.remove('is-active');
+                s.targetScale = 0.94;
+              }
             });
             state.el.classList.add('is-active');
             switchHeadline(state.service);
@@ -2689,8 +2707,11 @@
 
           state.el.addEventListener('mouseleave', () => {
             state.isHovered = false;
-            state.scale = 1;
-            // Sticky behavior: the second-line word remains stuck to the last hovered service!
+            state.targetScale = 1;
+            isAnyHovered = false;
+            nodeStates.forEach(s => {
+              s.targetScale = 1;
+            });
           });
 
           state.el.addEventListener('click', (e) => {
@@ -2703,7 +2724,7 @@
               const secHeight = servicesSection.offsetHeight;
               const totalScrollable = secHeight - vh;
               const cardCount = nodeStates.length;
-              const step = 1 / (cardCount - 1);
+              const step = 1 / Math.max(cardCount - 1, 1);
 
               const targetProgress = state.idx * step;
               const targetScrollY = secTop + (totalScrollable * targetProgress);
@@ -2716,45 +2737,49 @@
           });
         });
 
-        let startTime = performance.now();
+        let currentAngle = 0;
+        let lastTime = performance.now();
 
         function animateOrbit(now) {
-          const elapsed = now - startTime;
+          const delta = Math.min(now - lastTime, 64);
+          lastTime = now;
+
+          // Serene, steady orbital rotation rate
+          if (!isAnyHovered) {
+            currentAngle += 0.00028 * delta;
+          } else {
+            currentAngle += 0.00004 * delta; // gentle micro-drift
+          }
+
           const rect = stage.getBoundingClientRect();
           const halfW = rect.width / 2;
           const halfH = rect.height / 2;
 
+          // Elliptical boundary kept comfortably outside the central headline text
+          const rx = Math.max(halfW * 0.76, 360);
+          const ry = Math.max(halfH * 0.72, 175);
+
           nodeStates.forEach((state) => {
-            const { cfg } = state;
+            const theta = currentAngle + state.baseOffset;
+
+            // Synchronized non-colliding orbit
+            const x0 = Math.cos(theta) * rx;
+            const y0 = Math.sin(theta) * ry;
+
+            // Gentle organic vertical wave
+            const subtleWave = Math.sin(theta * 2) * 12;
+
             if (!state.isHovered) {
-              const t = elapsed * cfg.speed + cfg.baseAngle;
-              const rx = halfW * cfg.rxScale;
-              const ry = halfH * cfg.ryScale;
+              state.targetX = x0;
+              state.targetY = y0 + subtleWave;
 
-              // Primary elliptical coordinates
-              let x0 = Math.cos(t) * rx;
-              let y0 = Math.sin(t) * ry;
-
-              // Rotate by orbital tilt angle
-              const cosTilt = Math.cos(cfg.tilt);
-              const sinTilt = Math.sin(cfg.tilt);
-              let xRot = x0 * cosTilt - y0 * sinTilt;
-              let yRot = x0 * sinTilt + y0 * cosTilt;
-
-              // Organic wandering perturbation so path is never a repetitive static loop
-              const wobbleX = Math.sin(elapsed * 0.001 * cfg.wobbleX) * cfg.ampX;
-              const wobbleY = Math.cos(elapsed * 0.001 * cfg.wobbleY) * cfg.ampY;
-
-              state.targetX = xRot + wobbleX;
-              state.targetY = yRot + wobbleY;
-
-              // Subtle magnetic deflection with mouse
+              // Subtle magnetic mouse interaction
               if (isMouseOverStage) {
                 const dx = state.targetX - mouseX;
                 const dy = state.targetY - mouseY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 180 && dist > 10) {
-                  const force = (1 - dist / 180) * 16;
+                if (dist < 160 && dist > 8) {
+                  const force = (1 - dist / 160) * 18;
                   state.targetX += (dx / dist) * force;
                   state.targetY += (dy / dist) * force;
                 }
@@ -2762,11 +2787,12 @@
             }
 
             // Silky smooth Lerp interpolation
-            const lerpSpeed = state.isHovered ? 0.2 : 0.05;
+            const lerpSpeed = state.isHovered ? 0.22 : 0.08;
             state.curX += (state.targetX - state.curX) * lerpSpeed;
             state.curY += (state.targetY - state.curY) * lerpSpeed;
+            state.scale += (state.targetScale - state.scale) * 0.15;
 
-            state.el.style.transform = `translate3d(${state.curX}px, ${state.curY}px, 0) scale(${state.scale})`;
+            state.el.style.transform = `translate3d(${state.curX.toFixed(2)}px, ${state.curY.toFixed(2)}px, 0) scale(${state.scale.toFixed(3)})`;
           });
 
           requestAnimationFrame(animateOrbit);
@@ -2890,70 +2916,98 @@
         updateStackDeckPhysics();
       }, { passive: true });
 
-      /* ── 3D Pinned Stacking Cards: Solid Bottom Slide-In Overlap Physics ── */
-      const servicesSection = document.getElementById('services');
-      const svcCards = Array.from(document.querySelectorAll('.services-deck-stage .svc-card'));
-
+      /* ── 3D Pinned Stacking Cards: Ultra-Smooth Solid Bottom Slide-In Overlap Physics ── */
       function updateStackDeckPhysics() {
+        const servicesSection = document.getElementById('services');
+        const svcCards = Array.from(document.querySelectorAll('.services-deck-stage .svc-card'));
         if (!servicesSection || !svcCards.length) return;
         const vh = window.innerHeight;
         const secRect = servicesSection.getBoundingClientRect();
         const totalScrollable = secRect.height - vh;
 
-        if (totalScrollable <= 0) return;
+        if (totalScrollable <= 0) {
+          svcCards.forEach((card, idx) => {
+            card.style.zIndex = idx + 1;
+            card.style.transform = idx === 0 ? 'translate3d(0, 0, 0) scale(1)' : 'translate3d(0, 115%, 0) scale(1)';
+            card.style.opacity = idx === 0 ? '1' : '0';
+            card.style.pointerEvents = idx === 0 ? 'auto' : 'none';
+          });
+          return;
+        }
 
         // Progress from 0 (top of section) to 1 (bottom of section)
         const progress = clamp(-secRect.top / totalScrollable, 0, 1);
         const cardCount = svcCards.length;
+        if (cardCount <= 1) {
+          if (svcCards[0]) {
+            svcCards[0].style.transform = 'translate3d(0, 0, 0) scale(1)';
+            svcCards[0].style.opacity = '1';
+            svcCards[0].style.pointerEvents = 'auto';
+          }
+          return;
+        }
+
         const step = 1 / (cardCount - 1);
 
         svcCards.forEach((card, i) => {
-          const startProgress = (i - 1) * step;
-          const endProgress = i * step;
+          card.style.zIndex = i + 1;
 
           if (i === 0) {
-            // First card stays 100% in its original position without moving at all
-            card.style.transform = 'translate3d(0, 0, 0)';
-            if (progress < step) {
+            // First card stays in position, subtly scaling down as card 1 glides over
+            if (progress <= step) {
+              const pNext = clamp(progress / step, 0, 1);
+              const scale = 1 - pNext * 0.04;
+              card.style.transform = `translate3d(0, 0, 0) scale(${scale.toFixed(4)})`;
               card.style.opacity = '1';
-              card.style.pointerEvents = 'auto';
+              card.style.pointerEvents = pNext < 0.3 ? 'auto' : 'none';
             } else {
-              // Disappears after the second card has completely overlapped it
+              card.style.transform = 'translate3d(0, 0, 0) scale(0.96)';
               card.style.opacity = '0';
               card.style.pointerEvents = 'none';
             }
           } else {
-            if (progress < startProgress) {
+            const enterStart = (i - 1) * step;
+            const enterEnd = i * step;
+            const exitEnd = (i + 1) * step;
+
+            if (progress < enterStart) {
               // Below the screen waiting for its turn
-              card.style.transform = 'translate3d(0, 115%, 0)';
+              card.style.transform = 'translate3d(0, 115%, 0) scale(1)';
               card.style.opacity = '1';
               card.style.pointerEvents = 'none';
-            } else if (progress >= startProgress && progress < endProgress) {
-              // Sliding up smoothly from the bottom to overlap the previous card
-              const p = clamp((progress - startProgress) / step, 0, 1);
-              const easeP = 1 - Math.pow(1 - p, 3.2);
+            } else if (progress >= enterStart && progress < enterEnd) {
+              // Sliding up smoothly from bottom to overlap previous card
+              const p = clamp((progress - enterStart) / step, 0, 1);
+              const easeP = 1 - Math.pow(1 - p, 3.0);
               const slideY = (1 - easeP) * 115;
 
-              card.style.transform = `translate3d(0, ${slideY.toFixed(2)}%, 0)`;
+              card.style.transform = `translate3d(0, ${slideY.toFixed(2)}%, 0) scale(1)`;
               card.style.opacity = '1';
               card.style.pointerEvents = p > 0.85 ? 'auto' : 'none';
-            } else {
-              // Has fully arrived and locked into position (does not change position)
-              card.style.transform = 'translate3d(0, 0, 0)';
-              const nextEnd = (i + 1) * step;
-              if (i === cardCount - 1 || progress < nextEnd) {
+            } else if (i === cardCount - 1 || progress <= exitEnd) {
+              // Active pinned card in position
+              if (i < cardCount - 1) {
+                const pNext = clamp((progress - enterEnd) / step, 0, 1);
+                const scale = 1 - pNext * 0.04;
+                card.style.transform = `translate3d(0, 0, 0) scale(${scale.toFixed(4)})`;
+                card.style.opacity = '1';
+                card.style.pointerEvents = pNext < 0.3 ? 'auto' : 'none';
+              } else {
+                card.style.transform = 'translate3d(0, 0, 0) scale(1)';
                 card.style.opacity = '1';
                 card.style.pointerEvents = 'auto';
-              } else {
-                // Disappears after the subsequent card has completely overlapped it
-                card.style.opacity = '0';
-                card.style.pointerEvents = 'none';
               }
+            } else {
+              // Covered by subsequent card
+              card.style.transform = 'translate3d(0, 0, 0) scale(0.96)';
+              card.style.opacity = '0';
+              card.style.pointerEvents = 'none';
             }
           }
         });
       }
 
+      window.updateStackDeckPhysics = updateStackDeckPhysics;
       window.addEventListener('resize', updateStackDeckPhysics, { passive: true });
       updateStackDeckPhysics();
 

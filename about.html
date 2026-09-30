@@ -921,22 +921,24 @@
     .work-duo-card {
       position: relative;
       height: 100%;
-      border-radius: clamp(18px, 2.2vw, 30px);
-      border: 1.5px solid var(--rule-m);
-      background: var(--card-bg);
+      border-radius: clamp(18px, 2.2vw, 28px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #0A0A0E;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: clamp(20px, 2.6vw, 36px);
+      padding: clamp(24px, 2.8vw, 36px);
       text-decoration: none;
-      color: inherit;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 16px 40px rgba(0, 0, 0, 0.06);
+      color: #FFFFFF;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.25);
       transition: border-color 0.35s var(--sp), box-shadow 0.35s var(--sp), transform 0.35s var(--sp);
+      cursor: pointer;
     }
 
-    [data-theme="dark"] .work-duo-card {
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    [data-theme="light"] .work-duo-card {
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
     .work-card-media {
@@ -950,7 +952,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.42) contrast(1.18) saturate(0.85);
+      filter: brightness(0.7) contrast(1.1);
       transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -958,16 +960,32 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(7, 7, 10, 0.2) 0%, rgba(7, 7, 10, 0.68) 46%, rgba(7, 7, 10, 0.96) 100%);
+      background: linear-gradient(180deg, rgba(7, 7, 10, 0.45) 0%, rgba(7, 7, 10, 0.6) 40%, rgba(7, 7, 10, 0.94) 100%);
       transition: background 0.4s ease;
     }
 
     [data-theme="light"] .work-card-img {
-      filter: brightness(0.65) contrast(1.1) saturate(0.9);
+      filter: brightness(0.7) contrast(1.1);
     }
 
     [data-theme="light"] .work-card-media::after {
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(240, 240, 246, 0.75) 50%, rgba(245, 245, 250, 0.96) 100%);
+      background: linear-gradient(180deg, rgba(7, 7, 10, 0.45) 0%, rgba(7, 7, 10, 0.62) 40%, rgba(7, 7, 10, 0.94) 100%);
+    }
+
+    .work-duo-card:hover {
+      border-color: rgba(200, 16, 46, 0.5);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(200, 16, 46, 0.2);
+    }
+
+    [data-theme="light"] .work-duo-card:hover {
+      border-color: rgba(200, 16, 46, 0.4);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16), 0 0 24px rgba(200, 16, 46, 0.12);
+    }
+
+    .work-duo-card:hover .work-card-img {
+      transform: scale(1.05);
+      filter: brightness(0.8) contrast(1.15);
     }
 
     .work-card-content {
@@ -977,30 +995,13 @@
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
-    }
-
-    .work-duo-card:hover {
-      border-color: rgba(200, 16, 46, 0.45);
-      transform: translateY(-8px);
-      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 0 0 32px rgba(200, 16, 46, 0.22);
-      z-index: 10;
-    }
-
-    [data-theme="light"] .work-duo-card:hover {
-      border-color: rgba(200, 16, 46, 0.32);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), 0 28px 60px rgba(0, 0, 0, 0.08), 0 0 24px rgba(200, 16, 46, 0.09);
-    }
-
-    .work-duo-card:hover .work-card-img {
-      transform: scale(1.06);
-      filter: brightness(0.55) contrast(1.25) saturate(1.05);
+      gap: 14px;
     }
 
     .work-top-meta {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-bottom: 8px;
+      justify-content: flex-start;
     }
 
     .work-num {
@@ -1009,110 +1010,103 @@
       font-weight: 700;
       color: var(--cr);
       letter-spacing: 0.14em;
-    }
-
-    .work-tag-pill {
-      font-family: var(--font-mono);
-      font-size: clamp(9.5px, 0.8vw, 11px);
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      color: #FFFFFF;
-      background: none;
-      border: none;
-      padding: 0;
-      border-radius: 0;
       text-transform: uppercase;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
-      backdrop-filter: none;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
     }
 
     .work-mid-body {
-      margin: auto 0;
-      padding: 8px 0;
+      margin-top: auto;
+      margin-bottom: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .work-title {
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(26px, 3.2vw, 42px);
-      line-height: 1.05;
-      letter-spacing: -0.035em;
+      font-size: clamp(24px, 2.6vw, 36px);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
       color: #FFFFFF;
-      margin-bottom: 8px;
-      text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
+      margin: 0;
+      text-shadow: 0 3px 18px rgba(0, 0, 0, 0.85);
     }
 
     [data-theme="light"] .work-title {
-      color: #07070A;
+      color: #FFFFFF;
     }
 
-    .work-desc {
-      font-family: var(--font-secondary);
+    .work-subtitle {
+      font-family: var(--font-primary);
       font-size: clamp(13px, 1.05vw, 15px);
-      line-height: 1.5;
-      color: rgba(255, 255, 255, 0.85);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.82);
+      letter-spacing: 0.01em;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+      white-space: nowrap;
       overflow: hidden;
-      max-width: 540px;
+      text-overflow: ellipsis;
     }
 
-    [data-theme="light"] .work-desc {
-      color: rgba(15, 15, 20, 0.8);
+    [data-theme="light"] .work-subtitle {
+      color: rgba(255, 255, 255, 0.82);
     }
 
     .work-bottom-meta {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
+      padding-top: 12px;
       border-top: 1px solid rgba(255, 255, 255, 0.14);
-      padding-top: 10px;
     }
 
-    [data-theme="light"] .work-bottom-meta {
-      border-top: 1px solid rgba(0, 0, 0, 0.12);
-    }
-
-    .work-pills {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-
-    .work-pill {
-      font-family: var(--font-mono);
-      font-size: clamp(8.5px, 0.75vw, 10px);
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: rgba(255, 255, 255, 0.7);
-      background: rgba(255, 255, 255, 0.08);
-      padding: 3px 10px;
-      border-radius: 6px;
+    .work-cta-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: clamp(12px, 0.9vw, 13px);
+      font-weight: 800;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
+      color: #FFFFFF;
+      transition: color 0.3s ease;
     }
 
-    [data-theme="light"] .work-pill {
-      color: rgba(15, 15, 20, 0.7);
-      background: rgba(0, 0, 0, 0.06);
-    }
-
-    .work-arrow {
-      font-family: var(--font-mono);
-      font-size: clamp(11px, 0.9vw, 12.5px);
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      color: var(--cr);
+    .work-cta-arrow {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       display: flex;
       align-items: center;
-      gap: 5px;
-      transition: gap 0.25s, transform 0.25s;
+      justify-content: center;
+      transition: all 0.3s var(--sp);
+      flex-shrink: 0;
     }
 
-    .work-duo-card:hover .work-arrow {
-      gap: 9px;
-      transform: translateX(4px);
+    .work-cta-arrow svg {
+      width: 13px;
+      height: 13px;
+      stroke: #FFFFFF;
+      stroke-width: 2.2;
+      transition: transform 0.3s var(--sp);
+    }
+
+    .work-duo-card:hover .work-cta-wrap {
+      color: var(--cr);
+    }
+
+    .work-duo-card:hover .work-cta-arrow {
+      background: var(--cr);
+      border-color: var(--cr);
+      transform: translate(2px, -2px);
+    }
+
+    .work-duo-card:hover .work-cta-arrow svg {
+      stroke: #FFFFFF;
     }
 
     @media (max-width: 860px) {
@@ -1666,18 +1660,23 @@
 
     .process-bg-path {
       fill: none;
-      stroke: var(--rule);
-      stroke-width: 1px;
-      stroke-dasharray: 4 4;
-      opacity: 0.4;
+      stroke: var(--rule-heavy);
+      stroke-width: 2px;
+      stroke-dasharray: 6 6;
+      opacity: 0.6;
+    }
+
+    [data-theme="light"] .process-bg-path {
+      stroke: rgba(0, 0, 0, 0.16);
+      opacity: 0.85;
     }
 
     .process-active-path {
       fill: none;
-      stroke: url(#laserGrad);
-      stroke-width: 1px;
+      stroke: var(--cr);
+      stroke-width: 2.5px;
       stroke-linecap: round;
-      filter: url(#laserGlow);
+      filter: drop-shadow(0 0 8px rgba(200, 16, 46, 0.55));
     }
 
     /* ── Step Items (Alternating Left & Right) ── */
@@ -2906,7 +2905,7 @@
     <div class="section-container hero-content">
       <div class="hero-tag-wrap">
         <div class="sec-tag-pill" style="margin-bottom:0;">
-          <span class="sec-dot"></span> ABOUT 1928 // THE STUDIO
+          <span class="sec-dot"></span> ABOUT 1928 / THE STUDIO
         </div>
       </div>
 
@@ -3002,7 +3001,7 @@
   <section id="works-driver" class="works-driver">
     <div class="works-sticky-stage" id="worksStickyStage">
       <div class="section-container works-stage-container">
-        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> SELECTED PROJECTS // 1928</div>
+        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> SELECTED PROJECTS / 1928</div>
         <h2 class="sec-heading" style="margin-bottom:clamp(6px, 1vh, 12px);">WORK WORTH <span>SHOWING.</span></h2>
         <p class="sec-desc">A selection of identities, digital experiences and creative work created for businesses with ambition.</p>
 
@@ -3016,21 +3015,19 @@
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">01 // GLOBAL ICON</span>
-                  <span class="work-tag-pill">BRAND IDENTITY</span>
+                  <span class="work-num">01 / GLOBAL ICON</span>
                 </div>
                 <div class="work-mid-body">
                   <h3 class="work-title">JUVENTUS</h3>
-                  <p class="work-desc">Global visual identity system, brand guidelines, and sensory stadium experience
-                    touchpoints.</p>
+                  <div class="work-subtitle">Global Visual Identity & Guidelines</div>
                 </div>
                 <div class="work-bottom-meta">
-                  <div class="work-pills">
-                    <span>Identity</span>
-                    <span>Guidelines</span>
-                    <span>Signage</span>
+                  <div class="work-cta-wrap">
+                    <span>View Case Study</span>
+                    <div class="work-cta-arrow">
+                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
                   </div>
-                  <span class="work-view-link">View Case Study ↗</span>
                 </div>
               </div>
             </a>
@@ -3042,21 +3039,19 @@
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">02 // COUTURE SPATIAL</span>
-                  <span class="work-tag-pill">SPATIAL &amp; DIGITAL</span>
+                  <span class="work-num">02 / COUTURE SPATIAL</span>
                 </div>
                 <div class="work-mid-body">
                   <h3 class="work-title">BALENCIAGA</h3>
-                  <p class="work-desc">Architectural spatial system, monolithic retail fixtures, and kinetic runway
-                    scenography.</p>
+                  <div class="work-subtitle">Flagship Architecture & Digital Scenography</div>
                 </div>
                 <div class="work-bottom-meta">
-                  <div class="work-pills">
-                    <span>Spatial</span>
-                    <span>Retail</span>
-                    <span>Runway</span>
+                  <div class="work-cta-wrap">
+                    <span>View Case Study</span>
+                    <div class="work-cta-arrow">
+                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
                   </div>
-                  <span class="work-view-link">View Case Study ↗</span>
                 </div>
               </div>
             </a>
@@ -3071,21 +3066,19 @@
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">03 // LUXURY ATELIER</span>
-                  <span class="work-tag-pill">PACKAGING &amp; 3D</span>
+                  <span class="work-num">03 / LUXURY ATELIER</span>
                 </div>
                 <div class="work-mid-body">
                   <h3 class="work-title">POLÈNE PARIS</h3>
-                  <p class="work-desc">Sculptural leather goods packaging, tactile materiality, and 3D architectural
-                    campaign assets.</p>
+                  <div class="work-subtitle">Sculptural Leather Goods & 3D Packaging</div>
                 </div>
                 <div class="work-bottom-meta">
-                  <div class="work-pills">
-                    <span>Packaging</span>
-                    <span>Tactile</span>
-                    <span>3D Assets</span>
+                  <div class="work-cta-wrap">
+                    <span>View Case Study</span>
+                    <div class="work-cta-arrow">
+                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
                   </div>
-                  <span class="work-view-link">View Case Study ↗</span>
                 </div>
               </div>
             </a>
@@ -3097,21 +3090,19 @@
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">04 // INDUSTRIAL LUXURY</span>
-                  <span class="work-tag-pill">ECOMMERCE &amp; WEBGL</span>
+                  <span class="work-num">04 / INDUSTRIAL LUXURY</span>
                 </div>
                 <div class="work-mid-body">
                   <h3 class="work-title">RIMOWA</h3>
-                  <p class="work-desc">Monolithic digital flagship, aluminum 3D configurator, and high-velocity global
-                    checkout.</p>
+                  <div class="work-subtitle">Digital Flagship & 3D WebGL Configurator</div>
                 </div>
                 <div class="work-bottom-meta">
-                  <div class="work-pills">
-                    <span>WebGL</span>
-                    <span>Configurator</span>
-                    <span>Flagship</span>
+                  <div class="work-cta-wrap">
+                    <span>View Case Study</span>
+                    <div class="work-cta-arrow">
+                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
                   </div>
-                  <span class="work-view-link">View Case Study ↗</span>
                 </div>
               </div>
             </a>
@@ -3132,7 +3123,7 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="values">
     <div class="section-container">
-      <div class="sec-tag-pill"><span class="sec-dot"></span> 1928 CREATIVE STUDIO // OUR PRINCIPLES</div>
+      <div class="sec-tag-pill"><span class="sec-dot"></span> 1928 CREATIVE STUDIO / OUR PRINCIPLES</div>
       <h2 class="sec-heading">WHAT WE <span>BELIEVE IN.</span></h2>
       <p class="sec-desc">The principles that shape how we think, create, collaborate, and build brands for meaningful growth.</p>
 
@@ -3149,7 +3140,7 @@
           <div class="val-expanded-content">
             <div class="val-exp-top">
               <div class="val-exp-meta">
-                <span class="val-exp-num">01 // PRINCIPLE</span>
+                <span class="val-exp-num">01 /</span>
                 <span class="val-exp-pill">Think With Purpose</span>
               </div>
             </div>
@@ -3179,7 +3170,7 @@
           <div class="val-expanded-content">
             <div class="val-exp-top">
               <div class="val-exp-meta">
-                <span class="val-exp-num">02 // PRINCIPLE</span>
+                <span class="val-exp-num">02 /</span>
                 <span class="val-exp-pill">Make It Matter</span>
               </div>
             </div>
@@ -3209,7 +3200,7 @@
           <div class="val-expanded-content">
             <div class="val-exp-top">
               <div class="val-exp-meta">
-                <span class="val-exp-num">03 // PRINCIPLE</span>
+                <span class="val-exp-num">03 /</span>
                 <span class="val-exp-pill">Create Real Connection</span>
               </div>
             </div>
@@ -3239,7 +3230,7 @@
           <div class="val-expanded-content">
             <div class="val-exp-top">
               <div class="val-exp-meta">
-                <span class="val-exp-num">04 // PRINCIPLE</span>
+                <span class="val-exp-num">04 /</span>
                 <span class="val-exp-pill">Create Lasting Value</span>
               </div>
             </div>
@@ -3363,7 +3354,7 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="process">
     <div class="section-container">
-      <div class="sec-tag-pill"><span class="sec-dot"></span> WORKFLOW FRAMEWORK // 1928</div>
+      <div class="sec-tag-pill"><span class="sec-dot"></span> WORKFLOW FRAMEWORK / 1928</div>
       <h2 class="sec-heading">HOW WE BUILD <span>TOGETHER.</span></h2>
       <p class="sec-desc">A thoughtful process that brings strategy, creativity and execution together, from the first conversation to meaningful growth.</p>
 
@@ -3398,7 +3389,7 @@
           </div>
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 01 // DISCOVER</span>
+              <span class="proc-card-phase">PHASE 01 / DISCOVER</span>
               <h3 class="proc-card-title">Understand Before We Build</h3>
             </div>
             <p class="proc-card-desc">We get close to your business, audience, market and ambitions to understand what makes your opportunity unique.</p>
@@ -3415,7 +3406,7 @@
         <div class="proc-step-item proc-item-right" data-step="2">
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 02 // DEFINE</span>
+              <span class="proc-card-phase">PHASE 02 / DEFINE</span>
               <h3 class="proc-card-title">Shape the Direction</h3>
             </div>
             <p class="proc-card-desc">We turn insights into a clear creative and strategic direction that gives your brand a strong foundation.</p>
@@ -3443,7 +3434,7 @@
           </div>
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 03 // CREATE</span>
+              <span class="proc-card-phase">PHASE 03 / CREATE</span>
               <h3 class="proc-card-title">Bring the Brand to Life</h3>
             </div>
             <p class="proc-card-desc">This is where ideas become identities, digital experiences, content and campaigns designed around your brand.</p>
@@ -3460,7 +3451,7 @@
         <div class="proc-step-item proc-item-right" data-step="4">
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 04 // CONNECT</span>
+              <span class="proc-card-phase">PHASE 04 / CONNECT</span>
               <h3 class="proc-card-title">Take It to the Right People</h3>
             </div>
             <p class="proc-card-desc">We bring your brand into the market through thoughtful content, digital marketing, social media and creator partnerships.</p>
@@ -3489,7 +3480,7 @@
           </div>
           <div class="proc-step-card">
             <div class="proc-card-header">
-              <span class="proc-card-phase">PHASE 05 // GROW</span>
+              <span class="proc-card-phase">PHASE 05 / GROW</span>
               <h3 class="proc-card-title">Build What Comes Next</h3>
             </div>
             <p class="proc-card-desc">We look beyond the launch to help your brand stay relevant, create value and keep moving towards its business goals.</p>
@@ -3510,7 +3501,7 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="clients-section">
     <div class="brands-header-block">
-      <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY // 1928 CLIENTS</div>
+      <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY / 1928 CLIENTS</div>
       <h2 class="brands-title">BRANDS THAT TRUST <span>1928.</span></h2>
       <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their ambitions, and the brands they’re building.</p>
     </div>
@@ -4095,20 +4086,17 @@
       }
 
       /* ── Minimalist Team Typographic Line Archive & Floating Portrait Portal ── */
-      const teamRows = document.querySelectorAll('.team-index-row');
       const teamFloatCard = document.getElementById('teamFloatingCard');
       const tfcImg = document.getElementById('tfcImg');
-      const tfcName = document.getElementById('tfcName');
-      const tfcRole = document.getElementById('tfcRole');
 
       let tfcTargetX = -300, tfcTargetY = -300;
       let tfcCurrentX = -300, tfcCurrentY = -300;
       let tfcActive = false;
 
       function renderTeamFloat() {
-        if (teamFloatCard) {
-          tfcCurrentX += (tfcTargetX - tfcCurrentX) * 0.16;
-          tfcCurrentY += (tfcTargetY - tfcCurrentY) * 0.16;
+        if (teamFloatCard && tfcActive) {
+          tfcCurrentX += (tfcTargetX - tfcCurrentX) * 0.18;
+          tfcCurrentY += (tfcTargetY - tfcCurrentY) * 0.18;
           teamFloatCard.style.left = `${tfcCurrentX}px`;
           teamFloatCard.style.top = `${tfcCurrentY}px`;
         }
@@ -4116,34 +4104,49 @@
       }
       renderTeamFloat();
 
-      teamRows.forEach(row => {
-        row.addEventListener('mouseenter', (e) => {
-          const photo = row.getAttribute('data-photo');
-          const name = row.getAttribute('data-name');
-          const role = row.getAttribute('data-role');
-          if (tfcImg && photo) tfcImg.src = photo;
-          if (tfcName && name) tfcName.textContent = name;
+      document.addEventListener('mouseover', (e) => {
+        const row = e.target.closest('.team-index-row');
+        if (row && window.innerWidth > 768) {
+          const photo = row.getAttribute('data-photo') || 'img/team-ami.jpg';
+          if (tfcImg) tfcImg.src = photo;
           tfcTargetX = e.clientX;
           tfcTargetY = e.clientY;
-          if (teamFloatCard && window.innerWidth > 860) teamFloatCard.classList.add('active');
+          if (!tfcActive) {
+            tfcCurrentX = e.clientX;
+            tfcCurrentY = e.clientY;
+            if (teamFloatCard) {
+              teamFloatCard.style.left = `${tfcCurrentX}px`;
+              teamFloatCard.style.top = `${tfcCurrentY}px`;
+            }
+          }
+          if (teamFloatCard) teamFloatCard.classList.add('active');
           tfcActive = true;
-        });
+        }
+      });
 
-        row.addEventListener('mousemove', (e) => {
+      document.addEventListener('mousemove', (e) => {
+        if (tfcActive) {
           tfcTargetX = e.clientX;
           tfcTargetY = e.clientY;
-        });
+        }
+      });
 
-        row.addEventListener('mouseleave', () => {
+      document.addEventListener('mouseout', (e) => {
+        const row = e.target.closest('.team-index-row');
+        const relatedRow = e.relatedTarget ? e.relatedTarget.closest('.team-index-row') : null;
+        if (row && !relatedRow) {
           if (teamFloatCard) teamFloatCard.classList.remove('active');
           tfcActive = false;
-        });
+        }
+      });
 
-        row.addEventListener('click', () => {
+      document.addEventListener('click', (e) => {
+        const row = e.target.closest('.team-index-row');
+        if (row) {
           const isExpanded = row.classList.contains('expanded');
-          teamRows.forEach(r => r.classList.remove('expanded'));
+          document.querySelectorAll('.team-index-row').forEach(r => r.classList.remove('expanded'));
           if (!isExpanded) row.classList.add('expanded');
-        });
+        }
       });
 
       document.querySelectorAll('a, button, .work-card, .work-duo-card, .val-panel, .team-index-row, .proc-row, .client-tile').forEach(el => {
@@ -4228,6 +4231,9 @@
       }
 
       /* ── S-Curve Serpentine Progressive Creative Process Flow ── */
+      let _procResizeListener = null;
+      let _procScrollListener = null;
+
       function initProcessSerpentine() {
         const track = document.getElementById('processTrack');
         const bgPath = document.getElementById('processBgPath');
@@ -4266,8 +4272,10 @@
           bgPath.setAttribute('d', d);
           activePath.setAttribute('d', d);
 
-          const totalLen = activePath.getTotalLength();
-          activePath.style.strokeDasharray = `${totalLen} ${totalLen}`;
+          const totalLen = activePath.getTotalLength ? activePath.getTotalLength() : 0;
+          if (totalLen) {
+            activePath.style.strokeDasharray = `${totalLen} ${totalLen}`;
+          }
           updateProcessScroll();
         }
 
@@ -4280,14 +4288,13 @@
           const firstRect = firstCircle.getBoundingClientRect();
           const lastRect = lastCircle.getBoundingClientRect();
 
-          // Smooth progress: starts when Node 1 is at 72% vh, hits 100% when Node 5 arrives at 54% vh
-          const startLineY = vh * 0.72;
-          const endLineY = vh * 0.54;
+          const startLineY = vh * 0.80;
+          const endLineY = vh * 0.50;
           const totalSpan = (lastRect.top - firstRect.top) + (startLineY - endLineY);
           const currentPos = startLineY - firstRect.top;
           const progress = Math.min(1, Math.max(0, currentPos / (totalSpan || 1)));
 
-          const totalLen = activePath.getTotalLength();
+          const totalLen = activePath.getTotalLength ? activePath.getTotalLength() : 0;
           if (totalLen) {
             activePath.style.strokeDashoffset = `${totalLen * (1 - progress)}`;
           }
@@ -4297,8 +4304,7 @@
             const circle = item.querySelector('.proc-node-circle');
             if (!circle) return;
             const cTop = circle.getBoundingClientRect().top;
-            const itemTrigger = idx / (items.length - 1);
-            if (progress >= (itemTrigger * 0.96) || cTop <= vh * 0.65) {
+            if (cTop <= vh * 0.72) {
               item.classList.add('active');
             } else {
               item.classList.remove('active');
@@ -4306,14 +4312,22 @@
           });
         }
 
-        window.addEventListener('resize', updatePathCoordinates);
-        window.addEventListener('scroll', updateProcessScroll, { passive: true });
+        if (_procResizeListener) window.removeEventListener('resize', _procResizeListener);
+        if (_procScrollListener) window.removeEventListener('scroll', _procScrollListener);
 
-        // Delayed initial layout passes to ensure fonts/dimensions are loaded
-        setTimeout(updatePathCoordinates, 100);
-        setTimeout(updatePathCoordinates, 400);
-        setTimeout(updatePathCoordinates, 1000);
+        _procResizeListener = updatePathCoordinates;
+        _procScrollListener = updateProcessScroll;
+
+        window.addEventListener('resize', _procResizeListener);
+        window.addEventListener('scroll', _procScrollListener, { passive: true });
+
+        // Immediate and delayed passes to ensure correct layout and path calculation
+        updatePathCoordinates();
+        setTimeout(updatePathCoordinates, 60);
+        setTimeout(updatePathCoordinates, 250);
+        setTimeout(updatePathCoordinates, 800);
       }
+      window.initProcessSerpentine = initProcessSerpentine;
       initProcessSerpentine();
 
       const heroIndicator = document.getElementById('heroScrollIndicator');

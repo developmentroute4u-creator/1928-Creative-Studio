@@ -167,6 +167,7 @@ try {
                     'title' => $s['title'],
                     'tagline' => $s['tagline'],
                     'desc' => $s['description'],
+                    'image' => $s['image_url'] ?? '',
                     'deliverables' => json_decode($s['deliverables_json'], true) ?: [],
                     'order' => (int)$s['display_order']
                 ];
@@ -250,6 +251,14 @@ try {
                 $settings[$s['setting_key']] = $s['setting_value'];
             }
             $response['settings'] = $settings;
+
+            // H. Contact Brief Form Configuration
+            if (isset($settings['contact_brief'])) {
+                $cb = json_decode($settings['contact_brief'], true);
+                if (is_array($cb)) {
+                    $response['contactBrief'] = $cb;
+                }
+            }
 
             echo json_encode(['status' => 'success', 'data' => $response]);
             break;
@@ -536,6 +545,45 @@ try {
             echo json_encode(['status' => 'success', 'message' => 'Team member deleted from MySQL.']);
             break;
 
+        // ═══════════════════════════════════════════════════════════
+        // 6B. STUDIO PRINCIPLES CRUD
+        // ═══════════════════════════════════════════════════════════
+        case 'save_principle':
+            $principleId = $inputData['id'] ?? $inputData['principleId'] ?? ('p' . time());
+            $num = $inputData['num'] ?? '01';
+            $pill = $inputData['pill'] ?? 'Think With Purpose';
+            $title = $inputData['title'] ?? 'Strategic Thinking';
+            $desc = $inputData['desc'] ?? ($inputData['description'] ?? '');
+            $tags = is_array($inputData['tags'] ?? null) ? $inputData['tags'] : (explode(',', $inputData['tags'] ?? ''));
+            $tagsClean = array_values(array_filter(array_map('trim', $tags)));
+            $tagsJson = json_encode($tagsClean);
+            $order = isset($inputData['order']) ? (int)$inputData['order'] : (int)preg_replace('/\D/', '', $num);
+            if ($order <= 0) $order = 1;
+
+            $stmt = $db->prepare("
+                INSERT INTO `studio_principles` (`principle_id`, `num`, `pill`, `title`, `description`, `tags_json`, `display_order`)
+                VALUES (:pid, :num, :pill, :title, :desc, :tags, :ord)
+                ON DUPLICATE KEY UPDATE
+                    `num` = VALUES(`num`),
+                    `pill` = VALUES(`pill`),
+                    `title` = VALUES(`title`),
+                    `description` = VALUES(`description`),
+                    `tags_json` = VALUES(`tags_json`),
+                    `display_order` = VALUES(`display_order`)
+            ");
+            $stmt->execute([
+                ':pid' => $principleId,
+                ':num' => $num,
+                ':pill' => $pill,
+                ':title' => $title,
+                ':desc' => $desc,
+                ':tags' => $tagsJson,
+                ':ord' => $order
+            ]);
+
+            echo json_encode(['status' => 'success', 'message' => 'Studio principle saved to MySQL.', 'principle_id' => $principleId]);
+            break;
+
 
         // ═══════════════════════════════════════════════════════════
         // 7. CORE SERVICES CRUD
@@ -546,18 +594,27 @@ try {
             $title = $inputData['title'] ?? '';
             $tagline = $inputData['tagline'] ?? '';
             $desc = $inputData['desc'] ?? '';
-            $delivJson = json_encode($inputData['deliverables'] ?? []);
-            $order = isset($inputData['order']) ? (int)$inputData['order'] : 1;
+            $image = $inputData['image'] ?? ($inputData['image_url'] ?? '');
+            $deliv = is_array($inputData['deliverables'] ?? null) ? $inputData['deliverables'] : explode(',', $inputData['deliverables'] ?? '');
+            $delivClean = array_values(array_filter(array_map('trim', $deliv)));
+            $delivJson = json_encode($delivClean);
+            $order = isset($inputData['order']) ? (int)$inputData['order'] : (int)preg_replace('/\D/', '', $num);
+            if ($order <= 0) $order = 1;
+
+            try {
+                $db->exec("ALTER TABLE `services` ADD COLUMN `image_url` VARCHAR(255) DEFAULT NULL");
+            } catch (Exception $e) {}
 
             $stmt = $db->prepare("
-                INSERT INTO `services` (`service_id`, `num`, `title`, `tagline`, `description`, `deliverables_json`, `display_order`, `active`)
-                VALUES (:sid, :num, :title, :tagline, :desc, :deliv, :ord, 1)
+                INSERT INTO `services` (`service_id`, `num`, `title`, `tagline`, `description`, `deliverables_json`, `image_url`, `display_order`, `active`)
+                VALUES (:sid, :num, :title, :tagline, :desc, :deliv, :img, :ord, 1)
                 ON DUPLICATE KEY UPDATE
                     `num` = VALUES(`num`),
                     `title` = VALUES(`title`),
                     `tagline` = VALUES(`tagline`),
                     `description` = VALUES(`description`),
                     `deliverables_json` = VALUES(`deliverables_json`),
+                    `image_url` = VALUES(`image_url`),
                     `display_order` = VALUES(`display_order`)
             ");
             $stmt->execute([
@@ -567,10 +624,11 @@ try {
                 ':tagline' => $tagline,
                 ':desc' => $desc,
                 ':deliv' => $delivJson,
+                ':img' => $image,
                 ':ord' => $order
             ]);
 
-            echo json_encode(['status' => 'success', 'message' => 'Service capability saved to MySQL.']);
+            echo json_encode(['status' => 'success', 'message' => 'Service capability saved to MySQL.', 'service_id' => $serviceId]);
             break;
 
 
