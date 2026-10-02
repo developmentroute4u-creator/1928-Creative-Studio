@@ -2520,7 +2520,25 @@
       const rdrCloseBtn = document.getElementById('rdrCloseBtn');
 
       function openReader(articleId) {
-        const article = allBlogsData.find(a => a.id === articleId);
+        let article = allBlogsData.find(a => a.id === articleId);
+
+        if (window.CMSStore) {
+          const cmsBlog = window.CMSStore.getBlogById(articleId) || (window.CMSStore.getBlogs ? window.CMSStore.getBlogs().find(b => b.id === articleId) : null);
+          if (cmsBlog) {
+            article = {
+              id: cmsBlog.id,
+              category: cmsBlog.category || article?.category || 'STRATEGY',
+              readTime: cmsBlog.readTime || article?.readTime || '6 MIN READ',
+              title: cmsBlog.title || article?.title || '',
+              excerpt: cmsBlog.excerpt || article?.excerpt || '',
+              contentHtml: cmsBlog.content || cmsBlog.contentHtml || article?.contentHtml || '',
+              author: cmsBlog.author || article?.author || 'Jay Thaker',
+              role: cmsBlog.role || article?.role || 'Studio Principal',
+              initials: cmsBlog.author ? cmsBlog.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'JT'
+            };
+          }
+        }
+
         if (!article) return;
 
         rdrCat.textContent = article.category;
@@ -2542,6 +2560,9 @@
         document.body.classList.remove('reader-open');
         document.body.style.overflow = '';
       }
+
+      window.openReader = openReader;
+      window.closeReader = closeReader;
 
       // Delegate click on cards to open reader
       grid.addEventListener('click', (e) => {
@@ -2598,6 +2619,10 @@
       }, { passive: true });
     });
   </script>
+
+  <!-- CMS Live Bridge -->
+  <script src="data-store.js"></script>
+  <script src="site-bridge.js"></script>
 </body>
 
 </html>

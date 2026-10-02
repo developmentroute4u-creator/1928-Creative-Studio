@@ -3544,7 +3544,6 @@
   <section id="featured-monograph">
     <!-- Section Top Header: Left Title, Single Line Description & Right Corner Counter -->
     <div class="featured-section-header">
-      <div class="sec-tag-pill" style="margin-bottom: 6px;"><span class="sec-dot"></span> LATEST FROM 1928 // INSIGHTS</div>
       <div class="fsh-top-row">
         <h3 class="fsh-sec-title">LATEST BLOGS</h3>
       </div>
@@ -3759,7 +3758,7 @@
         </div>
         <div class="pga-header-meta">
           <span class="pga-counter" id="resultCounter" style="display: none;">Showing 7 of 7 Perspectives</span>
-          <a href="blog-detail.html" class="pga-drift-hint" id="exploreBlogBtn" title="Open Complete Blog Repository">
+          <a href="all-blogs.html" class="pga-drift-hint" id="exploreBlogBtn" title="Open Complete Blog Repository">
             <span class="pdh-dot"></span>
             <span class="pdh-text">EXPLORE ALL BLOGS</span>
             <svg class="pdh-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -4148,8 +4147,8 @@
         </div>
 
         <!-- Featured Architectural Blueprint Banner -->
-        <div class="reader-blueprint-banner">
-          <div class="hfs-asset-glyph">
+        <div class="reader-blueprint-banner" id="mReaderSpecimenBanner">
+          <div class="hfs-asset-glyph" id="mReaderSpecimenGlyph">
             <svg viewBox="0 0 64 64" fill="none" class="hfs-svg-icon">
               <rect x="6" y="10" width="52" height="44" rx="8" stroke="currentColor" stroke-width="1.8" />
               <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.8" />
@@ -4158,9 +4157,10 @@
               <circle cx="32" cy="32" r="20" stroke="var(--cr)" stroke-width="1.5" stroke-dasharray="3 3"
                 class="hfs-radar-ring" />
             </svg>
-            <div class="hfs-badge">[ FULL MONOGRAPH ASSET SPECIMEN ]</div>
-            <div class="hfs-prompt">1928 EDITORIAL PROVENANCE CAPTURE</div>
+            <div class="hfs-badge" id="mReaderSpecimenBadge">[ FULL MONOGRAPH ASSET SPECIMEN ]</div>
+            <div class="hfs-prompt" id="mReaderSpecimenPrompt">1928 EDITORIAL PROVENANCE CAPTURE</div>
           </div>
+          <img id="mReaderSpecimenImg" src="" alt="Specimen Figure" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:12px;" />
 
           <div class="corner-crosshair cc-tl">+</div>
           <div class="corner-crosshair cc-tr">+</div>
@@ -4754,7 +4754,35 @@
       const readerRelatedGrid = document.getElementById('mReaderRelatedGrid');
 
       function openReader(id) {
-        const data = articlesData[id] || articlesData['art-monogram'];
+        let data = articlesData[id];
+
+        if (window.CMSStore) {
+          const cmsBlog = window.CMSStore.getBlogById(id) || (window.CMSStore.getBlogs ? window.CMSStore.getBlogs().find(b => b.id === id) : null);
+          if (cmsBlog) {
+            const defaultSections = [
+              { id: 'sec-strategic-shift', title: '01. The Strategic Shift' },
+              { id: 'sec-mathematical-geometry', title: '02. Mathematical Geometry' },
+              { id: 'sec-executive-takeaways', title: '03. Executive Takeaways' }
+            ];
+            data = {
+              category: cmsBlog.category || data?.category || 'BRAND ARCHITECTURE',
+              title: cmsBlog.title || data?.title || 'Perspective Monograph',
+              author: cmsBlog.author || data?.author || 'Jay Thaker',
+              role: cmsBlog.role || data?.role || 'Studio Principal & Brand Architect',
+              initials: cmsBlog.initials || (cmsBlog.author ? cmsBlog.author.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase() : 'JT'),
+              date: cmsBlog.date || data?.date || 'SEPTEMBER 2026',
+              readTime: cmsBlog.readTime || data?.readTime || '7 MIN READ',
+              contentHtml: cmsBlog.content || cmsBlog.contentHtml || data?.contentHtml || '',
+              bio: cmsBlog.bio || data?.bio || 'Founder & Principal Brand Strategist at 1928 Creative Studio. Advising luxury maisons and deep-tech founders on enduring visual systems.',
+              specimenImage: cmsBlog.specimenImage || data?.specimenImage || '',
+              specimenCaption: cmsBlog.specimenCaption || data?.specimenCaption || '1928 EDITORIAL PROVENANCE CAPTURE',
+              sections: (Array.isArray(cmsBlog.sections) && cmsBlog.sections.length) ? cmsBlog.sections : (data?.sections || defaultSections),
+              related: (Array.isArray(cmsBlog.related) && cmsBlog.related.length) ? cmsBlog.related : (data?.related || ['art-spatial', 'art-webgl'])
+            };
+          }
+        }
+
+        if (!data) data = articlesData['art-monogram'];
         if (!data) return;
 
         document.getElementById('mReaderCat').textContent = data.category;
@@ -4769,6 +4797,23 @@
         document.getElementById('mBioAvatarBox').textContent = data.initials;
         document.getElementById('mBioText').textContent = data.bio;
 
+        // Populate Specimen Banner Image and Caption
+        const specimenImgEl = document.getElementById('mReaderSpecimenImg');
+        const specimenGlyphEl = document.getElementById('mReaderSpecimenGlyph');
+        const specimenPromptEl = document.getElementById('mReaderSpecimenPrompt');
+        if (specimenPromptEl) specimenPromptEl.textContent = data.specimenCaption || '1928 EDITORIAL PROVENANCE CAPTURE';
+
+        if (specimenImgEl && specimenGlyphEl) {
+          if (data.specimenImage) {
+            specimenImgEl.src = data.specimenImage;
+            specimenImgEl.style.display = 'block';
+            specimenGlyphEl.style.display = 'none';
+          } else {
+            specimenImgEl.style.display = 'none';
+            specimenGlyphEl.style.display = 'flex';
+          }
+        }
+
         // Populate Dynamic Table of Contents (TOC) with Scrollspy
         if (readerTOC && data.sections) {
           readerTOC.innerHTML = '';
@@ -4781,7 +4826,18 @@
 
             a.addEventListener('click', (e) => {
               e.preventDefault();
-              const targetEl = document.getElementById(sec.id);
+              let targetEl = document.getElementById(sec.id);
+              if (!targetEl) {
+                // Fallback search by text inside prose
+                const headings = document.getElementById('mReaderProse')?.querySelectorAll('h2, h3, h4');
+                if (headings) {
+                  headings.forEach(h => {
+                    if (h.textContent.trim().toLowerCase() === sec.title.trim().toLowerCase() || h.textContent.includes(sec.title)) {
+                      targetEl = h;
+                    }
+                  });
+                }
+              }
               if (targetEl && modalStage) {
                 const targetPos = targetEl.offsetTop - 80;
                 modalStage.scrollTo({ top: targetPos, behavior: 'smooth' });
@@ -4797,18 +4853,18 @@
         if (readerRelatedGrid && data.related) {
           readerRelatedGrid.innerHTML = '';
           data.related.forEach(relId => {
-            const relData = articlesData[relId];
+            const relData = (window.CMSStore ? window.CMSStore.getBlogById(relId) : null) || articlesData[relId];
             if (!relData) return;
 
             const card = document.createElement('div');
             card.className = 'rrs-card';
             card.innerHTML = `
               <div>
-                <span class="rrs-cat">${relData.category}</span>
+                <span class="rrs-cat">${relData.category || 'THEORY'}</span>
                 <h4 class="rrs-card-title">${relData.title}</h4>
               </div>
               <div class="rrs-meta">
-                <span>${relData.readTime}</span>
+                <span>${relData.readTime || '5 MIN'}</span>
                 <span style="color:var(--cr-bright); font-weight:700;">Explore Monograph →</span>
               </div>
             `;
@@ -4830,6 +4886,9 @@
         document.body.classList.remove('reader-open');
         document.body.style.overflow = '';
       }
+
+      window.openReader = openReader;
+      window.closeReader = closeReader;
 
       if (closeBtn) closeBtn.addEventListener('click', closeReader);
       if (modal) {
@@ -5518,6 +5577,8 @@
       setInterval(updateFooterTime, 15000);
     });
   </script>
+  <script src="data-store.js"></script>
+  <script src="site-bridge.js"></script>
 </body>
 
 </html>

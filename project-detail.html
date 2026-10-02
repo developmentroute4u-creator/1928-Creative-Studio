@@ -392,6 +392,14 @@
     (function () {
       'use strict';
 
+      // Immediately redirect to portfolio interactive modal if project ID is provided
+      const params = new URLSearchParams(window.location.search);
+      const pid = params.get('id') || params.get('project');
+      if (pid) {
+        window.location.replace(`portfolio.html?project=${encodeURIComponent(pid)}`);
+        return;
+      }
+
       // Live Clock
       function updateClock() {
         const clockEl = document.getElementById('liveClock');
@@ -446,6 +454,10 @@
       }
     })();
   </script>
+
+  <!-- CMS Live Bridge -->
+  <script src="data-store.js"></script>
+  <script src="site-bridge.js"></script>
 </body>
 
 </html>

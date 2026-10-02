@@ -4,448 +4,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Under Development · 1928 Creative Studio</title>
-  <meta name="description" content="1928 Creative Studio — This page is currently under development." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
-    rel="stylesheet" />
-
-  <link rel="stylesheet" href="style.css" />
-
-  <style>
-    /* ── Gotham Primary & Raleway Secondary Font System ── */
-    @font-face {
-      font-family: 'Gotham';
-      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Gotham';
-      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Gotham';
-      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-    @font-face {
-      font-family: 'Gotham';
-      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
-      font-weight: 900;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: var(--font-secondary);
-      min-height: 100vh;
-      width: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: clamp(24px, 4vh, 48px) 0 0 0;
-      transition: background .3s, color .3s;
-      position: relative;
-    }
-
-    .dev-page-hero {
-      width: 100%;
-      min-height: 75vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 clamp(24px, 4vw, 56px);
-      box-sizing: border-box;
-    }
-      height: 6px;
-      background: var(--cr);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-    }
-
-    .c-ring {
-      width: 32px;
-      height: 32px;
-      border: 1.5px solid var(--cr);
-      border-radius: 50%;
-      position: fixed;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: transform .12s ease-out, width .25s, height .25s;
-    }
-
-    /* ── Minimal Top Navigation ── */
-    .top-bar {
-      width: 100%;
-      max-width: 1500px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 2;
-    }
-
-    .brand-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--ink);
-    }
-
-    .brand-title {
-      font-family: var(--font-primary);
-      font-weight: 900;
-      font-size: 1.25rem;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-    }
-
-    .brand-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--cr);
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    /* ── Floating Fixed Theme Toggle Button (Bottom-Right Corner) ── */
-    #theme-fab {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      z-index: 9990;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--card-bg);
-      border: 1.5px solid var(--rule-m);
-      color: var(--ink);
-      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
-      display: grid;
-      place-items: center;
-      cursor: pointer;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      transition: transform .3s var(--sp), border-color .3s, box-shadow .3s, background .3s;
-    }
-
-    #theme-fab:hover {
-      transform: translateY(-3px) scale(1.08);
-      border-color: var(--cr);
-      box-shadow: 0 14px 40px var(--cr-glow);
-    }
-
-    #theme-fab svg {
-      width: 20px;
-      height: 20px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      transition: transform .4s var(--sp);
-    }
-
-    #theme-fab:hover svg {
-      transform: rotate(25deg);
-    }
-
-    [data-theme="dark"] #theme-fab .icon-moon,
-    [data-theme="light"] #theme-fab .icon-sun {
-      display: none;
-    }
-
-    [data-theme="dark"] #theme-fab .icon-sun,
-    [data-theme="light"] #theme-fab .icon-moon {
-      display: block;
-    }
-
-    /* ── Creative Centered Hero Statement ── */
-    .center-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      max-width: 900px;
-      margin: auto;
-      z-index: 2;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Space Mono', var(--font-secondary), monospace;
-      font-size: clamp(0.72rem, 0.9vw, 0.82rem);
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--cr);
-      padding: 0;
-      background: none;
-      border-radius: 0;
-      margin-bottom: clamp(24px, 3.5vh, 36px);
-    }
-
-    .pulse-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--cr);
-      border-radius: 50%;
-      box-shadow: 0 0 10px var(--cr);
-      animation: pulse 2s infinite ease-in-out;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.8); opacity: 0.3; }
-    }
-
-    .statement-title {
-      font-family: var(--font-primary);
-      font-size: clamp(38px, 6.5vw, 92px);
-      font-weight: 900;
-      line-height: 0.98;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      color: var(--ink);
-      margin-bottom: clamp(28px, 4vh, 44px);
-    }
-
-    .statement-title em {
-      font-style: italic;
-      font-weight: 400;
-      color: var(--cr);
-      display: inline-block;
-      letter-spacing: -0.02em;
-    }
-
-    .return-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 32px;
-      background: var(--ink);
-      color: var(--bg);
-      border-radius: 999px;
-      text-decoration: none;
-      font-family: var(--font-primary);
-      font-weight: 700;
-      font-size: 0.92rem;
-      letter-spacing: 0.04em;
-      transition: all .25s var(--sp);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
-    }
-
-    .return-pill:hover {
-      background: var(--cr);
-      transform: translateY(-3px);
-      box-shadow: 0 14px 36px var(--cr-glow);
-    }
-
-    .return-pill .arr {
-      transition: transform .25s var(--sp);
-    }
-
-    .return-pill:hover .arr {
-      transform: translate(3px, -3px);
-    }
-
-    /* ── Minimal Bottom Sub-Bar ── */
-    .bottom-bar {
-      width: 100%;
-      max-width: 1500px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: 'Space Mono', var(--font-secondary), monospace;
-      font-size: 0.74rem;
-      color: var(--ink-dim);
-      letter-spacing: 0.08em;
-      z-index: 2;
-    }
-
-    .bottom-bar a {
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color .2s;
-    }
-
-    .bottom-bar a:hover {
-      color: var(--cr);
-    }
-
-    @media (max-width: 600px) {
-      .bottom-bar {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-      }
-    }
-
-    /* ── Smooth scrollbar ─────────────────────────────────── */
-    html {
-      scrollbar-width: thin;
-      scrollbar-color: var(--cr) var(--bg);
-    }
-
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--cr);
-      border-radius: 3px;
-    }
-  </style>
-</head>
-
-<body>
-  <!-- Custom Cursor -->
-  <div class="c-dot" id="cDot"></div>
-  <div class="c-ring" id="cRing"></div>
-
-  <div class="dev-page-hero">
-    <!-- Minimal Top Bar -->
-    <header class="top-bar">
-      <a href="index.html" class="brand-link">
-        <span class="brand-title">1928</span>
-        <span class="brand-dot"></span>
-      </a>
-    </header>
-
-    <!-- Creative Centered Label Statement -->
-    <main class="center-container">
-      <div class="status-pill">
-        <span class="pulse-dot"></span>
-        <span>1928 Creative Studio</span>
-      </div>
-
-      <h1 class="statement-title">
-        This page is under <br />
-        <em>development.</em>
-      </h1>
-
-      <a href="index.html" class="return-pill">
-        <span>Return to Homepage</span>
-        <span class="arr">↗</span>
-      </a>
-    </main>
-  </div>
-
-  <!-- Footer (Referenced from footer.html) -->
-  <div id="footer-placeholder"></div>
-  <script src="footer-loader.js"></script>
-
-
-  <!-- Floating Bottom-Right Theme Toggle Button -->
-  <button id="theme-fab" aria-label="Toggle light/dark theme" title="Toggle Theme">
-    <!-- Sun Icon (shown in Dark mode to prompt switching to Light) -->
-    <svg class="icon-sun" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="5"></circle>
-      <line x1="12" y1="1" x2="12" y2="3"></line>
-      <line x1="12" y1="21" x2="12" y2="23"></line>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-      <line x1="1" y1="12" x2="3" y2="12"></line>
-      <line x1="21" y1="12" x2="23" y2="12"></line>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    </svg>
-    <!-- Moon Icon (shown in Light mode to prompt switching to Dark) -->
-    <svg class="icon-moon" viewBox="0 0 24 24">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-    </svg>
-  </button>
-
+  <title>Service Overview · 1928 Creative Studio</title>
+  <meta name="description" content="Dedicated Service Capabilities & Strategic Frameworks by 1928 Creative Studio." />
   <script>
     (function () {
-      'use strict';
+      const params = new URLSearchParams(window.location.search);
+      const svc = (params.get('service') || params.get('id') || params.get('slug') || '').toLowerCase();
+      
+      const map = {
+        'logo-design': 'service-logo-design.html',
+        '1': 'service-logo-design.html',
+        '01': 'service-logo-design.html',
+        'logo': 'service-logo-design.html',
+        
+        'brand-identity': 'service-brand-identity.html',
+        'brand-identity-development': 'service-brand-identity.html',
+        '2': 'service-brand-identity.html',
+        '02': 'service-brand-identity.html',
+        'branding': 'service-brand-identity.html',
+        
+        'website-development': 'service-website-development.html',
+        'website-design-development': 'service-website-development.html',
+        '3': 'service-website-development.html',
+        '03': 'service-website-development.html',
+        'website': 'service-website-development.html',
+        'web': 'service-website-development.html',
+        
+        'digital-marketing': 'service-digital-marketing.html',
+        'social-media-digital-marketing': 'service-digital-marketing.html',
+        '4': 'service-digital-marketing.html',
+        '04': 'service-digital-marketing.html',
+        'social': 'service-digital-marketing.html',
+        'marketing': 'service-digital-marketing.html',
+        
+        'content-creation': 'service-content-creation.html',
+        'content-creation-influencer-marketing': 'service-content-creation.html',
+        '5': 'service-content-creation.html',
+        '05': 'service-content-creation.html',
+        'content': 'service-content-creation.html',
+        'influencer': 'service-content-creation.html'
+      };
 
-      // Live Clock
-      function updateClock() {
-        const clockEl = document.getElementById('liveClock');
-        if (!clockEl) return;
-        const now = new Date();
-        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
-        const timeStr = now.toLocaleTimeString('en-US', options);
-        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
-      }
-      updateClock();
-      setInterval(updateClock, 30000);
-
-      // Custom Cursor
-      const cDot = document.getElementById('cDot');
-      const cRing = document.getElementById('cRing');
-      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-      let ringX = mouseX, ringY = mouseY;
-
-      window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        if (cDot) {
-          cDot.style.left = mouseX + 'px';
-          cDot.style.top = mouseY + 'px';
-        }
-      }, { passive: true });
-
-      function renderCursor() {
-        ringX += (mouseX - ringX) * 0.18;
-        ringY += (mouseY - ringY) * 0.18;
-        if (cRing) {
-          cRing.style.left = ringX + 'px';
-          cRing.style.top = ringY + 'px';
-        }
-        requestAnimationFrame(renderCursor);
-      }
-      renderCursor();
-
-      // Floating Theme Toggle Sync
-      const themeFab = document.getElementById('theme-fab');
-      const savedTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-
-      if (themeFab) {
-        themeFab.addEventListener('click', () => {
-          const curTheme = document.documentElement.getAttribute('data-theme');
-          const nextTheme = curTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', nextTheme);
-          localStorage.setItem('t28', nextTheme);
-          localStorage.setItem('theme-1928', nextTheme);
-        });
+      if (map[svc]) {
+        window.location.replace(map[svc]);
+      } else {
+        window.location.replace('services.html');
       }
     })();
   </script>
+</head>
+
+<body style="background:#07070A;color:#F7F7FA;display:grid;place-items:center;height:100vh;font-family:sans-serif;">
+  <p>Routing to dedicated service experience...</p>
 </body>
 
 </html>
