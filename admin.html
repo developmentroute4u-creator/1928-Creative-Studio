@@ -6788,31 +6788,40 @@
       const currentCuration = window.CMSStore.getPerspectivesCuration ? window.CMSStore.getPerspectivesCuration() : {};
 
       // Gather Hero IDs
-      const heroIds = [];
-      for (let i = 0; i < 8; i++) {
-        const sel = document.getElementById(`slotSelect_hero_${i}`);
-        if (sel) heroIds.push(sel.value);
-        else if (currentCuration.heroTickerIds && currentCuration.heroTickerIds[i]) heroIds.push(currentCuration.heroTickerIds[i]);
-        else heroIds.push(allBlogs[i % allBlogs.length]?.id || 'art-monogram');
+      let heroIds = currentCuration.heroTickerIds || allBlogs.slice(0, 8).map(b => b.id);
+      if (section === 'hero' || section === 'all') {
+        heroIds = [];
+        for (let i = 0; i < 8; i++) {
+          const sel = document.getElementById(`slotSelect_hero_${i}`);
+          if (sel && sel.value) heroIds.push(sel.value);
+          else if (currentCuration.heroTickerIds && currentCuration.heroTickerIds[i]) heroIds.push(currentCuration.heroTickerIds[i]);
+          else heroIds.push(allBlogs[i % allBlogs.length]?.id || 'art-monogram');
+        }
       }
 
       // Gather Featured IDs
-      const featIds = [];
-      for (let i = 0; i < 4; i++) {
-        const sel = document.getElementById(`slotSelect_featured_${i}`);
-        if (sel) featIds.push(sel.value);
-        else if (currentCuration.featuredCarouselIds && currentCuration.featuredCarouselIds[i]) featIds.push(currentCuration.featuredCarouselIds[i]);
-        else featIds.push(allBlogs[i % allBlogs.length]?.id || 'art-monogram');
+      let featIds = currentCuration.featuredCarouselIds || allBlogs.slice(0, 4).map(b => b.id);
+      if (section === 'featured' || section === 'all') {
+        featIds = [];
+        for (let i = 0; i < 4; i++) {
+          const sel = document.getElementById(`slotSelect_featured_${i}`);
+          if (sel && sel.value) featIds.push(sel.value);
+          else if (currentCuration.featuredCarouselIds && currentCuration.featuredCarouselIds[i]) featIds.push(currentCuration.featuredCarouselIds[i]);
+          else featIds.push(allBlogs[i % allBlogs.length]?.id || 'art-monogram');
+        }
       }
 
       // Gather Codex IDs & count
       const codexCount = parseInt(document.getElementById('codexCountSelect')?.value, 10) || currentCuration.codexCount || 6;
-      const codexIds = [];
-      for (let i = 0; i < codexCount; i++) {
-        const sel = document.getElementById(`slotSelect_codex_${i}`);
-        if (sel) codexIds.push(sel.value);
-        else if (currentCuration.codexGridIds && currentCuration.codexGridIds[i]) codexIds.push(currentCuration.codexGridIds[i]);
-        else codexIds.push(allBlogs[i % allBlogs.length]?.id || 'art-spatial');
+      let codexIds = currentCuration.codexGridIds || allBlogs.slice(0, codexCount).map(b => b.id);
+      if (section === 'codex' || section === 'all') {
+        codexIds = [];
+        for (let i = 0; i < codexCount; i++) {
+          const sel = document.getElementById(`slotSelect_codex_${i}`);
+          if (sel && sel.value) codexIds.push(sel.value);
+          else if (currentCuration.codexGridIds && currentCuration.codexGridIds[i]) codexIds.push(currentCuration.codexGridIds[i]);
+          else codexIds.push(allBlogs[i % allBlogs.length]?.id || 'art-spatial');
+        }
       }
 
       const newCuration = {

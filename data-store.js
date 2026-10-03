@@ -1045,7 +1045,13 @@
         headline: 'OUR CORE SERVICES',
         description: 'From the first visual impression to the way your brand grows in the market, we bring strategy, creativity and execution together under one roof.'
       },
-      homeSelectedProjects: ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir']
+      homeSelectedProjects: ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'],
+      perspectives_curation: {
+        heroTickerIds: ['art-monogram', 'art-spatial', 'art-webgl', 'art-fluted', 'art-kinetic', 'art-quiet', 'art-monochrome', 'art-typographic-grid'],
+        featuredCarouselIds: ['art-monogram', 'art-spatial', 'art-webgl', 'art-fluted'],
+        codexGridIds: ['art-spatial', 'art-webgl', 'art-fluted', 'art-kinetic', 'art-monochrome', 'art-quiet'],
+        codexCount: 6
+      }
     },
 
     // ── 8. CONTACT & MULTI-STEP BRIEF CONFIGURATION ──
@@ -1605,19 +1611,19 @@
         try { raw = JSON.parse(raw); } catch (e) { raw = null; }
       }
 
-      const heroTickerIds = (Array.isArray(raw?.heroTickerIds) && raw.heroTickerIds.length >= 8) 
+      const heroTickerIds = (Array.isArray(raw?.heroTickerIds) && raw.heroTickerIds.length > 0) 
         ? raw.heroTickerIds 
-        : defaultIds.slice(0, 8);
+        : (DEFAULT_CMS_DATA.settings?.perspectives_curation?.heroTickerIds || defaultIds.slice(0, 8));
 
-      const featuredCarouselIds = (Array.isArray(raw?.featuredCarouselIds) && raw.featuredCarouselIds.length >= 4)
-        ? raw.featuredCarouselIds
-        : defaultIds.slice(0, 4);
+      const featuredCarouselIds = (Array.isArray(raw?.featuredCarouselIds) && raw.featuredCarouselIds.length > 0)
+        ? raw.featuredCarouselIds 
+        : (DEFAULT_CMS_DATA.settings?.perspectives_curation?.featuredCarouselIds || defaultIds.slice(0, 4));
 
-      const codexGridIds = (Array.isArray(raw?.codexGridIds) && raw.codexGridIds.length >= 6)
-        ? raw.codexGridIds
-        : defaultIds.slice(0, 6);
+      const codexGridIds = (Array.isArray(raw?.codexGridIds) && raw.codexGridIds.length > 0)
+        ? raw.codexGridIds 
+        : (DEFAULT_CMS_DATA.settings?.perspectives_curation?.codexGridIds || defaultIds.slice(0, 6));
 
-      const codexCount = parseInt(raw?.codexCount, 10) || 6;
+      const codexCount = parseInt(raw?.codexCount, 10) || DEFAULT_CMS_DATA.settings?.perspectives_curation?.codexCount || 6;
 
       return {
         heroTickerIds,
@@ -1632,6 +1638,9 @@
       this.data.settings.perspectives_curation = curationData;
       this._saveData();
       this._sendToAPI('save_perspectives_curation', curationData);
+      this._sendToAPI('save_settings', {
+        perspectives_curation: typeof curationData === 'object' ? JSON.stringify(curationData) : curationData
+      });
       return curationData;
     }
 

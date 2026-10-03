@@ -162,7 +162,7 @@
     // B. Render Dropdown & Critical Dispatch Ticker Words (#cdbSlider, #cdbWordList)
     const tickerContainers = document.querySelectorAll('#cdbSlider, #cdbWordList');
     if (tickerContainers.length) {
-      const heroBlogs = curation.heroTickerIds.map(id => blogs.find(b => b.id === id)).filter(Boolean);
+      const heroBlogs = (curation.heroTickerIds || []).map(id => blogs.find(b => b.id === id)).filter(Boolean);
       const tickerItems = heroBlogs.length ? heroBlogs : blogs.slice(0, 8);
       
       tickerContainers.forEach(container => {
@@ -174,6 +174,29 @@
           </div>
         `).join('');
       });
+
+      const cdbSlider = document.getElementById('cdbSlider');
+      if (cdbSlider && tickerItems.length > 1) {
+        if (window._cdbSliderTimer) {
+          clearInterval(window._cdbSliderTimer);
+          window._cdbSliderTimer = null;
+        }
+        let currentWordIdx = 0;
+        window._cdbSliderTimer = setInterval(() => {
+          const currentWords = cdbSlider.querySelectorAll('.cdb-word');
+          if (!currentWords.length) return;
+          if (currentWordIdx >= currentWords.length) currentWordIdx = 0;
+          currentWords[currentWordIdx]?.classList.remove('active');
+          currentWords[currentWordIdx]?.classList.add('exit');
+          const prevIdx = currentWordIdx;
+          currentWordIdx = (currentWordIdx + 1) % currentWords.length;
+          currentWords[currentWordIdx]?.classList.remove('exit');
+          currentWords[currentWordIdx]?.classList.add('active');
+          setTimeout(() => {
+            currentWords[prevIdx]?.classList.remove('exit');
+          }, 500);
+        }, 2800);
+      }
     }
 
     // C. Render Latest Blogs Carousel (#lbcTrack)

@@ -1362,9 +1362,8 @@
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
       text-decoration: none;
       color: inherit;
-      transition: box-shadow .5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: border-color .3s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: none;
-      will-change: transform;
     }
 
     .p-card-1 {
@@ -1397,25 +1396,15 @@
       transform: rotate(1.6deg);
     }
 
-    .p-card-v:hover {
-      box-shadow: 0 36px 90px rgba(0, 0, 0, 0.22);
-    }
-
     [data-theme="dark"] .p-card-v {
       background: #151518;
       border-color: rgba(255, 255, 255, 0.12);
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
     }
 
-    .p-card-v:hover {
-      transform: translateY(-8px) scale(1.015);
-      box-shadow: 0 36px 90px rgba(0, 0, 0, 0.20);
-    }
-
-    [data-theme="dark"] .p-card-v {
-      background: #151518;
-      border-color: rgba(255, 255, 255, 0.12);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+    .p-card-v:hover,
+    [data-theme="dark"] .p-card-v:hover {
+      border-color: var(--cr);
     }
 
     .pcv-media {
@@ -1431,11 +1420,6 @@
       height: 100%;
       position: relative;
       overflow: hidden;
-      transition: transform .7s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .p-card-v:hover .pcv-gradient {
-      transform: scale(1.06);
     }
 
     .pcv-badge-top {
@@ -1545,11 +1529,6 @@
       align-items: center;
       gap: 6px;
       margin-top: 6px;
-      transition: gap .3s;
-    }
-
-    .p-card-v:hover .pcv-cta {
-      gap: 12px;
     }
 
     /* Abstract patterns inside media gradients */

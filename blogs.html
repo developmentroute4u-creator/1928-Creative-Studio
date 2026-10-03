@@ -4325,31 +4325,34 @@
       /* ── Critical Dispatch Word Rotator (Recently Uploaded Blog Topics) ── */
       const cdbSlider = document.getElementById('cdbSlider');
       if (cdbSlider) {
-        const words = cdbSlider.querySelectorAll('.cdb-word');
         let currentWordIdx = 0;
 
         function advanceCdbWord() {
+          const words = cdbSlider.querySelectorAll('.cdb-word');
           if (!words.length) return;
-          words[currentWordIdx].classList.remove('active');
-          words[currentWordIdx].classList.add('exit');
+          if (currentWordIdx >= words.length) currentWordIdx = 0;
+          words[currentWordIdx]?.classList.remove('active');
+          words[currentWordIdx]?.classList.add('exit');
           const prevIdx = currentWordIdx;
           currentWordIdx = (currentWordIdx + 1) % words.length;
-          words[currentWordIdx].classList.remove('exit');
-          words[currentWordIdx].classList.add('active');
+          words[currentWordIdx]?.classList.remove('exit');
+          words[currentWordIdx]?.classList.add('active');
           setTimeout(() => {
-            words[prevIdx].classList.remove('exit');
+            words[prevIdx]?.classList.remove('exit');
           }, 500);
         }
 
-        setInterval(advanceCdbWord, 2800);
+        if (window._cdbSliderTimer) clearInterval(window._cdbSliderTimer);
+        window._cdbSliderTimer = setInterval(advanceCdbWord, 2800);
 
-        words.forEach(word => {
-          word.addEventListener('click', () => {
+        cdbSlider.addEventListener('click', (e) => {
+          const word = e.target.closest('.cdb-word');
+          if (word) {
             const articleId = word.getAttribute('data-article-id');
             if (articleId && typeof openReader === 'function') {
               openReader(articleId);
             }
-          });
+          }
         });
       }
 
