@@ -488,9 +488,10 @@
       border: 1.5px solid rgba(0, 0, 0, 0.08);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.95);
       color: var(--cr);
-      transition: background 0.3s ease,
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+        background 0.3s ease,
         border-color 0.3s ease,
-        box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
         color 0.3s ease;
       will-change: transform;
       z-index: 22;
@@ -2171,7 +2172,7 @@
       <!-- Centerpiece: Clean 2-Line Dynamic Headline (No Tag) -->
       <div class="hero-clean-lockup">
         <h1 class="hcl-headline">
-          <span class="hcl-line-1">WE BUILD</span>
+          <span class="hcl-line-1">WE ENGINEER BESPOKE</span>
           <span class="hcl-dynamic-wrap">
             <span class="hcl-dynamic-word" id="dynamicServiceWord">DIGITAL EXPERIENCES</span>
           </span>
@@ -2180,8 +2181,8 @@
 
       <!-- Revolving Floating Service Icon Discs -->
       <div class="hero-orbit-icons" id="heroOrbitIcons">
-        <!-- 01 Distinctive Logos -->
-        <a href="service-logo-design.html" class="orbit-icon-node" data-service="DISTINCTIVE LOGOS" data-idx="0" aria-label="Distinctive Logos">
+        <!-- 01 Logo Design -->
+        <a href="#service-01" class="orbit-icon-node" data-service="LOGO DESIGN" data-idx="0" aria-label="Logo Design">
           <span class="oin-tag">01</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2192,9 +2193,9 @@
           </svg>
         </a>
 
-        <!-- 02 Complete Brand Identities -->
-        <a href="service-brand-identity.html" class="orbit-icon-node" data-service="COMPLETE BRAND IDENTITIES" data-idx="1"
-          aria-label="Complete Brand Identities">
+        <!-- 02 Brand Identity -->
+        <a href="#service-02" class="orbit-icon-node" data-service="BRAND IDENTITY" data-idx="1"
+          aria-label="Brand Identity">
           <span class="oin-tag">02</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2205,9 +2206,9 @@
           </svg>
         </a>
 
-        <!-- 03 Digital Experiences -->
-        <a href="service-website-development.html" class="orbit-icon-node" data-service="DIGITAL EXPERIENCES" data-idx="2"
-          aria-label="Digital Experiences">
+        <!-- 03 Web Design & Dev -->
+        <a href="#service-03" class="orbit-icon-node" data-service="WEB DESIGN & DEV" data-idx="2"
+          aria-label="Web Design & Dev">
           <span class="oin-tag">03</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2216,9 +2217,9 @@
           </svg>
         </a>
 
-        <!-- 04 Digital Growth -->
-        <a href="service-digital-marketing.html" class="orbit-icon-node" data-service="DIGITAL GROWTH" data-idx="3"
-          aria-label="Digital Growth">
+        <!-- 04 Social & Digital -->
+        <a href="#service-04" class="orbit-icon-node" data-service="SOCIAL & DIGITAL" data-idx="3"
+          aria-label="Social & Digital">
           <span class="oin-tag">04</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2227,9 +2228,9 @@
           </svg>
         </a>
 
-        <!-- 05 Content & Influence -->
-        <a href="service-content-creation.html" class="orbit-icon-node" data-service="CONTENT & INFLUENCE" data-idx="4"
-          aria-label="Content & Influence">
+        <!-- 05 Content & Creators -->
+        <a href="#service-05" class="orbit-icon-node" data-service="CONTENT & CREATORS" data-idx="4"
+          aria-label="Content & Creators">
           <span class="oin-tag">05</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2697,38 +2698,35 @@
       /* ── Mathematical Helper Utilities ── */
       function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
-      /* ── Elegant Synchronized Orbital Floating Engine for Service Icons ── */
+      /* ── Organic Random Orbital Floating Engine for Service Icons ── */
       const stage = document.getElementById('heroOrbitStage');
       const iconNodes = document.querySelectorAll('.orbit-icon-node');
       const dynamicWord = document.getElementById('dynamicServiceWord');
       const defaultHeadlineText = 'DIGITAL EXPERIENCES';
 
       if (stage && iconNodes.length) {
-        const count = iconNodes.length; // 5 service nodes
-        const initialRect = stage.getBoundingClientRect();
-        const initHalfW = initialRect.width > 0 ? initialRect.width / 2 : 550;
-        const initHalfH = initialRect.height > 0 ? initialRect.height / 2 : 280;
-        const initRx = Math.max(initHalfW * 0.76, 360);
-        const initRy = Math.max(initHalfH * 0.72, 175);
+        // Spatially expanded & evenly distributed orbital parametric configuration
+        const nodeConfigs = [
+          { baseAngle: 0.0, speed: 0.00030, rxScale: 0.72, ryScale: 0.65, wobbleX: 1.1, wobbleY: 1.5, ampX: 48, ampY: 38, tilt: -0.14 },
+          { baseAngle: 1.256, speed: -0.00028, rxScale: 0.78, ryScale: 0.72, wobbleX: 1.6, wobbleY: 1.1, ampX: 56, ampY: 44, tilt: 0.18 },
+          { baseAngle: 2.513, speed: 0.00032, rxScale: 0.68, ryScale: 0.62, wobbleX: 0.9, wobbleY: 1.8, ampX: 44, ampY: 36, tilt: -0.08 },
+          { baseAngle: 3.770, speed: -0.00034, rxScale: 0.76, ryScale: 0.70, wobbleX: 1.9, wobbleY: 1.3, ampX: 52, ampY: 42, tilt: 0.14 },
+          { baseAngle: 5.026, speed: 0.00031, rxScale: 0.70, ryScale: 0.66, wobbleX: 1.4, wobbleY: 1.7, ampX: 46, ampY: 40, tilt: -0.16 }
+        ];
 
         const nodeStates = Array.from(iconNodes).map((node, i) => {
-          // Perfectly spaced 72-degree angular offsets (2*PI/5)
-          const baseOffset = (i * 2 * Math.PI) / count;
-          const startX = Math.cos(baseOffset) * initRx;
-          const startY = Math.sin(baseOffset) * initRy;
-          node.style.transform = `translate3d(${startX.toFixed(2)}px, ${startY.toFixed(2)}px, 0) scale(1)`;
+          const cfg = nodeConfigs[i % nodeConfigs.length];
           return {
             el: node,
             idx: i,
             service: node.getAttribute('data-service'),
-            baseOffset,
-            curX: startX,
-            curY: startY,
-            targetX: startX,
-            targetY: startY,
+            cfg,
+            curX: 0,
+            curY: 0,
+            targetX: 0,
+            targetY: 0,
             isHovered: false,
-            scale: 1,
-            targetScale: 1
+            scale: 1
           };
         });
 
@@ -2757,18 +2755,12 @@
           }, 120);
         }
 
-        let isAnyHovered = false;
-
         nodeStates.forEach((state) => {
           state.el.addEventListener('mouseenter', () => {
             state.isHovered = true;
-            state.targetScale = 1.18;
-            isAnyHovered = true;
+            state.scale = 1.14;
             nodeStates.forEach(s => {
-              if (s !== state) {
-                s.el.classList.remove('is-active');
-                s.targetScale = 0.94;
-              }
+              if (s !== state) s.el.classList.remove('is-active');
             });
             state.el.classList.add('is-active');
             switchHeadline(state.service);
@@ -2776,11 +2768,8 @@
 
           state.el.addEventListener('mouseleave', () => {
             state.isHovered = false;
-            state.targetScale = 1;
-            isAnyHovered = false;
-            nodeStates.forEach(s => {
-              s.targetScale = 1;
-            });
+            state.scale = 1;
+            // Sticky behavior: the second-line word remains stuck to the last hovered service!
           });
 
           state.el.addEventListener('click', (e) => {
@@ -2806,49 +2795,45 @@
           });
         });
 
-        let currentAngle = 0;
-        let lastTime = performance.now();
+        let startTime = performance.now();
 
         function animateOrbit(now) {
-          const delta = Math.min(now - lastTime, 64);
-          lastTime = now;
-
-          // Serene, steady orbital rotation rate
-          if (!isAnyHovered) {
-            currentAngle += 0.00028 * delta;
-          } else {
-            currentAngle += 0.00004 * delta; // gentle micro-drift
-          }
-
+          const elapsed = now - startTime;
           const rect = stage.getBoundingClientRect();
           const halfW = rect.width / 2;
           const halfH = rect.height / 2;
 
-          // Elliptical boundary kept comfortably outside the central headline text
-          const rx = Math.max(halfW * 0.76, 360);
-          const ry = Math.max(halfH * 0.72, 175);
-
           nodeStates.forEach((state) => {
-            const theta = currentAngle + state.baseOffset;
-
-            // Synchronized non-colliding orbit
-            const x0 = Math.cos(theta) * rx;
-            const y0 = Math.sin(theta) * ry;
-
-            // Gentle organic vertical wave
-            const subtleWave = Math.sin(theta * 2) * 12;
-
+            const { cfg } = state;
             if (!state.isHovered) {
-              state.targetX = x0;
-              state.targetY = y0 + subtleWave;
+              const t = elapsed * cfg.speed + cfg.baseAngle;
+              const rx = halfW * cfg.rxScale;
+              const ry = halfH * cfg.ryScale;
 
-              // Subtle magnetic mouse interaction
+              // Primary elliptical coordinates
+              let x0 = Math.cos(t) * rx;
+              let y0 = Math.sin(t) * ry;
+
+              // Rotate by orbital tilt angle
+              const cosTilt = Math.cos(cfg.tilt);
+              const sinTilt = Math.sin(cfg.tilt);
+              let xRot = x0 * cosTilt - y0 * sinTilt;
+              let yRot = x0 * sinTilt + y0 * cosTilt;
+
+              // Organic wandering perturbation so path is never a repetitive static loop
+              const wobbleX = Math.sin(elapsed * 0.001 * cfg.wobbleX) * cfg.ampX;
+              const wobbleY = Math.cos(elapsed * 0.001 * cfg.wobbleY) * cfg.ampY;
+
+              state.targetX = xRot + wobbleX;
+              state.targetY = yRot + wobbleY;
+
+              // Subtle magnetic deflection with mouse
               if (isMouseOverStage) {
                 const dx = state.targetX - mouseX;
                 const dy = state.targetY - mouseY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 160 && dist > 8) {
-                  const force = (1 - dist / 160) * 18;
+                if (dist < 180 && dist > 10) {
+                  const force = (1 - dist / 180) * 16;
                   state.targetX += (dx / dist) * force;
                   state.targetY += (dy / dist) * force;
                 }
@@ -2856,12 +2841,11 @@
             }
 
             // Silky smooth Lerp interpolation
-            const lerpSpeed = state.isHovered ? 0.22 : 0.08;
+            const lerpSpeed = state.isHovered ? 0.2 : 0.05;
             state.curX += (state.targetX - state.curX) * lerpSpeed;
             state.curY += (state.targetY - state.curY) * lerpSpeed;
-            state.scale += (state.targetScale - state.scale) * 0.15;
 
-            state.el.style.transform = `translate3d(${state.curX.toFixed(2)}px, ${state.curY.toFixed(2)}px, 0) scale(${state.scale.toFixed(3)})`;
+            state.el.style.transform = `translate3d(${state.curX}px, ${state.curY}px, 0) scale(${state.scale})`;
           });
 
           requestAnimationFrame(animateOrbit);
