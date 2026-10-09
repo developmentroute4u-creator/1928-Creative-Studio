@@ -88,6 +88,9 @@
     if (!clients.length) return;
 
     clientTracks.forEach(track => {
+      // Preserve the bespoke 3-row 60-logo marquee inside #brands-driver
+      if (track.closest('#brands-driver')) return;
+
       // If it's a marquee group inside a track, only render once per group
       const isMarquee = track.classList.contains('brand-logo-track') || track.classList.contains('client-marquee-track') || track.classList.contains('clients-track') || track.classList.contains('marquee-track');
       const isGroup = track.classList.contains('marquee-group');
@@ -361,9 +364,9 @@
     const pill2 = document.getElementById('heroPill2Media') || allPills[1];
 
     if (pill1) {
-      const p1Id = heroData.pill1ProjectId || 'aurora';
+      const p1Id = heroData.pill1ProjectId || 'vibee';
       const proj1 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p1Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p1Id) : null);
-      const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage || heroData.pill1Img || 'img/port-chronos.jpg') : (heroData.pill1Img || 'img/port-chronos.jpg');
+      const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage || heroData.pill1Img || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg') : (heroData.pill1Img || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg');
       const imgEl = pill1.querySelector('img') || document.getElementById('heroPill1Img');
       if (imgEl) imgEl.src = img1;
       pill1.setAttribute('data-project-id', p1Id);
@@ -493,7 +496,16 @@
     if (portCardsFlow) {
       const selectedIds = (typeof window.CMSStore.getHomeSelectedProjects === 'function')
         ? window.CMSStore.getHomeSelectedProjects()
-        : ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'];
+        : ['vibee', 'infyli', 'mudra-school', 'awards-plus', 'last-mile-analytics', 'alda'];
+
+      const selectedWorkImages = [
+        'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
+        'img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
+        'img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+        'img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg',
+        'img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+        'img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg'
+      ];
 
       let cardsHtml = '';
       for (let i = 0; i < 6; i++) {
@@ -504,7 +516,7 @@
 
         const numStr = slotNum < 10 ? `0${slotNum}` : `${slotNum}`;
         const clientStr = (proj.client || proj.title || 'CASE STUDY').toUpperCase();
-        const img = proj.bannerImage || proj.coverImage || 'img/port-chronos.jpg';
+        const img = proj.coverImage || proj.bannerImage || selectedWorkImages[i] || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';
         const titleText = proj.summary || proj.subheading || proj.title;
 
         // Parse 2 tags cleanly
@@ -1350,5 +1362,36 @@
     }
   });
   window.addEventListener('footerLoaded', renderClientLogos);
+
+  // Real-Time Live Code & Asset Sync via Server-Sent Events
+  if (typeof EventSource !== 'undefined') {
+    try {
+      const liveSource = new EventSource('/api/live-sync');
+      liveSource.addEventListener('code_change', (e) => {
+        try {
+          const payload = JSON.parse(e.data);
+          const changedFile = payload.file || '';
+          console.log('⚡ [SITE LIVE SYNC] Change detected:', changedFile);
+
+          if (changedFile.includes('data-store.js')) {
+            const s = document.createElement('script');
+            s.src = `data-store.js?t=${Date.now()}`;
+            s.onload = () => {
+              if (window.CMSStore && window.CMSStore.reloadFromCode) {
+                window.CMSStore.reloadFromCode();
+              }
+              initDynamicCMS();
+            };
+            document.head.appendChild(s);
+          } else {
+            if (window.CMSStore && window.CMSStore.reloadFromCode) {
+              window.CMSStore.reloadFromCode();
+            }
+            initDynamicCMS();
+          }
+        } catch (err) {}
+      });
+    } catch (e) {}
+  }
 
 })();

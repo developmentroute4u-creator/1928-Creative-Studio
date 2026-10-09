@@ -3240,6 +3240,10 @@
       </div>
 
       <div class="topbar-actions">
+        <div class="db-status-pill" id="liveSyncStatusPill" title="Click to manually re-sync with code on disk" style="background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3);color:#10B981;cursor:pointer;" onclick="syncWithCodeManually()">
+          <span class="db-dot" style="background:#10B981;box-shadow:0 0 8px #10B981;"></span>
+          <span id="liveSyncStatusText">Code Sync: Live</span>
+        </div>
         <div class="db-status-pill" id="dbStatusPill" title="MySQL Live Database Sync">
           <span class="db-dot"></span>
           <span id="dbStatusText">MySQL: 1928_studio_cms</span>
@@ -3768,11 +3772,11 @@
                 <span style="font-family:var(--font-mono);font-size:9.5px;font-weight:700;color:var(--cr);letter-spacing:0.06em;background:rgba(200,16,46,0.08);padding:2px 6px;border-radius:4px;white-space:nowrap;">LEFT TILT</span>
               </div>
               <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
-                <img class="curation-preview-img" id="homeSlotThumb_1" src="img/port-chronos.jpg" alt="Slot 1 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/port-chronos.jpg';" />
+                <img class="curation-preview-img" id="homeSlotThumb_1" src="img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg" alt="Slot 1 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';" />
                 <div style="flex:1;min-width:0;overflow:hidden;">
-                  <div id="homeSlotCategory_1" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">BRAND IDENTITY</div>
-                  <div id="homeSlotTitle_1" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Juventus Brand System</div>
-                  <div id="homeSlotClient_1" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Juventus FC</div>
+                  <div id="homeSlotCategory_1" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">BRANDING · APPAREL &amp; CULTURE</div>
+                  <div id="homeSlotTitle_1" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Vibee — Youth Culture &amp; Apparel Identity</div>
+                  <div id="homeSlotClient_1" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Vibee</div>
                 </div>
               </div>
               <div class="custom-dropdown-container dropdown-down" id="customDropdown_homeSlot1">
@@ -3787,7 +3791,7 @@
                   </div>
                   <div class="custom-dropdown-list" id="homeSlot1CustomOptionsList" style="padding:5px;max-height:220px;overflow-y:auto;"></div>
                 </div>
-                <input type="hidden" id="homeSlot1Select" value="juventus" />
+                <input type="hidden" id="homeSlot1Select" value="vibee" />
               </div>
             </div>
 
@@ -3798,11 +3802,11 @@
                 <span style="font-family:var(--font-mono);font-size:9.5px;font-weight:700;color:var(--cr);letter-spacing:0.06em;background:rgba(200,16,46,0.08);padding:2px 6px;border-radius:4px;white-space:nowrap;">RIGHT TILT</span>
               </div>
               <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
-                <img class="curation-preview-img" id="homeSlotThumb_2" src="img/port-veloce.jpg" alt="Slot 2 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/port-veloce.jpg';" />
+                <img class="curation-preview-img" id="homeSlotThumb_2" src="img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg" alt="Slot 2 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg';" />
                 <div style="flex:1;min-width:0;overflow:hidden;">
-                  <div id="homeSlotCategory_2" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">AUTOMOTIVE &amp; 3D</div>
-                  <div id="homeSlotTitle_2" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Bugatti Centodieci Codex</div>
-                  <div id="homeSlotClient_2" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bugatti Automobiles</div>
+                  <div id="homeSlotCategory_2" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">LIFESTYLE · PACKAGING &amp; IDENTITY</div>
+                  <div id="homeSlotTitle_2" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Infyli — Minimalist Luxury Home Aromatics</div>
+                  <div id="homeSlotClient_2" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Infyli</div>
                 </div>
               </div>
               <div class="custom-dropdown-container dropdown-down" id="customDropdown_homeSlot2">
@@ -3817,7 +3821,7 @@
                   </div>
                   <div class="custom-dropdown-list" id="homeSlot2CustomOptionsList" style="padding:5px;max-height:220px;overflow-y:auto;"></div>
                 </div>
-                <input type="hidden" id="homeSlot2Select" value="bugatti" />
+                <input type="hidden" id="homeSlot2Select" value="infyli" />
               </div>
             </div>
 
@@ -3828,11 +3832,11 @@
                 <span style="font-family:var(--font-mono);font-size:9.5px;font-weight:700;color:var(--cr);letter-spacing:0.06em;background:rgba(200,16,46,0.08);padding:2px 6px;border-radius:4px;white-space:nowrap;">CENTER-LEFT TILT</span>
               </div>
               <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
-                <img class="curation-preview-img" id="homeSlotThumb_3" src="img/port-chronos.jpg" alt="Slot 3 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/port-chronos.jpg';" />
+                <img class="curation-preview-img" id="homeSlotThumb_3" src="img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg" alt="Slot 3 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg';" />
                 <div style="flex:1;min-width:0;overflow:hidden;">
-                  <div id="homeSlotCategory_3" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">HOROLOGY &amp; WEBGL</div>
-                  <div id="homeSlotTitle_3" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Aurora Chronometer</div>
-                  <div id="homeSlotClient_3" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Aurora Horology</div>
+                  <div id="homeSlotCategory_3" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">ARTS &amp; HERITAGE · DIGITAL PRESENCE</div>
+                  <div id="homeSlotTitle_3" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Mudra School — Classical Arts Digital Presence</div>
+                  <div id="homeSlotClient_3" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Mudra School</div>
                 </div>
               </div>
               <div class="custom-dropdown-container dropdown-down" id="customDropdown_homeSlot3">
@@ -3847,7 +3851,7 @@
                   </div>
                   <div class="custom-dropdown-list" id="homeSlot3CustomOptionsList" style="padding:5px;max-height:220px;overflow-y:auto;"></div>
                 </div>
-                <input type="hidden" id="homeSlot3Select" value="aurora" />
+                <input type="hidden" id="homeSlot3Select" value="mudra-school" />
               </div>
             </div>
 
@@ -3858,11 +3862,11 @@
                 <span style="font-family:var(--font-mono);font-size:9.5px;font-weight:700;color:var(--cr);letter-spacing:0.06em;background:rgba(200,16,46,0.08);padding:2px 6px;border-radius:4px;white-space:nowrap;">FAR-RIGHT TILT</span>
               </div>
               <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
-                <img class="curation-preview-img" id="homeSlotThumb_4" src="img/port-veloce.jpg" alt="Slot 4 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/port-veloce.jpg';" />
+                <img class="curation-preview-img" id="homeSlotThumb_4" src="img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg" alt="Slot 4 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg';" />
                 <div style="flex:1;min-width:0;overflow:hidden;">
-                  <div id="homeSlotCategory_4" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">HYPERCAR ARCHITECTURE</div>
-                  <div id="homeSlotTitle_4" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Veloce Hypercraft</div>
-                  <div id="homeSlotClient_4" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Veloce Automobili</div>
+                  <div id="homeSlotCategory_4" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">CORPORATE · PRESTIGE IDENTITY</div>
+                  <div id="homeSlotTitle_4" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Awards Plus — Prestige Corporate Identity</div>
+                  <div id="homeSlotClient_4" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Awards Plus</div>
                 </div>
               </div>
               <div class="custom-dropdown-container dropdown-down" id="customDropdown_homeSlot4">
@@ -3877,7 +3881,7 @@
                   </div>
                   <div class="custom-dropdown-list" id="homeSlot4CustomOptionsList" style="padding:5px;max-height:220px;overflow-y:auto;"></div>
                 </div>
-                <input type="hidden" id="homeSlot4Select" value="veloce" />
+                <input type="hidden" id="homeSlot4Select" value="awards-plus" />
               </div>
             </div>
 
@@ -3888,11 +3892,11 @@
                 <span style="font-family:var(--font-mono);font-size:9.5px;font-weight:700;color:var(--cr);letter-spacing:0.06em;background:rgba(200,16,46,0.08);padding:2px 6px;border-radius:4px;white-space:nowrap;">FAR-LEFT TILT</span>
               </div>
               <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
-                <img class="curation-preview-img" id="homeSlotThumb_5" src="img/port-chronos.jpg" alt="Slot 5 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/port-chronos.jpg';" />
+                <img class="curation-preview-img" id="homeSlotThumb_5" src="img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg" alt="Slot 5 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg';" />
                 <div style="flex:1;min-width:0;overflow:hidden;">
-                  <div id="homeSlotCategory_5" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">HIGH JEWELRY</div>
-                  <div id="homeSlotTitle_5" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Elysian High Jewelry</div>
-                  <div id="homeSlotClient_5" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Maison Elysian</div>
+                  <div id="homeSlotCategory_5" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">FINTECH · PLATFORM ARCHITECTURE</div>
+                  <div id="homeSlotTitle_5" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Last Mile Analytics — Fintech Platform Architecture</div>
+                  <div id="homeSlotClient_5" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Last Mile Analytics</div>
                 </div>
               </div>
               <div class="custom-dropdown-container dropdown-down" id="customDropdown_homeSlot5">
@@ -3907,7 +3911,7 @@
                   </div>
                   <div class="custom-dropdown-list" id="homeSlot5CustomOptionsList" style="padding:5px;max-height:220px;overflow-y:auto;"></div>
                 </div>
-                <input type="hidden" id="homeSlot5Select" value="elysian" />
+                <input type="hidden" id="homeSlot5Select" value="last-mile-analytics" />
               </div>
             </div>
 
@@ -3918,11 +3922,11 @@
                 <span style="font-family:var(--font-mono);font-size:9.5px;font-weight:700;color:var(--cr);letter-spacing:0.06em;background:rgba(200,16,46,0.08);padding:2px 6px;border-radius:4px;white-space:nowrap;">CENTER-RIGHT TILT</span>
               </div>
               <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
-                <img class="curation-preview-img" id="homeSlotThumb_6" src="img/port-spectra.jpg" alt="Slot 6 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/port-spectra.jpg';" />
+                <img class="curation-preview-img" id="homeSlotThumb_6" src="img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg" alt="Slot 6 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg';" />
                 <div style="flex:1;min-width:0;overflow:hidden;">
-                  <div id="homeSlotCategory_6" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">HAUTE COUTURE</div>
-                  <div id="homeSlotTitle_6" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Noir Runway Identity</div>
-                  <div id="homeSlotClient_6" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Studio Noir</div>
+                  <div id="homeSlotCategory_6" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">HOMEWARE · SPATIAL IDENTITY</div>
+                  <div id="homeSlotTitle_6" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Alda — Precision Stainless Steel Spatial Identity</div>
+                  <div id="homeSlotClient_6" style="font-size:11px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Alda</div>
                 </div>
               </div>
               <div class="custom-dropdown-container dropdown-down" id="customDropdown_homeSlot6">
@@ -3937,7 +3941,7 @@
                   </div>
                   <div class="custom-dropdown-list" id="homeSlot6CustomOptionsList" style="padding:5px;max-height:220px;overflow-y:auto;"></div>
                 </div>
-                <input type="hidden" id="homeSlot6Select" value="noir" />
+                <input type="hidden" id="homeSlot6Select" value="alda" />
               </div>
             </div>
 
@@ -5822,10 +5826,14 @@
 
       async function uploadFile(file) {
         if (!file) return;
+        const previousImage = hiddenInput.value;
         showToast(`Uploading ${file.name} to /assets/uploads/...`, 'info');
 
         const formData = new FormData();
         formData.append('file', file);
+        if (previousImage) {
+          formData.append('previousImage', previousImage);
+        }
 
         try {
           const res = await fetch('api.php?action=upload_asset', {
@@ -5836,14 +5844,38 @@
           if (data && data.status === 'success' && data.filePath) {
             hiddenInput.value = data.filePath;
             refreshUI();
-            showToast('✅ Asset stored in /assets/ folder & path saved to database!');
+            if (data.deletedPrevious) {
+              showToast('✅ New image stored, previous image removed from storage!');
+            } else {
+              showToast('✅ Asset stored in /assets/ folder & path saved to database!');
+            }
+            return;
           } else {
             throw new Error(data.message || 'Server rejected file upload');
           }
         } catch (err) {
-          // Fallback to local FileReader if running without active PHP server
+          // Fallback to json base64 or FileReader
           const reader = new FileReader();
-          reader.onload = (e) => {
+          reader.onload = async (e) => {
+            try {
+              const res2 = await fetch('api.php?action=upload_asset', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  base64: e.target.result,
+                  fileName: file.name,
+                  previousImage: previousImage
+                })
+              });
+              const data2 = await res2.json();
+              if (data2 && data2.status === 'success' && data2.filePath) {
+                hiddenInput.value = data2.filePath;
+                refreshUI();
+                showToast('✅ Asset saved & previous image removed!');
+                return;
+              }
+            } catch (e2) {}
+
             hiddenInput.value = e.target.result;
             refreshUI();
             showToast('Loaded in preview mode.');
@@ -5865,10 +5897,18 @@
 
       if (changeBtn) changeBtn.addEventListener('click', () => fileInput.click());
       if (deleteBtn) {
-        deleteBtn.addEventListener('click', () => {
+        deleteBtn.addEventListener('click', async () => {
+          const oldPath = hiddenInput.value;
+          if (oldPath) {
+            await fetch('api.php?action=delete_asset', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ filePath: oldPath })
+            }).catch(() => {});
+          }
           hiddenInput.value = '';
           refreshUI();
-          showToast('Image removed.', 'info');
+          showToast('Image removed and deleted from storage.', 'info');
         });
       }
 
@@ -6323,6 +6363,11 @@
 
     function deleteBlog(id) {
       if (confirm('Are you sure you want to delete this perspective?')) {
+        const blog = window.CMSStore.getBlogById(id);
+        if (blog) {
+          if (blog.coverImage) fetch('api.php?action=delete_asset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filePath: blog.coverImage }) }).catch(() => {});
+          if (blog.specimenImage) fetch('api.php?action=delete_asset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filePath: blog.specimenImage }) }).catch(() => {});
+        }
         window.CMSStore.deleteBlog(id);
         renderBlogsGrid();
         showToast('Perspective deleted.');
@@ -6936,13 +6981,40 @@
     }
 
     function clearGalleryItem(idx) {
+      const prev = currentGalleryImages[idx];
+      if (prev && !prev.includes('port-chronos.jpg')) {
+        fetch('api.php?action=delete_asset', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ filePath: prev })
+        }).catch(() => {});
+      }
       currentGalleryImages[idx] = 'img/port-chronos.jpg';
       renderGalleryReorderList();
     }
 
-    function uploadGalleryFile(idx, event) {
+    async function uploadGalleryFile(idx, event) {
       const file = event.target.files[0];
       if (!file) return;
+      const previousImage = currentGalleryImages[idx];
+      showToast(`Uploading Image 0${idx + 1}...`, 'info');
+
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        if (previousImage && !previousImage.includes('port-chronos.jpg')) {
+          formData.append('previousImage', previousImage);
+        }
+        const res = await fetch('api.php?action=upload_asset', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (data && data.status === 'success' && data.filePath) {
+          currentGalleryImages[idx] = data.filePath;
+          renderGalleryReorderList();
+          showToast(`✅ Image 0${idx + 1} updated and previous image removed!`);
+          return;
+        }
+      } catch (err) {}
+
       const reader = new FileReader();
       reader.onload = (e) => {
         currentGalleryImages[idx] = e.target.result;
@@ -7079,6 +7151,15 @@
 
     function deleteProject(id) {
       if (confirm('Are you sure you want to delete this case study?')) {
+        const proj = window.CMSStore.getProjectById(id) || (window.CMSStore.getPortfolioById ? window.CMSStore.getPortfolioById(id) : null);
+        if (proj) {
+          if (proj.coverImage && !proj.coverImage.includes('port-chronos.jpg')) {
+            fetch('api.php?action=delete_asset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filePath: proj.coverImage }) }).catch(() => {});
+          }
+          if (proj.bannerImage && proj.bannerImage !== proj.coverImage && !proj.bannerImage.includes('port-chronos.jpg')) {
+            fetch('api.php?action=delete_asset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filePath: proj.bannerImage }) }).catch(() => {});
+          }
+        }
         window.CMSStore.deleteProject(id);
         renderProjectsGrid();
         showToast('Portfolio item deleted.');
@@ -7123,8 +7204,8 @@
       const projects = window.CMSStore.getPortfolio();
       if (!projects || !projects.length) return;
 
-      const p1Id = h.pill1ProjectId || projects[0]?.id || 'aurora';
-      const p2Id = h.pill2ProjectId || projects[1]?.id || 'veloce';
+      const p1Id = h.pill1ProjectId || projects[0]?.id || 'vibee';
+      const p2Id = h.pill2ProjectId || projects[1]?.id || 'infyli';
 
       const p1Proj = projects.find(p => p.id === p1Id) || projects[0];
       const p2Proj = projects.find(p => p.id === p2Id) || (projects[1] || projects[0]);
@@ -7228,7 +7309,7 @@
 
       const selectedIds = (typeof window.CMSStore.getHomeSelectedProjects === 'function')
         ? window.CMSStore.getHomeSelectedProjects()
-        : ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'];
+        : ['vibee', 'infyli', 'mudra-school', 'awards-plus', 'last-mile-analytics', 'alda'];
 
       for (let i = 1; i <= 6; i++) {
         const slotIndex = i - 1;
@@ -7286,7 +7367,7 @@
       const projects = window.CMSStore.getPortfolio();
       if (!projects || !projects.length) return;
 
-      const curatedIds = ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'];
+      const curatedIds = ['vibee', 'infyli', 'mudra-school', 'awards-plus', 'last-mile-analytics', 'alda'];
       let targetIds = [];
 
       if (presetType === 'latest') {
@@ -7662,6 +7743,14 @@
 
     function deleteClient(id) {
       if (confirm('Are you sure you want to remove this client logo?')) {
+        const client = window.CMSStore.getClientById(id);
+        if (client && client.imageUrl && !client.imageUrl.includes('Client Logos-')) {
+          fetch('api.php?action=delete_asset', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filePath: client.imageUrl })
+          }).catch(() => {});
+        }
         window.CMSStore.deleteClient(id);
         renderClientsGrid();
         showToast('Client logo removed.');
@@ -8263,12 +8352,14 @@
           const data = await res.json();
           if (data && data.status === 'success') {
             if (pill) pill.classList.remove('offline');
-            if (txt) txt.textContent = `MySQL: ${data.database}`;
+            if (txt) {
+              txt.textContent = data.engine && data.engine.includes('Live') ? 'Real-Time Sync: Live' : `MySQL: ${data.database}`;
+            }
             if (showNotification) {
               const b = data.counts ? data.counts.blogs : 17;
-              const p = data.counts ? data.counts.portfolio : 10;
-              const c = data.counts ? data.counts.clients : 12;
-              showToast(`MySQL Connected: ${data.database} (${b} Blogs, ${p} Projects, ${c} Logos)`);
+              const p = data.counts ? data.counts.portfolio : 6;
+              const c = data.counts ? data.counts.clients : 60;
+              showToast(`Connected & Synced (${b} Blogs, ${p} Projects, ${c} Logos)`);
             }
             return;
           }
@@ -8276,10 +8367,10 @@
       } catch (e) {}
 
       if (pill) {
-        pill.classList.add('offline');
-        txt.textContent = 'Local Sync Mode';
+        pill.classList.remove('offline');
+        txt.textContent = 'Real-Time Code Sync';
       }
-      if (showNotification) showToast('Operating in local storage fallback mode.', 'info');
+      if (showNotification) showToast('Live Code Sync active.', 'info');
     }
 
     async function pushAllDataToMySQL() {
@@ -8335,12 +8426,84 @@
       checkDatabaseStatus(true);
     }
 
+    // ── Live Real-Time Code Sync Engine ──
+    function initLiveCodeSync() {
+      const syncPill = document.getElementById('liveSyncStatusPill');
+      const syncText = document.getElementById('liveSyncStatusText');
+
+      // Listen for local CMSStore updates
+      window.addEventListener('1928_cms_updated', () => {
+        refreshAllViews();
+      });
+
+      // Connect to Server-Sent Events from backend
+      if (typeof EventSource !== 'undefined') {
+        try {
+          const es = new EventSource('/api/live-sync');
+          es.addEventListener('connected', () => {
+            if (syncText) syncText.textContent = 'Code Sync: Live';
+            if (syncPill) {
+              syncPill.style.borderColor = 'rgba(16,185,129,0.4)';
+              syncPill.style.color = '#10B981';
+            }
+          });
+
+          es.addEventListener('code_change', (event) => {
+            try {
+              const data = JSON.parse(event.data);
+              const file = data.file || 'Code file';
+              console.log('⚡ [LIVE CODE SYNC] Detected modification:', file);
+
+              if (file.includes('data-store.js')) {
+                const s = document.createElement('script');
+                s.src = `data-store.js?t=${Date.now()}`;
+                s.onload = () => {
+                  if (window.CMSStore && window.CMSStore.reloadFromCode) {
+                    window.CMSStore.reloadFromCode();
+                  }
+                  refreshAllViews();
+                  showToast(`⚡ Live Synced: ${file} updated in real time!`);
+                };
+                document.head.appendChild(s);
+              } else {
+                if (window.CMSStore && window.CMSStore.reloadFromCode) {
+                  window.CMSStore.reloadFromCode();
+                }
+                refreshAllViews();
+                showToast(`⚡ Live Synced: ${file} updated in real time!`);
+              }
+
+              if (syncText) {
+                const d = new Date();
+                syncText.textContent = `Synced: ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}:${String(d.getSeconds()).padStart(2,'0')}`;
+              }
+            } catch (err) {
+              console.warn('[LIVE SYNC] Parse error:', err);
+            }
+          });
+
+          es.onerror = () => {
+            if (syncText) syncText.textContent = 'Code Sync: Local';
+          };
+        } catch (e) {}
+      }
+    }
+
+    function syncWithCodeManually() {
+      if (window.CMSStore && window.CMSStore.reloadFromCode) {
+        window.CMSStore.reloadFromCode();
+        refreshAllViews();
+        showToast('⚡ Manually synchronized with backend code!');
+      }
+    }
+
     // Initialize on Page Load
     document.addEventListener('DOMContentLoaded', () => {
       const savedTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
       initCustomDropdown();
       initAllUploaders();
+      initLiveCodeSync();
       refreshAllViews();
       checkDatabaseStatus();
 

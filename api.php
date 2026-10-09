@@ -641,6 +641,24 @@ try {
                 mkdir($targetDir, 0777, true);
             }
 
+            $safeDeleteOld = function($oldPath) {
+                if (empty($oldPath) || !is_string($oldPath)) return false;
+                if (strpos($oldPath, 'http://') === 0 || strpos($oldPath, 'https://') === 0 || strpos($oldPath, 'data:') === 0) return false;
+                $cleanRel = ltrim(explode('?', explode('#', $oldPath)[0])[0], '/\\');
+                $fullPath = realpath(__DIR__ . '/' . $cleanRel);
+                $baseDir = realpath(__DIR__);
+                if (!$fullPath || strpos($fullPath, $baseDir) !== 0) return false;
+                $baseName = strtolower(basename($fullPath));
+                if ($baseName === 'favicon.svg' || $baseName === 'logo.svg') return false;
+                $relDir = strtolower(substr($fullPath, strlen($baseDir) + 1));
+                if (strpos($relDir, 'img') !== 0 && strpos($relDir, 'assets') !== 0) return false;
+                if (file_exists($fullPath) && is_file($fullPath)) {
+                    @unlink($fullPath);
+                    return true;
+                }
+                return false;
+            };
+
             // Handle standard multipart form upload
             if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
                 $file = $_FILES['file'];
@@ -665,6 +683,11 @@ try {
 
                 if (move_uploaded_file($file['tmp_name'], $destPath)) {
                     $relPath = 'assets/uploads/' . $uniqueName;
+                    
+                    // Automatically delete replaced previous image
+                    $prevImg = $_POST['previousImage'] ?? ($_POST['oldFilePath'] ?? ($_POST['previous_image'] ?? null));
+                    $deletedPrev = $prevImg ? $safeDeleteOld($prevImg) : false;
+
                     echo json_encode([
                         'status' => 'success',
                         'message' => 'Asset successfully uploaded to assets directory.',
@@ -672,7 +695,8 @@ try {
                         'url' => $relPath,
                         'fileName' => $uniqueName,
                         'fileSize' => $file['size'],
-                        'extension' => $ext
+                        'extension' => $ext,
+                        'deletedPrevious' => $deletedPrev ? $prevImg : null
                     ]);
                 } else {
                     http_response_code(500);
@@ -705,12 +729,16 @@ try {
 
                 if (file_put_contents($destPath, $decoded) !== false) {
                     $relPath = 'assets/uploads/' . $uniqueName;
+                    $prevImg = $inputData['previousImage'] ?? ($inputData['oldFilePath'] ?? null);
+                    $deletedPrev = $prevImg ? $safeDeleteOld($prevImg) : false;
+
                     echo json_encode([
                         'status' => 'success',
                         'message' => 'Base64 asset saved to assets directory.',
                         'filePath' => $relPath,
                         'url' => $relPath,
-                        'fileName' => $uniqueName
+                        'fileName' => $uniqueName,
+                        'deletedPrevious' => $deletedPrev ? $prevImg : null
                     ]);
                 } else {
                     http_response_code(500);
@@ -724,16 +752,25 @@ try {
             break;
 
         case 'delete_asset':
-            $relPath = $inputData['filePath'] ?? '';
-            if ($relPath && strpos($relPath, 'assets/uploads/') === 0) {
-                $fullPath = __DIR__ . '/' . $relPath;
-                if (file_exists($fullPath) && is_file($fullPath)) {
-                    unlink($fullPath);
-                    echo json_encode(['status' => 'success', 'message' => 'Asset removed from assets folder.']);
-                    exit;
+            $targetPath = $inputData['filePath'] ?? ($inputData['path'] ?? ($_GET['filePath'] ?? ''));
+            $deleted = false;
+            if ($targetPath && is_string($targetPath)) {
+                $cleanRel = ltrim(explode('?', explode('#', $targetPath)[0])[0], '/\\');
+                $fullPath = realpath(__DIR__ . '/' . $cleanRel);
+                $baseDir = realpath(__DIR__);
+                if ($fullPath && strpos($fullPath, $baseDir) === 0) {
+                    $baseName = strtolower(basename($fullPath));
+                    if ($baseName !== 'favicon.svg' && $baseName !== 'logo.svg') {
+                        $relDir = strtolower(substr($fullPath, strlen($baseDir) + 1));
+                        if (strpos($relDir, 'img') === 0 || strpos($relDir, 'assets') === 0) {
+                            if (file_exists($fullPath) && is_file($fullPath)) {
+                                $deleted = @unlink($fullPath);
+                            }
+                        }
+                    }
                 }
             }
-            echo json_encode(['status' => 'success', 'message' => 'Asset reference cleared.']);
+            echo json_encode(['status' => 'success', 'deleted' => $deleted, 'path' => $targetPath]);
             break;
 
 

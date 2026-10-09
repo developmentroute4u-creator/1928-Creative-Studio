@@ -431,42 +431,42 @@
     body.step-5-all-cards-dock #wc-l1 {
       opacity: 1;
       filter: blur(0px);
-      transform: rotateY(38deg) rotateX(4deg) scale(1.0);
+      transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
     body.step-5-all-cards-dock #wc-l2 {
       opacity: 1;
       filter: blur(0px);
-      transform: rotateY(42deg) rotateX(-4deg) scale(1.0);
+      transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
     body.step-5-all-cards-dock #wc-r1 {
       opacity: 1;
       filter: blur(0px);
-      transform: rotateY(-38deg) rotateX(-4deg) scale(1.0);
+      transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
     body.step-5-all-cards-dock #wc-r2 {
       opacity: 1;
       filter: blur(0px);
-      transform: rotateY(-42deg) rotateX(4deg) scale(1.0);
+      transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
     body.step-5-all-cards-dock #wc-t1 {
       opacity: 1;
       filter: blur(0px);
-      transform: rotateX(-45deg) rotateY(6deg) scale(1.0);
+      transform: rotateX(0deg) rotateY(0deg) scale(1.0);
     }
     body.step-5-all-cards-dock #wc-b1 {
       opacity: 1;
       filter: blur(0px);
-      transform: rotateX(45deg) rotateY(-6deg) scale(1.0);
+      transform: rotateX(0deg) rotateY(0deg) scale(1.0);
     }
     body.step-5-all-cards-dock #wc-back1 {
       opacity: 1;
       filter: blur(0px);
-      transform: rotateY(-12deg) rotateX(4deg) scale(1.0);
+      transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
     body.step-5-all-cards-dock #wc-back2 {
       opacity: 1;
       filter: blur(0px);
-      transform: rotateY(10deg) rotateX(-4deg) scale(1.0);
+      transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
     
     body.hero-loading-complete .wall-card {
@@ -985,6 +985,7 @@
 
     .room-face.left {
       width: 800px;
+      left: 0;
       transform-origin: left center;
       transform: rotateY(90deg);
       background: transparent;
@@ -1000,6 +1001,7 @@
 
     .room-face.top {
       height: 800px;
+      top: 0;
       transform-origin: center top;
       transform: rotateX(-90deg);
       background: transparent;
@@ -1024,6 +1026,42 @@
       will-change: transform;
     }
 
+    #wc-b1 {
+      border-bottom: none !important;
+      border-bottom-left-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      transform-origin: center bottom !important;
+    }
+
+    #wc-t1 {
+      border-top: none !important;
+      border-top-left-radius: 0 !important;
+      border-top-right-radius: 0 !important;
+      transform-origin: center top !important;
+    }
+
+    #wc-l1 {
+      border-left: none !important;
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+      transform-origin: left center !important;
+    }
+
+    #wc-l2 {
+      transform-origin: left center !important;
+    }
+
+    #wc-r1 {
+      border-right: none !important;
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+      transform-origin: right center !important;
+    }
+
+    #wc-r2 {
+      transform-origin: right center !important;
+    }
+
     [data-theme="dark"] .wall-card {
       background: #18181B;
       border-color: rgba(255, 255, 255, 0.12);
@@ -1039,8 +1077,19 @@
       position: relative;
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
       filter: grayscale(100%);
       transition: filter .4s, transform .4s;
+    }
+
+    .wall-card .wc-inner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.65) 100%);
+      pointer-events: none;
+      z-index: 1;
+      border-radius: inherit;
     }
 
     .wall-card:hover .wc-inner {
@@ -1051,8 +1100,11 @@
       font-family: 'Space Mono', monospace;
       font-size: .62rem;
       font-weight: 700;
-      color: var(--ink-dim);
+      color: #FFFFFF;
       letter-spacing: .08em;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
     }
 
     .wall-card .wc-label {
@@ -1061,8 +1113,20 @@
       font-weight: 700;
       letter-spacing: .04em;
       text-transform: uppercase;
-      color: var(--ink);
+      color: #FFFFFF;
+      position: relative;
+      z-index: 2;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
     }
+
+    #wc-back1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-01.jpg'); }
+    #wc-back2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-02.jpg'); }
+    #wc-l1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-03.jpg'); }
+    #wc-l2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-04.jpg'); }
+    #wc-r1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-05.jpg'); }
+    #wc-r2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-06.jpg'); }
+    #wc-t1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-07.jpg'); }
+    #wc-b1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-08.jpg'); }
 
     /* ── Video / Showreel Pop-up & Right Docking ── */
     .hero-reel {
@@ -1382,6 +1446,27 @@
       height: clamp(300px, 34vw, 420px);
       overflow: hidden;
       background: #000;
+    }
+
+    .pcv-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .p-card-v:hover .pcv-media img {
+      transform: scale(1.06);
+    }
+
+    .pcv-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.0) 35%, rgba(0, 0, 0, 0.25) 100%);
+      pointer-events: none;
+      z-index: 1;
     }
 
     .pcv-gradient {
@@ -2553,6 +2638,60 @@
       stroke-linecap: round;
       filter: drop-shadow(0 0 6px rgba(200, 16, 46, 0.3));
       transition: opacity .2s ease;
+    }
+
+    /* ── Individual Brand Logo Card ── */
+    .brand-logo-card {
+      min-width: clamp(210px, 17vw, 260px);
+      height: clamp(84px, 9.8vh, 98px);
+      background: #FFFFFF !important;
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 22px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.035);
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.3s;
+      cursor: pointer;
+      user-select: none;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .brand-logo-card {
+      background: #FFFFFF !important;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 22px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-logo-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(200, 16, 46, 0.45);
+      box-shadow: 0 14px 32px rgba(200, 16, 46, 0.16);
+    }
+
+    [data-theme="dark"] .brand-logo-card:hover {
+      border-color: rgba(255, 46, 77, 0.6);
+      box-shadow: 0 14px 34px rgba(255, 46, 77, 0.25);
+    }
+
+    .brand-logo-card img.brand-logo-img {
+      width: 100%;
+      height: 100%;
+      max-height: 52px;
+      max-width: 185px;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      filter: none !important;
+      opacity: 1 !important;
+      transition: transform 0.35s ease;
+    }
+
+    .brand-logo-card:hover img.brand-logo-img {
+      transform: scale(1.06);
     }
 
     /* Fresh Perspectives Stage mounted inside the Seamless Studio Canvas */

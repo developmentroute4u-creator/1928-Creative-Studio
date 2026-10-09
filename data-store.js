@@ -162,489 +162,793 @@
     // ── 4. CLIENT & PARTNER LOGOS ──
     clients: [
       {
-        id: 'client-oberoi',
-        name: 'The Oberoi Group',
-        subtitle: 'Luxury Hospitality & Leisure',
+        id: 'client-01',
+        name: 'Client Partner 01',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><path d="M 25 20 C 25 12, 35 12, 35 20 C 35 28, 25 28, 25 20 Z M 20 20 C 20 8, 40 8, 40 20 C 40 32, 20 32, 20 20 Z" fill="#E51937"/><text x="48" y="26" font-family="\'Montserrat\', sans-serif" font-weight="700" font-size="15" fill="currentColor" letter-spacing="3px">OBEROI</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-01.jpg',
         active: true,
         order: 1
       },
       {
-        id: 'client-taj',
-        name: 'Taj Hotels & Palaces',
-        subtitle: 'Heritage Luxury & Resorts',
+        id: 'client-02',
+        name: 'Client Partner 02',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><path d="M 20 28 L 30 10 L 40 28 Z M 27 22 L 33 22" stroke="#E51937" stroke-width="2" fill="none"/><text x="50" y="26" font-family="\'Montserrat\', sans-serif" font-weight="800" font-size="16" fill="currentColor" letter-spacing="4px">TAJ</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-02.jpg',
         active: true,
         order: 2
       },
       {
-        id: 'client-leela',
-        name: 'The Leela Palaces',
-        subtitle: 'Palaces, Hotels & Resorts',
+        id: 'client-03',
+        name: 'Client Partner 03',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><circle cx="28" cy="20" r="10" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="28" cy="20" r="4" fill="#E51937"/><text x="46" y="25" font-family="\'Montserrat\', sans-serif" font-weight="700" font-size="14" fill="currentColor" letter-spacing="2.5px">THE LEELA</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-03.jpg',
         active: true,
         order: 3
       },
       {
-        id: 'client-itc',
-        name: 'ITC Luxury Collection',
-        subtitle: 'Sustainable Hospitality',
+        id: 'client-04',
+        name: 'Client Partner 04',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><rect x="18" y="12" width="22" height="16" fill="none" stroke="#E51937" stroke-width="2"/><text x="23" y="25" font-family="\'Montserrat\', sans-serif" font-weight="900" font-size="12" fill="currentColor">ITC</text><text x="48" y="25" font-family="\'Montserrat\', sans-serif" font-weight="600" font-size="13" fill="currentColor" letter-spacing="2px">HOTELS</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-04.jpg',
         active: true,
         order: 4
       },
       {
-        id: 'client-sotheby',
-        name: "Sotheby's Realty",
-        subtitle: 'International Realty & Estates',
+        id: 'client-05',
+        name: 'Client Partner 05',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><text x="10" y="25" font-family="\'Montserrat\', sans-serif" font-weight="700" font-size="13.5" fill="currentColor" letter-spacing="1px">SOTHEBY\'S</text><circle cx="120" cy="18" r="3" fill="#E51937"/></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-05.jpg',
         active: true,
         order: 5
       },
       {
-        id: 'client-crest',
-        name: 'Crest Luxury Assets',
-        subtitle: 'Private Equity & Assets',
+        id: 'client-06',
+        name: 'Client Partner 06',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><polygon points="30,8 42,32 18,32" stroke="#E51937" stroke-width="2" fill="none"/><text x="50" y="26" font-family="\'Montserrat\', sans-serif" font-weight="800" font-size="16" fill="currentColor" letter-spacing="2px">CREST</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-06.jpg',
         active: true,
         order: 6
       },
       {
-        id: 'client-kinesis',
-        name: 'Kinesis',
-        subtitle: 'Spatial Identity',
+        id: 'client-07',
+        name: 'Client Partner 07',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><path d="M 25 20 Q 35 10 45 20 T 65 20" stroke="#E51937" stroke-width="3" fill="none"/><text x="75" y="25" font-family="\'Montserrat\', sans-serif" font-weight="800" font-size="16" fill="currentColor">KINESIS</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-07.jpg',
         active: true,
         order: 7
       },
       {
-        id: 'client-aura',
-        name: 'Aura Systems',
-        subtitle: 'Visual Systems',
+        id: 'client-08',
+        name: 'Client Partner 08',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><circle cx="40" cy="20" r="8" fill="none" stroke="currentColor" stroke-width="2"/><text x="60" y="26" font-family="\'Montserrat\', sans-serif" font-weight="800" font-size="18" fill="currentColor" letter-spacing="1px">AURA</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-08.jpg',
         active: true,
         order: 8
       },
       {
-        id: 'client-jukku',
-        name: 'Jukku Digital',
-        subtitle: 'Digital Growth',
+        id: 'client-09',
+        name: 'Client Partner 09',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><text x="80" y="26" text-anchor="middle" font-family="\'Montserrat\', sans-serif" font-weight="900" font-size="20" fill="#C8102E" letter-spacing="1px">JUKKU</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-09.jpg',
         active: true,
         order: 9
       },
       {
-        id: 'client-synapse',
-        name: 'Synapse',
-        subtitle: 'Product Architecture',
+        id: 'client-10',
+        name: 'Client Partner 10',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><circle cx="30" cy="20" r="6" fill="#E51937"/><circle cx="45" cy="20" r="6" fill="currentColor"/><text x="60" y="26" font-family="\'Montserrat\', sans-serif" font-weight="800" font-size="16" fill="currentColor">SYNAPSE</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-10.jpg',
         active: true,
         order: 10
       },
       {
-        id: 'client-monolith',
-        name: 'Monolith',
-        subtitle: 'Spatial Design',
+        id: 'client-11',
+        name: 'Client Partner 11',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><rect x="25" y="10" width="18" height="20" fill="currentColor"/><text x="52" y="26" font-family="\'Montserrat\', sans-serif" font-weight="900" font-size="16" fill="currentColor">MONOLITH</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-11.jpg',
         active: true,
         order: 11
       },
       {
-        id: 'client-solaris',
-        name: 'Solaris Energy',
-        subtitle: 'Energy & Innovation',
+        id: 'client-12',
+        name: 'Client Partner 12',
+        subtitle: 'Brand & Spatial Partner',
         websiteUrl: '#',
-        type: 'svg',
-        svgCode: '<svg viewBox="0 0 160 40" class="brand-logo-svg"><polygon points="35,12 45,20 35,28" fill="#E51937"/><text x="55" y="26" font-family="\'Montserrat\', sans-serif" font-weight="800" font-size="16" fill="currentColor" letter-spacing="1.5px">SOLARIS</text></svg>',
+        type: 'image',
+        imageUrl: 'img/Client Logos-12.jpg',
         active: true,
         order: 12
+      },
+      {
+        id: 'client-13',
+        name: 'Client Partner 13',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-13.jpg',
+        active: true,
+        order: 13
+      },
+      {
+        id: 'client-14',
+        name: 'Client Partner 14',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-14.jpg',
+        active: true,
+        order: 14
+      },
+      {
+        id: 'client-15',
+        name: 'Client Partner 15',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-15.jpg',
+        active: true,
+        order: 15
+      },
+      {
+        id: 'client-16',
+        name: 'Client Partner 16',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-16.jpg',
+        active: true,
+        order: 16
+      },
+      {
+        id: 'client-17',
+        name: 'Client Partner 17',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-17.jpg',
+        active: true,
+        order: 17
+      },
+      {
+        id: 'client-18',
+        name: 'Client Partner 18',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-18.jpg',
+        active: true,
+        order: 18
+      },
+      {
+        id: 'client-19',
+        name: 'Client Partner 19',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-19.jpg',
+        active: true,
+        order: 19
+      },
+      {
+        id: 'client-20',
+        name: 'Client Partner 20',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-20.jpg',
+        active: true,
+        order: 20
+      },
+      {
+        id: 'client-21',
+        name: 'Client Partner 21',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-21.jpg',
+        active: true,
+        order: 21
+      },
+      {
+        id: 'client-22',
+        name: 'Client Partner 22',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-22.jpg',
+        active: true,
+        order: 22
+      },
+      {
+        id: 'client-23',
+        name: 'Client Partner 23',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-23.jpg',
+        active: true,
+        order: 23
+      },
+      {
+        id: 'client-24',
+        name: 'Client Partner 24',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-24.jpg',
+        active: true,
+        order: 24
+      },
+      {
+        id: 'client-25',
+        name: 'Client Partner 25',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-25.jpg',
+        active: true,
+        order: 25
+      },
+      {
+        id: 'client-26',
+        name: 'Client Partner 26',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-26.jpg',
+        active: true,
+        order: 26
+      },
+      {
+        id: 'client-27',
+        name: 'Client Partner 27',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-27.jpg',
+        active: true,
+        order: 27
+      },
+      {
+        id: 'client-28',
+        name: 'Client Partner 28',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-28.jpg',
+        active: true,
+        order: 28
+      },
+      {
+        id: 'client-29',
+        name: 'Client Partner 29',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-29.jpg',
+        active: true,
+        order: 29
+      },
+      {
+        id: 'client-30',
+        name: 'Client Partner 30',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-30.jpg',
+        active: true,
+        order: 30
+      },
+      {
+        id: 'client-31',
+        name: 'Client Partner 31',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-31.jpg',
+        active: true,
+        order: 31
+      },
+      {
+        id: 'client-32',
+        name: 'Client Partner 32',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-32.jpg',
+        active: true,
+        order: 32
+      },
+      {
+        id: 'client-33',
+        name: 'Client Partner 33',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-33.jpg',
+        active: true,
+        order: 33
+      },
+      {
+        id: 'client-34',
+        name: 'Client Partner 34',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-34.jpg',
+        active: true,
+        order: 34
+      },
+      {
+        id: 'client-35',
+        name: 'Client Partner 35',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-35.jpg',
+        active: true,
+        order: 35
+      },
+      {
+        id: 'client-36',
+        name: 'Client Partner 36',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-36.jpg',
+        active: true,
+        order: 36
+      },
+      {
+        id: 'client-37',
+        name: 'Client Partner 37',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-37.jpg',
+        active: true,
+        order: 37
+      },
+      {
+        id: 'client-38',
+        name: 'Client Partner 38',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-38.jpg',
+        active: true,
+        order: 38
+      },
+      {
+        id: 'client-39',
+        name: 'Client Partner 39',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-39.jpg',
+        active: true,
+        order: 39
+      },
+      {
+        id: 'client-40',
+        name: 'Client Partner 40',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-40.jpg',
+        active: true,
+        order: 40
+      },
+      {
+        id: 'client-41',
+        name: 'Client Partner 41',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-41.jpg',
+        active: true,
+        order: 41
+      },
+      {
+        id: 'client-42',
+        name: 'Client Partner 42',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-42.jpg',
+        active: true,
+        order: 42
+      },
+      {
+        id: 'client-43',
+        name: 'Client Partner 43',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-43.jpg',
+        active: true,
+        order: 43
+      },
+      {
+        id: 'client-44',
+        name: 'Client Partner 44',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-44.jpg',
+        active: true,
+        order: 44
+      },
+      {
+        id: 'client-45',
+        name: 'Client Partner 45',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-45.jpg',
+        active: true,
+        order: 45
+      },
+      {
+        id: 'client-46',
+        name: 'Client Partner 46',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-46.jpg',
+        active: true,
+        order: 46
+      },
+      {
+        id: 'client-47',
+        name: 'Client Partner 47',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-47.jpg',
+        active: true,
+        order: 47
+      },
+      {
+        id: 'client-48',
+        name: 'Client Partner 48',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-48.jpg',
+        active: true,
+        order: 48
+      },
+      {
+        id: 'client-49',
+        name: 'Client Partner 49',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-49.jpg',
+        active: true,
+        order: 49
+      },
+      {
+        id: 'client-50',
+        name: 'Client Partner 50',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-50.jpg',
+        active: true,
+        order: 50
+      },
+      {
+        id: 'client-51',
+        name: 'Client Partner 51',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-51.jpg',
+        active: true,
+        order: 51
+      },
+      {
+        id: 'client-52',
+        name: 'Client Partner 52',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-52.jpg',
+        active: true,
+        order: 52
+      },
+      {
+        id: 'client-53',
+        name: 'Client Partner 53',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-53.jpg',
+        active: true,
+        order: 53
+      },
+      {
+        id: 'client-54',
+        name: 'Client Partner 54',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-54.jpg',
+        active: true,
+        order: 54
+      },
+      {
+        id: 'client-55',
+        name: 'Client Partner 55',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-55.jpg',
+        active: true,
+        order: 55
+      },
+      {
+        id: 'client-56',
+        name: 'Client Partner 56',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-56.jpg',
+        active: true,
+        order: 56
+      },
+      {
+        id: 'client-57',
+        name: 'Client Partner 57',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-57.jpg',
+        active: true,
+        order: 57
+      },
+      {
+        id: 'client-58',
+        name: 'Client Partner 58',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-58.jpg',
+        active: true,
+        order: 58
+      },
+      {
+        id: 'client-59',
+        name: 'Client Partner 59',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-59.jpg',
+        active: true,
+        order: 59
+      },
+      {
+        id: 'client-60',
+        name: 'Client Partner 60',
+        subtitle: 'Brand & Spatial Partner',
+        websiteUrl: '#',
+        type: 'image',
+        imageUrl: 'img/Client Logos-60.jpg',
+        active: true,
+        order: 60
       }
     ],
 
-    // ── 5. PORTFOLIO CASE STUDIES ──
+    // ── 5. PORTFOLIO CASE STUDIES (100% SYNCED WITH LIVE WEBSITE) ──
     portfolio: [
       {
-        id: 'aurora',
-        title: 'Aurora Chronometer Systems',
-        client: 'Aurora Horology Geneve',
-        subheading: 'Swiss Luxury Brand Identity & 3D Vault',
-        category: 'brand-identity web-design logo-design',
-        categoryDisplay: 'Swiss Luxury Brand Identity & 3D Vault',
-        tagPill: 'Horology & WebGL',
-        sector: 'Swiss Luxury Horology',
-        deliverables: 'Identity, Packaging, 3D WebGL Vault',
-        timeline: '6 Months · Global Launch',
+        id: 'vibee',
+        title: 'Vibee — Youth Culture & Apparel Identity',
+        client: 'Vibee',
+        subheading: 'Crafting youth culture, distinctive apparel identity and community storytelling.',
+        category: 'brand-identity logo-design',
+        categoryDisplay: 'Branding · Apparel & Culture',
+        tagPill: 'Youth Branding',
+        sector: 'Apparel & Culture',
+        deliverables: 'Brand Identity, Logo System, Community Storytelling',
+        timeline: 'Project Completed',
         gridSpan: 'bento-wide',
         year: '2025',
-        coverImage: 'img/port-chronos.jpg',
-        bannerImage: 'img/port-chronos.jpg',
+        coverImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
+        bannerImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
         featured: true,
         order: 1,
-        overview: 'Aurora Horology commissioned 1928 Creative Studio to architect an enduring brand ecosystem that honors Swiss horological precision while establishing commanding digital authority for the next generation of luxury collectors. Through monolithic typographic architecture, bespoke crimson color physics, and a zero-latency 3D WebGL boutique vault, we transformed the brand into an iconic collector centerpiece that sold out its inaugural batch within minutes.',
-        description: 'A complete haute horlogerie visual identity system, architectural physical packaging, and custom WebGL timekeeper showcase.',
-        summary: 'A complete haute horlogerie visual identity system, architectural physical packaging, and custom WebGL timekeeper showcase.',
-        challenge: 'Positioning an independent Geneva watchmaker against century-old heritage conglomerates without diluting precision credentials.',
-        approach: 'Designed a monolithic titanium-grade visual identity system paired with an interactive 120fps WebGL virtual tourbillon configurator.',
-        impact: 'Sold out the inaugural 100-piece production run within 72 hours of global digital launch.',
+        overview: 'Vibee is a youth-driven apparel brand rooted in culture, community, and self-expression. 1928 Creative Studio crafted a distinctive brand identity that speaks the language of its audience — bold, energetic, and unapologetically authentic.',
+        description: 'Crafting youth culture, distinctive apparel identity and community storytelling.',
+        summary: 'Crafting youth culture, distinctive apparel identity and community storytelling.',
+        challenge: 'Creating a brand identity that resonates authentically with Gen-Z while maintaining commercial scalability.',
+        approach: 'Developed a visual language drawn from street culture and music, with a flexible identity system that adapts across digital and physical touchpoints.',
+        impact: 'Established Vibee as a recognizable cultural label with a loyal community following.',
         galleryImages: [
-          'img/port-chronos.jpg',
-          'img/port-spectra.jpg',
-          'img/port-lumina.jpg',
-          'img/wc-l1.jpg',
-          'img/wc-r1.jpg',
-          'img/port-veloce.jpg'
+          'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg'
         ],
         metrics: [
-          { label: 'Market Valuation Uplift', value: '+340%' },
-          { label: 'Private Vault Inquiries', value: '4.8k' },
-          { label: 'Global Design Accolades', value: '04' }
+          { label: 'Community Reach', value: '50k+' },
+          { label: 'Brand Recognition', value: '+280%' }
         ]
       },
       {
-        id: 'veloce',
-        title: 'Veloce Hypercraft Platforms',
-        client: 'Veloce Automobili Modena',
-        subheading: 'Automotive Digital Flagship & Raytraced Configurator',
-        category: 'web-design brand-identity',
-        categoryDisplay: 'Automotive Digital Flagship & Raytraced Configurator',
-        tagPill: 'Automotive & 3D',
-        sector: 'Ultra-High Performance Automotive & EV',
-        deliverables: 'Curved Cockpit UI, 3D Vehicle Configurator',
-        timeline: '8 Months · Global Reveal',
+        id: 'infyli',
+        title: 'Infyli — Minimalist Luxury Home Aromatics',
+        client: 'Infyli',
+        subheading: 'Minimalist luxury home aromatics and sensory packaging architecture.',
+        category: 'spatial-packaging brand-identity',
+        categoryDisplay: 'Lifestyle · Packaging & Identity',
+        tagPill: 'Luxury Aromatics',
+        sector: 'Lifestyle & Wellness',
+        deliverables: 'Brand Identity, Packaging Design, Sensory Architecture',
+        timeline: 'Project Completed',
         gridSpan: 'bento-compact',
         year: '2025',
-        coverImage: 'img/port-veloce.jpg',
-        bannerImage: 'img/port-veloce.jpg',
+        coverImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
+        bannerImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
         featured: true,
         order: 2,
-        overview: 'Designing the next-generation digital cockpit and companion mobile platform for an ultra-high performance electric hypercar capable of 0-100 km/h in 1.8 seconds. We synthesized dense telemetry parameters into a high-contrast dark mode visual hierarchy, procedural real-time raytraced shaders, and micro-haptic interactions running at 120fps on custom curved automotive displays.',
-        description: 'Digital ecosystem engineered for electric hypercar customization with real-time shader material simulation.',
-        summary: 'Digital ecosystem engineered for electric hypercar customization with real-time shader material simulation.',
-        challenge: 'Overcoming web browser rendering bottlenecks to showcase real-time carbon-fiber weave finishes.',
-        approach: 'Developed custom GLSL fragment shaders simulating accurate photonic refractions across curved hypercar body panels.',
-        impact: 'Acquired 18 qualified bespoke hypercar custom orders prior to physical prototype reveals.',
+        overview: 'Infyli is a luxury home aromatics brand that believes in the quiet power of scent and space. 1928 Creative Studio developed a minimalist identity and sensory packaging architecture that commands attention through restraint.',
+        description: 'Minimalist luxury home aromatics and sensory packaging architecture.',
+        summary: 'Minimalist luxury home aromatics and sensory packaging architecture.',
+        challenge: 'Communicating premium sensory experience through minimal visual language.',
+        approach: 'Designed packaging around silence and negative space — letting material choice and proportion speak louder than graphics.',
+        impact: 'Positioned Infyli as a sought-after luxury lifestyle brand in premium retail.',
         galleryImages: [
-          'img/port-veloce.jpg',
-          'img/port-kroma.jpg',
-          'img/wc-r2.jpg',
-          'img/port-zenith.jpg',
-          'img/wc-top.jpg',
-          'assets/services/svc_4.jpg'
+          'img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg'
         ],
         metrics: [
-          { label: 'Avg Interactive Duration', value: '6.4 Min' },
-          { label: 'VIP Allocations Reserved', value: '100%' },
-          { label: 'Frame-Rate Target', value: '120 FPS' }
+          { label: 'Premium Shelf Placement', value: '12 Stores' },
+          { label: 'Brand Recall', value: '+320%' }
         ]
       },
       {
-        id: 'elysian',
-        title: 'Elysian High Jewelry & Fragrance',
-        client: 'Maison Elysian Paris',
-        subheading: 'Haute Parfumerie Flacon & Travertine Flagship',
-        category: 'spatial-packaging brand-identity',
-        categoryDisplay: 'Haute Parfumerie Flacon & Travertine Flagship',
-        tagPill: 'Packaging & Spatial',
-        sector: 'Luxury Fragrance & Cosmetics',
-        deliverables: 'Glass Bottle Design, Logo Monogram, Box Suite',
-        timeline: '5 Months · European Flagships',
+        id: 'mudra-school',
+        title: 'Mudra School — Classical Arts Digital Presence',
+        client: 'Mudra School',
+        subheading: 'Preserving classical Indian performing arts through contemporary digital storytelling.',
+        category: 'web-design brand-identity',
+        categoryDisplay: 'Arts & Heritage · Digital Presence',
+        tagPill: 'Heritage & Culture',
+        sector: 'Arts & Education',
+        deliverables: 'Brand Identity, Digital Platform, Cultural Storytelling',
+        timeline: 'Project Completed',
         gridSpan: 'bento-compact',
         year: '2025',
-        coverImage: 'img/port-elysian.jpg',
-        bannerImage: 'img/port-elysian.jpg',
+        coverImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+        bannerImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
         featured: true,
         order: 3,
-        overview: 'Sculpting a bespoke fluted glass vessel and monolithic identity for a Paris-based luxury fragrance house featuring deep crimson gradients and pure geometry. The physical packaging pairs fluted frosted crystal with a custom brushed brass collar, creating an instantly recognizable silhouette that won Pentawards Gold and secured commanding flagship shelf presence across Europe.',
-        description: 'Fluted lead-free crystal flacon architecture, weighted magnetic closures, and Milan flagship sensory environment.',
-        summary: 'Fluted lead-free crystal flacon architecture, weighted magnetic closures, and Milan flagship sensory environment.',
-        challenge: 'Transforming high perfumery into a sculptural tactile artifact that commands heirloom status.',
-        approach: 'Engineered a 480-gram crystal monolith with 1.2N acoustic magnetic snaps and brutalist travertine store fixtures.',
-        impact: 'Expanded across 14 premier luxury department stores in Paris, Tokyo, and New York.',
+        overview: 'Mudra School is a classical Indian performing arts institution with a rich legacy. 1928 Creative Studio bridged tradition and modernity — creating a digital presence that honors cultural heritage while making it accessible and compelling to contemporary audiences.',
+        description: 'Preserving classical Indian performing arts through contemporary digital storytelling.',
+        summary: 'Preserving classical Indian performing arts through contemporary digital storytelling.',
+        challenge: 'Translating centuries of living art tradition into a contemporary digital experience without losing cultural integrity.',
+        approach: 'Wove classical visual motifs with modern typography and interactive digital storytelling across web and social platforms.',
+        impact: 'Significantly expanded enrollment and digital reach for the institution.',
         galleryImages: [
-          'img/port-elysian.jpg',
-          'img/port-chronos.jpg',
-          'assets/services/svc_3.jpg',
-          'img/wc-l2.jpg',
-          'assets/services/svc_1.jpg',
-          'img/wc-r1.jpg'
+          'img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg'
         ],
         metrics: [
-          { label: 'Retail Revenue per Sq.Ft', value: '€4,200' },
-          { label: 'Packaging Retention Rate', value: '96%' }
+          { label: 'Digital Reach Growth', value: '+450%' },
+          { label: 'New Enrollments', value: '+60%' }
         ]
       },
       {
-        id: 'noir-atelier',
-        title: 'Noir Spatial Architecture & Flagship',
-        client: 'Noir Fashion Group Milan',
-        subheading: 'Brutalist Travertine Flagship Architecture',
-        category: 'spatial-packaging brand-identity',
-        categoryDisplay: 'Brutalist Travertine Flagship Architecture',
-        tagPill: 'Spatial Architecture',
-        sector: 'High Fashion & Luxury Retail Architecture',
-        deliverables: 'Spatial Guidelines, Fixture Architecture, Soundscapes',
-        timeline: '6 Months · Milan Design Week',
+        id: 'awards-plus',
+        title: 'Awards Plus — Prestige Corporate Identity',
+        client: 'Awards Plus',
+        subheading: 'Engineering heirloom executive recognition marks and tactile luxury seals.',
+        category: 'brand-identity logo-design spatial-packaging',
+        categoryDisplay: 'Corporate · Prestige Identity',
+        tagPill: 'Corporate Prestige',
+        sector: 'Corporate Recognition & Awards',
+        deliverables: 'Identity System, Prestige Mark Design, Tactile Packaging',
+        timeline: 'Project Completed',
         gridSpan: 'bento-wide',
-        year: '2024',
-        coverImage: 'img/port-noir.jpg',
-        bannerImage: 'img/port-noir.jpg',
+        year: '2025',
+        coverImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg',
+        bannerImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg',
         featured: true,
         order: 4,
-        overview: 'Monolithic interior architecture, directional soundscapes, and negative-space lighting choreography. Eliminating the commercial feel of traditional retail to create an immersive museum-grade sanctum with split-face Roman travertine walls and 2700K surgical beam spotlights.',
-        description: 'Monolithic interior architecture, directional soundscapes, and negative-space lighting choreography.',
-        summary: 'Monolithic interior architecture, directional soundscapes, and negative-space lighting choreography.',
-        challenge: 'Eliminating the commercial feel of traditional retail to create an immersive museum-grade sanctum.',
-        approach: 'Incorporated unpolished split-face Roman travertine walls, 2700K surgical beam spotlights, and acoustic felt baffles.',
-        impact: 'Won Milan Retail Architecture Design of the Year.',
+        overview: 'Awards Plus is a corporate recognition and awards brand. 1928 Creative Studio engineered a prestige identity system that commands respect — from heirloom executive recognition marks to tactile luxury seals worthy of the achievements they celebrate.',
+        description: 'Engineering heirloom executive recognition marks and tactile luxury seals.',
+        summary: 'Engineering heirloom executive recognition marks and tactile luxury seals.',
+        challenge: 'Creating a brand identity that communicates prestige and permanence in the corporate recognition space.',
+        approach: 'Developed a monumental identity system anchored in classical proportion, premium material selection, and architectural typography.',
+        impact: 'Elevated Awards Plus to the premier corporate recognition brand in its market.',
         galleryImages: [
-          'img/port-noir.jpg',
-          'img/wc-mid.jpg',
-          'assets/services/svc_2.jpg',
-          'img/wc-bot.jpg',
-          'img/port-spectra.jpg',
-          'img/wc-top.jpg'
+          'img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg'
         ],
         metrics: [
-          { label: 'Footfall Dwell Duration', value: '+210%' },
-          { label: 'Conversion Velocity', value: '38%' }
+          { label: 'Corporate Clients', value: '200+' },
+          { label: 'Brand Prestige Score', value: '+400%' }
         ]
       },
       {
-        id: 'lumina',
-        title: 'Lumina Neural Aesthetics Platform',
-        client: 'Lumina AI Zurich',
-        subheading: 'Liquid Metal UI & Generative Research Interface',
+        id: 'last-mile-analytics',
+        title: 'Last Mile Analytics — Fintech Platform Architecture',
+        client: 'Last Mile Analytics',
+        subheading: 'Data-driven financial advisory platforms engineered with razor-sharp UX.',
         category: 'web-design brand-identity',
-        categoryDisplay: 'Liquid Metal UI & Generative Research Interface',
-        tagPill: 'AI Interface & WebGL',
-        sector: 'Deep Tech & Generative AI',
-        deliverables: 'Brand System, 3D WebGL Platform, Visual Tokens',
-        timeline: '4 Months · Enterprise Launch',
-        gridSpan: 'bento-wide',
-        year: '2024',
-        coverImage: 'img/port-lumina.jpg',
-        bannerImage: 'img/port-lumina.jpg',
+        categoryDisplay: 'Fintech · Platform Architecture',
+        tagPill: 'Fintech & Data',
+        sector: 'Financial Technology & Advisory',
+        deliverables: 'Platform UI/UX, Brand System, Data Visualization',
+        timeline: 'Project Completed',
+        gridSpan: 'bento-compact',
+        year: '2025',
+        coverImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+        bannerImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
         featured: true,
         order: 5,
-        overview: 'Generative liquid chrome shader interfaces representing deep neural state transformations. Making complex deep learning workflows feel human, organic, and visually captivating through custom GLSL shaders and responsive physics engines.',
-        description: 'Generative liquid chrome shader interfaces representing deep neural state transformations.',
-        summary: 'Generative liquid chrome shader interfaces representing deep neural state transformations.',
-        challenge: 'Making complex deep learning workflows feel human, organic, and visually captivating.',
-        approach: 'Replaced sterile SaaS dashboard widgets with dynamic fluid simulations that adapt to computational confidence.',
-        impact: 'Positioned Lumina as the definitive luxury interface in enterprise artificial intelligence.',
+        overview: 'Last Mile Analytics is a fintech company bringing data-driven financial advisory to underserved markets. 1928 Creative Studio architected a digital platform with razor-sharp UX that makes complex financial data accessible, actionable, and trustworthy.',
+        description: 'Data-driven financial advisory platforms engineered with razor-sharp UX.',
+        summary: 'Data-driven financial advisory platforms engineered with razor-sharp UX.',
+        challenge: 'Making complex financial analytics feel simple, trustworthy, and accessible to non-expert users.',
+        approach: 'Built a clean, precision-focused UI system with intelligent data visualization that guides users from insight to action.',
+        impact: 'Became the go-to analytics platform for financial advisors in tier-2 and tier-3 markets.',
         galleryImages: [
-          'img/port-lumina.jpg',
-          'img/port-kroma.jpg',
-          'img/port-veloce.jpg',
-          'img/wc-top.jpg',
-          'assets/services/svc_5.jpg',
-          'img/wc-r1.jpg'
+          'img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg'
         ],
         metrics: [
-          { label: 'Series A Raised', value: '$24M' },
-          { label: 'User Retention Rate', value: '88%' }
+          { label: 'User Adoption', value: '+380%' },
+          { label: 'Advisory Efficiency', value: '+65%' }
         ]
       },
       {
-        id: 'bugatti',
-        title: 'Bugatti Centodieci Collector Codex',
-        client: 'Bugatti Automobiles Molsheim',
-        subheading: 'Aerospace Carbon Fiber Presentation Codex',
-        category: 'spatial-packaging brand-identity',
-        categoryDisplay: 'Aerospace Carbon Fiber Presentation Codex',
-        tagPill: 'Collector Codex',
-        sector: 'Hypercar Collector Publishing',
-        deliverables: 'Monograph Codex, Milled Aluminum Slipcase',
-        timeline: '5 Months · Molsheim Atelier',
+        id: 'alda',
+        title: 'Alda — Precision Stainless Steel Spatial Identity',
+        client: 'Alda',
+        subheading: 'Elevating everyday living spaces through precision stainless steel industrial design.',
+        category: 'brand-identity spatial-packaging web-design',
+        categoryDisplay: 'Homeware · Spatial Identity',
+        tagPill: 'Industrial Design',
+        sector: 'Homeware & Industrial Design',
+        deliverables: 'Brand Identity, Spatial Design System, Digital Presence',
+        timeline: 'Project Completed',
         gridSpan: 'bento-compact',
-        year: '2024',
-        coverImage: 'img/port-spectra.jpg',
-        bannerImage: 'img/port-spectra.jpg',
+        year: '2025',
+        coverImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg',
+        bannerImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg',
         featured: true,
         order: 6,
-        overview: 'Limited-edition bespoke carbon-bound hardcover monograph and archival collector packaging. Designing an archival asset worthy of a multi-million dollar hypercar acquisition using aerospace carbon fiber weaves and custom milled aluminum case.',
-        description: 'Limited-edition bespoke carbon-bound hardcover monograph and archival collector packaging.',
-        summary: 'Limited-edition bespoke carbon-bound hardcover monograph and archival collector packaging.',
-        challenge: 'Designing an archival asset worthy of a multi-million dollar hypercar acquisition.',
-        approach: 'Handcrafted binding using aerospace carbon fiber weaves, silver-foil typography, and custom milled aluminum case.',
-        impact: 'Catalogued into premier private automotive archives globally.',
+        overview: 'Alda crafts precision stainless steel products that elevate everyday living spaces. 1928 Creative Studio developed a spatial identity that mirrors the brand\'s industrial precision — clean, durable, and quietly beautiful.',
+        description: 'Elevating everyday living spaces through precision stainless steel industrial design.',
+        summary: 'Elevating everyday living spaces through precision stainless steel industrial design.',
+        challenge: 'Communicating the functional beauty of industrial-grade design in a warm, aspirational lifestyle context.',
+        approach: 'Created an identity system that balances engineering precision with warm spatial aesthetics — translating steel\'s character into brand language.',
+        impact: 'Positioned Alda as the premium choice in the precision homeware category.',
         galleryImages: [
-          'img/port-spectra.jpg',
-          'img/wc-l1.jpg',
-          'img/wc-r1.jpg',
-          'img/port-lumina.jpg',
-          'img/wc-r2.jpg',
-          'img/port-chronos.jpg'
+          'img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg'
         ],
         metrics: [
-          { label: 'Limited Edition Print Run', value: '110 Copies' },
-          { label: 'Collector Satisfaction', value: '100%' }
-        ]
-      },
-      {
-        id: 'juventus',
-        title: 'Juventus Brand System',
-        client: 'Juventus Football Club',
-        subheading: 'Global Iconic Identity & Sensory Stadium Experience',
-        category: 'brand-identity logo-design',
-        categoryDisplay: 'Global Iconic Identity & Sensory Stadium Experience',
-        tagPill: 'Global Icon',
-        sector: 'Global Icon & Sports Entertainment',
-        deliverables: 'Monogram Architecture, Stadium Spatial, Merch System',
-        timeline: '8 Months · Global Rollout',
-        gridSpan: 'bento-compact',
-        year: '2024',
-        coverImage: 'img/wc-top.jpg',
-        bannerImage: 'img/wc-top.jpg',
-        featured: true,
-        order: 7,
-        overview: 'Global visual identity system, brand guidelines, and sensory stadium experience touchpoints. Reinventing a century-old heritage sports club into a global lifestyle and entertainment brand with an iconic minimalist J-monogram.',
-        description: 'Global visual identity system, brand guidelines, and sensory stadium experience touchpoints.',
-        summary: 'Global visual identity system, brand guidelines, and sensory stadium experience touchpoints.',
-        challenge: 'Reinventing a century-old heritage sports club into a global lifestyle and entertainment brand.',
-        approach: 'Stripped away legacy shields to introduce an iconic minimalist J-monogram and black/white architectural identity.',
-        impact: 'Became the most recognized contemporary sports rebrand of the decade.',
-        galleryImages: [
-          'img/wc-top.jpg',
-          'img/wc-mid.jpg',
-          'img/wc-bot.jpg',
-          'assets/services/svc_1.jpg',
-          'assets/services/svc_2.jpg',
-          'img/port-zenith.jpg'
-        ],
-        metrics: [
-          { label: 'Global Merchandise Uplift', value: '+42%' },
-          { label: 'Brand Value Growth', value: '€180M' }
-        ]
-      },
-      {
-        id: 'balenciaga',
-        title: 'Balenciaga Couture Spatial Architecture',
-        client: 'Balenciaga Paris',
-        subheading: 'Monolithic Retail Fixtures & Runway Scenography',
-        category: 'spatial-packaging brand-identity',
-        categoryDisplay: 'Monolithic Retail Fixtures & Runway Scenography',
-        tagPill: 'Couture Spatial',
-        sector: 'Post-Luxury Couture Spatial',
-        deliverables: 'Runway Scenography, Raw Concrete Fixtures',
-        timeline: '4 Months · Paris Fashion Week',
-        gridSpan: 'bento-wide',
-        year: '2024',
-        coverImage: 'img/wc-mid.jpg',
-        bannerImage: 'img/wc-mid.jpg',
-        featured: true,
-        order: 8,
-        overview: 'Architectural spatial system, monolithic raw-concrete retail fixtures, and kinetic runway scenography translating post-luxury couture aesthetics into visceral physical and retail spaces across flagship stores.',
-        description: 'Architectural spatial system, monolithic raw-concrete retail fixtures, and kinetic runway scenography.',
-        summary: 'Architectural spatial system, monolithic raw-concrete retail fixtures, and kinetic runway scenography.',
-        challenge: 'Translating post-luxury couture aesthetics into visceral physical and retail spaces.',
-        approach: 'Raw industrial concrete monoliths contrasted with razor-sharp dynamic LED grids and brushed steel display cases.',
-        impact: 'Implemented across premier flagships in Paris, New York, and Seoul.',
-        galleryImages: [
-          'img/wc-mid.jpg',
-          'img/wc-bot.jpg',
-          'img/port-noir.jpg',
-          'assets/services/svc_3.jpg',
-          'assets/services/svc_4.jpg',
-          'img/port-veloce.jpg'
-        ],
-        metrics: [
-          { label: 'Flagship Footfall Increase', value: '+65%' },
-          { label: 'Runway Live Impressions', value: '18M' }
-        ]
-      },
-      {
-        id: 'polene',
-        title: 'Polène Paris Leather Goods',
-        client: 'Polène Paris',
-        subheading: 'Sculptural Leather Goods Packaging & 3D Assets',
-        category: 'spatial-packaging brand-identity',
-        categoryDisplay: 'Sculptural Leather Goods Packaging & 3D Assets',
-        tagPill: 'Luxury Atelier',
-        sector: 'Luxury Leather Atelier',
-        deliverables: 'Sculpted Presentation Boxes, Magnetic Closures',
-        timeline: '6 Months · Paris Atelier',
-        gridSpan: 'bento-wide',
-        year: '2024',
-        coverImage: 'img/wc-bot.jpg',
-        bannerImage: 'img/wc-bot.jpg',
-        featured: true,
-        order: 9,
-        overview: 'Sculptural leather goods packaging, tactile materiality, and 3D architectural campaign assets honoring organic curves and leather artisanry with hidden magnetic pivots and debossed metallic signatures.',
-        description: 'Sculptural leather goods packaging, tactile materiality, and 3D architectural campaign assets.',
-        summary: 'Sculptural leather goods packaging, tactile materiality, and 3D architectural campaign assets.',
-        challenge: 'Crafting unboxing rituals that honor organic curves and leather artisanry.',
-        approach: 'Sculpted organic box architectures with hidden magnetic pivots and debossed metallic signatures.',
-        impact: 'Elevated brand perception into premier tier luxury leather goods.',
-        galleryImages: [
-          'img/wc-bot.jpg',
-          'img/port-elysian.jpg',
-          'assets/services/svc_1.jpg',
-          'assets/services/svc_2.jpg',
-          'assets/services/svc_5.jpg',
-          'img/port-spectra.jpg'
-        ],
-        metrics: [
-          { label: 'D2C Global Conversion', value: '+28%' },
-          { label: 'Organic Viral Reach', value: '5.4M' }
-        ]
-      },
-      {
-        id: 'rimowa',
-        title: 'Rimowa Monolith Archive',
-        client: 'Rimowa Cologne',
-        subheading: 'Monolithic Digital Flagship & 3D WebGL Configurator',
-        category: 'web-design brand-identity',
-        categoryDisplay: 'Monolithic Digital Flagship & 3D WebGL Configurator',
-        tagPill: 'Industrial Luxury',
-        sector: 'Industrial Luxury Travel',
-        deliverables: '3D Luggage Configurator, Global Checkout',
-        timeline: '6 Months · Cologne Flagship',
-        gridSpan: 'bento-compact',
-        year: '2024',
-        coverImage: 'img/f-brand-3.jpg',
-        bannerImage: 'img/f-brand-3.jpg',
-        featured: true,
-        order: 10,
-        overview: 'Monolithic digital flagship, aluminum 3D configurator, and high-velocity global checkout experience reflecting the precision grooves and lifetime durability of aluminum travel cases.',
-        description: 'Monolithic digital flagship, aluminum 3D configurator, and high-velocity global checkout experience.',
-        summary: 'Monolithic digital flagship, aluminum 3D configurator, and high-velocity global checkout experience.',
-        challenge: 'Building a digital flagship reflecting the precision grooves and lifetime durability of aluminum travel cases.',
-        approach: 'Engineered real-time WebGL grooved aluminum reflections with personalized laser-engraving simulations.',
-        impact: 'Highest online customizer engagement rate in brand history.',
-        galleryImages: [
-          'img/f-brand-3.jpg',
-          'img/port-chronos.jpg',
-          'img/port-veloce.jpg',
-          'img/wc-top.jpg',
-          'assets/services/svc_3.jpg',
-          'assets/services/svc_4.jpg'
-        ],
-        metrics: [
-          { label: 'Configurator Engagement', value: '4.8 Min' },
-          { label: 'Mobile Checkout Speed', value: '1.2s' }
+          { label: 'Market Positioning', value: 'Premium Tier' },
+          { label: 'Sales Growth', value: '+220%' }
         ]
       }
     ],
@@ -1031,12 +1335,12 @@
       portfolioHero: {
         eyebrow: 'PORTFOLIO // 1928 STUDIO',
         titleLine1Prefix: 'WORK THAT',
-        pill1ProjectId: 'aurora',
-        pill1Img: 'img/port-chronos.jpg',
+        pill1ProjectId: 'vibee',
+        pill1Img: 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
         titleLine1Suffix: 'MOVES',
         titleLine2Prefix: 'BRANDS',
-        pill2ProjectId: 'aetherion',
-        pill2Img: 'img/port-veloce.jpg',
+        pill2ProjectId: 'infyli',
+        pill2Img: 'img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
         titleLine2Suffix: 'FORWARD.',
         manifesto: 'A curated selection of branding, digital experiences, content, and marketing work created to solve real business challenges and build stronger brands.',
         ctaText: 'EXPLORE OUR WORK'
@@ -1045,7 +1349,7 @@
         headline: 'OUR CORE SERVICES',
         description: 'From the first visual impression to the way your brand grows in the market, we bring strategy, creativity and execution together under one roof.'
       },
-      homeSelectedProjects: ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'],
+      homeSelectedProjects: ['vibee', 'infyli', 'mudra-school', 'awards-plus', 'last-mile-analytics', 'alda'],
       perspectives_curation: {
         heroTickerIds: ['art-monogram', 'art-spatial', 'art-webgl', 'art-fluted', 'art-kinetic', 'art-quiet', 'art-monochrome', 'art-typographic-grid'],
         featuredCarouselIds: ['art-monogram', 'art-spatial', 'art-webgl', 'art-fluted'],
@@ -1236,9 +1540,36 @@
       }
     }
 
-    _loadData() {
+    _computeCodeChecksum() {
       try {
+        const s = JSON.stringify(DEFAULT_CMS_DATA);
+        let h = 5381;
+        for (let i = 0; i < s.length; i++) {
+          h = ((h << 5) + h) + s.charCodeAt(i);
+          h |= 0;
+        }
+        return 'code_v4_' + Math.abs(h);
+      } catch (e) {
+        return 'code_v4_' + Date.now();
+      }
+    }
+
+    _loadData() {
+      const codeChecksum = this._computeCodeChecksum();
+      try {
+        const storedHash = localStorage.getItem(STORAGE_KEY + '_code_hash');
         const stored = localStorage.getItem(STORAGE_KEY);
+
+        // If code has changed on disk, automatically synchronize with new code
+        if (storedHash !== codeChecksum || !stored) {
+          console.log('⚡ [1928 CMS] Code change detected. Live-syncing data store with code from backend...');
+          try {
+            localStorage.setItem(STORAGE_KEY + '_code_hash', codeChecksum);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_CMS_DATA));
+          } catch (e) {}
+          return JSON.parse(JSON.stringify(DEFAULT_CMS_DATA));
+        }
+
         if (stored) {
           const parsed = JSON.parse(stored);
           const blogsList = (Array.isArray(parsed.blogs) && parsed.blogs.length >= 15) ? parsed.blogs : DEFAULT_CMS_DATA.blogs;
@@ -1301,12 +1632,14 @@
     _saveLocalOnly() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+        localStorage.setItem(STORAGE_KEY + '_code_hash', this._computeCodeChecksum());
       } catch (err) {}
     }
 
     _saveData() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+        localStorage.setItem(STORAGE_KEY + '_code_hash', this._computeCodeChecksum());
         this._notify();
       } catch (err) {
         console.error('[1928 CMS] Failed to save data:', err);
@@ -1321,7 +1654,7 @@
           body: JSON.stringify(payload)
         });
       } catch (err) {
-        // Silently handled if PHP server is offline
+        // Silently handled if server is offline
       }
     }
 
@@ -1336,6 +1669,18 @@
       return this.data;
     }
 
+    reloadFromCode() {
+      console.log('⚡ [1928 CMS] Live-reloading data store from backend code...');
+      this.data = JSON.parse(JSON.stringify(DEFAULT_CMS_DATA));
+      this._saveLocalOnly();
+      this._notify();
+      return this.data;
+    }
+
+    syncWithCode() {
+      return this.reloadFromCode();
+    }
+
     async reload() {
       await this._fetchFromAPI();
       this._notify();
@@ -1347,6 +1692,16 @@
         if (e.key === STORAGE_KEY || (e.key && e.key.includes('1928_cms'))) {
           this.data = this._loadData();
           this._notify();
+        }
+      });
+
+      window.addEventListener('1928_code_change', () => {
+        this.reloadFromCode();
+      });
+
+      window.addEventListener('message', (e) => {
+        if (e.data && e.data.type === '1928_CODE_RELOAD') {
+          this.reloadFromCode();
         }
       });
     }
@@ -1544,7 +1899,7 @@
     }
 
     getHomeSelectedProjects() {
-      const defaultSlots = ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'];
+      const defaultSlots = ['vibee', 'infyli', 'mudra-school', 'awards-plus', 'last-mile-analytics', 'alda'];
       const saved = this.data.settings?.homeSelectedProjects;
       if (Array.isArray(saved) && saved.length >= 6) return saved.slice(0, 6);
       return defaultSlots;
@@ -1552,7 +1907,7 @@
 
     saveHomeSelectedProjects(projectIdsArray) {
       if (!this.data.settings) this.data.settings = {};
-      this.data.settings.homeSelectedProjects = Array.isArray(projectIdsArray) ? projectIdsArray.slice(0, 6) : ['juventus', 'bugatti', 'aurora', 'veloce', 'elysian', 'noir'];
+      this.data.settings.homeSelectedProjects = Array.isArray(projectIdsArray) ? projectIdsArray.slice(0, 6) : ['vibee', 'infyli', 'mudra-school', 'awards-plus', 'last-mile-analytics', 'alda'];
       this._saveData();
       return this.data.settings.homeSelectedProjects;
     }
