@@ -3922,7 +3922,7 @@
                 <span style="font-family:var(--font-mono);font-size:9.5px;font-weight:700;color:var(--cr);letter-spacing:0.06em;background:rgba(200,16,46,0.08);padding:2px 6px;border-radius:4px;white-space:nowrap;">CENTER-RIGHT TILT</span>
               </div>
               <div style="display:flex;align-items:center;gap:10px;min-width:0;overflow:hidden;">
-                <img class="curation-preview-img" id="homeSlotThumb_6" src="img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg" alt="Slot 6 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg';" />
+                <img class="curation-preview-img" id="homeSlotThumb_6" src="img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg" alt="Slot 6 Preview" style="width:58px;height:42px;border-radius:6px;object-fit:cover;object-position:left center;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.src='img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg';" />
                 <div style="flex:1;min-width:0;overflow:hidden;">
                   <div id="homeSlotCategory_6" style="font-family:var(--font-mono);font-size:9px;font-weight:700;color:var(--cr);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">HOMEWARE · SPATIAL IDENTITY</div>
                   <div id="homeSlotTitle_6" style="font-family:var(--font-primary);font-size:12.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--ink);">Alda — Precision Stainless Steel Spatial Identity</div>
@@ -7897,20 +7897,23 @@
         'July', 'August', 'September', 'October', 'November', 'December'
       ];
 
-      const selMonth = currentMonth;
-      selectGenericDropdownOption('customDropdown_contactMonth', 'contactStep4Month', String(selMonth), monthNames[selMonth] || 'September');
+      const isLegacyDemo = (s4.defaultMonth === 8 && s4.defaultDay === 29);
+      const isLegacyBooked = Array.isArray(s4.bookedDays) && s4.bookedDays.length === 2 && s4.bookedDays.includes(8) && s4.bookedDays.includes(9);
+
+      const selMonth = (s4.defaultMonth !== undefined && s4.defaultMonth !== null && !isLegacyDemo) ? s4.defaultMonth : currentMonth;
+      selectGenericDropdownOption('customDropdown_contactMonth', 'contactStep4Month', String(selMonth), monthNames[selMonth] || 'October');
 
       const elYear = document.getElementById('contactStep4Year');
-      if (elYear) elYear.value = currentYear;
+      if (elYear) elYear.value = (s4.defaultYear && s4.defaultYear >= currentYear) ? s4.defaultYear : currentYear;
 
       const elDay = document.getElementById('contactStep4Day');
-      if (elDay) elDay.value = currentDay;
+      if (elDay) elDay.value = (s4.defaultDay && !isLegacyDemo) ? s4.defaultDay : currentDay;
 
       const selTz = s4.timezone || 'Asia/Kolkata (IST · GMT+5:30)';
       selectGenericDropdownOption('customDropdown_contactTimezone', 'contactStep4Timezone', selTz, selTz);
 
       const elBooked = document.getElementById('contactStep4BookedDays');
-      if (elBooked) elBooked.value = Array.isArray(s4.bookedDays) ? s4.bookedDays.join(', ') : '8, 9';
+      if (elBooked) elBooked.value = (Array.isArray(s4.bookedDays) && !isLegacyBooked) ? s4.bookedDays.join(', ') : '';
 
       contactSlotsState = Array.isArray(s4.slots) ? [...s4.slots] : ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'];
       renderContactSlotsList();
@@ -8128,7 +8131,7 @@
     }
 
     function collectContactSessionData() {
-      const rawBooked = document.getElementById('contactStep4BookedDays')?.value.trim() || '8, 9';
+      const rawBooked = document.getElementById('contactStep4BookedDays')?.value.trim() || '';
       const bookedDays = rawBooked.split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n));
       const now = new Date();
       const monthVal = parseInt(document.getElementById('contactStep4Month')?.value, 10);

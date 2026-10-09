@@ -81,40 +81,77 @@
   // ═══════════════════════════════════════════════════════════
   function renderClientLogos() {
     if (!window.CMSStore) return;
-    const clientTracks = document.querySelectorAll('.brand-logo-track, .client-marquee-track, #clientLogoGrid, .clients-track, .marquee-track, .marquee-group');
-    if (!clientTracks.length) return;
-
     const clients = window.CMSStore.getClients(true);
     if (!clients.length) return;
 
-    clientTracks.forEach(track => {
-      // Preserve the bespoke 3-row 60-logo marquee inside #brands-driver
-      if (track.closest('#brands-driver')) return;
-
-      // If it's a marquee group inside a track, only render once per group
-      const isMarquee = track.classList.contains('brand-logo-track') || track.classList.contains('client-marquee-track') || track.classList.contains('clients-track') || track.classList.contains('marquee-track');
-      const isGroup = track.classList.contains('marquee-group');
-      const items = (isMarquee && !isGroup) ? [...clients, ...clients] : clients;
-
-      let html = '';
-      items.forEach(c => {
+    // A. 3-Row Infinite Dual-Direction Logo Marquee Stages (Home index.html & About about.html)
+    const marqueeStages = document.querySelectorAll('.brands-marquee-stage');
+    if (marqueeStages.length) {
+      function renderLogoCard(c) {
         let logoContent = '';
         if (c.type === 'svg' && c.svgCode) {
           logoContent = c.svgCode;
         } else if (c.imageUrl) {
-          logoContent = `<img src="${c.imageUrl}" alt="${c.name}" style="max-height:38px;width:auto;object-fit:contain;" />`;
+          logoContent = `<img src="${c.imageUrl}" alt="${c.name || 'Client Logo'}" class="brand-logo-img" loading="lazy" />`;
         } else {
           logoContent = `<span style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;letter-spacing:1px;color:currentColor;">${c.name}</span>`;
         }
-
-        const linkStart = c.websiteUrl && c.websiteUrl !== '#' ? `<a href="${c.websiteUrl}" target="_blank" rel="noopener" class="brand-logo-card" title="${c.name} — ${c.subtitle || ''}">` : `<div class="brand-logo-card" title="${c.name} — ${c.subtitle || ''}">`;
+        const linkStart = c.websiteUrl && c.websiteUrl !== '#' ? `<a href="${c.websiteUrl}" target="_blank" rel="noopener" class="brand-logo-card" title="${c.name}">` : `<div class="brand-logo-card">`;
         const linkEnd = c.websiteUrl && c.websiteUrl !== '#' ? `</a>` : `</div>`;
+        return `${linkStart}${logoContent}${linkEnd}`;
+      }
 
-        html += `${linkStart}${logoContent}${linkEnd}`;
+      function buildGroupHtml(clientSlice) {
+        return clientSlice.map(renderLogoCard).join('');
+      }
+
+      marqueeStages.forEach(stage => {
+        const rows = stage.querySelectorAll('.brand-row-wrap');
+        if (rows.length >= 3) {
+          // Exactly 20 unique logos per row, perfectly synchronized across Home and About
+          const rowSlices = [
+            clients.slice(0, 20),
+            clients.slice(20, 40),
+            clients.slice(40, 60)
+          ];
+
+          rows.forEach((row, rIdx) => {
+            const track = row.querySelector('.marquee-track');
+            if (track && rowSlices[rIdx] && rowSlices[rIdx].length) {
+              const groupContent = buildGroupHtml(rowSlices[rIdx]);
+              track.innerHTML = `
+                <div class="marquee-group">${groupContent}</div>
+                <div class="marquee-group" aria-hidden="true">${groupContent}</div>
+              `;
+            }
+          });
+        }
       });
+    }
 
-      track.innerHTML = html;
-    });
+    // B. Generic client tracks on any other page (excluding .brands-marquee-stage)
+    const otherTracks = document.querySelectorAll('.brand-logo-track, .client-marquee-track, #clientLogoGrid, .clients-track');
+    if (otherTracks.length) {
+      otherTracks.forEach(track => {
+        if (track.closest('.brands-marquee-stage') || track.closest('#brands-driver') || track.closest('#clients-section')) return;
+        const items = [...clients, ...clients];
+        let html = '';
+        items.forEach(c => {
+          let logoContent = '';
+          if (c.type === 'svg' && c.svgCode) {
+            logoContent = c.svgCode;
+          } else if (c.imageUrl) {
+            logoContent = `<img src="${c.imageUrl}" alt="${c.name}" style="max-height:38px;width:auto;object-fit:contain;" />`;
+          } else {
+            logoContent = `<span style="font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;letter-spacing:1px;color:currentColor;">${c.name}</span>`;
+          }
+          const linkStart = c.websiteUrl && c.websiteUrl !== '#' ? `<a href="${c.websiteUrl}" target="_blank" rel="noopener" class="brand-logo-card" title="${c.name}">` : `<div class="brand-logo-card">`;
+          const linkEnd = c.websiteUrl && c.websiteUrl !== '#' ? `</a>` : `</div>`;
+          html += `${linkStart}${logoContent}${linkEnd}`;
+        });
+        track.innerHTML = html;
+      });
+    }
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -443,7 +480,6 @@
 
       function makeWorkCard(p, numStr, subStr) {
         const title = p.title || 'FEATURED WORK';
-        const subtitle = p.subheading || p.categoryDisplay || p.tagPill || p.client || subStr || 'Brand Identity & Digital';
         const img = p.bannerImage || p.coverImage || 'img/port-chronos.jpg';
         return `
           <a href="portfolio.html?project=${p.id || ''}" class="work-duo-card">
@@ -452,17 +488,23 @@
             </div>
             <div class="work-card-content">
               <div class="work-top-meta">
-                <span class="work-num">${numStr}</span>
+                <span class="work-num">
+                  <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                  ${numStr}
+                </span>
               </div>
-              <div class="work-mid-body">
+              <div class="work-bottom-block">
                 <h3 class="work-title">${title}</h3>
-                <div class="work-subtitle">${subtitle}</div>
-              </div>
-              <div class="work-bottom-meta">
-                <div class="work-cta-wrap">
-                  <span>View Case Study</span>
-                  <div class="work-cta-arrow">
-                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="work-bottom-meta">
+                  <div class="work-cta-wrap">
+                    <span>View Case Study</span>
+                    <div class="work-cta-arrow">
+                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -471,8 +513,8 @@
         `;
       }
 
-      if (p1.title) worksSet1.innerHTML = makeWorkCard(p1, '01 / GLOBAL ICON', 'Brand Identity & Vault') + makeWorkCard(p2, '02 / HYPERCRAFT', 'Automotive Platform & 3D');
-      if (p3.title) worksSet2.innerHTML = makeWorkCard(p3, '03 / ATELIER', 'Packaging & 3D Architecture') + makeWorkCard(p4, '04 / MONOLITH', 'Spatial Architecture & Flagship');
+      if (p1.title) worksSet1.innerHTML = makeWorkCard(p1, '01 / GLOBAL ICON') + makeWorkCard(p2, '02 / GLOBAL ICON');
+      if (p3.title) worksSet2.innerHTML = makeWorkCard(p3, '03 / GLOBAL ICON') + makeWorkCard(p4, '04 / GLOBAL ICON');
     }
 
     // C. Project Detail Page Direct Injection
@@ -532,12 +574,14 @@
           if (parts[1]) tag2 = parts[1];
         }
 
+        const objPos = proj.objectPosition || (slotNum === 6 || proj.id === 'alda' || img.includes('-06') ? 'left center' : 'center center');
+
         cardsHtml += `
           <!-- CARD ${slotNum} (SLOT ${slotNum}) -->
           <article class="p-flow-item p-item-${slotNum}">
             <a href="portfolio.html?project=${proj.id}" class="p-card-v p-card-${slotNum}">
               <div class="pcv-media">
-                <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.src='img/port-chronos.jpg';" />
+                <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;object-position:${objPos};transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.src='img/port-chronos.jpg';" />
                 <div class="pcv-badge-top"><span class="pcv-num">${numStr}</span><span class="pcv-client">${clientStr}</span></div>
               </div>
               <div class="pcv-info">
@@ -996,42 +1040,18 @@
       }
     }
 
-    // ── STEP 2: Disciplines ──
+    // ── STEP 2: Capital Allocation ──
     const p2 = document.getElementById('stepPane2');
+    const allocConfig = (brief.step2 && brief.step2.tiers) ? brief.step2 : (brief.step3 || {});
     if (p2) {
       const h2 = p2.querySelector('.pane-headline');
-      if (h2 && brief.step2?.headline) h2.textContent = brief.step2.headline;
+      if (h2 && allocConfig.headline) h2.textContent = allocConfig.headline;
       const c2 = p2.querySelector('.pane-caption');
-      if (c2 && brief.step2?.caption) c2.textContent = brief.step2.caption;
-
-      const discGrid = document.getElementById('discGrid');
-      if (discGrid && Array.isArray(brief.step2?.disciplines) && brief.step2.disciplines.length) {
-        discGrid.innerHTML = brief.step2.disciplines.map(d => `
-          <div class="disc-item-chip${d.defaultSelected ? ' selected' : ''}" data-disc="${d.label}">
-            <span>${d.label}</span>
-            <span class="disc-dot-check">✓</span>
-          </div>
-        `).join('');
-
-        discGrid.querySelectorAll('.disc-item-chip').forEach(chip => {
-          chip.addEventListener('click', () => {
-            chip.classList.toggle('selected');
-          });
-        });
-      }
-    }
-
-    // ── STEP 3: Capital Allocation ──
-    const p3 = document.getElementById('stepPane3');
-    if (p3) {
-      const h3 = p3.querySelector('.pane-headline');
-      if (h3 && brief.step3?.headline) h3.textContent = brief.step3.headline;
-      const c3 = p3.querySelector('.pane-caption');
-      if (c3 && brief.step3?.caption) c3.textContent = brief.step3.caption;
+      if (c2 && allocConfig.caption) c2.textContent = allocConfig.caption;
 
       const tierGrid = document.getElementById('tierGrid');
-      if (tierGrid && Array.isArray(brief.step3?.tiers) && brief.step3.tiers.length) {
-        tierGrid.innerHTML = brief.step3.tiers.map((t, idx) => `
+      if (tierGrid && Array.isArray(allocConfig.tiers) && allocConfig.tiers.length) {
+        tierGrid.innerHTML = allocConfig.tiers.map((t, idx) => `
           <div class="tier-option-box${t.defaultSelected || idx === 1 ? ' active' : ''}" data-tier="${t.amount}">
             <div class="tob-amount">${t.amount}</div>
             <div class="tob-tier-name">${t.name}</div>
@@ -1046,12 +1066,12 @@
         });
       }
 
-      const tlLabel = p3.querySelector('.timeline-label-title');
-      if (tlLabel && brief.step3?.timelineTitle) tlLabel.textContent = brief.step3.timelineTitle;
+      const tlLabel = p2.querySelector('.timeline-label-title');
+      if (tlLabel && allocConfig.timelineTitle) tlLabel.textContent = allocConfig.timelineTitle;
 
       const tlPills = document.getElementById('timelinePills');
-      if (tlPills && Array.isArray(brief.step3?.timelines) && brief.step3.timelines.length) {
-        tlPills.innerHTML = brief.step3.timelines.map((tl, idx) => `
+      if (tlPills && Array.isArray(allocConfig.timelines) && allocConfig.timelines.length) {
+        tlPills.innerHTML = allocConfig.timelines.map((tl, idx) => `
           <button type="button" class="timeline-pill${tl.defaultSelected || idx === 0 ? ' active' : ''}">${tl.label}</button>
         `).join('');
 
@@ -1064,23 +1084,35 @@
       }
     }
 
-    // ── STEP 4: Strategy Session Window (Calendar & Configurable Month) ──
-    const p4 = document.getElementById('stepPane4');
-    if (p4) {
-      const h4 = p4.querySelector('.pane-headline');
-      if (h4 && brief.step4?.headline) h4.textContent = brief.step4.headline;
-      const c4 = p4.querySelector('.pane-caption');
-      if (c4 && brief.step4?.caption) c4.textContent = brief.step4.caption;
+    // ── STEP 3: Strategy Session Window (Calendar & Configurable Month) ──
+    const p3 = document.getElementById('stepPane3') || document.getElementById('stepPane4');
+    const sessionConfig = (brief.step3 && brief.step3.defaultYear !== undefined) ? brief.step3 : (brief.step4 || {});
+    if (p3) {
+      const h3 = p3.querySelector('.pane-headline');
+      if (h3 && sessionConfig.headline) h3.textContent = sessionConfig.headline;
+      const c3 = p3.querySelector('.pane-caption');
+      if (c3 && sessionConfig.caption) c3.textContent = sessionConfig.caption;
 
-      const tzBadge = p4.querySelector('.sbi-tz-badge span:last-child');
-      if (tzBadge && brief.step4?.timezone) tzBadge.textContent = brief.step4.timezone;
+      const tzBadge = p3.querySelector('.sbi-tz-badge span:last-child');
+      if (tzBadge && sessionConfig.timezone) tzBadge.textContent = sessionConfig.timezone;
 
       const now = new Date();
-      const s4 = brief.step4 || {};
-      const targetYear = (s4.defaultYear !== undefined && s4.defaultYear !== null) ? parseInt(s4.defaultYear, 10) : now.getFullYear();
-      const targetMonth = (s4.defaultMonth !== undefined && s4.defaultMonth !== null) ? parseInt(s4.defaultMonth, 10) : now.getMonth();
-      const defaultDay = (s4.defaultDay !== undefined && s4.defaultDay !== null) ? parseInt(s4.defaultDay, 10) : now.getDate();
-      const bookedList = Array.isArray(s4.bookedDays) ? s4.bookedDays.map(d => parseInt(d, 10)) : [8, 9];
+      const s3 = sessionConfig;
+      const isLegacySep29 = (s3.defaultYear === 2026 && s3.defaultMonth === 8 && s3.defaultDay === 29);
+      const isPastMonth = (s3.defaultYear !== undefined && s3.defaultMonth !== undefined && (s3.defaultYear < now.getFullYear() || (s3.defaultYear === now.getFullYear() && s3.defaultMonth < now.getMonth())));
+
+      const targetYear = (isLegacySep29 || isPastMonth || s3.defaultYear === undefined || s3.defaultYear === null) ? now.getFullYear() : parseInt(s3.defaultYear, 10);
+      const targetMonth = (isLegacySep29 || isPastMonth || s3.defaultMonth === undefined || s3.defaultMonth === null) ? now.getMonth() : parseInt(s3.defaultMonth, 10);
+
+      // Booked list: ONLY real bookings configured via admin panel/backend; NEVER fake hardcoded [8, 9]
+      let bookedList = [];
+      if (Array.isArray(s3.bookedDays)) {
+        const raw = s3.bookedDays.map(d => parseInt(d, 10)).filter(d => !isNaN(d));
+        const isLegacyDemo = raw.length === 2 && raw.includes(8) && raw.includes(9);
+        if (!isLegacyDemo) {
+          bookedList = raw;
+        }
+      }
 
       const monthNames = [
         'January', 'February', 'March', 'April', 'May', 'June',
@@ -1091,7 +1123,7 @@
 
       const monthTitleEl = document.getElementById('stepCalMonthTitle');
       if (monthTitleEl) {
-        monthTitleEl.textContent = `${monthNames[targetMonth] || 'September'} ${targetYear}`;
+        monthTitleEl.textContent = `${monthNames[targetMonth] || 'October'} ${targetYear}`;
       }
 
       const daysGrid = document.getElementById('stepSbDaysGrid');
@@ -1099,13 +1131,40 @@
       const slotsCount = document.getElementById('stepSlotsCount');
       const timesGrid = document.getElementById('stepSbTimesGrid');
 
-      const customSlots = Array.isArray(s4.slots) && s4.slots.length ? s4.slots : [
+      const customSlots = Array.isArray(s3.slots) && s3.slots.length ? s3.slots : [
         '11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'
       ];
 
-      let selectedDay = defaultDay;
-      let selectedWeekday = 'Monday';
-      let selectedTime = customSlots[0] || '02:30 PM IST';
+      const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
+      const isCurrentMonthYear = (targetYear === now.getFullYear() && targetMonth === now.getMonth());
+
+      // Base default day: live today (now.getDate() = 9) or s3.defaultDay
+      let baseDay = isCurrentMonthYear ? now.getDate() : (parseInt(s3.defaultDay, 10) || 1);
+      if (isLegacySep29 || isPastMonth) {
+        baseDay = now.getDate();
+      }
+      if (baseDay > daysInMonth) baseDay = 1;
+
+      // Selection logic: Start at baseDay (9th).
+      // If that date is booked through backend/admin OR is a Sunday, search forward for next available open date!
+      let selectedDay = baseDay;
+      while (selectedDay <= daysInMonth) {
+        const testDate = new Date(targetYear, targetMonth, selectedDay);
+        const isSun = testDate.getDay() === 0;
+        const isBkd = bookedList.includes(selectedDay);
+        const isPastDay = isCurrentMonthYear && (selectedDay < now.getDate());
+        if (!isSun && !isBkd && !isPastDay) {
+          break; // Found next available open date!
+        }
+        selectedDay++;
+      }
+      if (selectedDay > daysInMonth) {
+        selectedDay = baseDay;
+      }
+
+      const selDayObj = new Date(targetYear, targetMonth, selectedDay);
+      let selectedWeekday = weekdaysMap[selDayObj.getDay()];
+      let selectedTime = customSlots[0] || '11:00 AM IST';
 
       function updateSummary() {
         if (summaryText) {
@@ -1161,18 +1220,6 @@
           daysGrid.appendChild(cell);
         }
 
-        // Days in target month
-        const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
-        const isCurrentMonthYear = (targetYear === now.getFullYear() && targetMonth === now.getMonth());
-        if (isCurrentMonthYear && selectedDay < now.getDate()) {
-          selectedDay = now.getDate();
-        } else if (selectedDay > daysInMonth) {
-          selectedDay = isCurrentMonthYear ? now.getDate() : 1;
-        }
-
-        const selDayObj = new Date(targetYear, targetMonth, selectedDay);
-        selectedWeekday = weekdaysMap[selDayObj.getDay()];
-
         for (let day = 1; day <= daysInMonth; day++) {
           const dObj = new Date(targetYear, targetMonth, day);
           const dow = dObj.getDay();
@@ -1227,108 +1274,60 @@
         renderSlots(selectedDay);
         updateSummary();
       }
-
-      // Consultation Focus Topics
-      const focusLabel = p4.querySelector('.sbi-focus-select-wrap label');
-      if (focusLabel && s4.focusLabel) focusLabel.textContent = s4.focusLabel;
-
-      const topicDropdown = document.getElementById('stepSelectTopicDropdown');
-      const topicLabel = document.getElementById('stepSelectTopicLabel');
-      const hiddenTopic = document.getElementById('stepSbTopic');
-      const topicList = Array.isArray(s4.focusTopics) && s4.focusTopics.length ? s4.focusTopics : [
-        'Logo Design & Visual Identity',
-        'Brand Identity Development',
-        'Website Design & Development',
-        'Social Media & Digital Marketing',
-        'Content Creation & Influencer Marketing',
-        'Full 360° Studio Creative Partnership'
-      ];
-
-      if (topicDropdown) {
-        topicDropdown.innerHTML = topicList.map((top, idx) => `
-          <div class="luxury-select-opt${idx === 0 ? ' active' : ''}" data-value="${top}">
-            <span class="lso-text">${top}</span>
-            <span class="lso-check">✓</span>
-          </div>
-        `).join('');
-
-        if (topicLabel) topicLabel.textContent = topicList[0];
-        if (hiddenTopic) hiddenTopic.value = topicList[0];
-
-        topicDropdown.querySelectorAll('.luxury-select-opt').forEach(opt => {
-          opt.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const val = opt.getAttribute('data-value');
-            if (hiddenTopic) hiddenTopic.value = val;
-            if (topicLabel) topicLabel.textContent = val;
-
-            topicDropdown.querySelectorAll('.luxury-select-opt').forEach(o => o.classList.remove('active'));
-            opt.classList.add('active');
-
-            const trigger = document.getElementById('stepSelectTopicTrigger');
-            if (trigger) {
-              trigger.classList.remove('open');
-              trigger.setAttribute('aria-expanded', 'false');
-            }
-            topicDropdown.classList.remove('open');
-          });
-        });
-      }
     }
 
-    // ── STEP 5: Credentials & Success Overlay ──
-    const p5 = document.getElementById('stepPane5');
-    if (p5) {
-      const h5 = p5.querySelector('.pane-headline');
-      if (h5 && brief.step5?.headline) h5.textContent = brief.step5.headline;
-      const c5 = p5.querySelector('.pane-caption');
-      if (c5 && brief.step5?.caption) c5.textContent = brief.step5.caption;
+    // ── STEP 4: Credentials & Success Overlay ──
+    const p4 = document.getElementById('stepPane4') || document.getElementById('stepPane5');
+    const credsConfig = (brief.step4 && (brief.step4.nameLabel || brief.step4.namePlaceholder)) ? brief.step4 : (brief.step5 || {});
+    if (p4) {
+      const h4 = p4.querySelector('.pane-headline');
+      if (h4 && credsConfig.headline) h4.textContent = credsConfig.headline;
+      const c4 = p4.querySelector('.pane-caption');
+      if (c4 && credsConfig.caption) c4.textContent = credsConfig.caption;
 
-      const s5 = brief.step5 || {};
-      const lblName = p5.querySelector('#grpName label');
-      if (lblName && s5.nameLabel) lblName.textContent = s5.nameLabel;
+      const lblName = p4.querySelector('#grpName label');
+      if (lblName && credsConfig.nameLabel) lblName.textContent = credsConfig.nameLabel;
       const inName = document.getElementById('fName');
-      if (inName && s5.namePlaceholder) inName.placeholder = s5.namePlaceholder;
+      if (inName && credsConfig.namePlaceholder) inName.placeholder = credsConfig.namePlaceholder;
 
-      const lblEmail = p5.querySelector('#grpEmail label');
-      if (lblEmail && s5.emailLabel) lblEmail.textContent = s5.emailLabel;
+      const lblEmail = p4.querySelector('#grpEmail label');
+      if (lblEmail && credsConfig.emailLabel) lblEmail.textContent = credsConfig.emailLabel;
       const inEmail = document.getElementById('fEmail');
-      if (inEmail && s5.emailPlaceholder) inEmail.placeholder = s5.emailPlaceholder;
+      if (inEmail && credsConfig.emailPlaceholder) inEmail.placeholder = credsConfig.emailPlaceholder;
 
-      const lblOrg = p5.querySelector('#grpOrg label');
-      if (lblOrg && s5.orgLabel) lblOrg.textContent = s5.orgLabel;
+      const lblOrg = p4.querySelector('#grpOrg label');
+      if (lblOrg && credsConfig.orgLabel) lblOrg.textContent = credsConfig.orgLabel;
       const inOrg = document.getElementById('fOrg');
-      if (inOrg && s5.orgPlaceholder) inOrg.placeholder = s5.orgPlaceholder;
+      if (inOrg && credsConfig.orgPlaceholder) inOrg.placeholder = credsConfig.orgPlaceholder;
 
-      const lblPhone = p5.querySelector('#grpPhone label');
-      if (lblPhone && s5.phoneLabel) lblPhone.textContent = s5.phoneLabel;
+      const lblPhone = p4.querySelector('#grpPhone label');
+      if (lblPhone && credsConfig.phoneLabel) lblPhone.textContent = credsConfig.phoneLabel;
       const inPhone = document.getElementById('fPhone');
-      if (inPhone && s5.phonePlaceholder) inPhone.placeholder = s5.phonePlaceholder;
+      if (inPhone && credsConfig.phonePlaceholder) inPhone.placeholder = credsConfig.phonePlaceholder;
 
-      const lblVision = p5.querySelector('#grpVision label');
-      if (lblVision && s5.visionLabel) lblVision.textContent = s5.visionLabel;
+      const lblVision = p4.querySelector('#grpVision label');
+      if (lblVision && credsConfig.visionLabel) lblVision.textContent = credsConfig.visionLabel;
       const inVision = document.getElementById('fVision');
-      if (inVision && s5.visionPlaceholder) inVision.placeholder = s5.visionPlaceholder;
+      if (inVision && credsConfig.visionPlaceholder) inVision.placeholder = credsConfig.visionPlaceholder;
 
       const ndaLine = document.getElementById('ndaCheck');
-      if (ndaLine && s5.ndaText) {
+      if (ndaLine && credsConfig.ndaText) {
         const textDiv = ndaLine.querySelector('div:last-child');
-        if (textDiv) textDiv.innerHTML = s5.ndaText;
+        if (textDiv) textDiv.innerHTML = credsConfig.ndaText;
       }
     }
 
     // Success Overlay
-    const s5 = brief.step5 || {};
     const successTitle = document.querySelector('#monolithSuccessOverlay .mso-title');
-    if (successTitle && s5.successTitle) successTitle.textContent = s5.successTitle;
+    if (successTitle && credsConfig.successTitle) successTitle.textContent = credsConfig.successTitle;
 
     const successDesc = document.querySelector('#monolithSuccessOverlay .mso-desc');
-    if (successDesc && s5.successDesc) successDesc.textContent = s5.successDesc;
+    if (successDesc && credsConfig.successDesc) successDesc.textContent = credsConfig.successDesc;
 
     const btnReset = document.getElementById('btnResetBrief');
-    if (btnReset && s5.resetBtnText) {
+    if (btnReset && credsConfig.resetBtnText) {
       const spanTxt = btnReset.querySelector('span:first-child');
-      if (spanTxt) spanTxt.textContent = s5.resetBtnText;
+      if (spanTxt) spanTxt.textContent = credsConfig.resetBtnText;
     }
   }
 

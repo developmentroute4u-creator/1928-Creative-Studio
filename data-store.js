@@ -253,8 +253,8 @@
       },
       {
         id: 'client-10',
-        name: 'Client Partner 10',
-        subtitle: 'Brand & Spatial Partner',
+        name: 'Vibee',
+        subtitle: 'Youth Culture & Apparel Identity',
         websiteUrl: '#',
         type: 'image',
         imageUrl: 'img/Client Logos-10.jpg',
@@ -753,8 +753,8 @@
       },
       {
         id: 'client-60',
-        name: 'Client Partner 60',
-        subtitle: 'Brand & Spatial Partner',
+        name: 'Vibee',
+        subtitle: 'Youth Culture & Apparel Identity',
         websiteUrl: '#',
         type: 'image',
         imageUrl: 'img/Client Logos-60.jpg',
@@ -935,6 +935,7 @@
         year: '2025',
         coverImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg',
         bannerImage: 'img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg',
+        objectPosition: 'left center',
         featured: true,
         order: 6,
         overview: 'Alda crafts precision stainless steel products that elevate everyday living spaces. 1928 Creative Studio developed a spatial identity that mirrors the brand\'s industrial precision — clean, durable, and quietly beautiful.',
@@ -1408,24 +1409,9 @@
         ]
       },
       step2: {
-        railWord: "Disciplines",
-        headline: "Specialized Disciplines",
-        caption: "Choose all deliverables and capabilities required for this engagement.",
-        disciplines: [
-          { id: "disc-1", label: "Logo & Symbol Design", defaultSelected: true },
-          { id: "disc-2", label: "Brand Guidelines & Systems", defaultSelected: true },
-          { id: "disc-3", label: "UI/UX & Web Design", defaultSelected: false },
-          { id: "disc-4", label: "WordPress & E-Commerce", defaultSelected: false },
-          { id: "disc-5", label: "Social Media Management", defaultSelected: false },
-          { id: "disc-6", label: "Meta Ads & Performance", defaultSelected: false },
-          { id: "disc-7", label: "Reels & Video Production", defaultSelected: false },
-          { id: "disc-8", label: "Influencer Collaborations", defaultSelected: false }
-        ]
-      },
-      step3: {
         railWord: "Allocation",
         headline: "Capital Allocation (INR ₹)",
-        caption: "Select your target budget tier and optional consultation window.",
+        caption: "Select your target budget tier and target engagement timeline.",
         tiers: [
           { id: "tier-1", amount: "< ₹15 Lakhs", name: "Targeted Sprint", defaultSelected: false },
           { id: "tier-2", amount: "₹15L – ₹30 Lakhs", name: "Core Evolution", defaultSelected: true },
@@ -1440,27 +1426,18 @@
           { id: "tl-4", label: "Flexible / Exploring", defaultSelected: false }
         ]
       },
-      step4: {
+      step3: {
         railWord: "Session",
         headline: "Strategy Session Window",
         caption: "Select your preferred 30-minute consultation window with our design leadership.",
         defaultYear: 2026,
-        defaultMonth: 8, // 0 = Jan, 8 = Sep
-        defaultDay: 29,
+        defaultMonth: 9, // 0 = Jan, 9 = Oct
+        defaultDay: 9,
         timezone: "Asia/Kolkata (IST · GMT+5:30)",
         slots: ["11:00 AM IST", "02:30 PM IST", "04:30 PM IST", "06:00 PM IST", "08:00 PM IST"],
-        bookedDays: [8, 9],
-        focusLabel: "Consultation Focus Area",
-        focusTopics: [
-          "Logo Design & Visual Identity",
-          "Brand Identity Development",
-          "Website Design & Development",
-          "Social Media & Digital Marketing",
-          "Content Creation & Influencer Marketing",
-          "Full 360° Studio Creative Partnership"
-        ]
+        bookedDays: []
       },
-      step5: {
+      step4: {
         railWord: "Credentials",
         headline: "Credentials & Brief",
         caption: "Your particulars and project brief.",
@@ -1476,8 +1453,8 @@
         visionPlaceholder: "Describe the strategic objectives, core challenges, and architectural scale...",
         ndaText: "Execute Bilateral Non-Disclosure Agreement (NDA) prior to review.",
         submitBtnText: "Submit Project Brief",
-        successTitle: "BRIEF SUBMITTED.",
-        successDesc: "Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.",
+        successTitle: "Brief Submitted.",
+        successDesc: "Thank you. Your parameters have been received — our partners will review your scope and follow up within 24 hours.",
         resetBtnText: "Submit Another Brief"
       }
     }
@@ -2003,6 +1980,17 @@
     getContactBrief() {
       if (!this.data.contactBrief) {
         this.data.contactBrief = JSON.parse(JSON.stringify(DEFAULT_CMS_DATA.contactBrief));
+      }
+      const s3 = this.data.contactBrief.step3 || this.data.contactBrief.step4;
+      if (s3) {
+        if (s3.defaultMonth === 8 && s3.defaultDay === 29) {
+          s3.defaultMonth = 9;
+          s3.defaultDay = 9;
+          s3.defaultYear = 2026;
+        }
+        if (Array.isArray(s3.bookedDays) && s3.bookedDays.length === 2 && s3.bookedDays.includes(8) && s3.bookedDays.includes(9)) {
+          s3.bookedDays = [];
+        }
       }
       return this.data.contactBrief;
     }

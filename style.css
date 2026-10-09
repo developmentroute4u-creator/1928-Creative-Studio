@@ -1083,40 +1083,16 @@
     }
 
     .wall-card .wc-inner::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.65) 100%);
-      pointer-events: none;
-      z-index: 1;
-      border-radius: inherit;
+      display: none;
     }
 
     .wall-card:hover .wc-inner {
       filter: grayscale(0%);
     }
 
-    .wall-card .wc-num {
-      font-family: 'Space Mono', monospace;
-      font-size: .62rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      letter-spacing: .08em;
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
-    }
-
+    .wall-card .wc-num,
     .wall-card .wc-label {
-      font-family: var(--font-primary);
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: #FFFFFF;
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+      display: none !important;
     }
 
     #wc-back1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-01.jpg'); }
@@ -1454,6 +1430,11 @@
       object-fit: cover;
       display: block;
       transition: transform .7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .p-card-6 .pcv-media img,
+    img[src*="Portfolio Showcase)-06"] {
+      object-position: left center !important;
     }
 
     .p-card-v:hover .pcv-media img {
@@ -2127,6 +2108,26 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .svc-s3-art-frame.is-white-bg {
+      background: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="dark"] .svc-s3-art-frame.is-white-bg {
+      background: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .svc-art-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+      pointer-events: none;
     }
 
     .svc-art-orbit {

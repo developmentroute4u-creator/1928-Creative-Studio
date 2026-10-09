@@ -1400,7 +1400,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── Full Monolithic Card Success Overlay (Covering Complete Card + Left Rail) ── */
+    /* ── Full Monolithic Card Success Overlay ── */
     .monolith-success-overlay {
       position: absolute;
       inset: 0;
@@ -1408,6 +1408,8 @@
       height: 100%;
       border-radius: 26px;
       overflow: hidden;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
       z-index: 50;
       display: flex;
       align-items: center;
@@ -1416,7 +1418,10 @@
       opacity: 0;
       visibility: hidden;
       transition: visibility 0.4s ease, opacity 0.35s ease;
+      box-sizing: border-box;
     }
+
+    .monolith-success-overlay::-webkit-scrollbar { display: none; }
 
     .monolith-success-overlay.active {
       opacity: 1;
@@ -1424,37 +1429,33 @@
       pointer-events: auto;
     }
 
-    /* Softly Expanding Crimson Morph Surface */
+    /* Expanding crimson surface */
     .mso-expand-bg {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at center, #c8102e 0%, #a00b22 55%, #7a0416 100%);
-      clip-path: circle(0% at 85% 90%);
-      transition: clip-path 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+      background: radial-gradient(ellipse at 60% 40%, #8f0a1e 0%, #5e0410 55%, #3c000a 100%);
+      clip-path: circle(0% at 85% 92%);
+      transition: clip-path 0.72s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 1;
     }
 
     .monolith-success-overlay.expanded .mso-expand-bg {
-      clip-path: circle(160% at 85% 90%);
+      clip-path: circle(160% at 85% 92%);
     }
 
     .mso-ambient-glow {
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.16), transparent 70%);
+      background: radial-gradient(circle at 50% 25%, rgba(255,255,255,0.07), transparent 60%);
       opacity: 0;
       z-index: 2;
-      transition: opacity 0.6s ease 0.35s;
+      transition: opacity 0.5s ease 0.4s;
       pointer-events: none;
     }
 
-    .monolith-success-overlay.expanded .mso-ambient-glow {
-      opacity: 1;
-    }
+    .monolith-success-overlay.expanded .mso-ambient-glow { opacity: 1; }
 
-    /* Centered Success Content with Staggered Fade Entrance */
+    /* ── Centered content: strictly sized to never overflow ── */
     .mso-content-box {
       position: relative;
       z-index: 3;
@@ -1463,98 +1464,171 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: clamp(28px, 4vh, 48px) clamp(24px, 3vw, 44px);
-      gap: 18px;
-      max-width: 580px;
-      margin: auto;
+      width: 100%;
+      max-width: 520px;
+      padding: 28px 32px;
+      box-sizing: border-box;
+      gap: 0;
       opacity: 0;
-      transform: translateY(18px) scale(0.96);
-      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+      transform: translateY(10px);
+      transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1) 0.32s, transform 0.4s cubic-bezier(0.16,1,0.3,1) 0.32s;
     }
 
     .monolith-success-overlay.expanded .mso-content-box {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: translateY(0);
     }
 
+    /* Check circle */
     .mso-badge-circle {
-      width: 64px;
-      height: 64px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.18);
-      border: 1.5px solid rgba(255, 255, 255, 0.45);
-      color: #ffffff;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 36px rgba(255, 255, 255, 0.32), 0 10px 26px rgba(0, 0, 0, 0.28);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      animation: pulseCheckGlow 3.2s infinite ease-in-out;
+      margin-bottom: 14px;
+      flex-shrink: 0;
     }
 
-    @keyframes pulseCheckGlow {
-      0%, 100% { box-shadow: 0 0 28px rgba(255, 255, 255, 0.3), 0 10px 26px rgba(0, 0, 0, 0.28); transform: scale(1); }
-      50% { box-shadow: 0 0 44px rgba(255, 255, 255, 0.55), 0 12px 30px rgba(0, 0, 0, 0.35); transform: scale(1.03); }
+    /* Title */
+    .mso-title {
+      font-family: var(--font-primary);
+      font-size: clamp(22px, 2.4vw, 28px);
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #fff;
+      line-height: 1.1;
+      margin: 0 0 6px;
     }
 
-    .mso-header-block {
+    /* Subtitle line */
+    .mso-subtitle {
+      font-family: var(--font-primary);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      color: rgba(255,255,255,0.55);
+      margin: 0 0 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Thin divider */
+    .mso-divider {
+      width: 100%;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+      margin-bottom: 20px;
+    }
+
+    /* Summary rows — clean, left-aligned, tightly spaced */
+    .mso-summary-rows {
+      width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      gap: 12px;
+      text-align: left;
+      margin-bottom: 22px;
+    }
+
+    .mso-row {
+      display: flex;
+      align-items: baseline;
       gap: 10px;
     }
 
-    .mso-title {
+    .mso-row-label {
       font-family: var(--font-primary);
-      font-size: clamp(26px, 3.2vw, 38px);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      text-transform: uppercase;
-      color: #ffffff;
-      line-height: 1.1;
-      text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-      margin: 0;
-    }
-
-    .mso-desc {
-      font-size: clamp(0.9rem, 1.15vw, 1rem);
-      line-height: 1.65;
-      color: rgba(255, 255, 255, 0.94);
-      font-weight: 400;
-      margin: 0;
-      max-width: 480px;
-      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .btn-reset-brief-luxury {
-      height: 44px;
-      padding: 0 28px;
-      border-radius: 999px;
-      border: 1.5px solid rgba(255, 255, 255, 0.42);
-      background: rgba(255, 255, 255, 0.14);
-      color: #ffffff;
-      font-family: var(--font-primary);
-      font-size: 0.84rem;
+      font-size: 0.6rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      white-space: nowrap;
+      min-width: 92px;
+      flex-shrink: 0;
+    }
+
+    .mso-row-val {
+      font-family: var(--font-primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.92);
+      line-height: 1.3;
+    }
+
+    .mso-row-val .mso-sub {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      margin-top: 1px;
+    }
+
+    /* NDA / contact inline row */
+    .mso-meta-row {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .mso-meta-contact {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .mso-meta-contact .mso-dot { opacity: 0.35; }
+
+    .mso-nda-tag {
+      font-family: var(--font-primary);
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      padding: 3px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      white-space: nowrap;
+    }
+
+    /* Reset button */
+    .btn-reset-brief-luxury {
+      height: 34px;
+      padding: 0 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.8);
+      font-family: var(--font-primary);
+      font-size: 0.74rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      transition: all 0.25s var(--sp);
-      margin-top: 6px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+      justify-content: center;
+      transition: all 0.2s ease;
     }
 
     .btn-reset-brief-luxury:hover {
-      background: #ffffff;
-      color: #b30c23;
-      border-color: #ffffff;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      transform: none;
+      background: rgba(255,255,255,0.16);
+      border-color: rgba(255,255,255,0.45);
+      color: #fff;
     }
 
     /* Loading micro-spinner in submit button */
@@ -3010,21 +3084,16 @@
 
           <button type="button" class="rail-step-tab" data-step="2">
             <span class="rail-step-num">02</span>
-            <span class="rail-step-word">Disciplines</span>
+            <span class="rail-step-word">Allocation</span>
           </button>
 
           <button type="button" class="rail-step-tab" data-step="3">
             <span class="rail-step-num">03</span>
-            <span class="rail-step-word">Allocation</span>
+            <span class="rail-step-word">Session</span>
           </button>
 
           <button type="button" class="rail-step-tab" data-step="4">
             <span class="rail-step-num">04</span>
-            <span class="rail-step-word">Session</span>
-          </button>
-
-          <button type="button" class="rail-step-tab" data-step="5">
-            <span class="rail-step-num">05</span>
             <span class="rail-step-word">Credentials</span>
           </button>
         </nav>
@@ -3138,49 +3207,8 @@
               </div>
             </div>
 
-            <!-- ══ STEP 2: Creative Disciplines ══ -->
+            <!-- ══ STEP 2: Capital Allocation (INR Only) ══ -->
             <div class="step-pane-section" id="stepPane2">
-              <h3 class="pane-headline">Specialized Disciplines</h3>
-              <p class="pane-caption">Choose all deliverables and capabilities required for this engagement.</p>
-
-              <div class="disciplines-chips-grid" id="discGrid">
-                <div class="disc-item-chip selected" data-disc="Logo Concept &amp; Wordmark">
-                  <span>Logo &amp; Symbol Design</span>
-                  <span class="disc-dot-check">✓</span>
-                </div>
-                <div class="disc-item-chip selected" data-disc="Brand Identity &amp; Guidelines">
-                  <span>Brand Guidelines &amp; Systems</span>
-                  <span class="disc-dot-check">✓</span>
-                </div>
-                <div class="disc-item-chip" data-disc="UI/UX &amp; Website Design">
-                  <span>UI/UX &amp; Web Design</span>
-                  <span class="disc-dot-check">✓</span>
-                </div>
-                <div class="disc-item-chip" data-disc="WordPress &amp; E-Commerce Development">
-                  <span>WordPress &amp; E-Commerce</span>
-                  <span class="disc-dot-check">✓</span>
-                </div>
-                <div class="disc-item-chip" data-disc="Social Media Management &amp; Content">
-                  <span>Social Media Management</span>
-                  <span class="disc-dot-check">✓</span>
-                </div>
-                <div class="disc-item-chip" data-disc="Meta Ads &amp; Digital Campaigns">
-                  <span>Meta Ads &amp; Performance</span>
-                  <span class="disc-dot-check">✓</span>
-                </div>
-                <div class="disc-item-chip" data-disc="Reels &amp; Video Production">
-                  <span>Reels &amp; Video Production</span>
-                  <span class="disc-dot-check">✓</span>
-                </div>
-                <div class="disc-item-chip" data-disc="Creator &amp; Influencer Marketing">
-                  <span>Influencer Collaborations</span>
-                  <span class="disc-dot-check">✓</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- ══ STEP 3: Capital Allocation (INR Only) ══ -->
-            <div class="step-pane-section" id="stepPane3">
               <h3 class="pane-headline">Capital Allocation (INR ₹)</h3>
               <p class="pane-caption">Select your target budget tier and optional consultation window.</p>
 
@@ -3214,8 +3242,8 @@
               </div>
             </div>
 
-            <!-- ══ STEP 4: Mandatory Strategy Session Booking ══ -->
-            <div class="step-pane-section" id="stepPane4">
+            <!-- ══ STEP 3: Mandatory Strategy Session Booking ══ -->
+            <div class="step-pane-section" id="stepPane3">
               <h3 class="pane-headline">Strategy Session Window</h3>
               <p class="pane-caption">Select your preferred 30-minute consultation window with our design leadership.</p>
 
@@ -3244,7 +3272,7 @@
                   </div>
                 </div>
 
-                <!-- Right: Time Slots & Focus Block -->
+                <!-- Right: Time Slots Block -->
                 <div class="sbi-slots-block">
                   <div class="sbi-slots-header">
                     <span class="sbi-slots-title">Available 30-Min Windows</span>
@@ -3254,51 +3282,12 @@
                   <div class="sbi-times-grid" id="stepSbTimesGrid">
                     <!-- Dynamic interactive time chips -->
                   </div>
-
-                  <div class="sbi-focus-select-wrap">
-                    <label class="in-label" style="margin-bottom: 6px;">Consultation Focus Area</label>
-                    <div class="luxury-custom-select" id="stepLuxurySelectTopic">
-                      <input type="hidden" id="stepSbTopic" value="Logo Design & Visual Identity" />
-                      <button type="button" class="luxury-select-trigger" id="stepSelectTopicTrigger" aria-haspopup="listbox" aria-expanded="false">
-                        <span class="lst-label" id="stepSelectTopicLabel">Logo Design &amp; Visual Identity</span>
-                        <svg class="lst-chevron" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                          <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
-                      </button>
-                      <div class="luxury-select-dropdown" id="stepSelectTopicDropdown" role="listbox">
-                        <div class="luxury-select-opt active" data-value="Logo Design & Visual Identity">
-                          <span class="lso-text">Logo Design &amp; Visual Identity</span>
-                          <span class="lso-check">✓</span>
-                        </div>
-                        <div class="luxury-select-opt" data-value="Brand Identity Development">
-                          <span class="lso-text">Brand Identity Development</span>
-                          <span class="lso-check">✓</span>
-                        </div>
-                        <div class="luxury-select-opt" data-value="Website Design & Development">
-                          <span class="lso-text">Website Design &amp; Development</span>
-                          <span class="lso-check">✓</span>
-                        </div>
-                        <div class="luxury-select-opt" data-value="Social Media & Digital Marketing">
-                          <span class="lso-text">Social Media &amp; Digital Marketing</span>
-                          <span class="lso-check">✓</span>
-                        </div>
-                        <div class="luxury-select-opt" data-value="Content Creation & Influencer Marketing">
-                          <span class="lso-text">Content Creation &amp; Influencer Marketing</span>
-                          <span class="lso-check">✓</span>
-                        </div>
-                        <div class="luxury-select-opt" data-value="Full 360° Studio Creative Partnership">
-                          <span class="lso-text">Full 360° Studio Creative Partnership</span>
-                          <span class="lso-check">✓</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
 
-            <!-- ══ STEP 5: Credentials & Brief (Final Step) ══ -->
-            <div class="step-pane-section" id="stepPane5">
+            <!-- ══ STEP 4: Credentials & Brief (Final Step) ══ -->
+            <div class="step-pane-section" id="stepPane4">
               <h3 class="pane-headline">Credentials &amp; Brief</h3>
               <p class="pane-caption">Your particulars and project brief.</p>
 
@@ -3421,18 +3410,56 @@
 
           <!-- Centered Success Content -->
           <div class="mso-content-box" id="msoContentBox">
+            <!-- Check icon -->
             <div class="mso-badge-circle">
-              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
               </svg>
             </div>
-            <div class="mso-header-block">
-              <h3 class="mso-title">BRIEF SUBMITTED.</h3>
-              <p class="mso-desc">Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.</p>
+
+            <!-- Title -->
+            <h3 class="mso-title">Brief Submitted.</h3>
+            <p class="mso-subtitle">Received · Under Review</p>
+
+            <!-- Divider -->
+            <div class="mso-divider"></div>
+
+            <!-- Clean summary rows -->
+            <div class="mso-summary-rows">
+              <div class="mso-row">
+                <span class="mso-row-label">Scope</span>
+                <span class="mso-row-val" id="msoSumScope">Logo Design</span>
+              </div>
+              <div class="mso-row">
+                <span class="mso-row-label">Allocation</span>
+                <span class="mso-row-val" id="msoSumAlloc">₹15L – ₹30 Lakhs<span class="mso-sub" id="msoSumTimeline"></span></span>
+              </div>
+              <div class="mso-row">
+                <span class="mso-row-label">Session</span>
+                <span class="mso-row-val" id="msoSumSession">Fri, Oct 9, 2026 · 11:00 AM IST</span>
+              </div>
+              <div class="mso-row">
+                <span class="mso-row-label">Client</span>
+                <span class="mso-row-val" id="msoSumClient">—<span class="mso-sub" id="msoSumBrand"></span></span>
+              </div>
             </div>
+
+            <!-- Contact + NDA row -->
+            <div class="mso-meta-row">
+              <div class="mso-meta-contact">
+                <span id="msoSumEmail">—</span>
+                <span class="mso-dot">·</span>
+                <span id="msoSumPhone">—</span>
+              </div>
+              <div class="mso-nda-tag" id="msoSumNda">NDA Executed</div>
+            </div>
+
+            <!-- Hidden node retained for JS compatibility -->
+            <div id="msoSumVisionWrap" style="display:none !important;"><span id="msoSumVision"></span></div>
+
+            <!-- Reset action -->
             <button type="button" class="btn-reset-brief-luxury" id="btnResetBrief">
               <span>Submit Another Brief</span>
-              <span class="arr">↺</span>
             </button>
           </div>
         </div>
@@ -3742,7 +3769,7 @@
 
       // ── Stepper Logic with Expanding Word Animation ──
       let currentStep = 1;
-      const totalSteps = 5;
+      const totalSteps = 4;
 
       const btnPrev = document.getElementById('btnPrev');
       const btnNext = document.getElementById('btnNext');
@@ -3783,10 +3810,7 @@
           { id: 'fEmail', grpId: 'grpEmail' },
           { id: 'fOrg', grpId: 'grpOrg' },
           { id: 'fPhone', grpId: 'grpPhone' },
-          { id: 'fVision', grpId: 'grpVision' },
-          { id: 'sbName', grpId: 'grpSbName' },
-          { id: 'sbEmail', grpId: 'grpSbEmail' },
-          { id: 'sbBrand', grpId: 'grpSbBrand' }
+          { id: 'fVision', grpId: 'grpVision' }
         ];
 
         fields.forEach(f => {
@@ -3909,6 +3933,63 @@
               return;
             }
 
+            // Populate all 4 steps' selections into executive submission confirmation card
+            const activeScope = document.querySelector('#scopeGrid .scope-option-card.active');
+            const scopeVal = activeScope ? (activeScope.getAttribute('data-mandate') || activeScope.querySelector('.soc-title')?.textContent.trim() || 'Logo Design') : 'Logo Design';
+
+            const activeTier = document.querySelector('#tierGrid .tier-option-box.active');
+            const tierAmount = activeTier ? (activeTier.getAttribute('data-tier') || activeTier.querySelector('.tob-amount')?.textContent.trim() || '₹15L – ₹30 Lakhs') : '₹15L – ₹30 Lakhs';
+            const tierName = activeTier ? (activeTier.querySelector('.tob-tier-name')?.textContent.trim() || '') : '';
+            const allocVal = tierName ? `${tierAmount} (${tierName})` : tierAmount;
+
+            const activeTimeline = document.querySelector('#timelinePills .timeline-pill.active');
+            const timelineVal = activeTimeline ? activeTimeline.textContent.trim() : '< 1 Month (Immediate)';
+
+            const sessionSummary = document.getElementById('stepSlotSummaryText')?.textContent.trim() ||
+              `${stepSelectedCalDate.weekday}, ${stepSelectedCalDate.month} ${stepSelectedCalDate.day}, ${stepSelectedCalDate.year} · ${stepSelectedCalTime}`;
+
+            const ccCodeText = document.getElementById('ccCode')?.textContent.trim() || '+91';
+            const phoneVal = `${ccCodeText} ${phone}`;
+            const ndaChecked = document.getElementById('ndaCheck')?.classList.contains('checked');
+
+            const elSumScope = document.getElementById('msoSumScope');
+            if (elSumScope) elSumScope.textContent = scopeVal;
+
+            // msoSumAlloc contains a nested .mso-sub span for timeline — set first text node only
+            const elSumAlloc = document.getElementById('msoSumAlloc');
+            if (elSumAlloc) {
+              // Preserve nested .mso-sub span
+              const tlSpan = elSumAlloc.querySelector('#msoSumTimeline');
+              elSumAlloc.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
+              elSumAlloc.insertBefore(document.createTextNode(allocVal), elSumAlloc.firstChild);
+              if (tlSpan) tlSpan.textContent = timelineVal;
+            }
+
+            const elSumSession = document.getElementById('msoSumSession');
+            if (elSumSession) elSumSession.textContent = sessionSummary;
+
+            const elSumClient = document.getElementById('msoSumClient');
+            if (elSumClient) {
+              const brandSpan = elSumClient.querySelector('#msoSumBrand');
+              elSumClient.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
+              elSumClient.insertBefore(document.createTextNode(name), elSumClient.firstChild);
+              if (brandSpan) brandSpan.textContent = org;
+            }
+
+            const elSumEmail = document.getElementById('msoSumEmail');
+            if (elSumEmail) elSumEmail.textContent = email;
+
+            const elSumPhone = document.getElementById('msoSumPhone');
+            if (elSumPhone) elSumPhone.textContent = phoneVal;
+
+            const elSumNda = document.getElementById('msoSumNda');
+            if (elSumNda) elSumNda.textContent = ndaChecked ? 'NDA Executed' : 'Standard Review';
+
+            const elSumVisionWrap = document.getElementById('msoSumVisionWrap');
+            if (elSumVisionWrap) {
+              elSumVisionWrap.style.display = 'none';
+            }
+
             btnNext.disabled = true;
             btnNext.classList.add('is-loading');
             btnNext.innerHTML = `<span class="btn-spinner"></span><span>Transmitting Brief...</span>`;
@@ -4004,15 +4085,7 @@
         });
       });
 
-      // Step 2: Capabilities Chips
-      document.querySelectorAll('#discGrid .disc-item-chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-          chip.classList.toggle('selected');
-          playLuxuryHaptic(580, 'sine', 0.03);
-        });
-      });
-
-      // Step 3: Tiers
+      // Step 2: Tiers
       document.querySelectorAll('#tierGrid .tier-option-box').forEach(tier => {
         tier.addEventListener('click', () => {
           document.querySelectorAll('#tierGrid .tier-option-box').forEach(t => t.classList.remove('active'));
@@ -4021,7 +4094,7 @@
         });
       });
 
-      // Step 3: Timeline Engagement Pills
+      // Step 2: Timeline Engagement Pills
       document.querySelectorAll('#timelinePills .timeline-pill').forEach(pill => {
         pill.addEventListener('click', () => {
           document.querySelectorAll('#timelinePills .timeline-pill').forEach(p => p.classList.remove('active'));
@@ -4046,7 +4119,19 @@
       const todayDay = _now.getDate();
       const todayMonth = _now.getMonth();
       const todayYear = _now.getFullYear();
-      const bookedDays = [8, 9]; // Studio Admin backend integration: Fully booked dates
+      // Studio Admin backend integration: Fully booked dates (empty by default; configured via Admin Panel)
+      let bookedDays = [];
+      try {
+        const _cb = (window.CMSStore && window.CMSStore.getContactBrief) ? window.CMSStore.getContactBrief() : null;
+        const _s = _cb ? (_cb.step3 || _cb.step4) : null;
+        if (_s && Array.isArray(_s.bookedDays)) {
+          const raw = _s.bookedDays.map(d => parseInt(d, 10)).filter(d => !isNaN(d));
+          const isLegacy = raw.length === 2 && raw.includes(8) && raw.includes(9);
+          if (!isLegacy) bookedDays = raw;
+        }
+      } catch (e) {
+        bookedDays = [];
+      }
 
       const monthNamesList = [
         'January', 'February', 'March', 'April', 'May', 'June',
@@ -4057,6 +4142,7 @@
 
       // Studio Admin backend integration: Available time windows per date
       const dateSlotsRegistry = {
+        9: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'],
         29: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'],
         7: ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'],
         10: ['10:30 AM IST', '02:00 PM IST', '04:30 PM IST', '07:00 PM IST'],
@@ -4094,13 +4180,26 @@
         stepCalMonthTitle.textContent = `${monthNamesList[todayMonth]} ${todayYear}`;
       }
 
+      // Start with today (9th) and find next available open date if today is booked or Sunday
+      let initDay = todayDay;
+      const daysInThisMonth = new Date(todayYear, todayMonth + 1, 0).getDate();
+      while (initDay <= daysInThisMonth) {
+        const testD = new Date(todayYear, todayMonth, initDay);
+        const isSun = testD.getDay() === 0;
+        const isBkd = bookedDays.includes(initDay);
+        if (!isSun && !isBkd) break;
+        initDay++;
+      }
+      if (initDay > daysInThisMonth) initDay = todayDay;
+
+      const initDateObj = new Date(todayYear, todayMonth, initDay);
       let stepSelectedCalDate = {
-        day: todayDay,
-        weekday: weekdaysMap[_now.getDay()],
+        day: initDay,
+        weekday: weekdaysMap[initDateObj.getDay()],
         month: monthShortNamesList[todayMonth],
         year: todayYear
       };
-      let stepSelectedCalTime = '02:30 PM IST';
+      let stepSelectedCalTime = '11:00 AM IST';
 
       function updateStepSessionBanner() {
         if (stepSlotSummaryText) {
@@ -4227,47 +4326,7 @@
       renderStepTimeSlots(stepSelectedCalDate.day);
       updateStepSessionBanner();
 
-      // Step 4 Topic Dropdown
-      const stepSelectTopicTrigger = document.getElementById('stepSelectTopicTrigger');
-      const stepSelectTopicDropdown = document.getElementById('stepSelectTopicDropdown');
-      const stepSelectTopicLabel = document.getElementById('stepSelectTopicLabel');
-      const stepHiddenTopicInput = document.getElementById('stepSbTopic');
 
-      if (stepSelectTopicTrigger && stepSelectTopicDropdown) {
-        stepSelectTopicTrigger.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const isOpen = stepSelectTopicDropdown.classList.contains('open');
-          stepSelectTopicDropdown.classList.toggle('open', !isOpen);
-          stepSelectTopicTrigger.classList.toggle('open', !isOpen);
-          stepSelectTopicTrigger.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
-          playLuxuryHaptic(560, 'sine', 0.03);
-        });
-
-        document.querySelectorAll('#stepSelectTopicDropdown .luxury-select-opt').forEach(opt => {
-          opt.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const val = opt.getAttribute('data-value');
-            if (stepHiddenTopicInput) stepHiddenTopicInput.value = val;
-            if (stepSelectTopicLabel) stepSelectTopicLabel.textContent = val;
-
-            document.querySelectorAll('#stepSelectTopicDropdown .luxury-select-opt').forEach(o => o.classList.remove('active'));
-            opt.classList.add('active');
-
-            stepSelectTopicDropdown.classList.remove('open');
-            stepSelectTopicTrigger.classList.remove('open');
-            stepSelectTopicTrigger.setAttribute('aria-expanded', 'false');
-            playLuxuryHaptic(620, 'sine', 0.03);
-          });
-        });
-
-        document.addEventListener('click', (e) => {
-          if (!document.getElementById('stepLuxurySelectTopic')?.contains(e.target)) {
-            stepSelectTopicDropdown.classList.remove('open');
-            stepSelectTopicTrigger.classList.remove('open');
-            stepSelectTopicTrigger.setAttribute('aria-expanded', 'false');
-          }
-        });
-      }
 
       // ── Floating Theme Toggle Sync ──
       const themeFab = document.getElementById('theme-fab');

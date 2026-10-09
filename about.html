@@ -881,19 +881,19 @@
       position: relative;
       width: 100%;
       align-self: stretch;
-      height: clamp(290px, 42vh, 420px);
+      height: clamp(420px, 56vh, 560px);
       overflow: visible;
       margin-top: clamp(16px, 2.2vh, 28px);
-      padding: 16px 0 20px 0;
+      padding: 12px 0 16px 0;
       box-sizing: border-box;
     }
 
     .works-card-set {
       position: absolute;
-      top: 16px;
+      top: 12px;
       left: 0;
       right: 0;
-      bottom: 20px;
+      bottom: 16px;
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: clamp(18px, 2.2vw, 32px);
@@ -928,7 +928,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: clamp(24px, 2.8vw, 36px);
+      padding: clamp(22px, 2.4vw, 32px);
       text-decoration: none;
       color: #FFFFFF;
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.25);
@@ -952,7 +952,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: brightness(0.7) contrast(1.1);
+      filter: brightness(0.92) contrast(1.05);
       transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -960,32 +960,48 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(7, 7, 10, 0.45) 0%, rgba(7, 7, 10, 0.6) 40%, rgba(7, 7, 10, 0.94) 100%);
+      background: linear-gradient(
+        180deg,
+        rgba(7, 7, 10, 0.6) 0%,
+        rgba(7, 7, 10, 0.18) 18%,
+        rgba(7, 7, 10, 0.04) 40%,
+        rgba(7, 7, 10, 0.25) 65%,
+        rgba(7, 7, 10, 0.85) 86%,
+        rgba(7, 7, 10, 0.96) 100%
+      );
       transition: background 0.4s ease;
     }
 
     [data-theme="light"] .work-card-img {
-      filter: brightness(0.7) contrast(1.1);
+      filter: brightness(0.92) contrast(1.05);
     }
 
     [data-theme="light"] .work-card-media::after {
-      background: linear-gradient(180deg, rgba(7, 7, 10, 0.45) 0%, rgba(7, 7, 10, 0.62) 40%, rgba(7, 7, 10, 0.94) 100%);
+      background: linear-gradient(
+        180deg,
+        rgba(7, 7, 10, 0.6) 0%,
+        rgba(7, 7, 10, 0.18) 18%,
+        rgba(7, 7, 10, 0.04) 40%,
+        rgba(7, 7, 10, 0.25) 65%,
+        rgba(7, 7, 10, 0.85) 86%,
+        rgba(7, 7, 10, 0.96) 100%
+      );
     }
 
     .work-duo-card:hover {
-      border-color: rgba(200, 16, 46, 0.5);
+      border-color: rgba(255, 255, 255, 0.28);
       transform: translateY(-6px);
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 30px rgba(200, 16, 46, 0.2);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 24px rgba(255, 255, 255, 0.06);
     }
 
     [data-theme="light"] .work-duo-card:hover {
-      border-color: rgba(200, 16, 46, 0.4);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16), 0 0 24px rgba(200, 16, 46, 0.12);
+      border-color: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
     }
 
     .work-duo-card:hover .work-card-img {
       transform: scale(1.05);
-      filter: brightness(0.8) contrast(1.15);
+      filter: brightness(0.98) contrast(1.1);
     }
 
     .work-card-content {
@@ -995,7 +1011,6 @@
       flex-direction: column;
       justify-content: space-between;
       height: 100%;
-      gap: 14px;
     }
 
     .work-top-meta {
@@ -1005,60 +1020,97 @@
     }
 
     .work-num {
-      font-family: var(--font-mono);
-      font-size: clamp(11px, 0.95vw, 13px);
-      font-weight: 700;
-      color: var(--cr);
-      letter-spacing: 0.14em;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-primary);
+      font-size: clamp(11.5px, 0.95vw, 13px);
+      font-weight: 800;
+      color: #FFFFFF !important;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85);
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+      opacity: 0.95;
     }
 
-    .work-mid-body {
+    .work-num,
+    .work-num *,
+    .work-top-meta,
+    .work-top-meta * {
+      color: #FFFFFF !important;
+      stroke: #FFFFFF !important;
+    }
+
+    .work-globe-icon {
+      width: 13px;
+      height: 13px;
+      stroke: #FFFFFF !important;
+      stroke-width: 2.2;
+      flex-shrink: 0;
+    }
+
+    [data-theme="light"] .work-num,
+    [data-theme="light"] .work-num *,
+    [data-theme="light"] .work-globe-icon {
+      color: #FFFFFF !important;
+      stroke: #FFFFFF !important;
+    }
+
+    .work-bottom-block {
       margin-top: auto;
-      margin-bottom: auto;
       display: flex;
-      flex-direction: column;
-      gap: 6px;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: clamp(16px, 1.8vw, 24px);
+      width: 100%;
+    }
+
+    .work-subtitle,
+    .work-headings-group .work-subtitle {
+      display: none !important;
     }
 
     .work-title {
+      flex: 1 1 auto;
+      max-width: min(calc(100% - 195px), 380px);
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: clamp(24px, 2.6vw, 36px);
-      line-height: 1.12;
-      letter-spacing: -0.03em;
-      color: #FFFFFF;
+      font-size: clamp(20px, 1.85vw, 26px);
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      color: #FFFFFF !important;
       margin: 0;
-      text-shadow: 0 3px 18px rgba(0, 0, 0, 0.85);
+      text-shadow: 0 3px 18px rgba(0, 0, 0, 0.95);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word;
     }
 
     [data-theme="light"] .work-title {
-      color: #FFFFFF;
-    }
-
-    .work-subtitle {
-      font-family: var(--font-primary);
-      font-size: clamp(13px, 1.05vw, 15px);
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.82);
-      letter-spacing: 0.01em;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    [data-theme="light"] .work-subtitle {
-      color: rgba(255, 255, 255, 0.82);
+      color: #FFFFFF !important;
     }
 
     .work-bottom-meta {
+      flex: 0 0 auto;
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      padding-top: 0 !important;
+      border: none !important;
+      border-top: none !important;
+      margin-left: auto;
+    }
+
+    .work-bottom-meta::before,
+    .work-bottom-meta::after,
+    .work-bottom-block::before,
+    .work-bottom-block::after {
+      display: none !important;
+      content: none !important;
     }
 
     .work-cta-wrap {
@@ -1066,47 +1118,52 @@
       align-items: center;
       gap: 10px;
       font-family: var(--font-primary);
-      font-size: clamp(12px, 0.9vw, 13px);
+      font-size: clamp(11.5px, 0.85vw, 12.5px);
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #FFFFFF;
-      transition: color 0.3s ease;
+      color: #FFFFFF !important;
+      transition: opacity 0.3s ease;
     }
 
     .work-cta-arrow {
-      width: 30px;
-      height: 30px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s var(--sp);
+      transition: background 0.3s ease, border-color 0.3s ease;
       flex-shrink: 0;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     .work-cta-arrow svg {
-      width: 13px;
-      height: 13px;
-      stroke: #FFFFFF;
+      width: 14px;
+      height: 14px;
+      stroke: #FFFFFF !important;
       stroke-width: 2.2;
-      transition: transform 0.3s var(--sp);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .work-duo-card:hover .work-cta-wrap {
-      color: var(--cr);
+    .work-duo-card:hover .work-cta-wrap,
+    .work-cta-wrap:hover {
+      color: #FFFFFF !important;
     }
 
-    .work-duo-card:hover .work-cta-arrow {
-      background: var(--cr);
-      border-color: var(--cr);
-      transform: translate(2px, -2px);
+    .work-duo-card:hover .work-cta-arrow,
+    .work-cta-wrap:hover .work-cta-arrow {
+      background: rgba(255, 255, 255, 0.24) !important;
+      border-color: rgba(255, 255, 255, 0.45) !important;
     }
 
-    .work-duo-card:hover .work-cta-arrow svg {
-      stroke: #FFFFFF;
+    .work-duo-card:hover .work-cta-arrow svg,
+    .work-cta-wrap:hover .work-cta-arrow svg {
+      transform: translate(3px, -3px);
+      stroke: #FFFFFF !important;
     }
 
     @media (max-width: 860px) {
@@ -1143,6 +1200,22 @@
         transform: none;
         pointer-events: auto;
         margin-top: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .work-bottom-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .work-title {
+        max-width: 100%;
+        font-size: 20px;
+      }
+      .work-bottom-meta {
+        width: 100%;
+        justify-content: flex-end;
       }
     }
 
@@ -1975,6 +2048,7 @@
 
     /* ── 3-Row Infinite Marquee Stage ── */
     .brands-marquee-stage {
+      --marquee-speed: 45s;
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -2002,15 +2076,15 @@
     }
 
     .marquee-left .marquee-track {
-      animation: marqueeL2R 45s linear infinite;
+      animation: marqueeL2R var(--marquee-speed, 45s) linear infinite;
     }
 
     .marquee-right .marquee-track {
-      animation: marqueeR2L 42s linear infinite;
+      animation: marqueeR2L var(--marquee-speed, 45s) linear infinite;
     }
 
     .brand-row-wrap:nth-child(3) .marquee-track {
-      animation: marqueeL2R 50s linear infinite;
+      animation: marqueeL2R var(--marquee-speed, 45s) linear infinite;
     }
 
     .brand-row-wrap:hover .marquee-track {
@@ -2038,36 +2112,54 @@
     .brand-logo-card {
       min-width: clamp(210px, 17vw, 260px);
       height: clamp(84px, 9.8vh, 98px);
-      background: var(--card-bg);
+      background: #FFFFFF !important;
       border: 1px solid var(--rule);
       border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 14px 26px;
+      padding: 12px 22px;
       box-sizing: border-box;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.025);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.035);
       transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.3s;
       cursor: pointer;
       user-select: none;
       flex-shrink: 0;
+      overflow: hidden;
     }
 
     [data-theme="dark"] .brand-logo-card {
-      background: #121217;
-      border-color: rgba(255, 255, 255, 0.07);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+      background: #FFFFFF !important;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 22px rgba(0, 0, 0, 0.4);
     }
 
     .brand-logo-card:hover {
       transform: translateY(-5px);
       border-color: rgba(200, 16, 46, 0.45);
-      box-shadow: 0 14px 32px rgba(200, 16, 46, 0.12);
+      box-shadow: 0 14px 32px rgba(200, 16, 46, 0.16);
     }
 
     [data-theme="dark"] .brand-logo-card:hover {
-      border-color: rgba(255, 46, 77, 0.5);
-      box-shadow: 0 14px 34px rgba(255, 46, 77, 0.2);
+      border-color: rgba(255, 46, 77, 0.6);
+      box-shadow: 0 14px 34px rgba(255, 46, 77, 0.25);
+    }
+
+    .brand-logo-card img.brand-logo-img {
+      width: 100%;
+      height: 100%;
+      max-height: 52px;
+      max-width: 185px;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      filter: none !important;
+      opacity: 1 !important;
+      transition: transform 0.35s ease;
+    }
+
+    .brand-logo-card:hover img.brand-logo-img {
+      transform: scale(1.06);
     }
 
     .brand-logo-svg {
@@ -3008,48 +3100,60 @@
         <div class="works-card-stage" id="worksCardStage">
           <!-- ── SET 1: First 2 Cards (Active Initially) ── -->
           <div class="works-card-set" id="worksSet1">
-            <!-- 01 JUVENTUS -->
-            <a href="project-detail.html" class="work-duo-card" id="workCard1">
+            <!-- 01 VIBEE -->
+            <a href="portfolio.html?project=vibee" class="work-duo-card" id="workCard1">
               <div class="work-card-media">
-                <img src="img/wc-top.jpg" alt="Juventus Brand System" class="work-card-img" />
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg" alt="Vibee — Youth Culture & Apparel Identity" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">01 / GLOBAL ICON</span>
+                  <span class="work-num">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    01 / GLOBAL ICON
+                  </span>
                 </div>
-                <div class="work-mid-body">
-                  <h3 class="work-title">JUVENTUS</h3>
-                  <div class="work-subtitle">Global Visual Identity & Guidelines</div>
-                </div>
-                <div class="work-bottom-meta">
-                  <div class="work-cta-wrap">
-                    <span>View Case Study</span>
-                    <div class="work-cta-arrow">
-                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="work-bottom-block">
+                  <h3 class="work-title">Vibee — Youth Culture & Apparel Identity</h3>
+                  <div class="work-bottom-meta">
+                    <div class="work-cta-wrap">
+                      <span>View Case Study</span>
+                      <div class="work-cta-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </a>
 
-            <!-- 02 BALENCIAGA -->
-            <a href="project-detail.html" class="work-duo-card" id="workCard2">
+            <!-- 02 INFYLI -->
+            <a href="portfolio.html?project=infyli" class="work-duo-card" id="workCard2">
               <div class="work-card-media">
-                <img src="img/wc-mid.jpg" alt="Balenciaga Flagship Architecture" class="work-card-img" />
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg" alt="Infyli — Minimalist Luxury Home Aromatics" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">02 / COUTURE SPATIAL</span>
+                  <span class="work-num">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    02 / GLOBAL ICON
+                  </span>
                 </div>
-                <div class="work-mid-body">
-                  <h3 class="work-title">BALENCIAGA</h3>
-                  <div class="work-subtitle">Flagship Architecture & Digital Scenography</div>
-                </div>
-                <div class="work-bottom-meta">
-                  <div class="work-cta-wrap">
-                    <span>View Case Study</span>
-                    <div class="work-cta-arrow">
-                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="work-bottom-block">
+                  <h3 class="work-title">Infyli — Minimalist Luxury Home Aromatics</h3>
+                  <div class="work-bottom-meta">
+                    <div class="work-cta-wrap">
+                      <span>View Case Study</span>
+                      <div class="work-cta-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -3059,48 +3163,60 @@
 
           <!-- ── SET 2: Next 2 Cards (Swapped In on Scroll) ── -->
           <div class="works-card-set" id="worksSet2">
-            <!-- 03 POLENE PARIS -->
-            <a href="project-detail.html" class="work-duo-card" id="workCard3">
+            <!-- 03 MUDRA SCHOOL -->
+            <a href="portfolio.html?project=mudra-school" class="work-duo-card" id="workCard3">
               <div class="work-card-media">
-                <img src="img/wc-bot.jpg" alt="Polène Paris Leather Goods" class="work-card-img" />
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg" alt="Mudra School — Classical Arts Digital Presence" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">03 / LUXURY ATELIER</span>
+                  <span class="work-num">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    03 / GLOBAL ICON
+                  </span>
                 </div>
-                <div class="work-mid-body">
-                  <h3 class="work-title">POLÈNE PARIS</h3>
-                  <div class="work-subtitle">Sculptural Leather Goods & 3D Packaging</div>
-                </div>
-                <div class="work-bottom-meta">
-                  <div class="work-cta-wrap">
-                    <span>View Case Study</span>
-                    <div class="work-cta-arrow">
-                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="work-bottom-block">
+                  <h3 class="work-title">Mudra School — Classical Arts Digital Presence</h3>
+                  <div class="work-bottom-meta">
+                    <div class="work-cta-wrap">
+                      <span>View Case Study</span>
+                      <div class="work-cta-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </a>
 
-            <!-- 04 RIMOWA -->
-            <a href="project-detail.html" class="work-duo-card" id="workCard4">
+            <!-- 04 AWARDS PLUS -->
+            <a href="portfolio.html?project=awards-plus" class="work-duo-card" id="workCard4">
               <div class="work-card-media">
-                <img src="img/f-brand-3.jpg" alt="Rimowa Monolith Archive" class="work-card-img" />
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg" alt="Awards Plus — Prestige Corporate Identity" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
-                  <span class="work-num">04 / INDUSTRIAL LUXURY</span>
+                  <span class="work-num">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    04 / GLOBAL ICON
+                  </span>
                 </div>
-                <div class="work-mid-body">
-                  <h3 class="work-title">RIMOWA</h3>
-                  <div class="work-subtitle">Digital Flagship & 3D WebGL Configurator</div>
-                </div>
-                <div class="work-bottom-meta">
-                  <div class="work-cta-wrap">
-                    <span>View Case Study</span>
-                    <div class="work-cta-arrow">
-                      <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="work-bottom-block">
+                  <h3 class="work-title">Awards Plus — Prestige Corporate Identity</h3>
+                  <div class="work-bottom-meta">
+                    <div class="work-cta-wrap">
+                      <span>View Case Study</span>
+                      <div class="work-cta-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -3506,476 +3622,392 @@
       <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their ambitions, and the brands they’re building.</p>
     </div>
 
-    <div class="brands-marquee-stage">
-      <!-- ── ROW 1 (Left to Right / Normal Direction) ── -->
+        <div class="brands-marquee-stage">
+      <!-- ── ROW 1 (Left to Right / Normal Direction: Logos 01–20) ── -->
       <div class="brand-row-wrap marquee-left">
         <div class="marquee-track">
-          <!-- Group 1 -->
           <div class="marquee-group">
-            <div class="brand-logo-card" title="Flipkart">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="8" y="27" font-family="'Montserrat', sans-serif" font-weight="800" font-style="italic" font-size="21" fill="#2874F0">Flipkart</text>
-                <rect x="120" y="8" width="24" height="24" rx="5" fill="#FFD200" />
-                <path d="M 125 21 Q 132 26 139 21" fill="none" stroke="#2874F0" stroke-width="2.2" stroke-linecap="round" />
-                <path d="M 129 12 Q 132 8 135 12" fill="none" stroke="#2874F0" stroke-width="2" stroke-linecap="round" />
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-01.jpg" alt="Client Logo 01" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Cars24">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="10" y="6" width="90" height="28" rx="6" fill="#0B3C5D" />
-                <text x="18" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#FFFFFF" letter-spacing="1px">CARS</text>
-                <rect x="104" y="6" width="46" height="28" rx="6" fill="#FF6A00" />
-                <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-02.jpg" alt="Client Logo 02" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Zepto">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="32" y="28" font-family="'Outfit', 'Montserrat', sans-serif" font-weight="900" font-size="26" fill="#7C22DE" letter-spacing="-0.02em">zepto</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-03.jpg" alt="Client Logo 03" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Shivalik">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="15" y="22" font-family="'Cinzel', 'Playfair Display', serif" font-weight="800" font-size="17" fill="currentColor" letter-spacing="2px">SHIVALIK</text>
-                <circle cx="126" cy="17" r="2.5" fill="#C8102E" />
-                <text x="16" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.8" fill="var(--ink-dim)" letter-spacing="1.2px">BUILDING LANDMARKS SINCE 1998</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-04.jpg" alt="Client Logo 04" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Swiggy">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="14" y="6" width="28" height="28" rx="8" fill="#FC8019" />
-                <path d="M 28 12 C 23 12 20 16 20 20 C 20 25 28 31 28 31 C 28 31 36 25 36 20 C 36 16 33 12 28 12 Z" fill="#FFFFFF" />
-                <circle cx="28" cy="19" r="2.5" fill="#FC8019" />
-                <text x="50" y="27" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#FC8019" letter-spacing="-0.01em">Swiggy</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-05.jpg" alt="Client Logo 05" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="CRED">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 22 10 L 36 10 L 36 25 Q 36 30 29 32 Q 22 30 22 25 Z" fill="none" stroke="currentColor" stroke-width="2.2" />
-                <path d="M 26 15 L 32 15 L 32 23 Q 32 26 29 27.5 Q 26 26 26 23 Z" fill="none" stroke="currentColor" stroke-width="2" />
-                <text x="48" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="currentColor" letter-spacing="3.5px">CRED</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-06.jpg" alt="Client Logo 06" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Phoenix Palladium">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 80 5 L 84 14 L 92 10 L 87 18 L 96 18 L 88 23 L 80 18 L 72 23 L 64 18 L 73 18 L 68 10 L 76 14 Z" fill="currentColor" opacity="0.85" />
-                <text x="80" y="32" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="2px">PHOENIX PALLADIUM</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-07.jpg" alt="Client Logo 07" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Jade Blue">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="14" y="8" width="132" height="24" rx="4" fill="#005691" />
-                <path d="M 28 20 C 28 16 32 15 35 18 C 38 21 42 20 42 16 C 42 12 38 13 35 16 C 32 19 28 20 28 20 Z" fill="none" stroke="#FFFFFF" stroke-width="2.2" />
-                <text x="52" y="25" font-family="'Montserrat', sans-serif" font-weight="800" font-size="12" fill="#FFFFFF" letter-spacing="2px">JADE BLUE</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-08.jpg" alt="Client Logo 08" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Gujarat Titans">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 24 8 L 44 8 L 39 30 L 34 33 L 29 30 Z" fill="#0C2340" stroke="#C59B27" stroke-width="1.8" />
-                <path d="M 34 11 L 38 18 L 30 18 Z" fill="#C59B27" />
-                <text x="52" y="20" font-family="'Montserrat', sans-serif" font-weight="900" font-size="11" fill="#0C2340" letter-spacing="0.5px">GUJARAT</text>
-                <text x="52" y="31" font-family="'Montserrat', sans-serif" font-weight="900" font-size="13" fill="#C59B27" letter-spacing="1px">TITANS</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-09.jpg" alt="Client Logo 09" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Adani Foundation">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="18" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#2B5B84" letter-spacing="-0.02em">adani</text>
-                <text x="78" y="24" font-family="'Montserrat', sans-serif" font-weight="600" font-size="11" fill="#8C3B78">Foundation</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-10.jpg" alt="Client Logo 10" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Credai">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 22 18 L 34 8 L 46 18 L 40 18 L 34 13 L 28 18 Z" fill="#0A7C42" />
-                <text x="52" y="23" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#0A7C42" letter-spacing="1.5px">CREDAÎ</text>
-                <text x="53" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="var(--ink-dim)" letter-spacing="1px">NASHIK METRO</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-11.jpg" alt="Client Logo 11" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Lofy">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="22" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="19" fill="currentColor" letter-spacing="4px">LOFY</text>
-                <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">HOME STORE</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-12.jpg" alt="Client Logo 12" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-13.jpg" alt="Client Logo 13" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-14.jpg" alt="Client Logo 14" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-15.jpg" alt="Client Logo 15" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-16.jpg" alt="Client Logo 16" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-17.jpg" alt="Client Logo 17" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-18.jpg" alt="Client Logo 18" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-19.jpg" alt="Client Logo 19" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-20.jpg" alt="Client Logo 20" class="brand-logo-img" loading="lazy" />
             </div>
           </div>
-          <!-- Group 2 (Duplicate for Infinite Loop) -->
           <div class="marquee-group" aria-hidden="true">
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="8" y="27" font-family="'Montserrat', sans-serif" font-weight="800" font-style="italic" font-size="21" fill="#2874F0">Flipkart</text>
-                <rect x="120" y="8" width="24" height="24" rx="5" fill="#FFD200" />
-                <path d="M 125 21 Q 132 26 139 21" fill="none" stroke="#2874F0" stroke-width="2.2" stroke-linecap="round" />
-                <path d="M 129 12 Q 132 8 135 12" fill="none" stroke="#2874F0" stroke-width="2" stroke-linecap="round" />
-              </svg>
+              <img src="img/Client Logos-01.jpg" alt="Client Logo 01" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="10" y="6" width="90" height="28" rx="6" fill="#0B3C5D" />
-                <text x="18" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#FFFFFF" letter-spacing="1px">CARS</text>
-                <rect x="104" y="6" width="46" height="28" rx="6" fill="#FF6A00" />
-                <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
-              </svg>
+              <img src="img/Client Logos-02.jpg" alt="Client Logo 02" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="32" y="28" font-family="'Outfit', 'Montserrat', sans-serif" font-weight="900" font-size="26" fill="#7C22DE" letter-spacing="-0.02em">zepto</text>
-              </svg>
+              <img src="img/Client Logos-03.jpg" alt="Client Logo 03" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="15" y="22" font-family="'Cinzel', 'Playfair Display', serif" font-weight="800" font-size="17" fill="currentColor" letter-spacing="2px">SHIVALIK</text>
-                <circle cx="126" cy="17" r="2.5" fill="#C8102E" />
-                <text x="16" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.8" fill="var(--ink-dim)" letter-spacing="1.2px">BUILDING LANDMARKS SINCE 1998</text>
-              </svg>
+              <img src="img/Client Logos-04.jpg" alt="Client Logo 04" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="14" y="6" width="28" height="28" rx="8" fill="#FC8019" />
-                <path d="M 28 12 C 23 12 20 16 20 20 C 20 25 28 31 28 31 C 28 31 36 25 36 20 C 36 16 33 12 28 12 Z" fill="#FFFFFF" />
-                <circle cx="28" cy="19" r="2.5" fill="#FC8019" />
-                <text x="50" y="27" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#FC8019" letter-spacing="-0.01em">Swiggy</text>
-              </svg>
+              <img src="img/Client Logos-05.jpg" alt="Client Logo 05" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 22 10 L 36 10 L 36 25 Q 36 30 29 32 Q 22 30 22 25 Z" fill="none" stroke="currentColor" stroke-width="2.2" />
-                <path d="M 26 15 L 32 15 L 32 23 Q 32 26 29 27.5 Q 26 26 26 23 Z" fill="none" stroke="currentColor" stroke-width="2" />
-                <text x="48" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="currentColor" letter-spacing="3.5px">CRED</text>
-              </svg>
+              <img src="img/Client Logos-06.jpg" alt="Client Logo 06" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 80 5 L 84 14 L 92 10 L 87 18 L 96 18 L 88 23 L 80 18 L 72 23 L 64 18 L 73 18 L 68 10 L 76 14 Z" fill="currentColor" opacity="0.85" />
-                <text x="80" y="32" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="2px">PHOENIX PALLADIUM</text>
-              </svg>
+              <img src="img/Client Logos-07.jpg" alt="Client Logo 07" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="14" y="8" width="132" height="24" rx="4" fill="#005691" />
-                <path d="M 28 20 C 28 16 32 15 35 18 C 38 21 42 20 42 16 C 42 12 38 13 35 16 C 32 19 28 20 28 20 Z" fill="none" stroke="#FFFFFF" stroke-width="2.2" />
-                <text x="52" y="25" font-family="'Montserrat', sans-serif" font-weight="800" font-size="12" fill="#FFFFFF" letter-spacing="2px">JADE BLUE</text>
-              </svg>
+              <img src="img/Client Logos-08.jpg" alt="Client Logo 08" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 24 8 L 44 8 L 39 30 L 34 33 L 29 30 Z" fill="#0C2340" stroke="#C59B27" stroke-width="1.8" />
-                <path d="M 34 11 L 38 18 L 30 18 Z" fill="#C59B27" />
-                <text x="52" y="20" font-family="'Montserrat', sans-serif" font-weight="900" font-size="11" fill="#0C2340" letter-spacing="0.5px">GUJARAT</text>
-                <text x="52" y="31" font-family="'Montserrat', sans-serif" font-weight="900" font-size="13" fill="#C59B27" letter-spacing="1px">TITANS</text>
-              </svg>
+              <img src="img/Client Logos-09.jpg" alt="Client Logo 09" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="18" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="20" fill="#2B5B84" letter-spacing="-0.02em">adani</text>
-                <text x="78" y="24" font-family="'Montserrat', sans-serif" font-weight="600" font-size="11" fill="#8C3B78">Foundation</text>
-              </svg>
+              <img src="img/Client Logos-10.jpg" alt="Client Logo 10" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 22 18 L 34 8 L 46 18 L 40 18 L 34 13 L 28 18 Z" fill="#0A7C42" />
-                <text x="52" y="23" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#0A7C42" letter-spacing="1.5px">CREDAÎ</text>
-                <text x="53" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="var(--ink-dim)" letter-spacing="1px">NASHIK METRO</text>
-              </svg>
+              <img src="img/Client Logos-11.jpg" alt="Client Logo 11" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="22" text-anchor="middle" font-family="'Outfit', sans-serif" font-weight="800" font-size="19" fill="currentColor" letter-spacing="4px">LOFY</text>
-                <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">HOME STORE</text>
-              </svg>
+              <img src="img/Client Logos-12.jpg" alt="Client Logo 12" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-13.jpg" alt="Client Logo 13" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-14.jpg" alt="Client Logo 14" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-15.jpg" alt="Client Logo 15" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-16.jpg" alt="Client Logo 16" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-17.jpg" alt="Client Logo 17" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-18.jpg" alt="Client Logo 18" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-19.jpg" alt="Client Logo 19" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-20.jpg" alt="Client Logo 20" class="brand-logo-img" loading="lazy" />
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── ROW 2 (Right to Left / Reverse Direction) ── -->
+      <!-- ── ROW 2 (Right to Left / Reverse Direction: Logos 21–40) ── -->
       <div class="brand-row-wrap marquee-right">
         <div class="marquee-track">
-          <!-- Group 1 -->
           <div class="marquee-group">
-            <div class="brand-logo-card" title="Mahindra Tractors">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="19" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="#E51937" letter-spacing="0.5px">mahindra</text>
-                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#E51937" letter-spacing="3px">TRACTORS</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-21.jpg" alt="Client Logo 21" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Cult Store">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="28" cy="14" r="3.5" fill="#FF3278" />
-                <path d="M 20 28 L 28 20 L 36 28 M 28 20 L 28 26" stroke="#FF3278" stroke-width="2.5" stroke-linecap="round" />
-                <text x="46" y="26" font-family="'Montserrat', sans-serif" font-weight="800" font-size="17" fill="currentColor">cult store</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-22.jpg" alt="Client Logo 22" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="TVS">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="18" y="27" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#002D62" letter-spacing="1px">TVS</text>
-                <path d="M 85 24 L 92 18 L 104 18 L 115 11 L 108 20 L 118 22 L 102 24 L 95 28 Z" fill="#D32F2F" />
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-23.jpg" alt="Client Logo 23" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="CaratLane">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="22" cy="20" r="8" fill="none" stroke="#8E24AA" stroke-width="2" stroke-dasharray="2 2" />
-                <text x="36" y="21" font-family="'Montserrat', sans-serif" font-weight="800" font-size="12" fill="#5E2750" letter-spacing="2px">CARATLANE</text>
-                <text x="36" y="29" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6" fill="#888" letter-spacing="1px">A TATA PRODUCT</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-24.jpg" alt="Client Logo 24" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="The St. Regis Mumbai">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="20" text-anchor="middle" font-family="'Cinzel', 'Playfair Display', serif" font-weight="700" font-size="14" fill="currentColor" letter-spacing="3px">ST REGIS</text>
-                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">MUMBAI</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-25.jpg" alt="Client Logo 25" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Space">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="24" cy="20" r="9" fill="none" stroke="#E5A93C" stroke-width="2" />
-                <path d="M 24 14 Q 28 20 24 26" stroke="#E5A93C" stroke-width="2" fill="none" />
-                <text x="40" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="currentColor" letter-spacing="2px">SPACE</text>
-                <text x="41" y="29" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1px">EMPOWERING LIFE</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-26.jpg" alt="Client Logo 26" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Goldi Solar">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="21" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#1C355E" letter-spacing="1.5px">GOLDI</text>
-                <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="10" fill="#E87722" letter-spacing="4px">SOLAR</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-27.jpg" alt="Client Logo 27" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Naturals">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="20" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#0A7C42" letter-spacing="1px">NATUR</text>
-                <circle cx="95" cy="18" r="5" fill="#66BB6A" />
-                <text x="104" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#0A7C42">LS</text>
-                <text x="22" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TASTE THE ORIGINAL</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-28.jpg" alt="Client Logo 28" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Skoda Stellar">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="25" cy="20" r="10" fill="none" stroke="#4BA82E" stroke-width="2" />
-                <path d="M 22 17 L 28 20 L 22 23 Z" fill="#4BA82E" />
-                <text x="42" y="21" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="1.5px">SKODA</text>
-                <text x="42" y="30" font-family="'Montserrat', sans-serif" font-weight="900" font-size="12" fill="#4BA82E" letter-spacing="2px">STELLAR</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-29.jpg" alt="Client Logo 29" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Qutone Ceramic">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#008080" letter-spacing="3px">QUTONE</text>
-                <text x="80" y="33" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="2px">CERAMIC INNOVATIONS</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-30.jpg" alt="Client Logo 30" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Thakkers">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="20" y="8" width="18" height="24" rx="2" fill="#1E4E79" />
-                <path d="M 29 11 L 29 29 M 23 18 L 35 18" stroke="#FFFFFF" stroke-width="1.5" />
-                <text x="46" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="13" fill="#1E4E79" letter-spacing="1.5px">THAKKERS</text>
-                <text x="47" y="30" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TRUST. HERITAGE. QUALITY.</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-31.jpg" alt="Client Logo 31" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="ABH Developers">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 16 28 L 24 10 L 32 28 L 27 28 L 24 19 L 21 28 Z" fill="#008080" />
-                <text x="38" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="16" fill="#008080" letter-spacing="1px">ABH</text>
-                <text x="39" y="31" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="currentColor" letter-spacing="2px">DEVELOPERS</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-32.jpg" alt="Client Logo 32" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Bikes24">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="10" y="6" width="90" height="28" rx="6" fill="#0288D1" />
-                <text x="18" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#FFFFFF" letter-spacing="1px">BIKES</text>
-                <rect x="104" y="6" width="46" height="28" rx="6" fill="#FF9800" />
-                <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-33.jpg" alt="Client Logo 33" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Reneev Developers">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 28 8 L 34 16 L 34 32 L 28 32 Z M 36 12 L 42 18 L 42 32 L 36 32 Z" fill="#1B6B93" />
-                <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="#1B6B93" letter-spacing="2.5px">RENEEV</text>
-                <text x="51" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1.5px">DEVELOPERS</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-34.jpg" alt="Client Logo 34" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-35.jpg" alt="Client Logo 35" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-36.jpg" alt="Client Logo 36" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-37.jpg" alt="Client Logo 37" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-38.jpg" alt="Client Logo 38" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-39.jpg" alt="Client Logo 39" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-40.jpg" alt="Client Logo 40" class="brand-logo-img" loading="lazy" />
             </div>
           </div>
-          <!-- Group 2 (Duplicate for Infinite Loop) -->
           <div class="marquee-group" aria-hidden="true">
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="19" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="#E51937" letter-spacing="0.5px">mahindra</text>
-                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="9" fill="#E51937" letter-spacing="3px">TRACTORS</text>
-              </svg>
+              <img src="img/Client Logos-21.jpg" alt="Client Logo 21" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="28" cy="14" r="3.5" fill="#FF3278" />
-                <path d="M 20 28 L 28 20 L 36 28 M 28 20 L 28 26" stroke="#FF3278" stroke-width="2.5" stroke-linecap="round" />
-                <text x="46" y="26" font-family="'Montserrat', sans-serif" font-weight="800" font-size="17" fill="currentColor">cult store</text>
-              </svg>
+              <img src="img/Client Logos-22.jpg" alt="Client Logo 22" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="18" y="27" font-family="'Montserrat', sans-serif" font-weight="900" font-style="italic" font-size="22" fill="#002D62" letter-spacing="1px">TVS</text>
-                <path d="M 85 24 L 92 18 L 104 18 L 115 11 L 108 20 L 118 22 L 102 24 L 95 28 Z" fill="#D32F2F" />
-              </svg>
+              <img src="img/Client Logos-23.jpg" alt="Client Logo 23" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="22" cy="20" r="8" fill="none" stroke="#8E24AA" stroke-width="2" stroke-dasharray="2 2" />
-                <text x="36" y="21" font-family="'Montserrat', sans-serif" font-weight="800" font-size="12" fill="#5E2750" letter-spacing="2px">CARATLANE</text>
-                <text x="36" y="29" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6" fill="#888" letter-spacing="1px">A TATA PRODUCT</text>
-              </svg>
+              <img src="img/Client Logos-24.jpg" alt="Client Logo 24" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="20" text-anchor="middle" font-family="'Cinzel', 'Playfair Display', serif" font-weight="700" font-size="14" fill="currentColor" letter-spacing="3px">ST REGIS</text>
-                <text x="80" y="29" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6.5" fill="var(--ink-dim)" letter-spacing="2px">MUMBAI</text>
-              </svg>
+              <img src="img/Client Logos-25.jpg" alt="Client Logo 25" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="24" cy="20" r="9" fill="none" stroke="#E5A93C" stroke-width="2" />
-                <path d="M 24 14 Q 28 20 24 26" stroke="#E5A93C" stroke-width="2" fill="none" />
-                <text x="40" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="15" fill="currentColor" letter-spacing="2px">SPACE</text>
-                <text x="41" y="29" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1px">EMPOWERING LIFE</text>
-              </svg>
+              <img src="img/Client Logos-26.jpg" alt="Client Logo 26" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="21" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#1C355E" letter-spacing="1.5px">GOLDI</text>
-                <text x="80" y="31" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="800" font-size="10" fill="#E87722" letter-spacing="4px">SOLAR</text>
-              </svg>
+              <img src="img/Client Logos-27.jpg" alt="Client Logo 27" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="20" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#0A7C42" letter-spacing="1px">NATUR</text>
-                <circle cx="95" cy="18" r="5" fill="#66BB6A" />
-                <text x="104" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="#0A7C42">LS</text>
-                <text x="22" y="32" font-family="'Montserrat', sans-serif" font-weight="700" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TASTE THE ORIGINAL</text>
-              </svg>
+              <img src="img/Client Logos-28.jpg" alt="Client Logo 28" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="25" cy="20" r="10" fill="none" stroke="#4BA82E" stroke-width="2" />
-                <path d="M 22 17 L 28 20 L 22 23 Z" fill="#4BA82E" />
-                <text x="42" y="21" font-family="'Montserrat', sans-serif" font-weight="700" font-size="8" fill="currentColor" letter-spacing="1.5px">SKODA</text>
-                <text x="42" y="30" font-family="'Montserrat', sans-serif" font-weight="900" font-size="12" fill="#4BA82E" letter-spacing="2px">STELLAR</text>
-              </svg>
+              <img src="img/Client Logos-29.jpg" alt="Client Logo 29" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="20" fill="#008080" letter-spacing="3px">QUTONE</text>
-                <text x="80" y="33" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="2px">CERAMIC INNOVATIONS</text>
-              </svg>
+              <img src="img/Client Logos-30.jpg" alt="Client Logo 30" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="20" y="8" width="18" height="24" rx="2" fill="#1E4E79" />
-                <path d="M 29 11 L 29 29 M 23 18 L 35 18" stroke="#FFFFFF" stroke-width="1.5" />
-                <text x="46" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="13" fill="#1E4E79" letter-spacing="1.5px">THAKKERS</text>
-                <text x="47" y="30" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5.5" fill="var(--ink-dim)" letter-spacing="1px">TRUST. HERITAGE. QUALITY.</text>
-              </svg>
+              <img src="img/Client Logos-31.jpg" alt="Client Logo 31" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 16 28 L 24 10 L 32 28 L 27 28 L 24 19 L 21 28 Z" fill="#008080" />
-                <text x="38" y="22" font-family="'Montserrat', sans-serif" font-weight="800" font-size="16" fill="#008080" letter-spacing="1px">ABH</text>
-                <text x="39" y="31" font-family="'Montserrat', sans-serif" font-weight="700" font-size="7" fill="currentColor" letter-spacing="2px">DEVELOPERS</text>
-              </svg>
+              <img src="img/Client Logos-32.jpg" alt="Client Logo 32" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="10" y="6" width="90" height="28" rx="6" fill="#0288D1" />
-                <text x="18" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="16" fill="#FFFFFF" letter-spacing="1px">BIKES</text>
-                <rect x="104" y="6" width="46" height="28" rx="6" fill="#FF9800" />
-                <text x="112" y="26" font-family="'Montserrat', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF">24</text>
-              </svg>
+              <img src="img/Client Logos-33.jpg" alt="Client Logo 33" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <path d="M 28 8 L 34 16 L 34 32 L 28 32 Z M 36 12 L 42 18 L 42 32 L 36 32 Z" fill="#1B6B93" />
-                <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="#1B6B93" letter-spacing="2.5px">RENEEV</text>
-                <text x="51" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1.5px">DEVELOPERS</text>
-              </svg>
+              <img src="img/Client Logos-34.jpg" alt="Client Logo 34" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-35.jpg" alt="Client Logo 35" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-36.jpg" alt="Client Logo 36" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-37.jpg" alt="Client Logo 37" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-38.jpg" alt="Client Logo 38" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-39.jpg" alt="Client Logo 39" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-40.jpg" alt="Client Logo 40" class="brand-logo-img" loading="lazy" />
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── ROW 3 (Left to Right / Normal Direction) ── -->
+      <!-- ── ROW 3 (Left to Right / Normal Direction: Logos 41–60) ── -->
       <div class="brand-row-wrap marquee-left">
         <div class="marquee-track">
-          <!-- Group 1 -->
           <div class="marquee-group">
-            <div class="brand-logo-card" title="Istana">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="24" cy="20" r="8" fill="none" stroke="#007A87" stroke-width="1.8" stroke-dasharray="3 2" />
-                <text x="38" y="22" font-family="'Cinzel', serif" font-weight="700" font-size="14" fill="#007A87" letter-spacing="2.5px">ISTANA</text>
-                <text x="39" y="30" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6" fill="var(--ink-dim)" letter-spacing="1.5px">LUXURY VILLAS</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-41.jpg" alt="Client Logo 41" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Oberoi Mall">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="25" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="600" font-size="22" fill="currentColor">oberoi mall</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-42.jpg" alt="Client Logo 42" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Clear">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="25" y="8" width="110" height="24" rx="4" fill="#E51937" />
-                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF" letter-spacing="2.5px">CLEAR</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-43.jpg" alt="Client Logo 43" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Swati">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="18" y="14" width="8" height="12" fill="#E51937" />
-                <rect x="28" y="14" width="8" height="12" fill="#222222" />
-                <text x="44" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="currentColor" letter-spacing="2px">SWATI</text>
-                <text x="45" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1px">BUILDING TOMORROW</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-44.jpg" alt="Client Logo 44" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Volkswagen Landmark">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="30" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="2" />
-                <path d="M 23 15 L 27 25 L 30 18 L 33 25 L 37 15" stroke="currentColor" stroke-width="1.8" fill="none" />
-                <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="1px">Landmark</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-45.jpg" alt="Client Logo 45" class="brand-logo-img" loading="lazy" />
             </div>
-            <div class="brand-logo-card" title="Navratna">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="26" text-anchor="middle" font-family="'Outfit', 'Montserrat', sans-serif" font-weight="800" font-size="20" fill="currentColor" letter-spacing="-0.02em">navratna</text>
-              </svg>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-46.jpg" alt="Client Logo 46" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-47.jpg" alt="Client Logo 47" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-48.jpg" alt="Client Logo 48" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-49.jpg" alt="Client Logo 49" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-50.jpg" alt="Client Logo 50" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-51.jpg" alt="Client Logo 51" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-52.jpg" alt="Client Logo 52" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-53.jpg" alt="Client Logo 53" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-54.jpg" alt="Client Logo 54" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-55.jpg" alt="Client Logo 55" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-56.jpg" alt="Client Logo 56" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-57.jpg" alt="Client Logo 57" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-58.jpg" alt="Client Logo 58" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-59.jpg" alt="Client Logo 59" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-60.jpg" alt="Client Logo 60" class="brand-logo-img" loading="lazy" />
             </div>
           </div>
-          <!-- Group 2 (Duplicate for Infinite Loop) -->
           <div class="marquee-group" aria-hidden="true">
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="24" cy="20" r="8" fill="none" stroke="#007A87" stroke-width="1.8" stroke-dasharray="3 2" />
-                <text x="38" y="22" font-family="'Cinzel', serif" font-weight="700" font-size="14" fill="#007A87" letter-spacing="2.5px">ISTANA</text>
-                <text x="39" y="30" font-family="'Montserrat', sans-serif" font-weight="600" font-size="6" fill="var(--ink-dim)" letter-spacing="1.5px">LUXURY VILLAS</text>
-              </svg>
+              <img src="img/Client Logos-41.jpg" alt="Client Logo 41" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="25" text-anchor="middle" font-family="'Brush Script MT', cursive, sans-serif" font-weight="600" font-size="22" fill="currentColor">oberoi mall</text>
-              </svg>
+              <img src="img/Client Logos-42.jpg" alt="Client Logo 42" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="25" y="8" width="110" height="24" rx="4" fill="#E51937" />
-                <text x="80" y="25" text-anchor="middle" font-family="'Montserrat', sans-serif" font-weight="900" font-size="15" fill="#FFFFFF" letter-spacing="2.5px">CLEAR</text>
-              </svg>
+              <img src="img/Client Logos-43.jpg" alt="Client Logo 43" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <rect x="18" y="14" width="8" height="12" fill="#E51937" />
-                <rect x="28" y="14" width="8" height="12" fill="#222222" />
-                <text x="44" y="24" font-family="'Montserrat', sans-serif" font-weight="900" font-size="17" fill="currentColor" letter-spacing="2px">SWATI</text>
-                <text x="45" y="32" font-family="'Montserrat', sans-serif" font-weight="600" font-size="5" fill="var(--ink-dim)" letter-spacing="1px">BUILDING TOMORROW</text>
-              </svg>
+              <img src="img/Client Logos-44.jpg" alt="Client Logo 44" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <circle cx="30" cy="20" r="11" fill="none" stroke="currentColor" stroke-width="2" />
-                <path d="M 23 15 L 27 25 L 30 18 L 33 25 L 37 15" stroke="currentColor" stroke-width="1.8" fill="none" />
-                <text x="50" y="24" font-family="'Montserrat', sans-serif" font-weight="800" font-size="14" fill="currentColor" letter-spacing="1px">Landmark</text>
-              </svg>
+              <img src="img/Client Logos-45.jpg" alt="Client Logo 45" class="brand-logo-img" loading="lazy" />
             </div>
             <div class="brand-logo-card">
-              <svg viewBox="0 0 160 40" class="brand-logo-svg">
-                <text x="80" y="26" text-anchor="middle" font-family="'Outfit', 'Montserrat', sans-serif" font-weight="800" font-size="20" fill="currentColor" letter-spacing="-0.02em">navratna</text>
-              </svg>
+              <img src="img/Client Logos-46.jpg" alt="Client Logo 46" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-47.jpg" alt="Client Logo 47" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-48.jpg" alt="Client Logo 48" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-49.jpg" alt="Client Logo 49" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-50.jpg" alt="Client Logo 50" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-51.jpg" alt="Client Logo 51" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-52.jpg" alt="Client Logo 52" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-53.jpg" alt="Client Logo 53" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-54.jpg" alt="Client Logo 54" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-55.jpg" alt="Client Logo 55" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-56.jpg" alt="Client Logo 56" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-57.jpg" alt="Client Logo 57" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-58.jpg" alt="Client Logo 58" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-59.jpg" alt="Client Logo 59" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-60.jpg" alt="Client Logo 60" class="brand-logo-img" loading="lazy" />
             </div>
           </div>
         </div>

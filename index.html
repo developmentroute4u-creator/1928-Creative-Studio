@@ -1114,40 +1114,16 @@
     }
 
     .wall-card .wc-inner::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.05) 45%, rgba(0, 0, 0, 0.65) 100%);
-      pointer-events: none;
-      z-index: 1;
-      border-radius: inherit;
+      display: none;
     }
 
     .wall-card:hover .wc-inner {
       filter: grayscale(0%);
     }
 
-    .wall-card .wc-num {
-      font-family: 'Space Mono', monospace;
-      font-size: .62rem;
-      font-weight: 700;
-      color: #FFFFFF;
-      letter-spacing: .08em;
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
-    }
-
+    .wall-card .wc-num,
     .wall-card .wc-label {
-      font-family: var(--font-primary);
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      color: #FFFFFF;
-      position: relative;
-      z-index: 2;
-      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);
+      display: none !important;
     }
 
     #wc-back1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-01.jpg'); }
@@ -1485,6 +1461,11 @@
       object-fit: cover;
       display: block;
       transition: transform .7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .p-card-6 .pcv-media img,
+    img[src*="Portfolio Showcase)-06"] {
+      object-position: left center !important;
     }
 
     .p-card-v:hover .pcv-media img {
@@ -2166,6 +2147,26 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .svc-s3-art-frame.is-white-bg {
+      background: #ffffff !important;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="dark"] .svc-s3-art-frame.is-white-bg {
+      background: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .svc-art-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+      pointer-events: none;
     }
 
     .svc-art-orbit {
@@ -3437,55 +3438,55 @@
       <div class="room-scene" id="roomScene">
         <div class="room-cube" id="roomCube">
 
-          <!-- ROOM 1 BACK WALL: 2 project cards (Sipology & NB Fotograph) -->
+          <!-- ROOM 1 BACK WALL: 2 project cards -->
           <div class="room-face back" id="wallBack">
             <div class="wall-card r1-card" id="wc-back1"
               style="width:180px;height:120px;top:28px;right:36px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-01.jpg');"><span class="wc-num">01</span><span class="wc-label">Sipology</span></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-01.jpg');"></div>
             </div>
             <div class="wall-card r1-card" id="wc-back2"
               style="width:160px;height:110px;bottom:28px;left:36px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-02.jpg');"><span class="wc-num">02</span><span class="wc-label">NB Fotograph</span></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-02.jpg');"></div>
             </div>
           </div>
 
-          <!-- ROOM 1 LEFT WALL: 2 cards with 3D perspective tilt (Awards Plus & Claceil) -->
+          <!-- ROOM 1 LEFT WALL: 2 cards with 3D perspective tilt -->
           <div class="room-face left" id="wallLeft">
             <div class="wall-card r1-card" id="wc-l1"
               style="width:240px;height:155px;top:28px;left:0px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-03.jpg');"><span class="wc-num">03</span><span class="wc-label">Awards Plus</span></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-03.jpg');"></div>
             </div>
             <div class="wall-card r1-card" id="wc-l2"
               style="width:190px;height:125px;bottom:46px;left:45px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-04.jpg');"><span class="wc-num">04</span><span class="wc-label">Claceil</span></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-04.jpg');"></div>
             </div>
           </div>
 
-          <!-- ROOM 1 RIGHT WALL: 2 cards with 3D perspective tilt (Vibee & XPRO.AI) -->
+          <!-- ROOM 1 RIGHT WALL: 2 cards with 3D perspective tilt -->
           <div class="room-face right" id="wallRight">
             <div class="wall-card r1-card" id="wc-r1"
               style="width:240px;height:155px;top:28px;right:0px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-05.jpg');"><span class="wc-num">05</span><span class="wc-label">Vibee</span></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-05.jpg');"></div>
             </div>
             <div class="wall-card r1-card" id="wc-r2"
               style="width:190px;height:125px;bottom:46px;right:45px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-06.jpg');"><span class="wc-num">06</span><span class="wc-label">XPRO.AI</span></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-06.jpg');"></div>
             </div>
           </div>
 
-          <!-- TOP WALL (CEILING): 1 card with top-down 3D perspective tilt (Rainbow Creation) -->
+          <!-- TOP WALL (CEILING): 1 card with top-down 3D perspective tilt -->
           <div class="room-face top" id="wallTop">
             <div class="wall-card r1-card" id="wc-t1"
               style="width:240px;height:145px;top:0px;right:70px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-07.jpg');"><span class="wc-num">07</span><span class="wc-label">Rainbow Creation</span></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-07.jpg');"></div>
             </div>
           </div>
 
-          <!-- BOTTOM WALL (FLOOR): 1 card with bottom-up 3D perspective tilt (Infyli) -->
+          <!-- BOTTOM WALL (FLOOR): 1 card with bottom-up 3D perspective tilt -->
           <div class="room-face bottom" id="wallBottom">
             <div class="wall-card r1-card" id="wc-b1"
               style="width:240px;height:160px;bottom:0px;left:50%;margin-left:-120px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-08.jpg');"><span class="wc-num">08</span><span class="wc-label">Infyli</span></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-08.jpg');"></div>
             </div>
           </div>
 
@@ -3641,7 +3642,7 @@
       <article class="p-flow-item p-item-6">
         <a href="project-detail.html" class="p-card-v p-card-6">
           <div class="pcv-media">
-            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg" alt="Selected Work 06" style="width:100%;height:100%;object-fit:cover;" />
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg" alt="Selected Work 06" style="width:100%;height:100%;object-fit:cover;object-position:left center;" />
             <div class="pcv-badge-top"><span class="pcv-num">06</span><span class="pcv-client">ALDA</span>
             </div>
           </div>
@@ -3790,10 +3791,11 @@
 
           <!-- Card 0: 01 Logo Design -->
           <div class="svc-showcase-card" id="svcCard0">
-            <div class="svc-s3-art-frame">
-              <div class="svc-art-torus">
-                <div class="svc-torus-shape s1"></div>
-              </div>
+            <div class="svc-s3-art-frame is-white-bg" style="background: #ffffff !important;">
+              <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();">
+                <source src="video/Test.mp4" type="video/mp4">
+                <source src="video/test.mp4" type="video/mp4">
+              </video>
             </div>
             <div class="svc-card-num-watermark">01</div>
             <div class="svc-card-header">
