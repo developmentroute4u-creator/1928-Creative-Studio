@@ -167,6 +167,31 @@
       transform: translateY(-100%);
     }
 
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo-img {
+      height: clamp(32px, 3.5vw, 40px);
+      width: auto;
+      max-width: 180px;
+      display: block;
+      object-fit: contain;
+      transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .nav-logo:hover .nav-logo-img {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    [data-theme="dark"] .nav-logo-img,
+    body.dark .nav-logo-img {
+      filter: brightness(1.28) contrast(1.08);
+    }
+
     .nav-logo svg {
       height: 32px;
       width: auto;
@@ -3188,26 +3213,8 @@
 
   <!-- ══ FIXED NAVIGATION ══ -->
   <nav id="nav">
-    <a href="index.html" class="nav-logo">
-      <svg viewBox="0 0 400 80" xmlns="http://www.w3.org/2000/svg" style="height:34px;width:auto;">
-        <style>
-          .nl {
-            font-family: 'Raleway', sans-serif;
-            font-weight: 700;
-            fill: #C8102E;
-          }
-
-          .ns {
-            font-family: 'Raleway', sans-serif;
-            font-weight: 600;
-            fill: #C8102E;
-            letter-spacing: 6px;
-          }
-        </style>
-        <text x="0" y="52" class="nl" font-size="52">1928</text>
-        <text x="218" y="38" class="ns" font-size="18">CREATIVE</text>
-        <text x="218" y="58" class="ns" font-size="18">STUDIO</text>
-      </svg>
+    <a href="index.html" class="nav-logo" aria-label="1928 Creative Studio">
+      <img src="img/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img">
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
