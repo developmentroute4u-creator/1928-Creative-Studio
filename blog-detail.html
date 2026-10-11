@@ -1,0 +1,2873 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Editorial Codex · All Blogs & Research | 1928 Creative Studio</title>
+  <meta name="description"
+    content="Comprehensive editorial archive of architectural research dispatches, computational WebGL shaders, luxury brand geometry, and spatial theorems by 1928 Creative Studio." />
+
+  <!-- Preconnect & Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ── Font System (Project Core Fonts Only) ── */
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ── CORE DESIGN SYSTEM TOKENS ── */
+    :root {
+      --bg: #0A0A0C;
+      --bg-alt: #111114;
+      --card-bg: #121216;
+      --card-alt: #17171d;
+      --card-hover: #1a1a22;
+      --ink: #f5f5f7;
+      --ink-mid: #9898a6;
+      --ink-dim: #545462;
+      --ink-muted: #3a3a44;
+      --rule: rgba(255, 255, 255, 0.08);
+      --rule-m: rgba(255, 255, 255, 0.14);
+      --rule-heavy: rgba(255, 255, 255, 0.24);
+      --cr: #B91C1C;
+      --cr-dk: #991B1B;
+      --cr-bright: #e62343;
+      --cr-soft: rgba(200, 16, 46, 0.14);
+      --cr-glow: rgba(200, 16, 46, 0.35);
+      --sp: cubic-bezier(0.16, 1, 0.3, 1);
+      --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      --nav-bg: rgba(10, 10, 14, 0.82);
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f5f8;
+      --bg-alt: #eaebee;
+      --card-bg: #ffffff;
+      --card-alt: #f0f0f4;
+      --card-hover: #ffffff;
+      --ink: #0A0A0A;
+      --ink-mid: #545462;
+      --ink-dim: #8c8c9a;
+      --ink-muted: #b0b0be;
+      --rule: rgba(10, 10, 10, 0.08);
+      --rule-m: rgba(10, 10, 10, 0.15);
+      --rule-heavy: rgba(10, 10, 10, 0.25);
+      --cr: #8B1A1A;
+      --cr-dk: #6B1212;
+      --cr-bright: #c8102e;
+      --cr-soft: rgba(139, 26, 26, 0.08);
+      --cr-glow: rgba(139, 26, 26, 0.25);
+      --nav-bg: rgba(248, 248, 250, 0.82);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-secondary);
+      overflow-x: hidden;
+      min-height: 100vh;
+      transition: background-color 0.4s ease, color 0.4s ease;
+      position: relative;
+    }
+
+    /* ── Custom Mouse Follower Physics ── */
+    .c-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s;
+    }
+
+    .c-ring {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s, height 0.25s, border-color 0.25s, transform 0.08s ease-out;
+    }
+
+    /* ── FIXED NAVIGATION (Hidden on Dedicated Blog Detail View) ── */
+    #nav {
+      display: none !important;
+    }
+
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo-img {
+      height: clamp(32px, 3.5vw, 40px);
+      width: auto;
+      max-width: 180px;
+      display: block;
+      object-fit: contain;
+      transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .nav-logo:hover .nav-logo-img {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    [data-theme="dark"] .nav-logo-img,
+    body.dark .nav-logo-img {
+      filter: brightness(1.28) contrast(1.08);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(20px, 2.5vw, 36px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-primary);
+      font-size: 13.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.3s var(--sp);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--ink);
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--cr);
+      border-radius: 2px;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       BESPOKE ATELIER SERVICES DROPDOWN SYSTEM
+       ═══════════════════════════════════════════════════════════ */
+    .nav-has-dropdown {
+      position: relative;
+    }
+
+    .nav-has-dropdown > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-caret {
+      width: 8px;
+      height: 5px;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+      opacity: 0.7;
+      display: inline-block;
+      vertical-align: middle;
+      pointer-events: none;
+    }
+
+    .nav-has-dropdown:hover > a,
+    .nav-has-dropdown:focus-within > a {
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-has-dropdown:hover .nav-caret,
+    .nav-has-dropdown:focus-within .nav-caret {
+      transform: rotate(180deg);
+      opacity: 1;
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s;
+      z-index: 1001;
+      padding-top: 12px; /* mouse bridge */
+      width: clamp(210px, 18vw, 230px);
+    }
+
+    .nav-has-dropdown:hover .nav-dropdown-menu,
+    .nav-has-dropdown:focus-within .nav-dropdown-menu,
+    .nav-has-dropdown.touch-open .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-dropdown-panel {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(10, 10, 10, 0.06);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      padding: 6px;
+      text-align: left;
+    }
+
+    [data-theme="dark"] .nav-dropdown-panel,
+    body.dark .nav-dropdown-panel {
+      background: rgba(14, 14, 18, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-dropdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 9px;
+      text-decoration: none;
+      background: transparent;
+      transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+      position: relative;
+    }
+
+    /* Reset global nav underlines inside dropdown */
+    .nav-dropdown-menu a::after,
+    .nav-dropdown-menu a.active::after {
+      display: none !important;
+    }
+
+    .nav-dropdown-item:hover {
+      background: rgba(10, 10, 10, 0.035);
+      transform: translateX(2px);
+    }
+
+    [data-theme="dark"] .nav-dropdown-item:hover,
+    body.dark .nav-dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .ndi-num {
+      font-family: var(--font-mono, 'Space Mono', monospace);
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--cr, #C8102E);
+      opacity: 0.75;
+      letter-spacing: 0.03em;
+      min-width: 18px;
+      transition: opacity 0.18s ease;
+    }
+
+    .nav-dropdown-item:hover .ndi-num {
+      opacity: 1;
+    }
+
+    .ndi-title {
+      font-family: var(--font-primary, 'Gotham', 'Montserrat', sans-serif);
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink, #0E0E10);
+      letter-spacing: 0.01em;
+      text-transform: none;
+      transition: color 0.18s ease;
+      line-height: 1.25;
+      flex: 1;
+    }
+
+    [data-theme="dark"] .ndi-title,
+    body.dark .ndi-title {
+      color: #EDEDF0;
+    }
+
+    .nav-dropdown-item:hover .ndi-title {
+      color: var(--cr, #C8102E);
+    }
+
+    .ndi-arrow {
+      opacity: 0;
+      transform: translateX(-4px);
+      color: var(--cr, #C8102E);
+      transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+
+    .nav-dropdown-item:hover .ndi-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .nav-dropdown-item.ndi-active {
+      background: rgba(200, 16, 46, 0.05);
+    }
+
+    [data-theme="dark"] .nav-dropdown-item.ndi-active,
+    body.dark .nav-dropdown-item.ndi-active {
+      background: rgba(200, 16, 46, 0.12);
+    }
+
+    .nav-dropdown-item.ndi-active .ndi-title {
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-dropdown-item.ndi-active .ndi-arrow {
+      opacity: 0.8;
+      transform: translateX(0);
+    }
+
+    .nav-dropdown-footer {
+      margin-top: 4px;
+      padding-top: 5px;
+      border-top: 1px solid rgba(10, 10, 10, 0.05);
+    }
+
+    [data-theme="dark"] .nav-dropdown-footer,
+    body.dark .nav-dropdown-footer {
+      border-top-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-dropdown-foot-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-family: var(--font-primary, 'Gotham', 'Montserrat', sans-serif);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink-mid, #666672);
+      text-decoration: none;
+      background: transparent;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    [data-theme="dark"] .nav-dropdown-foot-link,
+    body.dark .nav-dropdown-foot-link {
+      color: #9A9AA6;
+    }
+
+    .nav-dropdown-foot-link svg {
+      transition: transform 0.18s ease, color 0.18s ease;
+      color: currentColor;
+    }
+
+    .nav-dropdown-foot-link:hover {
+      background: rgba(200, 16, 46, 0.05);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    [data-theme="dark"] .nav-dropdown-foot-link:hover,
+    body.dark .nav-dropdown-foot-link:hover {
+      background: rgba(200, 16, 46, 0.12);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    .nav-dropdown-foot-link:hover svg {
+      transform: translateX(3px);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-cta {
+      font-family: var(--font-primary, var(--font-secondary));
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    /* Light Theme: hover becomes darker */
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    /* Dark Theme: CTA turns white on hover */
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .nav-logo svg .nl,
+    .nav-logo svg .ns {
+      fill: var(--cr);
+      transition: fill 0.3s;
+    }
+
+    /* ── Floating Theme Toggle Button ── */
+    #theme-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9990;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-m);
+      color: var(--ink);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+
+    #theme-fab:hover {
+      transform: translateY(-3px) scale(1.08);
+      border-color: var(--cr);
+      box-shadow: 0 14px 40px var(--cr-glow);
+    }
+
+    #theme-fab svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform 0.4s var(--sp);
+    }
+
+    #theme-fab:hover svg {
+      transform: rotate(25deg);
+    }
+
+    [data-theme="dark"] #theme-fab .icon-moon,
+    [data-theme="light"] #theme-fab .icon-sun {
+      display: none;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-sun,
+    [data-theme="light"] #theme-fab .icon-moon {
+      display: block;
+    }
+
+    /* ── Smooth Scrollbar (Signature Crimson) ── */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--cr) var(--bg);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cr);
+      border-radius: 3px;
+    }
+
+    /* ── MAIN ARCHIVE CONTAINER ── */
+    .blog-archive-page {
+      padding-top: 108px;
+      padding-bottom: 28px;
+      width: 100%;
+      max-width: 1520px;
+      margin: 0 auto;
+      padding-left: clamp(24px, 4.5vw, 64px);
+      padding-right: clamp(24px, 4.5vw, 64px);
+      box-sizing: border-box;
+    }
+
+    /* ── ARCHIVE HEADER & HERO SECTION ── */
+    .bah-header-section {
+      margin-bottom: clamp(40px, 6vh, 68px);
+      position: relative;
+    }
+
+    .bah-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 16px;
+    }
+
+    .bah-breadcrumb a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color 0.25s ease;
+    }
+
+    .bah-breadcrumb a:hover {
+      color: var(--cr);
+    }
+
+    .bah-breadcrumb span.sep {
+      color: var(--rule-heavy);
+    }
+
+    .bah-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: 16px;
+    }
+
+    .bah-eyebrow-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cr);
+      box-shadow: 0 0 10px var(--cr-glow);
+      animation: pulseDot 2.4s infinite ease-in-out;
+    }
+
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.8); }
+    }
+
+    .bah-title-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .bah-title {
+      font-family: var(--font-primary);
+      font-size: clamp(38px, 5.2vw, 68px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      color: var(--ink);
+      max-width: 20ch;
+    }
+
+    .bah-stats-pills {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .bah-stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      border-radius: 999px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+    }
+
+    .bah-stat-pill strong {
+      color: var(--ink);
+    }
+
+    .bah-lead-desc {
+      font-size: clamp(16px, 1.25vw, 19px);
+      color: var(--ink-mid);
+      line-height: 1.65;
+      max-width: 68ch;
+      margin-bottom: 36px;
+    }
+
+    /* ── Top Back Button Navigation ── */
+    .bah-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .bah-back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s var(--sp);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    .bah-back-btn .bbb-arrow {
+      transition: transform 0.25s var(--sp), color 0.25s;
+      color: var(--cr);
+    }
+
+    .bah-back-btn:hover {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--cr-glow);
+    }
+
+    .bah-back-btn:hover .bbb-arrow {
+      color: #ffffff;
+      transform: translateX(-4px);
+    }
+
+    /* ── SEARCH & FILTER CONTROLS TOOLBAR ── */
+    .bah-toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 20px;
+      padding: clamp(20px, 2.5vw, 28px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+      margin-bottom: 44px;
+    }
+
+    .bah-search-wrap {
+      position: relative;
+      width: 100%;
+    }
+
+    .bah-search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      stroke: var(--ink-dim);
+      pointer-events: none;
+    }
+
+    .bah-search-input {
+      width: 100%;
+      padding: 14px 48px 14px 48px;
+      background: var(--bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 12px;
+      color: var(--ink);
+      font-family: var(--font-secondary);
+      font-size: 14.5px;
+      outline: none;
+      transition: border-color 0.3s var(--sp), box-shadow 0.3s var(--sp);
+    }
+
+    .bah-search-input:focus {
+      border-color: var(--cr);
+      box-shadow: 0 0 0 3px var(--cr-soft);
+    }
+
+    .bah-search-input::placeholder {
+      color: var(--ink-dim);
+    }
+
+    .bah-clear-btn {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--ink-dim);
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      padding: 4px;
+      line-height: 1;
+    }
+
+    .bah-clear-btn:hover {
+      color: var(--ink);
+    }
+
+    /* Category Filter Pills */
+    .bah-filter-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .bah-filter-btn {
+      background: var(--card-alt);
+      border: 1px solid var(--rule-m);
+      color: var(--ink-mid);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.3s var(--sp);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .bah-filter-btn:hover {
+      color: var(--ink);
+      border-color: var(--rule-heavy);
+      background: var(--card-hover);
+    }
+
+    .bah-filter-btn.active {
+      background: var(--cr-soft);
+      border-color: var(--cr);
+      color: var(--cr);
+    }
+
+    .bah-filter-btn.active .bfb-dot {
+      background: var(--cr);
+    }
+
+    .bfb-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+
+    /* Results summary bar */
+    .bah-results-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--ink-dim);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0 4px;
+    }
+
+    .bah-results-bar strong {
+      color: var(--ink);
+    }
+
+    /* ── BLOG CARDS DIRECTORY GRID ── */
+    .blog-directory-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(24px, 2.5vw, 36px);
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 1180px) {
+      .blog-directory-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .blog-directory-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── INDIVIDUAL EDITORIAL BLOG CARD ── */
+    .blog-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 520px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+      transition: transform 0.4s var(--sp), border-color 0.4s var(--sp), box-shadow 0.4s var(--sp);
+      box-sizing: border-box;
+      opacity: 0;
+      transform: translateY(24px);
+      animation: cardEntrance 0.6s var(--sp) forwards;
+    }
+
+    @keyframes cardEntrance {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    [data-theme="light"] .blog-card {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+
+    .blog-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--rule-heavy);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45), 0 0 24px rgba(255, 255, 255, 0.04);
+    }
+
+    [data-theme="light"] .blog-card:hover {
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08), 0 0 20px rgba(200, 16, 46, 0.08);
+      border-color: rgba(200, 16, 46, 0.35);
+    }
+
+    /* Card Top Visual 16:9 */
+    .card-visual-box {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: var(--card-alt);
+      border: 1px dashed var(--rule-m);
+      border-radius: 16px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      overflow: hidden;
+      transition: background-color 0.35s var(--sp), border-color 0.35s var(--sp);
+    }
+
+    .blog-card:hover .card-visual-box {
+      border-color: var(--rule-heavy);
+      background: var(--card-hover);
+    }
+
+    .cvb-crosshair {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-dim);
+      opacity: 0.5;
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .cvb-tl { top: 8px; left: 10px; }
+    .cvb-tr { top: 8px; right: 10px; }
+    .cvb-bl { bottom: 8px; left: 10px; }
+    .cvb-br { bottom: 8px; right: 10px; }
+
+    .cvb-icon-wrap {
+      color: var(--ink-dim);
+      transition: transform 0.4s var(--sp), color 0.35s var(--sp);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .blog-card:hover .cvb-icon-wrap {
+      transform: scale(1.12);
+      color: var(--ink);
+    }
+
+    .cvb-svg {
+      width: 44px;
+      height: 44px;
+      stroke: currentColor;
+    }
+
+    .cvb-meta-tags {
+      position: absolute;
+      bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      color: var(--ink-dim);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 3px 8px;
+      border-radius: 4px;
+      backdrop-filter: blur(8px);
+    }
+
+    [data-theme="light"] .cvb-meta-tags {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    /* Card Content */
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-spec-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .card-category-tag {
+      color: var(--cr);
+      font-weight: 800;
+    }
+
+    .card-read-time {
+      color: var(--ink-dim);
+      font-weight: 500;
+    }
+
+    .card-title {
+      font-family: var(--font-primary);
+      font-size: clamp(20px, 1.7vw, 24px);
+      font-weight: 900;
+      line-height: 1.22;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 12px;
+      transition: color 0.3s var(--sp);
+    }
+
+    .blog-card:hover .card-title {
+      color: var(--cr-bright);
+    }
+
+    .card-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--ink-mid);
+      margin-bottom: 24px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Card Footer Row */
+    .card-footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--rule);
+      padding-top: 16px;
+      margin-top: auto;
+    }
+
+    .card-location {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-loc-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--ink-dim);
+    }
+
+    .card-arrow-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-family: var(--font-primary);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--rule-m);
+      background: var(--card-alt);
+      color: var(--ink);
+      transition: all 0.3s var(--sp);
+      flex-shrink: 0;
+    }
+
+    .blog-card:hover .card-arrow-btn {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px var(--cr-glow);
+    }
+
+    .blog-card:hover .card-arrow-btn svg {
+      transform: translateX(2px);
+    }
+
+    /* ── LOAD MORE BUTTON SECTION ── */
+    .load-more-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 16px;
+      margin-bottom: 12px;
+    }
+
+    .load-more-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 36px;
+      border-radius: 999px;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-heavy);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
+      transition: all 0.35s var(--sp);
+      position: relative;
+    }
+
+    .load-more-btn:hover:not(:disabled) {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 12px 32px var(--cr-glow);
+      transform: translateY(-3px);
+    }
+
+    .load-more-btn:hover:not(:disabled) .lmb-badge {
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+    }
+
+    .load-more-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      border-color: var(--rule);
+    }
+
+    .load-more-btn.loading .lmb-icon {
+      display: none;
+    }
+
+    .load-more-btn.loading .lmb-spinner {
+      display: inline-block;
+    }
+
+    .lmb-spinner {
+      display: none;
+      width: 14px;
+      height: 14px;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .lmb-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--card-alt);
+      color: var(--ink-dim);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .load-more-note {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--ink-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-search-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px dashed var(--rule-heavy);
+      border-radius: 24px;
+      margin-bottom: 60px;
+    }
+
+    .empty-search-state.show {
+      display: flex;
+    }
+
+    .ess-icon {
+      margin-bottom: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cr);
+    }
+
+    .ess-search-svg {
+      width: 44px;
+      height: 44px;
+      color: var(--cr);
+      filter: drop-shadow(0 0 14px var(--cr-glow));
+      transition: transform 0.35s var(--sp);
+    }
+
+    .empty-search-state:hover .ess-search-svg {
+      transform: scale(1.12);
+    }
+
+    .ess-title {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .ess-desc {
+      font-size: 15px;
+      color: var(--ink-mid);
+      max-width: 42ch;
+      margin-bottom: 24px;
+    }
+
+    .ess-reset-btn {
+      padding: 10px 24px;
+      border-radius: 999px;
+      background: var(--card-alt);
+      border: 1px solid var(--rule-m);
+      color: var(--ink);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s var(--sp);
+    }
+
+    .ess-reset-btn:hover {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #ffffff;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ARTICLE READER MODAL DRAWER
+       ═══════════════════════════════════════════════════════════ */
+    .reader-drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 99990;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.45s var(--sp), visibility 0.45s;
+    }
+
+    .reader-drawer-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .reader-drawer-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(920px, 94vw);
+      height: 100vh;
+      background: var(--bg);
+      border-left: 1px solid var(--rule-m);
+      z-index: 99995;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.5s var(--sp);
+      box-shadow: -24px 0 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .reader-drawer-overlay.active .reader-drawer-panel {
+      transform: translateX(0);
+    }
+
+    .reader-header-bar {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(20px, 3vw, 40px);
+      border-bottom: 1px solid var(--rule);
+      background: var(--bg);
+      flex-shrink: 0;
+    }
+
+    .reader-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .rhl-cat-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--cr);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .rhl-sep {
+      color: var(--rule-heavy);
+    }
+
+    .rhl-read-time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+    }
+
+    .reader-close-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      color: var(--ink);
+      font-size: 20px;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      transition: all 0.3s var(--sp);
+    }
+
+    .reader-close-btn:hover {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #ffffff;
+      transform: rotate(90deg);
+    }
+
+    .reader-scroll-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: clamp(32px, 5vw, 64px) clamp(24px, 4vw, 56px);
+      scroll-behavior: smooth;
+    }
+
+    .reader-body-container {
+      max-width: 740px;
+      margin: 0 auto;
+    }
+
+    .reader-h1 {
+      font-family: var(--font-primary);
+      font-size: clamp(32px, 4vw, 46px);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin-bottom: 20px;
+    }
+
+    .reader-lead {
+      font-size: 18px;
+      line-height: 1.68;
+      color: var(--ink-mid);
+      margin-bottom: 36px;
+      border-left: 3px solid var(--cr);
+      padding-left: 18px;
+    }
+
+    .reader-article-content {
+      font-size: 16.5px;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+
+    .reader-article-content h2 {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 800;
+      margin-top: 40px;
+      margin-bottom: 16px;
+      color: var(--ink);
+    }
+
+    .reader-article-content p {
+      margin-bottom: 24px;
+      color: var(--ink-mid);
+    }
+
+    .reader-pullquote {
+      margin: 36px 0;
+      padding: 28px 32px;
+      background: var(--card-alt);
+      border-left: 4px solid var(--cr);
+      border-radius: 0 16px 16px 0;
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .reader-takeaway-box {
+      margin: 36px 0;
+      padding: 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 16px;
+    }
+
+    .rtb-title {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: 16px;
+    }
+
+    .rtb-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rtb-list li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--ink-mid);
+    }
+
+    .rtb-list li::before {
+      content: '▪';
+      position: absolute;
+      left: 0;
+      color: var(--cr);
+    }
+
+    .reader-author-bio-card {
+      margin-top: 56px;
+      padding: 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .rabc-avatar-box {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--cr-soft);
+      border: 2px solid var(--cr);
+      display: grid;
+      place-items: center;
+      color: var(--cr);
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .rabc-name {
+      font-family: var(--font-primary);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .rabc-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--cr);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .rabc-bio {
+      font-size: 13.5px;
+      color: var(--ink-dim);
+      line-height: 1.5;
+    }
+
+    .reader-cta-deck {
+      margin-top: 36px;
+      margin-bottom: 40px;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(200, 16, 46, 0.12) 0%, rgba(200, 16, 46, 0.02) 100%);
+      border: 1px solid var(--cr-soft);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .rcd-title {
+      font-family: var(--font-primary);
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .rcd-sub {
+      font-size: 13.5px;
+      color: var(--ink-mid);
+    }
+
+    .rcd-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.3s var(--sp);
+    }
+
+    .rcd-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--cr-glow);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FOOTER — MODERN EDITORIAL LUXURY (Exact Site-wide Standard)
+       ═══════════════════════════════════════════════════════════ */
+    #footer-driver {
+      position: relative;
+      background: var(--bg);
+      min-height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 2.5vh, 32px) clamp(24px, 3.5vw, 52px) clamp(24px, 3.5vh, 40px);
+      box-sizing: border-box;
+      z-index: 10;
+      transition: background 0.4s var(--sp);
+      margin-top: 10px;
+    }
+
+    .footer-luxury-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: clamp(36px, 5vw, 64px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
+      padding: clamp(48px, 6vh, 68px) clamp(40px, 5vw, 72px) 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1640px;
+      min-height: clamp(500px, 68vh, 640px);
+      margin: 0 auto;
+      gap: clamp(48px, 7vh, 80px);
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+      transition: background 0.4s var(--sp), border-color 0.4s;
+    }
+
+    [data-theme="dark"] .footer-luxury-card {
+      background: var(--card-bg);
+      border-color: var(--rule-m);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.35);
+    }
+
+    .f-outer-bar {
+      width: 100%;
+      max-width: 1640px;
+      margin: clamp(28px, 4vh, 44px) auto 0;
+      padding: 0 clamp(16px, 2.5vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .f-outer-copyright,
+    .f-outer-dev {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .f-outer-dev a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .f-outer-dev a:hover {
+      color: var(--cr);
+    }
+
+    .f-header-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+      gap: clamp(28px, 3.5vw, 52px);
+      align-items: flex-start;
+    }
+
+    .f-desc-col .f-statement-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(1.4rem, 1.85vw, 1.9rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 380px;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-secondary);
+      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
+      max-width: 340px;
+      margin-bottom: 12px;
+    }
+
+    .f-desc-col .f-location-tag {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim, var(--ink-mid));
+      margin: 0 0 18px 0;
+      text-transform: uppercase;
+    }
+
+    .f-col-label {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 20px;
+    }
+
+    .f-links-clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .f-links-clean a {
+      font-family: var(--font-primary);
+      font-weight: 500;
+      font-size: 0.94rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color .2s, transform .2s;
+      display: inline-block;
+    }
+
+    .f-links-clean a:hover {
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    .f-social-circles {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .f-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.25s var(--sp);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .f-circle-btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .f-cta-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f-action-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: transform .25s var(--sp), box-shadow .25s, background 0.3s, color 0.3s;
+    }
+
+    .f-action-pill:hover {
+      transform: translateY(-3px);
+    }
+
+    .f-action-pill.cta-primary {
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(200, 16, 46, 0.22);
+    }
+
+    [data-theme="light"] .f-action-pill.cta-primary:hover {
+      background: var(--cr-dk);
+      box-shadow: 0 12px 32px rgba(139, 26, 26, 0.35);
+    }
+
+    [data-theme="dark"] .f-action-pill.cta-primary:hover {
+      background: #ffffff;
+      color: #0A0A0C;
+      box-shadow: 0 12px 32px rgba(255, 255, 255, 0.28);
+    }
+
+    .f-action-pill.cta-secondary {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+    }
+
+    .f-action-pill.cta-secondary:hover {
+      border-color: var(--ink);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .f-action-txt {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .f-action-heading {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.96rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f-action-sub {
+      font-family: var(--font-primary);
+      font-size: 0.74rem;
+      opacity: 0.78;
+    }
+
+    .f-action-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .cta-primary .f-action-arrow {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    [data-theme="dark"] .f-action-pill.cta-primary:hover .f-action-arrow {
+      background: rgba(10, 10, 12, 0.15);
+      color: #0A0A0C;
+    }
+
+    .cta-secondary .f-action-arrow {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* ── Bottom Cluster: Staggered Character Emergence Headline (Half-Cut to Full Wave) ── */
+    .f-bottom-cluster {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: clamp(32px, 5vh, 60px);
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .f-brand-title-wrap {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(12px, 2vw, 24px) 0 clamp(18px, 2.8vh, 32px) 0;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .f-brand-giant-text {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(26px, 6.85vw, 110px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      width: 100%;
+      transform: scaleY(1.22);
+      transform-origin: center bottom;
+    }
+
+    .f-char-word {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .f-char-space {
+      display: inline-block;
+      width: 0.32em;
+    }
+
+    .f-char {
+      display: inline-block;
+      opacity: 1;
+      transform: translateY(50%);
+      transition: transform 0.95s cubic-bezier(0.19, 1, 0.22, 1);
+      will-change: transform;
+    }
+
+    .f-brand-giant-text.revealed .f-char {
+      transform: translateY(0%);
+    }
+
+    .f-bottom-line {
+      width: 100%;
+      height: 1.5px;
+      background: var(--rule);
+      margin: 0;
+      transition: background 0.3s;
+    }
+
+    /* ── Responsive Queries for Footer ── */
+    @media (max-width: 1024px) {
+      .f-header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .f-header-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .f-outer-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Custom Mouse Cursor Follower -->
+  <div class="c-dot" id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
+
+  <!-- ══ FIXED NAVIGATION ══ -->
+  <nav id="nav" class="visible">
+    <a href="index.html" class="nav-logo" aria-label="1928 Creative Studio">
+      <img src="img/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li class="nav-has-dropdown">
+        <a href="services.html" class="nav-link-services">
+          Services
+          <svg class="nav-caret" width="8" height="5" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 1.5L5 4.5L9 1.5"/>
+          </svg>
+        </a>
+        <div class="nav-dropdown-menu" aria-label="Services Submenu">
+          <div class="nav-dropdown-panel">
+            <div class="nav-dropdown-list">
+              <a href="service-logo-design.html" class="nav-dropdown-item">
+                <span class="ndi-num">01</span>
+                <span class="ndi-title">Logo Design</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-brand-identity.html" class="nav-dropdown-item">
+                <span class="ndi-num">02</span>
+                <span class="ndi-title">Brand Identity</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-website-development.html" class="nav-dropdown-item">
+                <span class="ndi-num">03</span>
+                <span class="ndi-title">Website Development</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-digital-marketing.html" class="nav-dropdown-item">
+                <span class="ndi-num">04</span>
+                <span class="ndi-title">Digital Marketing</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-content-creation.html" class="nav-dropdown-item">
+                <span class="ndi-num">05</span>
+                <span class="ndi-title">Content Creation</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+            <div class="nav-dropdown-footer">
+              <a href="services.html" class="nav-dropdown-foot-link">
+                <span>All Services Overview</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li><a href="portfolio.html">Work</a></li>
+      <li><a href="blogs.html" class="active">Perspectives</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="contact.html" class="nav-cta">Start Project</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MAIN DEDICATED BLOG DIRECTORY PAGE
+       ═══════════════════════════════════════════════════════════ -->
+  <main class="blog-archive-page">
+
+    <!-- Top Back Button Navigation -->
+    <div class="bah-top-bar">
+      <a href="blogs.html" class="bah-back-btn" id="blogBackBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="bbb-arrow">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        <span>Back to Perspectives</span>
+      </a>
+    </div>
+
+    <!-- Interactive Search & Filters Toolbar (Top Section) -->
+    <section class="bah-toolbar">
+      <div class="bah-search-wrap">
+        <svg class="bah-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="blogSearchInput" class="bah-search-input"
+          placeholder="Search by title, category, city, or strategic topic..." autocomplete="off" />
+        <button id="blogSearchClear" class="bah-clear-btn" title="Clear Search">✕</button>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="bah-filter-pills-row" id="filterPillsRow">
+        <button class="bah-filter-btn active" data-filter="all">
+          <span class="bfb-dot"></span> All Perspectives
+        </button>
+        <button class="bah-filter-btn" data-filter="brand-architecture">
+          <span class="bfb-dot"></span> Brand Architecture
+        </button>
+        <button class="bah-filter-btn" data-filter="spatial-design">
+          <span class="bfb-dot"></span> Spatial Design
+        </button>
+        <button class="bah-filter-btn" data-filter="computational-webgl">
+          <span class="bfb-dot"></span> Computational WebGL
+        </button>
+        <button class="bah-filter-btn" data-filter="packaging-spatial">
+          <span class="bfb-dot"></span> Packaging &amp; Spatial
+        </button>
+        <button class="bah-filter-btn" data-filter="luxury-semiotics">
+          <span class="bfb-dot"></span> Luxury Semiotics
+        </button>
+        <button class="bah-filter-btn" data-filter="cultural-critique">
+          <span class="bfb-dot"></span> Cultural Critique
+        </button>
+      </div>
+
+      <!-- Result Counter -->
+      <div class="bah-results-bar">
+        <div>Showing <strong id="displayedCount">9</strong> of <strong id="totalCount">16</strong> Published Monographs</div>
+        <div>Continuous Studio Dispatches</div>
+      </div>
+    </section>
+
+    <!-- Empty Search State -->
+    <div class="empty-search-state" id="emptySearchState">
+      <div class="ess-icon">
+        <svg class="ess-search-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3 class="ess-title">No Monographs Found</h3>
+      <p class="ess-desc" id="essDesc">We couldn't find any dispatches matching your search query. Try broadening your keywords.</p>
+      <button class="ess-reset-btn" id="essResetBtn">Reset All Filters</button>
+    </div>
+
+    <!-- Blog Directory Grid -->
+    <div class="blog-directory-grid" id="blogDirectoryGrid">
+      <!-- Cards dynamically generated via JavaScript -->
+    </div>
+
+    <!-- Load More Section -->
+    <div class="load-more-section" id="loadMoreSection">
+      <button class="load-more-btn" id="loadMoreBtn">
+        <span class="lmb-spinner"></span>
+        <span class="lmb-icon">↓</span>
+        <span class="lmb-text">Load More Blogs</span>
+        <span class="lmb-badge" id="lmbBadge">(7 Remaining)</span>
+      </button>
+      <p class="load-more-note" id="loadMoreNote">Click to expand the remaining studio monographs</p>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ARTICLE READER DRAWER MODAL
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="reader-drawer-overlay" id="articleReaderOverlay">
+    <div class="reader-drawer-panel" id="articleReaderPanel">
+      <div class="reader-header-bar">
+        <div class="reader-header-left">
+          <span class="rhl-cat-pill" id="rdrCat">Brand Architecture</span>
+          <span class="rhl-sep">·</span>
+          <span class="rhl-read-time" id="rdrReadTime">7 Min Read</span>
+        </div>
+        <button class="reader-close-btn" id="rdrCloseBtn" aria-label="Close Monograph">✕</button>
+      </div>
+
+      <div class="reader-scroll-viewport">
+        <div class="reader-body-container">
+          <h1 class="reader-h1" id="rdrTitle">Monograph Title</h1>
+          <p class="reader-lead" id="rdrExcerpt">Monograph lead excerpt summary.</p>
+          <div class="reader-article-content" id="rdrContent">
+            <!-- Dynamically populated article body -->
+          </div>
+
+          <!-- Author Bio -->
+          <div class="reader-author-bio-card">
+            <div class="rabc-avatar-box" id="rdrAuthorAvatar">JT</div>
+            <div>
+              <span class="rabc-role" id="rdrAuthorRole">Studio Principal</span>
+              <h4 class="rabc-name" id="rdrAuthorName">Jay Thaker</h4>
+              <p class="rabc-bio" id="rdrAuthorBio">
+                Founder &amp; Principal Brand Strategist at 1928 Creative Studio. Advising high-growth luxury maisons,
+                architectural firms, and deep-tech enterprises on enduring visual authority and spatial physics.
+              </p>
+            </div>
+          </div>
+
+          <!-- Commission CTA Deck -->
+          <div class="reader-cta-deck">
+            <div>
+              <h3 class="rcd-title">Ready to implement these strategic principles?</h3>
+              <p class="rcd-sub">Let's sculpt an enduring, category-defining visual architecture for your brand.</p>
+            </div>
+            <a href="contact.html" class="rcd-btn">Initiate Project Commission ↗</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modern Luxury Footer Loader -->
+  <div id="footer-placeholder"></div>
+  <script src="footer-loader.js"></script>
+
+  <!-- Floating Theme Switcher FAB -->
+  <button id="theme-fab" aria-label="Toggle light/dark theme" title="Toggle Theme">
+    <svg class="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       INTERACTIVE JAVASCRIPT ENGINE (Search, Filter, Pagination, Reader)
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+    /* ── Floating Theme Toggle Engine ── */
+    const DR = document.documentElement;
+    const initTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
+    DR.setAttribute('data-theme', initTheme);
+    if (document.body) document.body.setAttribute('data-theme', initTheme);
+
+    function toggleTheme() {
+      const current = DR.getAttribute('data-theme') || 'dark';
+      const n = current === 'dark' ? 'light' : 'dark';
+      DR.setAttribute('data-theme', n);
+      if (document.body) document.body.setAttribute('data-theme', n);
+      try {
+        localStorage.setItem('t28', n);
+        localStorage.setItem('theme-1928', n);
+        localStorage.setItem('theme', n);
+      } catch (e) {}
+    }
+
+    window.toggleTheme = toggleTheme;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeFab = document.getElementById('theme-fab');
+      if (themeFab) {
+        themeFab.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          toggleTheme();
+        });
+      }
+
+      /* ── Custom Mouse Follower Physics ── */
+      const dot = document.getElementById('cDot');
+      const ring = document.getElementById('cRing');
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let ringX = mouseX, ringY = mouseY;
+
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        if (dot) {
+          dot.style.left = `${mouseX}px`;
+          dot.style.top = `${mouseY}px`;
+        }
+      });
+
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        if (ring) {
+          ring.style.left = `${ringX}px`;
+          ring.style.top = `${ringY}px`;
+        }
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      /* ── Full 16 Curated Monograph Database ── */
+      const allBlogsData = [
+        {
+          id: 'art-monogram',
+          title: 'The Monolithic Luxury Monogram as an Enduring Landmark',
+          category: 'Brand Architecture',
+          categorySlug: 'brand-architecture',
+          date: 'September 2026',
+          readTime: '7 Min Read',
+          city: 'London, UK',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal & Brand Architect',
+          excerpt: 'How high-growth luxury houses engineer mathematically rigorous marks to command enduring global authority.',
+          contentHtml: `
+            <h2>01. The Strategic Shift</h2>
+            <p>For over two centuries, luxury identity was anchored in typographic ornamentation: delicate high-contrast Didone serifs, hand-engraved filigree, and intricate crests meant to signify aristocratic provenance. Today, that aesthetic vocabulary is encountering severe friction in a computational world governed by high-density digital micro-surfaces and monolithic physical environments.</p>
+            <div class="reader-pullquote">
+              <p>"A modern luxury monogram is no longer an emblem of aristocracy; it is an architectural mathematical vector engineered for zero-latency cognitive recognition."</p>
+            </div>
+            <h2>02. Mathematical Geometry &amp; Reductive Precision</h2>
+            <p>When 1928 Creative Studio engineers an enduring monogram, we adhere to strict proportion physics: optical stroke compensation, bespoke grid alignments, and modular counter-space balances. A mark must retain commanding presence whether machined at 3mm on a surgical titanium horology crown or laser-projected 100 meters wide across an airport terminal facade.</p>
+            <div class="reader-takeaway-box">
+              <div class="rtb-title">Key Architectural Principles</div>
+              <ul class="rtb-list">
+                <li><strong>Optical Stroke Balance:</strong> Horizontal lines are tuned 7% lighter than verticals to eliminate human retinal distortion.</li>
+                <li><strong>Zero-Noise Vectoring:</strong> Reduction of bezier anchor points by 60% for pure mathematical curves.</li>
+                <li><strong>Sub-Pixel Digital Mastery:</strong> Perfect pixel-grid snapping across 4K, OLED, and micro-HUD screens.</li>
+              </ul>
+            </div>
+          `
+        },
+        {
+          id: 'art-spatial',
+          title: 'Spatial Choreography Across Modern Architectural Luxury Flagship Retail',
+          category: 'Spatial Design',
+          categorySlug: 'spatial-design',
+          date: 'August 2026',
+          readTime: '6 Min Read',
+          city: 'Milan, Italy',
+          author: 'Elena Vance',
+          initials: 'EV',
+          role: 'Spatial Design Director',
+          excerpt: 'Choreographing visitor trajectories through brutalist travertine monoliths, directional acoustics, and negative-space compression.',
+          contentHtml: `
+            <h2>01. The Sensory Environment</h2>
+            <p>Physical retail in 2026 is no longer about inventory distribution; it is sensory brand communion. When a client crosses the threshold into a physical flagship, every sensory input—the acoustic reverberation time of polished concrete, the color temperature of 2700K recessed spotlights, and the scent of custom cedarwood—instantly primes their valuation perception.</p>
+            <div class="reader-pullquote">
+              <p>"The space itself is the most powerful salesperson. When architecture radiates permanence, price resistance dissipates."</p>
+            </div>
+            <h2>02. Monolithic Material Physics</h2>
+            <p>We specify raw split-face travertine, blackened brushed steel, and acoustic felt panels to establish a temple-like reverence. Clients spend 3.2x longer inside acoustically damped private VIP suites than open retail floors.</p>
+          `
+        },
+        {
+          id: 'art-webgl',
+          title: 'Zero Latency Computational Raytracing in WebGL Interactive Ecosystems',
+          category: 'Computational WebGL',
+          categorySlug: 'computational-webgl',
+          date: 'August 2026',
+          readTime: '5 Min Read',
+          city: 'Tokyo, Japan',
+          author: 'Kaito Tanaka',
+          initials: 'KT',
+          role: 'Lead Shader Engineer',
+          excerpt: 'Synthesizing custom GLSL physically-based surface shaders for real-time metallic reflections at native 120 FPS.',
+          contentHtml: `
+            <h2>01. Beyond the Flat 2D Web</h2>
+            <p>Static JPEG mockups and auto-playing video loops are remnants of a bygone digital era. The contemporary luxury buyer demands agency—the power to inspect sub-millimeter stitching on an automotive interior or rotate a tourbillon watch under real-time procedural lighting.</p>
+            <div class="reader-pullquote">
+              <p>"Interactive 3D WebGL is not a gimmick; it is the closest digital surrogate to physical touch."</p>
+            </div>
+            <h2>02. Custom GLSL Fragment Shaders</h2>
+            <p>By compiling custom GLSL fragment shaders and implementing procedural normal map decompression, we achieve buttery 120fps performance across mobile Safari and desktop Chrome without draining device thermals.</p>
+          `
+        },
+        {
+          id: 'art-fluted',
+          title: 'Tactile Acoustic Snaps and Travertine in Bespoke Packaging',
+          category: 'Packaging & Spatial',
+          categorySlug: 'packaging-spatial',
+          date: 'July 2026',
+          readTime: '8 Min Read',
+          city: 'Paris, France',
+          author: 'Ami Patel',
+          initials: 'AP',
+          role: 'Materials & Packaging Specialist',
+          excerpt: 'The psychophysics of 45-decibel acoustic closures, haptic friction coefficients, and unboxing rituals in ultra-luxury design.',
+          contentHtml: `
+            <h2>01. The Tactile Physics of Glass</h2>
+            <p>Weight is perceived as quality. A perfume vessel weighing 480 grams with an internal magnetic snap rated at 1.2 Newtons immediately communicates $300+ value before the atomizer is ever depressed.</p>
+            <div class="reader-pullquote">
+              <p>"The tactile sensation of opening a luxury package triggers dopamine pathways faster than visual advertising."</p>
+            </div>
+            <h2>02. Light Refraction &amp; Fluting Tolerances</h2>
+            <p>Precision micro-fluting cut into lead-free crystal glass bends ambient gallery spotlights into vertical prismatic rays, transforming the fragrance liquid into a radiant glowing beacon.</p>
+          `
+        },
+        {
+          id: 'art-monochrome',
+          title: 'The 99% Black Spectrum: Chromatic Precision in Semiotics',
+          category: 'Luxury Semiotics',
+          categorySlug: 'luxury-semiotics',
+          date: 'July 2026',
+          readTime: '6 Min Read',
+          city: 'Zurich, Switzerland',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal & Brand Architect',
+          excerpt: 'Why restrained monochrome palettes with solitary crimson accents create an impenetrable aura of institutional prestige.',
+          contentHtml: `
+            <h2>01. Monochromatic Discipline</h2>
+            <p>Restraint is the ultimate form of luxury. By confining brand color palettes to deep carbon blacks, neutral zincs, and an uncompromising solitary crimson accent, the brand radiates supreme confidence and timeless elegance.</p>
+            <div class="reader-pullquote">
+              <p>"Color attracts attention; pure contrast commands reverence."</p>
+            </div>
+            <h2>02. 99% Black Hierarchy</h2>
+            <p>We work with 5 distinct shades of black: Carbon (#070709), Onyx (#0E0E12), Gunmetal (#14141A), Zinc (#181820), and Obsidian (#000000). Layering these values creates depth without chromatic clutter.</p>
+          `
+        },
+        {
+          id: 'art-kinetic',
+          title: 'Kinetic Identity Systems and Mathematical Precision in Modern Typography',
+          category: 'Cultural Critique',
+          categorySlug: 'cultural-critique',
+          date: 'June 2026',
+          readTime: '4 Min Read',
+          city: 'Milan, Italy',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal',
+          excerpt: 'Deconstructing our viral runway takeover that synchronized architectural projection mapping with high-velocity motion graphics.',
+          contentHtml: `
+            <h2>01. High-Velocity Typography</h2>
+            <p>In the noise of Milan Fashion Week, static billboards are invisible. By treating typography as physical kinetic particles that react to model runway pacing, we turned the entire venue into an immersive living typographic ecosystem.</p>
+            <div class="reader-pullquote">
+              <p>"Type in motion is the heartbeat of digital culture. If your letters don't breathe, your brand is already obsolete."</p>
+            </div>
+          `
+        },
+        {
+          id: 'art-neural',
+          title: 'Neural Aesthetics and Liquid Interfaces for Next Generation Platforms',
+          category: 'Computational WebGL',
+          categorySlug: 'computational-webgl',
+          date: 'June 2026',
+          readTime: '7 Min Read',
+          city: 'Seoul, South Korea',
+          author: 'Kaito Tanaka',
+          initials: 'KT',
+          role: 'Lead Shader Engineer',
+          excerpt: 'Moving beyond sterile flat SaaS dashboards into dynamic, organic liquid chrome shaders that visualize real-time state transitions.',
+          contentHtml: `
+            <h2>01. Fluid Computational States</h2>
+            <p>As artificial intelligence systems become more complex, human operators need intuitive qualitative feedback. Procedural liquid metal shaders provide instant visual comprehension of neural confidence metrics and data flow densities.</p>
+            <div class="reader-pullquote">
+              <p>"We are replacing rigid rectangles with fluid computational matter that breathes in rhythm with machine reasoning."</p>
+            </div>
+          `
+        },
+        {
+          id: 'art-quiet',
+          title: 'The Anti-Algorithmic Luxury Paradigm: Why Scarcity Drives Brand Equity',
+          category: 'Cultural Critique',
+          categorySlug: 'cultural-critique',
+          date: 'May 2026',
+          readTime: '9 Min Read',
+          city: 'Kyoto, Japan',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal & Brand Architect',
+          excerpt: 'Why high-growth luxury maisons reject relentless social output in favor of intentional friction, mystery, and physical artifact supremacy.',
+          contentHtml: `
+            <h2>01. The Myth of Ubiquity</h2>
+            <p>Algorithmic content engines demand endless feeding. But luxury is defined by distance. When a brand is available everywhere, it means nothing. Intentional scarcity and cryptographic gating preserve the essential mystique that commands 10x price premiums.</p>
+            <div class="reader-pullquote">
+              <p>"If your brand is everywhere, it is already nowhere. Real luxury lives in the shadows of intentional scarcity."</p>
+            </div>
+          `
+        },
+        // BATCH 2 (Loaded via 'Load More' Button)
+        {
+          id: 'art-typographic-grid',
+          title: 'Mathematical Grids and Kinetic Symmetry in Modernist Identity Systems',
+          category: 'Brand Architecture',
+          categorySlug: 'brand-architecture',
+          date: 'April 2026',
+          readTime: '6 Min Read',
+          city: 'Basel, Switzerland',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal & Brand Architect',
+          excerpt: 'Applying rational Swiss modernist proportion systems to responsive multi-device digital identity ecosystems.',
+          contentHtml: `
+            <h2>01. The Rationality of the Grid</h2>
+            <p>Swiss modernist typography was never about rigidity—it was about creating an invisible harmonious scaffolding where content commands absolute focus. We translate Josef Müller-Brockmann's modular principles into dynamic CSS subgrid architectures.</p>
+            <div class="reader-pullquote">
+              <p>"The grid does not constrain creativity; it liberates form from arbitrary visual noise."</p>
+            </div>
+          `
+        },
+        {
+          id: 'art-haptic-luxury',
+          title: 'The Psychophysics of Haptic Resistance in Ultra Luxury Hardware',
+          category: 'Packaging & Spatial',
+          categorySlug: 'packaging-spatial',
+          date: 'March 2026',
+          readTime: '8 Min Read',
+          city: 'Munich, Germany',
+          author: 'Ami Patel',
+          initials: 'AP',
+          role: 'Materials & Packaging Specialist',
+          excerpt: 'Calibrating rotary dial torque and magnetic tactile detents to instill subconscious trust in high-end devices.',
+          contentHtml: `
+            <h2>01. Micro-Newton Calibration</h2>
+            <p>When an automotive volume rotary switch possesses 0.08 Newton-meters of hydraulic damping resistance, human tactile receptors instantly signal mechanical precision, transforming an electronic volume knob into horological luxury.</p>
+          `
+        },
+        {
+          id: 'art-chromatic-void',
+          title: 'Photonic Contrast and Atmospheric Lighting in Modern Gallery Flagships',
+          category: 'Spatial Design',
+          categorySlug: 'spatial-design',
+          date: 'March 2026',
+          readTime: '5 Min Read',
+          city: 'New York, USA',
+          author: 'Elena Vance',
+          initials: 'EV',
+          role: 'Spatial Design Director',
+          excerpt: 'Utilizing 90% ambient spatial darkness with focused narrow-beam illumination to amplify product valuation.',
+          contentHtml: `
+            <h2>01. Darkness as a Frame</h2>
+            <p>Bright retail environments wash out product drama. By plunging 90% of the room into controlled shadow and deploying high-CRI 98+ spotlights with surgical cutoff snoots, every exhibited object takes on the sacred aura of a museum relic.</p>
+          `
+        },
+        {
+          id: 'art-stealth-wealth',
+          title: 'Sub-Surface Brand Semiotics in High Horology and Private Aviation',
+          category: 'Luxury Semiotics',
+          categorySlug: 'luxury-semiotics',
+          date: 'February 2026',
+          readTime: '7 Min Read',
+          city: 'Geneva, Switzerland',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal & Brand Architect',
+          excerpt: 'How ultra-high-net-worth brands engineer covert visual codes discernible only to initiated cultural connoisseurs.',
+          contentHtml: `
+            <h2>01. The Cryptographic Code of Luxury</h2>
+            <p>Overt logos attract mass attention, but alienate connoisseurs. In high horology and private aviation interiors, status is communicated through stealth finishes: hand-anglage chamfering, hidden guilloché dials, and subtle micro-perforations.</p>
+          `
+        },
+        {
+          id: 'art-digital-twins',
+          title: 'Physical to Digital Twin Fidelity in Bespoke Automotive Configurator Design',
+          category: 'Computational WebGL',
+          categorySlug: 'computational-webgl',
+          date: 'January 2026',
+          readTime: '6 Min Read',
+          city: 'Stuttgart, Germany',
+          author: 'Kaito Tanaka',
+          initials: 'KT',
+          role: 'Lead Shader Engineer',
+          excerpt: 'Raymarched anisotropic carbon fiber weaves and multi-coat candy paint shaders for online bespoke luxury customization.',
+          contentHtml: `
+            <h2>01. Sub-Surface Flake Simulation</h2>
+            <p>Simulating metallic flake distribution under dynamic orbital HDRI lighting gives buyers absolute confidence when specifying $50,000 bespoke paint options on 8-figure hypercars.</p>
+          `
+        },
+        {
+          id: 'art-monolith-arch',
+          title: 'Brutalist Travertine Monoliths and Negative Space in High-End Boutiques',
+          category: 'Spatial Design',
+          categorySlug: 'spatial-design',
+          date: 'January 2026',
+          readTime: '7 Min Read',
+          city: 'Stockholm, Sweden',
+          author: 'Elena Vance',
+          initials: 'EV',
+          role: 'Spatial Design Director',
+          excerpt: 'Carving monumental stone blocks to sculpt intimate sensory chambers within vast luxury architecture.',
+          contentHtml: `
+            <h2>01. The Weight of Silence</h2>
+            <p>When monumental 4-ton unpolished Roman travertine blocks anchor a boutique interior, the weight of the physical rock silences ambient noise and demands contemplative deceleration.</p>
+          `
+        },
+        {
+          id: 'art-tactile-unbox',
+          title: 'The Ritual of the Unboxing: Micro Tolerances in Rigid Presentation Cases',
+          category: 'Packaging & Spatial',
+          categorySlug: 'packaging-spatial',
+          date: 'December 2025',
+          readTime: '8 Min Read',
+          city: 'London, UK',
+          author: 'Ami Patel',
+          initials: 'AP',
+          role: 'Materials & Packaging Specialist',
+          excerpt: 'Engineering 3.5-second air-cushion lid descent rates for an unforgettable tactile brand reveal ceremony.',
+          contentHtml: `
+            <h2>01. Air-Piston Resistance</h2>
+            <p>When a rigid telescoping box lid drops under its own weight at a calibrated 3.5-second glide, the client experiences sensory suspense before laying eyes on the timepiece.</p>
+          `
+        },
+        {
+          id: 'art-cultural-resonance',
+          title: 'Cultural Resonance and Timeless Dominance in Modern Architectural Practice',
+          category: 'Cultural Critique',
+          categorySlug: 'cultural-critique',
+          date: 'November 2025',
+          readTime: '5 Min Read',
+          city: 'Paris, France',
+          author: 'Jay Thaker',
+          initials: 'JT',
+          role: 'Studio Principal & Brand Architect',
+          excerpt: 'Synthesizing architectural permanence with high-speed digital agility to build brands that outlive generational cycles.',
+          contentHtml: `
+            <h2>01. The 100-Year Vision</h2>
+            <p>Trends disappear within quarters; architectural geometry endures across centuries. By treating branding as physical architecture, we forge institutional equity that stands immune to seasonal aesthetic volatility.</p>
+          `
+        }
+      ];
+
+      /* ── STATE MANAGEMENT ── */
+      let currentFilter = 'all';
+      let searchQuery = '';
+      let visibleCount = 9; // Starts with 9 blogs
+      const pageSize = 9;
+
+      const grid = document.getElementById('blogDirectoryGrid');
+      const loadMoreBtn = document.getElementById('loadMoreBtn');
+      const loadMoreSection = document.getElementById('loadMoreSection');
+      const lmbBadge = document.getElementById('lmbBadge');
+      const loadMoreNote = document.getElementById('loadMoreNote');
+      const displayedCountEl = document.getElementById('displayedCount');
+      const totalCountEl = document.getElementById('totalCount');
+      const searchInput = document.getElementById('blogSearchInput');
+      const clearBtn = document.getElementById('blogSearchClear');
+      const emptyState = document.getElementById('emptySearchState');
+      const essDesc = document.getElementById('essDesc');
+      const essResetBtn = document.getElementById('essResetBtn');
+      const filterBtns = document.querySelectorAll('.bah-filter-btn');
+
+      function getFilteredArticles() {
+        return allBlogsData.filter(item => {
+          // Category match
+          const catMatch = (currentFilter === 'all') || (item.categorySlug === currentFilter);
+          if (!catMatch) return false;
+
+          // Search match
+          if (!searchQuery) return true;
+          const q = searchQuery.toLowerCase().trim();
+          const titleMatch = item.title.toLowerCase().includes(q);
+          const excerptMatch = item.excerpt.toLowerCase().includes(q);
+          const catNameMatch = item.category.toLowerCase().includes(q);
+          const cityMatch = item.city.toLowerCase().includes(q);
+          return titleMatch || excerptMatch || catNameMatch || cityMatch;
+        });
+      }
+
+      function renderGrid() {
+        const filtered = getFilteredArticles();
+        const totalMatching = filtered.length;
+        const toShow = filtered.slice(0, visibleCount);
+
+        // Update counts
+        totalCountEl.textContent = totalMatching;
+        displayedCountEl.textContent = Math.min(visibleCount, totalMatching);
+
+        // Check empty state
+        if (totalMatching === 0) {
+          grid.innerHTML = '';
+          emptyState.classList.add('show');
+          essDesc.textContent = searchQuery ? `No dispatches found matching "${searchQuery}".` : 'No dispatches found in this category.';
+          loadMoreSection.style.display = 'none';
+          return;
+        } else {
+          emptyState.classList.remove('show');
+        }
+
+        // Render card items
+        grid.innerHTML = toShow.map((item, idx) => `
+          <article class="blog-card" data-article-id="${item.id}" style="animation-delay: ${(idx % 8) * 0.06}s">
+            <div>
+              <!-- 16:9 Blueprint Canvas -->
+              <div class="card-visual-box">
+                <div class="cvb-crosshair cvb-tl">+</div>
+                <div class="cvb-crosshair cvb-tr">+</div>
+                <div class="cvb-crosshair cvb-bl">+</div>
+                <div class="cvb-crosshair cvb-br">+</div>
+                <div class="cvb-icon-wrap">
+                  <svg class="cvb-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="3" ry="3"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.8"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                </div>
+                <div class="cvb-meta-tags">16 : 9 RATIO · 800 × 450 PX</div>
+              </div>
+
+              <!-- Content -->
+              <div class="card-body">
+                <div class="card-spec-row">
+                  <span class="card-category-tag">${item.category}</span>
+                  <span class="card-read-time">${item.readTime}</span>
+                </div>
+                <h3 class="card-title">${item.title}</h3>
+                <p class="card-desc">${item.excerpt}</p>
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="card-footer-row">
+              <span class="card-location">
+                <span class="card-loc-dot"></span>
+                ${item.city}
+              </span>
+              <div class="card-arrow-btn" title="Open Complete Monograph">
+                <span class="cab-open-text">Open</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        // Update Load More Button
+        const remaining = totalMatching - visibleCount;
+        if (remaining > 0) {
+          loadMoreSection.style.display = 'flex';
+          loadMoreBtn.disabled = false;
+          loadMoreBtn.classList.remove('loading');
+          loadMoreBtn.querySelector('.lmb-text').textContent = 'Load More Blogs';
+          loadMoreBtn.querySelector('.lmb-icon').style.display = 'inline-block';
+          lmbBadge.textContent = `(${remaining} Remaining)`;
+          loadMoreNote.textContent = `Displaying ${Math.min(visibleCount, totalMatching)} of ${totalMatching} published dispatches`;
+        } else {
+          if (totalMatching <= pageSize) {
+            loadMoreSection.style.display = 'none';
+          } else {
+            loadMoreSection.style.display = 'flex';
+            loadMoreBtn.disabled = true;
+            loadMoreBtn.classList.remove('loading');
+            loadMoreBtn.querySelector('.lmb-text').textContent = 'All Monographs Loaded ✓';
+            loadMoreBtn.querySelector('.lmb-icon').style.display = 'none';
+            lmbBadge.textContent = '(Complete)';
+            loadMoreNote.textContent = `All ${totalMatching} monographs currently displayed in full.`;
+          }
+        }
+      }
+
+      // Initial Render (8 Blogs)
+      renderGrid();
+
+      /* ── Load More Action Handler ── */
+      loadMoreBtn.addEventListener('click', () => {
+        loadMoreBtn.classList.add('loading');
+        loadMoreBtn.querySelector('.lmb-text').textContent = 'Loading Monographs...';
+
+        setTimeout(() => {
+          visibleCount += pageSize;
+          renderGrid();
+        }, 380);
+      });
+
+      /* ── Live Search with Debounce & Clear ── */
+      let searchTimeout;
+      searchInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        searchQuery = val;
+        clearBtn.style.display = val.length ? 'block' : 'none';
+
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+          visibleCount = pageSize; // Reset page on new search
+          renderGrid();
+        }, 150);
+      });
+
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        clearBtn.style.display = 'none';
+        visibleCount = pageSize;
+        renderGrid();
+        searchInput.focus();
+      });
+
+      /* ── Category Filter Pills ── */
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentFilter = btn.getAttribute('data-filter');
+          visibleCount = pageSize; // Reset to 8 on category switch
+          renderGrid();
+        });
+      });
+
+      /* ── Empty State Reset Handler ── */
+      essResetBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchQuery = '';
+        clearBtn.style.display = 'none';
+        currentFilter = 'all';
+        filterBtns.forEach(b => b.classList.remove('active'));
+        if (filterBtns[0]) filterBtns[0].classList.add('active');
+        visibleCount = pageSize;
+        renderGrid();
+      });
+
+      /* ── Open In-Drawer Reader Modal ── */
+      const readerOverlay = document.getElementById('articleReaderOverlay');
+      const rdrCat = document.getElementById('rdrCat');
+      const rdrReadTime = document.getElementById('rdrReadTime');
+      const rdrTitle = document.getElementById('rdrTitle');
+      const rdrExcerpt = document.getElementById('rdrExcerpt');
+      const rdrContent = document.getElementById('rdrContent');
+      const rdrAuthorName = document.getElementById('rdrAuthorName');
+      const rdrAuthorRole = document.getElementById('rdrAuthorRole');
+      const rdrAuthorAvatar = document.getElementById('rdrAuthorAvatar');
+      const rdrAuthorBio = document.getElementById('rdrAuthorBio');
+      const rdrCloseBtn = document.getElementById('rdrCloseBtn');
+
+      function openReader(articleId) {
+        let article = allBlogsData.find(a => a.id === articleId);
+
+        if (window.CMSStore) {
+          const cmsBlog = window.CMSStore.getBlogById(articleId) || (window.CMSStore.getBlogs ? window.CMSStore.getBlogs().find(b => b.id === articleId) : null);
+          if (cmsBlog) {
+            article = {
+              id: cmsBlog.id,
+              category: cmsBlog.category || article?.category || 'STRATEGY',
+              readTime: cmsBlog.readTime || article?.readTime || '6 MIN READ',
+              title: cmsBlog.title || article?.title || '',
+              excerpt: cmsBlog.excerpt || article?.excerpt || '',
+              contentHtml: cmsBlog.content || cmsBlog.contentHtml || article?.contentHtml || '',
+              author: cmsBlog.author || article?.author || 'Jay Thaker',
+              role: cmsBlog.role || article?.role || 'Studio Principal',
+              initials: cmsBlog.initials || (cmsBlog.author ? cmsBlog.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'JT'),
+              bio: cmsBlog.bio || article?.bio || 'Founder & Principal Brand Strategist at 1928 Creative Studio. Advising luxury maisons and deep-tech founders on enduring visual systems.'
+            };
+          }
+        }
+
+        if (!article) return;
+
+        rdrCat.textContent = article.category;
+        rdrReadTime.textContent = article.readTime;
+        rdrTitle.textContent = article.title;
+        rdrExcerpt.textContent = article.excerpt;
+        rdrContent.innerHTML = article.contentHtml;
+        rdrAuthorName.textContent = article.author || 'Jay Thaker';
+        rdrAuthorRole.textContent = article.role || 'Studio Principal';
+        rdrAuthorAvatar.textContent = article.initials || 'JT';
+        if (rdrAuthorBio) rdrAuthorBio.textContent = article.bio || 'Founder & Principal Brand Strategist at 1928 Creative Studio.';
+
+        readerOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeReader() {
+        readerOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      window.openReader = openReader;
+      window.closeReader = closeReader;
+
+      // Delegate click on cards to open reader
+      grid.addEventListener('click', (e) => {
+        const card = e.target.closest('.blog-card');
+        if (card) {
+          const aid = card.getAttribute('data-article-id');
+          if (aid) openReader(aid);
+        }
+      });
+
+      rdrCloseBtn.addEventListener('click', closeReader);
+      readerOverlay.addEventListener('click', (e) => {
+        if (e.target === readerOverlay) closeReader();
+      });
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeReader();
+      });
+
+      // Auto-open reader if URL has query parameter ?article=... or hash #...
+      function checkUrlAndOpenArticle() {
+        const params = new URLSearchParams(window.location.search);
+        const articleParam = params.get('article') || params.get('id') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+        if (articleParam) {
+          setTimeout(() => {
+            openReader(articleParam);
+          }, 80);
+        }
+      }
+      checkUrlAndOpenArticle();
+
+      // Nav Directional Scroll Behavior
+      let lastBlogDetailScrollY = window.scrollY;
+      const navEl = document.getElementById('nav');
+
+      window.addEventListener('scroll', () => {
+        const sy = window.scrollY;
+        if (navEl) {
+          if (sy <= 40 || sy < lastBlogDetailScrollY - 3) {
+            // Scrolling UP (or at top): header comes down smoothly
+            navEl.classList.add('visible');
+            navEl.classList.remove('hidden');
+          } else if (sy > lastBlogDetailScrollY + 3) {
+            // Scrolling DOWN: header animates up out of view
+            navEl.classList.remove('visible');
+            navEl.classList.add('hidden');
+          }
+        }
+        lastBlogDetailScrollY = sy;
+      }, { passive: true });
+    });
+  </script>
+
+  <!-- CMS Live Bridge -->
+  <script src="data-store.js"></script>
+  <script src="site-bridge.js"></script>
+</body>
+
+</html>

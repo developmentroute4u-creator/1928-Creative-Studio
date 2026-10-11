@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>1928 Creative Studio — Engineering Iconic Brands</title>
+<meta name="description" content="1928 Creative Studio — Multidisciplinary brand architecture, digital platforms, and cinematic design systems."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+/* ══ HARMONIOUS BRAND COLOR SYSTEM ═════════════ */
+:root{
+  --bg: #F5F4F0;
+  --ink: #0F172A;
+  --dim: rgba(15, 23, 42, 0.52);
+  --rule: rgba(15, 23, 42, 0.08);
+  
+  /* Core Brand Crimson */
+  --cr: #8B1A1A;
+  --cr-dk: #6B1212;
+  --cr-lo: rgba(139, 26, 26, 0.08);
+  
+  /* Harmonious Folder Palette */
+  --f1-bg: linear-gradient(135deg, #C25E00 0%, #E67E22 100%); 
+  --f2-bg: linear-gradient(135deg, #7B1E5A 0%, #A22B76 100%); 
+  --f3-bg: linear-gradient(135deg, #8B1A1A 0%, #5B0E0E 100%); 
+  --f4-bg: linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%); 
+  --f5-bg: linear-gradient(135deg, #0F5156 0%, #14B8A6 100%); 
+
+  --card-bg: #FFFFFF;
+  --card-text: #0F172A;
+  --glass-bg: linear-gradient(180deg, rgba(255,255,255,0.36) 0%, rgba(255,255,255,0.14) 100%);
+  --glass-border: rgba(255, 255, 255, 0.5);
+
+  --sp: cubic-bezier(.34, 1.56, .64, 1);
+  --sm: cubic-bezier(.16, 1, .3, 1);
+}
+
+[data-theme="dark"]{
+  --bg: #0B0E14;
+  --ink: #F8FAFC;
+  --dim: rgba(248, 250, 252, 0.52);
+  --rule: rgba(248, 250, 252, 0.08);
+  
+  --cr: #B91C1C;
+  --cr-dk: #991B1B;
+  --cr-lo: rgba(185, 28, 28, 0.15);
+  
+  --f1-bg: linear-gradient(135deg, #9A3412 0%, #C25E00 100%);
+  --f2-bg: linear-gradient(135deg, #5B1343 0%, #7B1E5A 100%);
+  --f3-bg: linear-gradient(135deg, #7F1D1D 0%, #450A0A 100%);
+  --f4-bg: linear-gradient(135deg, #1E1B4B 0%, #1E3A8A 100%);
+  --f5-bg: linear-gradient(135deg, #042F2C 0%, #0F5156 100%);
+
+  --card-bg: #18181B;
+  --card-text: #F4F4F5;
+  --glass-bg: linear-gradient(180deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.05) 100%);
+  --glass-border: rgba(255, 255, 255, 0.22);
+}
+
+/* ══ RESET ═════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{font-size:16px;}
+body{
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  cursor: none;
+  overflow-x: hidden;
+  transition: background .4s var(--sm), color .4s var(--sm);
+}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;border:none;background:none;cursor:none;color:inherit;}
+::selection{background:var(--cr);color:#fff;}
+
+/* ══ CURSOR ════════════════════════════════════ */
+#cur{
+  position:fixed;z-index:99999;pointer-events:none;
+  width:8px;height:8px;border-radius:50%;background:var(--cr);
+  transform:translate(-50%,-50%);
+}
+#cur-r{
+  position:fixed;z-index:99998;pointer-events:none;
+  width:36px;height:36px;border-radius:50%;
+  border:1.5px solid var(--cr);opacity:.4;
+  transform:translate(-50%,-50%);
+  transition:width .28s var(--sm),height .28s var(--sm),opacity .3s,background .3s;
+}
+body.hov #cur-r{width:56px;height:56px;opacity:.85;background:var(--cr-lo);}
+
+/* Theme toggle */
+#tbtn{
+  position:fixed;top:36px;right:44px;z-index:900;
+  width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--rule);display:grid;place-items:center;
+  transition:border-color .25s,transform .32s;background:var(--bg);
+}
+#tbtn:hover{border-color:var(--cr);transform:rotate(22deg);}
+#tbtn svg{width:15px;height:15px;fill:var(--dim);}
+
+/* ══ HERO SECTION ══════════════════════════════ */
+#hero-driver{position:relative;height:480vh;}
+#hero-sticky{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+  background:var(--bg);z-index:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:space-between;
+}
+
+/* ─ BRAND LOGO & HEADER ─ */
+#brand{
+  position:absolute;top:15vh;left:50%;
+  transform:translateX(-50%);
+  text-align:center;z-index:4;
+  pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  width:100%;max-width:920px;padding:0 24px;
+  will-change:opacity,transform;
+}
+.b-badge{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;font-size:11px;
+  letter-spacing:.26em;text-transform:uppercase;
+  color:var(--cr);background:var(--cr-lo);
+  padding:5px 18px;border-radius:999px;
+  border:1px solid rgba(139,26,26,0.18);
+  display:inline-flex;align-items:center;gap:6px;
+  animation: logoEntrance 1s ease-out forwards;
+}
+.b-dot{
+  font-size:8px;color:var(--cr);
+  animation: pulseDot 2s infinite;
+}
+@keyframes pulseDot{0%,100%{opacity:.4;}50%{opacity:1;}}
+
+.b-logo-title{
+  font-family:'Jazmin-Regular', 'Jazmin', 'Cinzel', 'Cormorant Garamond', serif;
+  font-weight:600;
+  font-size:clamp(32px,4.6vw,64px);
+  line-height:1.05;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--cr);
+  white-space:nowrap;
+  margin-top:2px;
+  text-shadow: 0 6px 28px rgba(139, 26, 26, 0.16);
+  animation: logoEntrance 1.2s var(--sm) forwards;
+}
+@keyframes logoEntrance{
+  0%{opacity:0;transform:translateY(-14px) scale(.98);}
+  100%{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.b-sub{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:400;font-size:clamp(13.5px,1.1vw,15.5px);
+  line-height:1.65;color:var(--dim);margin-top:4px;
+  letter-spacing:.02em;
+  text-align:center;
+  white-space:normal;
+  max-width:820px;
+  animation: logoEntrance 1.4s var(--sm) forwards;
+}
+
+/* ══ 3D FOLDER STAGE — DYNAMIC MOUSE TILT ══════ */
+#stage{
+  position:absolute;bottom:0;left:0;right:0;
+  height:440px;
+  perspective:1300px;perspective-origin:50% 90%;
+  overflow:visible; /* NO TOP CLIPPING — allows rising cards to display cleanly! */
+  transform-style:preserve-3d;
+  transition:transform .25s ease-out;
+}
+
+/* ══ WRAPSTOCK FOLDER COMPONENT — PERFECTLY ROUNDED CORNERS ═════ */
+.fc{
+  position:absolute;bottom:-10px;
+  width:295px;height:330px;
+  overflow:visible;
+  cursor:none;will-change:transform,opacity;
+  transition:transform .4s var(--sm);
+}
+
+.fc-tab-body{
+  position:absolute;inset:0;
+  border-radius:24px 24px 24px 24px;
+  /* Smooth Rounded Folder Notch Path — All corners properly rounded */
+  clip-path: path("M 0 16 Q 0 0 16 0 L 110 0 Q 124 0 132 10 L 140 18 Q 148 24 160 24 L 274 24 Q 290 24 290 40 L 290 306 Q 290 330 266 330 L 24 330 Q 0 330 0 306 Z");
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+  transition: transform .36s var(--sm), box-shadow .36s var(--sm);
+}
+
+.fc:hover .fc-tab-body{
+  transform: translateY(-12px);
+  box-shadow: 0 40px 90px rgba(0,0,0,0.3);
+}
+
+/* White File Card inside — slides UP on hover with 3D tilt */
+.fc-file{
+  position:absolute;
+  top:22px;left:50%;
+  transform:translateX(-50%) translateY(16px);
+  width:252px;height:246px;
+  background: var(--card-bg);
+  color: var(--card-text);
+  border-radius:18px;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.16);
+  padding:14px;
+  transition: transform .52s var(--sp), box-shadow .52s var(--sm);
+  z-index:2;
+  pointer-events:none;
+}
+
+.fc:hover .fc-file{
+  transform: translateX(-50%) translateY(-100px) rotateX(6deg) scale(1.06);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.32);
+}
+
+/* Artwork Preview inside Card */
+.fc-file-img{
+  width:100%;height:106px;
+  border-radius:12px;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.fc-file-img svg{
+  width:38px;height:38px;fill:rgba(255,255,255,0.92);
+  filter:drop-shadow(0 4px 8px rgba(0,0,0,0.25));
+}
+
+.fc-file-info{
+  margin-top:12px;display:flex;justify-content:space-between;align-items:center;
+}
+.fc-file-title{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:700;font-size:0.88rem;
+  letter-spacing:-.01em;text-transform:uppercase;
+}
+.fc-file-id{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;font-size:0.62rem;
+  opacity:.6;letter-spacing:.05em;
+}
+
+.fc-file-lines{
+  margin-top:10px;display:flex;flex-direction:column;gap:5px;
+}
+.fc-fline{
+  height:4px;border-radius:2px;background:var(--rule);width:100%;
+}
+.fc-fline:nth-child(2){width:65%;}
+
+/* Frosted Glass Front Pocket */
+.fc-pocket{
+  position:absolute;bottom:0;left:0;right:0;height:62%;
+  border-radius:20px 20px 24px 24px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  border-top: 1.5px solid rgba(255, 255, 255, 0.55);
+  padding: 20px 22px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  z-index: 10; pointer-events: none;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.fc-p-title{
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:800;font-size:1.28rem;
+  line-height:1.1;color:#FFFFFF;
+  letter-spacing:-.02em;
+  text-shadow:0 2px 10px rgba(0,0,0,0.3);
+}
+.fc-p-count{
+  font-family:'Space Grotesk',sans-serif;
+  font-weight:600;font-size:0.75rem;
+  color:rgba(255,255,255,0.85);
+  margin-top:4px;
+}
+
+.fc-action-btn{
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(255,255,255,0.25);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.5);
+  display:grid;place-items:center;
+  margin:0 auto;
+  box-shadow:0 4px 14px rgba(0,0,0,0.15);
+  transition:transform .3s var(--sm), background .3s;
+}
+.fc:hover .fc-action-btn{
+  transform:scale(1.12);background:rgba(255,255,255,0.45);
+}
+.fc-action-btn svg{
+  width:16px;height:16px;fill:#FFFFFF;
+}
+
+/* Individual 3D Arc Positions & Ambient Float Animation */
+#fc-1{
+  left:calc(50% - 635px);
+  transform:rotateY(30deg) rotateZ(-7deg) translateY(44px) scale(.84);
+  animation: floatArc1 6s ease-in-out infinite alternate;
+}
+#fc-1 .fc-tab-body{background:var(--f1-bg);}
+
+#fc-2{
+  left:calc(50% - 355px);
+  transform:rotateY(15deg) rotateZ(-3deg) translateY(20px) scale(.92);
+  animation: floatArc2 6s ease-in-out infinite alternate 1s;
+}
+#fc-2 .fc-tab-body{background:var(--f2-bg);}
+
+#fc-3{
+  left:50%;margin-left:-147px;
+  transform:scale(1.05);z-index:20;
+  animation: floatArc3 6s ease-in-out infinite alternate 2s;
+}
+#fc-3 .fc-tab-body{background:var(--f3-bg);}
+
+#fc-4{
+  right:calc(50% - 355px);
+  transform:rotateY(-15deg) rotateZ(3deg) translateY(20px) scale(.92);
+  animation: floatArc4 6s ease-in-out infinite alternate 1.5s;
+}
+#fc-4 .fc-tab-body{background:var(--f4-bg);}
+
+#fc-5{
+  right:calc(50% - 635px);
+  transform:rotateY(-30deg) rotateZ(7deg) translateY(44px) scale(.84);
+  animation: floatArc5 6s ease-in-out infinite alternate 0.5s;
+}
+#fc-5 .fc-tab-body{background:var(--f5-bg);}
+
+@keyframes floatArc1{0%{transform:rotateY(30deg) rotateZ(-7deg) translateY(44px) scale(.84);}100%{transform:rotateY(30deg) rotateZ(-7deg) translateY(34px) scale(.84);}}
+@keyframes floatArc2{0%{transform:rotateY(15deg) rotateZ(-3deg) translateY(20px) scale(.92);}100%{transform:rotateY(15deg) rotateZ(-3deg) translateY(10px) scale(.92);}}
+@keyframes floatArc3{0%{transform:translateY(0) scale(1.05);}100%{transform:translateY(-10px) scale(1.05);}}
+@keyframes floatArc4{0%{transform:rotateY(-15deg) rotateZ(3deg) translateY(20px) scale(.92);}100%{transform:rotateY(-15deg) rotateZ(3deg) translateY(10px) scale(.92);}}
+@keyframes floatArc5{0%{transform:rotateY(-30deg) rotateZ(7deg) translateY(44px) scale(.84);}100%{transform:rotateY(-30deg) rotateZ(7deg) translateY(34px) scale(.84);}}
+
+
+
+/* ══ STICKY FOLDER BINDER HEADER — PSYCHOLOGICAL FOLDER UX ══ */
+.sticky-folder-header{
+  position:sticky;top:28px;z-index:90;
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--card-bg);color:var(--card-text);
+  padding:10px 22px 10px 16px;border-radius:16px 24px 24px 16px;
+  border:1px solid var(--rule);
+  box-shadow:0 12px 32px rgba(0,0,0,0.12);
+  margin-bottom:32px;
+}
+.sf-tab-icon{
+  width:32px;height:32px;border-radius:10px;
+  background:var(--cr);display:grid;place-items:center;
+}
+.sf-tab-icon svg{width:16px;height:16px;fill:#FFF;}
+.sf-title{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:.85rem;letter-spacing:-.01em;text-transform:uppercase;
+}
+.sf-id{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:.62rem;color:var(--cr);letter-spacing:.08em;margin-left:12px;
+}
+
+/* ══ DIRECTIONAL SIDE-STICKING FILE CARD LAYOUT ══ */
+.opened-folder-layout{
+  position:relative;
+  min-height:100vh;
+}
+.opened-folder-layout.left-align{
+  padding-left:360px;
+}
+.opened-folder-layout.right-align{
+  padding-right:360px;
+}
+
+.sticky-side-card{
+  position:fixed;
+  top:110px;
+  width:310px;
+  height:calc(100vh - 180px);
+  background:var(--card-bg);
+  color:var(--card-text);
+  border-radius:24px;
+  border:1px solid var(--rule);
+  box-shadow:0 24px 60px rgba(0,0,0,0.14);
+  padding:28px 24px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  z-index:90;
+}
+.sticky-side-card.left-side{ left: 5vw; }
+.sticky-side-card.right-side{ right: 5vw; }
+
+.ssc-header{
+  display:flex;justify-content:space-between;align-items:center;
+}
+.ssc-tag{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--cr);
+}
+.ssc-id{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:10px;
+  color:var(--dim);letter-spacing:.08em;
+}
+.ssc-img{
+  width:100%;height:150px;border-radius:16px;margin:18px 0;
+  display:flex;align-items:center;justify-content:center;
+}
+.ssc-img svg{width:44px;height:44px;fill:#FFF;}
+.ssc-title{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.75rem;
+  letter-spacing:-.02em;line-height:1.15;color:var(--ink);
+}
+.ssc-desc{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;font-size:.85rem;
+  color:var(--dim);line-height:1.6;margin-top:8px;
+}
+
+/* Next Folder Bar at End of Page */
+.next-folder-indicator{
+  margin-top:60px;padding:32px 38px;border-radius:22px;
+  background:var(--cr-lo);border:1px solid rgba(139,26,26,0.18);
+  display:flex;justify-content:space-between;align-items:center;
+  cursor:none;transition:transform .3s var(--sm), border-color .3s;
+}
+.next-folder-indicator:hover{
+  transform:translateY(-4px);border-color:var(--cr);
+}
+.nfi-badge{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:11px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--cr);margin-bottom:4px;
+}
+.nfi-title{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.75rem;
+  letter-spacing:-.02em;color:var(--ink);
+}
+
+/* ══ HOME CONTENT SCREEN ════════════════════════ */
+#home-scr{
+  position:fixed;inset:0;z-index:50;
+  background:var(--bg);opacity:0;pointer-events:none;
+  overflow-y:auto;will-change:opacity;
+}
+#home-scr.open{opacity:1;pointer-events:all;}
+#h-back{
+  position:fixed;top:34px;left:44px;z-index:120;
+  font-family:'Space Grotesk',sans-serif;font-size:.65rem;
+  font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  padding:8px 20px;border-radius:999px;
+  border:1px solid var(--rule);color:var(--dim);
+  opacity:0;pointer-events:none;background:var(--bg);
+  transition:opacity .4s,border-color .25s,color .25s;
+}
+#h-back.vis{opacity:1;pointer-events:all;}
+#h-back:hover{border-color:var(--cr);color:var(--cr);}
+
+/* ─ Main Content Layout ─ */
+.ci{max-width:1080px;margin:0 auto;padding:110px 6vw 80px;}
+.blk{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.blk.in{opacity:1;transform:translateY(0);}
+
+.tag{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--cr);display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.tag::before{content:'';width:20px;height:2px;background:var(--cr);border-radius:1px;}
+
+.dh{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:clamp(36px,5vw,72px);line-height:.98;
+  letter-spacing:-.03em;color:var(--ink);margin-bottom:26px;
+}
+.dh em{color:var(--cr);font-style:normal;}
+
+.bp{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;
+  font-size:1.02rem;color:var(--dim);line-height:1.8;max-width:560px;
+}
+
+.g2{display:grid;grid-template-columns:1.2fr 1fr;gap:52px;align-items:start;}
+
+.mg{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1px;
+  background:var(--rule);border-radius:20px;overflow:hidden;
+}
+.mc{background:var(--bg);padding:28px 24px;}
+.mv{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:clamp(2.4rem,4vw,3.6rem);line-height:1;color:var(--ink);
+  letter-spacing:-.03em;
+}
+.mv em{color:var(--cr);font-style:normal;}
+.ml{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:.6rem;letter-spacing:.18em;color:var(--dim);
+  text-transform:uppercase;margin-top:6px;
+}
+
+.mnf{
+  margin-top:48px;padding:36px 44px;
+  border:1px solid var(--rule);border-radius:22px;background:var(--cr-lo);
+}
+.mnf p{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;
+  font-size:clamp(18px,2vw,26px);line-height:1.6;color:var(--ink);
+}
+
+.wg{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:32px;}
+.wc{
+  height:240px;border-radius:20px;padding:30px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  border:1px solid var(--rule);
+  transition:transform .32s var(--sm),border-color .25s;
+}
+.wc:hover{transform:translateY(-7px);border-color:var(--cr);}
+.wca{background:rgba(139,26,26,0.06);}.wcb{background:rgba(99,102,241,0.06);}
+.wt{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:.6rem;letter-spacing:.14em;color:var(--cr);margin-bottom:6px;
+}
+.wn{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:1.75rem;letter-spacing:-.02em;
+}
+
+.sl{display:flex;flex-direction:column;margin-top:32px;}
+.sr{
+  display:grid;grid-template-columns:44px 1fr 32px;align-items:center;
+  gap:20px;padding:20px 0;border-top:1px solid var(--rule);cursor:none;
+}
+.sr:last-child{border-bottom:1px solid var(--rule);}
+.sr:hover .sn{color:var(--cr);}
+.si{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.65rem;color:var(--dim);}
+.sn{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;
+  font-size:1.25rem;letter-spacing:-.01em;transition:color .25s;
+}
+.sa{
+  font-family:'Space Grotesk',sans-serif;font-size:.7rem;color:var(--cr);
+  opacity:0;transition:opacity .25s;
+}
+.sr:hover .sa{opacity:1;}
+
+.ag{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px;}
+.ac{
+  border:1px solid var(--rule);border-radius:18px;padding:26px 20px;
+  transition:border-color .25s;
+}
+.ac:hover{border-color:var(--cr);}
+.an{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:2rem;color:var(--cr);margin-bottom:10px;
+}
+.ah{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:6px;}
+.ap{font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;font-size:.82rem;color:var(--dim);line-height:1.6;}
+
+.mq{
+  overflow:hidden;padding:22px 0;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+}
+.mq-t{display:inline-flex;white-space:nowrap;animation:mq 32s linear infinite;}
+@keyframes mq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.mi{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;
+  font-size:1.25rem;color:var(--dim);margin:0 26px;
+}
+.md{color:var(--cr);}
+
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px;}
+.rc{border:1px solid var(--rule);border-radius:20px;padding:30px;background:var(--bg);}
+.rq{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;
+  font-size:1.08rem;line-height:1.7;color:var(--ink);margin-bottom:18px;
+}
+.rb{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.62rem;color:var(--dim);letter-spacing:.1em;}
+
+.cta{
+  background:var(--cr);color:#fff;border-radius:26px;
+  padding:86px 6vw;text-align:center;margin:60px 0;
+}
+.cta-h{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:clamp(52px,9vw,130px);line-height:.92;letter-spacing:-.03em;margin-bottom:30px;
+}
+.cta-b{
+  display:inline-block;background:#fff;color:var(--cr);
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.7rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:15px 42px;border-radius:10px;cursor:none;
+  box-shadow:0 8px 28px rgba(0,0,0,.18);transition:transform .25s;
+}
+.cta-b:hover{transform:translateY(-3px);}
+
+.ft{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:36px;margin-top:60px;padding-top:46px;border-top:1px solid var(--rule);
+}
+.ft-b{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:1.5rem;color:var(--cr);margin-bottom:12px;letter-spacing:-.02em;
+}
+.ft-p{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;
+  font-size:.85rem;color:var(--dim);line-height:1.7;max-width:270px;
+}
+.ft-h{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.62rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--cr);margin-bottom:14px;
+}
+.ft-ls{display:flex;flex-direction:column;gap:10px;}
+.ft-ls a{
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;
+  color:var(--dim);transition:color .2s;
+}
+.ft-ls a:hover{color:var(--cr);}
+.ft-copy{
+  text-align:center;margin-top:40px;padding-bottom:40px;
+  font-family:'Space Grotesk',sans-serif;font-size:.58rem;letter-spacing:.12em;color:var(--dim);
+}
+
+/* ══ PAGE OVERLAY ═══════════════════════════════ */
+#overlay{
+  position:fixed;inset:0;z-index:200;
+  background:var(--bg);pointer-events:none;
+  opacity:0;
+  overflow-y:auto;padding:100px 7vw 80px;
+  transition:opacity .5s var(--sm);
+}
+#overlay.open{pointer-events:all;opacity:1;}
+#ov-back{
+  position:fixed;top:34px;right:44px;z-index:300;
+  font-family:'Space Grotesk',sans-serif;font-size:.65rem;
+  font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  padding:8px 20px;border-radius:999px;
+  border:1px solid var(--rule);color:var(--dim);
+  opacity:0;pointer-events:none;background:var(--bg);
+  transition:opacity .4s,border-color .25s,color .25s;
+}
+#ov-back.vis{opacity:1;pointer-events:all;}
+#ov-back:hover{border-color:var(--cr);color:var(--cr);}
+
+.ov-wrap{max-width:860px;margin:0 auto;}
+.ov-tag{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.65rem;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--cr);
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
+}
+.ov-tag::before{content:'';width:20px;height:2px;background:var(--cr);border-radius:1px;}
+.ov-h{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;
+  font-size:clamp(38px,5vw,72px);line-height:.98;letter-spacing:-.03em;
+  color:var(--ink);margin-bottom:28px;
+}
+.ov-h em{color:var(--cr);font-style:normal;}
+.ov-p{
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:400;
+  font-size:1.02rem;color:var(--dim);line-height:1.8;max-width:580px;
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cur"></div><div id="cur-r"></div>
+
+<!-- Theme toggle -->
+<button id="tbtn" title="Toggle theme">
+  <svg viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+</button>
+
+<!-- ═══ HERO SECTION ═══ -->
+<div id="hero-driver">
+<div id="hero-sticky">
+
+  <!-- 1928 CREATIVE STUDIO LOGO, BRAND ENGINEERING BADGE & 2-LINE DESCRIPTION -->
+  <div id="brand">
+    <span class="b-badge"><span class="b-dot">●</span> NEW · CREATIVE BRAND ENGINEERING &amp; DIGITAL ARCHITECTURE</span>
+    <h1 class="b-logo-title">1928 CREATIVE STUDIO</h1>
+    <p class="b-sub">We craft category-defining brand identities, high-conversion web platforms, and cinematic design systems<br/>that transform ambitious companies into recognized market authorities worldwide.</p>
+  </div>
+
+  <!-- 3D FOLDER STAGE WITH MOUSE-TILT PARALLAX & AMBIENT FLOAT -->
+  <div id="stage">
+
+    <!-- ABOUT FOLDER -->
+    <div class="fc" id="fc-1" data-page="about" onclick="clickFolder(this,'about')">
+      <div class="fc-tab-body"></div>
+      
+      <div class="fc-file">
+        <div class="fc-file-img" style="background:linear-gradient(135deg, #C25E00, #E67E22);">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div class="fc-file-info">
+          <span class="fc-file-title">ABOUT US</span>
+          <span class="fc-file-id">ID: 1928-ABT</span>
+        </div>
+        <div class="fc-file-lines">
+          <div class="fc-fline"></div>
+          <div class="fc-fline"></div>
+        </div>
+      </div>
+
+      <div class="fc-pocket">
+        <div>
+          <div class="fc-p-title">About Studio</div>
+          <div class="fc-p-count">12 Story Modules</div>
+        </div>
+        <div class="fc-action-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICES FOLDER -->
+    <div class="fc" id="fc-2" data-page="services" onclick="clickFolder(this,'services')">
+      <div class="fc-tab-body"></div>
+      
+      <div class="fc-file">
+        <div class="fc-file-img" style="background:linear-gradient(135deg, #7B1E5A, #A22B76);">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="fc-file-info">
+          <span class="fc-file-title">SERVICES</span>
+          <span class="fc-file-id">ID: 1928-SRV</span>
+        </div>
+        <div class="fc-file-lines">
+          <div class="fc-fline"></div>
+          <div class="fc-fline"></div>
+        </div>
+      </div>
+
+      <div class="fc-pocket">
+        <div>
+          <div class="fc-p-title">Capabilities</div>
+          <div class="fc-p-count">7 Core Services</div>
+        </div>
+        <div class="fc-action-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOME CENTER FOLDER -->
+    <div class="fc" id="fc-3" data-page="home">
+      <div class="fc-tab-body"></div>
+      
+      <div class="fc-file">
+        <div class="fc-file-img" style="background:linear-gradient(135deg, #8B1A1A, #5B0E0E);">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        </div>
+        <div class="fc-file-info">
+          <span class="fc-file-title">1928 STUDIO</span>
+          <span class="fc-file-id">ID: 1928-MAIN</span>
+        </div>
+        <div class="fc-file-lines">
+          <div class="fc-fline"></div>
+          <div class="fc-fline"></div>
+        </div>
+      </div>
+
+      <div class="fc-pocket">
+        <div>
+          <div class="fc-p-title">1928 Studio</div>
+          <div class="fc-p-count">458 Showcase Items</div>
+        </div>
+        <div class="fc-action-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDITORIAL FOLDER -->
+    <div class="fc" id="fc-4" data-page="editorial" onclick="clickFolder(this,'editorial')">
+      <div class="fc-tab-body"></div>
+      
+      <div class="fc-file">
+        <div class="fc-file-img" style="background:linear-gradient(135deg, #1E3A8A, #3B82F6);">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </div>
+        <div class="fc-file-info">
+          <span class="fc-file-title">EDITORIAL</span>
+          <span class="fc-file-id">ID: 1928-EDT</span>
+        </div>
+        <div class="fc-file-lines">
+          <div class="fc-fline"></div>
+          <div class="fc-fline"></div>
+        </div>
+      </div>
+
+      <div class="fc-pocket">
+        <div>
+          <div class="fc-p-title">Insights</div>
+          <div class="fc-p-count">24 Articles</div>
+        </div>
+        <div class="fc-action-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACT / START BRIEF FOLDER -->
+    <div class="fc" id="fc-5" data-page="contact" onclick="clickFolder(this,'contact')">
+      <div class="fc-tab-body"></div>
+      
+      <div class="fc-file">
+        <div class="fc-file-img" style="background:linear-gradient(135deg, #0F5156, #14B8A6);">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="fc-file-info">
+          <span class="fc-file-title">START BRIEF</span>
+          <span class="fc-file-id">ID: 1928-CTC</span>
+        </div>
+        <div class="fc-file-lines">
+          <div class="fc-fline"></div>
+          <div class="fc-fline"></div>
+        </div>
+      </div>
+
+      <div class="fc-pocket">
+        <div>
+          <div class="fc-p-title">Start Brief</div>
+          <div class="fc-p-count">Direct Channel</div>
+        </div>
+        <div class="fc-action-btn">
+          <svg viewBox="0 0 24 24"><path d="M12 4v12m0 0l-5-5m5 5l5-5"/></svg>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /stage -->
+
+</div><!-- /hero-sticky -->
+</div><!-- /hero-driver -->
+
+<!-- HOME CONTENT -->
+<div id="home-scr">
+  <button id="h-back" onclick="closeHome()">← Back</button>
+  <div class="ci">
+
+    <div class="blk g2" id="b1">
+      <div>
+        <div class="tag">01 · The Studio</div>
+        <h2 class="dh">We don't just design — we <em>engineer</em> icons.</h2>
+        <p class="bp">1928 Creative Studio combines radical market strategy with unyielding visual craft. We partner with visionary leaders, ambitious startups, and enterprise brands to build lasting category authority.</p>
+      </div>
+      <div class="mg">
+        <div class="mc"><div class="mv">100<em>+</em></div><div class="ml">Brands</div></div>
+        <div class="mc"><div class="mv">7<em>+</em></div><div class="ml">Years</div></div>
+        <div class="mc"><div class="mv">500<em>+</em></div><div class="ml">Projects</div></div>
+        <div class="mc"><div class="mv">15<em>+</em></div><div class="ml">Markets</div></div>
+      </div>
+    </div>
+
+    <div class="blk mnf" id="b2" style="margin-top:48px;">
+      <p>"We believe every brand is a story waiting to be told — with precision, intent, and the kind of visual language that outlasts trends."</p>
+    </div>
+
+    <div class="blk" id="b3" style="margin-top:76px;">
+      <div class="tag">02 · Featured Works</div>
+      <h2 class="dh">Case <em>studies.</em></h2>
+      <div class="wg">
+        <div class="wc wca"><div class="wt">Branding · Web · Photography</div><div class="wn">Zenith Luxury Homes</div></div>
+        <div class="wc wcb"><div class="wt">Digital · Strategy · Meta</div><div class="wn">Arka Fashion Studio</div></div>
+      </div>
+    </div>
+
+    <div class="blk" id="b4" style="margin-top:76px;">
+      <div class="tag">03 · Capabilities</div>
+      <h2 class="dh">Seven ways we make you <em>remarkable.</em></h2>
+      <div class="sl">
+        <div class="sr"><span class="si">01</span><span class="sn">Logo &amp; Brand Identity</span><span class="sa">→</span></div>
+        <div class="sr"><span class="si">02</span><span class="sn">UI/UX &amp; Web Design</span><span class="sa">→</span></div>
+        <div class="sr"><span class="si">03</span><span class="sn">Photography &amp; Film</span><span class="sa">→</span></div>
+        <div class="sr"><span class="si">04</span><span class="sn">Digital Marketing</span><span class="sa">→</span></div>
+        <div class="sr"><span class="si">05</span><span class="sn">Social Media Strategy</span><span class="sa">→</span></div>
+        <div class="sr"><span class="si">06</span><span class="sn">Content &amp; Copywriting</span><span class="sa">→</span></div>
+        <div class="sr"><span class="si">07</span><span class="sn">Editorial &amp; Press</span><span class="sa">→</span></div>
+      </div>
+    </div>
+
+    <div class="blk" id="b5" style="margin-top:76px;">
+      <div class="tag">04 · The Advantage</div>
+      <h2 class="dh">The 1928 <em>difference.</em></h2>
+      <div class="ag">
+        <div class="ac"><div class="an">01</div><div class="ah">Radical Strategy</div><div class="ap">Deep market research before any visual is touched.</div></div>
+        <div class="ac"><div class="an">02</div><div class="ah">World-Class Craft</div><div class="ap">International standards at every detail.</div></div>
+        <div class="ac"><div class="an">03</div><div class="ah">Global Reach</div><div class="ap">Ahmedabad roots, built for the world.</div></div>
+        <div class="ac"><div class="an">04</div><div class="ah">Measurable Impact</div><div class="ap">Design that drives conversion and loyalty.</div></div>
+      </div>
+    </div>
+
+    <div class="blk mq" id="b6" style="margin-top:76px;">
+      <div class="mq-t">
+        <span class="mi">Zenith Luxury Homes</span><span class="md"> · </span>
+        <span class="mi">Arka Fashion Studio</span><span class="md"> · </span>
+        <span class="mi">Veda Wellness</span><span class="md"> · </span>
+        <span class="mi">Nova Organics</span><span class="md"> · </span>
+        <span class="mi">1928 Creative Studio</span><span class="md"> · </span>
+        <span class="mi">Zenith Luxury Homes</span><span class="md"> · </span>
+        <span class="mi">Arka Fashion Studio</span><span class="md"> · </span>
+        <span class="mi">Veda Wellness</span><span class="md"> · </span>
+        <span class="mi">Nova Organics</span><span class="md"> · </span>
+        <span class="mi">1928 Creative Studio</span><span class="md"> · </span>
+      </div>
+    </div>
+
+    <div class="blk" id="b7" style="margin-top:76px;">
+      <div class="tag">05 · Client Words</div>
+      <h2 class="dh">What they <em>say.</em></h2>
+      <div class="rg">
+        <div class="rc"><p class="rq">"1928 didn't just redesign our brand — they elevated our business into a recognised market authority within 90 days."</p><div class="rb">Rahul Kapoor · Founder, Zenith Luxury Homes</div></div>
+        <div class="rc"><p class="rq">"World-class creativity. Our social engagement grew 340% following the relaunch."</p><div class="rb">Priya Shah · CEO, Arka Fashion Studio</div></div>
+      </div>
+    </div>
+
+    <div class="blk cta" id="b8" style="margin-top:60px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:.65rem;letter-spacing:.24em;opacity:.8;margin-bottom:14px;">[ LET'S BUILD SOMETHING REMARKABLE ]</div>
+      <h2 class="cta-h">Start your<br/>project.</h2>
+      <button class="cta-b" onclick="clickFolder(document.getElementById('fc-5'),'contact')">Start a Brief →</button>
+    </div>
+
+    <div class="blk ft" id="b10">
+      <div>
+        <div class="ft-b">1928 Creative Studio</div>
+        <p class="ft-p">Award-winning multidisciplinary studio engineering brand identity, digital platforms, and cinematic visual stories. Ahmedabad, India.</p>
+      </div>
+      <div>
+        <div class="ft-h">Studio</div>
+        <div class="ft-ls"><a onclick="clickFolder(this,'about');return false;" href="#">About</a><a onclick="clickFolder(this,'services');return false;" href="#">Services</a><a onclick="clickFolder(this,'portfolio');return false;" href="#">Portfolio</a><a onclick="clickFolder(this,'editorial');return false;" href="#">Editorial</a></div>
+      </div>
+      <div>
+        <div class="ft-h">Services</div>
+        <div class="ft-ls"><a href="#">Brand Identity</a><a href="#">UI/UX &amp; Web</a><a href="#">Social Media</a><a href="#">Film &amp; Photo</a></div>
+      </div>
+      <div>
+        <div class="ft-h">Connect</div>
+        <div class="ft-ls">
+          <a href="mailto:hello@1928creativestudio.com" style="color:var(--cr);">hello@1928creativestudio.com</a>
+          <span style="font-size:.85rem;color:var(--dim);">+91 98765 43210</span>
+          <span style="font-size:.85rem;color:var(--dim);">Ahmedabad, India</span>
+        </div>
+      </div>
+    </div>
+    <div class="blk ft-copy" id="b11">© 2026 1928 Creative Studio · All rights reserved.</div>
+  </div>
+</div>
+
+<!-- PAGE OVERLAY -->
+<div id="overlay"></div>
+<button id="ov-back" onclick="closeOverlay()">← Back</button>
+
+<script>
+/* ══ CURSOR & PARALLAX ═════════════════════════ */
+const CUR=document.getElementById('cur');
+const CURR=document.getElementById('cur-r');
+const stage=document.getElementById('stage');
+let mx=0,my=0,rx=0,ry=0;
+
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  CUR.style.left=mx+'px';CUR.style.top=my+'px';
+  
+  /* Dynamic 3D stage tilt tracking cursor position */
+  const tiltX = (my / window.innerHeight - 0.5) * -12;
+  const tiltY = (mx / window.innerWidth - 0.5) * 12;
+  stage.style.transform = `rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
+});
+
+(function L(){
+  rx+=(mx-rx)*.11;ry+=(my-ry)*.11;
+  CURR.style.left=rx+'px';CURR.style.top=ry+'px';
+  requestAnimationFrame(L);
+})();
+
+document.addEventListener('mouseover',e=>{if(e.target.closest('a,button,.fc,.wc,.sr,.ac'))document.body.classList.add('hov');});
+document.addEventListener('mouseout',e=>{if(e.target.closest('a,button,.fc,.wc,.sr,.ac'))document.body.classList.remove('hov');});
+
+/* ══ LIGHT / DARK THEME ════════════════════════ */
+const DR=document.documentElement;
+DR.setAttribute('data-theme',localStorage.getItem('t28')||'light');
+document.getElementById('tbtn').addEventListener('click',()=>{
+  const n=DR.getAttribute('data-theme')==='light'?'dark':'light';
+  DR.setAttribute('data-theme',n);localStorage.setItem('t28',n);
+});
+
+/* ══ REFERENCES & STRICT HOVER TRACKING ═════════ */
+const hDrv=document.getElementById('hero-driver');
+const brand=document.getElementById('brand');
+const fi=document.getElementById('fi');
+const fiHeader=document.getElementById('fi-card-header');
+const homeScr=document.getElementById('home-scr');
+const hBack=document.getElementById('h-back');
+let homeOpen=false;
+
+/* Track active hover folder and remember last hovered folder ID */
+let activeHoverFolderId = null; 
+let lastHoveredFolderId = 'fc-3';
+
+document.querySelectorAll('.fc').forEach(fc => {
+  fc.addEventListener('mouseenter', () => {
+    activeHoverFolderId = fc.id;
+    lastHoveredFolderId = fc.id;
+  });
+  fc.addEventListener('mouseleave', () => {
+    if (activeHoverFolderId === fc.id) {
+      activeHoverFolderId = null;
+    }
+  });
+});
+
+function eio(t){return t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
+function lerp(a,b,t){return a+(b-a)*t;}
+function clamp(v,lo,hi){return Math.min(Math.max(v,lo),hi);}
+
+/* Folder Metadata for Dynamic Card Navigation */
+const FOLDER_META = {
+  'fc-1': { title: 'About Studio', sub: '12 STORY MODULES', color: 'linear-gradient(135deg, #C25E00, #E67E22)', page: 'about' },
+  'fc-2': { title: 'Capabilities', sub: '7 CORE SERVICES', color: 'linear-gradient(135deg, #7B1E5A, #A22B76)', page: 'services' },
+  'fc-3': { title: '1928 Studio', sub: '458 SHOWCASE ITEMS', color: 'linear-gradient(135deg, #8B1A1A, #5B0E0E)', page: 'home' },
+  'fc-4': { title: 'Editorial', sub: '24 ARTICLES', color: 'linear-gradient(135deg, #1E3A8A, #3B82F6)', page: 'editorial' },
+  'fc-5': { title: 'Start Brief', sub: 'DIRECT CHANNEL', color: 'linear-gradient(135deg, #0F5156, #14B8A6)', page: 'contact' }
+};
+
+/* ══ ONLY FILE CARD RISES & DOCKS TO SIDE — STAGE STAYS STATIONARY ════ */
+window.addEventListener('scroll',onScroll,{passive:true});
+
+let lockedScrollFolderId = null;
+
+function onScroll(){
+  if(homeOpen)return;
+
+  const sy=window.scrollY;
+  const total=hDrv.offsetHeight-window.innerHeight;
+  const p=clamp(sy/total,0,1);
+
+  /* Lock target folder on scroll start so cursor movement during scroll does NOT switch folders */
+  if (p > 0.01 && !lockedScrollFolderId) {
+    lockedScrollFolderId = activeHoverFolderId || lastHoveredFolderId || 'fc-3';
+  } else if (p <= 0.005) {
+    lockedScrollFolderId = null;
+  }
+
+  const targetId = lockedScrollFolderId || activeHoverFolderId || lastHoveredFolderId || 'fc-3';
+  const targetFolder = document.getElementById(targetId);
+  const targetCard = targetFolder ? targetFolder.querySelector('.fc-file') : null;
+  const meta = FOLDER_META[targetId] || FOLDER_META['fc-3'];
+
+  /* Brand header fades on scroll */
+  brand.style.opacity=clamp(1-p*3.5,0,1)+'';
+
+  /* FOLDER STAGE REMAINS COMPLETELY STATIONARY — NO ZOOMING OR CLIPPING OF FOLDER BODIES */
+  stage.style.transform = `rotateX(0deg) rotateY(0deg)`;
+
+  if (p <= 0.01) {
+    /* SCROLL-BACK RESET: Card glides right back INSIDE its folder slot */
+    stage.style.pointerEvents = 'auto';
+    document.querySelectorAll('.fc').forEach(fc => {
+      fc.style.opacity = '1';
+      const fcCard = fc.querySelector('.fc-file');
+      if (fcCard) {
+        fcCard.style.transform = '';
+        fcCard.style.zIndex = '';
+      }
+    });
+    return;
+  }
+
+  /* Disable hover interaction on other folders during scroll */
+  stage.style.pointerEvents = 'none';
+
+  /* Fade non-target folders slightly to keep full focus on the active file card */
+  document.querySelectorAll('.fc').forEach(fc => {
+    const fcCard = fc.querySelector('.fc-file');
+    if(fc.id !== targetId){
+      fc.style.opacity = clamp(1 - p*3.5, 0.15, 1) + '';
+      if(fcCard) {
+        fcCard.style.transform = '';
+        fcCard.style.zIndex = '';
+      }
+    } else {
+      fc.style.opacity = '1';
+    }
+  });
+
+  /* Phase 1: Only the active file card rises up out of its folder slot */
+  const riseP = clamp(p / 0.40, 0, 1);
+  const easeRise = eio(riseP);
+  const riseY = lerp(0, -220, easeRise);
+
+  /* Phase 2: File card glides to designated side (Left for fc-1,2,3; Right for fc-4,5) */
+  const dockP = clamp((p - 0.30) / 0.54, 0, 1);
+  const easeDock = eio(dockP);
+
+  let sideShiftX = 0;
+  if (targetId === 'fc-1') { sideShiftX = -260; }
+  else if (targetId === 'fc-2') { sideShiftX = -180; }
+  else if (targetId === 'fc-3') { sideShiftX = -220; }
+  else if (targetId === 'fc-4') { sideShiftX = 180; }
+  else if (targetId === 'fc-5') { sideShiftX = 260; }
+
+  const curShiftX = lerp(0, sideShiftX, easeDock);
+  const curScale = lerp(1, 1.15, easeDock);
+
+  if (targetCard) {
+    targetCard.style.transform = `translateX(calc(-50% + ${curShiftX}px)) translateY(${riseY - 40}px) scale(${curScale})`;
+    targetCard.style.zIndex = '50';
+  }
+
+  if (p >= 0.84 && !homeOpen) {
+    if (meta.page === 'home') {
+      homeScr.style.opacity = '1';
+      triggerHome();
+    } else {
+      clickFolder(targetFolder, meta.page);
+    }
+  }
+}
+
+function triggerHome(){
+  if(homeOpen)return;homeOpen=true;
+  homeScr.classList.add('open');hBack.classList.add('vis');
+  document.body.style.overflow='hidden';
+  homeScr.querySelectorAll('.blk').forEach((b,i)=>
+    setTimeout(()=>b.classList.add('in'),80+i*65));
+}
+
+function closeHome(){
+  homeOpen=false;
+  homeScr.classList.remove('open');homeScr.style.opacity='0';
+  hBack.classList.remove('vis');
+  document.body.style.overflow='';
+  
+  stage.style.pointerEvents = 'auto';
+  stage.style.transform = 'rotateX(0deg) rotateY(0deg)';
+  brand.style.opacity='1';
+  document.querySelectorAll('.fc').forEach(fc => {
+    fc.style.opacity='1';
+    const fcCard = fc.querySelector('.fc-file');
+    if(fcCard) {
+      fcCard.style.transform = '';
+      fcCard.style.zIndex = '';
+    }
+  });
+  homeScr.querySelectorAll('.blk').forEach(b=>b.classList.remove('in'));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ══ CLICK FOLDER → RECTANGULAR ZOOM OVERLAY ════ */
+const OV=document.getElementById('overlay');
+const OVB=document.getElementById('ov-back');
+
+function clickFolder(el,page){
+  if(!PAGES[page])return;
+  OV.innerHTML=PAGES[page];OV.scrollTop=0;
+  
+  OV.style.transition='none';
+  OV.style.transform='scale(0.92)';
+  OV.style.opacity='0';
+
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    OV.style.transition='transform .6s cubic-bezier(.16,1,.3,1), opacity .5s ease';
+    OV.style.transform='scale(1)';
+    OV.style.opacity='1';
+    OV.classList.add('open');OVB.classList.add('vis');
+    document.body.style.overflow='hidden';
+  }));
+}
+function closeOverlay(){
+  OV.style.transition='transform .45s ease, opacity .45s ease';
+  OV.style.transform='scale(0.94)';
+  OV.style.opacity='0';
+  OVB.classList.remove('vis');
+  setTimeout(()=>{
+    OV.classList.remove('open');
+    OV.style.transform='none';
+    document.body.style.overflow=homeOpen?'hidden':'';
+  },460);
+}
+
+/* ══ PAGE CONTENT WITH DIRECTIONAL STICKY FILE CARDS ═══════════════════════════ */
+const PAGES={
+  about:`
+    <div class="opened-folder-layout left-align">
+      <div class="sticky-side-card left-side">
+        <div class="ssc-header">
+          <span class="ssc-tag">ABOUT STUDIO</span>
+          <span class="ssc-id">ID: 1928-ABT</span>
+        </div>
+        <div class="ssc-img" style="background:linear-gradient(135deg, #C25E00, #E67E22);">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <div>
+          <div class="ssc-title">About Studio</div>
+          <div class="ssc-desc">12 Story Modules · Global Brand Architecture</div>
+        </div>
+      </div>
+      <div class="ov-wrap">
+        <div class="ov-tag">About Studio</div>
+        <h2 class="ov-h">The <em>minds</em> behind 1928.</h2>
+        <p class="ov-p" style="margin-bottom:44px;">Founded in Ahmedabad with a global vision, 1928 Creative Studio is a multidisciplinary brand engineering studio. We combine strategic rigour with unyielding visual craft to build brands that command authority and inspire loyalty.</p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:44px;">
+          ${['100+·Brands','7+·Years','500+·Projects','15+·Markets'].map(x=>{const[v,l]=x.split('·');return`<div style="background:var(--bg);padding:28px 22px;border:1px solid var(--rule);border-radius:18px;"><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:2.8rem;line-height:1;color:var(--ink);letter-spacing:-.03em;">${v.slice(0,-1)}<em style="color:var(--cr);font-style:normal;">+</em></div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.6rem;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-top:6px;">${l}</div></div>`;}).join('')}
+        </div>
+        <div style="padding:36px 44px;border:1px solid var(--rule);border-radius:22px;background:var(--cr-lo);">
+          <p style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:500;font-size:clamp(18px,2vw,24px);line-height:1.6;">"We believe every brand is a story waiting to be told — with precision, intent, and the kind of visual language that outlasts trends."</p>
+        </div>
+        <div class="next-folder-indicator" onclick="clickFolder(null,'services')">
+          <div><div class="nfi-badge">NEXT FOLDER</div><div class="nfi-title">Capabilities &amp; Services →</div></div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;color:var(--cr);">EXPLORE 📁</div>
+        </div>
+      </div>
+    </div>`,
+
+  services:`
+    <div class="opened-folder-layout left-align">
+      <div class="sticky-side-card left-side">
+        <div class="ssc-header">
+          <span class="ssc-tag">CAPABILITIES</span>
+          <span class="ssc-id">ID: 1928-SRV</span>
+        </div>
+        <div class="ssc-img" style="background:linear-gradient(135deg, #7B1E5A, #A22B76);">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <div class="ssc-title">Capabilities</div>
+          <div class="ssc-desc">7 Core Services · Brand Identity, Web &amp; Film</div>
+        </div>
+      </div>
+      <div class="ov-wrap">
+        <div class="ov-tag">Capabilities</div>
+        <h2 class="ov-h">Seven ways we make you <em>remarkable.</em></h2>
+        <div style="border-bottom:1px solid var(--rule);">${[['01','Logo & Brand Identity','₹25K+'],['02','UI/UX & Web Design','₹40K+'],['03','Photography & Film','Quote'],['04','Digital Marketing','Monthly'],['05','Social Media','Monthly'],['06','Content & Copy','Quote'],['07','Editorial & Press','Quote']].map(([n,t,p])=>`<div style="display:grid;grid-template-columns:44px 1fr 70px;align-items:center;gap:22px;padding:22px 0;border-top:1px solid var(--rule);" onmouseover="this.children[1].style.color='var(--cr)'" onmouseout="this.children[1].style.color=''"><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.65rem;color:var(--dim);">${n}</span><span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:1.3rem;transition:color .25s;letter-spacing:-.01em;">${t}</span><span style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.6rem;color:var(--cr);text-align:right;">${p}</span></div>`).join('')}</div>
+        <div class="next-folder-indicator" onclick="clickFolder(null,'portfolio')">
+          <div><div class="nfi-badge">NEXT FOLDER</div><div class="nfi-title">Portfolio &amp; Case Studies →</div></div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;color:var(--cr);">EXPLORE 📁</div>
+        </div>
+      </div>
+    </div>`,
+
+  portfolio:`
+    <div class="opened-folder-layout left-align">
+      <div class="sticky-side-card left-side">
+        <div class="ssc-header">
+          <span class="ssc-tag">PORTFOLIO</span>
+          <span class="ssc-id">ID: 1928-MAIN</span>
+        </div>
+        <div class="ssc-img" style="background:linear-gradient(135deg, #8B1A1A, #5B0E0E);">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        </div>
+        <div>
+          <div class="ssc-title">Case Studies</div>
+          <div class="ssc-desc">458 Showcase Items · Iconic Client Work</div>
+        </div>
+      </div>
+      <div class="ov-wrap">
+        <div class="ov-tag">Portfolio</div>
+        <h2 class="ov-h">Case <em>studies.</em></h2>
+        <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-top:10px;">${[['rgba(194,94,0,0.06)','Zenith Luxury Homes','Branding · Web · Photography','+210% Growth'],['rgba(123,30,90,0.06)','Arka Fashion Studio','Digital · Strategy · Meta','+340% Engagement'],['rgba(30,58,138,0.06)','Veda Wellness','UI/UX · Product Design','3× User Retention'],['rgba(15,81,86,0.06)','Nova Organics','Branding · Packaging','6 Global Markets']].map(([bg,n,t,r])=>`<div style="background:${bg};border-radius:20px;padding:34px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--rule);transition:transform .3s;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform=''"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.65rem;color:var(--cr);margin-bottom:6px;">${t}</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.85rem;letter-spacing:-.02em;">${n}</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.65rem;color:var(--dim);margin-top:6px;">${r}</div></div>`).join('')}</div>
+        <div class="next-folder-indicator" onclick="clickFolder(null,'editorial')">
+          <div><div class="nfi-badge">NEXT FOLDER</div><div class="nfi-title">Editorial &amp; Insights →</div></div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;color:var(--cr);">EXPLORE 📁</div>
+        </div>
+      </div>
+    </div>`,
+
+  editorial:`
+    <div class="opened-folder-layout right-align">
+      <div class="sticky-side-card right-side">
+        <div class="ssc-header">
+          <span class="ssc-tag">EDITORIAL</span>
+          <span class="ssc-id">ID: 1928-EDT</span>
+        </div>
+        <div class="ssc-img" style="background:linear-gradient(135deg, #1E3A8A, #3B82F6);">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </div>
+        <div>
+          <div class="ssc-title">Editorial</div>
+          <div class="ssc-desc">24 Articles · Thoughts on Design &amp; Strategy</div>
+        </div>
+      </div>
+      <div class="ov-wrap">
+        <div class="ov-tag">Editorial</div>
+        <h2 class="ov-h">Insights &amp; <em>ideas.</em></h2>
+        <div style="display:grid;grid-template-columns:1fr;gap:16px;margin-top:10px;">${[['Branding','5 min read','Why Iconic Brands Win in the Digital Era'],['Web Design','7 min read','The Anatomy of a High-Conversion Website'],['Strategy','4 min read','Scaling Social Architecture for Global Audiences']].map(([c,t,h])=>`<div style="border:1px solid var(--rule);border-radius:18px;padding:28px;background:var(--bg);transition:border-color .25s,transform .3s;" onmouseover="this.style.borderColor='var(--cr)';this.style.transform='translateY(-5px)'" onmouseout="this.style.borderColor='';this.style.transform=''"><div style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.65rem;color:var(--cr);margin-bottom:10px;">${c} · ${t}</div><div style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.35rem;line-height:1.35;letter-spacing:-.01em;">${h}</div></div>`).join('')}</div>
+        <div class="next-folder-indicator" onclick="clickFolder(null,'contact')">
+          <div><div class="nfi-badge">NEXT FOLDER</div><div class="nfi-title">Start Brief &amp; Contact →</div></div>
+          <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.14em;color:var(--cr);">EXPLORE 📁</div>
+        </div>
+      </div>
+    </div>`,
+
+  contact:`
+    <div class="opened-folder-layout right-align">
+      <div class="sticky-side-card right-side">
+        <div class="ssc-header">
+          <span class="ssc-tag">START BRIEF</span>
+          <span class="ssc-id">ID: 1928-CTC</span>
+        </div>
+        <div class="ssc-img" style="background:linear-gradient(135deg, #0F5156, #14B8A6);">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div>
+          <div class="ssc-title">Start Brief</div>
+          <div class="ssc-desc">Direct Channel · Fast 24-Hour Studio Response</div>
+        </div>
+      </div>
+      <div class="ov-wrap">
+        <div class="ov-tag">Start Brief</div>
+        <h2 class="ov-h">Start your <em>project.</em></h2>
+        <form onsubmit="event.preventDefault();this.nextElementSibling.style.display='block';this.reset();" style="display:flex;flex-direction:column;gap:22px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div><label style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px;">First Name</label><input type="text" placeholder="Aarav" required style="width:100%;border:none;border-bottom:1.5px solid var(--rule);padding:10px 0;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:400;outline:none;color:var(--ink);"/></div>
+            <div><label style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px;">Last Name</label><input type="text" placeholder="Shah" required style="width:100%;border:none;border-bottom:1.5px solid var(--rule);padding:10px 0;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:400;outline:none;color:var(--ink);"/></div>
+          </div>
+          <div><label style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px;">Email</label><input type="email" placeholder="hello@yourbrand.com" required style="width:100%;border:none;border-bottom:1.5px solid var(--rule);padding:10px 0;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:400;outline:none;color:var(--ink);"/></div>
+          <div><label style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px;">Service</label><select style="width:100%;border:none;border-bottom:1.5px solid var(--rule);padding:10px 0;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;outline:none;color:var(--ink);"><option value="">Select…</option><option>Logo &amp; Brand Identity</option><option>UI/UX &amp; Web</option><option>Photography &amp; Film</option><option>Digital Marketing</option></select></div>
+          <div><label style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px;">Brief</label><textarea placeholder="Describe your vision…" style="width:100%;border:none;border-bottom:1.5px solid var(--rule);padding:10px 0;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:400;outline:none;resize:vertical;min-height:80px;color:var(--ink);"></textarea></div>
+          <button type="submit" style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:var(--cr);border:none;padding:16px;border-radius:10px;cursor:none;transition:background .25s;" onmouseover="this.style.background='var(--cr-dk)'" onmouseout="this.style.background='var(--cr)'">Submit Brief →</button>
+        </form>
+        <div style="display:none;margin-top:14px;padding:14px 18px;background:var(--cr-lo);border:1px solid rgba(139,26,26,.2);border-radius:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:.6rem;color:var(--cr);">[ Brief received · We'll respond within 24 hours ]</div>
+      </div>
+    </div>`
+};
+</script>
+</body>
+</html>

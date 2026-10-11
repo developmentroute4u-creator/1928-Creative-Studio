@@ -1,0 +1,2772 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work &amp; Portfolio · 1928 Creative Studio</title>
+  <meta name="description"
+    content="Explore selected works and category-defining brand architectures engineered by 1928 Creative Studio." />
+  
+  <!-- Immediate Theme Initializer & Session Tracker to prevent flashing -->
+  <script>
+    (function () {
+      try { sessionStorage.setItem('1928_site_visited', 'true'); } catch (e) { }
+      const savedTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ── Font System (Project Core Fonts Only) ── */
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #09090b;
+      --card-bg: #111115;
+      --card-hover: #16161c;
+      --ink: #f5f5f7;
+      --ink-mid: #9c9ca6;
+      --ink-dim: #5a5a66;
+      --rule: rgba(255, 255, 255, 0.08);
+      --rule-m: rgba(255, 255, 255, 0.16);
+      --rule-heavy: rgba(255, 255, 255, 0.28);
+      --cr: #c8102e;
+      --cr-glow: rgba(200, 16, 46, 0.35);
+      --cr-soft: rgba(200, 16, 46, 0.08);
+      --sp: cubic-bezier(0.16, 1, 0.3, 1);
+      --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg: #f7f7f9;
+      --card-bg: #ffffff;
+      --card-hover: #f0f0f4;
+      --ink: #111114;
+      --ink-mid: #555562;
+      --ink-dim: #8e8e9c;
+      --rule: rgba(0, 0, 0, 0.08);
+      --rule-m: rgba(0, 0, 0, 0.15);
+      --rule-heavy: rgba(0, 0, 0, 0.25);
+      --cr: #c8102e;
+      --cr-glow: rgba(200, 16, 46, 0.22);
+      --cr-soft: rgba(200, 16, 46, 0.05);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-secondary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background 0.4s var(--sp), color 0.4s var(--sp);
+    }
+
+    /* ── Custom Cursor ── */
+    .c-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+    }
+
+    .c-ring {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s, height 0.25s, border-color 0.25s;
+    }
+
+    /* ── Shared Layout Utilities ── */
+    .section-container {
+      width: 100%;
+      max-width: 1540px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4vw, 56px);
+      position: relative;
+    }
+
+    .sec-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: clamp(10px, 0.85vw, 11px);
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cr);
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      margin-bottom: clamp(14px, 2vh, 22px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       1. HERO SECTION (Adaptive Light & Dark Modes)
+       ═══════════════════════════════════════════════════════════ */
+    #portfolio-hero {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at 50% 48%, #13131a 0%, #08080a 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(24px, 4vh, 48px) clamp(20px, 4vw, 56px);
+      box-sizing: border-box;
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.4s var(--sp), border-color 0.4s var(--sp);
+    }
+
+    [data-theme="light"] #portfolio-hero {
+      background: radial-gradient(circle at 50% 48%, #ffffff 0%, #eceef3 100%);
+      border-bottom-color: var(--rule);
+    }
+
+    .hero-stage-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      max-width: 1100px;
+      width: 100%;
+      z-index: 10;
+      position: relative;
+    }
+
+    .hero-eyebrow-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cr);
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      margin-bottom: clamp(20px, 3vh, 32px);
+    }
+
+    [data-theme="light"] .hero-eyebrow-tag {
+      background: none;
+      border-color: transparent;
+    }
+
+    .het-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+    }
+
+    .hero-statement-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(34px, 4.6vw, 64px);
+      letter-spacing: -0.035em;
+      line-height: 1.22;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin-bottom: clamp(20px, 3vh, 30px);
+      transition: color 0.4s var(--sp);
+    }
+
+    .hst-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: clamp(10px, 1.4vw, 18px);
+    }
+
+    .hero-rounded-media {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: clamp(76px, 8vw, 115px);
+      height: clamp(38px, 4.2vw, 56px);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 20px rgba(200, 16, 46, 0.25);
+      cursor: pointer;
+      vertical-align: middle;
+      position: relative;
+      transition: transform 0.4s var(--sp), width 0.4s var(--sp), border-color 0.3s, box-shadow 0.3s;
+    }
+
+    [data-theme="light"] .hero-rounded-media {
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 20px rgba(200, 16, 46, 0.12);
+    }
+
+    .hero-rounded-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s var(--sp);
+    }
+
+    .hero-rounded-media:hover {
+      width: clamp(98px, 10.5vw, 145px);
+      border-color: var(--cr);
+      transform: scale(1.06);
+      box-shadow: 0 12px 36px var(--cr-glow);
+    }
+
+    .hero-rounded-media:hover img {
+      transform: scale(1.18);
+    }
+
+    .hst-dot-red {
+      color: var(--cr);
+    }
+
+    .hero-manifesto {
+      font-family: var(--font-secondary);
+      font-size: clamp(15px, 1.25vw, 18.5px);
+      color: var(--ink-mid);
+      max-width: 680px;
+      line-height: 1.6;
+      font-weight: 400;
+      margin-bottom: clamp(28px, 4vh, 44px);
+      transition: color 0.4s var(--sp);
+    }
+
+    .hero-actions-deck {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-pill-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--rule-m);
+      padding: 12px 28px;
+      border-radius: 999px;
+      transition: all 0.35s var(--sp);
+    }
+
+    [data-theme="light"] .hero-pill-cta {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: var(--rule-m);
+      color: var(--ink);
+    }
+
+    .hero-pill-cta:hover {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 12px 35px var(--cr-glow);
+    }
+
+    .hpc-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+
+    .hero-pill-cta:hover .hpc-dot {
+      background: #fff;
+    }
+
+    .hpc-arrow {
+      font-size: 12px;
+      transition: transform 0.3s;
+    }
+
+    .hero-pill-cta:hover .hpc-arrow {
+      transform: translateY(3px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       2. PORTFOLIO ARCHIVE WRAPPER & STICKY FILTER BAR
+       ═══════════════════════════════════════════════════════════ */
+    #portfolio-archive-wrapper {
+      position: relative;
+      width: 100%;
+      background: var(--bg);
+      transition: background 0.4s var(--sp);
+    }
+
+    #filter-bar-wrap {
+      position: sticky;
+      top: 62px;
+      left: 0;
+      right: 0;
+      z-index: 998;
+      background: rgba(9, 9, 11, 0.94);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--rule);
+      padding: 18px 0 20px;
+      transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s var(--sp), opacity 0.35s ease, background 0.4s var(--sp), border-color 0.4s;
+    }
+
+    #nav.visible ~ #portfolio-archive-wrapper #filter-bar-wrap,
+    body.nav-visible #filter-bar-wrap {
+      top: 62px;
+    }
+
+    #nav.hidden ~ #portfolio-archive-wrapper #filter-bar-wrap,
+    body.nav-hidden #filter-bar-wrap {
+      top: 0px;
+    }
+
+    #filter-bar-wrap.hide-for-footer {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    [data-theme="light"] #filter-bar-wrap {
+      background: rgba(247, 247, 249, 0.96);
+      border-bottom-color: var(--rule);
+    }
+
+    .filter-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      overflow: visible;
+      padding: 10px 16px 14px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .filter-bar-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      font-family: var(--font-primary);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--rule-m);
+      padding: 10px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s var(--sp);
+      flex-shrink: 0;
+    }
+
+    [data-theme="light"] .filter-btn {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: var(--rule-m);
+      color: var(--ink-mid);
+    }
+
+    .filter-btn:hover {
+      color: var(--ink);
+      border-color: var(--ink-mid);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-2px);
+    }
+
+    [data-theme="light"] .filter-btn:hover {
+      background: rgba(0, 0, 0, 0.06);
+      border-color: var(--ink);
+      color: var(--ink);
+      transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+      color: var(--bg);
+      background: var(--ink);
+      border-color: var(--ink);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+      transform: translateY(-1px);
+    }
+
+    [data-theme="dark"] .filter-btn.active {
+      color: #09090b;
+      background: #ffffff;
+      border-color: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 0 10px rgba(255, 255, 255, 0.12);
+    }
+
+    [data-theme="light"] .filter-btn.active {
+      color: #ffffff;
+      background: #09090b;
+      border-color: #09090b;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.16);
+    }
+
+    .filter-count {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      opacity: 0.7;
+      font-weight: 700;
+    }
+
+    .filter-icon-plus {
+      font-size: 12px;
+      line-height: 1;
+      transition: transform 0.3s;
+    }
+
+    .filter-btn.active .filter-icon-plus {
+      transform: rotate(45deg);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       3. EDITORIAL ASYMMETRIC BENTO GRID (DZ!NR Architecture)
+          - Every card image has the EXACT SAME UNIFORM HEIGHT
+          - Widths alternate (13 cols vs 7 cols) with zero gaps
+       ═══════════════════════════════════════════════════════════ */
+    #portfolio-grid-sec {
+      padding: clamp(48px, 6vh, 90px) 0 clamp(80px, 10vh, 140px);
+    }
+
+    .dzinr-bento-matrix {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: clamp(24px, 3vw, 44px);
+      width: 100%;
+    }
+
+    /* Bento Column Spans */
+    .bento-wide {
+      grid-column: span 13;
+    }
+
+    .bento-compact {
+      grid-column: span 7;
+    }
+
+    .bento-full {
+      grid-column: span 20;
+    }
+
+    .dzinr-project-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      width: 100%;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    /* CARD IMAGE CONTAINER: EXACT SAME UNIFORM HEIGHT ON ALL CARDS */
+    .dpc-img-wrap {
+      position: relative;
+      width: 100%;
+      height: clamp(440px, 58vh, 680px);
+      overflow: hidden;
+      border-radius: 18px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      transition: border-color 0.35s, box-shadow 0.35s, background 0.4s;
+    }
+
+    [data-theme="light"] .dpc-img-wrap {
+      background: #e8e8ed;
+      border-color: var(--rule);
+    }
+
+    .dpc-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dzinr-project-card:hover .dpc-img-wrap {
+      border-color: var(--cr);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35), 0 0 30px var(--cr-glow);
+    }
+
+    .dzinr-project-card:hover .dpc-img-wrap img {
+      transform: scale(1.06);
+    }
+
+    .dpc-tag-pill {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 2;
+      background: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border: none;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0;
+      border-radius: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    [data-theme="light"] .dpc-tag-pill {
+      background: none;
+      color: #fff;
+      border-color: transparent;
+      box-shadow: none;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+    }
+
+    .dpc-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 2px 8px;
+      min-height: 52px;
+    }
+
+    .dpc-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .dpc-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(20px, 1.8vw, 26px);
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      color: var(--ink);
+      transition: color 0.3s;
+    }
+
+    .dzinr-project-card:hover .dpc-title {
+      color: var(--cr);
+    }
+
+    .dpc-category-sub {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      color: var(--ink-dim);
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .dzinr-project-card:hover .dpc-category-sub {
+      color: var(--ink-mid);
+    }
+
+    .dpc-arrow-circle {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--rule-m);
+      background: rgba(255, 255, 255, 0.03);
+      display: grid;
+      place-items: center;
+      color: var(--ink);
+      flex-shrink: 0;
+      transition: transform 0.35s var(--sp), background 0.3s, border-color 0.3s, color 0.3s;
+    }
+
+    [data-theme="light"] .dpc-arrow-circle {
+      background: rgba(0, 0, 0, 0.04);
+      border-color: var(--rule-m);
+      color: var(--ink);
+    }
+
+    .dpc-arrow-circle svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transform: rotate(-45deg);
+      transition: transform 0.35s var(--sp);
+    }
+
+    .dzinr-project-card:hover .dpc-arrow-circle {
+      background: var(--cr);
+      border-color: var(--cr);
+      color: #fff;
+    }
+
+    .dzinr-project-card:hover .dpc-arrow-circle svg {
+      transform: rotate(0deg);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       4. PROJECT DETAIL DEEP-DIVE MODAL DRAWER
+       ═══════════════════════════════════════════════════════════ */
+    .project-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    [data-theme="light"] .project-modal-backdrop {
+      background: rgba(240, 240, 246, 0.88);
+    }
+
+    .project-modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.modal-open #nav,
+    body:has(.project-modal-backdrop.active) #nav {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transform: translateY(-100%) !important;
+    }
+
+    .project-modal-stage {
+      width: 100%;
+      max-width: 1400px;
+      height: 92vh;
+      background: var(--card-bg);
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      border: 1px solid var(--rule-m);
+      border-bottom: none;
+      box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.8);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s var(--sp);
+      position: relative;
+    }
+
+    [data-theme="light"] .project-modal-stage {
+      background: #FFFFFF;
+      box-shadow: 0 -20px 80px rgba(0, 0, 0, 0.12);
+      border-color: rgba(0, 0, 0, 0.1);
+    }
+
+    .project-modal-stage::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .project-modal-backdrop.active .project-modal-stage {
+      transform: translateY(0);
+    }
+
+    .modal-close-btn {
+      position: sticky;
+      top: 24px;
+      right: 24px;
+      margin-left: auto;
+      z-index: 9999;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: rgba(10, 10, 14, 0.8);
+      backdrop-filter: blur(16px);
+      border: 1.5px solid var(--rule-m);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="light"] .modal-close-btn {
+      background: rgba(255, 255, 255, 0.9);
+      color: #111114;
+      border-color: rgba(0, 0, 0, 0.15);
+    }
+
+    .modal-close-btn:hover {
+      transform: rotate(90deg) scale(1.1);
+      background: var(--cr) !important;
+      border-color: var(--cr) !important;
+      color: #fff !important;
+    }
+
+    .modal-content-wrap {
+      padding: clamp(24px, 4vw, 60px);
+      margin-top: -30px;
+    }
+
+    .modal-hero-banner {
+      width: 100%;
+      height: clamp(340px, 45vh, 560px);
+      border-radius: 28px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: clamp(30px, 4vh, 50px);
+      border: 1px solid var(--rule);
+    }
+
+    .modal-hero-banner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .modal-hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10, 10, 14, 0.95) 0%, rgba(10, 10, 14, 0.2) 60%, rgba(10, 10, 14, 0) 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(24px, 4vw, 48px);
+    }
+
+    .modal-hero-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(32px, 4.5vw, 64px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .modal-info-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: clamp(30px, 4vw, 60px);
+      margin-bottom: clamp(48px, 6vh, 76px);
+    }
+
+    .modal-section-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(20px, 1.8vw, 26px);
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+      color: var(--ink);
+    }
+
+    .modal-desc-body {
+      font-size: clamp(15px, 1.2vw, 17.5px);
+      color: var(--ink-mid);
+      line-height: 1.7;
+    }
+
+    .modal-spec-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    [data-theme="light"] .modal-spec-card {
+      background: rgba(0, 0, 0, 0.03);
+      border-color: var(--rule);
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 12px;
+    }
+
+    .spec-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .spec-lbl {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 4px;
+    }
+
+    .spec-val {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--ink);
+    }
+
+    /* ── Editorial Project Visual Showcase (Stack of Big Master Cards) ── */
+    .modal-project-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: clamp(52px, 7vh, 84px);
+    }
+
+    .modal-gal-card {
+      width: 100%;
+      height: clamp(700px, 88vh, 1020px);
+      border-radius: clamp(20px, 2.5vw, 32px);
+      overflow: hidden;
+      border: 1px solid var(--rule);
+      background: #111115;
+      position: relative;
+    }
+
+    [data-theme="light"] .modal-gal-card {
+      background: #f0f0f4;
+      border-color: var(--rule);
+    }
+
+    .modal-gal-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Modal End Benchmark CTA */
+    .modal-cta-deck {
+      border-top: 1.5px solid var(--rule);
+      padding-top: clamp(36px, 5vh, 52px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 28px;
+    }
+
+    .modal-cta-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(22px, 2.2vw, 32px);
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin: 0 0 6px 0;
+    }
+
+    .modal-cta-sub {
+      font-size: clamp(14px, 1.1vw, 16px);
+      color: var(--ink-mid);
+      margin: 0;
+    }
+
+    .modal-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 36px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: var(--cr);
+      border: 1px solid var(--cr);
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 12px 35px var(--cr-glow);
+      transition: all 0.35s var(--sp);
+      flex-shrink: 0;
+    }
+
+    .modal-cta-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 45px rgba(200, 16, 46, 0.45);
+      background: #e01436;
+    }
+
+    .mcb-arrow {
+      font-size: 14px;
+      transition: transform 0.3s;
+    }
+
+    .modal-cta-btn:hover .mcb-arrow {
+      transform: translate(3px, -3px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       5. EXACT UNIFIED LUXURY FOOTER (Identical to Home Page)
+       ═══════════════════════════════════════════════════════════ */
+    #footer-driver {
+      position: relative;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px) clamp(24px, 3.5vh, 40px);
+      box-sizing: border-box;
+      z-index: 10;
+      transition: background 0.4s var(--sp);
+    }
+
+    .footer-luxury-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: clamp(36px, 5vw, 64px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
+      padding: clamp(48px, 6vh, 68px) clamp(40px, 5vw, 72px) 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1640px;
+      min-height: clamp(500px, 68vh, 640px);
+      margin: 0 auto;
+      gap: clamp(48px, 7vh, 80px);
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+      transition: background 0.4s var(--sp), border-color 0.4s;
+    }
+
+    .f-outer-bar {
+      width: 100%;
+      max-width: 1640px;
+      margin: clamp(28px, 4vh, 44px) auto 0;
+      padding: 0 clamp(16px, 2.5vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .f-outer-copyright,
+    .f-outer-dev {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .f-outer-dev a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .f-outer-dev a:hover {
+      color: var(--cr);
+    }
+
+    .f-header-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+      gap: clamp(28px, 3.5vw, 52px);
+      align-items: flex-start;
+    }
+
+    .f-desc-col .f-statement-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(1.4rem, 1.85vw, 1.9rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 380px;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-secondary);
+      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
+      max-width: 340px;
+      margin-bottom: 12px;
+    }
+
+    .f-desc-col .f-location-tag {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim, var(--ink-mid));
+      margin: 0 0 18px 0;
+      text-transform: uppercase;
+    }
+
+    .f-col-label {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 20px;
+    }
+
+    .f-links-clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .f-links-clean a {
+      font-family: var(--font-primary);
+      font-weight: 500;
+      font-size: 0.94rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color .2s, transform .2s;
+      display: inline-block;
+    }
+
+    .f-links-clean a:hover {
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    .f-social-circles {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .f-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.25s var(--sp);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .f-circle-btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .f-cta-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f-action-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: transform .25s var(--sp), box-shadow .25s;
+    }
+
+    .f-action-pill:hover {
+      transform: translateY(-3px);
+    }
+
+    .f-action-pill.cta-primary {
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(200, 16, 46, 0.22);
+    }
+
+    .f-action-pill.cta-secondary {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+    }
+
+    .f-action-pill.cta-secondary:hover {
+      border-color: var(--ink);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .f-action-txt {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .f-action-heading {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.96rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f-action-sub {
+      font-family: var(--font-primary);
+      font-size: 0.74rem;
+      opacity: 0.78;
+    }
+
+    .f-action-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .cta-primary .f-action-arrow {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .cta-secondary .f-action-arrow {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* ── Bottom Cluster: Staggered Character Emergence Headline (Half-Cut to Full Wave) ── */
+    .f-bottom-cluster {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: clamp(32px, 5vh, 60px);
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .f-brand-title-wrap {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(12px, 2vw, 24px) 0 clamp(18px, 2.8vh, 32px) 0;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .f-brand-giant-text {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(26px, 6.85vw, 110px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      width: 100%;
+      transform: scaleY(1.22);
+      transform-origin: center bottom;
+    }
+
+    .f-char-word {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .f-char-space {
+      display: inline-block;
+      width: 0.32em;
+    }
+
+    .f-char {
+      display: inline-block;
+      opacity: 1;
+      transform: translateY(50%);
+      transition: transform 0.95s cubic-bezier(0.19, 1, 0.22, 1);
+      will-change: transform;
+    }
+
+    .f-brand-giant-text.revealed .f-char {
+      transform: translateY(0%);
+    }
+
+    .f-bottom-line {
+      width: 100%;
+      height: 1.5px;
+      background: var(--rule);
+      margin: 0;
+      transition: background 0.3s;
+    }
+
+    /* ── Floating Theme Toggle FAB ── */
+    #theme-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9990;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-m);
+      color: var(--ink);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.4s, color 0.4s;
+    }
+
+    [data-theme="light"] #theme-fab {
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.15);
+      color: #111114;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    #theme-fab:hover {
+      transform: translateY(-3px) scale(1.08);
+      border-color: var(--cr);
+      box-shadow: 0 14px 40px var(--cr-glow);
+    }
+
+    #theme-fab svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-moon,
+    [data-theme="light"] #theme-fab .icon-sun {
+      display: none;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-sun,
+    [data-theme="light"] #theme-fab .icon-moon {
+      display: block;
+    }
+
+    /* ── Responsive Queries ── */
+    @media (max-width: 1024px) {
+      .f-header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 991px) {
+      .filter-bar-inner {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding: 10px 20px 16px;
+      }
+
+      .dzinr-bento-matrix {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .bento-wide,
+      .bento-compact,
+      .bento-full {
+        grid-column: span 1 !important;
+      }
+
+      .dpc-img-wrap {
+        height: clamp(360px, 46vh, 520px);
+      }
+
+      .modal-gal-card {
+        height: clamp(480px, 70vh, 700px);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .f-header-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .f-outer-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+
+    [data-theme="dark"] #theme-fab .icon-moon,
+    [data-theme="light"] #theme-fab .icon-sun {
+      display: none;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-sun,
+    [data-theme="light"] #theme-fab .icon-moon {
+      display: block;
+    }
+
+    /* ── Responsive Queries ── */
+    @media (max-width: 1024px) {
+      .f-header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .f-header-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .f-meta-bar {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .modal-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-cta-deck {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      padding: 14px clamp(20px, 3.5vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 248, 250, 0.82);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      will-change: transform, opacity;
+    }
+
+    [data-theme="dark"] #nav {
+      background: rgba(10, 10, 14, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+    }
+
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo-img {
+      height: clamp(32px, 3.5vw, 40px);
+      width: auto;
+      max-width: 180px;
+      display: block;
+      object-fit: contain;
+      transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .nav-logo:hover .nav-logo-img {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    [data-theme="dark"] .nav-logo-img,
+    body.dark .nav-logo-img {
+      filter: brightness(1.28) contrast(1.08);
+    }
+
+    .nav-logo svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.8vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: all .25s ease;
+      position: relative;
+      padding: 5px 8px;
+      border-radius: 20px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 0px;
+      height: 1.5px;
+      background: var(--cr);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .25s var(--sm);
+    }
+
+    .nav-links a:hover {
+      color: var(--cr);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* ── Clean Minimal Luxury Active Page Header Link ── */
+    .nav-links a.active {
+      font-weight: 800;
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 5px 6px;
+    }
+
+    .nav-links a.active::after {
+      transform: scaleX(1);
+      height: 2px;
+      background: var(--cr);
+      left: 6px;
+      right: 6px;
+      bottom: -2px;
+      border-radius: 2px;
+      box-shadow: none;
+    }
+
+    .nav-links a.active:hover {
+      color: #0A0A0A;
+    }
+
+    body.dark .nav-links a.active,
+    [data-theme="dark"] .nav-links a.active {
+      color: #ffffff;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active::after,
+    [data-theme="dark"] .nav-links a.active::after {
+      background: var(--cr);
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active:hover,
+    [data-theme="dark"] .nav-links a.active:hover {
+      color: #ffffff;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       BESPOKE ATELIER SERVICES DROPDOWN SYSTEM
+       ═══════════════════════════════════════════════════════════ */
+    .nav-has-dropdown {
+      position: relative;
+    }
+
+    .nav-has-dropdown > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-caret {
+      width: 8px;
+      height: 5px;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+      opacity: 0.7;
+      display: inline-block;
+      vertical-align: middle;
+      pointer-events: none;
+    }
+
+    .nav-has-dropdown:hover > a,
+    .nav-has-dropdown:focus-within > a {
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-has-dropdown:hover .nav-caret,
+    .nav-has-dropdown:focus-within .nav-caret {
+      transform: rotate(180deg);
+      opacity: 1;
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s;
+      z-index: 1001;
+      padding-top: 12px; /* mouse bridge */
+      width: clamp(210px, 18vw, 230px);
+    }
+
+    .nav-has-dropdown:hover .nav-dropdown-menu,
+    .nav-has-dropdown:focus-within .nav-dropdown-menu,
+    .nav-has-dropdown.touch-open .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-dropdown-panel {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(10, 10, 10, 0.06);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      padding: 6px;
+      text-align: left;
+    }
+
+    [data-theme="dark"] .nav-dropdown-panel,
+    body.dark .nav-dropdown-panel {
+      background: rgba(14, 14, 18, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-dropdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 9px;
+      text-decoration: none;
+      background: transparent;
+      transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+      position: relative;
+    }
+
+    /* Reset global nav underlines inside dropdown */
+    .nav-dropdown-menu a::after,
+    .nav-dropdown-menu a.active::after {
+      display: none !important;
+    }
+
+    .nav-dropdown-item:hover {
+      background: rgba(10, 10, 10, 0.035);
+      transform: translateX(2px);
+    }
+
+    [data-theme="dark"] .nav-dropdown-item:hover,
+    body.dark .nav-dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .ndi-num {
+      font-family: var(--font-mono, 'Space Mono', monospace);
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--cr, #C8102E);
+      opacity: 0.75;
+      letter-spacing: 0.03em;
+      min-width: 18px;
+      transition: opacity 0.18s ease;
+    }
+
+    .nav-dropdown-item:hover .ndi-num {
+      opacity: 1;
+    }
+
+    .ndi-title {
+      font-family: var(--font-primary, 'Gotham', 'Montserrat', sans-serif);
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink, #0E0E10);
+      letter-spacing: 0.01em;
+      text-transform: none;
+      transition: color 0.18s ease;
+      line-height: 1.25;
+      flex: 1;
+    }
+
+    [data-theme="dark"] .ndi-title,
+    body.dark .ndi-title {
+      color: #EDEDF0;
+    }
+
+    .nav-dropdown-item:hover .ndi-title {
+      color: var(--cr, #C8102E);
+    }
+
+    .ndi-arrow {
+      opacity: 0;
+      transform: translateX(-4px);
+      color: var(--cr, #C8102E);
+      transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+
+    .nav-dropdown-item:hover .ndi-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .nav-dropdown-item.ndi-active {
+      background: rgba(200, 16, 46, 0.05);
+    }
+
+    [data-theme="dark"] .nav-dropdown-item.ndi-active,
+    body.dark .nav-dropdown-item.ndi-active {
+      background: rgba(200, 16, 46, 0.12);
+    }
+
+    .nav-dropdown-item.ndi-active .ndi-title {
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-dropdown-item.ndi-active .ndi-arrow {
+      opacity: 0.8;
+      transform: translateX(0);
+    }
+
+    .nav-dropdown-footer {
+      margin-top: 4px;
+      padding-top: 5px;
+      border-top: 1px solid rgba(10, 10, 10, 0.05);
+    }
+
+    [data-theme="dark"] .nav-dropdown-footer,
+    body.dark .nav-dropdown-footer {
+      border-top-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-dropdown-foot-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-family: var(--font-primary, 'Gotham', 'Montserrat', sans-serif);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink-mid, #666672);
+      text-decoration: none;
+      background: transparent;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    [data-theme="dark"] .nav-dropdown-foot-link,
+    body.dark .nav-dropdown-foot-link {
+      color: #9A9AA6;
+    }
+
+    .nav-dropdown-foot-link svg {
+      transition: transform 0.18s ease, color 0.18s ease;
+      color: currentColor;
+    }
+
+    .nav-dropdown-foot-link:hover {
+      background: rgba(200, 16, 46, 0.05);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    [data-theme="dark"] .nav-dropdown-foot-link:hover,
+    body.dark .nav-dropdown-foot-link:hover {
+      background: rgba(200, 16, 46, 0.12);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    .nav-dropdown-foot-link:hover svg {
+      transform: translateX(3px);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-cta {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    /* Light Theme: hover becomes darker */
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    /* Dark Theme: CTA turns white on hover */
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .nav-logo svg .nl,
+    .nav-logo svg .ns {
+      fill: var(--cr);
+      transition: fill 0.3s;
+    }
+
+    /* ── Smooth scrollbar ─────────────────────────────────── */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--cr) var(--bg);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cr);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Custom Interactive Cursor -->
+  <div class="c-dot" id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
+
+  <!-- ══ FIXED NAVIGATION ══ -->
+  <nav id="nav" class="visible">
+    <a href="index.html" class="nav-logo" aria-label="1928 Creative Studio">
+      <img src="img/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li class="nav-has-dropdown">
+        <a href="services.html" class="nav-link-services">
+          Services
+          <svg class="nav-caret" width="8" height="5" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 1.5L5 4.5L9 1.5"/>
+          </svg>
+        </a>
+        <div class="nav-dropdown-menu" aria-label="Services Submenu">
+          <div class="nav-dropdown-panel">
+            <div class="nav-dropdown-list">
+              <a href="service-logo-design.html" class="nav-dropdown-item">
+                <span class="ndi-num">01</span>
+                <span class="ndi-title">Logo Design</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-brand-identity.html" class="nav-dropdown-item">
+                <span class="ndi-num">02</span>
+                <span class="ndi-title">Brand Identity</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-website-development.html" class="nav-dropdown-item">
+                <span class="ndi-num">03</span>
+                <span class="ndi-title">Website Development</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-digital-marketing.html" class="nav-dropdown-item">
+                <span class="ndi-num">04</span>
+                <span class="ndi-title">Digital Marketing</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-content-creation.html" class="nav-dropdown-item">
+                <span class="ndi-num">05</span>
+                <span class="ndi-title">Content Creation</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+            <div class="nav-dropdown-footer">
+              <a href="services.html" class="nav-dropdown-foot-link">
+                <span>All Services Overview</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li><a href="portfolio.html" class="active">Work</a></li>
+      <li><a href="blogs.html">Perspectives</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="contact.html" class="nav-cta">Start Project</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       1. HERO SECTION (Adaptive Light & Dark Modes)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="portfolio-hero">
+    <div class="hero-stage-container">
+      <h1 class="hero-statement-title">
+        <div class="hst-line">
+          <span>WORK THAT</span>
+          <div class="hero-rounded-media" id="heroPill1Media" data-project-id="aurora" title="Explore Aurora Horology">
+            <img id="heroPill1Img" src="img/port-chronos.jpg" alt="Hero Pill 1 Preview" onerror="this.src='img/port-chronos.jpg';" />
+          </div>
+          <span>MOVES</span>
+        </div>
+        <div class="hst-line" style="margin-top: 6px;">
+          <span>BRANDS</span>
+          <div class="hero-rounded-media" id="heroPill2Media" data-project-id="veloce" title="Explore Veloce Hypercraft">
+            <img id="heroPill2Img" src="img/port-veloce.jpg" alt="Hero Pill 2 Preview" onerror="this.src='img/port-veloce.jpg';" />
+          </div>
+          <span>FORWARD<span class="hst-dot-red">.</span></span>
+        </div>
+      </h1>
+
+      <p class="hero-manifesto">
+        A curated selection of branding, digital experiences, content, and marketing work created to solve real business challenges and build stronger brands.
+      </p>
+
+      <div class="hero-actions-deck">
+        <a href="#filter-bar-wrap" class="hero-pill-cta" id="heroScrollCue">
+          <span class="hpc-dot"></span>
+          <span>EXPLORE OUR WORK</span>
+          <span class="hpc-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2 & 3. PORTFOLIO ARCHIVE CONTAINER
+       (Binds sticky filter bar to the portfolio section only)
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="portfolio-archive-wrapper">
+    <!-- Sticky Filter Bar (Sticks within archive, scrolls away before footer) -->
+    <div id="filter-bar-wrap">
+      <div class="section-container">
+        <div class="filter-bar-inner" id="filterTabsCluster">
+          <button class="filter-btn active" data-filter="all">
+            <span>ALL</span>
+            <sup class="filter-count">(08)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="brand-identity">
+            <span>BRAND IDENTITY</span>
+            <sup class="filter-count">(05)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="logo-design">
+            <span>LOGO &amp; SYSTEM</span>
+            <sup class="filter-count">(03)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="web-design">
+            <span>WEBSITE &amp; WEBGL</span>
+            <sup class="filter-count">(04)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="social-marketing">
+            <span>SOCIAL &amp; CAMPAIGN</span>
+            <sup class="filter-count">(03)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+          <button class="filter-btn" data-filter="spatial-packaging">
+            <span>SPATIAL &amp; PACKAGING</span>
+            <sup class="filter-count">(03)</sup>
+            <span class="filter-icon-plus">+</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editorial Asymmetric Bento Grid -->
+    <section id="portfolio-grid-sec">
+      <div class="section-container">
+        <div class="dzinr-bento-matrix" id="matrixGrid">
+
+          <!-- 01 AURORA HOROLOGY (Wide: 13 cols) -->
+          <div class="dzinr-project-card bento-wide" data-category="brand-identity web-design logo-design" data-project-id="aurora">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Horology &amp; WebGL</span>
+              <img src="img/port-chronos.jpg" alt="Aurora Horology" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Aurora Chronometer Systems</h3>
+                <p class="dpc-category-sub">Swiss Luxury Brand Identity &amp; 3D Vault</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 02 VERTEX ARCHITECTS (Compact: 7 cols) -->
+          <div class="dzinr-project-card bento-compact" data-category="logo-design brand-identity spatial-packaging" data-project-id="vertex">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Spatial System</span>
+              <img src="img/port-spectra.jpg" alt="Vertex Architects" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Vertex Architects</h3>
+                <p class="dpc-category-sub">Geometric Logo Architecture</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 03 SOLSTICE PERFUME (Compact: 7 cols) -->
+          <div class="dzinr-project-card bento-compact" data-category="logo-design brand-identity spatial-packaging" data-project-id="solstice">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Packaging Craft</span>
+              <img src="img/port-lumina.jpg" alt="Solstice Perfume" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Solstice Haute Parfumerie</h3>
+                <p class="dpc-category-sub">Fluted Monolithic Glass Vessel</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 04 AETHERION EV (Wide: 13 cols) -->
+          <div class="dzinr-project-card bento-wide" data-category="web-design brand-identity" data-project-id="aetherion">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Cyber Cockpit</span>
+              <img src="img/port-veloce.jpg" alt="Aetherion EV" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Aetherion Cyber Telemetry</h3>
+                <p class="dpc-category-sub">Real-Time WebGL Automotive Cockpit</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 05 QUANTUM CHROME (Wide: 13 cols) -->
+          <div class="dzinr-project-card bento-wide" data-category="web-design logo-design brand-identity" data-project-id="quantum">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Neural Platform</span>
+              <img src="img/port-kroma.jpg" alt="Quantum Chrome Engine" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Quantum Chrome Engine</h3>
+                <p class="dpc-category-sub">Generative AI Shaders &amp; Design System</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 06 MILAN MOMENTUM FW24 (Compact: 7 cols) -->
+          <div class="dzinr-project-card bento-compact" data-category="social-marketing spatial-packaging" data-project-id="milan">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Runway Takeover</span>
+              <img src="img/port-zenith.jpg" alt="Milan Momentum" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">Milan Runway Momentum</h3>
+                <p class="dpc-category-sub">Global Omnichannel Social Campaign</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 07 LOFY SPATIAL (Compact: 7 cols) -->
+          <div class="dzinr-project-card bento-compact" data-category="brand-identity social-marketing" data-project-id="lofy">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Modular Flagship</span>
+              <img src="assets/services/svc_1.jpg" alt="LOFY Modular Architecture" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">LOFY Spatial Environments</h3>
+                <p class="dpc-category-sub">Sustainable Architectural Brand System</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- 08 ST. REGIS MUMBAI (Wide: 13 cols) -->
+          <div class="dzinr-project-card bento-wide" data-category="brand-identity spatial-packaging social-marketing" data-project-id="stregis">
+            <div class="dpc-img-wrap">
+              <span class="dpc-tag-pill">Luxury Hospitality</span>
+              <img src="assets/services/svc_2.jpg" alt="St. Regis Mumbai" />
+            </div>
+            <div class="dpc-body">
+              <div class="dpc-info">
+                <h3 class="dpc-title">St. Regis Spatial Monogram</h3>
+                <p class="dpc-category-sub">Sensory Hospitality Suite &amp; Print Architecture</p>
+              </div>
+              <div class="dpc-arrow-circle">
+                <svg viewBox="0 0 24 24"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       4. PROJECT DETAIL DEEP-DIVE MODAL DRAWER
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="project-modal-backdrop" id="projectModal" aria-hidden="true">
+    <div class="project-modal-stage">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close Case Study">✕</button>
+
+      <div class="modal-content-wrap">
+        <!-- Hero Banner -->
+        <div class="modal-hero-banner">
+          <img id="mHeroImg" src="img/port-chronos.jpg" alt="Case Hero" />
+          <div class="modal-hero-overlay">
+            <span class="sec-tag-pill" id="mHeroCat" style="width:fit-content; margin-bottom: 8px;">Brand Identity</span>
+            <h2 class="modal-hero-title" id="mHeroTitle">Aurora Chronometer Systems</h2>
+          </div>
+        </div>
+
+        <!-- Overview & Client Meta Grid -->
+        <div class="modal-info-grid">
+          <div>
+            <h3 class="modal-section-title" id="mOverviewTitle">Strategic Overview</h3>
+            <p class="modal-desc-body" id="mOverviewText">
+              Aurora Horology commissioned 1928 Creative Studio to architect an enduring brand ecosystem that honors Swiss horological precision while establishing commanding digital authority for the next generation of luxury collectors. Through monolithic typographic architecture, bespoke crimson color physics, and a zero-latency 3D WebGL boutique vault, we transformed the brand into an iconic collector centerpiece.
+            </p>
+          </div>
+
+          <div class="modal-spec-card">
+            <div class="spec-item">
+              <span class="spec-lbl">Client</span>
+              <span class="spec-val" id="mClientName">Aurora Horology Ltd.</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Sector</span>
+              <span class="spec-val" id="mSector">Swiss Luxury Horology</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Deliverables</span>
+              <span class="spec-val" id="mDeliverables">Identity, Packaging, WebGL Vault</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-lbl">Timeline</span>
+              <span class="spec-val" id="mTimeline">6 Months · Global Launch</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Visual Gallery Showcase (Stack of 6 Big Master Cards) -->
+        <div class="modal-project-gallery">
+          <div class="modal-gal-card">
+            <img id="mGal1" src="img/port-chronos.jpg" alt="Case Study Asset 1" />
+          </div>
+          <div class="modal-gal-card">
+            <img id="mGal2" src="img/port-spectra.jpg" alt="Case Study Asset 2" />
+          </div>
+          <div class="modal-gal-card">
+            <img id="mGal3" src="img/port-lumina.jpg" alt="Case Study Asset 3" />
+          </div>
+          <div class="modal-gal-card">
+            <img id="mGal4" src="img/wc-l1.jpg" alt="Case Study Asset 4" />
+          </div>
+          <div class="modal-gal-card">
+            <img id="mGal5" src="img/wc-r1.jpg" alt="Case Study Asset 5" />
+          </div>
+          <div class="modal-gal-card">
+            <img id="mGal6" src="img/port-veloce.jpg" alt="Case Study Asset 6" />
+          </div>
+        </div>
+
+        <!-- End Separator & Benchmark CTA -->
+        <div class="modal-cta-deck">
+          <div>
+            <span class="sec-tag-pill" style="margin-bottom: 8px;">COMMISSION &amp; INQUIRY</span>
+            <h3 class="modal-cta-title">Ready to build a similar benchmark?</h3>
+            <p class="modal-cta-sub">Let’s engineer an enduring, category-defining visual identity system for your brand.</p>
+          </div>
+          <a href="contact.html" class="modal-cta-btn">
+            <span>Initiate Project Commission</span>
+            <span class="mcb-arrow">↗</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. EXACT UNIFIED LUXURY FOOTER (Referenced from footer.html) -->
+  <div id="footer-placeholder"></div>
+  <script src="footer-loader.js"></script>
+
+
+  <!-- Floating Fixed Theme Toggle Button -->
+  <button id="theme-fab" aria-label="Toggle Dark/Light Mode" title="Toggle Light/Dark Theme">
+    <svg class="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       JAVASCRIPT LOGIC & INTERACTIONS
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+    (function () {
+      /* ── Math Helpers ── */
+      function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
+
+      /* ── Custom Cursor Logic ── */
+      const dot = document.getElementById('cDot');
+      const ring = document.getElementById('cRing');
+      let mx = -100, my = -100, rx = -100, ry = -100;
+
+      window.addEventListener('mousemove', (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        if (dot) {
+          dot.style.left = mx + 'px';
+          dot.style.top = my + 'px';
+        }
+      }, { passive: true });
+
+      function renderCursor() {
+        rx += (mx - rx) * 0.18;
+        ry += (my - ry) * 0.18;
+        if (ring) {
+          ring.style.left = rx + 'px';
+          ring.style.top = ry + 'px';
+        }
+        requestAnimationFrame(renderCursor);
+      }
+      renderCursor();
+
+      document.querySelectorAll('a, button, .dzinr-project-card, .hero-rounded-media, .f-chip, .f-action-pill').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if (ring) {
+            ring.style.width = '54px';
+            ring.style.height = '54px';
+            ring.style.borderColor = 'rgba(200, 16, 46, 0.75)';
+          }
+        });
+        el.addEventListener('mouseleave', () => {
+          if (ring) {
+            ring.style.width = '32px';
+            ring.style.height = '32px';
+            ring.style.borderColor = 'var(--cr)';
+          }
+        });
+      });
+
+      /* ── Dynamic Bento Re-Layout Filter Engine (DZ!NR Style with Zero Gaps) ── */
+      const filterBtns = document.querySelectorAll('.filter-btn');
+
+      function applyFilter(filter) {
+        const allCards = Array.from(document.querySelectorAll('#matrixGrid .dzinr-project-card'));
+        const visibleCards = [];
+
+        allCards.forEach(card => {
+          const catAttr = card.getAttribute('data-category') || '';
+          const categories = catAttr.split(' ');
+          if (filter === 'all' || categories.includes(filter)) {
+            card.style.display = 'flex';
+            visibleCards.push(card);
+          } else {
+            card.style.display = 'none';
+            card.classList.remove('bento-wide', 'bento-compact', 'bento-full');
+          }
+        });
+
+        // Alternating zigzag layout:
+        // Row 1: Big Left (13 cols) + Small Right (7 cols)
+        // Row 2: Small Left (7 cols) + Big Right (13 cols)
+        // Row 3: Big Left (13 cols) + Small Right (7 cols)
+        // Row 4: Small Left (7 cols) + Big Right (13 cols)
+        for (let i = 0; i < visibleCards.length; i++) {
+          const card = visibleCards[i];
+          card.classList.remove('bento-wide', 'bento-compact', 'bento-full');
+
+          // If there is an odd item left alone on the last row, expand it to full 20 columns
+          const isLastOdd = (i === visibleCards.length - 1) && (visibleCards.length % 2 === 1);
+          if (isLastOdd && visibleCards.length > 1) {
+            card.classList.add('bento-full');
+            continue;
+          }
+
+          const pairIndex = Math.floor(i / 2);
+          const isFirstInPair = (i % 2 === 0);
+          if (pairIndex % 2 === 0) {
+            // Even rows (Row 1, Row 3...): Big on Left, Small on Right
+            card.classList.add(isFirstInPair ? 'bento-wide' : 'bento-compact');
+          } else {
+            // Odd rows (Row 2, Row 4...): Small on Left, Big on Right
+            card.classList.add(isFirstInPair ? 'bento-compact' : 'bento-wide');
+          }
+        }
+      }
+
+      window.reapplyPortfolioFilter = function() {
+        const activeBtn = document.querySelector('.filter-btn.active');
+        const filter = activeBtn ? activeBtn.getAttribute('data-filter') : 'all';
+        applyFilter(filter);
+      };
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.getAttribute('data-filter');
+          applyFilter(filter);
+        });
+      });
+
+      // Initial filter pass
+      applyFilter('all');
+
+      /* ── Sticky Filter Hide on Footer Scroll (Dismiss smoothly when entering footer) ── */
+      const filterWrap = document.getElementById('filter-bar-wrap');
+      const footerElement = document.getElementById('footer-driver');
+
+      function checkFilterFooterCollision() {
+        if (!filterWrap || !footerElement) return;
+        const footerRect = footerElement.getBoundingClientRect();
+        // When the footer enters the upper viewport, smoothly hide filter bar up
+        if (footerRect.top <= 120) {
+          filterWrap.classList.add('hide-for-footer');
+        } else {
+          filterWrap.classList.remove('hide-for-footer');
+        }
+      }
+
+      window.addEventListener('scroll', checkFilterFooterCollision, { passive: true });
+
+      /* ── Project Case Study Modal Data Matrix ── */
+      const caseStudies = {
+        aurora: {
+          title: 'Aurora Chronometer Systems',
+          category: 'Brand Identity & WebGL Vault',
+          client: 'Aurora Horology Ltd. (Geneva)',
+          sector: 'Swiss Luxury Horology',
+          deliverables: 'Identity, Packaging, 3D WebGL Vault',
+          timeline: '6 Months · Global Launch',
+          overview: 'Aurora Horology commissioned 1928 Creative Studio to architect an enduring brand ecosystem that honors Swiss horological precision while establishing commanding digital authority for the next generation of luxury collectors. Through monolithic typographic architecture, bespoke crimson color physics, and a zero-latency 3D WebGL boutique vault, we transformed the brand into an iconic collector centerpiece that sold out its inaugural batch within minutes.',
+          heroImg: 'img/port-chronos.jpg',
+          gal1: 'img/port-chronos.jpg',
+          gal2: 'img/port-spectra.jpg',
+          galFull1: 'img/wc-top.jpg',
+          gal3: 'img/port-lumina.jpg',
+          gal4: 'img/wc-l1.jpg',
+          gal5: 'img/wc-r1.jpg',
+          galFull2: 'img/wc-bot.jpg',
+          gal6: 'img/port-veloce.jpg',
+          gal7: 'assets/services/svc_1.jpg'
+        },
+        vertex: {
+          title: 'Vertex Architectural Tokens',
+          category: 'Logo Design & Spatial Identity',
+          client: 'Vertex Studio Dubai',
+          sector: 'Modern Architecture & Urban Planning',
+          deliverables: 'Logo Mark, Embossed Stationery, Spatial Codes',
+          timeline: '4 Months · MENA Region',
+          overview: 'Creating an architectural brand language rooted in structural integrity, monolithic geometries, and tactile materials that reflect physical urban excellence. We formulated a geometric logo token, tactile stationery system with micro-embossed crimson foil on raw concrete linen, and spatial brand codes that elevated the firm’s global win-rate by 48% across international institutional developments.',
+          heroImg: 'img/port-spectra.jpg',
+          gal1: 'img/port-spectra.jpg',
+          gal2: 'img/wc-l1.jpg',
+          galFull1: 'img/wc-r1.jpg',
+          gal3: 'img/port-lumina.jpg',
+          gal4: 'img/wc-r2.jpg',
+          gal5: 'img/port-chronos.jpg',
+          galFull2: 'img/wc-top.jpg',
+          gal6: 'assets/services/svc_2.jpg',
+          gal7: 'assets/services/svc_3.jpg'
+        },
+        aetherion: {
+          title: 'Aetherion Cyber Telemetry',
+          category: 'WebGL & Automotive UI Platform',
+          client: 'Aetherion Motors (Munich / Silicon Valley)',
+          sector: 'Hyper Electric Automotive',
+          deliverables: 'Curved Cockpit UI, 3D Vehicle Configurator',
+          timeline: '8 Months · Global Reveal',
+          overview: 'Designing the next-generation digital cockpit and companion mobile platform for an ultra-high performance electric hypercar capable of 0-100 km/h in 1.8 seconds. We synthesized dense telemetry parameters into a high-contrast dark mode visual hierarchy, procedural real-time raytraced shaders, and micro-haptic interactions running at 120fps on custom curved automotive displays.',
+          heroImg: 'img/port-veloce.jpg',
+          gal1: 'img/port-veloce.jpg',
+          gal2: 'img/port-kroma.jpg',
+          galFull1: 'img/wc-r2.jpg',
+          gal3: 'img/port-zenith.jpg',
+          gal4: 'img/wc-top.jpg',
+          gal5: 'assets/services/svc_4.jpg',
+          galFull2: 'img/wc-bot.jpg',
+          gal6: 'img/port-chronos.jpg',
+          gal7: 'assets/services/svc_5.jpg'
+        },
+        solstice: {
+          title: 'Solstice Monolithic Perfume',
+          category: 'Logo Design & Cosmetic Packaging',
+          client: 'Solstice Haute Parfumerie (Paris)',
+          sector: 'Luxury Fragrance & Cosmetics',
+          deliverables: 'Glass Bottle Design, Logo Monogram, Box Suite',
+          timeline: '5 Months · European Flagships',
+          overview: 'Sculpting a bespoke fluted glass vessel and monolithic identity for a Paris-based luxury fragrance house featuring deep crimson gradients and pure geometry. The physical packaging pairs fluted frosted crystal with a custom brushed brass collar, creating an instantly recognizable silhouette that won Pentawards Gold and secured commanding flagship shelf presence across Europe.',
+          heroImg: 'img/port-lumina.jpg',
+          gal1: 'img/port-lumina.jpg',
+          gal2: 'img/port-chronos.jpg',
+          galFull1: 'assets/services/svc_3.jpg',
+          gal3: 'img/wc-l2.jpg',
+          gal4: 'assets/services/svc_1.jpg',
+          gal5: 'img/wc-r1.jpg',
+          galFull2: 'img/wc-top.jpg',
+          gal6: 'img/port-spectra.jpg',
+          gal7: 'assets/services/svc_2.jpg'
+        },
+        milan: {
+          title: 'Milan Runway Global Momentum',
+          category: 'Social Media & Influencer Campaign',
+          client: 'Maison Element (Milan)',
+          sector: 'High Fashion & Luxury Apparel',
+          deliverables: 'Omnichannel Social Takeover, Dynamic Video Ads',
+          timeline: '3 Months · Milan Fashion Week FW24',
+          overview: 'An avant-garde digital campaign orchestrating viral street projections, high-velocity motion graphics, and top-tier influencer activations for Milan Fashion Week. Combining kinetic oversized typography overlays with metallic crimson motion treatments and AR filter suites, the campaign captured over 18.4M organic impressions and drove complete capsule sell-outs.',
+          heroImg: 'img/port-zenith.jpg',
+          gal1: 'img/port-zenith.jpg',
+          gal2: 'assets/services/svc_4.jpg',
+          galFull1: 'img/wc-bot.jpg',
+          gal3: 'assets/services/svc_1.jpg',
+          gal4: 'assets/services/svc_2.jpg',
+          gal5: 'img/wc-r2.jpg',
+          galFull2: 'img/wc-top.jpg',
+          gal6: 'img/port-veloce.jpg',
+          gal7: 'img/port-kroma.jpg'
+        },
+        quantum: {
+          title: 'Quantum Chrome Engine',
+          category: 'WebGL 3D Engine & Identity',
+          client: 'Quantum Neural AI Systems',
+          sector: 'Deep Tech & Generative AI',
+          deliverables: 'Brand System, 3D WebGL Platform, Visual Tokens',
+          timeline: '4 Months · Enterprise Launch',
+          overview: 'Engineering an interactive 3D brand environment and generative liquid chrome identity system that visualizes complex neural computing in real-time. Powered by custom GLSL procedural liquid metal shaders and responsive physics engines, the platform demystifies enterprise AI infrastructure and positioned the client to close their landmark $45M Series B funding round.',
+          heroImg: 'img/port-kroma.jpg',
+          gal1: 'img/port-kroma.jpg',
+          gal2: 'img/port-veloce.jpg',
+          galFull1: 'img/wc-top.jpg',
+          gal3: 'assets/services/svc_5.jpg',
+          gal4: 'img/wc-r1.jpg',
+          gal5: 'img/wc-l2.jpg',
+          galFull2: 'img/wc-bot.jpg',
+          gal6: 'img/port-lumina.jpg',
+          gal7: 'assets/services/svc_4.jpg'
+        },
+        lofy: {
+          title: 'LOFY Modular Architecture',
+          category: 'Spatial Brand Architecture',
+          client: 'LOFY Living Environments',
+          sector: 'Architectural Real Estate',
+          deliverables: 'Brand Guidelines, Spatial Flagships, Digital Portal',
+          timeline: '6 Months · India / UAE',
+          overview: 'Crafting the foundational identity and environmental wayfinding for modular luxury residential developments across major metropolitan centers in India and the UAE. Utilizing a modular typographic grid, raw stone textures with crimson accents, and an interactive digital property sales portal, 100% of flagship residences were pre-sold within 60 days of unveil.',
+          heroImg: 'assets/services/svc_1.jpg',
+          gal1: 'assets/services/svc_1.jpg',
+          gal2: 'assets/services/svc_3.jpg',
+          galFull1: 'assets/services/svc_2.jpg',
+          gal3: 'img/wc-l1.jpg',
+          gal4: 'assets/services/svc_5.jpg',
+          gal5: 'img/port-spectra.jpg',
+          galFull2: 'img/wc-top.jpg',
+          gal6: 'img/wc-bot.jpg',
+          gal7: 'img/port-chronos.jpg'
+        },
+        stregis: {
+          title: 'St. Regis Mumbai Spatial Identity',
+          category: 'Hospitality Brand & Collateral',
+          client: 'St. Regis Hotels &amp; Resorts',
+          sector: 'Ultra-Luxury Hospitality',
+          deliverables: 'VIP Onboarding Suite, Culinary Collateral, Campaign',
+          timeline: '4 Months · Mumbai Flagship',
+          overview: 'A bespoke suite of sensory physical collateral and digital guest experiences engineered for one of India’s most prestigious luxury hotel addresses. Featuring handcrafted gold foil debossing, custom calligraphy monograms, and tactile artisan paper stocks, the new collateral suite achieved record 99.2% VIP guest satisfaction ratings and international travel press acclaim.',
+          heroImg: 'assets/services/svc_2.jpg',
+          gal1: 'assets/services/svc_2.jpg',
+          gal2: 'assets/services/svc_5.jpg',
+          galFull1: 'img/port-lumina.jpg',
+          gal3: 'img/wc-r1.jpg',
+          gal4: 'assets/services/svc_3.jpg',
+          gal5: 'assets/services/svc_1.jpg',
+          galFull2: 'img/wc-bot.jpg',
+          gal6: 'img/wc-top.jpg',
+          gal7: 'img/port-spectra.jpg'
+        }
+      };
+
+      /* ── Modal Open / Close Controller ── */
+      const modal = document.getElementById('projectModal');
+      const modalStage = modal ? modal.querySelector('.project-modal-stage') : null;
+      const closeBtn = document.getElementById('modalCloseBtn');
+      const triggerCards = document.querySelectorAll('[data-project-id]');
+
+      function openModal(id) {
+        let cmsP = null;
+        if (window.CMSStore) {
+          if (typeof window.CMSStore.getPortfolioById === 'function') cmsP = window.CMSStore.getPortfolioById(id);
+          if (!cmsP && typeof window.CMSStore.getProjectById === 'function') cmsP = window.CMSStore.getProjectById(id);
+          if (!cmsP && typeof window.CMSStore.getPortfolio === 'function') {
+            cmsP = window.CMSStore.getPortfolio().find(p => p.id === id);
+          }
+        }
+        
+        const fallback = caseStudies[id] || caseStudies.aurora;
+        
+        const title = cmsP?.title || fallback?.title || 'Featured Project';
+        const category = cmsP?.subheading || cmsP?.categoryDisplay || cmsP?.tagPill || fallback?.category || 'Brand Architecture';
+        const overviewTitle = cmsP?.overviewTitle || cmsP?.strategicOverviewTitle || 'Strategic Overview';
+        const overview = cmsP?.overview || cmsP?.strategicOverview || cmsP?.description || cmsP?.summary || fallback?.overview || '';
+        const clientVal = (cmsP && cmsP.client !== undefined && cmsP.client !== null && cmsP.client !== '') ? cmsP.client : (fallback?.client || '');
+        const sectorVal = (cmsP && cmsP.sector !== undefined && cmsP.sector !== null && cmsP.sector !== '') ? cmsP.sector : (fallback?.sector || '');
+        const deliverablesVal = (cmsP && cmsP.deliverables !== undefined && cmsP.deliverables !== null && cmsP.deliverables !== '') ? cmsP.deliverables : (fallback?.deliverables || '');
+        const timelineVal = (cmsP && cmsP.timeline !== undefined && cmsP.timeline !== null && cmsP.timeline !== '') ? cmsP.timeline : (cmsP?.year ? `${cmsP.year} · Complete Archive` : (fallback?.timeline || '2025 · Global Reveal'));
+        const heroImg = cmsP?.bannerImage || cmsP?.coverImage || fallback?.heroImg || 'img/port-chronos.jpg';
+        const galleryImages = (cmsP?.galleryImages && Array.isArray(cmsP.galleryImages) && cmsP.galleryImages.length > 0)
+          ? cmsP.galleryImages
+          : [
+              fallback?.gal1 || cmsP?.coverImage || 'img/port-chronos.jpg',
+              fallback?.gal2 || 'img/port-spectra.jpg',
+              fallback?.gal3 || 'img/port-lumina.jpg',
+              fallback?.gal4 || 'img/wc-l1.jpg',
+              fallback?.gal5 || 'img/wc-r1.jpg',
+              fallback?.gal6 || 'img/port-veloce.jpg'
+            ];
+        
+        document.getElementById('mHeroImg').src = heroImg;
+        document.getElementById('mHeroTitle').textContent = title;
+        document.getElementById('mHeroCat').textContent = category;
+        
+        const mOverviewTitleEl = document.getElementById('mOverviewTitle');
+        if (mOverviewTitleEl) mOverviewTitleEl.textContent = overviewTitle;
+        
+        document.getElementById('mOverviewText').textContent = overview;
+        document.getElementById('mClientName').textContent = clientVal;
+        document.getElementById('mSector').textContent = sectorVal;
+        document.getElementById('mDeliverables').textContent = deliverablesVal;
+        document.getElementById('mTimeline').textContent = timelineVal;
+
+        const imgs = galleryImages;
+        for (let g = 1; g <= 6; g++) {
+          const galEl = document.getElementById('mGal' + g);
+          if (galEl) {
+            galEl.src = imgs[g - 1] || heroImg || 'img/port-chronos.jpg';
+          }
+        }
+
+        if (modalStage) modalStage.scrollTop = 0;
+
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+        const navEl = document.getElementById('nav');
+        if (navEl) navEl.classList.add('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        modal.classList.remove('active');
+        document.body.classList.remove('modal-open');
+        const navEl = document.getElementById('nav');
+        if (navEl) navEl.classList.remove('hidden');
+        document.body.style.overflow = '';
+      }
+
+      window.openProjectModal = openModal;
+      window.closeProjectModal = closeModal;
+
+      triggerCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const pid = card.getAttribute('data-project-id');
+          if (pid) openModal(pid);
+        });
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
+
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+      });
+
+      /* ── Live Ahmedabad Clock ── */
+      function updateFooterTime() {
+        const clockEl = document.getElementById('footer-live-clock');
+        const now = new Date();
+        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
+        const timeStr = now.toLocaleTimeString('en-US', options);
+        if (clockEl) clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
+      }
+      updateFooterTime();
+      setInterval(updateFooterTime, 30000);
+
+      /* ── Comprehensive Dark / Light Theme Toggle & Cross-Site Persistence Engine ── */
+      const themeFab = document.getElementById('theme-fab');
+      const root = document.documentElement;
+
+      function setTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem('t28', theme);
+        localStorage.setItem('theme-1928', theme);
+        localStorage.setItem('theme', theme);
+      }
+
+      // Read current active or stored theme
+      const initialTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
+      setTheme(initialTheme);
+
+      if (themeFab) {
+        themeFab.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          setTheme(next);
+        });
+      }
+
+      let lastPortScrollY = window.scrollY;
+      const navEl = document.getElementById('nav');
+
+      window.addEventListener('scroll', () => {
+        if (document.body.classList.contains('modal-open')) return;
+        const sy = window.scrollY;
+        if (navEl) {
+          if (sy <= 40 || sy < lastPortScrollY - 3) {
+            // Scrolling UP (or at top): header comes down smoothly
+            navEl.classList.add('visible');
+            navEl.classList.remove('hidden');
+            document.body.classList.add('nav-visible');
+            document.body.classList.remove('nav-hidden');
+          } else if (sy > lastPortScrollY + 3) {
+            // Scrolling DOWN: header animates up out of view
+            navEl.classList.remove('visible');
+            navEl.classList.add('hidden');
+            document.body.classList.remove('nav-visible');
+            document.body.classList.add('nav-hidden');
+          }
+        }
+        lastPortScrollY = sy;
+      }, { passive: true });
+
+      // Check for deep-link project URL param (?project=aurora or ?id=aurora)
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetProj = urlParams.get('project') || urlParams.get('id');
+      if (targetProj) {
+        setTimeout(() => {
+          openModal(targetProj);
+        }, 200);
+      }
+
+    })();
+  </script>
+  <script src="data-store.js"></script>
+  <script src="site-bridge.js"></script>
+</body>
+
+</html>

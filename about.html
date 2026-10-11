@@ -1,0 +1,4716 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About · 1928 Creative Studio</title>
+  <meta name="description"
+    content="1928 Creative Studio — Independent brand engineering practice sculpting iconic visual identities, spatial environments, and digital platforms." />
+  <script>
+    try { sessionStorage.setItem('1928_site_visited', 'true'); } catch (e) { }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+
+  <style>
+    /* ── Typography Setup ── */
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #07070A;
+      --card-bg: #0F0F14;
+      --card-hover: #15151C;
+      --ink: #F7F7FA;
+      --ink-mid: #9E9EA8;
+      --ink-dim: #545460;
+      --rule: rgba(255, 255, 255, 0.08);
+      --rule-m: rgba(255, 255, 255, 0.16);
+      --cr: #C8102E;
+      --cr-glow: rgba(200, 16, 46, 0.28);
+      --sp: cubic-bezier(0.16, 1, 0.3, 1);
+      --font-primary: 'Gotham', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-secondary: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    [data-theme="light"] {
+      --bg: #F8F8FA;
+      --card-bg: #FFFFFF;
+      --card-hover: #F0F0F5;
+      --ink: #0A0A0E;
+      --ink-mid: #525260;
+      --ink-dim: #90909A;
+      --rule: rgba(0, 0, 0, 0.08);
+      --rule-m: rgba(0, 0, 0, 0.16);
+      --cr: #C8102E;
+      --cr-glow: rgba(200, 16, 46, 0.18);
+    }
+
+    html {
+      background: var(--bg);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-secondary);
+      overflow-x: hidden;
+      transition: background 0.4s var(--sp), color 0.4s var(--sp);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── Custom Interactive Cursor ── */
+    .c-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+    }
+
+    .c-ring {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid var(--cr);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 99998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.12s ease-out, width 0.25s, height 0.25s, border-color 0.25s;
+    }
+
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 999;
+      padding: 14px clamp(20px, 3.5vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 248, 250, 0.75);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      will-change: transform, opacity;
+    }
+
+    [data-theme="dark"] #nav {
+      background: rgba(10, 10, 14, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+    }
+
+    .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo-img {
+      height: clamp(32px, 3.5vw, 40px);
+      width: auto;
+      max-width: 180px;
+      display: block;
+      object-fit: contain;
+      transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .nav-logo:hover .nav-logo-img {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    [data-theme="dark"] .nav-logo-img,
+    body.dark .nav-logo-img {
+      filter: brightness(1.28) contrast(1.08);
+    }
+
+    .nav-logo svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.8vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: all .25s ease;
+      position: relative;
+      padding: 5px 8px;
+      border-radius: 20px;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 0px;
+      height: 1.5px;
+      background: var(--cr);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform .25s var(--sm);
+    }
+
+    .nav-links a:hover {
+      color: var(--cr);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+    }
+
+    /* ── Clean Minimal Luxury Active Page Header Link ── */
+    .nav-links a.active {
+      font-weight: 800;
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 5px 6px;
+    }
+
+    .nav-links a.active::after {
+      transform: scaleX(1);
+      height: 2px;
+      background: var(--cr);
+      left: 6px;
+      right: 6px;
+      bottom: -2px;
+      border-radius: 2px;
+      box-shadow: none;
+    }
+
+    .nav-links a.active:hover {
+      color: #0A0A0A;
+    }
+
+    body.dark .nav-links a.active,
+    [data-theme="dark"] .nav-links a.active {
+      color: #ffffff;
+      background: none;
+      border: none;
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active::after,
+    [data-theme="dark"] .nav-links a.active::after {
+      background: var(--cr);
+      box-shadow: none;
+    }
+
+    body.dark .nav-links a.active:hover,
+    [data-theme="dark"] .nav-links a.active:hover {
+      color: #ffffff;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-cta {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    /* Light Theme: hover becomes darker */
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    /* Dark Theme: CTA turns white on hover */
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    .nav-logo svg .nl,
+    .nav-logo svg .ns {
+      fill: var(--cr);
+      transition: fill 0.3s;
+    }
+
+    /* ── Shared Layout Utilities ── */
+    .section-container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(20px, 4.5vw, 64px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .sec-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      width: fit-content;
+      width: -moz-fit-content;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: clamp(10px, 0.85vw, 11px);
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--cr);
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      margin-bottom: clamp(14px, 2vh, 22px);
+      box-sizing: border-box;
+    }
+
+    .sec-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cr);
+      box-shadow: 0 0 10px var(--cr);
+    }
+
+    .sec-heading {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(32px, 4.5vw, 60px);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin-bottom: clamp(14px, 2vh, 24px);
+    }
+
+    .sec-heading span {
+      color: var(--cr);
+    }
+
+    .sec-desc {
+      font-family: var(--font-secondary);
+      font-size: clamp(15px, 1.3vw, 19px);
+      line-height: 1.6;
+      color: var(--ink-mid);
+      max-width: 720px;
+      margin-bottom: clamp(32px, 4.5vh, 52px);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       1. HERO SECTION (Pure Editorial Typography & Slow-Motion Entrance)
+       ═══════════════════════════════════════════════════════════ */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 100vh;
+      max-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(24px, 4vh, 48px) clamp(20px, 4vw, 48px);
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 1100px;
+      margin: auto 0;
+    }
+
+    /* Slow-Motion Mask Container */
+    .anim-mask {
+      overflow: hidden;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Tag Pill Short Stop-Motion Entrance */
+    .hero-tag-wrap {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: stopMotionSnap 0.35s steps(4) 0.1s forwards;
+      margin-bottom: clamp(16px, 2.5vh, 26px);
+    }
+
+    /* Headline Short & Crisp Stop-Motion Lines (2 Unified Lines: 1 White, 1 Red) */
+    .hero-headline {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(34px, 5.2vw, 76px);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      margin-bottom: clamp(18px, 2.8vh, 30px);
+      white-space: nowrap;
+    }
+
+    .hero-line-1 {
+      display: block;
+      color: var(--ink);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(20px) scale(0.97);
+      filter: blur(2px);
+      animation: stopMotionSnap 0.45s steps(5) 0.22s forwards;
+    }
+
+    .hero-line-2 {
+      display: block;
+      color: var(--cr);
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(20px) scale(0.97);
+      filter: blur(2px);
+      animation: stopMotionSnap 0.45s steps(5) 0.38s forwards;
+    }
+
+    /* Stop-Motion Stepped Shutter Keyframe */
+    @keyframes stopMotionSnap {
+      0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.97);
+        filter: blur(2px);
+      }
+
+      40% {
+        opacity: 0.6;
+        transform: translateY(8px) scale(1.01);
+        filter: blur(1px);
+      }
+
+      75% {
+        opacity: 0.9;
+        transform: translateY(-2px) scale(0.995);
+        filter: blur(0px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0px) scale(1.0);
+        filter: blur(0px);
+      }
+    }
+
+    /* Subtitle Short Stop-Motion Reveal */
+    .hero-sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(14px, 1.15vw, 16.5px);
+      font-weight: 400;
+      line-height: 1.65;
+      color: var(--ink-mid);
+      max-width: 660px;
+      margin-bottom: clamp(24px, 3.5vh, 38px);
+      opacity: 0;
+      transform: translateY(14px);
+      filter: blur(2px);
+      animation: stopMotionSnap 0.45s steps(5) 0.55s forwards;
+    }
+
+    .hero-sub span.hl {
+      color: var(--ink);
+      font-weight: 600;
+      border-bottom: 1px solid rgba(200, 16, 46, 0.45);
+    }
+
+    /* Actions Short Stop-Motion Snap */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 0;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: stopMotionSnap 0.4s steps(4) 0.7s forwards;
+    }
+
+    .btn-primary {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 38px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--bg);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.35);
+      transition: all 0.3s var(--sp);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary:hover {
+      background: var(--cr);
+      color: #FFFFFF;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 38px var(--cr-glow);
+    }
+
+    .btn-ghost {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 15px 34px;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--rule-m);
+      transition: all 0.3s var(--sp);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--cr);
+      color: var(--cr);
+      transform: translateY(-2px);
+    }
+
+    /* ── Bottom Center Scroll Indicator (Mouse Pill + SCROLL Text Only) ── */
+    .hero-scroll-indicator {
+      position: absolute;
+      bottom: clamp(16px, 2.8vh, 32px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      text-decoration: none;
+      opacity: 0;
+      animation: scrollBottomUpEntrance 0.6s var(--sp) 0.85s forwards;
+      cursor: pointer;
+      will-change: transform, opacity;
+      transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    }
+
+    @keyframes scrollBottomUpEntrance {
+      0% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(28px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+    }
+
+    .scroll-mouse-pill {
+      width: 18px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1.5px solid var(--rule-m);
+      display: flex;
+      justify-content: center;
+      padding-top: 4.5px;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s var(--sp);
+    }
+
+    .scroll-wheel-dot {
+      width: 2.5px;
+      height: 5.5px;
+      border-radius: 2px;
+      background: var(--cr);
+      animation: wheelRoll 1.5s ease-in-out infinite;
+    }
+
+    @keyframes wheelRoll {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      70% {
+        opacity: 0.2;
+        transform: translateY(8px);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+    }
+
+    .scroll-text {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      transition: color 0.25s;
+      white-space: nowrap;
+    }
+
+    .hero-scroll-indicator:hover .scroll-text {
+      color: var(--ink);
+    }
+
+    .hero-scroll-indicator:hover .scroll-mouse-pill {
+      border-color: var(--cr);
+      box-shadow: 0 0 14px var(--cr-glow);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       2. STUDIO STORY (Scroll-Illuminated Narrative)
+       ═══════════════════════════════════════════════════════════ */
+    #story {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(60px, 8vh, 100px) 0;
+      border-top: 1px solid var(--rule);
+      overflow: hidden;
+    }
+
+    .story-card-wrap {
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-m);
+      border-radius: clamp(24px, 3vw, 40px);
+      padding: clamp(36px, 4.5vw, 64px);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.04), 0 20px 50px rgba(0, 0, 0, 0.06), 0 2px 10px rgba(0, 0, 0, 0.02);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+
+    [data-theme="dark"] .story-card-wrap {
+      background: linear-gradient(145deg, #111116 0%, #0B0B0E 100%);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.30), 0 20px 60px rgba(0, 0, 0, 0.40), 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .story-card-wrap::after {
+      content: '1928';
+      position: absolute;
+      bottom: -40px;
+      right: 20px;
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(100px, 15vw, 220px);
+      color: var(--ink);
+      opacity: 0.03;
+      pointer-events: none;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .story-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: clamp(30px, 4vh, 44px);
+      flex-wrap: wrap;
+    }
+
+    .story-statement {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(20px, 2.35vw, 36px);
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin: 0;
+      white-space: nowrap;
+    }
+
+    .story-statement span {
+      color: var(--cr);
+    }
+
+    .story-meta-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--cr);
+      background: var(--cr-lo);
+      border: 1px solid rgba(200, 16, 46, 0.25);
+      padding: 6px 14px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .story-meta-badge .smb-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--cr);
+      box-shadow: 0 0 8px var(--cr);
+    }
+
+    .story-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(16px, 2vw, 28px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .story-pillar-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--rule);
+      border-radius: clamp(16px, 1.8vw, 24px);
+      padding: clamp(24px, 2.5vw, 34px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: clamp(14px, 1.8vh, 20px);
+      transition: all 0.35s var(--sp);
+      position: relative;
+      overflow: hidden;
+    }
+
+    [data-theme="light"] .story-pillar-item {
+      background: rgba(0, 0, 0, 0.02);
+      border-color: rgba(0, 0, 0, 0.07);
+    }
+
+    .story-pillar-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+
+    .story-pillar-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(200, 16, 46, 0.35);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08), 0 0 20px rgba(200, 16, 46, 0.08);
+    }
+
+    .story-pillar-item:hover::before {
+      background: var(--cr);
+    }
+
+    .story-pillar-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .story-pillar-num {
+      font-family: var(--font-mono);
+      font-size: clamp(12px, 1vw, 14px);
+      font-weight: 800;
+      color: var(--cr);
+      letter-spacing: 0.12em;
+    }
+
+    .story-pillar-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+    }
+
+    .story-pillar-text {
+      font-family: var(--font-secondary);
+      font-size: clamp(14px, 1.05vw, 16.5px);
+      line-height: 1.65;
+      color: var(--ink-mid);
+      margin: 0;
+      flex-grow: 1;
+    }
+
+    .story-pillar-sub {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--cr);
+      opacity: 0.85;
+      text-transform: uppercase;
+      padding-top: 12px;
+      border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 900px) {
+      .story-pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .story-statement {
+        white-space: normal;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       3. BEST WORKS (Aligned Sticky Deck with 2-Set Card Transition)
+       ═══════════════════════════════════════════════════════════ */
+    #works-driver {
+      position: relative;
+      height: 260vh;
+      border-top: 1px solid var(--rule);
+      background: var(--bg);
+    }
+
+    .works-sticky-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(20px, 3vh, 40px) 0;
+      overflow: hidden;
+    }
+
+    .works-stage-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100%;
+      width: 100%;
+    }
+
+    .works-stage-container .sec-tag-pill {
+      align-self: flex-start;
+      width: fit-content;
+    }
+
+    .works-stage-container .sec-desc {
+      margin-bottom: 0;
+      max-width: 680px;
+    }
+
+    .works-card-stage {
+      position: relative;
+      width: 100%;
+      align-self: stretch;
+      height: clamp(420px, 56vh, 560px);
+      overflow: visible;
+      margin-top: clamp(16px, 2.2vh, 28px);
+      padding: 12px 0 16px 0;
+      box-sizing: border-box;
+    }
+
+    .works-card-set {
+      position: absolute;
+      top: 12px;
+      left: 0;
+      right: 0;
+      bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(18px, 2.2vw, 32px);
+      width: 100%;
+      overflow: visible;
+      will-change: transform, opacity;
+    }
+
+    /* Set 1: Active initially */
+    #worksSet1 {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    /* Set 2: Enters softly on scroll */
+    #worksSet2 {
+      opacity: 0;
+      transform: translateY(20px) scale(0.96);
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .work-duo-card {
+      position: relative;
+      height: 100%;
+      border-radius: clamp(18px, 2.2vw, 28px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #0A0A0E;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(22px, 2.4vw, 32px);
+      text-decoration: none;
+      color: #FFFFFF;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.25);
+      transition: border-color 0.35s var(--sp), box-shadow 0.35s var(--sp), transform 0.35s var(--sp);
+      cursor: pointer;
+    }
+
+    [data-theme="light"] .work-duo-card {
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .work-card-media {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .work-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.92) contrast(1.05);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .work-card-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(7, 7, 10, 0.6) 0%,
+        rgba(7, 7, 10, 0.18) 18%,
+        rgba(7, 7, 10, 0.04) 40%,
+        rgba(7, 7, 10, 0.25) 65%,
+        rgba(7, 7, 10, 0.85) 86%,
+        rgba(7, 7, 10, 0.96) 100%
+      );
+      transition: background 0.4s ease;
+    }
+
+    [data-theme="light"] .work-card-img {
+      filter: brightness(0.92) contrast(1.05);
+    }
+
+    [data-theme="light"] .work-card-media::after {
+      background: linear-gradient(
+        180deg,
+        rgba(7, 7, 10, 0.6) 0%,
+        rgba(7, 7, 10, 0.18) 18%,
+        rgba(7, 7, 10, 0.04) 40%,
+        rgba(7, 7, 10, 0.25) 65%,
+        rgba(7, 7, 10, 0.85) 86%,
+        rgba(7, 7, 10, 0.96) 100%
+      );
+    }
+
+    .work-duo-card:hover {
+      border-color: rgba(255, 255, 255, 0.28);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 24px rgba(255, 255, 255, 0.06);
+    }
+
+    [data-theme="light"] .work-duo-card:hover {
+      border-color: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+    }
+
+    .work-duo-card:hover .work-card-img {
+      transform: scale(1.05);
+      filter: brightness(0.98) contrast(1.1);
+    }
+
+    .work-card-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .work-top-meta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .work-num {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-primary);
+      font-size: clamp(11.5px, 0.95vw, 13px);
+      font-weight: 800;
+      color: #FFFFFF !important;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+      opacity: 0.95;
+    }
+
+    .work-num,
+    .work-num *,
+    .work-top-meta,
+    .work-top-meta * {
+      color: #FFFFFF !important;
+      stroke: #FFFFFF !important;
+    }
+
+    .work-globe-icon {
+      width: 13px;
+      height: 13px;
+      stroke: #FFFFFF !important;
+      stroke-width: 2.2;
+      flex-shrink: 0;
+    }
+
+    [data-theme="light"] .work-num,
+    [data-theme="light"] .work-num *,
+    [data-theme="light"] .work-globe-icon {
+      color: #FFFFFF !important;
+      stroke: #FFFFFF !important;
+    }
+
+    .work-bottom-block {
+      margin-top: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: clamp(16px, 1.8vw, 24px);
+      width: 100%;
+    }
+
+    .work-subtitle,
+    .work-headings-group .work-subtitle {
+      display: none !important;
+    }
+
+    .work-title {
+      flex: 1 1 auto;
+      max-width: min(calc(100% - 195px), 380px);
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(20px, 1.85vw, 26px);
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      color: #FFFFFF !important;
+      margin: 0;
+      text-shadow: 0 3px 18px rgba(0, 0, 0, 0.95);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word;
+    }
+
+    [data-theme="light"] .work-title {
+      color: #FFFFFF !important;
+    }
+
+    .work-bottom-meta {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-top: 0 !important;
+      border: none !important;
+      border-top: none !important;
+      margin-left: auto;
+    }
+
+    .work-bottom-meta::before,
+    .work-bottom-meta::after,
+    .work-bottom-block::before,
+    .work-bottom-block::after {
+      display: none !important;
+      content: none !important;
+    }
+
+    .work-cta-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-primary);
+      font-size: clamp(11.5px, 0.85vw, 12.5px);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #FFFFFF !important;
+      transition: opacity 0.3s ease;
+    }
+
+    .work-cta-arrow {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      flex-shrink: 0;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .work-cta-arrow svg {
+      width: 14px;
+      height: 14px;
+      stroke: #FFFFFF !important;
+      stroke-width: 2.2;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .work-duo-card:hover .work-cta-wrap,
+    .work-cta-wrap:hover {
+      color: #FFFFFF !important;
+    }
+
+    .work-duo-card:hover .work-cta-arrow,
+    .work-cta-wrap:hover .work-cta-arrow {
+      background: rgba(255, 255, 255, 0.24) !important;
+      border-color: rgba(255, 255, 255, 0.45) !important;
+    }
+
+    .work-duo-card:hover .work-cta-arrow svg,
+    .work-cta-wrap:hover .work-cta-arrow svg {
+      transform: translate(3px, -3px);
+      stroke: #FFFFFF !important;
+    }
+
+    @media (max-width: 860px) {
+      #works-driver {
+        min-height: auto;
+      }
+
+      .works-sticky-stage {
+        position: relative;
+        height: auto;
+        padding: 80px 0;
+      }
+
+      .works-card-stage {
+        height: auto;
+        overflow: visible;
+        padding: 10px 0;
+      }
+
+      .works-card-set {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        height: auto;
+        overflow: visible;
+      }
+
+      #worksSet2 {
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        margin-top: 20px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .work-bottom-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .work-title {
+        max-width: 100%;
+        font-size: 20px;
+      }
+      .work-bottom-meta {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       4. CORE VALUES (Kinetic Architectural Monolith Accordion)
+       ═══════════════════════════════════════════════════════════ */
+    #values {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(60px, 8vh, 100px) 0;
+      border-top: 1px solid var(--rule);
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .values-accordion {
+      display: flex;
+      gap: clamp(12px, 1.5vw, 20px);
+      width: 100%;
+      height: clamp(380px, 48vh, 500px);
+      margin-top: clamp(10px, 1.5vh, 20px);
+    }
+
+    .val-panel {
+      position: relative;
+      flex: 1;
+      border-radius: clamp(18px, 2vw, 28px);
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule);
+      overflow: hidden;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(20px, 2.5vw, 36px);
+      transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s var(--sp), box-shadow 0.4s var(--sp), background 0.4s ease;
+      will-change: flex;
+      user-select: none;
+    }
+
+    .val-panel:hover {
+      border-color: rgba(200, 16, 46, 0.45);
+    }
+
+    .val-panel.active {
+      flex: 3.2;
+      border-color: var(--cr);
+      background: linear-gradient(135deg, rgba(20, 20, 28, 0.95) 0%, rgba(10, 10, 15, 0.98) 100%);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(200, 16, 46, 0.15);
+      cursor: default;
+    }
+
+    [data-theme="light"] .val-panel.active {
+      background: linear-gradient(135deg, #FFFFFF 0%, #F5F5FA 100%);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08), 0 0 25px rgba(200, 16, 46, 0.1);
+    }
+
+    /* ── Collapsed Vertical View ── */
+    .val-collapsed-content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(22px, 2.8vw, 34px) 12px;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.35s ease 0.18s, transform 0.35s ease 0.18s;
+      pointer-events: none;
+    }
+
+    .val-panel.active .val-collapsed-content {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.15s ease 0s, transform 0.15s ease 0s;
+    }
+
+    .val-col-num {
+      font-family: var(--font-mono);
+      font-size: clamp(12px, 1.1vw, 15px);
+      font-weight: 800;
+      color: var(--cr);
+      letter-spacing: 0.14em;
+    }
+
+    .val-col-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(15px, 1.4vw, 20px);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      white-space: nowrap;
+      margin: auto 0;
+      transition: color 0.3s;
+    }
+
+    .val-panel:hover .val-col-title {
+      color: var(--ink);
+    }
+
+    /* ── Expanded Content (Soft Staggered Cinematic Text Reveal) ── */
+    .val-expanded-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      width: 100%;
+      min-width: clamp(280px, 32vw, 560px);
+      pointer-events: none;
+    }
+
+    .val-panel.active .val-expanded-content {
+      pointer-events: auto;
+    }
+
+    /* Staggered Element 1: Top Meta */
+    .val-exp-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: clamp(14px, 2vh, 24px);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
+    }
+
+    .val-panel.active .val-exp-top {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.45s ease 0.15s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+    }
+
+    .val-exp-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .val-exp-num {
+      font-family: var(--font-mono);
+      font-size: clamp(12px, 1vw, 14px);
+      font-weight: 800;
+      color: var(--cr);
+      letter-spacing: 0.16em;
+    }
+
+    .val-exp-pill {
+      font-family: var(--font-mono);
+      font-size: clamp(9px, 0.8vw, 11px);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--cr);
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      text-transform: uppercase;
+    }
+
+    .val-exp-body {
+      margin: auto 0;
+      padding: 8px 0;
+    }
+
+    /* Staggered Element 2: Headline */
+    .val-exp-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(26px, 3.2vw, 42px);
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
+    }
+
+    .val-panel.active .val-exp-title {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease 0.22s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.22s;
+    }
+
+    /* Staggered Element 3: Narrative */
+    .val-exp-desc {
+      font-family: var(--font-secondary);
+      font-size: clamp(14px, 1.15vw, 17px);
+      line-height: 1.65;
+      color: var(--ink-mid);
+      max-width: 640px;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
+    }
+
+    .val-panel.active .val-exp-desc {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.55s ease 0.28s, transform 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.28s;
+    }
+
+    /* Staggered Element 4: Tags Row */
+    .val-exp-bottom {
+      display: flex;
+      gap: 0;
+      flex-wrap: wrap;
+      align-items: center;
+      border-top: 1px solid var(--rule);
+      padding-top: 14px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.2s ease 0s, transform 0.2s ease 0s;
+    }
+
+    .val-panel.active .val-exp-bottom {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.45s ease 0.34s, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.34s;
+    }
+
+    .val-exp-tag {
+      font-family: var(--font-mono);
+      font-size: clamp(9px, 0.8vw, 11px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--ink-mid);
+      background: none;
+      padding: 0;
+      border-radius: 0;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .val-exp-tag:not(:last-child)::after {
+      content: '·';
+      margin: 0 10px;
+      color: var(--cr);
+      font-weight: 700;
+    }
+
+    [data-theme="light"] .val-exp-tag {
+      background: none;
+    }
+
+    @media (max-width: 860px) {
+      .values-accordion {
+        flex-direction: column;
+        height: auto;
+        gap: 16px;
+      }
+
+      .val-panel {
+        flex: none !important;
+        height: auto;
+        min-height: 180px;
+      }
+
+      .val-collapsed-content {
+        display: none;
+      }
+
+      .val-expanded-content {
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        min-width: 0;
+      }
+
+      .val-exp-top,
+      .val-exp-title,
+      .val-exp-desc,
+      .val-exp-bottom {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       5. OUR TEAM (Minimalist Editorial Typographic Line Archive)
+       ═══════════════════════════════════════════════════════════ */
+    #team {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(60px, 8vh, 100px) 0;
+      border-top: 1px solid var(--rule);
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .team-header-split {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: clamp(24px, 4vw, 56px);
+      margin-bottom: clamp(24px, 3.5vh, 40px);
+      flex-wrap: wrap;
+    }
+
+    .team-header-desc {
+      font-family: var(--font-secondary);
+      font-size: clamp(14px, 1.1vw, 16.5px);
+      line-height: 1.65;
+      color: var(--ink-mid);
+      max-width: 520px;
+      margin: 0;
+    }
+
+    .team-minimal-index {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      border-top: 1px solid var(--rule);
+    }
+
+    .team-index-row {
+      position: relative;
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.35s var(--sp), border-color 0.35s var(--sp);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .team-index-row::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--cr);
+      opacity: 0;
+      transform: scaleY(0.2);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s var(--sp);
+    }
+
+    .team-index-row:hover,
+    .team-index-row.expanded {
+      background: rgba(200, 16, 46, 0.04);
+      border-color: rgba(200, 16, 46, 0.35);
+    }
+
+    .team-index-row:hover::before,
+    .team-index-row.expanded::before {
+      opacity: 1;
+      transform: scaleY(1);
+    }
+
+    .team-row-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(24px, 3.4vh, 38px) clamp(12px, 1.5vw, 24px);
+      transition: padding 0.35s var(--sp);
+    }
+
+    .team-row-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .team-row-name {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(24px, 2.8vw, 38px);
+      letter-spacing: -0.035em;
+      color: var(--ink);
+      transition: color 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .team-index-row:hover .team-row-name,
+    .team-index-row.expanded .team-row-name {
+      color: var(--cr);
+      transform: translateX(6px);
+    }
+
+    /* ── Right Column: Role / Speciality ── */
+    .team-row-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    .team-row-role {
+      font-family: var(--font-secondary);
+      font-size: clamp(14px, 1.15vw, 17px);
+      font-weight: 600;
+      color: var(--ink-mid);
+      transition: color 0.3s, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .team-index-row:hover .team-row-role,
+    .team-index-row.expanded .team-row-role {
+      color: var(--ink);
+      transform: translateX(-6px);
+    }
+
+    /* ── Floating Circular Portrait Lens ("image comes into the circle") ── */
+    .team-floating-circle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      width: clamp(170px, 15vw, 210px);
+      height: clamp(170px, 15vw, 210px);
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid #ffffff;
+      background: #0a0a0e;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.14), 0 4px 12px rgba(0, 0, 0, 0.06);
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.2);
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      will-change: transform, left, top, opacity;
+    }
+
+    [data-theme="dark"] .team-floating-circle {
+      border-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 16px 42px rgba(0, 0, 0, 0.45), 0 0 24px rgba(200, 16, 46, 0.18);
+    }
+
+    [data-theme="light"] .team-floating-circle {
+      border-color: #ffffff;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .team-floating-circle.active {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .tfc-circle-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 50%;
+      transform: scale(1.05);
+      transition: transform 0.4s ease;
+    }
+
+    .team-floating-circle.active .tfc-circle-img {
+      transform: scale(1.12);
+    }
+
+    @media (max-width: 860px) {
+      .team-row-main {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 24px 12px;
+      }
+
+      .team-row-center {
+        justify-content: flex-start;
+      }
+
+      .team-row-right {
+        justify-content: flex-start;
+        text-align: left;
+      }
+
+      .team-floating-circle {
+        display: none !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       6. CREATIVE PROCESS (S-Curve Serpentine Progressive Flow)
+       ═══════════════════════════════════════════════════════════ */
+    #process {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(100px, 14vh, 180px) 0 clamp(110px, 15vh, 200px) 0;
+      border-top: 1px solid var(--rule);
+      overflow: hidden;
+    }
+
+    .process-serpentine-track {
+      position: relative;
+      margin-top: clamp(64px, 8vh, 110px);
+      padding-bottom: clamp(30px, 4vh, 60px);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(64px, 8.5vh, 110px);
+      width: 100%;
+    }
+
+    /* ── Kinetic Overlaid SVG Line ── */
+    .process-svg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: visible;
+    }
+
+    .process-bg-path {
+      fill: none;
+      stroke: var(--rule-heavy);
+      stroke-width: 2px;
+      stroke-dasharray: 6 6;
+      opacity: 0.6;
+    }
+
+    [data-theme="light"] .process-bg-path {
+      stroke: rgba(0, 0, 0, 0.16);
+      opacity: 0.85;
+    }
+
+    .process-active-path {
+      fill: none;
+      stroke: var(--cr);
+      stroke-width: 2.5px;
+      stroke-linecap: round;
+      filter: drop-shadow(0 0 8px rgba(200, 16, 46, 0.55));
+    }
+
+    /* ── Step Items (Alternating Left & Right) ── */
+    .proc-step-item {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: clamp(20px, 3.5vw, 48px);
+      width: 100%;
+    }
+
+    .proc-item-left {
+      justify-content: flex-start;
+    }
+
+    .proc-item-right {
+      justify-content: flex-end;
+    }
+
+    /* ── Glowing Circle Node ── */
+    .proc-node-wrapper {
+      flex-shrink: 0;
+      position: relative;
+      z-index: 5;
+    }
+
+    .proc-node-circle {
+      width: clamp(54px, 5.2vw, 72px);
+      height: clamp(54px, 5.2vw, 72px);
+      border-radius: 50%;
+      border: 1.5px solid var(--rule);
+      background: var(--bg);
+      display: grid;
+      place-items: center;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+      transition: border-color 0.45s var(--sp), background 0.45s var(--sp), box-shadow 0.45s var(--sp), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+    }
+
+    .proc-node-num {
+      position: relative;
+      z-index: 3;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: clamp(17px, 1.7vw, 22px);
+      color: var(--ink-dim);
+      transition: color 0.4s, text-shadow 0.4s;
+    }
+
+    .proc-node-pulse {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cr);
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.4s, transform 0.4s;
+      pointer-events: none;
+    }
+
+    @keyframes laserPulseRing {
+      0% {
+        transform: scale(0.95);
+        opacity: 0.8;
+      }
+
+      50% {
+        transform: scale(1.25);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+    }
+
+    /* Active Node Styling */
+    .proc-step-item.active .proc-node-circle {
+      border-color: var(--cr);
+      background: var(--bg);
+      box-shadow: 0 0 18px rgba(200, 16, 46, 0.20), 0 4px 16px rgba(0, 0, 0, 0.04);
+      transform: scale(1.04);
+    }
+
+    .proc-step-item.active .proc-node-num {
+      color: var(--cr);
+      text-shadow: 0 0 10px rgba(200, 16, 46, 0.25);
+    }
+
+    .proc-step-item.active .proc-node-pulse {
+      opacity: 1;
+      animation: laserPulseRing 2.2s infinite ease-out;
+    }
+
+    /* ── Step Glassmorphic Card ── */
+    .proc-step-card {
+      width: min(520px, 75vw);
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 22px;
+      padding: clamp(22px, 2.6vw, 34px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      opacity: 0.25;
+      transform: translateY(22px) scale(0.98);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.03), 0 10px 25px rgba(0, 0, 0, 0.04);
+      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s;
+    }
+
+    .proc-step-item.active .proc-step-card {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      border-color: rgba(200, 16, 46, 0.28);
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.04), 0 14px 35px rgba(0, 0, 0, 0.06), 0 0 20px rgba(200, 16, 46, 0.04);
+    }
+
+    [data-theme="dark"] .proc-step-card {
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.25), 0 14px 40px rgba(0, 0, 0, 0.35);
+    }
+
+    [data-theme="dark"] .proc-step-item.active .proc-step-card {
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.30), 0 16px 45px rgba(0, 0, 0, 0.40), 0 0 24px rgba(200, 16, 46, 0.12);
+    }
+
+    .proc-step-card:hover {
+      border-color: var(--cr);
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.05), 0 16px 40px rgba(0, 0, 0, 0.07), 0 0 24px rgba(200, 16, 46, 0.08);
+    }
+
+    [data-theme="dark"] .proc-step-card:hover {
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.35), 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 30px rgba(200, 16, 46, 0.20);
+    }
+
+    .proc-card-header {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .proc-card-phase {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--cr);
+      text-transform: uppercase;
+    }
+
+    .proc-card-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(18px, 1.7vw, 24px);
+      color: var(--ink);
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .proc-card-desc {
+      font-family: var(--font-secondary);
+      font-size: clamp(13px, 1vw, 15px);
+      line-height: 1.6;
+      color: var(--ink-mid);
+      margin: 0 0 16px 0;
+    }
+
+    .proc-card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0;
+    }
+
+    .proc-card-tags span {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--ink-mid);
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .proc-card-tags span:not(:last-child)::after {
+      content: '·';
+      margin: 0 8px;
+      color: var(--cr);
+      font-weight: 700;
+    }
+
+    [data-theme="light"] .proc-card-tags span {
+      background: none;
+    }
+
+    @media (max-width: 768px) {
+      .proc-step-item {
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        gap: 16px;
+      }
+
+      .proc-item-right .proc-step-card {
+        order: 2;
+      }
+
+      .proc-item-right .proc-node-wrapper {
+        order: 1;
+      }
+
+      .proc-step-card {
+        width: 100%;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       7. SELECTED CLIENTS (3-Row Infinite Dual-Direction Logo Marquee)
+       ═══════════════════════════════════════════════════════════ */
+    #clients-section {
+      position: relative;
+      background: var(--bg);
+      padding: clamp(90px, 12vh, 150px) 0;
+      overflow: hidden;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(48px, 6.5vh, 72px);
+    }
+
+    .brands-header-block {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 clamp(24px, 4vw, 64px);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brands-header-block .bph-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--cr);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brands-header-block .bph-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--cr);
+      display: inline-block;
+      box-shadow: 0 0 8px var(--cr);
+    }
+
+    .brands-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(38px, 5.2vw, 76px);
+      line-height: 0.98;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .brands-title em,
+    .brands-title span {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cr);
+    }
+
+    .brands-subtitle {
+      font-family: var(--font-primary);
+      font-size: clamp(0.92rem, 1.15vw, 1.12rem);
+      color: var(--ink-dim);
+      max-width: 640px;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* ── 3-Row Infinite Marquee Stage ── */
+    .brands-marquee-stage {
+      --marquee-speed: 45s;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      padding: 12px 0;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 7%, #000 93%, transparent 100%);
+    }
+
+    .brand-row-wrap {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      padding: 14px 0;
+    }
+
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      width: max-content;
+      will-change: transform;
+      padding: 6px 0;
+    }
+
+    .marquee-left .marquee-track {
+      animation: marqueeL2R var(--marquee-speed, 45s) linear infinite;
+    }
+
+    .marquee-right .marquee-track {
+      animation: marqueeR2L var(--marquee-speed, 45s) linear infinite;
+    }
+
+    .brand-row-wrap:nth-child(3) .marquee-track {
+      animation: marqueeL2R var(--marquee-speed, 45s) linear infinite;
+    }
+
+    .brand-row-wrap:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    @keyframes marqueeL2R {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
+    @keyframes marqueeR2L {
+      0% { transform: translate3d(-50%, 0, 0); }
+      100% { transform: translate3d(0, 0, 0); }
+    }
+
+    .marquee-group {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      flex-shrink: 0;
+    }
+
+    /* ── Individual Brand Logo Card ── */
+    .brand-logo-card {
+      min-width: clamp(225px, 18vw, 275px);
+      height: clamp(92px, 10.5vh, 106px);
+      background: #FFFFFF !important;
+      border: 1px solid var(--rule);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.035);
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.3s;
+      cursor: pointer;
+      user-select: none;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    [data-theme="dark"] .brand-logo-card {
+      background: #FFFFFF !important;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 22px rgba(0, 0, 0, 0.4);
+    }
+
+    .brand-logo-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(200, 16, 46, 0.45);
+      box-shadow: 0 14px 32px rgba(200, 16, 46, 0.16);
+    }
+
+    [data-theme="dark"] .brand-logo-card:hover {
+      border-color: rgba(255, 46, 77, 0.6);
+      box-shadow: 0 14px 34px rgba(255, 46, 77, 0.25);
+    }
+
+    .brand-logo-card img.brand-logo-img {
+      width: 100%;
+      height: 100%;
+      max-height: 68px;
+      max-width: 215px;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      filter: none !important;
+      opacity: 1 !important;
+      transition: transform 0.35s ease;
+    }
+
+    .brand-logo-card:hover img.brand-logo-img {
+      transform: scale(1.06);
+    }
+
+    .brand-logo-svg {
+      width: 100%;
+      height: 100%;
+      max-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ink);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       8. SECTION 8: READY TO BUILD CTA (Full Viewport Card Showcase)
+       ═══════════════════════════════════════════════════════════ */
+    #cta {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(60px, 8vh, 100px) clamp(24px, 4vw, 64px);
+      border: none;
+      background: var(--bg);
+      text-align: center;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    [data-theme="light"] #cta {
+      background: var(--bg);
+    }
+
+    /* ── Luxury Animated Perimeter Red Line CTA ── */
+    .fcta-container {
+      width: 100%;
+      max-width: 1280px;
+      position: relative;
+      border-radius: clamp(32px, 4.5vw, 56px);
+      background: var(--card-bg);
+      border: none;
+      padding: clamp(64px, 8vh, 100px) clamp(32px, 5vw, 76px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    [data-theme="light"] .fcta-container {
+      background: #FFFFFF;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+    }
+
+    .fcta-beam-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 3;
+    }
+
+    .fcta-beam-svg rect {
+      rx: clamp(32px, 4.5vw, 56px);
+      ry: clamp(32px, 4.5vw, 56px);
+    }
+
+    /* Soft Gray Base Border Track inside the box */
+    .fcta-beam-track {
+      stroke: rgba(255, 255, 255, 0.12);
+      stroke-width: 1px;
+    }
+
+    [data-theme="light"] .fcta-beam-track {
+      stroke: rgba(10, 10, 10, 0.08);
+      stroke-width: 1px;
+    }
+
+    /* Soft Reddish Inner Shadow (Ultra-soft, deep inward depth, exact 1:1 span from line start to end only) */
+    .fcta-inner-shadow {
+      stroke: var(--cr);
+      stroke-width: 44px;
+      stroke-linecap: round;
+      stroke-dasharray: 170 830;
+      filter: blur(24px);
+      opacity: 0.18;
+      animation: fctaShadowMove 30s linear infinite;
+    }
+
+    [data-theme="light"] .fcta-inner-shadow {
+      stroke: var(--cr);
+      stroke-width: 44px;
+      stroke-linecap: round;
+      stroke-dasharray: 170 830;
+      filter: blur(22px);
+      opacity: 0.14;
+      animation: fctaShadowMove 30s linear infinite;
+    }
+
+    /* Single Pure Red Moving Line (One unified line: thick center, softly tapered thin ends) */
+    .fcta-beam-line {
+      stroke: var(--cr);
+      stroke-width: 2.5px;
+      stroke-linecap: round;
+      stroke-dasharray: 200 800;
+      filter: drop-shadow(0 0 5px rgba(200, 16, 46, 0.55));
+      animation: fctaBeamMove 30s linear infinite;
+    }
+
+    [data-theme="light"] .fcta-beam-line {
+      stroke: var(--cr);
+      stroke-width: 2.5px;
+      stroke-linecap: round;
+      stroke-dasharray: 200 800;
+      filter: drop-shadow(0 0 4px rgba(200, 16, 46, 0.35));
+      animation: fctaBeamMove 30s linear infinite;
+    }
+
+    @keyframes fctaBeamMove {
+      0% {
+        stroke-dashoffset: 0;
+      }
+
+      100% {
+        stroke-dashoffset: -1000;
+      }
+    }
+
+    @keyframes fctaShadowMove {
+      0% {
+        stroke-dashoffset: -15;
+      }
+
+      100% {
+        stroke-dashoffset: -1015;
+      }
+    }
+
+    .fcta-title {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(30px, 4.4vw, 68px);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin: 0 0 clamp(16px, 2.2vh, 26px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .fcta-line-1 {
+      display: block;
+      white-space: nowrap;
+      color: var(--ink);
+    }
+
+    .fcta-line-2 {
+      display: block;
+      color: var(--cr);
+      font-style: italic;
+      font-weight: 300;
+      white-space: nowrap;
+    }
+
+    .fcta-sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(15px, 1.25vw, 19px);
+      line-height: 1.6;
+      color: var(--ink-mid);
+      max-width: 680px;
+      margin-bottom: clamp(24px, 3.5vh, 38px);
+    }
+
+    .fcta-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .fcta-actions .btn-primary {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #FFFFFF;
+      box-shadow: 0 8px 24px rgba(200, 16, 46, 0.22);
+      transition: transform 0.25s var(--sp), box-shadow 0.25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .fcta-actions .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 34px rgba(200, 16, 46, 0.36);
+    }
+
+    .fcta-actions .btn-ghost {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 999px;
+      background: var(--card-bg);
+      color: var(--ink);
+      border: 1.5px solid var(--rule-m);
+      transition: all 0.25s var(--sp);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .fcta-actions .btn-ghost:hover {
+      border-color: var(--ink);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    }
+
+
+    /* ═══════════════════════════════════════════════════════════
+       8. MODERN EDITORIAL LUXURY EXIT FOOTER (Exact Homepage Design)
+       ═══════════════════════════════════════════════════════════ */
+    #footer-driver {
+      position: relative;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 4.5vh, 56px) clamp(24px, 3.5vw, 52px) clamp(24px, 3.5vh, 40px);
+      box-sizing: border-box;
+      z-index: 10;
+    }
+
+    .footer-luxury-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: clamp(36px, 5vw, 64px);
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.05);
+      padding: clamp(48px, 6vh, 68px) clamp(40px, 5vw, 72px) 0px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1640px;
+      min-height: clamp(500px, 68vh, 640px);
+      margin: 0 auto;
+      gap: clamp(48px, 7vh, 80px);
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .f-outer-bar {
+      width: 100%;
+      max-width: 1640px;
+      margin: clamp(28px, 4vh, 44px) auto 0;
+      padding: 0 clamp(16px, 2.5vw, 36px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-sizing: border-box;
+    }
+
+    .f-outer-copyright,
+    .f-outer-dev {
+      font-family: var(--font-primary);
+      font-size: 0.76rem;
+      color: var(--ink-dim);
+      font-weight: 400;
+      line-height: 1.4;
+    }
+
+    .f-outer-dev a {
+      color: var(--ink-dim);
+      text-decoration: none;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .f-outer-dev a:hover {
+      color: var(--cr);
+    }
+
+    .f-header-grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+      gap: clamp(28px, 3.5vw, 52px);
+      align-items: flex-start;
+    }
+
+    .f-desc-col .f-statement-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(1.4rem, 1.85vw, 1.9rem);
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 380px;
+    }
+
+    .f-desc-col .f-desc-text {
+      font-family: var(--font-secondary);
+      font-weight: 400;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--ink-mid);
+      max-width: 340px;
+      margin-bottom: 12px;
+    }
+
+    .f-desc-col .f-location-tag {
+      font-family: var(--font-mono, monospace);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--ink-dim, var(--ink-mid));
+      margin: 0 0 18px 0;
+      text-transform: uppercase;
+    }
+
+    .f-col-label {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-bottom: 20px;
+    }
+
+    .f-links-clean {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .f-links-clean a {
+      font-family: var(--font-primary);
+      font-weight: 500;
+      font-size: 0.94rem;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color .2s, transform .2s;
+      display: inline-block;
+    }
+
+    .f-links-clean a:hover {
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    .f-social-circles {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .f-circle-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all 0.25s var(--sp);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .f-circle-btn:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .f-cta-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f-action-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 22px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: transform .25s var(--sp), box-shadow .25s;
+    }
+
+    .f-action-pill:hover {
+      transform: translateY(-3px);
+    }
+
+    .f-action-pill.cta-primary {
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 10px 28px rgba(200, 16, 46, 0.22);
+    }
+
+    .f-action-pill.cta-secondary {
+      background: var(--bg);
+      border: 1px solid var(--rule);
+      color: var(--ink);
+    }
+
+    .f-action-pill.cta-secondary:hover {
+      border-color: var(--ink);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .f-action-txt {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .f-action-heading {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 0.96rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .f-action-sub {
+      font-family: var(--font-primary);
+      font-size: 0.74rem;
+      opacity: 0.78;
+    }
+
+    .f-action-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .cta-primary .f-action-arrow {
+      background: rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+    }
+
+    .cta-secondary .f-action-arrow {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    /* ── Bottom Cluster: Staggered Character Emergence Headline (Half-Cut to Full Wave) ── */
+    .f-bottom-cluster {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-top: clamp(32px, 5vh, 60px);
+      margin-bottom: 0;
+      position: relative;
+    }
+
+    .f-brand-title-wrap {
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: clamp(12px, 2vw, 24px) 0 clamp(18px, 2.8vh, 32px) 0;
+      user-select: none;
+      box-sizing: border-box;
+    }
+
+    .f-brand-giant-text {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(26px, 6.85vw, 110px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      text-transform: uppercase;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      white-space: nowrap;
+      width: 100%;
+      transform: scaleY(1.22);
+      transform-origin: center bottom;
+    }
+
+    .f-char-word {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .f-char-space {
+      display: inline-block;
+      width: 0.32em;
+    }
+
+    .f-char {
+      display: inline-block;
+      opacity: 1;
+      transform: translateY(50%);
+      transition: transform 0.95s cubic-bezier(0.19, 1, 0.22, 1);
+      will-change: transform;
+    }
+
+    .f-brand-giant-text.revealed .f-char {
+      transform: translateY(0%);
+    }
+
+    .f-bottom-line {
+      width: 100%;
+      height: 1.5px;
+      background: var(--rule);
+      margin: 0;
+      transition: background 0.3s;
+    }
+
+    @media (max-width: 1024px) {
+      .f-header-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .f-header-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .f-outer-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+
+    /* ── Floating Theme Toggle FAB ── */
+    #theme-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9990;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-m);
+      color: var(--ink);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.25);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform 0.3s var(--sp), border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+
+    #theme-fab:hover {
+      transform: translateY(-3px) scale(1.08);
+      border-color: var(--cr);
+      box-shadow: 0 14px 40px var(--cr-glow);
+    }
+
+    #theme-fab svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-moon,
+    [data-theme="light"] #theme-fab .icon-sun {
+      display: none;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-sun,
+    [data-theme="light"] #theme-fab .icon-moon {
+      display: block;
+    }
+
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      padding: 14px clamp(20px, 3.5vw, 48px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(248, 248, 250, 0.82);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid rgba(10, 10, 10, 0.07);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, background 0.3s, border-color 0.3s, box-shadow 0.3s;
+      will-change: transform, opacity;
+    }
+
+    [data-theme="dark"] #nav {
+      background: rgba(10, 10, 14, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    #nav.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    #nav.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-100%);
+    }
+
+    .nav-logo svg {
+      height: 32px;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 1.8vw, 24px);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--ink-mid);
+      transition: all .25s ease;
+      position: relative;
+      padding: 5px 8px;
+      border-radius: 20px;
+    }
+
+    .nav-links a:hover {
+      color: var(--cr);
+    }
+
+    .nav-links a.active {
+      font-weight: 800;
+      color: #0A0A0A;
+      background: none;
+      border: none;
+      box-shadow: none;
+      padding: 5px 6px;
+    }
+
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      transform: scaleX(1);
+      height: 2px;
+      background: var(--cr);
+      left: 6px;
+      right: 6px;
+      bottom: -2px;
+      border-radius: 2px;
+    }
+
+    [data-theme="dark"] .nav-links a.active {
+      color: #ffffff;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       BESPOKE ATELIER SERVICES DROPDOWN SYSTEM
+       ═══════════════════════════════════════════════════════════ */
+    .nav-has-dropdown {
+      position: relative;
+    }
+
+    .nav-has-dropdown > a {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav-caret {
+      width: 8px;
+      height: 5px;
+      transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+      opacity: 0.7;
+      display: inline-block;
+      vertical-align: middle;
+      pointer-events: none;
+    }
+
+    .nav-has-dropdown:hover > a,
+    .nav-has-dropdown:focus-within > a {
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-has-dropdown:hover .nav-caret,
+    .nav-has-dropdown:focus-within .nav-caret {
+      transform: rotate(180deg);
+      opacity: 1;
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s;
+      z-index: 1001;
+      padding-top: 12px; /* mouse bridge */
+      width: clamp(210px, 18vw, 230px);
+    }
+
+    .nav-has-dropdown:hover .nav-dropdown-menu,
+    .nav-has-dropdown:focus-within .nav-dropdown-menu,
+    .nav-has-dropdown.touch-open .nav-dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-dropdown-panel {
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border: 1px solid rgba(10, 10, 10, 0.06);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.08), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+      overflow: hidden;
+      padding: 6px;
+      text-align: left;
+    }
+
+    [data-theme="dark"] .nav-dropdown-panel,
+    body.dark .nav-dropdown-panel {
+      background: rgba(14, 14, 18, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      box-shadow: 0 20px 48px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-dropdown-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 9px;
+      text-decoration: none;
+      background: transparent;
+      transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+      position: relative;
+    }
+
+    /* Reset global nav underlines inside dropdown */
+    .nav-dropdown-menu a::after,
+    .nav-dropdown-menu a.active::after {
+      display: none !important;
+    }
+
+    .nav-dropdown-item:hover {
+      background: rgba(10, 10, 10, 0.035);
+      transform: translateX(2px);
+    }
+
+    [data-theme="dark"] .nav-dropdown-item:hover,
+    body.dark .nav-dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .ndi-num {
+      font-family: var(--font-mono, 'Space Mono', monospace);
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--cr, #C8102E);
+      opacity: 0.75;
+      letter-spacing: 0.03em;
+      min-width: 18px;
+      transition: opacity 0.18s ease;
+    }
+
+    .nav-dropdown-item:hover .ndi-num {
+      opacity: 1;
+    }
+
+    .ndi-title {
+      font-family: var(--font-primary, 'Gotham', 'Montserrat', sans-serif);
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--ink, #0E0E10);
+      letter-spacing: 0.01em;
+      text-transform: none;
+      transition: color 0.18s ease;
+      line-height: 1.25;
+      flex: 1;
+    }
+
+    [data-theme="dark"] .ndi-title,
+    body.dark .ndi-title {
+      color: #EDEDF0;
+    }
+
+    .nav-dropdown-item:hover .ndi-title {
+      color: var(--cr, #C8102E);
+    }
+
+    .ndi-arrow {
+      opacity: 0;
+      transform: translateX(-4px);
+      color: var(--cr, #C8102E);
+      transition: opacity 0.18s cubic-bezier(0.16, 1, 0.3, 1), transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+      flex-shrink: 0;
+    }
+
+    .nav-dropdown-item:hover .ndi-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .nav-dropdown-item.ndi-active {
+      background: rgba(200, 16, 46, 0.05);
+    }
+
+    [data-theme="dark"] .nav-dropdown-item.ndi-active,
+    body.dark .nav-dropdown-item.ndi-active {
+      background: rgba(200, 16, 46, 0.12);
+    }
+
+    .nav-dropdown-item.ndi-active .ndi-title {
+      color: var(--cr, #C8102E);
+    }
+
+    .nav-dropdown-item.ndi-active .ndi-arrow {
+      opacity: 0.8;
+      transform: translateX(0);
+    }
+
+    .nav-dropdown-footer {
+      margin-top: 4px;
+      padding-top: 5px;
+      border-top: 1px solid rgba(10, 10, 10, 0.05);
+    }
+
+    [data-theme="dark"] .nav-dropdown-footer,
+    body.dark .nav-dropdown-footer {
+      border-top-color: rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-dropdown-foot-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-family: var(--font-primary, 'Gotham', 'Montserrat', sans-serif);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--ink-mid, #666672);
+      text-decoration: none;
+      background: transparent;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    [data-theme="dark"] .nav-dropdown-foot-link,
+    body.dark .nav-dropdown-foot-link {
+      color: #9A9AA6;
+    }
+
+    .nav-dropdown-foot-link svg {
+      transition: transform 0.18s ease, color 0.18s ease;
+      color: currentColor;
+    }
+
+    .nav-dropdown-foot-link:hover {
+      background: rgba(200, 16, 46, 0.05);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    [data-theme="dark"] .nav-dropdown-foot-link:hover,
+    body.dark .nav-dropdown-foot-link:hover {
+      background: rgba(200, 16, 46, 0.12);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    .nav-dropdown-foot-link:hover svg {
+      transform: translateX(3px);
+      color: var(--cr, #C8102E) !important;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-cta {
+      font-family: var(--font-primary);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 9px 22px;
+      border-radius: 999px;
+      background: var(--cr);
+      color: #ffffff;
+      box-shadow: 0 4px 16px var(--cr-glow);
+      transition: background .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .nav-cta:hover,
+    [data-theme="light"] .nav-cta:hover {
+      background: var(--cr-dk, #6B1212);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(107, 18, 18, 0.45);
+    }
+
+    [data-theme="dark"] .nav-cta:hover,
+    body.dark .nav-cta:hover {
+      background: #ffffff !important;
+      color: #0A0A0C !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(255, 255, 255, 0.35) !important;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      .c-dot,
+      .c-ring {
+        display: none !important;
+      }
+    }
+
+    /* ── Smooth scrollbar ─────────────────────────────────── */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--cr) var(--bg);
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--cr);
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Mouse Cursor -->
+  <div class="c-dot" id="cDot"></div>
+  <div class="c-ring" id="cRing"></div>
+
+  <!-- ══ FIXED NAVIGATION ══ -->
+  <nav id="nav">
+    <a href="index.html" class="nav-logo" aria-label="1928 Creative Studio">
+      <img src="img/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li class="nav-has-dropdown">
+        <a href="services.html" class="nav-link-services">
+          Services
+          <svg class="nav-caret" width="8" height="5" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 1.5L5 4.5L9 1.5"/>
+          </svg>
+        </a>
+        <div class="nav-dropdown-menu" aria-label="Services Submenu">
+          <div class="nav-dropdown-panel">
+            <div class="nav-dropdown-list">
+              <a href="service-logo-design.html" class="nav-dropdown-item">
+                <span class="ndi-num">01</span>
+                <span class="ndi-title">Logo Design</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-brand-identity.html" class="nav-dropdown-item">
+                <span class="ndi-num">02</span>
+                <span class="ndi-title">Brand Identity</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-website-development.html" class="nav-dropdown-item">
+                <span class="ndi-num">03</span>
+                <span class="ndi-title">Website Development</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-digital-marketing.html" class="nav-dropdown-item">
+                <span class="ndi-num">04</span>
+                <span class="ndi-title">Digital Marketing</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+              <a href="service-content-creation.html" class="nav-dropdown-item">
+                <span class="ndi-num">05</span>
+                <span class="ndi-title">Content Creation</span>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+            <div class="nav-dropdown-footer">
+              <a href="services.html" class="nav-dropdown-foot-link">
+                <span>All Services Overview</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li><a href="portfolio.html">Work</a></li>
+      <li><a href="blogs.html">Perspectives</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="contact.html" class="nav-cta">Start Project</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       1. HERO SECTION (Stop-Motion Kinetic Typography Entrance)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="hero">
+    <div class="section-container hero-content">
+      <div class="hero-tag-wrap">
+        <div class="sec-tag-pill" style="margin-bottom:0;">
+          <span class="sec-dot"></span> ABOUT 1928 / THE STUDIO
+        </div>
+      </div>
+
+      <h1 class="hero-headline">
+        <span class="anim-mask"><span class="hero-line-1">WE TURN IDEAS</span></span>
+        <span class="anim-mask"><span class="hero-line-2">INTO BRANDS THAT GROW.</span></span>
+      </h1>
+
+      <p class="hero-sub">
+        <span class="hl">1928 Creative Studio</span> is a creative partner for ambitious businesses, bringing together <span
+          class="hl">strategy, design, digital and storytelling</span> to build brands with character and businesses with greater potential.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#story" class="btn-primary">EXPLORE OUR STORY ↓</a>
+        <a href="contact.html" class="btn-ghost">START A CONVERSATION →</a>
+      </div>
+    </div>
+
+    <!-- Bottom Center Anchored Scroll Indicator (Mouse + SCROLL Text Only) -->
+    <a href="#story" class="hero-scroll-indicator" id="heroScrollIndicator" aria-label="Scroll to explore story">
+      <div class="scroll-mouse-pill">
+        <span class="scroll-wheel-dot"></span>
+      </div>
+      <span class="scroll-text">SCROLL</span>
+    </a>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       2. STUDIO STORY
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="story">
+    <div class="section-container">
+      <div class="sec-tag-pill"><span class="sec-dot"></span> ORIGINS &amp; ESSENCE</div>
+      <h2 class="sec-heading">THE STORY BEHIND <span>1928</span></h2>
+      <p class="sec-desc">Built by people who believe every business has the potential to become a meaningful brand.</p>
+
+      <div class="story-card-wrap">
+        <div class="story-card-header">
+          <h3 class="story-statement">
+            "WE TURN AMBITION INTO <span>MOMENTUM.</span>"
+          </h3>
+          <div class="story-meta-badge">
+            <span class="smb-dot"></span>
+            <span>1928 STUDIO MANIFESTO</span>
+          </div>
+        </div>
+
+        <div class="story-pillars-grid">
+          <!-- Pillar 1 -->
+          <div class="story-pillar-item">
+            <div class="story-pillar-head">
+              <span class="story-pillar-num">01</span>
+              <span class="story-pillar-tag">FOUNDATION</span>
+            </div>
+            <p class="story-pillar-text">
+              1928 Creative Studio was founded by Ami and Tushar, bringing together creative thinking, strategic direction and digital expertise under one roof.
+            </p>
+            <div class="story-pillar-sub">STRATEGY + CRAFT</div>
+          </div>
+
+          <!-- Pillar 2 -->
+          <div class="story-pillar-item">
+            <div class="story-pillar-head">
+              <span class="story-pillar-num">02</span>
+              <span class="story-pillar-tag">EXPERIENCE</span>
+            </div>
+            <p class="story-pillar-text">
+              With 10+ years of experience, we work with businesses to shape how they look, how they communicate, and how they grow.
+            </p>
+            <div class="story-pillar-sub">10+ YEARS EXPERTISE</div>
+          </div>
+
+          <!-- Pillar 3 -->
+          <div class="story-pillar-item">
+            <div class="story-pillar-head">
+              <span class="story-pillar-num">03</span>
+              <span class="story-pillar-tag">INTEGRATION</span>
+            </div>
+            <p class="story-pillar-text">
+              From identity and digital experiences to content, marketing and influence, we help businesses move closer to their goals, with every part of the brand working together.
+            </p>
+            <div class="story-pillar-sub">COMPLETE LIFECYCLE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       3. BEST WORKS (Aligned Sticky Deck with 2-Set Card Transition)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="works-driver" class="works-driver">
+    <div class="works-sticky-stage" id="worksStickyStage">
+      <div class="section-container works-stage-container">
+        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> SELECTED PROJECTS / 1928</div>
+        <h2 class="sec-heading" style="margin-bottom:clamp(6px, 1vh, 12px);">WORK WORTH <span>SHOWING.</span></h2>
+        <p class="sec-desc">A selection of identities, digital experiences and creative work created for businesses with ambition.</p>
+
+        <div class="works-card-stage" id="worksCardStage">
+          <!-- ── SET 1: First 2 Cards (Active Initially) ── -->
+          <div class="works-card-set" id="worksSet1">
+            <!-- 01 VIBEE -->
+            <a href="portfolio.html?project=vibee" class="work-duo-card" id="workCard1">
+              <div class="work-card-media">
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg" alt="Vibee — Youth Culture & Apparel Identity" class="work-card-img" />
+              </div>
+              <div class="work-card-content">
+                <div class="work-top-meta">
+                  <span class="work-num">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    01 / GLOBAL ICON
+                  </span>
+                </div>
+                <div class="work-bottom-block">
+                  <h3 class="work-title">Vibee — Youth Culture & Apparel Identity</h3>
+                  <div class="work-bottom-meta">
+                    <div class="work-cta-wrap">
+                      <span>View Case Study</span>
+                      <div class="work-cta-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- 02 INFYLI -->
+            <a href="portfolio.html?project=infyli" class="work-duo-card" id="workCard2">
+              <div class="work-card-media">
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg" alt="Infyli — Minimalist Luxury Home Aromatics" class="work-card-img" />
+              </div>
+              <div class="work-card-content">
+                <div class="work-top-meta">
+                  <span class="work-num">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    02 / GLOBAL ICON
+                  </span>
+                </div>
+                <div class="work-bottom-block">
+                  <h3 class="work-title">Infyli — Minimalist Luxury Home Aromatics</h3>
+                  <div class="work-bottom-meta">
+                    <div class="work-cta-wrap">
+                      <span>View Case Study</span>
+                      <div class="work-cta-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+
+          <!-- ── SET 2: Next 2 Cards (Swapped In on Scroll) ── -->
+          <div class="works-card-set" id="worksSet2">
+            <!-- 03 MUDRA SCHOOL -->
+            <a href="portfolio.html?project=mudra-school" class="work-duo-card" id="workCard3">
+              <div class="work-card-media">
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg" alt="Mudra School — Classical Arts Digital Presence" class="work-card-img" />
+              </div>
+              <div class="work-card-content">
+                <div class="work-top-meta">
+                  <span class="work-num">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    03 / GLOBAL ICON
+                  </span>
+                </div>
+                <div class="work-bottom-block">
+                  <h3 class="work-title">Mudra School — Classical Arts Digital Presence</h3>
+                  <div class="work-bottom-meta">
+                    <div class="work-cta-wrap">
+                      <span>View Case Study</span>
+                      <div class="work-cta-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <!-- 04 AWARDS PLUS -->
+            <a href="portfolio.html?project=awards-plus" class="work-duo-card" id="workCard4">
+              <div class="work-card-media">
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg" alt="Awards Plus — Prestige Corporate Identity" class="work-card-img" />
+              </div>
+              <div class="work-card-content">
+                <div class="work-top-meta">
+                  <span class="work-num">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <line x1="2" y1="12" x2="22" y2="12"></line>
+                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    </svg>
+                    04 / GLOBAL ICON
+                  </span>
+                </div>
+                <div class="work-bottom-block">
+                  <h3 class="work-title">Awards Plus — Prestige Corporate Identity</h3>
+                  <div class="work-bottom-meta">
+                    <div class="work-cta-wrap">
+                      <span>View Case Study</span>
+                      <div class="work-cta-arrow">
+                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Dynamic Indicator Dots for Set 1 / Set 2 -->
+        <div class="works-set-indicators" id="worksSetIndicators">
+          <span class="works-dot active" data-set="1"></span>
+          <span class="works-dot" data-set="2"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       4. OUR PRINCIPLES (Accordion)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="values">
+    <div class="section-container">
+      <div class="sec-tag-pill"><span class="sec-dot"></span> 1928 CREATIVE STUDIO / OUR PRINCIPLES</div>
+      <h2 class="sec-heading">WHAT WE <span>BELIEVE IN.</span></h2>
+      <p class="sec-desc">The principles that shape how we think, create, collaborate, and build brands for meaningful growth.</p>
+
+      <div class="values-accordion" id="valuesAccordion">
+        <!-- ── 01 STRATEGIC THINKING ── -->
+        <div class="val-panel active" data-val="1">
+          <!-- Collapsed Strip View -->
+          <div class="val-collapsed-content">
+            <span class="val-col-num">01</span>
+            <span class="val-col-title">STRATEGIC THINKING</span>
+          </div>
+
+          <!-- Expanded Rich Manifesto View -->
+          <div class="val-expanded-content">
+            <div class="val-exp-top">
+              <div class="val-exp-meta">
+                <span class="val-exp-num">01 /</span>
+                <span class="val-exp-pill">Think With Purpose</span>
+              </div>
+            </div>
+
+            <div class="val-exp-body">
+              <h3 class="val-exp-title">STRATEGIC THINKING</h3>
+              <p class="val-exp-desc">We start with the bigger picture. Your goals, audience, market and ambition shape every creative decision we make.</p>
+            </div>
+
+            <div class="val-exp-bottom">
+              <span class="val-exp-tag">BUSINESS FIRST</span>
+              <span class="val-exp-tag">CLEAR DIRECTION</span>
+              <span class="val-exp-tag">PURPOSEFUL IDEAS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 02 DISTINCTIVE CRAFT ── -->
+        <div class="val-panel" data-val="2">
+          <!-- Collapsed Strip View -->
+          <div class="val-collapsed-content">
+            <span class="val-col-num">02</span>
+            <span class="val-col-title">DISTINCTIVE CRAFT</span>
+          </div>
+
+          <!-- Expanded Rich Manifesto View -->
+          <div class="val-expanded-content">
+            <div class="val-exp-top">
+              <div class="val-exp-meta">
+                <span class="val-exp-num">02 /</span>
+                <span class="val-exp-pill">Make It Matter</span>
+              </div>
+            </div>
+
+            <div class="val-exp-body">
+              <h3 class="val-exp-title">DISTINCTIVE CRAFT</h3>
+              <p class="val-exp-desc">Every detail has a role. We create identities and experiences with clarity, character and a visual point of view that people remember.</p>
+            </div>
+
+            <div class="val-exp-bottom">
+              <span class="val-exp-tag">DETAIL</span>
+              <span class="val-exp-tag">CHARACTER</span>
+              <span class="val-exp-tag">RECOGNITION</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 03 HUMAN CONNECTION ── -->
+        <div class="val-panel" data-val="3">
+          <!-- Collapsed Strip View -->
+          <div class="val-collapsed-content">
+            <span class="val-col-num">03</span>
+            <span class="val-col-title">HUMAN CONNECTION</span>
+          </div>
+
+          <!-- Expanded Rich Manifesto View -->
+          <div class="val-expanded-content">
+            <div class="val-exp-top">
+              <div class="val-exp-meta">
+                <span class="val-exp-num">03 /</span>
+                <span class="val-exp-pill">Create Real Connection</span>
+              </div>
+            </div>
+
+            <div class="val-exp-body">
+              <h3 class="val-exp-title">HUMAN CONNECTION</h3>
+              <p class="val-exp-desc">Great brands connect before they convert. We build stories, content and experiences that feel relevant, natural and human.</p>
+            </div>
+
+            <div class="val-exp-bottom">
+              <span class="val-exp-tag">STORY</span>
+              <span class="val-exp-tag">CULTURE</span>
+              <span class="val-exp-tag">CONNECTION</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 04 BUILT FOR GROWTH ── -->
+        <div class="val-panel" data-val="4">
+          <!-- Collapsed Strip View -->
+          <div class="val-collapsed-content">
+            <span class="val-col-num">04</span>
+            <span class="val-col-title">BUILT FOR GROWTH</span>
+          </div>
+
+          <!-- Expanded Rich Manifesto View -->
+          <div class="val-expanded-content">
+            <div class="val-exp-top">
+              <div class="val-exp-meta">
+                <span class="val-exp-num">04 /</span>
+                <span class="val-exp-pill">Create Lasting Value</span>
+              </div>
+            </div>
+
+            <div class="val-exp-body">
+              <h3 class="val-exp-title">BUILT FOR GROWTH</h3>
+              <p class="val-exp-desc">A stronger brand should create opportunities for a stronger business. We design every touchpoint with growth, relevance and long-term value in mind.</p>
+            </div>
+
+            <div class="val-exp-bottom">
+              <span class="val-exp-tag">BRAND</span>
+              <span class="val-exp-tag">BUSINESS</span>
+              <span class="val-exp-tag">GROWTH</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       5. OUR TEAM (Minimalist Editorial Typographic Line Archive)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="team">
+    <div class="section-container">
+      <div class="sec-tag-pill" style="margin-bottom: clamp(6px, 1vh, 12px);"><span class="sec-dot"></span> STUDIO MINDS
+      </div>
+      <div class="team-header-split">
+        <h2 class="sec-heading" style="margin-bottom: 0; line-height: 1;">OUR <span>TEAM</span></h2>
+      </div>
+
+      <div class="team-minimal-index" id="teamMinimalIndex">
+        <!-- 01 AMI PANCHAL -->
+        <div class="team-index-row" data-member="ami" data-name="Ami Panchal" data-role="Founder &amp; Creative + Strategy Head"
+          data-photo="img/team-ami.jpg">
+          <div class="team-row-main">
+            <div class="team-row-left">
+              <span class="team-row-name">Ami Panchal</span>
+            </div>
+            <div class="team-row-right">
+              <span class="team-row-role">Founder &amp; Creative + Strategy Head</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 TUSHAR PANCHAL -->
+        <div class="team-index-row" data-member="tushar" data-name="Tushar Panchal" data-role="Founder &amp; Marketing Head"
+          data-photo="img/team-tusar.jpg">
+          <div class="team-row-main">
+            <div class="team-row-left">
+              <span class="team-row-name">Tushar Panchal</span>
+            </div>
+            <div class="team-row-right">
+              <span class="team-row-role">Founder &amp; Marketing Head</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 TRUSHA PANCHAL -->
+        <div class="team-index-row" data-member="trusha" data-name="Trusha Panchal" data-role="Senior Graphic Designer"
+          data-photo="img/team-elena.jpg">
+          <div class="team-row-main">
+            <div class="team-row-left">
+              <span class="team-row-name">Trusha Panchal</span>
+            </div>
+            <div class="team-row-right">
+              <span class="team-row-role">Senior Graphic Designer</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 HARSH PATEL -->
+        <div class="team-index-row" data-member="harsh" data-name="Harsh Patel" data-role="Senior Video Editor"
+          data-photo="img/team-kaito.jpg">
+          <div class="team-row-main">
+            <div class="team-row-left">
+              <span class="team-row-name">Harsh Patel</span>
+            </div>
+            <div class="team-row-right">
+              <span class="team-row-role">Senior Video Editor</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 URVISH MISTRY -->
+        <div class="team-index-row" data-member="urvish" data-name="Urvish Mistry" data-role="Junior Video Editor + Community Manager"
+          data-photo="img/team-ami.jpg">
+          <div class="team-row-main">
+            <div class="team-row-left">
+              <span class="team-row-name">Urvish Mistry</span>
+            </div>
+            <div class="team-row-right">
+              <span class="team-row-role">Junior Video Editor + Community Manager</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 06 PRIYAL LUNKAR -->
+        <div class="team-index-row" data-member="priyal" data-name="Priyal Lunkar" data-role="Social Media Manager"
+          data-photo="img/team-elena.jpg">
+          <div class="team-row-main">
+            <div class="team-row-left">
+              <span class="team-row-name">Priyal Lunkar</span>
+            </div>
+            <div class="team-row-right">
+              <span class="team-row-role">Social Media Manager</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Circular Portrait Lens ("image comes into the circle") -->
+    <div id="teamFloatingCard" class="team-floating-circle" aria-hidden="true">
+      <img id="tfcImg" src="img/team-ami.jpg" alt="Team Portrait" class="tfc-circle-img" />
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       6. CREATIVE PROCESS (S-Curve Serpentine Progressive Flow)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="process">
+    <div class="section-container">
+      <div class="sec-tag-pill"><span class="sec-dot"></span> WORKFLOW FRAMEWORK / 1928</div>
+      <h2 class="sec-heading">HOW WE BUILD <span>TOGETHER.</span></h2>
+      <p class="sec-desc">A thoughtful process that brings strategy, creativity and execution together, from the first conversation to meaningful growth.</p>
+
+      <div class="process-serpentine-track" id="processTrack">
+        <!-- Connecting SVG Laser Path -->
+        <svg class="process-svg-canvas" id="processSvgCanvas" aria-hidden="true">
+          <defs>
+            <linearGradient id="laserGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="var(--cr)" stop-opacity="1" />
+              <stop offset="50%" stop-color="#ff3b5c" stop-opacity="1" />
+              <stop offset="100%" stop-color="var(--cr)" stop-opacity="1" />
+            </linearGradient>
+            <filter id="laserGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="0.4" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+          <path class="process-bg-path" id="processBgPath" d="" />
+          <path class="process-active-path" id="processActivePath" d="" />
+        </svg>
+
+        <!-- 01 DISCOVERY (LEFT) -->
+        <div class="proc-step-item proc-item-left" data-step="1">
+          <div class="proc-node-wrapper">
+            <div class="proc-node-circle">
+              <span class="proc-node-num">01</span>
+              <div class="proc-node-pulse"></div>
+            </div>
+          </div>
+          <div class="proc-step-card">
+            <div class="proc-card-header">
+              <span class="proc-card-phase">PHASE 01 / DISCOVER</span>
+              <h3 class="proc-card-title">Understand Before We Build</h3>
+            </div>
+            <p class="proc-card-desc">We get close to your business, audience, market and ambitions to understand what makes your opportunity unique.</p>
+            <div class="proc-card-tags">
+              <span>BUSINESS DISCOVERY</span>
+              <span>AUDIENCE</span>
+              <span>MARKET</span>
+              <span>GOALS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 BLUEPRINT (RIGHT) -->
+        <div class="proc-step-item proc-item-right" data-step="2">
+          <div class="proc-step-card">
+            <div class="proc-card-header">
+              <span class="proc-card-phase">PHASE 02 / DEFINE</span>
+              <h3 class="proc-card-title">Shape the Direction</h3>
+            </div>
+            <p class="proc-card-desc">We turn insights into a clear creative and strategic direction that gives your brand a strong foundation.</p>
+            <div class="proc-card-tags">
+              <span>POSITIONING</span>
+              <span>BRAND DIRECTION</span>
+              <span>CREATIVE STRATEGY</span>
+            </div>
+          </div>
+          <div class="proc-node-wrapper">
+            <div class="proc-node-circle">
+              <span class="proc-node-num">02</span>
+              <div class="proc-node-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 PROTOTYPING (LEFT) -->
+        <div class="proc-step-item proc-item-left" data-step="3">
+          <div class="proc-node-wrapper">
+            <div class="proc-node-circle">
+              <span class="proc-node-num">03</span>
+              <div class="proc-node-pulse"></div>
+            </div>
+          </div>
+          <div class="proc-step-card">
+            <div class="proc-card-header">
+              <span class="proc-card-phase">PHASE 03 / CREATE</span>
+              <h3 class="proc-card-title">Bring the Brand to Life</h3>
+            </div>
+            <p class="proc-card-desc">This is where ideas become identities, digital experiences, content and campaigns designed around your brand.</p>
+            <div class="proc-card-tags">
+              <span>IDENTITY</span>
+              <span>DESIGN</span>
+              <span>DIGITAL</span>
+              <span>CONTENT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 ENGINEERING (RIGHT) -->
+        <div class="proc-step-item proc-item-right" data-step="4">
+          <div class="proc-step-card">
+            <div class="proc-card-header">
+              <span class="proc-card-phase">PHASE 04 / CONNECT</span>
+              <h3 class="proc-card-title">Take It to the Right People</h3>
+            </div>
+            <p class="proc-card-desc">We bring your brand into the market through thoughtful content, digital marketing, social media and creator partnerships.</p>
+            <div class="proc-card-tags">
+              <span>SOCIAL</span>
+              <span>MARKETING</span>
+              <span>CONTENT</span>
+              <span>INFLUENCE</span>
+            </div>
+          </div>
+          <div class="proc-node-wrapper">
+            <div class="proc-node-circle">
+              <span class="proc-node-num">04</span>
+              <div class="proc-node-pulse"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 ACTIVATION (LEFT) -->
+        <div class="proc-step-item proc-item-left" data-step="5">
+          <div class="proc-node-wrapper">
+            <div class="proc-node-circle">
+              <span class="proc-node-num">05</span>
+              <div class="proc-node-pulse"></div>
+            </div>
+          </div>
+          <div class="proc-step-card">
+            <div class="proc-card-header">
+              <span class="proc-card-phase">PHASE 05 / GROW</span>
+              <h3 class="proc-card-title">Build What Comes Next</h3>
+            </div>
+            <p class="proc-card-desc">We look beyond the launch to help your brand stay relevant, create value and keep moving towards its business goals.</p>
+            <div class="proc-card-tags">
+              <span>OPTIMISATION</span>
+              <span>GROWTH</span>
+              <span>LONG-TERM VALUE</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       7. SELECTED CLIENTS (3-Row Infinite Dual-Direction Logo Marquee)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="clients-section">
+    <div class="brands-header-block">
+      <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY / 1928 CLIENTS</div>
+      <h2 class="brands-title">BRANDS THAT TRUST <span>1928.</span></h2>
+      <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their ambitions, and the brands they’re building.</p>
+    </div>
+
+        <div class="brands-marquee-stage">
+      <!-- ── ROW 1 (Left to Right / Normal Direction: Logos 01–20) ── -->
+      <div class="brand-row-wrap marquee-left">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-01.jpg" alt="Client Logo 01" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-02.jpg" alt="Client Logo 02" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-03.jpg" alt="Client Logo 03" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-04.jpg" alt="Client Logo 04" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-05.jpg" alt="Client Logo 05" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-06.jpg" alt="Client Logo 06" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-07.jpg" alt="Client Logo 07" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-08.jpg" alt="Client Logo 08" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-09.jpg" alt="Client Logo 09" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-10.jpg" alt="Client Logo 10" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-11.jpg" alt="Client Logo 11" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-12.jpg" alt="Client Logo 12" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-13.jpg" alt="Client Logo 13" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-14.jpg" alt="Client Logo 14" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-15.jpg" alt="Client Logo 15" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-16.jpg" alt="Client Logo 16" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-17.jpg" alt="Client Logo 17" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-18.jpg" alt="Client Logo 18" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-19.jpg" alt="Client Logo 19" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-20.jpg" alt="Client Logo 20" class="brand-logo-img" loading="lazy" />
+            </div>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-01.jpg" alt="Client Logo 01" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-02.jpg" alt="Client Logo 02" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-03.jpg" alt="Client Logo 03" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-04.jpg" alt="Client Logo 04" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-05.jpg" alt="Client Logo 05" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-06.jpg" alt="Client Logo 06" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-07.jpg" alt="Client Logo 07" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-08.jpg" alt="Client Logo 08" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-09.jpg" alt="Client Logo 09" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-10.jpg" alt="Client Logo 10" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-11.jpg" alt="Client Logo 11" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-12.jpg" alt="Client Logo 12" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-13.jpg" alt="Client Logo 13" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-14.jpg" alt="Client Logo 14" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-15.jpg" alt="Client Logo 15" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-16.jpg" alt="Client Logo 16" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-17.jpg" alt="Client Logo 17" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-18.jpg" alt="Client Logo 18" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-19.jpg" alt="Client Logo 19" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-20.jpg" alt="Client Logo 20" class="brand-logo-img" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ROW 2 (Right to Left / Reverse Direction: Logos 21–40) ── -->
+      <div class="brand-row-wrap marquee-right">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-21.jpg" alt="Client Logo 21" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-22.jpg" alt="Client Logo 22" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-23.jpg" alt="Client Logo 23" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-24.jpg" alt="Client Logo 24" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-25.jpg" alt="Client Logo 25" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-26.jpg" alt="Client Logo 26" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-27.jpg" alt="Client Logo 27" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-28.jpg" alt="Client Logo 28" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-29.jpg" alt="Client Logo 29" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-30.jpg" alt="Client Logo 30" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-31.jpg" alt="Client Logo 31" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-32.jpg" alt="Client Logo 32" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-33.jpg" alt="Client Logo 33" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-34.jpg" alt="Client Logo 34" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-35.jpg" alt="Client Logo 35" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-36.jpg" alt="Client Logo 36" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-37.jpg" alt="Client Logo 37" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-38.jpg" alt="Client Logo 38" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-39.jpg" alt="Client Logo 39" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-40.jpg" alt="Client Logo 40" class="brand-logo-img" loading="lazy" />
+            </div>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-21.jpg" alt="Client Logo 21" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-22.jpg" alt="Client Logo 22" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-23.jpg" alt="Client Logo 23" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-24.jpg" alt="Client Logo 24" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-25.jpg" alt="Client Logo 25" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-26.jpg" alt="Client Logo 26" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-27.jpg" alt="Client Logo 27" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-28.jpg" alt="Client Logo 28" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-29.jpg" alt="Client Logo 29" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-30.jpg" alt="Client Logo 30" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-31.jpg" alt="Client Logo 31" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-32.jpg" alt="Client Logo 32" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-33.jpg" alt="Client Logo 33" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-34.jpg" alt="Client Logo 34" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-35.jpg" alt="Client Logo 35" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-36.jpg" alt="Client Logo 36" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-37.jpg" alt="Client Logo 37" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-38.jpg" alt="Client Logo 38" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-39.jpg" alt="Client Logo 39" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-40.jpg" alt="Client Logo 40" class="brand-logo-img" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ROW 3 (Left to Right / Normal Direction: Logos 41–60) ── -->
+      <div class="brand-row-wrap marquee-left">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-41.jpg" alt="Client Logo 41" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-42.jpg" alt="Client Logo 42" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-43.jpg" alt="Client Logo 43" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-44.jpg" alt="Client Logo 44" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-45.jpg" alt="Client Logo 45" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-46.jpg" alt="Client Logo 46" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-47.jpg" alt="Client Logo 47" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-48.jpg" alt="Client Logo 48" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-49.jpg" alt="Client Logo 49" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-50.jpg" alt="Client Logo 50" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-51.jpg" alt="Client Logo 51" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-52.jpg" alt="Client Logo 52" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-53.jpg" alt="Client Logo 53" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-54.jpg" alt="Client Logo 54" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-55.jpg" alt="Client Logo 55" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-56.jpg" alt="Client Logo 56" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-57.jpg" alt="Client Logo 57" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-58.jpg" alt="Client Logo 58" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-59.jpg" alt="Client Logo 59" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-60.jpg" alt="Client Logo 60" class="brand-logo-img" loading="lazy" />
+            </div>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-41.jpg" alt="Client Logo 41" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-42.jpg" alt="Client Logo 42" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-43.jpg" alt="Client Logo 43" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-44.jpg" alt="Client Logo 44" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-45.jpg" alt="Client Logo 45" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-46.jpg" alt="Client Logo 46" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-47.jpg" alt="Client Logo 47" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-48.jpg" alt="Client Logo 48" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-49.jpg" alt="Client Logo 49" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-50.jpg" alt="Client Logo 50" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-51.jpg" alt="Client Logo 51" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-52.jpg" alt="Client Logo 52" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-53.jpg" alt="Client Logo 53" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-54.jpg" alt="Client Logo 54" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-55.jpg" alt="Client Logo 55" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-56.jpg" alt="Client Logo 56" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-57.jpg" alt="Client Logo 57" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-58.jpg" alt="Client Logo 58" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-59.jpg" alt="Client Logo 59" class="brand-logo-img" loading="lazy" />
+            </div>
+            <div class="brand-logo-card">
+              <img src="img/Client Logos-60.jpg" alt="Client Logo 60" class="brand-logo-img" loading="lazy" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       8. SECTION 8: READY TO BUILD CTA (Full Viewport Showcase)
+       ═══════════════════════════════════════════════════════════ -->
+  <section id="cta">
+    <div class="fcta-container">
+      <!-- Animated Perimeter Red Line & Soft Reddish Inner Shadow (Strictly inside the card) -->
+      <svg class="fcta-beam-svg" width="100%" height="100%">
+        <rect class="fcta-beam-track" x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="48" ry="48"
+          fill="none" />
+        <rect class="fcta-inner-shadow" x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="48"
+          ry="48" pathLength="1000" fill="none" />
+        <rect class="fcta-beam-line" x="0.5" y="0.5" width="calc(100% - 1px)" height="calc(100% - 1px)" rx="48" ry="48"
+          pathLength="1000" fill="none" />
+      </svg>
+
+      <div class="fcta-content">
+        <h2 class="fcta-title">
+          <span class="fcta-line-1">YOUR NEXT BIG MOVE</span>
+          <span class="fcta-line-2">STARTS HERE.</span>
+        </h2>
+        <p class="fcta-sub">
+          Whether you’re building a new brand or taking an existing one further, we’re here to shape what comes next.
+        </p>
+        <div class="fcta-actions">
+          <a href="contact.html" class="btn-primary">START A CONVERSATION →</a>
+          <a href="portfolio.html" class="btn-ghost">VIEW OUR WORK →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- 8. MODERN EDITORIAL LUXURY EXIT FOOTER (Referenced from footer.html) -->
+  <div id="footer-placeholder"></div>
+  <script src="footer-loader.js"></script>
+
+
+  <!-- Floating Theme Toggle FAB (Dark / Light) -->
+  <button id="theme-fab" aria-label="Toggle theme">
+    <svg class="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <script>
+    (function () {
+      /* ── Mathematical Helper Utilities ── */
+      function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
+      function lerp(a, b, t) { return a + (b - a) * t; }
+      function eioq(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+      /* ── Custom Cursor ── */
+      const dot = document.getElementById('cDot');
+      const ring = document.getElementById('cRing');
+      let mx = -100, my = -100, rx = -100, ry = -100;
+
+      window.addEventListener('mousemove', (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        if (dot) {
+          dot.style.left = mx + 'px';
+          dot.style.top = my + 'px';
+        }
+      }, { passive: true });
+
+      function renderCursor() {
+        rx += (mx - rx) * 0.18;
+        ry += (my - ry) * 0.18;
+        if (ring) {
+          ring.style.left = rx + 'px';
+          ring.style.top = ry + 'px';
+        }
+        requestAnimationFrame(renderCursor);
+      }
+      renderCursor();
+
+      /* ── Interactive Core Values Kinetic Accordion Slabs ── */
+      const valPanels = document.querySelectorAll('.val-panel');
+      if (valPanels.length > 0) {
+        valPanels.forEach(panel => {
+          panel.addEventListener('mouseenter', () => {
+            valPanels.forEach(p => p.classList.remove('active'));
+            panel.classList.add('active');
+          });
+          panel.addEventListener('click', () => {
+            valPanels.forEach(p => p.classList.remove('active'));
+            panel.classList.add('active');
+          });
+        });
+      }
+
+      /* ── Minimalist Team Typographic Line Archive & Floating Portrait Portal ── */
+      const teamFloatCard = document.getElementById('teamFloatingCard');
+      const tfcImg = document.getElementById('tfcImg');
+
+      let tfcTargetX = -300, tfcTargetY = -300;
+      let tfcCurrentX = -300, tfcCurrentY = -300;
+      let tfcActive = false;
+
+      function renderTeamFloat() {
+        if (teamFloatCard && tfcActive) {
+          tfcCurrentX += (tfcTargetX - tfcCurrentX) * 0.18;
+          tfcCurrentY += (tfcTargetY - tfcCurrentY) * 0.18;
+          teamFloatCard.style.left = `${tfcCurrentX}px`;
+          teamFloatCard.style.top = `${tfcCurrentY}px`;
+        }
+        requestAnimationFrame(renderTeamFloat);
+      }
+      renderTeamFloat();
+
+      document.addEventListener('mouseover', (e) => {
+        const row = e.target.closest('.team-index-row');
+        if (row && window.innerWidth > 768) {
+          const photo = row.getAttribute('data-photo') || 'img/team-ami.jpg';
+          if (tfcImg) tfcImg.src = photo;
+          tfcTargetX = e.clientX;
+          tfcTargetY = e.clientY;
+          if (!tfcActive) {
+            tfcCurrentX = e.clientX;
+            tfcCurrentY = e.clientY;
+            if (teamFloatCard) {
+              teamFloatCard.style.left = `${tfcCurrentX}px`;
+              teamFloatCard.style.top = `${tfcCurrentY}px`;
+            }
+          }
+          if (teamFloatCard) teamFloatCard.classList.add('active');
+          tfcActive = true;
+        }
+      });
+
+      document.addEventListener('mousemove', (e) => {
+        if (tfcActive) {
+          tfcTargetX = e.clientX;
+          tfcTargetY = e.clientY;
+        }
+      });
+
+      document.addEventListener('mouseout', (e) => {
+        const row = e.target.closest('.team-index-row');
+        const relatedRow = e.relatedTarget ? e.relatedTarget.closest('.team-index-row') : null;
+        if (row && !relatedRow) {
+          if (teamFloatCard) teamFloatCard.classList.remove('active');
+          tfcActive = false;
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        const row = e.target.closest('.team-index-row');
+        if (row) {
+          const isExpanded = row.classList.contains('expanded');
+          document.querySelectorAll('.team-index-row').forEach(r => r.classList.remove('expanded'));
+          if (!isExpanded) row.classList.add('expanded');
+        }
+      });
+
+      document.querySelectorAll('a, button, .work-card, .work-duo-card, .val-panel, .team-index-row, .proc-row, .client-tile').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if (ring) {
+            ring.style.width = '52px';
+            ring.style.height = '52px';
+            ring.style.borderColor = 'rgba(200, 16, 46, 0.6)';
+          }
+        });
+        el.addEventListener('mouseleave', () => {
+          if (ring) {
+            ring.style.width = '32px';
+            ring.style.height = '32px';
+            ring.style.borderColor = 'var(--cr)';
+          }
+        });
+      });
+
+      /* ── Live Ahmedabad Clock ── */
+      function updateFooterTime() {
+        const clockEl = document.getElementById('footer-live-clock');
+        if (!clockEl) return;
+        const now = new Date();
+        const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
+        const timeStr = now.toLocaleTimeString('en-US', options);
+        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
+      }
+      updateFooterTime();
+      setInterval(updateFooterTime, 30000);
+
+      /* ── Dark / Light Theme FAB ── */
+      const themeFab = document.getElementById('theme-fab');
+      const root = document.documentElement;
+
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      root.setAttribute('data-theme', savedTheme);
+
+      if (themeFab) {
+        themeFab.addEventListener('click', () => {
+          const current = root.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          root.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+
+
+
+      /* ── Best Works 2-Set Pinned Scroll Deck (Soft Crossfade with Zero Text Overlap) ── */
+      const worksDriver = document.getElementById('works-driver');
+      const worksSet1 = document.getElementById('worksSet1');
+      const worksSet2 = document.getElementById('worksSet2');
+
+      function updateWorksOnScroll() {
+        if (!worksDriver || !worksSet1 || !worksSet2) return;
+        const rect = worksDriver.getBoundingClientRect();
+        const totalDist = worksDriver.offsetHeight - window.innerHeight;
+        if (totalDist <= 0) return;
+        const scrolled = -rect.top;
+        const p = clamp(scrolled / totalDist, 0, 1);
+
+        // Phase 1 (p: 0.0 -> 0.50): Set 1 (01 Juventus, 02 Bugatti)
+        // Stays centered & clear initially, then softly fades out in place (with subtle micro-scale) without moving into the text above
+        const set1ExitP = clamp((p - 0.18) / 0.28, 0, 1);
+        const set1E = eioq(set1ExitP);
+        const set1Scale = lerp(1, 0.96, set1E);
+        const set1Opac = lerp(1, 0, set1E);
+        worksSet1.style.transform = `translateY(0px) scale(${set1Scale})`;
+        worksSet1.style.opacity = `${set1Opac}`;
+        worksSet1.style.pointerEvents = set1Opac > 0.4 ? 'auto' : 'none';
+
+        // Phase 2 (p: 0.32 -> 1.0): Set 2 (03 Mini Brand, 04 Zerodha)
+        // Softly fades in and scales smoothly into full view
+        const set2EnterP = clamp((p - 0.32) / 0.28, 0, 1);
+        const set2E = eioq(set2EnterP);
+        const set2Scale = lerp(0.96, 1, set2E);
+        const set2Opac = lerp(0, 1, set2E);
+        worksSet2.style.transform = `translateY(0px) scale(${set2Scale})`;
+        worksSet2.style.opacity = `${set2Opac}`;
+        worksSet2.style.pointerEvents = set2Opac > 0.4 ? 'auto' : 'none';
+      }
+
+      /* ── S-Curve Serpentine Progressive Creative Process Flow ── */
+      let _procResizeListener = null;
+      let _procScrollListener = null;
+
+      function initProcessSerpentine() {
+        const track = document.getElementById('processTrack');
+        const bgPath = document.getElementById('processBgPath');
+        const activePath = document.getElementById('processActivePath');
+        const items = document.querySelectorAll('.proc-step-item');
+        if (!track || !bgPath || !activePath || !items.length) return;
+
+        function updatePathCoordinates() {
+          const trackRect = track.getBoundingClientRect();
+          const points = [];
+
+          items.forEach(item => {
+            const circle = item.querySelector('.proc-node-circle');
+            if (!circle) return;
+            const cRect = circle.getBoundingClientRect();
+            const x = cRect.left + cRect.width / 2 - trackRect.left;
+            const y = cRect.top + cRect.height / 2 - trackRect.top;
+            points.push({ x, y });
+          });
+
+          if (points.length < 2) return;
+
+          // Build smooth Bezier S-Curve path through all node centers
+          let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
+          for (let i = 0; i < points.length - 1; i++) {
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const dy = p2.y - p1.y;
+            const cp1x = p1.x;
+            const cp1y = p1.y + dy * 0.50;
+            const cp2x = p2.x;
+            const cp2y = p2.y - dy * 0.50;
+            d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+          }
+
+          bgPath.setAttribute('d', d);
+          activePath.setAttribute('d', d);
+
+          const totalLen = activePath.getTotalLength ? activePath.getTotalLength() : 0;
+          if (totalLen) {
+            activePath.style.strokeDasharray = `${totalLen} ${totalLen}`;
+          }
+          updateProcessScroll();
+        }
+
+        function updateProcessScroll() {
+          const vh = window.innerHeight;
+          const firstCircle = items[0].querySelector('.proc-node-circle');
+          const lastCircle = items[items.length - 1].querySelector('.proc-node-circle');
+          if (!firstCircle || !lastCircle) return;
+
+          const firstRect = firstCircle.getBoundingClientRect();
+          const lastRect = lastCircle.getBoundingClientRect();
+
+          const startLineY = vh * 0.80;
+          const endLineY = vh * 0.50;
+          const totalSpan = (lastRect.top - firstRect.top) + (startLineY - endLineY);
+          const currentPos = startLineY - firstRect.top;
+          const progress = Math.min(1, Math.max(0, currentPos / (totalSpan || 1)));
+
+          const totalLen = activePath.getTotalLength ? activePath.getTotalLength() : 0;
+          if (totalLen) {
+            activePath.style.strokeDashoffset = `${totalLen * (1 - progress)}`;
+          }
+
+          // Progressively activate each node and its card as the laser reaches it
+          items.forEach((item, idx) => {
+            const circle = item.querySelector('.proc-node-circle');
+            if (!circle) return;
+            const cTop = circle.getBoundingClientRect().top;
+            if (cTop <= vh * 0.72) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        }
+
+        if (_procResizeListener) window.removeEventListener('resize', _procResizeListener);
+        if (_procScrollListener) window.removeEventListener('scroll', _procScrollListener);
+
+        _procResizeListener = updatePathCoordinates;
+        _procScrollListener = updateProcessScroll;
+
+        window.addEventListener('resize', _procResizeListener);
+        window.addEventListener('scroll', _procScrollListener, { passive: true });
+
+        // Immediate and delayed passes to ensure correct layout and path calculation
+        updatePathCoordinates();
+        setTimeout(updatePathCoordinates, 60);
+        setTimeout(updatePathCoordinates, 250);
+        setTimeout(updatePathCoordinates, 800);
+      }
+      window.initProcessSerpentine = initProcessSerpentine;
+      initProcessSerpentine();
+
+      const heroIndicator = document.getElementById('heroScrollIndicator');
+      const nav = document.getElementById('nav');
+      let lastSY = 0;
+
+      function onScroll(forcedSY) {
+        const sy = (typeof forcedSY === 'number') ? forcedSY : window.scrollY;
+
+        // Bottom Scroll Indicator Soft Fade-Out on Scroll
+        if (heroIndicator) {
+          const fadeProgress = Math.min(1, sy / 140);
+          heroIndicator.style.opacity = `${Math.max(0, 1 - fadeProgress).toFixed(3)}`;
+          heroIndicator.style.transform = `translateX(-50%) translateY(${-fadeProgress * 20}px)`;
+          heroIndicator.style.pointerEvents = fadeProgress >= 1 ? 'none' : 'auto';
+        }
+
+        // Best Works 2-Step Pinned Scroll
+        if (typeof updateWorksOnScroll === 'function') {
+          updateWorksOnScroll();
+        }
+
+        // Header scroll hide/show
+        if (nav) {
+          if (sy <= 40 || sy < lastSY - 2) {
+            // Scrolling UP (or at top): header comes down smoothly
+            nav.classList.add('visible');
+            nav.classList.remove('hidden');
+          } else if (sy > lastSY + 2) {
+            // Scrolling DOWN: header animates up out of view
+            nav.classList.remove('visible');
+            nav.classList.add('hidden');
+          }
+        }
+
+        lastSY = sy;
+      }
+
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            onScroll();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      // Immediate & Smooth Slide-Down Entrance
+      if (nav) {
+        nav.classList.add('visible');
+        nav.classList.remove('hidden');
+      }
+
+      setTimeout(() => {
+        if (nav && window.scrollY <= 40) {
+          nav.classList.add('visible');
+          nav.classList.remove('hidden');
+        }
+      }, 100);
+
+      // Initial execution
+      onScroll();
+    })();
+  </script>
+  <script src="data-store.js"></script>
+  <script src="site-bridge.js"></script>
+</body>
+
+</html>

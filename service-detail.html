@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Overview · 1928 Creative Studio</title>
+  <meta name="description" content="Dedicated Service Capabilities & Strategic Frameworks by 1928 Creative Studio." />
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const svc = (params.get('service') || params.get('id') || params.get('slug') || '').toLowerCase();
+      
+      const map = {
+        'logo-design': 'service-logo-design.html',
+        '1': 'service-logo-design.html',
+        '01': 'service-logo-design.html',
+        'logo': 'service-logo-design.html',
+        
+        'brand-identity': 'service-brand-identity.html',
+        'brand-identity-development': 'service-brand-identity.html',
+        '2': 'service-brand-identity.html',
+        '02': 'service-brand-identity.html',
+        'branding': 'service-brand-identity.html',
+        
+        'website-development': 'service-website-development.html',
+        'website-design-development': 'service-website-development.html',
+        '3': 'service-website-development.html',
+        '03': 'service-website-development.html',
+        'website': 'service-website-development.html',
+        'web': 'service-website-development.html',
+        
+        'digital-marketing': 'service-digital-marketing.html',
+        'social-media-digital-marketing': 'service-digital-marketing.html',
+        '4': 'service-digital-marketing.html',
+        '04': 'service-digital-marketing.html',
+        'social': 'service-digital-marketing.html',
+        'marketing': 'service-digital-marketing.html',
+        
+        'content-creation': 'service-content-creation.html',
+        'content-creation-influencer-marketing': 'service-content-creation.html',
+        '5': 'service-content-creation.html',
+        '05': 'service-content-creation.html',
+        'content': 'service-content-creation.html',
+        'influencer': 'service-content-creation.html'
+      };
+
+      if (map[svc]) {
+        window.location.replace(map[svc]);
+      } else {
+        window.location.replace('services.html');
+      }
+    })();
+  </script>
+</head>
+
+<body style="background:#07070A;color:#F7F7FA;display:grid;place-items:center;height:100vh;font-family:sans-serif;">
+  <p>Routing to dedicated service experience...</p>
+</body>
+
+</html>
