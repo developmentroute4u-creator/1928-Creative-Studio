@@ -47,3 +47,10 @@ define('SMTP_FROM_NAME', '1928 Creative Studio');
 // define('SMTP_PASS', '');
 // define('SMTP_FROM_EMAIL', 'no-reply@1928creativestudio.com');
 // define('SMTP_FROM_NAME', '1928 Creative Studio');
+
+// 5. CLOUDFLARE TURNSTILE CAPTCHA (Optional Backend Verification):
+// Once your friend gets the live Secret Key from Cloudflare Dashboard -> Turnstile,
+// uncomment and paste it below:
+// define('CLOUDFLARE_TURNSTILE_SECRET_KEY', 'your-cloudflare-turnstile-secret-key-here');
+// define('ENABLE_TURNSTILE_VERIFY', true);
+

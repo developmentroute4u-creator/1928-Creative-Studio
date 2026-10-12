@@ -11,6 +11,9 @@
     try { sessionStorage.setItem('1928_site_visited', 'true'); } catch (e) { }
   </script>
 
+  <!-- Cloudflare Turnstile CAPTCHA API -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
   <!-- Google Fonts: Montserrat & Raleway -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -1374,6 +1377,56 @@
       background: var(--cr);
       border-color: var(--cr);
       color: #fff;
+    }
+
+    /* ── Cloudflare Turnstile Security Verification Container ── */
+    #grpCaptcha {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .turnstile-captcha-wrap {
+      height: 72px;
+      min-height: 72px;
+      padding: 0 6px;
+      border-radius: 12px;
+      background: var(--card-alt);
+      border: 1.5px solid var(--rule-m);
+      transition: all 0.25s var(--sp);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+
+    [data-theme="light"] .turnstile-captcha-wrap {
+      background: var(--card-alt);
+      border-color: var(--rule-m);
+    }
+
+    .turnstile-captcha-wrap.has-error,
+    #grpCaptcha.has-error .turnstile-captcha-wrap {
+      border-color: var(--cr) !important;
+      background: rgba(200, 16, 46, 0.04) !important;
+      box-shadow: 0 0 0 2px var(--cr-glow);
+    }
+
+    .turnstile-widget-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .turnstile-widget-container .cf-turnstile {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 100%;
     }
 
     /* Form Action Nav Row */
@@ -3432,7 +3485,6 @@
       </li>
       <li><a href="portfolio.html">Work</a></li>
       <li><a href="blogs.html">Perspectives</a></li>
-      <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
     <div class="nav-right">
       <a href="#start-project-sec" class="nav-cta">Start Project</a>
@@ -3805,12 +3857,31 @@
                     <span class="field-error-msg">Please enter a valid 10-digit number</span>
                   </div>
 
-                  <div class="input-field-group full" id="grpVision">
+                  <!-- Project Vision & Strategic Ambition (Left Column) -->
+                  <div class="input-field-group" id="grpVision">
                     <label class="in-label" for="fVision">Project Vision &amp; Strategic Ambition *</label>
                     <textarea id="fVision" class="text-input-luxury"
                       placeholder="Describe the strategic objectives, core challenges, and architectural scale..."
                       required></textarea>
                     <span class="field-error-msg">Please describe your project objectives</span>
+                  </div>
+
+                  <!-- Cloudflare Turnstile Security Verification (Right Column, Beside Vision) -->
+                  <div class="input-field-group" id="grpCaptcha">
+                    <label class="in-label" for="cfTurnstileWidget">Security Verification *</label>
+                    <div class="turnstile-captcha-wrap" id="captchaWrap">
+                      <div class="turnstile-widget-container">
+                        <div class="cf-turnstile"
+                          id="cfTurnstileWidget"
+                          data-sitekey="1x00000000000000000000AA"
+                          data-theme="auto"
+                          data-size="flexible"
+                          data-callback="onTurnstileSuccess"
+                          data-expired-callback="onTurnstileExpired"
+                          data-error-callback="onTurnstileError"></div>
+                      </div>
+                    </div>
+                    <span class="field-error-msg" id="captchaErrorNotice">Please verify that you are human before submitting</span>
                   </div>
                 </div>
 
@@ -4205,6 +4276,60 @@
       attachCursorHover();
       window.addEventListener('footerLoaded', attachCursorHover);
 
+      // ── Cloudflare Turnstile CAPTCHA Controller ──
+      // Test Sitekey: 1x00000000000000000000AA (always passes verification for development & testing)
+      // When ready for live production, replace with your live Turnstile Sitekey
+      const TURNSTILE_SITEKEY = '1x00000000000000000000AA';
+      let turnstileToken = '';
+      let turnstileWidgetId = null;
+
+      window.onTurnstileSuccess = function (token) {
+        turnstileToken = token;
+        const grp = document.getElementById('grpCaptcha');
+        const captchaWrap = document.getElementById('captchaWrap');
+        if (grp) grp.classList.remove('has-error');
+        if (captchaWrap) captchaWrap.classList.remove('has-error');
+      };
+
+      window.onTurnstileExpired = function () {
+        turnstileToken = '';
+        const grp = document.getElementById('grpCaptcha');
+        const captchaWrap = document.getElementById('captchaWrap');
+        const captchaNotice = document.getElementById('captchaErrorNotice');
+        if (grp) grp.classList.add('has-error');
+        if (captchaWrap) captchaWrap.classList.add('has-error');
+        if (captchaNotice) captchaNotice.textContent = 'Verification expired. Please verify again.';
+      };
+
+      window.onTurnstileError = function () {
+        turnstileToken = '';
+        const grp = document.getElementById('grpCaptcha');
+        const captchaWrap = document.getElementById('captchaWrap');
+        const captchaNotice = document.getElementById('captchaErrorNotice');
+        if (grp) grp.classList.add('has-error');
+        if (captchaWrap) captchaWrap.classList.add('has-error');
+        if (captchaNotice) captchaNotice.textContent = 'Security check encountered an issue. Please retry.';
+      };
+
+      function ensureTurnstileWidget() {
+        const widgetEl = document.getElementById('cfTurnstileWidget');
+        if (!widgetEl) return;
+        // If iframe is not yet rendered inside and turnstile API is available
+        if (!widgetEl.querySelector('iframe') && window.turnstile && typeof window.turnstile.render === 'function') {
+          try {
+            turnstileWidgetId = window.turnstile.render('#cfTurnstileWidget', {
+              sitekey: TURNSTILE_SITEKEY,
+              theme: 'auto',
+              callback: window.onTurnstileSuccess,
+              'expired-callback': window.onTurnstileExpired,
+              'error-callback': window.onTurnstileError
+            });
+          } catch (e) {
+            // Widget may already be initializing
+          }
+        }
+      }
+
       // ── Stepper Logic with Expanding Word Animation ──
       let currentStep = 1;
       const totalSteps = 4;
@@ -4235,6 +4360,7 @@
         if (btnNext) {
           if (step === totalSteps) {
             btnNext.innerHTML = `<span>Submit Project Brief</span>`;
+            setTimeout(ensureTurnstileWidget, 50);
           } else {
             btnNext.innerHTML = `<span>Continue</span> <span>→</span>`;
           }
@@ -4371,6 +4497,37 @@
               return;
             }
 
+            // Validate Turnstile Security Verification
+            let verifiedToken = turnstileToken;
+            if (!verifiedToken) {
+              const respInput = document.querySelector('[name="cf-turnstile-response"]');
+              if (respInput && respInput.value) {
+                verifiedToken = respInput.value;
+              }
+            }
+            if (!verifiedToken && window.turnstile && typeof window.turnstile.getResponse === 'function') {
+              try {
+                verifiedToken = window.turnstile.getResponse(turnstileWidgetId || '#cfTurnstileWidget') || window.turnstile.getResponse() || '';
+              } catch (e) {}
+            }
+
+            if (!verifiedToken) {
+              const grp = document.getElementById('grpCaptcha');
+              const captchaWrap = document.getElementById('captchaWrap');
+              const captchaNotice = document.getElementById('captchaErrorNotice');
+              if (grp) grp.classList.add('has-error');
+              if (captchaWrap) {
+                captchaWrap.classList.add('has-error');
+                captchaWrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+              }
+              if (captchaNotice) {
+                captchaNotice.textContent = 'Please complete the security verification before submitting';
+              }
+              showToast('Please complete the security verification before submitting.');
+              playLuxuryHaptic(380, 'triangle', 0.08);
+              return;
+            }
+
             // Populate all 4 steps' selections into executive submission confirmation card
             const activeScope = document.querySelector('#scopeGrid .scope-option-card.active');
             const scopeVal = activeScope ? (activeScope.getAttribute('data-mandate') || activeScope.querySelector('.soc-title')?.textContent.trim() || 'Logo Design') : 'Logo Design';
@@ -4428,7 +4585,7 @@
               elSumVisionWrap.style.display = 'none';
             }
 
-            // Build complete submission payload
+            // Build complete submission payload (including Cloudflare Turnstile CAPTCHA response)
             const formData = {
               name: name,
               email: email,
@@ -4441,7 +4598,9 @@
               time: stepSelectedCalTime,
               session: sessionSummary,
               vision: vision,
-              nda: ndaChecked ? 'Bilateral NDA Requested' : 'Standard Review'
+              nda: ndaChecked ? 'Bilateral NDA Requested' : 'Standard Review',
+              turnstile_token: verifiedToken,
+              'cf-turnstile-response': verifiedToken
             };
 
             btnNext.disabled = true;
@@ -4527,6 +4686,18 @@
 
           const briefForm = document.getElementById('directBriefForm');
           if (briefForm) briefForm.reset();
+
+          // Reset Turnstile CAPTCHA state
+          turnstileToken = '';
+          const grp = document.getElementById('grpCaptcha');
+          const captchaWrap = document.getElementById('captchaWrap');
+          if (grp) grp.classList.remove('has-error');
+          if (captchaWrap) captchaWrap.classList.remove('has-error');
+          if (window.turnstile && typeof window.turnstile.reset === 'function') {
+            try {
+              window.turnstile.reset(turnstileWidgetId || '#cfTurnstileWidget');
+            } catch (e) {}
+          }
 
           btnNext.classList.remove('is-loading');
           btnNext.disabled = false;

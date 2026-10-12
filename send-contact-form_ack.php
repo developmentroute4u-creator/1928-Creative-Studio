@@ -82,6 +82,20 @@ if (!defined('ADMIN_NOTIFICATION_EMAIL')) {
     define('ADMIN_NOTIFICATION_EMAIL', getenv('ADMIN_NOTIFICATION_EMAIL') ?: ''); // Set to your studio email to get a copy
 }
 
+/**
+ * Cloudflare Turnstile CAPTCHA Secret Key:
+ * Your friend can set their live secret key in smtp-config.php, in an environment variable,
+ * or enter it below.
+ * Cloudflare Official Always-Passes Test Secret Key: 1x0000000000000000000000000000000AA
+ */
+if (!defined('CLOUDFLARE_TURNSTILE_SECRET_KEY')) {
+    define('CLOUDFLARE_TURNSTILE_SECRET_KEY', getenv('CLOUDFLARE_TURNSTILE_SECRET_KEY') ?: '');
+}
+if (!defined('ENABLE_TURNSTILE_VERIFY')) {
+    // Automatically enabled if secret key is configured, or toggle manually
+    define('ENABLE_TURNSTILE_VERIFY', !empty(CLOUDFLARE_TURNSTILE_SECRET_KEY));
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
 // 2. PARSE & VALIDATE INCOMING FORM SUBMISSION
 // ══════════════════════════════════════════════════════════════════════════════
@@ -95,18 +109,34 @@ if (!is_array($requestData) || empty($requestData)) {
 }
 
 // Extract fields with clean sanitization
-$name     = trim($requestData['name'] ?? $requestData['fullName'] ?? '');
-$email    = trim($requestData['email'] ?? $requestData['corporateEmail'] ?? '');
-$company  = trim($requestData['company'] ?? $requestData['org'] ?? $requestData['enterprise'] ?? 'Independent Project');
-$phone    = trim($requestData['phone'] ?? $requestData['contactNumber'] ?? 'Not Specified');
-$service  = trim($requestData['service'] ?? $requestData['scope'] ?? 'Creative Direction & Strategy');
-$budget   = trim($requestData['budget'] ?? $requestData['allocation'] ?? 'Undisclosed Allocation');
-$timeline = trim($requestData['timeline'] ?? '< 1 Month (Immediate)');
-$date     = trim($requestData['date'] ?? date('l, M j, Y'));
-$time     = trim($requestData['time'] ?? '11:00 AM IST');
-$session  = trim($requestData['session'] ?? "$date · $time");
-$vision   = trim($requestData['vision'] ?? $requestData['projectVision'] ?? '');
-$nda      = trim($requestData['nda'] ?? 'Standard Review');
+$name           = trim($requestData['name'] ?? $requestData['fullName'] ?? '');
+$email          = trim($requestData['email'] ?? $requestData['corporateEmail'] ?? '');
+$company        = trim($requestData['company'] ?? $requestData['org'] ?? $requestData['enterprise'] ?? 'Independent Project');
+$phone          = trim($requestData['phone'] ?? $requestData['contactNumber'] ?? 'Not Specified');
+$service        = trim($requestData['service'] ?? $requestData['scope'] ?? 'Creative Direction & Strategy');
+$budget         = trim($requestData['budget'] ?? $requestData['allocation'] ?? 'Undisclosed Allocation');
+$timeline       = trim($requestData['timeline'] ?? '< 1 Month (Immediate)');
+$date           = trim($requestData['date'] ?? date('l, M j, Y'));
+$time           = trim($requestData['time'] ?? '11:00 AM IST');
+$session        = trim($requestData['session'] ?? "$date · $time");
+$vision         = trim($requestData['vision'] ?? $requestData['projectVision'] ?? '');
+$nda            = trim($requestData['nda'] ?? 'Standard Review');
+$turnstileToken = trim($requestData['turnstile_token'] ?? $requestData['cf-turnstile-response'] ?? $_POST['cf-turnstile-response'] ?? '');
+
+$cleanData = [
+    'name'     => $name,
+    'email'    => $email,
+    'company'  => $company,
+    'phone'    => $phone,
+    'service'  => $service,
+    'budget'   => $budget,
+    'timeline' => $timeline,
+    'date'     => $date,
+    'time'     => $time,
+    'session'  => $session,
+    'vision'   => $vision,
+    'nda'      => $nda,
+];
 
 // Validation: Require Name
 if (empty($name)) {
@@ -126,6 +156,45 @@ if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         'message' => 'Please provide a valid corporate email address.'
     ]);
     exit;
+}
+
+// Validation: Cloudflare Turnstile Security Verification
+// When backend verification is enabled (by setting CLOUDFLARE_TURNSTILE_SECRET_KEY)
+if (ENABLE_TURNSTILE_VERIFY) {
+    if (empty($turnstileToken)) {
+        http_response_code(422);
+        echo json_encode([
+            'status'  => 'error',
+            'message' => 'Security verification token is missing. Please complete the CAPTCHA.'
+        ]);
+        exit;
+    }
+
+    $verifyUrl = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    $postFields = http_build_query([
+        'secret'   => CLOUDFLARE_TURNSTILE_SECRET_KEY,
+        'response' => $turnstileToken,
+        'remoteip' => $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['REMOTE_ADDR'] ?? ''
+    ]);
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $verifyUrl);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    $verifyResult = curl_exec($ch);
+    curl_close($ch);
+
+    $verifyData = json_decode($verifyResult, true);
+    if (!$verifyData || empty($verifyData['success'])) {
+        http_response_code(403);
+        echo json_encode([
+            'status'  => 'error',
+            'message' => 'Security verification failed. Please refresh and try again.'
+        ]);
+        exit;
+    }
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
@@ -154,18 +223,18 @@ use PHPMailer\PHPMailer\Exception;
 
 function buildAcknowledgmentHtml(array $d): string
 {
-    $nameParts = explode(' ', trim($d['name']));
-    $firstName = htmlspecialchars($nameParts[0], ENT_QUOTES, 'UTF-8');
-    $fullName  = htmlspecialchars($d['name'], ENT_QUOTES, 'UTF-8');
-    $company   = htmlspecialchars($d['company'], ENT_QUOTES, 'UTF-8');
-    $service   = htmlspecialchars($d['service'], ENT_QUOTES, 'UTF-8');
-    $budget    = htmlspecialchars($d['budget'], ENT_QUOTES, 'UTF-8');
-    $timeline  = htmlspecialchars($d['timeline'], ENT_QUOTES, 'UTF-8');
-    $date      = htmlspecialchars($d['date'], ENT_QUOTES, 'UTF-8');
-    $time      = htmlspecialchars($d['time'], ENT_QUOTES, 'UTF-8');
-    $phone     = htmlspecialchars($d['phone'], ENT_QUOTES, 'UTF-8');
-    $nda       = htmlspecialchars($d['nda'], ENT_QUOTES, 'UTF-8');
-    $vision    = htmlspecialchars($d['vision'], ENT_QUOTES, 'UTF-8');
+    $fullName  = htmlspecialchars($d['name'] ?? 'Valued Client', ENT_QUOTES, 'UTF-8');
+    $nameParts = explode(' ', trim($fullName));
+    $firstName = htmlspecialchars($nameParts[0] ?? 'Valued Client', ENT_QUOTES, 'UTF-8');
+    $company   = htmlspecialchars($d['company'] ?? 'Independent Project', ENT_QUOTES, 'UTF-8');
+    $service   = htmlspecialchars($d['service'] ?? 'Creative Strategy', ENT_QUOTES, 'UTF-8');
+    $budget    = htmlspecialchars($d['budget'] ?? 'Undisclosed Allocation', ENT_QUOTES, 'UTF-8');
+    $timeline  = htmlspecialchars($d['timeline'] ?? '< 1 Month (Immediate)', ENT_QUOTES, 'UTF-8');
+    $date      = htmlspecialchars($d['date'] ?? date('l, M j, Y'), ENT_QUOTES, 'UTF-8');
+    $time      = htmlspecialchars($d['time'] ?? '11:00 AM IST', ENT_QUOTES, 'UTF-8');
+    $phone     = htmlspecialchars($d['phone'] ?? 'Not Specified', ENT_QUOTES, 'UTF-8');
+    $nda       = htmlspecialchars($d['nda'] ?? 'Standard Review', ENT_QUOTES, 'UTF-8');
+    $vision    = htmlspecialchars($d['vision'] ?? 'Confidential Project Brief', ENT_QUOTES, 'UTF-8');
 
     $templatePath = __DIR__ . '/email-template.html';
 
@@ -258,8 +327,18 @@ HTML;
 
 function buildAcknowledgmentPlainText(array $d): string
 {
-    $nameParts = explode(' ', trim($d['name']));
-    $firstName = $nameParts[0];
+    $fullName  = $d['name'] ?? 'Valued Client';
+    $nameParts = explode(' ', trim($fullName));
+    $firstName = $nameParts[0] ?? 'Valued Client';
+    $company   = $d['company'] ?? 'Independent Project';
+    $service   = $d['service'] ?? 'Creative Strategy';
+    $budget    = $d['budget'] ?? 'Undisclosed Allocation';
+    $timeline  = $d['timeline'] ?? '< 1 Month (Immediate)';
+    $date      = $d['date'] ?? date('l, M j, Y');
+    $time      = $d['time'] ?? '11:00 AM IST';
+    $phone     = $d['phone'] ?? 'Not Specified';
+    $nda       = $d['nda'] ?? 'Standard Review';
+    $vision    = $d['vision'] ?? 'Confidential Project Brief';
 
     return <<<TEXT
 1928 CREATIVE STUDIO — BRIEF RECEIVED
@@ -346,8 +425,8 @@ try {
     // Email Subject & Payload
     $mail->isHTML(true);
     $mail->Subject = 'Brief Received — 1928 Creative Studio';
-    $mail->Body    = buildAcknowledgmentHtml($requestData);
-    $mail->AltBody = buildAcknowledgmentPlainText($requestData);
+    $mail->Body    = buildAcknowledgmentHtml($cleanData);
+    $mail->AltBody = buildAcknowledgmentPlainText($cleanData);
 
     // Transmit email
     $mail->send();

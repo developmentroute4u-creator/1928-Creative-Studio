@@ -614,7 +614,7 @@
     }
 
     .service-hero-wrap {
-      max-width: 1100px;
+      max-width: 1160px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
@@ -794,11 +794,11 @@
     .service-meta-strip {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 12px;
       width: 100%;
-      max-width: 1020px;
+      max-width: 1140px;
       margin: 0 auto;
-      padding: 24px 32px;
+      padding: clamp(16px, 1.8vw, 22px) clamp(16px, 2vw, 26px);
       background: var(--card-bg);
       border: 1.5px solid var(--rule-m);
       border-radius: 18px;
@@ -806,40 +806,96 @@
       box-sizing: border-box;
     }
 
-    @media (max-width: 768px) {
-      .service-meta-strip {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 20px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .service-meta-strip {
-        grid-template-columns: 1fr;
-      }
-    }
-
     .meta-item-box {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       text-align: center;
+      padding: 4px 8px;
+      min-width: 0;
+      justify-content: center;
+    }
+
+    .meta-item-box:not(:last-child) {
+      border-right: 1px solid var(--rule);
     }
 
     .meta-item-label {
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: clamp(0.62rem, 0.68vw, 0.68rem);
       font-weight: 700;
-      color: var(--cr);
+      color: var(--ink-dim);
       text-transform: uppercase;
       letter-spacing: 0.1em;
+      white-space: nowrap;
     }
 
     .meta-item-value {
       font-family: var(--font-primary);
-      font-size: 1.05rem;
+      font-size: clamp(0.78rem, 0.88vw, 0.90rem);
       font-weight: 800;
       color: var(--ink);
+      white-space: nowrap;
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    @media (max-width: 960px) {
+      .service-meta-strip {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px 18px;
+        padding: 20px;
+      }
+      .meta-item-box {
+        border-right: none;
+        padding: 8px 10px;
+      }
+      .meta-item-box:nth-child(1),
+      .meta-item-box:nth-child(3) {
+        border-right: 1px solid var(--rule);
+      }
+      .meta-item-box:nth-child(1),
+      .meta-item-box:nth-child(2) {
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 14px;
+      }
+      .meta-item-box:nth-child(3),
+      .meta-item-box:nth-child(4) {
+        padding-top: 6px;
+      }
+      .meta-item-value {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .service-meta-strip {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 16px 14px;
+      }
+      .meta-item-box {
+        border-right: none !important;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 10px;
+      }
+      .meta-item-box:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .meta-item-value {
+        white-space: normal;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
     }
 
     @keyframes spinSphere {
@@ -1059,7 +1115,8 @@
     }
 
     .sfw-header-left {
-      max-width: 720px;
+      flex: 1 1 auto;
+      max-width: calc(100% - 190px);
     }
 
     .sfw-header-left .sec-tag-pill {
@@ -1094,11 +1151,16 @@
 
     .sfw-header-left .sec-desc {
       font-family: var(--font-secondary);
-      font-size: clamp(14px, 1.1vw, 16.5px);
+      font-size: clamp(13.5px, 1.05vw, 16px);
       line-height: 1.5;
       color: var(--ink-mid);
-      max-width: 660px;
+      max-width: none;
+      white-space: nowrap;
       margin-top: 0;
+    }
+
+    .sfw-header-right {
+      flex-shrink: 0;
     }
 
     .sfw-view-all-pill {
@@ -1131,201 +1193,241 @@
 
     .sfw-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: clamp(16px, 2vw, 26px);
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(18px, 2.2vw, 32px);
     }
 
     .sfw-card {
-      background: var(--card-alt);
-      border: 1.5px solid var(--rule-m);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), 
-                  border-color 0.35s ease, 
-                  box-shadow 0.38s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-      position: relative;
-    }
-
-    .sfw-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(200, 16, 46, 0.42);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.14), 0 0 24px var(--cr-glow);
-    }
-
-    .sfw-card-link {
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    .sfw-media-wrap {
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 10;
+      min-height: clamp(300px, 38vh, 420px);
+      border-radius: clamp(18px, 2.2vw, 28px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: #0A0A0E;
       overflow: hidden;
-      background: #09090d;
-      border-bottom: 1px solid var(--rule);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(20px, 2.4vw, 32px);
+      text-decoration: none;
+      color: #FFFFFF !important;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45), 0 4px 16px rgba(0, 0, 0, 0.25);
+      transition: border-color 0.35s var(--sp), box-shadow 0.35s var(--sp), transform 0.35s var(--sp);
+      cursor: pointer;
     }
 
-    .sfw-media-wrap img {
+    [data-theme="light"] .sfw-card {
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
+    }
+
+    .sfw-card:hover {
+      border-color: rgba(255, 255, 255, 0.28);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 24px rgba(255, 255, 255, 0.06);
+    }
+
+    [data-theme="light"] .sfw-card:hover {
+      border-color: rgba(0, 0, 0, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.16);
+    }
+
+    .sfw-card-media {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .sfw-card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
-      display: block;
-      transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+      filter: brightness(0.92) contrast(1.05);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .sfw-card:hover .sfw-media-wrap img {
+    .sfw-card-media::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(7, 7, 10, 0.6) 0%,
+        rgba(7, 7, 10, 0.18) 18%,
+        rgba(7, 7, 10, 0.04) 40%,
+        rgba(7, 7, 10, 0.25) 65%,
+        rgba(7, 7, 10, 0.85) 86%,
+        rgba(7, 7, 10, 0.96) 100%
+      );
+      transition: background 0.4s ease;
+    }
+
+    [data-theme="light"] .sfw-card-img {
+      filter: brightness(0.92) contrast(1.05);
+    }
+
+    [data-theme="light"] .sfw-card-media::after {
+      background: linear-gradient(
+        180deg,
+        rgba(7, 7, 10, 0.6) 0%,
+        rgba(7, 7, 10, 0.18) 18%,
+        rgba(7, 7, 10, 0.04) 40%,
+        rgba(7, 7, 10, 0.25) 65%,
+        rgba(7, 7, 10, 0.85) 86%,
+        rgba(7, 7, 10, 0.96) 100%
+      );
+    }
+
+    .sfw-card:hover .sfw-card-img {
       transform: scale(1.05);
-      filter: brightness(1.04);
+      filter: brightness(0.98) contrast(1.1);
     }
 
-    .sfw-badge-tag {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      padding: 5px 12px;
-      border-radius: 999px;
-      background: rgba(9, 9, 13, 0.78);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      color: #ffffff;
-      font-family: var(--font-primary);
-      font-size: 0.62rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+    .sfw-card-content {
+      position: relative;
       z-index: 2;
-      pointer-events: none;
-    }
-
-    .sfw-arrow-btn {
-      position: absolute;
-      top: 12px;
-      right: 12px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(9, 9, 13, 0.78);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      color: #ffffff;
-      display: grid;
-      place-items: center;
-      transition: background 0.28s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.25s ease, border-color 0.25s ease;
-      z-index: 2;
-    }
-
-    .sfw-arrow-btn svg {
-      width: 13px;
-      height: 13px;
-      stroke: currentColor;
-    }
-
-    .sfw-card:hover .sfw-arrow-btn {
-      background: var(--cr);
-      border-color: var(--cr);
-      color: #ffffff;
-      transform: rotate(45deg);
-    }
-
-    .sfw-content {
-      padding: clamp(16px, 1.8vw, 22px);
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
-      gap: 7px;
+      justify-content: space-between;
+      height: 100%;
     }
 
-    .sfw-meta-row {
+    .sfw-top-meta {
       display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .sfw-num {
+      display: inline-flex;
       align-items: center;
       gap: 7px;
       font-family: var(--font-primary);
-      font-size: 0.68rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--cr);
-      margin-bottom: 2px;
-    }
-
-    .sfw-dot {
-      color: var(--ink-dim);
-      opacity: 0.6;
-    }
-
-    .sfw-category {
-      color: var(--ink-mid);
-      font-weight: 600;
-    }
-
-    .sfw-title {
-      font-family: var(--font-primary);
-      font-size: clamp(1.02rem, 1.2vw, 1.16rem);
+      font-size: clamp(11.5px, 0.95vw, 13px);
       font-weight: 800;
-      letter-spacing: -0.025em;
-      color: var(--ink);
+      color: #FFFFFF !important;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.95);
+      opacity: 0.95;
+    }
+
+    .sfw-globe-icon {
+      width: 13px;
+      height: 13px;
+      stroke: #FFFFFF !important;
+      stroke-width: 2.2;
+      flex-shrink: 0;
+    }
+
+    .sfw-bottom-block {
+      margin-top: auto;
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: clamp(16px, 1.8vw, 24px);
+      width: 100%;
+    }
+
+    .sfw-work-title {
+      flex: 1 1 auto;
+      max-width: min(calc(100% - 195px), 420px);
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(18px, 1.7vw, 24px);
       line-height: 1.25;
+      letter-spacing: -0.025em;
+      color: #FFFFFF !important;
       margin: 0;
-      transition: color 0.22s ease;
-    }
-
-    .sfw-card:hover .sfw-title {
-      color: var(--cr-bright);
-    }
-
-    .sfw-subtitle {
-      font-size: 0.82rem;
-      color: var(--ink-mid);
-      line-height: 1.5;
-      font-family: var(--font-secondary);
-      margin: 0 0 6px 0;
+      text-shadow: 0 3px 18px rgba(0, 0, 0, 0.95);
       display: -webkit-box;
       -webkit-line-clamp: 2;
       line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      word-break: break-word;
     }
 
-    .sfw-chips-row {
+    .sfw-bottom-meta {
+      flex: 0 0 auto;
       display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: auto;
-      padding-top: 13px;
-      border-top: 1px solid var(--rule);
+      align-items: center;
+      justify-content: flex-end;
+      margin-left: auto;
     }
 
-    .sfw-chip {
+    .sfw-cta-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
       font-family: var(--font-primary);
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-size: clamp(11px, 0.85vw, 12.5px);
+      font-weight: 800;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 3px 9px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.04);
-      color: var(--ink-mid);
-      border: 1px solid var(--rule);
-      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+      color: #FFFFFF !important;
+      transition: opacity 0.3s ease;
     }
 
-    .sfw-card:hover .sfw-chip {
-      border-color: var(--rule-m);
-      color: var(--ink);
+    .sfw-cta-arrow {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s ease, border-color 0.3s ease;
+      flex-shrink: 0;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
-    [data-theme="light"] .sfw-chip {
-      background: rgba(0, 0, 0, 0.03);
+    .sfw-cta-arrow svg {
+      width: 14px;
+      height: 14px;
+      stroke: #FFFFFF !important;
+      stroke-width: 2.2;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sfw-card:hover .sfw-cta-arrow {
+      background: rgba(255, 255, 255, 0.24) !important;
+      border-color: rgba(255, 255, 255, 0.45) !important;
+    }
+
+    .sfw-card:hover .sfw-cta-arrow svg {
+      transform: translate(3px, -3px);
+      stroke: #FFFFFF !important;
+    }
+
+    @media (max-width: 860px) {
+      .sfw-header-left {
+        max-width: 100%;
+      }
+      .sfw-header-left .sec-desc {
+        white-space: normal;
+      }
+      .sfw-grid {
+        grid-template-columns: 1fr;
+      }
+      .sfw-bottom-block {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .sfw-work-title {
+        max-width: 100%;
+        font-size: 19px;
+      }
+      .sfw-bottom-meta {
+        width: 100%;
+        justify-content: flex-end;
+      }
     }
 
     .sfw-footer-bar {
@@ -2097,7 +2199,6 @@
       </li>
       <li><a href="portfolio.html">Work</a></li>
       <li><a href="blogs.html">Perspectives</a></li>
-      <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-right">
       <a href="contact.html?service=website#start-project-sec" class="nav-cta">Start Project</a>
@@ -2299,10 +2400,10 @@
         <div class="sfw-header-left">
           <div class="sec-tag-pill">
             <span class="sec-dot"></span>
-            <span>PORTFOLIO SHOWCASE // 1928</span>
+            <span>SELECTED PROJECTS // 1928</span>
           </div>
           <h2 class="sec-heading">OUR BEST <span>WORK</span></h2>
-          <p class="sec-desc">Selected brand identity systems, physical craftsmanship, and digital flagships architected by 1928 Creative Studio.</p>
+          <p class="sec-desc">A selection of identities, digital experiences and creative work created for businesses with ambition.</p>
         </div>
         <div class="sfw-header-right">
           <a href="portfolio.html" class="sfw-view-all-pill">
@@ -2313,86 +2414,65 @@
       </div>
 
       <div class="sfw-grid">
-        <!-- 01 AURORA HOROLOGY -->
-        <article class="sfw-card">
-          <a href="portfolio.html?project=aurora" class="sfw-card-link" aria-label="View Aurora Chronometer Systems case study">
-            <div class="sfw-media-wrap">
-              <img src="img/port-chronos.jpg" alt="Aurora Chronometer Systems" loading="lazy" />
-              <div class="sfw-badge-tag">Horology &amp; WebGL</div>
-              <div class="sfw-arrow-btn" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        <!-- 01 MUDRA SCHOOL -->
+        <a href="portfolio.html?project=mudra-school" class="sfw-card" aria-label="View Mudra School case study">
+          <div class="sfw-card-media">
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg" alt="Mudra School — Classical Arts Digital Presence" class="sfw-card-img" loading="lazy" />
+          </div>
+          <div class="sfw-card-content">
+            <div class="sfw-top-meta">
+              <span class="sfw-num">
+                <svg class="sfw-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                01 / GLOBAL ICON
+              </span>
+            </div>
+            <div class="sfw-bottom-block">
+              <h3 class="sfw-work-title">Mudra School — Classical Arts Digital Presence</h3>
+              <div class="sfw-bottom-meta">
+                <div class="sfw-cta-wrap">
+                  <span>View Case Study</span>
+                  <div class="sfw-cta-arrow">
+                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="sfw-content">
-              <div class="sfw-meta-row">
-                <span class="sfw-client">Geneva · 2025</span>
-                <span class="sfw-dot">·</span>
-                <span class="sfw-category">Brand Identity</span>
-              </div>
-              <h3 class="sfw-title">Aurora Chronometer Systems</h3>
-              <p class="sfw-subtitle">Swiss luxury brand identity, architectural physical packaging, and 3D WebGL timekeeper showcase.</p>
-              <div class="sfw-chips-row">
-                <span class="sfw-chip">Identity Codex</span>
-                <span class="sfw-chip">Packaging</span>
-                <span class="sfw-chip">3D WebGL Vault</span>
-              </div>
-            </div>
-          </a>
-        </article>
+          </div>
+        </a>
 
-        <!-- 02 VERTEX ARCHITECTS -->
-        <article class="sfw-card">
-          <a href="portfolio.html?project=vertex" class="sfw-card-link" aria-label="View Vertex Architects case study">
-            <div class="sfw-media-wrap">
-              <img src="img/port-spectra.jpg" alt="Vertex Architects" loading="lazy" />
-              <div class="sfw-badge-tag">Spatial System</div>
-              <div class="sfw-arrow-btn" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+        <!-- 02 LAST MILE ANALYTICS -->
+        <a href="portfolio.html?project=last-mile-analytics" class="sfw-card" aria-label="View Last Mile Analytics case study">
+          <div class="sfw-card-media">
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg" alt="Last Mile Analytics — Fintech Platform Architecture" class="sfw-card-img" loading="lazy" />
+          </div>
+          <div class="sfw-card-content">
+            <div class="sfw-top-meta">
+              <span class="sfw-num">
+                <svg class="sfw-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                02 / GLOBAL ICON
+              </span>
+            </div>
+            <div class="sfw-bottom-block">
+              <h3 class="sfw-work-title">Last Mile Analytics — Fintech Platform Architecture</h3>
+              <div class="sfw-bottom-meta">
+                <div class="sfw-cta-wrap">
+                  <span>View Case Study</span>
+                  <div class="sfw-cta-arrow">
+                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="sfw-content">
-              <div class="sfw-meta-row">
-                <span class="sfw-client">Dubai · 2025</span>
-                <span class="sfw-dot">·</span>
-                <span class="sfw-category">Spatial Identity</span>
-              </div>
-              <h3 class="sfw-title">Vertex Architects</h3>
-              <p class="sfw-subtitle">Geometric logo architecture, debossed crimson stationery on concrete linen, and physical spatial brand codes.</p>
-              <div class="sfw-chips-row">
-                <span class="sfw-chip">Logo System</span>
-                <span class="sfw-chip">Tactile Collateral</span>
-                <span class="sfw-chip">Spatial Codes</span>
-              </div>
-            </div>
-          </a>
-        </article>
-
-        <!-- 03 SOLSTICE HAUTE PARFUMERIE -->
-        <article class="sfw-card">
-          <a href="portfolio.html?project=solstice" class="sfw-card-link" aria-label="View Solstice Haute Parfumerie case study">
-            <div class="sfw-media-wrap">
-              <img src="img/port-lumina.jpg" alt="Solstice Haute Parfumerie" loading="lazy" />
-              <div class="sfw-badge-tag">Packaging Craft</div>
-              <div class="sfw-arrow-btn" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
-              </div>
-            </div>
-            <div class="sfw-content">
-              <div class="sfw-meta-row">
-                <span class="sfw-client">Paris · 2025</span>
-                <span class="sfw-dot">·</span>
-                <span class="sfw-category">Packaging &amp; Identity</span>
-              </div>
-              <h3 class="sfw-title">Solstice Haute Parfumerie</h3>
-              <p class="sfw-subtitle">Fluted monolithic glass bottle architecture, tactile luxury packaging, and complete fragrance brand identity.</p>
-              <div class="sfw-chips-row">
-                <span class="sfw-chip">Bottle Craft</span>
-                <span class="sfw-chip">Visual Universe</span>
-                <span class="sfw-chip">Packaging Suite</span>
-              </div>
-            </div>
-          </a>
-        </article>
+          </div>
+        </a>
       </div>
 
       <div class="sfw-footer-bar">
