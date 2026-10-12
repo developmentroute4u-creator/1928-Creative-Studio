@@ -1413,11 +1413,19 @@
         railWord: "Allocation",
         headline: "Capital Allocation (INR ₹)",
         caption: "Select your target budget tier and target engagement timeline.",
+        currency: "INR",
+        currencies: ["INR", "USD"],
         tiers: [
-          { id: "tier-1", amount: "< ₹15 Lakhs", name: "Targeted Sprint", defaultSelected: false },
-          { id: "tier-2", amount: "₹15L – ₹30 Lakhs", name: "Core Evolution", defaultSelected: true },
-          { id: "tier-3", amount: "₹30L – ₹60 Lakhs", name: "Flagship Venture", defaultSelected: false },
-          { id: "tier-4", amount: "₹60 Lakhs+", name: "Comprehensive", defaultSelected: false }
+          { id: "tier-1", amount: "< ₹50,000", name: "Targeted Sprint", defaultSelected: false },
+          { id: "tier-2", amount: "₹50,000 to 1 Lakh", name: "Core Evolution", defaultSelected: true },
+          { id: "tier-3", amount: "1 Lakh to 2 Lakh", name: "Flagship Venture", defaultSelected: false },
+          { id: "tier-4", amount: "2 Lakh +", name: "Comprehensive", defaultSelected: false }
+        ],
+        tiersUsd: [
+          { id: "tier-u1", amount: "< $500", name: "Targeted Sprint", defaultSelected: false },
+          { id: "tier-u2", amount: "$500 to 1000$", name: "Core Evolution", defaultSelected: true },
+          { id: "tier-u3", amount: "1000$ to 2000$", name: "Flagship Venture", defaultSelected: false },
+          { id: "tier-u4", amount: "2000$ +", name: "Comprehensive", defaultSelected: false }
         ],
         timelineTitle: "Target Engagement Timeline",
         timelines: [

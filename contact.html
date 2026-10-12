@@ -809,6 +809,57 @@
     }
 
     /* ── STEP 3: Capital Allocation & Session Window ── */
+    .pane-headline-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .currency-toggle-wrap {
+      display: inline-flex;
+      align-items: center;
+      background: var(--card-alt);
+      border: 1.5px solid var(--rule-m);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .currency-toggle-btn {
+      border: none;
+      background: transparent;
+      color: var(--ink-mid);
+      font-family: var(--font-primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 5px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.22s var(--sp);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .currency-toggle-btn:hover {
+      color: var(--ink);
+    }
+
+    .currency-toggle-btn.active {
+      background: var(--ink);
+      color: var(--bg);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .currency-toggle-btn .curr-symbol {
+      font-weight: 800;
+      font-size: 0.78rem;
+    }
+
     .tiers-horizontal-row {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -3572,26 +3623,36 @@
               </div>
             </div>
 
-            <!-- ══ STEP 2: Capital Allocation (INR Only) ══ -->
+            <!-- ══ STEP 2: Capital Allocation ══ -->
             <div class="step-pane-section" id="stepPane2">
-              <h3 class="pane-headline">Capital Allocation (INR ₹)</h3>
-              <p class="pane-caption">Select your target budget tier and optional consultation window.</p>
+              <div class="pane-headline-row">
+                <h3 class="pane-headline" id="allocHeadline">Capital Allocation (INR ₹)</h3>
+                <div class="currency-toggle-wrap" role="group" aria-label="Select Currency">
+                  <button type="button" class="currency-toggle-btn active" id="btnCurrINR" data-currency="INR">
+                    <span class="curr-symbol">₹</span> INR
+                  </button>
+                  <button type="button" class="currency-toggle-btn" id="btnCurrUSD" data-currency="USD">
+                    <span class="curr-symbol">$</span> USD
+                  </button>
+                </div>
+              </div>
+              <p class="pane-caption">Select your target budget tier and target engagement timeline.</p>
 
               <div class="tiers-horizontal-row" id="tierGrid">
-                <div class="tier-option-box" data-tier="&lt; ₹15 Lakhs">
-                  <div class="tob-amount">&lt; ₹15 Lakhs</div>
+                <div class="tier-option-box" data-tier="&lt; ₹50,000">
+                  <div class="tob-amount">&lt; ₹50,000</div>
                   <div class="tob-tier-name">Targeted Sprint</div>
                 </div>
-                <div class="tier-option-box active" data-tier="₹15L – ₹30 Lakhs">
-                  <div class="tob-amount">₹15L – ₹30 Lakhs</div>
+                <div class="tier-option-box active" data-tier="₹50,000 to 1 Lakh">
+                  <div class="tob-amount">₹50,000 to 1 Lakh</div>
                   <div class="tob-tier-name">Core Evolution</div>
                 </div>
-                <div class="tier-option-box" data-tier="₹30L – ₹60 Lakhs">
-                  <div class="tob-amount">₹30L – ₹60 Lakhs</div>
+                <div class="tier-option-box" data-tier="1 Lakh to 2 Lakh">
+                  <div class="tob-amount">1 Lakh to 2 Lakh</div>
                   <div class="tob-tier-name">Flagship Venture</div>
                 </div>
-                <div class="tier-option-box" data-tier="₹60 Lakhs+">
-                  <div class="tob-amount">₹60 Lakhs+</div>
+                <div class="tier-option-box" data-tier="2 Lakh +">
+                  <div class="tob-amount">2 Lakh +</div>
                   <div class="tob-tier-name">Comprehensive</div>
                 </div>
               </div>
@@ -3807,7 +3868,7 @@
               </div>
               <div class="mso-row">
                 <span class="mso-row-label">Allocation</span>
-                <span class="mso-row-val" id="msoSumAlloc">₹15L – ₹30 Lakhs<span class="mso-sub"
+                <span class="mso-row-val" id="msoSumAlloc">₹50,000 to 1 Lakh<span class="mso-sub"
                     id="msoSumTimeline"></span></span>
               </div>
               <div class="mso-row">
@@ -4315,7 +4376,7 @@
             const scopeVal = activeScope ? (activeScope.getAttribute('data-mandate') || activeScope.querySelector('.soc-title')?.textContent.trim() || 'Logo Design') : 'Logo Design';
 
             const activeTier = document.querySelector('#tierGrid .tier-option-box.active');
-            const tierAmount = activeTier ? (activeTier.getAttribute('data-tier') || activeTier.querySelector('.tob-amount')?.textContent.trim() || '₹15L – ₹30 Lakhs') : '₹15L – ₹30 Lakhs';
+            const tierAmount = activeTier ? (activeTier.getAttribute('data-tier') || activeTier.querySelector('.tob-amount')?.textContent.trim() || '₹50,000 to 1 Lakh') : '₹50,000 to 1 Lakh';
             const tierName = activeTier ? (activeTier.querySelector('.tob-tier-name')?.textContent.trim() || '') : '';
             const allocVal = tierName ? `${tierAmount} (${tierName})` : tierAmount;
 
@@ -4503,6 +4564,60 @@
           document.querySelectorAll('#scopeGrid .scope-option-card').forEach(c => c.classList.remove('active'));
           card.classList.add('active');
           playLuxuryHaptic(620, 'sine', 0.03);
+        });
+      });
+
+      // Step 2: Currency Switcher (INR default & USD option)
+      let currentCurrency = 'INR';
+      const tierCurrencyData = {
+        INR: [
+          { amount: '< ₹50,000', name: 'Targeted Sprint', tier: '< ₹50,000' },
+          { amount: '₹50,000 to 1 Lakh', name: 'Core Evolution', tier: '₹50,000 to 1 Lakh' },
+          { amount: '1 Lakh to 2 Lakh', name: 'Flagship Venture', tier: '1 Lakh to 2 Lakh' },
+          { amount: '2 Lakh +', name: 'Comprehensive', tier: '2 Lakh +' }
+        ],
+        USD: [
+          { amount: '< $500', name: 'Targeted Sprint', tier: '< $500' },
+          { amount: '$500 to 1000$', name: 'Core Evolution', tier: '$500 to 1000$' },
+          { amount: '1000$ to 2000$', name: 'Flagship Venture', tier: '1000$ to 2000$' },
+          { amount: '2000$ +', name: 'Comprehensive', tier: '2000$ +' }
+        ]
+      };
+
+      function updateCurrency(curr) {
+        currentCurrency = curr;
+        const allocHeadline = document.getElementById('allocHeadline');
+        if (allocHeadline) {
+          allocHeadline.textContent = curr === 'INR' ? 'Capital Allocation (INR ₹)' : 'Capital Allocation (USD $)';
+        }
+        document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-currency') === curr);
+        });
+
+        const boxes = document.querySelectorAll('#tierGrid .tier-option-box');
+        let activeIdx = -1;
+        boxes.forEach((b, i) => { if (b.classList.contains('active')) activeIdx = i; });
+        if (activeIdx < 0) activeIdx = 1;
+
+        tierCurrencyData[curr].forEach((item, idx) => {
+          if (boxes[idx]) {
+            boxes[idx].setAttribute('data-tier', item.tier);
+            const amt = boxes[idx].querySelector('.tob-amount');
+            if (amt) amt.textContent = item.amount;
+            const nm = boxes[idx].querySelector('.tob-tier-name');
+            if (nm) nm.textContent = item.name;
+            boxes[idx].classList.toggle('active', idx === activeIdx);
+          }
+        });
+      }
+
+      document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const curr = btn.getAttribute('data-currency');
+          if (curr && curr !== currentCurrency) {
+            updateCurrency(curr);
+            playLuxuryHaptic(640, 'sine', 0.03);
+          }
         });
       });
 
