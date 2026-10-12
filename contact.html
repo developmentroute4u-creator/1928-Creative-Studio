@@ -366,10 +366,11 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: clamp(28px, 4.5vh, 52px) clamp(24px, 4vw, 68px);
+      padding: clamp(22px, 3.2vh, 36px) clamp(24px, 4vw, 68px);
       box-sizing: border-box;
       background: var(--bg);
       position: relative;
+      scroll-margin-top: 0px;
     }
 
     .fullscreen-project-container {
@@ -378,7 +379,7 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: clamp(16px, 2.6vh, 26px);
+      gap: clamp(14px, 2.2vh, 22px);
     }
 
     /* Section Top Header */
@@ -3383,7 +3384,7 @@
       <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <a href="contact.html" class="nav-cta">Start Project</a>
+      <a href="#start-project-sec" class="nav-cta">Start Project</a>
     </div>
   </nav>
 
@@ -4807,6 +4808,102 @@
 
       // Initial Render
       navigateToStep(1);
+
+      // ── Dedicated Scroll to Second Section (Commission Form) ──
+      function scrollToCommissionSection(smooth) {
+        const target = document.getElementById('start-project-sec');
+        if (!target) return;
+
+        // Hide fixed navigation header so section takes full focus like screenshot
+        const navEl = document.getElementById('nav');
+        if (navEl) {
+          navEl.classList.remove('visible');
+          navEl.classList.add('hidden');
+        }
+
+        // Align exact top edge of #start-project-sec with viewport top (0 offset)
+        const targetTop = target.offsetTop;
+        window.scrollTo({
+          top: targetTop,
+          behavior: smooth ? 'smooth' : 'auto'
+        });
+      }
+
+      // ── Service Pre-selection & Incoming Redirect Handler ──
+      function handleIncomingServiceAndScroll() {
+        try {
+          const urlParams = new URLSearchParams(window.location.search);
+          const svcParam = (urlParams.get('service') || '').toLowerCase().trim();
+          const hash = window.location.hash;
+
+          // 1. Auto-select matching service mandate in Step 1 (Scope)
+          if (svcParam) {
+            const serviceMap = {
+              'logo': 'Logo Design',
+              'brand': 'Brand Identity Development',
+              'web': 'Website Design & Development',
+              'website': 'Website Design & Development',
+              'social': 'Social Media & Digital Marketing',
+              'marketing': 'Social Media & Digital Marketing',
+              'digital': 'Social Media & Digital Marketing',
+              'content': 'Content Creation & Influencer Marketing',
+              'influencer': 'Content Creation & Influencer Marketing'
+            };
+
+            let matchedMandate = null;
+            for (const key in serviceMap) {
+              if (svcParam.includes(key)) {
+                matchedMandate = serviceMap[key];
+                break;
+              }
+            }
+
+            if (matchedMandate) {
+              const scopeCards = document.querySelectorAll('#scopeGrid .scope-option-card');
+              scopeCards.forEach(c => {
+                if (c.getAttribute('data-mandate') === matchedMandate) {
+                  scopeCards.forEach(other => other.classList.remove('active'));
+                  c.classList.add('active');
+                }
+              });
+            }
+          }
+
+          // 2. Smoothly scroll directly to the second section (#start-project-sec) with exact top placement
+          if (hash === '#start-project-sec' || hash === '#brief' || hash === '#form' || hash === '#briefMonolithCard' || svcParam) {
+            scrollToCommissionSection(false);
+            setTimeout(() => {
+              scrollToCommissionSection(true);
+            }, 60);
+            setTimeout(() => {
+              scrollToCommissionSection(true);
+            }, 250);
+          }
+        } catch (e) {
+          console.warn('Deep link handling error:', e);
+        }
+      }
+
+      handleIncomingServiceAndScroll();
+      window.addEventListener('hashchange', handleIncomingServiceAndScroll);
+      window.addEventListener('load', () => {
+        const hash = window.location.hash;
+        const urlParams = new URLSearchParams(window.location.search);
+        if (hash === '#start-project-sec' || hash === '#brief' || hash === '#form' || hash === '#briefMonolithCard' || urlParams.has('service')) {
+          scrollToCommissionSection(false);
+        }
+      });
+
+      // ── Smooth In-Page Interception for #start-project-sec Links ──
+      document.querySelectorAll('a[href="#start-project-sec"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+          e.preventDefault();
+          scrollToCommissionSection(true);
+          if (window.history && window.history.pushState) {
+            window.history.pushState(null, null, '#start-project-sec');
+          }
+        });
+      });
     })();
   </script>
   <script src="data-store.js"></script>

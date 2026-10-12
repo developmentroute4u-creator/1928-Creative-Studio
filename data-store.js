@@ -1326,10 +1326,11 @@
       email: 'studio@1928creativestudio.com',
       phone: '+91 98250 19280',
       socials: {
-        instagram: 'https://instagram.com',
-        linkedin: 'https://linkedin.com',
-        behance: 'https://behance.net',
-        twitter: 'https://twitter.com'
+        instagram: 'https://www.instagram.com/1928creativestudio',
+        facebook: 'https://www.facebook.com/1928Creativestudio/',
+        linkedin: 'https://www.linkedin.com/company/1928-creative-studio/',
+        youtube: 'https://www.youtube.com/@1928creativestudio',
+        behance: 'https://www.behance.net/1928Creativestudio'
       },
       ctaPrimaryText: 'Start a Project',
       ctaSecondaryText: 'Tell us what you\'re building',

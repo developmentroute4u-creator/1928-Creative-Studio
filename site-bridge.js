@@ -940,7 +940,7 @@
                   </div>
                 </div>
                 <div class="svc-card-actions">
-                  <a href="contact.html" class="svc-btn-action">Inquire About This Service</a>
+                  <a href="contact.html?service=${encodeURIComponent(s.title || '')}#start-project-sec" class="svc-btn-action">Inquire About This Service</a>
                 </div>
               </div>
               <div class="svc-card-right">

@@ -2754,9 +2754,10 @@
         lastPortScrollY = sy;
       }, { passive: true });
 
-      // Check for deep-link project URL param (?project=aurora or ?id=aurora)
+      // Check for deep-link project URL param (?project=aurora or ?id=aurora or #aurora)
       const urlParams = new URLSearchParams(window.location.search);
-      const targetProj = urlParams.get('project') || urlParams.get('id');
+      const hashProj = window.location.hash ? window.location.hash.replace('#', '').trim() : '';
+      const targetProj = urlParams.get('project') || urlParams.get('id') || (hashProj && caseStudies[hashProj] ? hashProj : null);
       if (targetProj) {
         setTimeout(() => {
           openModal(targetProj);
