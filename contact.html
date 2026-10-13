@@ -10,8 +10,8 @@
   <script>
     try { sessionStorage.setItem('1928_site_visited', 'true'); } catch (e) { }
   </script>
-
   <!-- Cloudflare Turnstile CAPTCHA API -->
+  <link rel="preconnect" href="https://challenges.cloudflare.com" />
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
   <!-- Google Fonts: Montserrat & Raleway -->
@@ -3871,17 +3871,13 @@
                     <label class="in-label" for="cfTurnstileWidget">Security Verification *</label>
                     <div class="turnstile-captcha-wrap" id="captchaWrap">
                       <div class="turnstile-widget-container">
-                        <div class="cf-turnstile"
-                          id="cfTurnstileWidget"
-                          data-sitekey="1x00000000000000000000AA"
-                          data-theme="auto"
-                          data-size="flexible"
-                          data-callback="onTurnstileSuccess"
-                          data-expired-callback="onTurnstileExpired"
-                          data-error-callback="onTurnstileError"></div>
+                        <div class="cf-turnstile" id="cfTurnstileWidget" data-sitekey="0x4AAAAAAFUgdEdsNFaPpxBM"
+                          data-theme="auto" data-size="flexible" data-callback="onTurnstileSuccess"
+                          data-expired-callback="onTurnstileExpired" data-error-callback="onTurnstileError"></div>
                       </div>
                     </div>
-                    <span class="field-error-msg" id="captchaErrorNotice">Please verify that you are human before submitting</span>
+                    <span class="field-error-msg" id="captchaErrorNotice">Please verify that you are human before
+                      submitting</span>
                   </div>
                 </div>
 
@@ -4277,9 +4273,9 @@
       window.addEventListener('footerLoaded', attachCursorHover);
 
       // ── Cloudflare Turnstile CAPTCHA Controller ──
-      // Test Sitekey: 1x00000000000000000000AA (always passes verification for development & testing)
+      // Test Sitekey: 0x4AAAAAAFUgdEdsNFaPpxBM (always passes verification for development & testing)
       // When ready for live production, replace with your live Turnstile Sitekey
-      const TURNSTILE_SITEKEY = '1x00000000000000000000AA';
+      const TURNSTILE_SITEKEY = '0x4AAAAAAFUgdEdsNFaPpxBM';
       let turnstileToken = '';
       let turnstileWidgetId = null;
 
@@ -4508,7 +4504,7 @@
             if (!verifiedToken && window.turnstile && typeof window.turnstile.getResponse === 'function') {
               try {
                 verifiedToken = window.turnstile.getResponse(turnstileWidgetId || '#cfTurnstileWidget') || window.turnstile.getResponse() || '';
-              } catch (e) {}
+              } catch (e) { }
             }
 
             if (!verifiedToken) {
@@ -4696,7 +4692,7 @@
           if (window.turnstile && typeof window.turnstile.reset === 'function') {
             try {
               window.turnstile.reset(turnstileWidgetId || '#cfTurnstileWidget');
-            } catch (e) {}
+            } catch (e) { }
           }
 
           btnNext.classList.remove('is-loading');
