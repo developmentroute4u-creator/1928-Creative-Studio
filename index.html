@@ -1564,6 +1564,10 @@
       will-change: transform, opacity;
     }
 
+    .svc-sticky-center {
+      display: none;
+    }
+
     .psc-badge {
       font-family: 'Space Mono', monospace;
       font-size: .68rem;
@@ -3616,6 +3620,933 @@
       background: var(--cr);
       border-radius: 3px;
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       MOBILE PHONE RESPONSIVE STYLES (Screen width <= 768px ONLY)
+       Desktop screens (> 768px) remain 100% untouched.
+       ═══════════════════════════════════════════════════════════ */
+    .phone-hero,
+    .phone-story-section {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      /* ── Hide Custom Desktop Mouse Cursor ── */
+      #cur, #cur-r {
+        display: none !important;
+      }
+
+      /* ── Hide Desktop 3D Room & Animation Layers ── */
+      #roomScene,
+      #heroRaysSvg,
+      #heroFrame,
+      #heroWhiteout,
+      .hero-loading-hud,
+      .hero-loading-ambient,
+      #heroTitle,
+      #heroStoryWrap,
+      #heroReel {
+        display: none !important;
+      }
+
+      /* ── Header on phone: Hide 'Start Project' button; only logo & hamburger icon remain ── */
+      #nav .nav-right .nav-cta,
+      #nav .nav-cta,
+      #navContactBtn {
+        display: none !important;
+      }
+
+      html, body {
+        overflow-x: clip !important;
+        max-width: 100vw !important;
+      }
+
+      /* ── 1. PHONE HERO SECTION (First Viewport: 1928 Creative Studio + 2-line Subtitle) ── */
+      #hero-driver {
+        position: relative !important;
+        height: 100svh !important;
+        min-height: 100svh !important;
+        overflow: hidden !important;
+        background: var(--bg) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0 20px !important;
+        box-sizing: border-box !important;
+      }
+
+      #hero-sticky {
+        position: relative !important;
+        top: auto !important;
+        height: 100% !important;
+        min-height: auto !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        overflow: visible !important;
+        background: transparent !important;
+      }
+
+      .phone-hero {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 520px !important;
+        padding: 0 !important;
+        position: relative !important;
+        z-index: 5 !important;
+        box-sizing: border-box !important;
+        margin: 0 auto !important;
+      }
+
+      /* Architectural Blueprint Grid Background */
+      .ph-grid-bg {
+        position: absolute;
+        inset: -100px -40px;
+        background-image: 
+          linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+        background-size: 32px 32px;
+        background-position: center center;
+        mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 80%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      [data-theme="light"] .ph-grid-bg {
+        background-image: 
+          linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+      }
+
+      .ph-glow {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        max-width: 360px;
+        height: 320px;
+        background: radial-gradient(circle, rgba(200, 16, 46, 0.22) 0%, rgba(200, 16, 46, 0.04) 55%, transparent 75%);
+        pointer-events: none;
+        z-index: 0;
+        filter: blur(40px);
+      }
+
+      [data-theme="light"] .ph-glow {
+        background: radial-gradient(circle, rgba(200, 16, 46, 0.12) 0%, rgba(200, 16, 46, 0.02) 55%, transparent 75%);
+      }
+
+      /* Exact desktop-matching font for 1928 Creative Studio */
+      .ph-title {
+        font-family: var(--font-primary) !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+        letter-spacing: -0.035em !important;
+        line-height: 1.04 !important;
+        color: var(--ink) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        position: relative !important;
+        z-index: 1 !important;
+      }
+
+      .ph-title-line1 {
+        font-family: var(--font-primary) !important;
+        font-size: clamp(48px, 13vw, 68px) !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.035em !important;
+        color: var(--ink) !important;
+        display: block !important;
+        line-height: 1.02 !important;
+      }
+
+      .ph-title-line2 {
+        font-family: var(--font-primary) !important;
+        font-size: clamp(30px, 8.2vw, 42px) !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.035em !important;
+        color: var(--ink) !important;
+        display: block !important;
+        white-space: nowrap !important;
+        margin-top: 4px !important;
+        line-height: 1.04 !important;
+      }
+
+      /* 2-line description strictly covering only two lines */
+      .ph-sub {
+        font-family: var(--font-secondary) !important;
+        font-weight: 400 !important;
+        font-size: clamp(13.5px, 3.6vw, 15px) !important;
+        line-height: 1.55 !important;
+        color: var(--ink-mid) !important;
+        max-width: 92% !important;
+        width: 100% !important;
+        margin: 20px auto 0 auto !important;
+        text-align: center !important;
+        position: relative !important;
+        z-index: 1 !important;
+      }
+
+      .ph-sub-line {
+        display: block !important;
+        white-space: nowrap !important;
+      }
+
+      /* ── 2. PHONE VIDEO SECTION (Full-Screen Expanded Vertical Video Showreel) ── */
+      .phone-story-section {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 100svh !important;
+        height: 100svh !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        background: #000000 !important;
+        position: relative !important;
+        z-index: 4 !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        overflow: hidden !important;
+      }
+
+      .pss-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+      }
+
+      .ph-reel-card {
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+        overflow: hidden !important;
+        position: relative !important;
+        z-index: 1 !important;
+        box-shadow: none !important;
+        border: none !important;
+        background: #000000 !important;
+        box-sizing: border-box !important;
+      }
+
+      .ph-reel-media {
+        position: relative !important;
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+      }
+
+      .ph-reel-media video {
+        position: absolute !important;
+        inset: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+
+      .ph-reel-overlay {
+        position: absolute !important;
+        inset: 0 !important;
+        background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.85) 100%) !important;
+        pointer-events: none !important;
+        z-index: 1 !important;
+      }
+
+      .ph-play-btn {
+        width: 68px !important;
+        height: 68px !important;
+        border-radius: 50% !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #0A0A0C !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 2 !important;
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        cursor: pointer !important;
+        padding-left: 4px !important;
+        transition: transform 0.25s, opacity 0.3s !important;
+      }
+
+      .ph-play-btn:active {
+        transform: translate(-50%, -50%) scale(0.92) !important;
+      }
+
+      .ph-reel-info {
+        position: absolute !important;
+        bottom: 32px !important;
+        left: 20px !important;
+        right: 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        z-index: 2 !important;
+        text-align: left !important;
+        pointer-events: none !important;
+      }
+
+      .ph-reel-badge {
+        font-family: 'Space Mono', monospace !important;
+        font-size: 0.65rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.16em !important;
+        color: var(--cr, #C8102E) !important;
+        text-transform: uppercase !important;
+        margin-bottom: 4px !important;
+      }
+
+      .ph-reel-heading {
+        font-family: var(--font-primary) !important;
+        font-size: clamp(17px, 4.8vw, 21px) !important;
+        font-weight: 700 !important;
+        color: #FFFFFF !important;
+        line-height: 1.25 !important;
+        letter-spacing: -0.01em !important;
+      }
+
+      /* ── 3. SELECTED WORK ON PHONES (Sticky Clean Box at Top; Cards Slide Below) ── */
+      #port-driver {
+        position: relative !important;
+        padding-top: 0 !important;
+        padding-bottom: 72px !important;
+        background: var(--bg) !important;
+        overflow: visible !important;
+      }
+
+      .port-sticky-center {
+        position: sticky !important;
+        top: 0 !important;
+        height: auto !important;
+        min-height: auto !important;
+        justify-content: flex-start !important;
+        z-index: 20 !important;
+        background: var(--bg) !important;
+        padding: 56px 20px 18px 20px !important;
+        margin: 0 !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        box-shadow: 0 16px 32px var(--bg) !important;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .port-sticky-center::after {
+        content: "";
+        position: absolute;
+        bottom: -24px;
+        left: 0;
+        right: 0;
+        height: 24px;
+        background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+        pointer-events: none;
+      }
+
+      .psc-badge {
+        display: none !important;
+      }
+
+      .psc-title {
+        font-family: var(--font-primary) !important;
+        font-weight: 700 !important;
+        font-size: clamp(30px, 8.2vw, 38px) !important;
+        line-height: 1.02 !important;
+        text-align: center !important;
+        letter-spacing: -0.035em !important;
+        color: var(--ink) !important;
+        margin: 0 !important;
+      }
+
+      .psc-title .psc-accent {
+        color: var(--cr) !important;
+        font-style: italic !important;
+      }
+
+      .psc-sub {
+        font-family: var(--font-secondary) !important;
+        font-size: 13.5px !important;
+        line-height: 1.5 !important;
+        margin-top: 10px !important;
+        max-width: 320px !important;
+        text-align: center !important;
+        color: var(--ink-mid) !important;
+      }
+
+      .port-cards-flow {
+        position: relative !important;
+        z-index: 5 !important;
+        margin-top: 0 !important;
+        padding: 10px 16px 40px 16px !important;
+        gap: 32px !important;
+        pointer-events: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .p-flow-item {
+        padding: 0 !important;
+        margin: 0 !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 380px !important;
+      }
+
+      .p-card-v {
+        width: 100% !important;
+        max-width: 380px !important;
+        transform: none !important;
+        border-radius: 18px !important;
+        box-sizing: border-box !important;
+      }
+
+      .pcv-media {
+        height: 230px !important;
+      }
+
+      /* ── 4. SERVICES ON PHONES (Sticky Clean Box at Top; Sleek Cards Slide Below) ── */
+      #svc-driver {
+        position: relative !important;
+        height: auto !important;
+        min-height: auto !important;
+        padding-top: 0 !important;
+        padding-bottom: 72px !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+        overflow: visible !important;
+        background: var(--bg) !important;
+      }
+
+      #svc-sticky {
+        position: relative !important;
+        top: auto !important;
+        height: auto !important;
+        min-height: auto !important;
+        display: block !important;
+        overflow: visible !important;
+        background: transparent !important;
+      }
+
+      .svc-spotlight {
+        display: none !important;
+      }
+
+      .svc-stage {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0 !important;
+        overflow: visible !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Sticky Services Center Header on Phone (Matches Selected Work Exactly) */
+      .svc-sticky-center {
+        display: flex !important;
+        position: sticky !important;
+        top: 0 !important;
+        height: auto !important;
+        min-height: auto !important;
+        justify-content: flex-start !important;
+        z-index: 20 !important;
+        background: var(--bg) !important;
+        padding: 56px 20px 18px 20px !important;
+        margin: 0 !important;
+        text-align: center !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        box-shadow: 0 16px 32px var(--bg) !important;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+
+      .svc-sticky-center::after {
+        content: "";
+        position: absolute;
+        bottom: -24px;
+        left: 0;
+        right: 0;
+        height: 24px;
+        background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
+        pointer-events: none;
+      }
+
+      .ssc-title {
+        font-family: var(--font-primary) !important;
+        font-weight: 700 !important;
+        font-size: clamp(30px, 8.2vw, 38px) !important;
+        line-height: 1.02 !important;
+        text-align: center !important;
+        letter-spacing: -0.035em !important;
+        color: var(--ink) !important;
+        margin: 0 !important;
+      }
+
+      .ssc-title .ssc-accent {
+        color: var(--cr) !important;
+        font-style: italic !important;
+      }
+
+      .ssc-sub {
+        font-family: var(--font-secondary) !important;
+        font-size: 13.5px !important;
+        line-height: 1.5 !important;
+        margin-top: 10px !important;
+        max-width: 320px !important;
+        text-align: center !important;
+        color: var(--ink-mid) !important;
+        transition: opacity 0.25s ease;
+      }
+
+      /* HIDE "Built around ideas. Designed for growth." & "Why Choose Us" ON PHONE */
+      #svcHeroCapsule,
+      .svc-hero-capsule,
+      .svc-capsule-folder-placeholder,
+      .svc-main-folder,
+      #svcFiveMenu,
+      .svc-s2-menu,
+      .svc-why-card {
+        display: none !important;
+      }
+
+      .svc-detail-deck {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 28px !important;
+        padding-top: 10px !important;
+        box-sizing: border-box !important;
+        pointer-events: auto !important;
+        overflow: visible !important;
+      }
+
+      .svc-showcase-card {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        opacity: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        padding: 18px 16px !important;
+        border-radius: 20px !important;
+        pointer-events: auto !important;
+        filter: none !important;
+        box-sizing: border-box !important;
+        background: #18181B !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2) !important;
+      }
+
+      [data-theme="light"] .svc-showcase-card {
+        background: #FFFFFF !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06) !important;
+      }
+
+      /* USER REQUIREMENT: Remove description, heading, and visual identity from cards on phone */
+      .svc-showcase-card .svc-card-header,
+      .svc-showcase-card .svc-badge,
+      .svc-showcase-card h3,
+      .svc-showcase-card p,
+      .svc-showcase-card .svc-card-num-watermark {
+        display: none !important;
+      }
+
+      .svc-s3-art-frame {
+        width: 100% !important;
+        height: 180px !important;
+        border-radius: 14px !important;
+        margin-bottom: 14px !important;
+        overflow: hidden !important;
+      }
+
+      .svc-art-video {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+
+      .svc-deliverables {
+        margin: 6px 0 14px 0 !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+      }
+
+      .svc-deliv-pill {
+        font-size: 11.5px !important;
+        padding: 5px 11px !important;
+      }
+
+      .svc-card-footer {
+        padding-top: 14px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+      }
+
+      [data-theme="light"] .svc-card-footer {
+        border-top-color: rgba(0, 0, 0, 0.08) !important;
+      }
+
+      /* ── 5. CLIENT LOGOS & BRAND COLLAB ON PHONES ── */
+      #brands-driver {
+        overflow: hidden !important;
+        max-width: 100vw !important;
+        padding: 48px 0 !important;
+        gap: 28px !important;
+      }
+
+      .brands-title {
+        font-size: clamp(28px, 8vw, 40px) !important;
+      }
+
+      .brands-subtitle {
+        color: var(--ink-mid) !important;
+        font-size: 0.88rem !important;
+        line-height: 1.6 !important;
+        max-width: 340px !important;
+        margin: 14px auto 0 auto !important;
+        opacity: 0.95 !important;
+        font-weight: 500 !important;
+      }
+
+      .brand-row-wrap {
+        overflow: hidden !important;
+        max-width: 100vw !important;
+      }
+
+      /* ── 6. FRESH PERSPECTIVES & INSIGHTS (ALL CENTERED; SIGNATURE EDITORIAL HEADING; CENTERED LINK) ── */
+      #blog-section {
+        padding: 56px 20px 72px 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+      }
+
+      .fbc-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        gap: 28px !important;
+      }
+
+      .fbc-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+      }
+
+      .fbc-header > div {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+      }
+
+      /* Subheading tag completely hidden/removed */
+      .fbc-tag {
+        display: none !important;
+      }
+
+      /* Prominent Editorial Header for Perspectives Block Section */
+      .fbc-header h2 {
+        display: block !important;
+        font-family: var(--font-primary) !important;
+        font-weight: 700 !important;
+        font-size: clamp(30px, 8.2vw, 38px) !important;
+        line-height: 1.04 !important;
+        text-align: center !important;
+        letter-spacing: -0.035em !important;
+        text-transform: uppercase !important;
+        color: var(--ink) !important;
+        margin: 0 auto 10px auto !important;
+      }
+
+      .fbc-header h2 em {
+        font-family: var(--font-primary) !important;
+        font-style: italic !important;
+        font-weight: 300 !important;
+        color: var(--cr) !important;
+        text-transform: uppercase !important;
+        display: inline !important;
+      }
+
+      .fbc-header p {
+        text-align: center !important;
+        margin: 0 auto !important;
+        font-size: 0.88rem !important;
+        line-height: 1.5 !important;
+        color: var(--ink-mid) !important;
+        max-width: 330px !important;
+      }
+
+      .fbc-all {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 22px auto 0 auto !important;
+        padding: 12px 26px !important;
+        background: rgba(255, 255, 255, 0.06) !important;
+        border: 1px solid rgba(255, 255, 255, 0.16) !important;
+        border-radius: 999px !important;
+        color: var(--ink) !important;
+        font-family: var(--font-primary) !important;
+        font-size: 0.82rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.05em !important;
+        text-transform: uppercase !important;
+        gap: 8px !important;
+        text-decoration: none !important;
+      }
+
+      [data-theme="light"] .fbc-all {
+        background: rgba(0, 0, 0, 0.04) !important;
+        border-color: rgba(0, 0, 0, 0.14) !important;
+      }
+
+      .fbc-cards-row {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        gap: 20px !important;
+      }
+
+      .fbc-card {
+        width: 100% !important;
+        max-width: 380px !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Center "Open Perspective" & arrow */
+      .fbc-link {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin: 16px auto 0 auto !important;
+        font-family: var(--font-primary) !important;
+        font-size: 0.78rem !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: var(--cr, #C8102E) !important;
+      }
+
+      .fbc-link-arrow {
+        display: inline-block !important;
+        transition: transform 0.25s ease;
+      }
+
+      /* Hide Trusted By label strictly on mobile */
+      .bph-label {
+        display: none !important;
+      }
+
+      /* ── 7. FOOTER ON PHONES (COMPACT LUXURY CARD, TIGHT PADDING, ZERO DEAD SPACE) ── */
+      .footer-luxury-card {
+        padding: 36px 18px 20px 18px !important;
+        min-height: auto !important;
+        height: auto !important;
+        gap: 16px !important;
+        justify-content: flex-start !important;
+        overflow: hidden !important;
+      }
+
+      .f-header-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 24px 16px !important;
+        width: 100% !important;
+      }
+
+      .f-desc-col {
+        grid-column: 1 / -1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .f-statement-title {
+        text-align: center !important;
+        font-size: clamp(22px, 6vw, 28px) !important;
+        margin-bottom: 12px !important;
+      }
+
+      .f-desc-text {
+        text-align: center !important;
+        font-size: 0.85rem !important;
+        max-width: 340px !important;
+        margin: 0 auto 16px auto !important;
+      }
+
+      .f-location-tag {
+        margin: 0 auto 18px auto !important;
+      }
+
+      .f-social-circles {
+        justify-content: center !important;
+        margin: 0 auto !important;
+      }
+
+      /* Explore and Studio & Legal links side-by-side */
+      .f-nav-col {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        padding: 0 4px !important;
+        box-sizing: border-box !important;
+      }
+
+      .f-col-label {
+        font-size: 0.72rem !important;
+        letter-spacing: 0.12em !important;
+        margin-bottom: 14px !important;
+        color: var(--cr, #C8102E) !important;
+        font-weight: 700 !important;
+      }
+
+      .f-links-clean li {
+        margin-bottom: 10px !important;
+      }
+
+      .f-links-clean a {
+        font-size: 0.88rem !important;
+        color: var(--ink-mid) !important;
+      }
+
+      /* CTA column full width below link columns */
+      .f-cta-column {
+        grid-column: 1 / -1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        gap: 12px !important;
+        margin-top: 4px !important;
+      }
+
+      .f-action-pill {
+        width: 100% !important;
+        max-width: 360px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Bottom Giant Brand Text ("1928 CREATIVE STUDIO" fully visible across width, compact gap above) */
+      .f-bottom-cluster {
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-top: 10px !important;
+        padding-top: 0 !important;
+      }
+
+      .f-brand-title-wrap {
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 4px 0 8px 0 !important;
+        box-sizing: border-box !important;
+      }
+
+      .f-brand-giant-text {
+        font-family: var(--font-primary) !important;
+        font-weight: 900 !important;
+        font-size: clamp(17px, 6.2vw, 40px) !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.02em !important;
+        line-height: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+      }
+
+      .f-brand-giant-text .f-char {
+        transform: translateY(0%) !important;
+        opacity: 1 !important;
+      }
+
+      .f-outer-bar {
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 8px !important;
+        padding: 16px 20px !important;
+      }
+
+      .f-outer-copyright, .f-outer-dev {
+        text-align: center !important;
+        font-size: 0.74rem !important;
+      }
+    }
   </style>
 </head>
 
@@ -3706,6 +4637,22 @@
         </div>
       </div>
 
+      <!-- ══ PHONE HERO VIEW (Strictly scoped to phones <= 768px; hidden on desktop) ══ -->
+      <div class="phone-hero" id="phoneHero">
+        <div class="ph-grid-bg"></div>
+        <div class="ph-glow"></div>
+
+        <h1 class="ph-title">
+          <span class="ph-title-line1">1928</span>
+          <span class="ph-title-line2">Creative Studio</span>
+        </h1>
+
+        <p class="ph-sub">
+          <span class="ph-sub-line">We build brands designed to grow.</span>
+          <span class="ph-sub-line">And businesses ready to create greater value.</span>
+        </p>
+      </div>
+
       <!-- LAYER 1 (z:2) — Architectural Wireframe SVG (Center Box + 4 Corner Rays + Outer Border) -->
       <!-- LAYER 1 (z:2) — Architectural Wireframe SVG (4 Box Lines Joining from Corners + 4 Corner Rays Emerging to Screen Corners + Outer Border) -->
       <svg class="hero-corner-rays" id="heroRaysSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -3788,7 +4735,7 @@
       <div class="hero-title" id="heroTitle">
         <h1>
           <span class="hero-part-1" id="hPart1">1928</span><br />
-          <span class="hero-part-2" id="hPart2">Creative Studio.</span>
+          <span class="hero-part-2" id="hPart2">Creative Studio</span>
         </h1>
         <div class="hero-sub" id="heroSub">
           We build brands designed to grow.<br />And businesses ready to create greater value.
@@ -3838,7 +4785,30 @@
             </svg></div>
         </div>
       </div>
+    </div>
+  </section>
 
+  <!-- ══ PHONE VIDEO SECTION (Video Showreel; strictly on phone <= 768px; hidden on desktop) ══ -->
+  <section id="phoneStorySec" class="phone-story-section">
+    <div class="pss-container">
+      <!-- The Featured Showreel Video Card -->
+      <div class="ph-reel-card" id="phReelCard">
+        <div class="ph-reel-media" id="phReelMedia">
+          <video id="phReelVideo" playsinline loop muted preload="metadata" poster="img/3D Room Floating Cards (Hero Section)-01.jpg">
+            <source src="video/Test.mp4" type="video/mp4">
+          </video>
+          <div class="ph-reel-overlay"></div>
+          <button type="button" class="ph-play-btn" id="phPlayBtn" aria-label="Play Studio Showreel">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <polygon points="6,4 20,12 6,20" />
+            </svg>
+          </button>
+          <div class="ph-reel-info">
+            <span class="ph-reel-badge">FEATURED SHOWREEL</span>
+            <span class="ph-reel-heading">Identity, Direction &amp; Digital</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -3950,6 +4920,13 @@
 
   <!-- §4 — SERVICES (Unified Architecture: One Single Persistent Physical Dossier Folder) -->
   <section id="svc-driver">
+
+    <!-- STICKY SERVICES HEADER (Strictly on Phone <= 768px; Hidden on Desktop) -->
+    <div class="svc-sticky-center" id="svcStickyCenter">
+      <h2 class="ssc-title">OUR<br /><span class="ssc-accent">SERVICES.</span></h2>
+      <p class="ssc-sub" id="sscSub">Strategic brand systems, digital experiences and content engineered for growth.</p>
+    </div>
+
     <div id="svc-sticky">
       <!-- Ambient Spotlight -->
       <div class="svc-spotlight"></div>
@@ -4712,7 +5689,6 @@
     <div class="fbc-content">
       <div class="fbc-header">
         <div>
-          <div class="fbc-tag">✦ 1928 Insights // Ideas &amp; Perspectives</div>
           <h2>A Different<br /><em>Point of View.</em></h2>
           <p style="font-family:var(--font-secondary);font-size:0.95rem;color:var(--ink-mid);margin-top:8px;max-width:560px;line-height:1.5;">Ideas, insights and perspectives on branding, design, digital and the business behind great brands.</p>
         </div>
@@ -4730,7 +5706,7 @@
               <h4>The Architectural Role of Language in Modern Brand Systems</h4>
               <p>How precise UX copywriting and brand vocabulary define category leadership and emotional equity.</p>
             </div>
-            <span class="fbc-link">Open Perspective →</span>
+            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"> →</span></span>
           </div>
         </a>
 
@@ -4745,7 +5721,7 @@
               <h4>Designing Frictionless Micro-Interactions for High-Retention Products</h4>
               <p>Exploring kinetic feedback loops, spatial pacing, and sensory digital choreography.</p>
             </div>
-            <span class="fbc-link">Open Perspective →</span>
+            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"> →</span></span>
           </div>
         </a>
 
@@ -4760,7 +5736,7 @@
               <h4>Scaling from Boutique Practice to Global Cultural Authority</h4>
               <p>Strategic frameworks behind iconic studio transformations and non-linear venture expansion.</p>
             </div>
-            <span class="fbc-link">Open Perspective →</span>
+            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"> →</span></span>
           </div>
         </a>
       </div>
@@ -5081,7 +6057,34 @@
         const sy = (typeof forcedSY === 'number') ? forcedSY : window.scrollY;
         const vh = window.innerHeight;
 
-        // Global Nav Visibility:
+        const isPhone = window.innerWidth <= 768;
+        if (isPhone) {
+          const isPastHero = sy >= (window.innerHeight * 0.6);
+          if (nav) {
+            if (isPastHero) {
+              if (sy < lastSY - 2) {
+                nav.classList.add('visible');
+                nav.classList.remove('hidden');
+              } else if (sy > lastSY + 2) {
+                nav.classList.remove('visible');
+                nav.classList.add('hidden');
+              }
+            } else {
+              // Strictly hidden on the first screen (hero) on phone
+              nav.classList.remove('visible');
+              nav.classList.add('hidden');
+            }
+          }
+          if (themeFab) {
+            themeFab.classList.add('vis');
+          }
+          document.documentElement.classList.remove('hide-scrollbar');
+          document.body.classList.remove('hide-scrollbar');
+          lastSY = sy;
+          return;
+        }
+
+        // Global Nav Visibility (Desktop):
         // - In Hero 3D room (heroHp < 0.70): always hidden.
         // - Starting from "Who We Are" (heroHp >= 0.70):
         //   * Scrolling UP (sy < lastSY - 2): appears / slides down into view.
@@ -5094,7 +6097,7 @@
         if (nav) {
           if (isPastHero) {
             if (sy < lastSY - 2) {
-              // Scrolling UP: header comes down smoothly from the top
+              // Scrolling UP: header comes down smoothly
               nav.classList.add('visible');
               nav.classList.remove('hidden');
             } else if (sy > lastSY + 2) {
@@ -5103,7 +6106,7 @@
               nav.classList.add('hidden');
             }
           } else {
-            // Strictly hidden inside the home page hero section
+            // Strictly hidden inside the home page hero section on desktop
             nav.classList.remove('visible');
             nav.classList.add('hidden');
           }
@@ -5131,7 +6134,7 @@
         lastSY = sy;
 
         /* ═══ §1 HERO & BRAND STORY ═══ */
-        if (heroDriver && heroTitle && roomCube && heroReel) {
+        if (heroDriver && heroTitle && roomCube && heroReel && window.innerWidth > 768) {
           const heroH = heroDriver.offsetHeight - vh;
           const hp = clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1);
 
@@ -5292,7 +6295,7 @@
         }
 
         /* ═══ §3 SELECTED WORK — Parallax Showcase with Sticky Center Headline ═══ */
-        if (portDriver) {
+        if (portDriver && window.innerWidth > 768) {
           const portTop = portDriver.offsetTop;
 
           if (portStickyCenter) {
@@ -5345,7 +6348,25 @@
         }
 
         /* ═══ §4 SERVICES — Unified Single Persistent Physical Dossier Folder ═══ */
-        if (svcDriver && svcHeroCapsule && mainSvcFolder) {
+        if (window.innerWidth <= 768) {
+          // Mobile Phone Services: update sticky header subtitle dynamically
+          const sscSub = document.querySelector('.svc-sticky-center .ssc-sub');
+          const svcCards = document.querySelectorAll('.svc-showcase-card');
+          if (sscSub && svcCards.length) {
+            let activeTitle = "A specialized collection of design, strategy and technology disciplines.";
+            svcCards.forEach((c) => {
+              const r = c.getBoundingClientRect();
+              if (r.top <= vh * 0.45 && r.bottom >= vh * 0.15) {
+                const badge = c.querySelector('.svc-badge');
+                const title = c.querySelector('h3');
+                if (badge && title) {
+                  activeTitle = `${badge.textContent.trim()} — ${title.textContent.trim()}`;
+                }
+              }
+            });
+            sscSub.textContent = activeTitle;
+          }
+        } else if (svcDriver && svcHeroCapsule && mainSvcFolder) {
           const svcTop = svcDriver.offsetTop;
           const svcH = svcDriver.offsetHeight - vh;
 
@@ -5848,6 +6869,16 @@
          1928 CREATIVE STUDIO — CINEMATIC 3D HERO LOADING JS
          ═══════════════════════════════════════════════════════════ */
       (function initHeroLoadingAssembly() {
+        if (window.innerWidth <= 768) {
+          // Phone view: Instant luxury entrance, zero 7.3s HUD wait
+          document.body.classList.remove('hero-loading-active');
+          document.body.classList.add('hero-loading-complete');
+          const hud = document.getElementById('heroLoadingHud');
+          if (hud) hud.style.display = 'none';
+          onScroll();
+          return;
+        }
+
         let isReload = false;
         try {
           const navEntries = performance.getEntriesByType('navigation');
@@ -5973,6 +7004,29 @@
           onScroll();
         }, 7300);
       })();
+
+      // Interactive Phone Showreel Video
+      const phPlayBtn = document.getElementById('phPlayBtn');
+      const phReelVideo = document.getElementById('phReelVideo');
+      const phReelCard = document.getElementById('phReelCard');
+      if (phPlayBtn && phReelVideo) {
+        const togglePhVideo = () => {
+          if (phReelVideo.paused) {
+            phReelVideo.play().catch(() => {});
+            phPlayBtn.style.opacity = '0';
+          } else {
+            phReelVideo.pause();
+            phPlayBtn.style.opacity = '1';
+          }
+        };
+        phPlayBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          togglePhVideo();
+        });
+        if (phReelCard) phReelCard.addEventListener('click', togglePhVideo);
+      }
+
+      window.addEventListener('resize', () => { onScroll(); }, { passive: true });
 
       onScroll();
     })();

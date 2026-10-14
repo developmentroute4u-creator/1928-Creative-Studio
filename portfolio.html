@@ -387,6 +387,8 @@
       -webkit-backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--rule);
       padding: 18px 0 20px;
+      overflow: hidden;
+      max-width: 100vw;
       transition: top 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s var(--sp), opacity 0.35s ease, background 0.4s var(--sp), border-color 0.4s;
     }
 
@@ -420,6 +422,15 @@
       padding: 10px 16px 14px;
       width: 100%;
       box-sizing: border-box;
+    }
+
+    @media (max-width: 1200px) {
+      .filter-bar-inner {
+        overflow-x: auto;
+        justify-content: flex-start;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
     }
 
     .filter-bar-inner::-webkit-scrollbar {
