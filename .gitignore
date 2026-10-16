@@ -13,3 +13,12 @@
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Dependencies
+node_modules/
+whatsapp-api/node_modules/
+# WhatsApp Web.js
+.wwebjs_auth/
+.wwebjs_cache/
+whatsapp-api/.wwebjs_auth/
+whatsapp-api/.wwebjs_cache/

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 1928 CREATIVE STUDIO — SMTP Configuration Settings (Optional Override)
  * 
@@ -38,6 +39,17 @@ define('SMTP_PASS', 'hL9^8q9@');
 define('SMTP_FROM_EMAIL', 'no-reply@1928creativestudio.com');
 define('SMTP_FROM_NAME', '1928 Creative Studio');
 
+if (!defined('WHATSAPP_API_URL')) {
+    define(
+        'WHATSAPP_API_URL',
+        'http://127.0.0.1:3000/send-form-notifications'
+    );
+}
+
+if (!defined('WHATSAPP_API_SECRET')) {
+    define('WHATSAPP_API_SECRET', 'akgsaqcwkuisebsdxpzwqswasogzhlsdlibetpugrjqruckv');
+}
+
 // 4. LARAGON LOCAL TESTING (Mail Catcher / Mailpit on localhost:1025):
 // define('SMTP_HOST', 'localhost');
 // define('SMTP_PORT', 1025);
@@ -53,4 +65,3 @@ define('SMTP_FROM_NAME', '1928 Creative Studio');
 // uncomment and paste it below:
 // define('CLOUDFLARE_TURNSTILE_SECRET_KEY', 'your-cloudflare-turnstile-secret-key-here');
 // define('ENABLE_TURNSTILE_VERIFY', true);
-

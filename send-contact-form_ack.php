@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 1928 CREATIVE STUDIO — Project Brief & Contact Form Acknowledgment Dispatcher
  * 
@@ -76,7 +77,7 @@ if (!defined('SMTP_FROM_NAME')) {
     define('SMTP_FROM_NAME', getenv('SMTP_FROM_NAME') ?: '1928 Creative Studio');
 }
 if (!defined('SMTP_REPLY_TO')) {
-    define('SMTP_REPLY_TO', getenv('SMTP_REPLY_TO') ?: 'hello@1928.studio');
+    define('SMTP_REPLY_TO', getenv('SMTP_REPLY_TO') ?: '1928.Creativestudio@gmail.com');
 }
 if (!defined('ADMIN_NOTIFICATION_EMAIL')) {
     define('ADMIN_NOTIFICATION_EMAIL', getenv('ADMIN_NOTIFICATION_EMAIL') ?: ''); // Set to your studio email to get a copy
@@ -270,6 +271,153 @@ try {
     // Continue so email dispatch can still be attempted even if DB has an issue
 }
 
+
+/* ── WhatsApp notifications: independent of email delivery ── */
+/* ── Customer WhatsApp confirmation ── */
+
+$whatsappResult = [
+    'attempted' => false,
+    'success'   => false,
+    'message'   => 'WhatsApp notification not attempted.'
+];
+
+try {
+    if (!function_exists('curl_init')) {
+        throw new RuntimeException(
+            'PHP cURL extension is not enabled.'
+        );
+    }
+
+    if (
+        !defined('WHATSAPP_API_URL') ||
+        !defined('WHATSAPP_API_SECRET') ||
+        WHATSAPP_API_SECRET === ''
+    ) {
+        throw new RuntimeException(
+            'WhatsApp API configuration is incomplete.'
+        );
+    }
+
+    // Normalize the customer's phone number.
+    $rawPhone = trim((string)$phone);
+    $phoneDigits = preg_replace('/\D+/', '', $rawPhone);
+
+    $countryCodeRaw = trim((string)(
+        $requestData['country_code']
+        ?? $requestData['countryCode']
+        ?? $requestData['dialCode']
+        ?? '+91'
+    ));
+
+    $countryDigits = preg_replace('/\D+/', '', $countryCodeRaw);
+
+    if (strpos($rawPhone, '+') === 0) {
+        // Number already includes its international prefix.
+        $whatsappPhone = $phoneDigits;
+    } elseif (
+        strlen($phoneDigits) > 10 &&
+        $countryDigits !== '' &&
+        strpos($phoneDigits, $countryDigits) === 0
+    ) {
+        // Number already starts with the country code.
+        $whatsappPhone = $phoneDigits;
+    } else {
+        // Add the selected country code to a local number.
+        $whatsappPhone = $countryDigits . $phoneDigits;
+    }
+
+    if (!preg_match('/^\d{8,15}$/', $whatsappPhone)) {
+        throw new RuntimeException(
+            'Customer phone number is invalid for WhatsApp.'
+        );
+    }
+
+    // The Node API requires the customer name and phone.
+    $whatsappPayload = [
+        'name'  => $name,
+        'phone' => $whatsappPhone
+    ];
+
+    $jsonPayload = json_encode(
+        $whatsappPayload,
+        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+    );
+
+    if ($jsonPayload === false) {
+        throw new RuntimeException(
+            'Could not encode the WhatsApp request.'
+        );
+    }
+
+    $ch = curl_init(WHATSAPP_API_URL);
+
+    curl_setopt_array($ch, [
+        CURLOPT_POST           => true,
+        CURLOPT_POSTFIELDS     => $jsonPayload,
+        CURLOPT_HTTPHEADER     => [
+            'Content-Type: application/json',
+            'x-api-secret: ' . WHATSAPP_API_SECRET
+        ],
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_CONNECTTIMEOUT => 3,
+        CURLOPT_TIMEOUT        => 35
+    ]);
+
+    $whatsappResult['attempted'] = true;
+
+    $whatsappResponse = curl_exec($ch);
+    $whatsappHttpCode = (int)curl_getinfo(
+        $ch,
+        CURLINFO_HTTP_CODE
+    );
+    $whatsappCurlError = curl_error($ch);
+
+    curl_close($ch);
+
+    if ($whatsappResponse === false) {
+        throw new RuntimeException(
+            'WhatsApp API connection failed: ' . $whatsappCurlError
+        );
+    }
+
+    $responseData = json_decode($whatsappResponse, true);
+
+    if (!is_array($responseData)) {
+        throw new RuntimeException(
+            'WhatsApp API returned an invalid response.'
+        );
+    }
+
+    if (
+        $whatsappHttpCode >= 200 &&
+        $whatsappHttpCode < 300 &&
+        !empty($responseData['success']) &&
+        !empty($responseData['customerSent'])
+    ) {
+        $whatsappResult['success'] = true;
+        $whatsappResult['message'] =
+            'Customer WhatsApp send operation completed.';
+    } else {
+        $whatsappResult['message'] =
+            $responseData['error']
+            ?? $responseData['message']
+            ?? 'WhatsApp API request failed.';
+
+        error_log(
+            '1928 Studio WhatsApp Error. HTTP ' .
+                $whatsappHttpCode . ': ' .
+                $whatsappResult['message']
+        );
+    }
+} catch (Throwable $whatsappError) {
+    $whatsappResult['message'] = $whatsappError->getMessage();
+
+    error_log(
+        '1928 Studio WhatsApp Integration Error: ' .
+            $whatsappError->getMessage()
+    );
+}
+
 // ══════════════════════════════════════════════════════════════════════════════
 // 3. LOAD PHPMAILER
 // ══════════════════════════════════════════════════════════════════════════════
@@ -282,7 +430,8 @@ if (!file_exists($autoloadFile)) {
             'status'     => 'success',
             'message'    => 'Brief received and securely logged in our studio admin panel! Our team will review your mandate within 72 hours.',
             'inquiry_id' => $inquiryId,
-            'saved_to_db'=> true,
+            'whatsapp' => $whatsappResult,
+            'saved_to_db' => true,
             'mail_sent'  => false
         ]);
         exit;
@@ -520,7 +669,8 @@ try {
         'status'     => 'success',
         'message'    => 'Brief received! An acknowledgment email has been sent to ' . htmlspecialchars($email) . ' (we will get back to you within 72 hours).',
         'inquiry_id' => $inquiryId,
-        'saved_to_db'=> $savedToDb,
+        'whatsapp' => $whatsappResult,
+        'saved_to_db' => $savedToDb,
         'mail_sent'  => true,
         'data'       => [
             'recipient' => $email,
@@ -530,13 +680,12 @@ try {
         ]
     ]);
     exit;
-
 } catch (Exception $e) {
     error_log("1928 Studio Mailer Error: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
 
     // Provide informative diagnosis
     $errorMsg = $mail->ErrorInfo ?: $e->getMessage();
-    
+
     // Provide a helpful hint if SMTP credentials are still default placeholders
     if (SMTP_USER === 'your-email@gmail.com' || SMTP_PASS === 'your-app-password') {
         $errorMsg = 'SMTP credentials not configured. Please set your SMTP details in send-contact-form_ack.php or smtp-config.php.';
@@ -549,9 +698,10 @@ try {
             'status'     => 'success',
             'message'    => 'Brief received and securely stored in our studio system! Our leadership will review your mandate within 72 hours.',
             'inquiry_id' => $inquiryId,
-            'saved_to_db'=> true,
+            'whatsapp' => $whatsappResult,
+            'saved_to_db' => true,
             'mail_sent'  => false,
-            'mail_notice'=> $errorMsg,
+            'mail_notice' => $errorMsg,
             'data'       => [
                 'recipient' => $email,
                 'timestamp' => date('c'),
