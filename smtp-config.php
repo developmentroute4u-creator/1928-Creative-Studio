@@ -39,6 +39,10 @@ define('SMTP_PASS', 'hL9^8q9@');
 define('SMTP_FROM_EMAIL', 'no-reply@1928creativestudio.com');
 define('SMTP_FROM_NAME', '1928 Creative Studio');
 
+if (!defined('ADMIN_NOTIFICATION_EMAIL')) {
+    define('ADMIN_NOTIFICATION_EMAIL', 'vanshmistry2001@gmail.com'); // Admin email recipient (change later for production)
+}
+
 if (!defined('WHATSAPP_API_URL')) {
     define(
         'WHATSAPP_API_URL',

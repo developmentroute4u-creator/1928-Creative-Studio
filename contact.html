@@ -4536,8 +4536,58 @@
             const activeTimeline = document.querySelector('#timelinePills .timeline-pill.active');
             const timelineVal = activeTimeline ? activeTimeline.textContent.trim() : '< 1 Month (Immediate)';
 
-            const sessionSummary = document.getElementById('stepSlotSummaryText')?.textContent.trim() ||
-              `${stepSelectedCalDate.weekday}, ${stepSelectedCalDate.month} ${stepSelectedCalDate.day}, ${stepSelectedCalDate.year} · ${stepSelectedCalTime}`;
+            // Accurately resolve chosen date and time from active selection in DOM or session banner
+            let chosenDate = window._studioSelectedDate || '';
+            let chosenTime = window._studioSelectedTime || '';
+
+            const slotSummaryEl = document.getElementById('stepSlotSummaryText');
+            if (slotSummaryEl) {
+              if (!chosenDate) chosenDate = slotSummaryEl.getAttribute('data-selected-date') || '';
+              if (!chosenTime) chosenTime = slotSummaryEl.getAttribute('data-selected-time') || '';
+            }
+
+            // Check active time chip in DOM
+            const activeTimeChip = document.querySelector('#stepSbTimesGrid .sb-time-chip.active');
+            if (activeTimeChip) {
+              const chipTime = activeTimeChip.getAttribute('data-time') || activeTimeChip.textContent.trim();
+              if (chipTime) chosenTime = chipTime;
+            }
+
+            // Parse from stepSlotSummaryText (e.g. "Thursday, Oct 22, 2026 · 04:30 PM IST")
+            const summaryRaw = slotSummaryEl ? slotSummaryEl.textContent.trim() : '';
+            if (summaryRaw) {
+              const summaryParts = summaryRaw.split(/\s*[·•\-]\s*/);
+              if (summaryParts.length >= 2) {
+                if (!chosenDate) chosenDate = summaryParts[0].trim();
+                if (!chosenTime) chosenTime = summaryParts[1].trim();
+              } else if (!chosenDate) {
+                chosenDate = summaryRaw;
+              }
+            }
+
+            // Fallback: Active calendar cell & month title
+            if (!chosenDate) {
+              const activeDayCell = document.querySelector('#stepSbDaysGrid .sb-day-cell.active');
+              const monthTitle = document.getElementById('stepCalMonthTitle')?.textContent.trim() || '';
+              if (activeDayCell && monthTitle) {
+                const dayNum = activeDayCell.getAttribute('data-day') || activeDayCell.textContent.trim();
+                const wDay = activeDayCell.getAttribute('data-weekday') || '';
+                chosenDate = wDay ? `${wDay}, ${monthTitle} ${dayNum}` : `${monthTitle} ${dayNum}`;
+              }
+            }
+
+            // Fallback to internal calendar state if present
+            if (!chosenDate && typeof stepSelectedCalDate !== 'undefined' && stepSelectedCalDate) {
+              chosenDate = `${stepSelectedCalDate.weekday}, ${stepSelectedCalDate.month} ${stepSelectedCalDate.day}, ${stepSelectedCalDate.year}`;
+            }
+            if (!chosenTime && typeof stepSelectedCalTime !== 'undefined' && stepSelectedCalTime) {
+              chosenTime = stepSelectedCalTime;
+            }
+            if (!chosenTime) {
+              chosenTime = '11:00 AM IST';
+            }
+
+            const sessionSummary = `${chosenDate} · ${chosenTime}`;
 
             const ccCodeText = document.getElementById('ccCode')?.textContent.trim() || '+91';
             const phoneVal = `${ccCodeText} ${phone}`;
@@ -4590,8 +4640,8 @@
               service: scopeVal,
               budget: allocVal,
               timeline: timelineVal,
-              date: `${stepSelectedCalDate.weekday}, ${stepSelectedCalDate.month} ${stepSelectedCalDate.day}, ${stepSelectedCalDate.year}`,
-              time: stepSelectedCalTime,
+              date: chosenDate,
+              time: chosenTime,
               session: sessionSummary,
               vision: vision,
               nda: ndaChecked ? 'Bilateral NDA Requested' : 'Standard Review',
@@ -4906,7 +4956,12 @@
 
       function updateStepSessionBanner() {
         if (stepSlotSummaryText) {
-          stepSlotSummaryText.textContent = `${stepSelectedCalDate.weekday}, ${stepSelectedCalDate.month} ${stepSelectedCalDate.day}, ${stepSelectedCalDate.year} · ${stepSelectedCalTime}`;
+          const dateStr = `${stepSelectedCalDate.weekday}, ${stepSelectedCalDate.month} ${stepSelectedCalDate.day}, ${stepSelectedCalDate.year}`;
+          stepSlotSummaryText.textContent = `${dateStr} · ${stepSelectedCalTime}`;
+          stepSlotSummaryText.setAttribute('data-selected-date', dateStr);
+          stepSlotSummaryText.setAttribute('data-selected-time', stepSelectedCalTime);
+          window._studioSelectedDate = dateStr;
+          window._studioSelectedTime = stepSelectedCalTime;
         }
       }
 

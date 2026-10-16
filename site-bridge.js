@@ -1164,7 +1164,12 @@
 
       function updateSummary() {
         if (summaryText) {
-          summaryText.textContent = `${selectedWeekday}, ${monthShortNames[targetMonth]} ${selectedDay}, ${targetYear} · ${selectedTime}`;
+          const dateStr = `${selectedWeekday}, ${monthShortNames[targetMonth]} ${selectedDay}, ${targetYear}`;
+          summaryText.textContent = `${dateStr} · ${selectedTime}`;
+          summaryText.setAttribute('data-selected-date', dateStr);
+          summaryText.setAttribute('data-selected-time', selectedTime);
+          window._studioSelectedDate = dateStr;
+          window._studioSelectedTime = selectedTime;
         }
       }
 

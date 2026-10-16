@@ -80,7 +80,7 @@ if (!defined('SMTP_REPLY_TO')) {
     define('SMTP_REPLY_TO', getenv('SMTP_REPLY_TO') ?: '1928.Creativestudio@gmail.com');
 }
 if (!defined('ADMIN_NOTIFICATION_EMAIL')) {
-    define('ADMIN_NOTIFICATION_EMAIL', getenv('ADMIN_NOTIFICATION_EMAIL') ?: ''); // Set to your studio email to get a copy
+    define('ADMIN_NOTIFICATION_EMAIL', getenv('ADMIN_NOTIFICATION_EMAIL') ?: 'vanshmistry2001@gmail.com'); // Admin email recipient (change later for production)
 }
 
 /**
@@ -117,12 +117,32 @@ $phone          = trim($requestData['phone'] ?? $requestData['contactNumber'] ??
 $service        = trim($requestData['service'] ?? $requestData['scope'] ?? 'Creative Direction & Strategy');
 $budget         = trim($requestData['budget'] ?? $requestData['allocation'] ?? 'Undisclosed Allocation');
 $timeline       = trim($requestData['timeline'] ?? '< 1 Month (Immediate)');
-$date           = trim($requestData['date'] ?? date('l, M j, Y'));
-$time           = trim($requestData['time'] ?? '11:00 AM IST');
-$session        = trim($requestData['session'] ?? "$date · $time");
-$vision         = trim($requestData['vision'] ?? $requestData['projectVision'] ?? '');
-$nda            = trim($requestData['nda'] ?? 'Standard Review');
-$turnstileToken = trim($requestData['turnstile_token'] ?? $requestData['cf-turnstile-response'] ?? $_POST['cf-turnstile-response'] ?? '');
+$date           = trim((string)($requestData['date'] ?? ''));
+$time           = trim((string)($requestData['time'] ?? ''));
+$session        = trim((string)($requestData['session'] ?? ''));
+$vision         = trim((string)($requestData['vision'] ?? $requestData['projectVision'] ?? ''));
+$nda            = trim((string)($requestData['nda'] ?? 'Standard Review'));
+$turnstileToken = trim((string)($requestData['turnstile_token'] ?? $requestData['cf-turnstile-response'] ?? $_POST['cf-turnstile-response'] ?? ''));
+
+// Fallback: If session contains both date and time (e.g. "Monday, Oct 19, 2026 · 02:30 PM IST"), parse components
+if (!empty($session) && (empty($date) || empty($time))) {
+    $sessionParts = preg_split('/\s*[·•\-]\s*/u', $session);
+    if (count($sessionParts) >= 2) {
+        if (empty($date)) $date = trim($sessionParts[0]);
+        if (empty($time)) $time = trim($sessionParts[1]);
+    }
+}
+
+// Ensure non-empty fallbacks if still blank
+if (empty($date)) {
+    $date = date('l, M j, Y');
+}
+if (empty($time)) {
+    $time = '11:00 AM IST';
+}
+if (empty($session)) {
+    $session = "$date · $time";
+}
 
 $cleanData = [
     'name'     => $name,
@@ -489,7 +509,8 @@ function buildAcknowledgmentHtml(array $d): string
             '{{logo_url}}'            => 'https://1928creativestudio.com/img/1928-logo-white-email.png',
         ];
 
-        return str_replace(array_keys($replacements), array_values($replacements), $html);
+        $rendered = str_replace(array_keys($replacements), array_values($replacements), $html);
+        return preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $rendered);
     }
 
     // High-fidelity standalone fallback HTML template if email-template.html is not present
@@ -613,14 +634,146 @@ TEXT;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
-// 5. DISPATCH EMAIL VIA PHPMailer SMTP
+// 4.5 GENERATE STUDIO ADMIN NOTIFICATION EMAIL CONTENT
 // ══════════════════════════════════════════════════════════════════════════════
 
-$mail = new PHPMailer(true);
+function buildAdminNotificationHtml(array $d, array $extra = []): string
+{
+    $fullName   = htmlspecialchars($d['name'] ?? 'Direct Lead', ENT_QUOTES, 'UTF-8');
+    $nameParts  = explode(' ', trim($fullName));
+    $firstName  = htmlspecialchars($nameParts[0] ?? 'Valued Client', ENT_QUOTES, 'UTF-8');
+    $company    = htmlspecialchars($d['company'] ?? 'Independent Project', ENT_QUOTES, 'UTF-8');
+    $email      = htmlspecialchars($d['email'] ?? '', ENT_QUOTES, 'UTF-8');
+    $phone      = htmlspecialchars($d['phone'] ?? 'Not Specified', ENT_QUOTES, 'UTF-8');
+    $service    = htmlspecialchars($d['service'] ?? 'Creative Strategy', ENT_QUOTES, 'UTF-8');
+    $budget     = htmlspecialchars($d['budget'] ?? 'Undisclosed Allocation', ENT_QUOTES, 'UTF-8');
+    $timeline   = htmlspecialchars($d['timeline'] ?? '< 1 Month (Immediate)', ENT_QUOTES, 'UTF-8');
+    $date       = htmlspecialchars($d['date'] ?? date('l, M j, Y'), ENT_QUOTES, 'UTF-8');
+    $time       = htmlspecialchars($d['time'] ?? '11:00 AM IST', ENT_QUOTES, 'UTF-8');
+    $nda        = htmlspecialchars($d['nda'] ?? 'Standard Review', ENT_QUOTES, 'UTF-8');
+    $vision     = htmlspecialchars($d['vision'] ?? 'No additional vision notes provided.', ENT_QUOTES, 'UTF-8');
+    $inquiryId  = htmlspecialchars((string)($extra['inquiry_id'] ?? 'NEW'), ENT_QUOTES, 'UTF-8');
+    $clientIp   = htmlspecialchars((string)($extra['ip'] ?? '127.0.0.1'), ENT_QUOTES, 'UTF-8');
+    $subTime    = htmlspecialchars((string)($extra['timestamp'] ?? date('l, M j, Y · h:i A T')), ENT_QUOTES, 'UTF-8');
 
+    // Prepare clean phone digits for WhatsApp and call links
+    $phoneDigits = preg_replace('/\D+/', '', (string)($d['phone'] ?? ''));
+    $rawPhone    = urlencode((string)($d['phone'] ?? ''));
+
+    $templatePath = __DIR__ . '/admin-email-template.html';
+
+    if (file_exists($templatePath)) {
+        $html = file_get_contents($templatePath);
+
+        $replacements = [
+            '{{inquiry_id}}'          => $inquiryId,
+            '{{client_name}}'         => $fullName,
+            '{{client_first_name}}'   => $firstName,
+            '{{company_name}}'        => $company,
+            '{{client_email}}'        => $email,
+            '{{client_phone}}'        => $phone,
+            '{{client_phone_raw}}'    => $rawPhone,
+            '{{client_phone_digits}}' => $phoneDigits,
+            '{{selected_service}}'    => $service,
+            '{{selected_budget}}'     => $budget,
+            '{{engagement_timeline}}' => $timeline,
+            '{{selected_date}}'       => $date,
+            '{{selected_time}}'       => $time,
+            '{{nda_status}}'          => $nda,
+            '{{project_vision}}'      => nl2br($vision),
+            '{{submission_time}}'     => $subTime,
+            '{{client_ip}}'           => $clientIp,
+            '{{logo_url}}'            => 'https://1928creativestudio.com/img/1928-logo-white-email.png',
+        ];
+
+        $rendered = str_replace(array_keys($replacements), array_values($replacements), $html);
+        return preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $rendered);
+    }
+
+    // High-fidelity fallback admin template if admin-email-template.html is absent
+    return <<<HTML
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>New Studio Lead #{$inquiryId}</title></head>
+<body style="margin:0;padding:24px;background:#0A0A0D;font-family:sans-serif;color:#F8F8FA;">
+  <div style="max-width:600px;margin:0 auto;background:#111117;border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:32px;">
+    <h2 style="color:#C8102E;margin-top:0;">1928 CREATIVE STUDIO // NEW MANDATE BRIEF #{$inquiryId}</h2>
+    <p><strong>Client:</strong> {$fullName} ({$company})</p>
+    <p><strong>Email:</strong> <a href="mailto:{$email}" style="color:#E61937;">{$email}</a></p>
+    <p><strong>Phone:</strong> <a href="tel:{$phone}" style="color:#F8F8FA;">{$phone}</a></p>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:20px 0;" />
+    <p><strong>Service:</strong> <span style="color:#E61937;">{$service}</span></p>
+    <p><strong>Budget:</strong> {$budget}</p>
+    <p><strong>Timeline:</strong> {$timeline}</p>
+    <p><strong>Strategy Session Slot:</strong> <span style="color:#C8102E;font-weight:bold;">{$date} · {$time}</span></p>
+    <p><strong>NDA:</strong> {$nda}</p>
+    <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:20px 0;" />
+    <h4 style="margin:0 0 8px;color:#8A8A9E;text-transform:uppercase;font-size:11px;">Project Vision:</h4>
+    <div style="background:#0E0E14;padding:16px;border-left:3px solid #C8102E;border-radius:4px;white-space:pre-wrap;">{$vision}</div>
+    <p style="font-size:11px;color:#6A6A7E;margin-top:24px;">Submitted: {$subTime} | IP: {$clientIp}</p>
+  </div>
+</body>
+</html>
+HTML;
+}
+
+function buildAdminNotificationPlainText(array $d, array $extra = []): string
+{
+    $fullName  = $d['name'] ?? 'Direct Lead';
+    $company   = $d['company'] ?? 'Independent Project';
+    $email     = $d['email'] ?? '';
+    $phone     = $d['phone'] ?? 'Not Specified';
+    $service   = $d['service'] ?? 'Creative Direction & Strategy';
+    $budget    = $d['budget'] ?? 'Undisclosed Allocation';
+    $timeline  = $d['timeline'] ?? '< 1 Month (Immediate)';
+    $date      = $d['date'] ?? date('l, M j, Y');
+    $time      = $d['time'] ?? '11:00 AM IST';
+    $nda       = $d['nda'] ?? 'Standard Review';
+    $vision    = $d['vision'] ?? 'No vision notes provided.';
+    $inquiryId = $extra['inquiry_id'] ?? 'NEW';
+    $subTime   = $extra['timestamp'] ?? date('l, M j, Y · h:i A T');
+    $clientIp  = $extra['ip'] ?? '127.0.0.1';
+
+    return <<<TEXT
+1928 CREATIVE STUDIO // NEW MANDATE BRIEF #{$inquiryId}
+============================================================
+A new project mandate brief was submitted on the website.
+
+CLIENT DETAILS:
+- Name: {$fullName}
+- Brand / Enterprise: {$company}
+- Corporate Email: {$email}
+- Contact Number: {$phone}
+
+PROJECT PARAMETERS:
+- Selected Mandate: {$service}
+- Capital Allocation: {$budget}
+- Target Timeline: {$timeline}
+- Requested Strategy Consultation: {$date} · {$time}
+- Bilateral NDA Protocol: {$nda}
+
+PROJECT VISION & AMBITION:
+{$vision}
+
+AUDIT DETAILS:
+- Submitted: {$subTime}
+- IP Address: {$clientIp}
+============================================================
+TEXT;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// 5. DISPATCH EMAILS VIA PHPMailer SMTP
+// ══════════════════════════════════════════════════════════════════════════════
+
+$customerMailSent  = false;
+$customerMailError = '';
+$adminMailSent     = false;
+$adminMailError    = '';
+
+// 5A. DISPATCH ACKNOWLEDGMENT EMAIL TO CUSTOMER
 try {
-    // Enable SMTP debugging in server logs if desired:
-    // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+    $mail = new PHPMailer(true);
 
     $mail->isSMTP();
     $mail->Host       = SMTP_HOST;
@@ -629,7 +782,6 @@ try {
     $mail->Password   = SMTP_PASS;
     $mail->Port       = SMTP_PORT;
 
-    // Configure SSL/TLS Encryption
     $secureMode = strtolower((string)SMTP_SECURE);
     if ($secureMode === 'ssl' || SMTP_PORT === 465) {
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
@@ -643,84 +795,114 @@ try {
     $mail->CharSet = 'UTF-8';
     $mail->Timeout = 20;
 
-    // Sender details
     $mail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
     $mail->addReplyTo(SMTP_REPLY_TO, SMTP_FROM_NAME);
-
-    // Recipient: The person who submitted the form
     $mail->addAddress($email, $name);
 
-    // Optional Admin Notification / BCC
-    if (!empty(ADMIN_NOTIFICATION_EMAIL) && filter_var(ADMIN_NOTIFICATION_EMAIL, FILTER_VALIDATE_EMAIL)) {
-        $mail->addBCC(ADMIN_NOTIFICATION_EMAIL);
-    }
-
-    // Email Subject & Payload
     $mail->isHTML(true);
     $mail->Subject = 'Brief Received — 1928 Creative Studio';
     $mail->Body    = buildAcknowledgmentHtml($cleanData);
     $mail->AltBody = buildAcknowledgmentPlainText($cleanData);
 
-    // Transmit email
     $mail->send();
+    $customerMailSent = true;
+} catch (Exception $e) {
+    $customerMailError = $mail->ErrorInfo ?: $e->getMessage();
+    error_log("1928 Studio Customer Mailer Error: " . $customerMailError);
+}
 
-    // Return successful response to frontend
+// 5B. DISPATCH DETAILED BRIEF NOTIFICATION TO STUDIO ADMIN
+$adminEmail = ADMIN_NOTIFICATION_EMAIL;
+if (!empty($adminEmail) && filter_var($adminEmail, FILTER_VALIDATE_EMAIL)) {
+    try {
+        $adminMail = new PHPMailer(true);
+
+        $adminMail->isSMTP();
+        $adminMail->Host       = SMTP_HOST;
+        $adminMail->SMTPAuth   = SMTP_AUTH;
+        $adminMail->Username   = SMTP_USER;
+        $adminMail->Password   = SMTP_PASS;
+        $adminMail->Port       = SMTP_PORT;
+
+        $secureMode = strtolower((string)SMTP_SECURE);
+        if ($secureMode === 'ssl' || SMTP_PORT === 465) {
+            $adminMail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        } elseif ($secureMode === 'tls' || SMTP_PORT === 587) {
+            $adminMail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        } else {
+            $adminMail->SMTPSecure = false;
+            $adminMail->SMTPAutoTLS = false;
+        }
+
+        $adminMail->CharSet = 'UTF-8';
+        $adminMail->Timeout = 20;
+
+        $adminMail->setFrom(SMTP_FROM_EMAIL, SMTP_FROM_NAME);
+        // Reply-To points to customer so admin can reply directly with one click
+        $adminMail->addReplyTo($email, $name);
+        $adminMail->addAddress($adminEmail, '1928 Studio Admin');
+
+        $adminMailExtra = [
+            'inquiry_id' => $inquiryId,
+            'ip'         => $clientIp ?? '127.0.0.1',
+            'ua'         => $userAgent ?? '',
+            'timestamp'  => date('l, M j, Y · h:i A T'),
+        ];
+
+        $adminMail->isHTML(true);
+        $adminMail->Subject = 'New Project Mandate #' . ($inquiryId ?: 'NEW') . ': ' . $company . ' — ' . $name . ' (' . $service . ')';
+        $adminMail->Body    = buildAdminNotificationHtml($cleanData, $adminMailExtra);
+        $adminMail->AltBody = buildAdminNotificationPlainText($cleanData, $adminMailExtra);
+
+        $adminMail->send();
+        $adminMailSent = true;
+    } catch (Exception $ae) {
+        $adminMailError = $adminMail->ErrorInfo ?: $ae->getMessage();
+        error_log("1928 Studio Admin Mailer Error: " . $adminMailError);
+    }
+}
+
+// 5C. RESPONSE RESOLUTION
+// If at least one notification dispatched or inquiry saved in database, treat submission as successful
+if ($customerMailSent || $adminMailSent || $savedToDb) {
+    http_response_code(200);
     echo json_encode([
-        'status'     => 'success',
-        'message'    => 'Brief received! An acknowledgment email has been sent to ' . htmlspecialchars($email) . ' (we will get back to you within 72 hours).',
-        'inquiry_id' => $inquiryId,
-        'whatsapp' => $whatsappResult,
-        'saved_to_db' => $savedToDb,
-        'mail_sent'  => true,
-        'data'       => [
+        'status'          => 'success',
+        'message'         => 'Brief received! An acknowledgment email has been sent to ' . htmlspecialchars($email) . ' (we will get back to you within 72 hours).',
+        'inquiry_id'      => $inquiryId,
+        'whatsapp'        => $whatsappResult,
+        'saved_to_db'     => $savedToDb,
+        'mail_sent'       => $customerMailSent,
+        'admin_mail_sent' => $adminMailSent,
+        'admin_email'     => $adminEmail,
+        'data'            => [
             'recipient' => $email,
             'timestamp' => date('c'),
             'company'   => $company,
-            'service'   => $service
-        ]
-    ]);
-    exit;
-} catch (Exception $e) {
-    error_log("1928 Studio Mailer Error: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
-
-    // Provide informative diagnosis
-    $errorMsg = $mail->ErrorInfo ?: $e->getMessage();
-
-    // Provide a helpful hint if SMTP credentials are still default placeholders
-    if (SMTP_USER === 'your-email@gmail.com' || SMTP_PASS === 'your-app-password') {
-        $errorMsg = 'SMTP credentials not configured. Please set your SMTP details in send-contact-form_ack.php or smtp-config.php.';
-    }
-
-    // If inquiry was already safely persisted to the database, treat submission as SUCCESS for the user
-    if ($savedToDb) {
-        http_response_code(200);
-        echo json_encode([
-            'status'     => 'success',
-            'message'    => 'Brief received and securely stored in our studio system! Our leadership will review your mandate within 72 hours.',
-            'inquiry_id' => $inquiryId,
-            'whatsapp' => $whatsappResult,
-            'saved_to_db' => true,
-            'mail_sent'  => false,
-            'mail_notice' => $errorMsg,
-            'data'       => [
-                'recipient' => $email,
-                'timestamp' => date('c'),
-                'company'   => $company,
-                'service'   => $service
-            ]
-        ]);
-        exit;
-    }
-
-    http_response_code(500);
-    echo json_encode([
-        'status'  => 'error',
-        'message' => 'Failed to dispatch acknowledgment email: ' . $errorMsg,
-        'debug'   => [
-            'host' => SMTP_HOST,
-            'port' => SMTP_PORT,
-            'user' => SMTP_USER !== 'your-email@gmail.com' ? 'Configured' : 'Default placeholder'
+            'service'   => $service,
+            'date'      => $date,
+            'time'      => $time,
+            'session'   => $session
         ]
     ]);
     exit;
 }
+
+// Complete failure condition
+http_response_code(500);
+$errSummary = $customerMailError ?: $adminMailError ?: 'Mail delivery failure';
+if (SMTP_USER === 'your-email@gmail.com' || SMTP_PASS === 'your-app-password') {
+    $errSummary = 'SMTP credentials not configured. Please set your SMTP details in send-contact-form_ack.php or smtp-config.php.';
+}
+
+echo json_encode([
+    'status'  => 'error',
+    'message' => 'Failed to dispatch notification: ' . $errSummary,
+    'debug'   => [
+        'host' => SMTP_HOST,
+        'port' => SMTP_PORT,
+        'customer_error' => $customerMailError,
+        'admin_error'    => $adminMailError
+    ]
+]);
+exit;
