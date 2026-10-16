@@ -66,6 +66,7 @@
       --rule-m: rgba(255, 255, 255, 0.16);
       --rule-heavy: rgba(255, 255, 255, 0.28);
       --cr: #C8102E;
+      --cr-bright: #E81538;
       --cr-glow: rgba(200, 16, 46, 0.28);
       --cr-lo: rgba(200, 16, 46, 0.10);
       --cr-dk: #8B1A1A;
@@ -92,6 +93,7 @@
       --rule-m: rgba(0, 0, 0, 0.16);
       --rule-heavy: rgba(0, 0, 0, 0.28);
       --cr: #C8102E;
+      --cr-bright: #C8102E;
       --cr-glow: rgba(200, 16, 46, 0.18);
       --cr-lo: rgba(200, 16, 46, 0.08);
       --cr-dk: #6B1212;
@@ -197,6 +199,11 @@
       position: relative;
       user-select: none;
       border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .nav-item span {
+      white-space: nowrap;
     }
 
     .nav-item svg {
@@ -231,8 +238,14 @@
       font-size: 10px;
       font-weight: 700;
       background: rgba(255, 255, 255, 0.15);
-      padding: 2px 7px;
+      padding: 3px 8px;
       border-radius: 999px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .sidebar-footer {
@@ -1541,9 +1554,11 @@
     }
 
     .modal-subtitle {
-      font-size: 12px;
+      font-size: 12.5px;
       color: var(--ink-mid);
-      font-family: var(--font-mono);
+      font-family: var(--font-primary);
+      font-weight: 500;
+      letter-spacing: 0.01em;
     }
 
     .modal-card form {
@@ -1593,10 +1608,10 @@
 
     /* Modal Form Sections & Badges */
     .modal-section-badge {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+      font-family: var(--font-primary);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.10em;
       text-transform: uppercase;
       color: var(--cr);
       margin: 22px 0 14px;
@@ -3142,9 +3157,417 @@
         margin-left: 0;
         width: 100%;
       }
-      .sidebar-toggle-mob {
-        display: grid;
-      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       10. INQUIRIES & LEADS MANAGEMENT SYSTEM
+       ═══════════════════════════════════════════════════════════ */
+    .inq-stats-ribbon {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .inq-stat-tile {
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s var(--sp);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    }
+    .inq-stat-tile:hover {
+      border-color: var(--rule-heavy);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    }
+    .inq-stat-tile.featured-new {
+      border-color: var(--cr);
+      background: linear-gradient(135deg, rgba(200, 16, 46, 0.07) 0%, var(--card-bg) 100%);
+    }
+    .inq-stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .inq-stat-val {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--ink);
+      line-height: 1.1;
+      font-family: var(--font-primary);
+      letter-spacing: -0.03em;
+    }
+    .inq-stat-sub {
+      font-size: 11.5px;
+      color: var(--ink-dim);
+    }
+    .inq-pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cr);
+      box-shadow: 0 0 10px var(--cr);
+      display: inline-block;
+      animation: inqPulse 1.8s infinite;
+    }
+    @keyframes inqPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    .inq-controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    }
+    .inq-filter-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .inq-filter-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      color: var(--ink-mid);
+      font-family: var(--font-primary);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .inq-filter-btn:hover {
+      color: var(--ink);
+      border-color: var(--rule-heavy);
+      background: var(--card-hover);
+    }
+    .inq-filter-btn.active {
+      background: var(--card-alt);
+      border-color: var(--cr);
+      color: var(--ink);
+    }
+    .inq-filter-count {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: var(--rule-m);
+      color: var(--ink);
+      font-weight: 800;
+    }
+    .inq-filter-btn.active .inq-filter-count {
+      background: var(--cr);
+      color: #fff;
+    }
+
+    .inq-search-wrap {
+      position: relative;
+      min-width: 260px;
+      flex: 1;
+      max-width: 360px;
+    }
+    .inq-search-input {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 8px;
+      padding: 8px 12px 8px 34px;
+      font-size: 12.5px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .inq-search-input:focus {
+      border-color: var(--cr);
+    }
+    .inq-search-icon {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      stroke: var(--ink-dim);
+      fill: none;
+      pointer-events: none;
+    }
+
+    .inq-table-card {
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+    .inq-table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+    .inq-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    .inq-table th {
+      background: var(--card-alt);
+      color: var(--ink-mid);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--rule-m);
+      white-space: nowrap;
+    }
+    .inq-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink);
+      vertical-align: middle;
+      transition: background 0.15s;
+    }
+    .inq-table tr:last-child td {
+      border-bottom: none;
+    }
+    .inq-table tr:hover td {
+      background: var(--card-hover);
+    }
+
+        /* Interactive Calendar Date Blackout Grid */
+    .cal-day-chip {
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 8px;
+      padding: 10px 4px;
+      text-align: center;
+      cursor: pointer;
+      font-family: var(--font-primary);
+      transition: all 0.18s var(--sp);
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+    }
+    .cal-day-chip:hover:not(.header):not(.offset) {
+      border-color: var(--rule-heavy);
+      background: var(--card-hover);
+      transform: translateY(-1px);
+    }
+    .cal-day-chip .day-num {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .cal-day-chip .day-dow {
+      font-size: 9.5px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+      margin-top: 2px;
+    }
+    .cal-day-chip.blocked {
+      background: rgba(200, 16, 46, 0.14) !important;
+      border-color: var(--cr) !important;
+      box-shadow: 0 0 12px rgba(200, 16, 46, 0.22);
+    }
+    .cal-day-chip.blocked .day-num {
+      color: var(--cr-bright) !important;
+      text-decoration: line-through;
+    }
+    .cal-day-chip.blocked .day-dow {
+      color: var(--cr-bright) !important;
+      font-weight: 800;
+    }
+    .cal-day-chip.header {
+      background: transparent;
+      border: none;
+      min-height: auto;
+      padding: 4px;
+      cursor: default;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-dim);
+    }
+    .cal-day-chip.offset {
+      background: transparent;
+      border: none;
+      cursor: default;
+      pointer-events: none;
+      min-height: 52px;
+    }
+
+    /* Studio Calendar Banner on Leads Page */
+    .inq-cal-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule-m);
+      border-radius: 12px;
+      padding: 14px 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+    }
+    .inq-cal-banner:hover {
+      border-color: var(--rule-heavy);
+    }
+
+    /* Status Pills */
+    .inq-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+    .inq-pill-new {
+      background: rgba(200, 16, 46, 0.14);
+      color: #FF4A65;
+      border: 1px solid rgba(200, 16, 46, 0.35);
+    }
+    .inq-pill-review {
+      background: rgba(245, 158, 11, 0.14);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+    .inq-pill-contacted {
+      background: rgba(16, 185, 129, 0.14);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+    .inq-pill-archived {
+      background: rgba(156, 163, 175, 0.12);
+      color: #9CA3AF;
+      border: 1px solid rgba(156, 163, 175, 0.25);
+    }
+
+    .inq-cell-client {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .inq-client-name {
+      font-weight: 800;
+      color: var(--ink);
+    }
+    .inq-client-brand {
+      font-size: 11.5px;
+      color: var(--ink-mid);
+    }
+    .inq-cell-mandate {
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .inq-cell-budget {
+      font-size: 12px;
+      color: var(--cr-bright);
+      font-weight: 700;
+    }
+    .inq-cell-date {
+      font-size: 12px;
+      color: var(--ink-mid);
+      white-space: nowrap;
+    }
+
+    /* Full Detail Modal UI */
+    .inq-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .inq-info-block {
+      background: var(--card-alt);
+      border: 1px solid var(--rule-m);
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .inq-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: 13px;
+    }
+    .inq-info-row:last-child {
+      border-bottom: none;
+    }
+    .inq-info-label {
+      font-family: var(--font-primary);
+      color: var(--ink-mid);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+    }
+    .inq-info-val {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--ink);
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .inq-vision-box {
+      background: var(--card-alt);
+      border-left: 3px solid var(--cr);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--ink);
+      white-space: pre-wrap;
+    }
+    .inq-copy-btn {
+      background: transparent;
+      border: 1px solid var(--rule-m);
+      color: var(--ink-mid);
+      padding: 3px 8px;
+      font-size: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 6px;
+      transition: all 0.2s;
+    }
+    .inq-copy-btn:hover {
+      color: var(--ink);
+      border-color: var(--ink);
     }
   </style>
 </head>
@@ -3168,6 +3591,13 @@
       <a class="nav-item active" data-view="dashboard">
         <svg viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
         <span>Dashboard</span>
+      </a>
+
+      <div class="nav-label">Leads &amp; Strategy</div>
+      <a class="nav-item" data-view="inquiries">
+        <svg viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/><polyline points="8 10 12 14 16 10"/></svg>
+        <span style="white-space:nowrap;">Inquiries</span>
+        <span class="badge" id="badgeInquiriesCount" style="background:var(--cr);color:#fff;white-space:nowrap;flex-shrink:0;">0</span>
       </a>
 
       <div class="nav-label">Content Managers</div>
@@ -3207,9 +3637,9 @@
       </a>
 
       <a class="nav-item" data-view="contact">
-        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         <span>Contact &amp; Brief</span>
-        <span class="badge" style="background:var(--cr);color:#fff;">5 Steps</span>
+        <span class="badge">5 Steps</span>
       </a>
 
       <div class="nav-label">System</div>
@@ -3232,6 +3662,13 @@
        ═══════════════════════════════════════════════════════════ -->
   <main id="main-content">
     
+    <!-- File Protocol Warning Alert (shown only if opened as file:/// instead of via localhost) -->
+    <div id="fileProtocolWarning" style="display:none;background:#B91C1C;color:#FFFFFF;padding:12px 24px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.02em;position:sticky;top:0;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,0.5);">
+      ⚠️ You opened this page via file:// protocol! Database API queries require the Laragon web server. Please open 
+      <a href="http://localhost/1928/admin.html" style="color:#FFF;text-decoration:underline;margin-left:6px;font-weight:900;">http://localhost/1928/admin.html</a>
+      in your browser to access live submissions.
+    </div>
+
     <!-- Topbar -->
     <header class="topbar">
       <div class="topbar-title">
@@ -3379,9 +3816,64 @@
             <span class="dash-metric-sub">Search snippets &amp; social meta</span>
           </div>
           <div class="dash-metric-footer">
-            <span>Configure SEO</span>
+            <span>Manage SEO</span>
             <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </div>
+        </div>
+
+        <!-- 7. Inquiries & Leads -->
+        <div class="dash-metric-card" onclick="switchView('inquiries')" style="border-color:rgba(200,16,46,0.35);background:linear-gradient(135deg, rgba(200,16,46,0.06) 0%, var(--card-bg) 100%);cursor:pointer;">
+          <div class="dash-metric-top">
+            <div class="dash-metric-icon primary">
+              <svg viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/><polyline points="8 10 12 14 16 10"/></svg>
+            </div>
+            <span class="dash-metric-tag" style="background:var(--cr);color:#fff;">Inquiries &amp; Leads</span>
+          </div>
+          <div class="dash-metric-mid">
+            <span class="dash-metric-val" id="statInquiriesNum">0</span>
+            <span class="dash-metric-label">Client Briefs Received</span>
+            <span class="dash-metric-sub" id="statNewInquiriesSub" style="color:var(--cr-bright);font-weight:700;">0 New / Unread</span>
+          </div>
+          <div class="dash-metric-footer">
+            <span>Inspect All Inquiries</span>
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Inquiries Preview Widget on Dashboard -->
+      <div class="stat-card" style="margin-top:28px;padding:24px;border:1px solid var(--rule-m);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:12px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span class="inq-pulse-dot"></span>
+              <h3 style="font-family:var(--font-primary);font-size:16px;font-weight:800;color:var(--ink);margin:0;">Recent Project Inquiries &amp; Briefs</h3>
+            </div>
+            <p style="font-size:12px;color:var(--ink-mid);margin:4px 0 0 17px;">Live client submissions and strategy session appointments from the contact page</p>
+          </div>
+          <button type="button" class="btn-action-primary" onclick="switchView('inquiries')" style="padding:8px 16px;font-size:11px;">
+            <span>View All Inquiries →</span>
+          </button>
+        </div>
+        <div class="inq-table-responsive">
+          <table class="inq-table" id="dashRecentInquiriesTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Client &amp; Brand</th>
+                <th>Mandate</th>
+                <th>Budget Tier</th>
+                <th>Session Window</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="dashRecentInquiriesBody">
+              <tr>
+                <td colspan="7" style="text-align:center;padding:32px;color:var(--ink-mid);">Loading latest inquiries...</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -4019,8 +4511,7 @@
       </div>
     </section>
 
-    <!-- ── VIEW: CONTACT & MULTI-STEP BRIEF ── -->
-    <section class="view-panel" id="view-contact">
+<section class="view-panel" id="view-contact">
       <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px;">
         <div>
           <h1 class="panel-headline" style="margin-bottom:6px;">Contact Page &amp; Brief Engine</h1>
@@ -4444,11 +4935,51 @@
               </div>
               <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Booked Days (Disabled on Grid)</label>
-                <input type="text" class="form-input" id="contactStep4BookedDays" placeholder="8, 9" />
-                <span class="form-hint">Comma-separated day numbers (e.g. 8, 9, 15)</span>
+                <input type="text" class="form-input" id="contactStep4BookedDays" placeholder="8, 9" oninput="handleBookedDaysInput(this.value)" />
+                <span class="form-hint">Comma-separated day numbers (e.g. 8, 9, 15) or click dates below</span>
               </div>
             </div>
           </div>
+
+          
+
+            <!-- Interactive Visual Calendar Blackout Grid -->
+            <div style="margin-top:20px;padding:18px 22px;border-radius:12px;background:var(--card-alt);border:1px solid var(--rule-m);">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:14px;">
+                <div>
+                  <div style="font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:var(--ink);">
+                    Interactive Date Blackout Selector
+                  </div>
+                  <div style="font-size:11.5px;color:var(--ink-mid);margin-top:2px;">
+                    Click any day in the grid below to instantly toggle it as <span style="color:var(--cr-bright);font-weight:700;">Blocked / Unavailable</span> on the live booking portal.
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                  <button type="button" class="btn-action-secondary" onclick="toggleBlockSundays()" style="padding:6px 12px;font-size:11px;">
+                    🚫 Block Sundays
+                  </button>
+                  <button type="button" class="btn-action-secondary" onclick="toggleBlockWeekends()" style="padding:6px 12px;font-size:11px;">
+                    🚫 Block Weekends
+                  </button>
+                  <button type="button" class="btn-action-secondary" onclick="clearAllBlockedDays()" style="padding:6px 12px;font-size:11px;">
+                    ✨ Clear All
+                  </button>
+                </div>
+              </div>
+
+              <!-- Day Chips Grid -->
+              <div id="interactiveDaysGrid" style="display:grid;grid-template-columns:repeat(7, 1fr);gap:8px;margin-bottom:14px;">
+                <!-- Dynamically rendered day cells -->
+              </div>
+
+              <!-- Active Blocked Summary -->
+              <div id="blockedDaysSummaryWrap" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--ink-mid);padding-top:10px;border-top:1px solid var(--rule);">
+                <span style="font-weight:700;color:var(--ink);">Currently Blocked Dates:</span>
+                <div id="blockedDaysTags" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            </div>
 
           <!-- Time Slots Manager -->
           <div class="stat-card" style="margin-bottom:24px;border:1px solid var(--rule-m);">
@@ -4606,6 +5137,204 @@
               <button type="button" class="btn-action-primary" onclick="saveContactTabCredentials()">Save Step 05 Settings</button>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+        <!-- ── VIEW 7: INQUIRIES & LEADS ── -->
+    <section class="view-panel" id="view-inquiries">
+      <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:28px;">
+        <div style="flex:1;min-width:0;">
+          <h1 class="panel-headline" style="margin-bottom:6px;">Client Briefs &amp; Strategy Inquiries</h1>
+          <p class="panel-sub" style="margin:0;">Real-time submissions from the 1928 contact portal with full parameters, budget tiers, and session slots.</p>
+        </div>
+        <div class="action-row" style="margin:0;display:flex;align-items:center;gap:12px;flex-shrink:0;">
+          <a href="api.php?action=export_inquiries_csv" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;" title="Export all client submissions as CSV spreadsheet">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <span>Export CSV</span>
+          </a>
+          <button type="button" class="btn-action-primary" onclick="loadContactInquiries(true)" style="display:inline-flex;align-items:center;gap:8px;padding:10px 18px;font-size:12px;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            <span>Refresh Leads</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Ribbon (5 metric tiles) -->
+      <div class="inq-stats-ribbon">
+        <div class="inq-stat-tile">
+          <div class="inq-stat-label">Total Briefs</div>
+          <div class="inq-stat-val" id="inqStatTotal">0</div>
+          <div class="inq-stat-sub">All-time portal commissions</div>
+        </div>
+        <div class="inq-stat-tile featured-new">
+          <div class="inq-stat-label">
+            <span class="inq-pulse-dot"></span>
+            <span>New / Unread</span>
+          </div>
+          <div class="inq-stat-val" id="inqStatNew" style="color:var(--cr-bright);">0</div>
+          <div class="inq-stat-sub">Requires leadership review</div>
+        </div>
+        <div class="inq-stat-tile">
+          <div class="inq-stat-label">In Review</div>
+          <div class="inq-stat-val" id="inqStatReview" style="color:#FBBF24;">0</div>
+          <div class="inq-stat-sub">Scope evaluation in progress</div>
+        </div>
+        <div class="inq-stat-tile">
+          <div class="inq-stat-label">Contacted</div>
+          <div class="inq-stat-val" id="inqStatContacted" style="color:#34D399;">0</div>
+          <div class="inq-stat-sub">Dialogue initiated with brand</div>
+        </div>
+        <div class="inq-stat-tile">
+          <div class="inq-stat-label">Archived</div>
+          <div class="inq-stat-val" id="inqStatArchived">0</div>
+          <div class="inq-stat-sub">Completed or past records</div>
+        </div>
+      </div>
+
+      <!-- Filter Controls & Search Bar -->
+      <div class="inq-controls-bar">
+        <div class="inq-filter-tabs">
+          <button type="button" class="inq-filter-btn active" data-status="all" onclick="filterInquiriesStatus('all')">
+            <span>All Briefs</span>
+            <span class="inq-filter-count" id="inqFilterCountAll">0</span>
+          </button>
+          <button type="button" class="inq-filter-btn" data-status="new" onclick="filterInquiriesStatus('new')">
+            <span>New</span>
+            <span class="inq-filter-count" id="inqFilterCountNew">0</span>
+          </button>
+          <button type="button" class="inq-filter-btn" data-status="in_review" onclick="filterInquiriesStatus('in_review')">
+            <span>In Review</span>
+            <span class="inq-filter-count" id="inqFilterCountReview">0</span>
+          </button>
+          <button type="button" class="inq-filter-btn" data-status="contacted" onclick="filterInquiriesStatus('contacted')">
+            <span>Contacted</span>
+            <span class="inq-filter-count" id="inqFilterCountContacted">0</span>
+          </button>
+          <button type="button" class="inq-filter-btn" data-status="archived" onclick="filterInquiriesStatus('archived')">
+            <span>Archived</span>
+            <span class="inq-filter-count" id="inqFilterCountArchived">0</span>
+          </button>
+        </div>
+
+        <div class="inq-search-wrap">
+          <svg class="inq-search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="inq-search-input" id="inqSearchInput" placeholder="Search by name, brand, email, service..." oninput="handleInquiriesSearch(this.value)" />
+        </div>
+      </div>
+
+      <!-- Inquiries Master Data Table Card -->
+      <div class="inq-table-card">
+        <div class="inq-table-responsive">
+          <table class="inq-table" id="inquiriesMasterTable">
+            <thead>
+              <tr>
+                <th style="width:140px;">Received Date</th>
+                <th>Client Particulars</th>
+                <th>Mandate / Scope</th>
+                <th>Budget Tier</th>
+                <th>Consultation Session</th>
+                <th>Status</th>
+                <th style="text-align:right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inquiriesTableBody">
+              <tr>
+                <td colspan="7" style="text-align:center;padding:48px;color:var(--ink-mid);">Loading incoming inquiries...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Studio Contact Channels & Storage Card -->
+      <div class="stat-card" style="margin-top:32px;padding:32px;border:1px solid var(--rule-m);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:16px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span class="inq-pulse-dot" style="background:#10B981;box-shadow:0 0 10px rgba(16,185,129,0.5);"></span>
+              <h3 style="font-family:var(--font-primary);font-size:18px;font-weight:800;color:var(--ink);margin:0;">Studio Contact Channels &amp; Practice Storage</h3>
+            </div>
+            <p style="font-size:12px;color:var(--ink-mid);margin:4px 0 0 17px;">Configure your official studio communication credentials, response SLAs, and direct client touchpoints stored in MySQL.</p>
+          </div>
+          <button type="button" class="btn-action-primary" onclick="saveStudioContactSettings()" style="display:inline-flex;align-items:center;gap:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <span>Save Contact Settings</span>
+          </button>
+        </div>
+
+        <!-- 01 // Practice Touchpoints -->
+        <div class="modal-section-badge" style="margin-bottom:14px;">01 // Studio Touchpoints &amp; Operational SLA</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:16px;margin-bottom:24px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Studio Practice Name</label>
+            <input type="text" class="form-input" id="studioContactName" placeholder="1928 Creative Studio" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Official Inbound Email</label>
+            <input type="email" class="form-input" id="studioContactEmail" placeholder="studio@1928creativestudio.com" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Direct Studio Telephone</label>
+            <input type="text" class="form-input" id="studioContactPhone" placeholder="+91 98250 19280" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Headquarters / Location</label>
+            <input type="text" class="form-input" id="studioContactLocation" placeholder="Ahmedabad, India · Global Practice" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Established Year</label>
+            <input type="text" class="form-input" id="studioContactEstablished" placeholder="1928" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Client Response SLA</label>
+            <input type="text" class="form-input" id="studioContactSLA" placeholder="We will get back to you within 72 hours" />
+          </div>
+        </div>
+
+        <!-- 02 // Official Social Channels -->
+        <div class="modal-section-badge" style="margin-bottom:14px;">02 // Official Studio Social Channels</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:16px;margin-bottom:24px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Instagram URL</label>
+            <input type="url" class="form-input" id="studioContactInstagram" placeholder="https://www.instagram.com/1928creativestudio" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">LinkedIn URL</label>
+            <input type="url" class="form-input" id="studioContactLinkedin" placeholder="https://www.linkedin.com/company/1928-creative-studio/" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">YouTube URL</label>
+            <input type="url" class="form-input" id="studioContactYoutube" placeholder="https://www.youtube.com/@1928creativestudio" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Behance Portfolio URL</label>
+            <input type="url" class="form-input" id="studioContactBehance" placeholder="https://www.behance.net/1928Creativestudio" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Facebook URL</label>
+            <input type="url" class="form-input" id="studioContactFacebook" placeholder="https://www.facebook.com/1928Creativestudio/" />
+          </div>
+        </div>
+
+        <!-- 03 // Call to Action Buttons -->
+        <div class="modal-section-badge" style="margin-bottom:14px;">03 // Call-to-Action Messaging</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Primary CTA Label</label>
+            <input type="text" class="form-input" id="studioCtaPrimary" placeholder="Start a Project" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Secondary CTA Subtext</label>
+            <input type="text" class="form-input" id="studioCtaSecondary" placeholder="Tell us what you're building" />
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;padding-top:16px;border-top:1px solid var(--rule);">
+          <button type="button" class="btn-action-primary" onclick="saveStudioContactSettings()" style="display:inline-flex;align-items:center;gap:8px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+            <span>Save Contact Settings to MySQL</span>
+          </button>
         </div>
       </div>
     </section>
@@ -5534,6 +6263,157 @@
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       MODAL: FULL INQUIRY & CLIENT BRIEF DETAIL
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalInquiryDetail">
+    <div class="modal-card" style="max-width:880px;">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <span class="modal-section-badge" id="modalInquiryIdBadge" style="margin:0;">Inquiry #00</span>
+            <span id="modalInquiryStatusPill" class="inq-pill inq-pill-new">New</span>
+          </div>
+          <h3 class="modal-title" id="modalInquiryTitle" style="margin-top:6px;">Client Project Brief</h3>
+          <span class="modal-subtitle" id="modalInquirySubtitle">Received via Contact Portal</span>
+        </div>
+        <button class="btn-icon-square" type="button" onclick="closeModal('modalInquiryDetail')">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="modalInquiryIdInput" />
+
+        <!-- 1. Client & Brand Particulars -->
+        <div class="modal-section-badge">01 // Client &amp; Enterprise Particulars</div>
+        <div class="inq-detail-grid">
+          <div class="inq-info-block">
+            <div class="inq-info-row">
+              <span class="inq-info-label">Full Name</span>
+              <span class="inq-info-val">
+                <span id="mInqName">-</span>
+                <button type="button" class="inq-copy-btn" onclick="copyText(document.getElementById('mInqName').textContent)">Copy</button>
+              </span>
+            </div>
+            <div class="inq-info-row">
+              <span class="inq-info-label">Enterprise / Brand</span>
+              <span class="inq-info-val" id="mInqCompany">-</span>
+            </div>
+          </div>
+
+          <div class="inq-info-block">
+            <div class="inq-info-row">
+              <span class="inq-info-label">Corporate Email</span>
+              <span class="inq-info-val">
+                <a id="mInqEmailLink" href="#" style="color:var(--cr-bright);text-decoration:none;">-</a>
+                <button type="button" class="inq-copy-btn" onclick="copyText(document.getElementById('mInqEmailLink').textContent)">Copy</button>
+              </span>
+            </div>
+            <div class="inq-info-row">
+              <span class="inq-info-label">Contact Number</span>
+              <span class="inq-info-val">
+                <a id="mInqPhoneLink" href="#" style="color:var(--ink);text-decoration:none;">-</a>
+                <button type="button" class="inq-copy-btn" onclick="copyText(document.getElementById('mInqPhoneLink').textContent)">Copy</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Project Scope, Capital Allocation & Consultation -->
+        <div class="modal-section-badge">02 // Scope, Allocation &amp; Strategy Consultation</div>
+        <div class="inq-detail-grid">
+          <div class="inq-info-block">
+            <div class="inq-info-row">
+              <span class="inq-info-label">Selected Mandate</span>
+              <span class="inq-info-val" id="mInqService" style="color:var(--cr);">Logo Design</span>
+            </div>
+            <div class="inq-info-row">
+              <span class="inq-info-label">Capital Allocation</span>
+              <span class="inq-info-val" id="mInqBudget">-</span>
+            </div>
+            <div class="inq-info-row">
+              <span class="inq-info-label">Target Timeline</span>
+              <span class="inq-info-val" id="mInqTimeline">-</span>
+            </div>
+          </div>
+
+          <div class="inq-info-block">
+            <div class="inq-info-row">
+              <span class="inq-info-label">Strategy Session</span>
+              <span class="inq-info-val" id="mInqSession">-</span>
+            </div>
+            <div class="inq-info-row">
+              <span class="inq-info-label">Confidentiality Protocol</span>
+              <span class="inq-info-val" id="mInqNda">-</span>
+            </div>
+            <div class="inq-info-row">
+              <span class="inq-info-label">Submission Date</span>
+              <span class="inq-info-val" id="mInqCreated">-</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Confidential Project Vision -->
+        <div class="modal-section-badge">03 // Confidential Project Vision &amp; Strategic Ambition</div>
+        <div class="inq-vision-box" id="mInqVision">No vision text provided.</div>
+
+        <!-- 4. Administration, Status & Follow-up Notes -->
+        <div class="modal-section-badge">04 // Leadership Status &amp; Follow-up Notes</div>
+        <div style="display:grid;grid-template-columns:1fr 1.6fr;gap:20px;margin-bottom:16px;align-items:flex-end;">
+          <div class="form-group" style="margin-bottom:0;position:relative;">
+            <label class="form-label">Inquiry Status</label>
+            <div class="custom-dropdown-container dropdown-up" id="customDropdown_mInqStatus" style="width:100%;">
+              <button type="button" class="custom-dropdown-trigger" id="customDropdownTrigger_mInqStatus" onclick="toggleGenericDropdown('customDropdown_mInqStatus', event)" style="height:42px;box-sizing:border-box;padding:0 14px;border-radius:8px;font-size:12.5px;font-weight:700;">
+                <span class="custom-dropdown-val" id="customDropdownVal_mInqStatus">New (Unread / Needs Review)</span>
+                <svg class="custom-dropdown-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="custom-dropdown-menu" id="customDropdownMenu_mInqStatus" style="width:100%;min-width:250px;bottom:calc(100% + 6px);top:auto;">
+                <div class="custom-dropdown-list" style="padding:6px;">
+                  <div class="custom-dropdown-item" data-value="new" onclick="selectGenericDropdownOption('customDropdown_mInqStatus', 'mInqStatusSelect', 'new', 'New (Unread / Needs Review)')">
+                    <span class="inq-pill inq-pill-new" style="font-size:10px;padding:2px 8px;">New</span>
+                    <span class="custom-dropdown-item-title" style="margin-left:8px;">Unread / Needs Review</span>
+                  </div>
+                  <div class="custom-dropdown-item" data-value="in_review" onclick="selectGenericDropdownOption('customDropdown_mInqStatus', 'mInqStatusSelect', 'in_review', 'In Review (Evaluating Scope)')">
+                    <span class="inq-pill inq-pill-review" style="font-size:10px;padding:2px 8px;">In Review</span>
+                    <span class="custom-dropdown-item-title" style="margin-left:8px;">Evaluating Scope</span>
+                  </div>
+                  <div class="custom-dropdown-item" data-value="contacted" onclick="selectGenericDropdownOption('customDropdown_mInqStatus', 'mInqStatusSelect', 'contacted', 'Contacted (Meeting Scheduled)')">
+                    <span class="inq-pill inq-pill-contacted" style="font-size:10px;padding:2px 8px;">Contacted</span>
+                    <span class="custom-dropdown-item-title" style="margin-left:8px;">Meeting Scheduled</span>
+                  </div>
+                  <div class="custom-dropdown-item" data-value="archived" onclick="selectGenericDropdownOption('customDropdown_mInqStatus', 'mInqStatusSelect', 'archived', 'Archived (Completed / Closed)')">
+                    <span class="inq-pill inq-pill-archived" style="font-size:10px;padding:2px 8px;">Archived</span>
+                    <span class="custom-dropdown-item-title" style="margin-left:8px;">Completed / Closed</span>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" id="mInqStatusSelect" value="new" />
+            </div>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Admin Follow-up Strategy &amp; Notes</label>
+            <input type="text" class="form-input" id="mInqAdminNotes" placeholder="Enter private studio notes, client call summaries, proposal links, or next steps..." style="height:42px;box-sizing:border-box;margin:0;font-size:12.5px;padding:0 14px;" />
+          </div>
+        </div>
+
+        <div style="font-size:11px;color:var(--ink-dim);display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--rule);">
+          <span id="mInqTelemetry">IP: - · Browser: -</span>
+          <button type="button" class="btn-action-danger" onclick="confirmDeleteCurrentInquiry()">Delete This Inquiry</button>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center;">
+        <button type="button" class="btn-action-secondary" onclick="closeModal('modalInquiryDetail')">Close</button>
+        <div style="display:flex;gap:12px;">
+          <a id="mInqDirectReplyBtn" href="#" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:6px;text-decoration:none !important;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <span>Email Client</span>
+          </a>
+          <button type="button" class="btn-action-primary" onclick="saveCurrentInquiryDetail()">Save Status &amp; Notes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div id="toast-wrap"></div>
 
@@ -5560,6 +6440,11 @@
     }
 
     function switchView(viewName) {
+      if (viewName === 'contact') {
+        switchContactSubTab(currentContactTab || 'scope');
+        renderContactAdminView();
+      }
+
       currentActiveView = viewName;
       document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -5572,18 +6457,23 @@
 
       const titleMap = {
         dashboard: 'Dashboard',
+        inquiries: 'Inquiries & Client Briefs',
+        contact: 'Contact Page & Brief Engine',
         seo: 'SEO & Metadata',
         blogs: 'Perspectives / Blogs',
         portfolio: 'Work & Portfolio',
         profile: 'Studio & Team Minds',
         services: 'Core Services',
         clients: 'Client Logos',
-        contact: 'Contact & Brief',
         backup: 'Backup & Database'
       };
       document.getElementById('topbarCurrentViewName').textContent = titleMap[viewName] || 'Dashboard';
 
       document.getElementById('sidebar').classList.remove('open');
+      if (viewName === 'inquiries') {
+        loadContactInquiries();
+        loadStudioContactSettings();
+      }
       refreshAllViews();
     }
 
@@ -7777,7 +8667,7 @@
       showToast('Client logo saved successfully!');
     });
 
-    // ═══════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════════
     // 7.5 CONTACT & MULTI-STEP BRIEF CONTROLLER
     // ═══════════════════════════════════════════════════════════
     let currentContactTab = 'scope';
@@ -7898,7 +8788,6 @@
       ];
 
       const isLegacyDemo = (s4.defaultMonth === 8 && s4.defaultDay === 29);
-      const isLegacyBooked = Array.isArray(s4.bookedDays) && s4.bookedDays.length === 2 && s4.bookedDays.includes(8) && s4.bookedDays.includes(9);
 
       const selMonth = (s4.defaultMonth !== undefined && s4.defaultMonth !== null && !isLegacyDemo) ? s4.defaultMonth : currentMonth;
       selectGenericDropdownOption('customDropdown_contactMonth', 'contactStep4Month', String(selMonth), monthNames[selMonth] || 'October');
@@ -7913,7 +8802,9 @@
       selectGenericDropdownOption('customDropdown_contactTimezone', 'contactStep4Timezone', selTz, selTz);
 
       const elBooked = document.getElementById('contactStep4BookedDays');
-      if (elBooked) elBooked.value = (Array.isArray(s4.bookedDays) && !isLegacyBooked) ? s4.bookedDays.join(', ') : '';
+      if (elBooked) elBooked.value = Array.isArray(s4.bookedDays) ? s4.bookedDays.join(', ') : '';
+
+      renderInteractiveBlockedDaysGrid();
 
       contactSlotsState = Array.isArray(s4.slots) ? [...s4.slots] : ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'];
       renderContactSlotsList();
@@ -8210,6 +9101,222 @@
       showToast('✅ Step 05 Credentials & Success Screen saved successfully!');
     }
 
+    
+    // ── INTERACTIVE DATE BLACKOUT & CALENDAR CONTROLLER ──
+    function getParsedBookedDays() {
+      const raw = document.getElementById('contactStep4BookedDays')?.value || '';
+      return raw.split(',')
+        .map(s => parseInt(s.trim(), 10))
+        .filter(n => !isNaN(n) && n >= 1 && n <= 31);
+    }
+
+    function renderInteractiveBlockedDaysGrid() {
+      const container = document.getElementById('interactiveDaysGrid');
+      const tagsContainer = document.getElementById('blockedDaysTags');
+      if (!container) return;
+
+      const now = new Date();
+      const monthInput = document.getElementById('contactStep4Month');
+      const yearInput = document.getElementById('contactStep4Year');
+
+      const month = monthInput ? parseInt(monthInput.value, 10) : now.getMonth();
+      const year = yearInput && yearInput.value ? parseInt(yearInput.value, 10) : now.getFullYear();
+
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const firstDayOffset = new Date(year, month, 1).getDay(); // 0 = Sun, 1 = Mon ...
+      const bookedDays = getParsedBookedDays();
+
+      const dows = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      let html = '';
+
+      // 1. Header row
+      dows.forEach(d => {
+        html += `<div class="cal-day-chip header">${d}</div>`;
+      });
+
+      // 2. Empty offset chips
+      for (let i = 0; i < firstDayOffset; i++) {
+        html += '<div class="cal-day-chip offset"></div>';
+      }
+
+      // 3. Day chips
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dowIndex = (firstDayOffset + day - 1) % 7;
+        const dowName = dows[dowIndex];
+        const isBlocked = bookedDays.includes(day);
+
+        html += `
+          <button type="button" class="cal-day-chip ${isBlocked ? 'blocked' : ''}" onclick="toggleBlockDay(${day})" title="${isBlocked ? 'Click to unblock Day ' + day : 'Click to block Day ' + day}">
+            <span class="day-num">${day}</span>
+            <span class="day-dow">${isBlocked ? 'BLOCKED' : dowName}</span>
+          </button>
+        `;
+      }
+
+      container.innerHTML = html;
+
+      // 4. Blocked Summary Tags
+      if (tagsContainer) {
+        if (bookedDays.length === 0) {
+          tagsContainer.innerHTML = '<span style="color:var(--ink-dim);font-style:italic;">No dates blocked. All standard studio consultation days are open.</span>';
+        } else {
+          tagsContainer.innerHTML = bookedDays.sort((a,b)=>a-b).map(d => `
+            <span class="inq-pill inq-pill-new" style="cursor:pointer;display:inline-flex;align-items:center;gap:4px;" onclick="toggleBlockDay(${d})" title="Click to unblock">
+              Day ${d} <span style="font-size:12px;opacity:0.8;">✕</span>
+            </span>
+          `).join('');
+        }
+      }
+
+      // 5. Update Leads Management Banner text if available
+      const bannerText = document.getElementById('inqLiveCalendarBannerText');
+      if (bannerText) {
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        bannerText.textContent = `Studio Consultation Window: ${monthNames[month] || 'Current'} ${year} · ${bookedDays.length} Blocked Date${bookedDays.length === 1 ? '' : 's'} · Changes sync live to client portal.`;
+      }
+    }
+
+    function toggleBlockDay(dayNum) {
+      const booked = getParsedBookedDays();
+      const idx = booked.indexOf(dayNum);
+      let updated;
+      let wasBlocked = false;
+
+      if (idx !== -1) {
+        updated = booked.filter(d => d !== dayNum);
+        wasBlocked = true;
+      } else {
+        updated = [...booked, dayNum].sort((a,b)=>a-b);
+      }
+
+      const input = document.getElementById('contactStep4BookedDays');
+      if (input) input.value = updated.join(', ');
+
+      renderInteractiveBlockedDaysGrid();
+
+      // Auto-save step4 to CMS store
+      if (window.CMSStore && typeof collectContactSessionData === 'function') {
+        const d4 = collectContactSessionData();
+        window.CMSStore.saveContactBriefStep('step4', d4.step4);
+      }
+
+      showToast(`${wasBlocked ? '✨ Day ' + dayNum + ' unblocked' : '🚫 Day ' + dayNum + ' blocked on calendar'}`);
+    }
+
+    function toggleBlockSundays() {
+      const now = new Date();
+      const monthInput = document.getElementById('contactStep4Month');
+      const yearInput = document.getElementById('contactStep4Year');
+      const month = monthInput ? parseInt(monthInput.value, 10) : now.getMonth();
+      const year = yearInput && yearInput.value ? parseInt(yearInput.value, 10) : now.getFullYear();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      const current = getParsedBookedDays();
+      const sundays = [];
+      for (let d = 1; d <= daysInMonth; d++) {
+        if (new Date(year, month, d).getDay() === 0) {
+          sundays.push(d);
+        }
+      }
+
+      const merged = Array.from(new Set([...current, ...sundays])).sort((a,b)=>a-b);
+      const input = document.getElementById('contactStep4BookedDays');
+      if (input) input.value = merged.join(', ');
+
+      renderInteractiveBlockedDaysGrid();
+      if (window.CMSStore && typeof collectContactSessionData === 'function') {
+        window.CMSStore.saveContactBriefStep('step4', collectContactSessionData().step4);
+      }
+      showToast('🚫 All Sundays for this month are now blocked.');
+    }
+
+    function toggleBlockWeekends() {
+      const now = new Date();
+      const monthInput = document.getElementById('contactStep4Month');
+      const yearInput = document.getElementById('contactStep4Year');
+      const month = monthInput ? parseInt(monthInput.value, 10) : now.getMonth();
+      const year = yearInput && yearInput.value ? parseInt(yearInput.value, 10) : now.getFullYear();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+      const current = getParsedBookedDays();
+      const weekends = [];
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dow = new Date(year, month, d).getDay();
+        if (dow === 0 || dow === 6) { // Sunday or Saturday
+          weekends.push(d);
+        }
+      }
+
+      const merged = Array.from(new Set([...current, ...weekends])).sort((a,b)=>a-b);
+      const input = document.getElementById('contactStep4BookedDays');
+      if (input) input.value = merged.join(', ');
+
+      renderInteractiveBlockedDaysGrid();
+      if (window.CMSStore && typeof collectContactSessionData === 'function') {
+        window.CMSStore.saveContactBriefStep('step4', collectContactSessionData().step4);
+      }
+      showToast('🚫 All weekends (Sat + Sun) for this month are now blocked.');
+    }
+
+    function clearAllBlockedDays() {
+      const input = document.getElementById('contactStep4BookedDays');
+      if (input) input.value = '';
+
+      renderInteractiveBlockedDaysGrid();
+      if (window.CMSStore && typeof collectContactSessionData === 'function') {
+        window.CMSStore.saveContactBriefStep('step4', collectContactSessionData().step4);
+      }
+      showToast('✨ All calendar blackout dates cleared.');
+    }
+
+    function handleBookedDaysInput(val) {
+      renderInteractiveBlockedDaysGrid();
+    }
+
+    function quickBlockCurrentInquiryDate() {
+      if (!currentSelectedInquiry || !currentSelectedInquiry.session_date) {
+        showToast('No consultation date was selected in this brief.', 'warning');
+        return;
+      }
+
+      const str = currentSelectedInquiry.session_date;
+      // Match day number (e.g. "Tuesday, Oct 27, 2026" -> 27)
+      const match = str.match(/\b(\d{1,2})\b/);
+      if (!match) {
+        showToast('Could not parse day from consultation date string.', 'warning');
+        return;
+      }
+
+      const dayNum = parseInt(match[1], 10);
+      if (dayNum < 1 || dayNum > 31) {
+        showToast('Parsed day is out of range.', 'warning');
+        return;
+      }
+
+      const booked = getParsedBookedDays();
+      if (booked.includes(dayNum)) {
+        showToast(`Day ${dayNum} is already blocked on the calendar.`, 'info');
+      } else {
+        const updated = [...booked, dayNum].sort((a,b)=>a-b);
+        const input = document.getElementById('contactStep4BookedDays');
+        if (input) input.value = updated.join(', ');
+
+        renderInteractiveBlockedDaysGrid();
+
+        if (window.CMSStore && typeof collectContactSessionData === 'function') {
+          window.CMSStore.saveContactBriefStep('step4', collectContactSessionData().step4);
+        }
+
+        const btn = document.getElementById('btnQuickBlockModalDate');
+        if (btn) {
+          btn.textContent = `✓ Day ${dayNum} Blocked on Calendar`;
+          btn.style.color = 'var(--cr-bright)';
+        }
+
+        showToast(`🎉 Day ${dayNum} successfully blocked on the live booking calendar!`);
+      }
+    }
+
     function saveAllContactAdmin() {
       const d1 = collectContactScopeData();
       const d2 = collectContactDisciplinesData();
@@ -8304,6 +9411,22 @@
       if (badgeP) badgeP.textContent = portfolioCount;
       if (badgeT) badgeT.textContent = teamCount;
       if (badgeC) badgeC.textContent = clientsCount;
+
+      // Update Inquiries Metric & Sidebar
+      const badgeInq = document.getElementById('badgeInquiriesCount');
+      if (allInquiriesList && allInquiriesList.length > 0) {
+        const newCount = allInquiriesList.filter(i => i.status === 'new').length;
+        if (badgeInq) {
+          badgeInq.textContent = newCount > 0 ? `${newCount} New` : allInquiriesList.length;
+          badgeInq.style.background = newCount > 0 ? 'var(--cr)' : 'var(--rule-heavy)';
+        }
+        const statInq = document.getElementById('statInquiriesNum');
+        const statInqSub = document.getElementById('statNewInquiriesSub');
+        if (statInq) statInq.textContent = allInquiriesList.length;
+        if (statInqSub) {
+          statInqSub.textContent = newCount > 0 ? `${newCount} New / Unread Brief${newCount === 1 ? '' : 's'}` : 'All caught up';
+        }
+      }
     }
 
     // ── MASTER VIEW REFRESH ──
@@ -8319,6 +9442,577 @@
       renderServicesGrid();
       renderClientsGrid();
       renderContactAdminView();
+      loadContactInquiries(false);
+      loadStudioContactSettings();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 10. INQUIRIES & LEADS MASTER CONTROLLER
+    // ═══════════════════════════════════════════════════════════
+    let allInquiriesList = [];
+    let currentInqFilter = 'all';
+    let currentInqSearch = '';
+    let currentSelectedInquiry = null;
+
+    function copyText(str) {
+      if (!str || str === '-') return;
+      navigator.clipboard.writeText(str).then(() => {
+        showToast(`Copied to clipboard: ${str}`, 'info');
+      }).catch(() => {
+        const temp = document.createElement('textarea');
+        temp.value = str;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        showToast(`Copied to clipboard: ${str}`, 'info');
+      });
+    }
+
+    async function loadContactInquiries(showToastNotice = false) {
+      const tbody = document.getElementById('inquiriesTableBody');
+      try {
+        const queryParams = new URLSearchParams();
+        if (currentInqFilter !== 'all') queryParams.append('status', currentInqFilter);
+        if (currentInqSearch) queryParams.append('search', currentInqSearch);
+
+        const res = await fetch(`api.php?action=get_contact_inquiries&${queryParams.toString()}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        if (data && data.status === 'success') {
+          allInquiriesList = data.inquiries || [];
+          const counts = data.counts || {};
+
+          // Update Stats Ribbon
+          const elTotal = document.getElementById('inqStatTotal');
+          const elNew = document.getElementById('inqStatNew');
+          const elReview = document.getElementById('inqStatReview');
+          const elContacted = document.getElementById('inqStatContacted');
+          const elArchived = document.getElementById('inqStatArchived');
+
+          if (elTotal) elTotal.textContent = counts.total || 0;
+          if (elNew) elNew.textContent = counts.new || 0;
+          if (elReview) elReview.textContent = counts.in_review || 0;
+          if (elContacted) elContacted.textContent = counts.contacted || 0;
+          if (elArchived) elArchived.textContent = counts.archived || 0;
+
+          // Update Filter Button Count Badges
+          const badgeAll = document.getElementById('inqFilterCountAll');
+          const badgeNew = document.getElementById('inqFilterCountNew');
+          const badgeRev = document.getElementById('inqFilterCountReview');
+          const badgeCon = document.getElementById('inqFilterCountContacted');
+          const badgeArc = document.getElementById('inqFilterCountArchived');
+
+          if (badgeAll) badgeAll.textContent = counts.total || 0;
+          if (badgeNew) badgeNew.textContent = counts.new || 0;
+          if (badgeRev) badgeRev.textContent = counts.in_review || 0;
+          if (badgeCon) badgeCon.textContent = counts.contacted || 0;
+          if (badgeArc) badgeArc.textContent = counts.archived || 0;
+
+          // Update Sidebar Badge & Dashboard Card
+          const badgeSidebar = document.getElementById('badgeInquiriesCount');
+          if (badgeSidebar) {
+            badgeSidebar.textContent = counts.new > 0 ? `${counts.new} New` : (counts.total || 0);
+            badgeSidebar.style.background = counts.new > 0 ? 'var(--cr)' : 'var(--rule-heavy)';
+          }
+
+          const statDashNum = document.getElementById('statInquiriesNum');
+          const statDashSub = document.getElementById('statNewInquiriesSub');
+          if (statDashNum) statDashNum.textContent = counts.total || 0;
+          if (statDashSub) {
+            statDashSub.textContent = counts.new > 0 ? `${counts.new} New / Unread Brief${counts.new === 1 ? '' : 's'}` : 'All caught up';
+          }
+
+          // Update Sidebar Contact Badge & Tab Badges
+          const badgeContact = document.getElementById('badgeContactCount');
+          if (badgeContact) {
+            badgeContact.textContent = counts.new > 0 ? `${counts.new} New` : `${counts.total || 0} Briefs`;
+            badgeContact.style.background = counts.new > 0 ? 'var(--cr)' : 'var(--rule-heavy)';
+          }
+
+          const badgeTabInq = document.getElementById('badgeTabInquiriesCount');
+          if (badgeTabInq) {
+            badgeTabInq.textContent = counts.new > 0 ? `${counts.new} New` : (counts.total || 0);
+          }
+
+          const badgeHdrNew = document.getElementById('badgeContactHeaderNew');
+          if (badgeHdrNew) {
+            badgeHdrNew.textContent = counts.new > 0 ? `${counts.new} New Briefs Awaiting Review` : `${counts.total || 0} Stored Briefs (Live)`;
+          }
+
+          try {
+            localStorage.setItem('1928_contact_inquiries_cache', JSON.stringify(allInquiriesList));
+            localStorage.setItem('1928_contact_inquiries_counts', JSON.stringify(counts));
+          } catch(e) {}
+
+          renderInquiriesTable();
+          renderDashboardRecentInquiries(allInquiriesList);
+
+          if (showToastNotice) {
+            showToast('Refreshed latest client inquiries & briefs');
+          }
+        }
+      } catch (err) {
+        console.warn('Live API query note:', err);
+        const cached = localStorage.getItem('1928_contact_inquiries_cache');
+        if (cached) {
+          try { allInquiriesList = JSON.parse(cached); } catch(e) {}
+        }
+        if (!allInquiriesList || allInquiriesList.length === 0) {
+          allInquiriesList = [
+            {
+              id: 4,
+              name: 'Sophia Laurent',
+              email: 'sophia@laurent-maison.com',
+              company: 'Maison Laurent Paris',
+              phone: '+33 1 42 68 55 00',
+              service: 'Brand Identity Development',
+              budget: '2 Lakh + (Comprehensive)',
+              timeline: '< 1 Month (Immediate)',
+              session_date: 'Friday, Oct 23, 2026',
+              session_time: '06:00 PM IST',
+              session_summary: 'Friday, Oct 23, 2026 · 06:00 PM IST',
+              vision: 'Bespoke Haute Joaillerie digital atelier with interactive 3D gem visualization.',
+              nda: 'Bilateral NDA Requested',
+              status: 'new',
+              admin_notes: null,
+              created_at: '2026-10-15 22:22:21'
+            },
+            {
+              id: 3,
+              name: 'Vikramaditya Oberoi',
+              email: 'vikram@oberoigroup.com',
+              company: 'Oberoi Heritage Resorts',
+              phone: '+91 99887 76655',
+              service: 'Website Design & Development',
+              budget: '2 Lakh + (Comprehensive)',
+              timeline: '< 1 Month (Immediate)',
+              session_date: 'Friday, Oct 23, 2026',
+              session_time: '04:30 PM IST',
+              session_summary: 'Friday, Oct 23, 2026 · 04:30 PM IST',
+              vision: 'We require an iconic ultra-luxury digital flagship showcasing private palace suites with 3D WebGL panoramic room tour physics.',
+              nda: 'Bilateral NDA Requested',
+              status: 'new',
+              admin_notes: null,
+              created_at: '2026-10-15 21:57:59'
+            },
+            {
+              id: 1,
+              name: 'Alexander Vance',
+              email: 'alexander@vanceholdings.com',
+              company: 'Vance Luxury Group',
+              phone: '+91 98250 88210',
+              service: 'Brand Identity Development',
+              budget: '1 Lakh to 2 Lakh (Flagship Venture)',
+              timeline: '< 1 Month (Immediate)',
+              session_date: 'Monday, Oct 19, 2026',
+              session_time: '02:30 PM IST',
+              session_summary: 'Monday, Oct 19, 2026 · 02:30 PM IST',
+              vision: 'We are preparing to launch a high-end luxury lifestyle maison and require an end-to-end visual identity, bespoke packaging system, and digital flagship.',
+              nda: 'Bilateral NDA Requested',
+              status: 'new',
+              admin_notes: 'Initial inquiry from contact form. Requested bilateral NDA prior to creative review.',
+              created_at: '2026-10-15 21:49:27'
+            },
+            {
+              id: 2,
+              name: 'Meera Singhania',
+              email: 'meera@singhaniacouture.in',
+              company: 'Singhania Haute Couture',
+              phone: '+91 97123 45678',
+              service: 'Website Design & Development',
+              budget: '2 Lakh + (Comprehensive)',
+              timeline: '1 – 3 Months (Standard)',
+              session_date: 'Wednesday, Oct 21, 2026',
+              session_time: '11:00 AM IST',
+              session_summary: 'Wednesday, Oct 21, 2026 · 11:00 AM IST',
+              vision: 'Complete overhaul of our international couture digital flagship with WebGL interactive runway storytelling and private client salon ordering.',
+              nda: 'Standard Review',
+              status: 'in_review',
+              admin_notes: 'Ami reviewed portfolio references. Scheduled for strategy session.',
+              created_at: '2026-10-15 21:49:27'
+            }
+          ];
+        }
+
+        const newCount = allInquiriesList.filter(i => i.status === 'new').length;
+        const totalCount = allInquiriesList.length;
+
+        const elTotal = document.getElementById('inqStatTotal');
+        const elNew = document.getElementById('inqStatNew');
+        if (elTotal) elTotal.textContent = totalCount;
+        if (elNew) elNew.textContent = newCount;
+
+        const badgeSidebar = document.getElementById('badgeInquiriesCount');
+        if (badgeSidebar) {
+          badgeSidebar.textContent = newCount > 0 ? `${newCount} New` : totalCount;
+          badgeSidebar.style.background = newCount > 0 ? 'var(--cr)' : 'var(--rule-heavy)';
+        }
+
+        const badgeContact = document.getElementById('badgeContactCount');
+        if (badgeContact) {
+          badgeContact.textContent = newCount > 0 ? `${newCount} New` : `${totalCount} Briefs`;
+          badgeContact.style.background = newCount > 0 ? 'var(--cr)' : 'var(--rule-heavy)';
+        }
+
+        const badgeTabInq = document.getElementById('badgeTabInquiriesCount');
+        if (badgeTabInq) {
+          badgeTabInq.textContent = newCount > 0 ? `${newCount} New` : totalCount;
+        }
+
+        renderInquiriesTable();
+        renderDashboardRecentInquiries(allInquiriesList);
+      }
+    }
+
+    function renderInquiriesTable() {
+      const tbody = document.getElementById('inquiriesTableBody');
+      if (!tbody) return;
+
+      if (!allInquiriesList || allInquiriesList.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align:center;padding:60px 24px;color:var(--ink-mid);">
+              <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;">No client inquiries found</div>
+              <p style="font-size:12.5px;margin:0;">There are no submissions matching your active filter "${currentInqFilter}". Submissions from contact.html will appear here instantly.</p>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      const statusMap = {
+        new: { label: 'New', cls: 'inq-pill-new' },
+        in_review: { label: 'In Review', cls: 'inq-pill-review' },
+        contacted: { label: 'Contacted', cls: 'inq-pill-contacted' },
+        archived: { label: 'Archived', cls: 'inq-pill-archived' }
+      };
+
+      tbody.innerHTML = allInquiriesList.map(inq => {
+        const st = statusMap[inq.status] || statusMap.new;
+        const formattedDate = inq.created_at ? inq.created_at.substring(0, 16) : '-';
+        const sessionTime = inq.session_summary || (inq.session_date ? `${inq.session_date} · ${inq.session_time}` : 'Not Specified');
+        const escapedName = (inq.name || 'Valued Client').replace(/"/g, '&quot;');
+        const escapedCompany = (inq.company || 'Independent Project').replace(/"/g, '&quot;');
+
+        return `
+          <tr id="inqRow_${inq.id}">
+            <td class="inq-cell-date">${formattedDate}</td>
+            <td>
+              <div class="inq-cell-client">
+                <span class="inq-client-name">${escapedName}</span>
+                <span class="inq-client-brand">${escapedCompany} · <a href="mailto:${inq.email}" style="color:var(--ink-mid);text-decoration:none;">${inq.email}</a></span>
+              </div>
+            </td>
+            <td>
+              <span class="inq-cell-mandate">${inq.service || 'Creative Direction'}</span>
+            </td>
+            <td>
+              <span class="inq-cell-budget">${inq.budget || 'Undisclosed'}</span>
+            </td>
+            <td style="font-size:12px;color:var(--ink-mid);">
+              ${sessionTime}
+            </td>
+            <td>
+              <span class="inq-pill ${st.cls}">${st.label}</span>
+            </td>
+            <td style="text-align:right;white-space:nowrap;">
+              <button type="button" class="btn-action-primary" onclick="openInquiryDetail(${inq.id})" style="padding:6px 12px;font-size:11px;">
+                View Brief
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function renderDashboardRecentInquiries(inquiries) {
+      const tbody = document.getElementById('dashRecentInquiriesBody');
+      if (!tbody) return;
+
+      if (!inquiries || inquiries.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--ink-mid);">No client briefs logged yet.</td></tr>`;
+        return;
+      }
+
+      const recent = inquiries.slice(0, 5);
+      const statusMap = {
+        new: { label: 'New', cls: 'inq-pill-new' },
+        in_review: { label: 'In Review', cls: 'inq-pill-review' },
+        contacted: { label: 'Contacted', cls: 'inq-pill-contacted' },
+        archived: { label: 'Archived', cls: 'inq-pill-archived' }
+      };
+
+      tbody.innerHTML = recent.map(inq => {
+        const st = statusMap[inq.status] || statusMap.new;
+        const formattedDate = inq.created_at ? inq.created_at.substring(0, 10) : '-';
+        const sessionTime = inq.session_summary || (inq.session_date ? `${inq.session_date} · ${inq.session_time}` : 'Not Specified');
+        const escapedName = (inq.name || 'Valued Client').replace(/"/g, '&quot;');
+        const escapedCompany = (inq.company || 'Independent Project').replace(/"/g, '&quot;');
+
+        return `
+          <tr>
+            <td class="inq-cell-date">${formattedDate}</td>
+            <td>
+              <div class="inq-cell-client">
+                <span class="inq-client-name">${escapedName}</span>
+                <span class="inq-client-brand">${escapedCompany}</span>
+              </div>
+            </td>
+            <td><span class="inq-cell-mandate">${inq.service || 'Strategy'}</span></td>
+            <td><span class="inq-cell-budget">${inq.budget || 'Undisclosed'}</span></td>
+            <td style="font-size:12px;color:var(--ink-mid);">${sessionTime}</td>
+            <td><span class="inq-pill ${st.cls}">${st.label}</span></td>
+            <td style="text-align:right;">
+              <button type="button" class="btn-action-secondary" onclick="openInquiryDetail(${inq.id})" style="padding:4px 10px;font-size:10.5px;">Inspect</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function filterInquiriesStatus(status) {
+      currentInqFilter = status;
+      document.querySelectorAll('.inq-filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-status') === status);
+      });
+      loadContactInquiries();
+    }
+
+    let inqSearchDebounce = null;
+    function handleInquiriesSearch(val) {
+      currentInqSearch = (val || '').trim();
+      clearTimeout(inqSearchDebounce);
+      inqSearchDebounce = setTimeout(() => {
+        loadContactInquiries();
+      }, 250);
+    }
+
+    async function openInquiryDetail(id) {
+      let inquiry = allInquiriesList.find(i => String(i.id) === String(id));
+      if (!inquiry) {
+        try {
+          const res = await fetch(`api.php?action=get_inquiry_detail&id=${id}`);
+          const json = await res.json();
+          if (json && json.status === 'success') {
+            inquiry = json.data;
+          }
+        } catch (e) {}
+      }
+
+      if (!inquiry) {
+        showToast('Could not load inquiry details.', 'error');
+        return;
+      }
+
+      currentSelectedInquiry = inquiry;
+
+      // Populate Modal Fields
+      document.getElementById('modalInquiryIdInput').value = inquiry.id;
+      document.getElementById('modalInquiryIdBadge').textContent = `Inquiry #${inquiry.id}`;
+      document.getElementById('modalInquiryTitle').textContent = `${inquiry.name} · ${inquiry.company || 'Project Brief'}`;
+      document.getElementById('modalInquirySubtitle').textContent = `Received on ${inquiry.created_at || 'Recent date'}`;
+
+      const statusMap = {
+        new: { label: 'New', cls: 'inq-pill-new' },
+        in_review: { label: 'In Review', cls: 'inq-pill-review' },
+        contacted: { label: 'Contacted', cls: 'inq-pill-contacted' },
+        archived: { label: 'Archived', cls: 'inq-pill-archived' }
+      };
+      const st = statusMap[inquiry.status] || statusMap.new;
+      const statusPill = document.getElementById('modalInquiryStatusPill');
+      if (statusPill) {
+        statusPill.textContent = st.label;
+        statusPill.className = `inq-pill ${st.cls}`;
+      }
+
+      document.getElementById('mInqName').textContent = inquiry.name || '-';
+      document.getElementById('mInqCompany').textContent = inquiry.company || 'Independent Project';
+
+      const emailLink = document.getElementById('mInqEmailLink');
+      if (emailLink) {
+        emailLink.textContent = inquiry.email || '-';
+        emailLink.href = inquiry.email ? `mailto:${inquiry.email}` : '#';
+      }
+
+      const phoneLink = document.getElementById('mInqPhoneLink');
+      if (phoneLink) {
+        phoneLink.textContent = inquiry.phone || 'Not Specified';
+        phoneLink.href = inquiry.phone ? `tel:${inquiry.phone.replace(/\s+/g, '')}` : '#';
+      }
+
+      document.getElementById('mInqService').textContent = inquiry.service || 'Creative Direction';
+      document.getElementById('mInqBudget').textContent = inquiry.budget || 'Undisclosed Allocation';
+      document.getElementById('mInqTimeline').textContent = inquiry.timeline || '< 1 Month (Immediate)';
+      document.getElementById('mInqSession').textContent = inquiry.session_summary || (inquiry.session_date ? `${inquiry.session_date} · ${inquiry.session_time}` : 'Not Specified');
+      document.getElementById('mInqNda').textContent = inquiry.nda || 'Standard Review';
+      document.getElementById('mInqCreated').textContent = inquiry.created_at || '-';
+      document.getElementById('mInqVision').textContent = inquiry.vision || 'No project vision written in submission.';
+
+      const selStatus = document.getElementById('mInqStatusSelect');
+      if (selStatus) selStatus.value = inquiry.status || 'new';
+
+      const statusLabels = {
+        new: 'New (Unread / Needs Review)',
+        in_review: 'In Review (Evaluating Scope)',
+        contacted: 'Contacted (Meeting Scheduled)',
+        archived: 'Archived (Completed / Closed)'
+      };
+      const curStatus = inquiry.status || 'new';
+      selectGenericDropdownOption('customDropdown_mInqStatus', 'mInqStatusSelect', curStatus, statusLabels[curStatus] || 'New (Unread / Needs Review)');
+
+      const txtNotes = document.getElementById('mInqAdminNotes');
+      if (txtNotes) txtNotes.value = inquiry.admin_notes || '';
+
+      const tel = document.getElementById('mInqTelemetry');
+      if (tel) {
+        tel.textContent = `Client IP: ${inquiry.ip_address || '127.0.0.1'} · System: ${inquiry.user_agent ? inquiry.user_agent.substring(0, 45) + '...' : 'Browser Web'}`;
+      }
+
+      const replyBtn = document.getElementById('mInqDirectReplyBtn');
+      if (replyBtn) {
+        const subject = encodeURIComponent(`1928 Creative Studio · Re: ${inquiry.service || 'Project'} Brief (${inquiry.company || inquiry.name})`);
+        const body = encodeURIComponent(`Hi ${inquiry.name},\n\nThank you for reaching out to 1928 Creative Studio and sharing your project brief for ${inquiry.company || 'your brand'}.\n\nOur creative directors have reviewed your mandate (${inquiry.service}) and would like to confirm our strategy consultation window:\n${inquiry.session_summary || ''}\n\nWarm regards,\nTeam 1928\n1928 Creative Studio\nhttps://1928creativestudio.com`);
+        replyBtn.href = `mailto:${inquiry.email}?subject=${subject}&body=${body}`;
+      }
+
+      document.getElementById('modalInquiryDetail').classList.add('active');
+    }
+
+    async function saveCurrentInquiryDetail() {
+      const id = document.getElementById('modalInquiryIdInput').value;
+      const newStatus = document.getElementById('mInqStatusSelect').value;
+      const notes = document.getElementById('mInqAdminNotes').value;
+
+      if (!id) return;
+
+      try {
+        const res = await fetch('api.php?action=update_inquiry_status', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: Number(id), status: newStatus, admin_notes: notes })
+        });
+        const json = await res.json();
+        if (json && json.status === 'success') {
+          showToast('Inquiry status and notes saved to MySQL database!');
+          closeModal('modalInquiryDetail');
+          loadContactInquiries();
+        } else {
+          showToast((json && json.message) ? json.message : 'Failed to update inquiry', 'error');
+        }
+      } catch (err) {
+        showToast(`Save error: ${err.message}`, 'error');
+      }
+    }
+
+    async function confirmDeleteCurrentInquiry() {
+      const id = document.getElementById('modalInquiryIdInput').value;
+      if (!id) return;
+
+      if (!confirm('Are you sure you want to permanently delete this client inquiry? This action cannot be undone.')) {
+        return;
+      }
+
+      try {
+        const res = await fetch('api.php?action=delete_inquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: Number(id) })
+        });
+        const json = await res.json();
+        if (json && json.status === 'success') {
+          showToast('Inquiry deleted successfully.');
+          closeModal('modalInquiryDetail');
+          loadContactInquiries();
+        } else {
+          showToast((json && json.message) ? json.message : 'Failed to delete inquiry', 'error');
+        }
+      } catch (err) {
+        showToast(`Delete error: ${err.message}`, 'error');
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // 11. STUDIO DIRECT CONTACT CHANNELS & SETTINGS CONTROLLER
+    // ═══════════════════════════════════════════════════════════
+    async function loadStudioContactSettings() {
+      try {
+        const res = await fetch('api.php?action=get_studio_settings');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (json && json.status === 'success' && json.settings) {
+          const s = json.settings;
+
+          const elName = document.getElementById('studioContactName');
+          const elEmail = document.getElementById('studioContactEmail');
+          const elPhone = document.getElementById('studioContactPhone');
+          const elLoc = document.getElementById('studioContactLocation');
+          const elEst = document.getElementById('studioContactEstablished');
+          const elSLA = document.getElementById('studioContactSLA');
+
+          const elInsta = document.getElementById('studioContactInstagram');
+          const elLink = document.getElementById('studioContactLinkedin');
+          const elYt = document.getElementById('studioContactYoutube');
+          const elBeh = document.getElementById('studioContactBehance');
+          const elFb = document.getElementById('studioContactFacebook');
+
+          const elCta1 = document.getElementById('studioCtaPrimary');
+          const elCta2 = document.getElementById('studioCtaSecondary');
+
+          if (elName) elName.value = s.studio_name || '1928 Creative Studio';
+          if (elEmail) elEmail.value = s.email || 'studio@1928creativestudio.com';
+          if (elPhone) elPhone.value = s.phone || '+91 98250 19280';
+          if (elLoc) elLoc.value = s.location || 'Ahmedabad, India · Global Practice';
+          if (elEst) elEst.value = s.established || '1928';
+          if (elSLA) elSLA.value = s.response_sla || 'We will get back to you within 72 hours';
+
+          if (elInsta) elInsta.value = s.instagram || 'https://www.instagram.com/1928creativestudio';
+          if (elLink) elLink.value = s.linkedin || 'https://www.linkedin.com/company/1928-creative-studio/';
+          if (elYt) elYt.value = s.youtube || 'https://www.youtube.com/@1928creativestudio';
+          if (elBeh) elBeh.value = s.behance || 'https://www.behance.net/1928Creativestudio';
+          if (elFb) elFb.value = s.facebook || 'https://www.facebook.com/1928Creativestudio/';
+
+          if (elCta1) elCta1.value = s.cta_primary_text || 'Start a Project';
+          if (elCta2) elCta2.value = s.cta_secondary_text || "Tell us what you're building";
+        }
+      } catch (err) {
+        console.warn('Could not fetch studio settings:', err);
+      }
+    }
+
+    async function saveStudioContactSettings() {
+      const payload = {
+        studio_name: document.getElementById('studioContactName')?.value || '1928 Creative Studio',
+        email: document.getElementById('studioContactEmail')?.value || 'studio@1928creativestudio.com',
+        phone: document.getElementById('studioContactPhone')?.value || '+91 98250 19280',
+        location: document.getElementById('studioContactLocation')?.value || 'Ahmedabad, India · Global Practice',
+        established: document.getElementById('studioContactEstablished')?.value || '1928',
+        response_sla: document.getElementById('studioContactSLA')?.value || 'We will get back to you within 72 hours',
+        instagram: document.getElementById('studioContactInstagram')?.value || '',
+        linkedin: document.getElementById('studioContactLinkedin')?.value || '',
+        youtube: document.getElementById('studioContactYoutube')?.value || '',
+        behance: document.getElementById('studioContactBehance')?.value || '',
+        facebook: document.getElementById('studioContactFacebook')?.value || '',
+        cta_primary_text: document.getElementById('studioCtaPrimary')?.value || 'Start a Project',
+        cta_secondary_text: document.getElementById('studioCtaSecondary')?.value || "Tell us what you're building"
+      };
+
+      try {
+        const res = await fetch('api.php?action=save_studio_contact_settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const json = await res.json();
+        if (json && json.status === 'success') {
+          showToast('Studio contact channels & practice details saved to MySQL!');
+        } else {
+          showToast((json && json.message) ? json.message : 'Failed to save studio contact details', 'error');
+        }
+      } catch (err) {
+        showToast(`Save error: ${err.message}`, 'error');
+      }
     }
 
     // ── NAVIGATION & THEME CONTROLS ──
@@ -8502,6 +10196,11 @@
 
     // Initialize on Page Load
     document.addEventListener('DOMContentLoaded', () => {
+      if (window.location.protocol === 'file:') {
+        const warn = document.getElementById('fileProtocolWarning');
+        if (warn) warn.style.display = 'block';
+      }
+
       const savedTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
       initCustomDropdown();
@@ -8532,7 +10231,33 @@
       }
     });
 
-  </script>
+  
+    // ── GLOBAL MODAL DISMISS & ESCAPE LISTENERS ──
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.classList && e.target.classList.contains('modal-backdrop')) {
+        e.target.classList.remove('active');
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-backdrop.active').forEach(m => m.classList.remove('active'));
+      }
+    });
+
+    // Expose crucial navigation & modal functions to window
+    window.openInquiryDetail = openInquiryDetail;
+    window.closeModal = closeModal;
+    window.switchView = switchView;
+    window.switchContactSubTab = switchContactSubTab;
+    window.toggleBlockDay = toggleBlockDay;
+    window.toggleBlockSundays = toggleBlockSundays;
+    window.toggleBlockWeekends = toggleBlockWeekends;
+    window.clearAllBlockedDays = clearAllBlockedDays;
+    window.handleBookedDaysInput = handleBookedDaysInput;
+    window.quickBlockCurrentInquiryDate = quickBlockCurrentInquiryDate;
+    window.renderInteractiveBlockedDaysGrid = renderInteractiveBlockedDaysGrid;
+</script>
 </body>
 
 </html>

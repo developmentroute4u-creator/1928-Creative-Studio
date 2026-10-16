@@ -9,7 +9,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
@@ -57,6 +57,45 @@ function checkAndAutoSeed(PDO $db) {
         if (!in_array('specimen_caption', $cols)) {
             $db->exec("ALTER TABLE `blogs` ADD COLUMN `specimen_caption` VARCHAR(255) NULL AFTER `specimen_image`");
         }
+
+        // Auto-migration & auto-seeding for contact_inquiries table
+        $inqTableCheck = $db->query("SHOW TABLES LIKE 'contact_inquiries'")->fetch();
+        if (!$inqTableCheck) {
+            $db->exec("
+                CREATE TABLE IF NOT EXISTS `contact_inquiries` (
+                  `id` INT AUTO_INCREMENT PRIMARY KEY,
+                  `name` VARCHAR(150) NOT NULL,
+                  `email` VARCHAR(191) NOT NULL,
+                  `company` VARCHAR(191) DEFAULT 'Independent Project',
+                  `phone` VARCHAR(50) DEFAULT 'Not Specified',
+                  `service` VARCHAR(150) DEFAULT 'Creative Direction & Strategy',
+                  `budget` VARCHAR(100) DEFAULT 'Undisclosed Allocation',
+                  `timeline` VARCHAR(100) DEFAULT '< 1 Month (Immediate)',
+                  `session_date` VARCHAR(100) DEFAULT NULL,
+                  `session_time` VARCHAR(50) DEFAULT NULL,
+                  `session_summary` VARCHAR(255) DEFAULT NULL,
+                  `vision` TEXT DEFAULT NULL,
+                  `nda` VARCHAR(100) DEFAULT 'Standard Review',
+                  `status` ENUM('new', 'in_review', 'contacted', 'archived') DEFAULT 'new',
+                  `admin_notes` TEXT DEFAULT NULL,
+                  `ip_address` VARCHAR(45) DEFAULT NULL,
+                  `user_agent` VARCHAR(255) DEFAULT NULL,
+                  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                  INDEX `idx_status` (`status`),
+                  INDEX `idx_created_at` (`created_at`),
+                  INDEX `idx_email` (`email`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+            ");
+        }
+        $inqCount = (int)($db->query("SELECT COUNT(*) as cnt FROM `contact_inquiries`")->fetch()['cnt'] ?? 0);
+        if ($inqCount === 0) {
+            $db->exec("
+                INSERT INTO `contact_inquiries` (`name`, `email`, `company`, `phone`, `service`, `budget`, `timeline`, `session_date`, `session_time`, `session_summary`, `vision`, `nda`, `status`, `admin_notes`) VALUES
+                ('Alexander Vance', 'alexander@vanceholdings.com', 'Vance Luxury Group', '+91 98250 88210', 'Brand Identity Development', '1 Lakh to 2 Lakh (Flagship Venture)', '< 1 Month (Immediate)', 'Monday, Oct 19, 2026', '02:30 PM IST', 'Monday, Oct 19, 2026 · 02:30 PM IST', 'We are preparing to launch a high-end luxury lifestyle maison and require an end-to-end visual identity, bespoke packaging system, and digital flagship.', 'Bilateral NDA Requested', 'new', 'Initial inquiry from contact form. Requested bilateral NDA prior to creative review.'),
+                ('Meera Singhania', 'meera@singhaniacouture.in', 'Singhania Haute Couture', '+91 97123 45678', 'Website Design & Development', '2 Lakh + (Comprehensive)', '1 – 3 Months (Standard)', 'Wednesday, Oct 21, 2026', '11:00 AM IST', 'Wednesday, Oct 21, 2026 · 11:00 AM IST', 'Complete overhaul of our international couture digital flagship with WebGL interactive runway storytelling and private client salon ordering.', 'Standard Review', 'in_review', 'Ami reviewed portfolio references. Scheduled for strategy session.');
+            ");
+        }
     } catch (Exception $e) {
         // Continue
     }
@@ -82,6 +121,8 @@ try {
                 'team' => (int)$db->query("SELECT COUNT(*) as c FROM `team_members`")->fetch()['c'] ?? 0,
                 'services' => (int)$db->query("SELECT COUNT(*) as c FROM `services`")->fetch()['c'] ?? 0,
                 'seo' => (int)$db->query("SELECT COUNT(*) as c FROM `seo_meta`")->fetch()['c'] ?? 0,
+                'inquiries' => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries`")->fetch()['c'] ?? 0),
+                'new_inquiries' => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries` WHERE `status` = 'new'")->fetch()['c'] ?? 0),
             ];
 
             echo json_encode([
@@ -259,6 +300,12 @@ try {
                     $response['contactBrief'] = $cb;
                 }
             }
+
+            // I. Inquiries Summary Stats
+            $response['inquiriesStats'] = [
+                'total' => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries`")->fetch()['c'] ?? 0),
+                'new' => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries` WHERE `status` = 'new'")->fetch()['c'] ?? 0),
+            ];
 
             echo json_encode(['status' => 'success', 'data' => $response]);
             break;
@@ -799,6 +846,200 @@ try {
                 $stmt->execute([':k' => $k, ':v' => $valStr]);
             }
             echo json_encode(['status' => 'success', 'message' => 'Settings saved to MySQL.']);
+            break;
+
+
+        // ═══════════════════════════════════════════════════════════
+        // 8.5 CONTACT INQUIRIES & LEADS MANAGEMENT
+        // ═══════════════════════════════════════════════════════════
+        case 'get_contact_inquiries':
+            $statusFilter = $_GET['status'] ?? 'all';
+            $search = trim($_GET['search'] ?? '');
+
+            $whereClauses = [];
+            $params = [];
+
+            if ($statusFilter !== 'all' && in_array($statusFilter, ['new', 'in_review', 'contacted', 'archived'])) {
+                $whereClauses[] = "`status` = :status";
+                $params[':status'] = $statusFilter;
+            }
+
+            if (!empty($search)) {
+                $whereClauses[] = "(`name` LIKE :search OR `email` LIKE :search OR `company` LIKE :search OR `service` LIKE :search OR `phone` LIKE :search)";
+                $params[':search'] = '%' . $search . '%';
+            }
+
+            $whereSql = !empty($whereClauses) ? "WHERE " . implode(" AND ", $whereClauses) : "";
+            $stmt = $db->prepare("SELECT * FROM `contact_inquiries` {$whereSql} ORDER BY `created_at` DESC");
+            $stmt->execute($params);
+            $inquiries = $stmt->fetchAll();
+
+            // Status counts breakdown
+            $counts = [
+                'total'      => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries`")->fetch()['c'] ?? 0),
+                'new'        => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries` WHERE `status` = 'new'")->fetch()['c'] ?? 0),
+                'in_review'  => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries` WHERE `status` = 'in_review'")->fetch()['c'] ?? 0),
+                'contacted'  => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries` WHERE `status` = 'contacted'")->fetch()['c'] ?? 0),
+                'archived'   => (int)($db->query("SELECT COUNT(*) as c FROM `contact_inquiries` WHERE `status` = 'archived'")->fetch()['c'] ?? 0),
+            ];
+
+            echo json_encode([
+                'status'    => 'success',
+                'inquiries' => $inquiries,
+                'counts'    => $counts
+            ]);
+            break;
+
+        case 'get_inquiry_detail':
+            $id = (int)($_GET['id'] ?? $inputData['id'] ?? 0);
+            $stmt = $db->prepare("SELECT * FROM `contact_inquiries` WHERE `id` = :id LIMIT 1");
+            $stmt->execute([':id' => $id]);
+            $inquiry = $stmt->fetch();
+            if (!$inquiry) {
+                http_response_code(404);
+                echo json_encode(['status' => 'error', 'message' => 'Inquiry not found']);
+                exit;
+            }
+            echo json_encode(['status' => 'success', 'data' => $inquiry]);
+            break;
+
+        case 'update_inquiry_status':
+            $id = (int)($inputData['id'] ?? $_GET['id'] ?? 0);
+            $newStatus = trim($inputData['status'] ?? '');
+            $notes = isset($inputData['admin_notes']) ? trim($inputData['admin_notes']) : null;
+
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['status' => 'error', 'message' => 'Missing inquiry ID']);
+                exit;
+            }
+
+            if (!in_array($newStatus, ['new', 'in_review', 'contacted', 'archived'])) {
+                http_response_code(400);
+                echo json_encode(['status' => 'error', 'message' => 'Invalid status value']);
+                exit;
+            }
+
+            if ($notes !== null) {
+                $stmt = $db->prepare("UPDATE `contact_inquiries` SET `status` = :st, `admin_notes` = :notes WHERE `id` = :id");
+                $stmt->execute([':st' => $newStatus, ':notes' => $notes, ':id' => $id]);
+            } else {
+                $stmt = $db->prepare("UPDATE `contact_inquiries` SET `status` = :st WHERE `id` = :id");
+                $stmt->execute([':st' => $newStatus, ':id' => $id]);
+            }
+
+            echo json_encode(['status' => 'success', 'message' => 'Inquiry status updated successfully']);
+            break;
+
+        case 'save_inquiry_notes':
+            $id = (int)($inputData['id'] ?? 0);
+            $notes = trim($inputData['admin_notes'] ?? '');
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['status' => 'error', 'message' => 'Missing inquiry ID']);
+                exit;
+            }
+            $stmt = $db->prepare("UPDATE `contact_inquiries` SET `admin_notes` = :notes WHERE `id` = :id");
+            $stmt->execute([':notes' => $notes, ':id' => $id]);
+            echo json_encode(['status' => 'success', 'message' => 'Admin notes saved successfully']);
+            break;
+
+        case 'delete_inquiry':
+            $id = (int)($inputData['id'] ?? $_GET['id'] ?? 0);
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode(['status' => 'error', 'message' => 'Missing inquiry ID']);
+                exit;
+            }
+            $stmt = $db->prepare("DELETE FROM `contact_inquiries` WHERE `id` = :id");
+            $stmt->execute([':id' => $id]);
+            echo json_encode(['status' => 'success', 'message' => 'Inquiry deleted successfully']);
+            break;
+
+        case 'export_inquiries_csv':
+            $stmt = $db->query("SELECT * FROM `contact_inquiries` ORDER BY `created_at` DESC");
+            $rows = $stmt->fetchAll();
+
+            header('Content-Type: text/csv; charset=utf-8');
+            header('Content-Disposition: attachment; filename="1928_studio_inquiries_' . date('Y-m-d_His') . '.csv"');
+            header('Pragma: no-cache');
+            header('Expires: 0');
+
+            // UTF-8 BOM for Microsoft Excel compatibility
+            echo "\xEF\xBB\xBF";
+
+            $out = fopen('php://output', 'w');
+            fputcsv($out, [
+                'ID',
+                'Status',
+                'Date Received',
+                'Client Name',
+                'Corporate Email',
+                'Enterprise / Brand',
+                'Contact Phone',
+                'Service / Mandate',
+                'Capital Allocation / Budget',
+                'Target Timeline',
+                'Session Date',
+                'Session Time',
+                'Session Summary',
+                'Confidential Project Vision',
+                'NDA Protocol',
+                'Admin Notes',
+                'IP Address'
+            ]);
+
+            foreach ($rows as $r) {
+                fputcsv($out, [
+                    $r['id'],
+                    strtoupper($r['status']),
+                    $r['created_at'],
+                    $r['name'],
+                    $r['email'],
+                    $r['company'],
+                    $r['phone'],
+                    $r['service'],
+                    $r['budget'],
+                    $r['timeline'],
+                    $r['session_date'],
+                    $r['session_time'],
+                    $r['session_summary'],
+                    $r['vision'],
+                    $r['nda'],
+                    $r['admin_notes'],
+                    $r['ip_address']
+                ]);
+            }
+            fclose($out);
+            exit;
+
+        case 'get_studio_settings':
+            $stmt = $db->query("SELECT `setting_key`, `setting_value` FROM `studio_settings`");
+            $rows = $stmt->fetchAll();
+            $settings = [];
+            foreach ($rows as $r) {
+                $settings[$r['setting_key']] = $r['setting_value'];
+            }
+            echo json_encode(['status' => 'success', 'settings' => $settings]);
+            break;
+
+        case 'save_studio_contact_settings':
+            $allowedKeys = [
+                'studio_name', 'email', 'phone', 'location', 'established',
+                'response_sla', 'instagram', 'facebook', 'linkedin', 'youtube',
+                'behance', 'cta_primary_text', 'cta_secondary_text'
+            ];
+            foreach ($inputData as $key => $val) {
+                if (in_array($key, $allowedKeys)) {
+                    $stmt = $db->prepare("
+                        INSERT INTO `studio_settings` (`setting_key`, `setting_value`)
+                        VALUES (:k, :v)
+                        ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`)
+                    ");
+                    $stmt->execute([':k' => $key, ':v' => (string)$val]);
+                }
+            }
+            echo json_encode(['status' => 'success', 'message' => 'Studio contact channels updated successfully.']);
             break;
 
 

@@ -198,11 +198,95 @@ if (ENABLE_TURNSTILE_VERIFY) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════════
+// 2.5 PERSIST INQUIRY TO MYSQL DATABASE (FAULT-TOLERANT STORAGE)
+// ══════════════════════════════════════════════════════════════════════════════
+
+$inquiryId = null;
+$savedToDb = false;
+
+try {
+    require_once __DIR__ . '/db.php';
+    $db = getDB();
+
+    // Auto-create table if not exists (fail-safe)
+    $db->exec("
+        CREATE TABLE IF NOT EXISTS `contact_inquiries` (
+          `id` INT AUTO_INCREMENT PRIMARY KEY,
+          `name` VARCHAR(150) NOT NULL,
+          `email` VARCHAR(191) NOT NULL,
+          `company` VARCHAR(191) DEFAULT 'Independent Project',
+          `phone` VARCHAR(50) DEFAULT 'Not Specified',
+          `service` VARCHAR(150) DEFAULT 'Creative Direction & Strategy',
+          `budget` VARCHAR(100) DEFAULT 'Undisclosed Allocation',
+          `timeline` VARCHAR(100) DEFAULT '< 1 Month (Immediate)',
+          `session_date` VARCHAR(100) DEFAULT NULL,
+          `session_time` VARCHAR(50) DEFAULT NULL,
+          `session_summary` VARCHAR(255) DEFAULT NULL,
+          `vision` TEXT DEFAULT NULL,
+          `nda` VARCHAR(100) DEFAULT 'Standard Review',
+          `status` ENUM('new', 'in_review', 'contacted', 'archived') DEFAULT 'new',
+          `admin_notes` TEXT DEFAULT NULL,
+          `ip_address` VARCHAR(45) DEFAULT NULL,
+          `user_agent` VARCHAR(255) DEFAULT NULL,
+          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+          `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          INDEX `idx_status` (`status`),
+          INDEX `idx_created_at` (`created_at`),
+          INDEX `idx_email` (`email`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    ");
+
+    $clientIp = $_SERVER['HTTP_CF_CONNECTING_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
+    $userAgent = substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 255);
+
+    $stmt = $db->prepare("
+        INSERT INTO `contact_inquiries`
+        (`name`, `email`, `company`, `phone`, `service`, `budget`, `timeline`, `session_date`, `session_time`, `session_summary`, `vision`, `nda`, `status`, `ip_address`, `user_agent`)
+        VALUES
+        (:name, :email, :company, :phone, :service, :budget, :timeline, :session_date, :session_time, :session_summary, :vision, :nda, 'new', :ip, :ua)
+    ");
+
+    $stmt->execute([
+        ':name'            => $name,
+        ':email'           => $email,
+        ':company'         => $company,
+        ':phone'           => $phone,
+        ':service'         => $service,
+        ':budget'          => $budget,
+        ':timeline'        => $timeline,
+        ':session_date'    => $date,
+        ':session_time'    => $time,
+        ':session_summary' => $session,
+        ':vision'          => $vision,
+        ':nda'             => $nda,
+        ':ip'              => $clientIp,
+        ':ua'              => $userAgent
+    ]);
+
+    $inquiryId = (int)$db->lastInsertId();
+    $savedToDb = true;
+} catch (Exception $dbErr) {
+    error_log("1928 Studio Database Ingestion Error: " . $dbErr->getMessage());
+    // Continue so email dispatch can still be attempted even if DB has an issue
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
 // 3. LOAD PHPMAILER
 // ══════════════════════════════════════════════════════════════════════════════
 
 $autoloadFile = __DIR__ . '/vendor/autoload.php';
 if (!file_exists($autoloadFile)) {
+    // If PHPMailer is missing but inquiry was saved to DB, return success to user
+    if ($savedToDb) {
+        echo json_encode([
+            'status'     => 'success',
+            'message'    => 'Brief received and securely logged in our studio admin panel! Our team will review your mandate within 72 hours.',
+            'inquiry_id' => $inquiryId,
+            'saved_to_db'=> true,
+            'mail_sent'  => false
+        ]);
+        exit;
+    }
     http_response_code(500);
     echo json_encode([
         'status'  => 'error',
@@ -433,9 +517,12 @@ try {
 
     // Return successful response to frontend
     echo json_encode([
-        'status'  => 'success',
-        'message' => 'Brief received! An acknowledgment email has been sent to ' . htmlspecialchars($email) . ' (we will get back to you within 72 hours).',
-        'data'    => [
+        'status'     => 'success',
+        'message'    => 'Brief received! An acknowledgment email has been sent to ' . htmlspecialchars($email) . ' (we will get back to you within 72 hours).',
+        'inquiry_id' => $inquiryId,
+        'saved_to_db'=> $savedToDb,
+        'mail_sent'  => true,
+        'data'       => [
             'recipient' => $email,
             'timestamp' => date('c'),
             'company'   => $company,
@@ -447,8 +534,6 @@ try {
 } catch (Exception $e) {
     error_log("1928 Studio Mailer Error: " . $mail->ErrorInfo . " | Exception: " . $e->getMessage());
 
-    http_response_code(500);
-
     // Provide informative diagnosis
     $errorMsg = $mail->ErrorInfo ?: $e->getMessage();
     
@@ -457,6 +542,27 @@ try {
         $errorMsg = 'SMTP credentials not configured. Please set your SMTP details in send-contact-form_ack.php or smtp-config.php.';
     }
 
+    // If inquiry was already safely persisted to the database, treat submission as SUCCESS for the user
+    if ($savedToDb) {
+        http_response_code(200);
+        echo json_encode([
+            'status'     => 'success',
+            'message'    => 'Brief received and securely stored in our studio system! Our leadership will review your mandate within 72 hours.',
+            'inquiry_id' => $inquiryId,
+            'saved_to_db'=> true,
+            'mail_sent'  => false,
+            'mail_notice'=> $errorMsg,
+            'data'       => [
+                'recipient' => $email,
+                'timestamp' => date('c'),
+                'company'   => $company,
+                'service'   => $service
+            ]
+        ]);
+        exit;
+    }
+
+    http_response_code(500);
     echo json_encode([
         'status'  => 'error',
         'message' => 'Failed to dispatch acknowledgment email: ' . $errorMsg,

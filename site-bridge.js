@@ -1104,14 +1104,10 @@
       const targetYear = (isLegacySep29 || isPastMonth || s3.defaultYear === undefined || s3.defaultYear === null) ? now.getFullYear() : parseInt(s3.defaultYear, 10);
       const targetMonth = (isLegacySep29 || isPastMonth || s3.defaultMonth === undefined || s3.defaultMonth === null) ? now.getMonth() : parseInt(s3.defaultMonth, 10);
 
-      // Booked list: ONLY real bookings configured via admin panel/backend; NEVER fake hardcoded [8, 9]
+      // Booked list: configured via admin panel/backend
       let bookedList = [];
       if (Array.isArray(s3.bookedDays)) {
-        const raw = s3.bookedDays.map(d => parseInt(d, 10)).filter(d => !isNaN(d));
-        const isLegacyDemo = raw.length === 2 && raw.includes(8) && raw.includes(9);
-        if (!isLegacyDemo) {
-          bookedList = raw;
-        }
+        bookedList = s3.bookedDays.map(d => parseInt(d, 10)).filter(d => !isNaN(d));
       }
 
       const monthNames = [
