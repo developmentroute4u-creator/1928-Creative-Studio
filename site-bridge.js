@@ -226,16 +226,18 @@
           const currentWords = cdbSlider.querySelectorAll('.cdb-word');
           if (!currentWords.length) return;
           if (currentWordIdx >= currentWords.length) currentWordIdx = 0;
-          currentWords[currentWordIdx]?.classList.remove('active');
-          currentWords[currentWordIdx]?.classList.add('exit');
+          const current = currentWords[currentWordIdx];
           const prevIdx = currentWordIdx;
           currentWordIdx = (currentWordIdx + 1) % currentWords.length;
-          currentWords[currentWordIdx]?.classList.remove('exit');
-          currentWords[currentWordIdx]?.classList.add('active');
+          const next = currentWords[currentWordIdx];
+          current?.classList.remove('active');
+          current?.classList.add('exit');
+          next?.classList.remove('exit');
+          next?.classList.add('active');
           setTimeout(() => {
             currentWords[prevIdx]?.classList.remove('exit');
-          }, 500);
-        }, 2800);
+          }, 320);
+        }, 3200);
       }
     }
 
@@ -396,14 +398,14 @@
     const heroData = window.CMSStore.getPortfolioHero ? window.CMSStore.getPortfolioHero() : null;
     if (!heroData) return;
 
-    const allPills = heroSec.querySelectorAll('.hero-rounded-media');
-    const pill1 = document.getElementById('heroPill1Media') || allPills[0];
-    const pill2 = document.getElementById('heroPill2Media') || allPills[1];
+    const pills1 = heroSec.querySelectorAll('#heroPill1Media, .hero-pill-1');
+    const pills2 = heroSec.querySelectorAll('#heroPill2Media, .hero-pill-2');
 
-    if (pill1) {
-      const p1Id = heroData.pill1ProjectId || 'vibee';
-      const proj1 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p1Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p1Id) : null);
-      const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage || heroData.pill1Img || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg') : (heroData.pill1Img || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg');
+    const p1Id = heroData.pill1ProjectId || 'vibee';
+    const proj1 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p1Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p1Id) : null);
+    const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage || heroData.pill1Img || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg') : (heroData.pill1Img || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg');
+
+    pills1.forEach(pill1 => {
       const imgEl = pill1.querySelector('img') || document.getElementById('heroPill1Img');
       if (imgEl) imgEl.src = img1;
       pill1.setAttribute('data-project-id', p1Id);
@@ -412,12 +414,13 @@
         if (typeof window.openProjectModal === 'function') window.openProjectModal(p1Id);
         else if (typeof window.openModal === 'function') window.openModal(p1Id);
       };
-    }
+    });
 
-    if (pill2) {
-      const p2Id = heroData.pill2ProjectId || 'veloce';
-      const proj2 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p2Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p2Id) : null);
-      const img2 = proj2 ? (proj2.bannerImage || proj2.coverImage || heroData.pill2Img || 'img/port-veloce.jpg') : (heroData.pill2Img || 'img/port-veloce.jpg');
+    const p2Id = heroData.pill2ProjectId || 'veloce';
+    const proj2 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p2Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p2Id) : null);
+    const img2 = proj2 ? (proj2.bannerImage || proj2.coverImage || heroData.pill2Img || 'img/port-veloce.jpg') : (heroData.pill2Img || 'img/port-veloce.jpg');
+
+    pills2.forEach(pill2 => {
       const imgEl = pill2.querySelector('img') || document.getElementById('heroPill2Img');
       if (imgEl) imgEl.src = img2;
       pill2.setAttribute('data-project-id', p2Id);
@@ -426,7 +429,7 @@
         if (typeof window.openProjectModal === 'function') window.openProjectModal(p2Id);
         else if (typeof window.openModal === 'function') window.openModal(p2Id);
       };
-    }
+    });
   }
 
   function renderPortfolioProjects() {
@@ -912,7 +915,7 @@
           const rightEl = card.querySelector('.svc-card-right');
           if (rightEl) {
             if (s.image) {
-              rightEl.innerHTML = `<img src="${s.image}" alt="${s.title}" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />`;
+              rightEl.innerHTML = `<img src="${s.image}" alt="${s.title}" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${s.num || `0${idx + 1}`}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />`;
             } else {
               rightEl.innerHTML = getServiceSculptureHTML(idx, s.num || `0${idx + 1}`);
             }
@@ -944,7 +947,7 @@
                 </div>
               </div>
               <div class="svc-card-right">
-                ${s.image ? `<img src="${s.image}" alt="${s.title}" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />` : getServiceSculptureHTML(idx, s.num || `0${idx + 1}`)}
+                ${s.image ? `<img src="${s.image}" alt="${s.title}" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />` : getServiceSculptureHTML(idx, s.num || `0${idx + 1}`)}
               </div>
             </article>
           `;
@@ -2003,15 +2006,46 @@
 
           /* blogs.html */
           .critical-dispatch-bar {
-            padding: 8px 14px !important;
+            display: inline-flex !important;
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: center !important;
+            padding: 9px 16px !important;
             gap: 10px !important;
             border-radius: 999px !important;
+            width: auto !important;
+            max-width: 94vw !important;
+            box-sizing: border-box !important;
+          }
+          .cdb-left {
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            border-right: 1px solid var(--rule-heavy) !important;
+            border-bottom: none !important;
+            padding-right: 10px !important;
+            padding-bottom: 0 !important;
+            width: auto !important;
+            flex-shrink: 0 !important;
+            font-size: 10px !important;
+          }
+          .cdb-right {
+            flex: 1 !important;
+            min-width: 0 !important;
+            width: auto !important;
+            height: 22px !important;
+            display: flex !important;
+            align-items: center !important;
+            overflow: hidden !important;
           }
           .cdb-cat-tag {
             display: none !important;
           }
           .cdb-topic-name {
-            font-size: 11px !important;
+            font-size: 10.5px !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            white-space: nowrap !important;
           }
 
           /* Service Detail pages */

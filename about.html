@@ -1193,54 +1193,115 @@
 
     @media (max-width: 860px) {
       #works-driver {
-        min-height: auto;
+        height: auto !important;
+        min-height: auto !important;
+        padding: clamp(48px, 7vh, 72px) 0 !important;
+        overflow: visible !important;
       }
 
       .works-sticky-stage {
-        position: relative;
-        height: auto;
-        padding: 80px 0;
+        position: relative !important;
+        top: auto !important;
+        height: auto !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+
+      .works-stage-container {
+        height: auto !important;
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 0 20px !important;
+      }
+
+      .works-stage-container .sec-tag-pill {
+        align-self: center !important;
+        margin: 0 auto 12px auto !important;
+      }
+
+      .works-stage-container .sec-heading {
+        text-align: center !important;
+        margin: 0 auto 10px auto !important;
+      }
+
+      .works-stage-container .sec-desc {
+        text-align: center !important;
+        margin: 0 auto 28px auto !important;
+        max-width: 480px !important;
       }
 
       .works-card-stage {
-        height: auto;
-        overflow: visible;
-        padding: 10px 0;
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
       }
 
-      .works-card-set {
-        position: relative;
-        top: auto;
-        bottom: auto;
-        left: auto;
-        right: auto;
-        grid-template-columns: 1fr;
-        gap: 20px;
-        height: auto;
-        overflow: visible;
-      }
-
+      .works-card-set,
+      #worksSet1,
       #worksSet2 {
-        opacity: 1;
-        transform: none;
-        pointer-events: auto;
-        margin-top: 20px;
+        position: static !important;
+        inset: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        width: 100% !important;
+        height: auto !important;
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        visibility: visible !important;
+        margin: 0 !important;
+        overflow: visible !important;
       }
-    }
 
-    @media (max-width: 600px) {
+      .work-duo-card {
+        width: 100% !important;
+        height: clamp(340px, 48vh, 420px) !important;
+        min-height: 320px !important;
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        border-radius: 24px !important;
+        padding: 24px !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+      }
+
       .work-bottom-block {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 14px;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 14px !important;
+        width: 100% !important;
       }
+
       .work-title {
-        max-width: 100%;
-        font-size: 20px;
+        max-width: 100% !important;
+        font-size: clamp(19px, 5.2vw, 22px) !important;
+        line-height: 1.2 !important;
+        text-align: left !important;
       }
+
       .work-bottom-meta {
-        width: 100%;
-        justify-content: flex-end;
+        width: 100% !important;
+        justify-content: flex-end !important;
+        margin: 0 !important;
+      }
+
+      .works-set-indicators {
+        display: none !important;
       }
     }
 
@@ -1503,27 +1564,106 @@
         gap: 16px;
       }
 
-      .val-panel {
+      .val-panel,
+      .val-panel:hover,
+      .val-panel.active,
+      .val-panel:focus {
         flex: none !important;
-        height: auto;
-        min-height: 180px;
+        height: auto !important;
+        min-height: auto !important;
+        border-radius: 20px !important;
+        border: 1px solid var(--rule) !important;
+        background: var(--card-bg) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+        transform: none !important;
+        cursor: default !important;
+        padding: 24px 20px !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+      }
+
+      [data-theme="light"] .val-panel.active,
+      [data-theme="light"] .val-panel:hover {
+        background: var(--card-bg) !important;
+        border-color: var(--rule) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
       }
 
       .val-collapsed-content {
-        display: none;
+        display: none !important;
       }
 
       .val-expanded-content {
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;
-        min-width: 0;
+        min-width: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        text-align: left !important;
+        align-items: flex-start !important;
+        width: 100% !important;
       }
 
-      .val-exp-top,
-      .val-exp-title,
-      .val-exp-desc,
+      .val-exp-top {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100% !important;
+        margin-bottom: 12px !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .val-exp-meta {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+        text-align: left !important;
+      }
+
+      .val-exp-body {
+        text-align: left !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 0 16px 0 !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .val-exp-title {
+        text-align: left !important;
+        margin: 0 0 10px 0 !important;
+        width: 100% !important;
+        font-size: clamp(20px, 5.5vw, 24px) !important;
+        line-height: 1.15 !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .val-exp-desc {
+        text-align: left !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: clamp(13.5px, 3.6vw, 15px) !important;
+        line-height: 1.6 !important;
+        color: var(--ink-mid) !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
       .val-exp-bottom {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100% !important;
+        border-top: 1px solid var(--rule) !important;
+        padding-top: 14px !important;
         opacity: 1 !important;
         transform: none !important;
       }
@@ -1699,20 +1839,161 @@
       transform: scale(1.12);
     }
 
+    .team-mobile-avatar,
+    .team-mobile-role,
+    .team-mobile-num {
+      display: none;
+    }
+
     @media (max-width: 860px) {
-      .team-row-main {
-        grid-template-columns: 1fr;
-        gap: 16px;
-        padding: 24px 12px;
+      #team .section-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 0 20px !important;
       }
 
-      .team-row-center {
-        justify-content: flex-start;
+      #team .sec-tag-pill {
+        margin: 0 auto 12px auto !important;
+        align-self: center !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        justify-content: center !important;
+      }
+
+      .team-header-split {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin-bottom: 24px !important;
+      }
+
+      .team-header-split .sec-heading {
+        text-align: center !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+      }
+
+      .team-header-desc {
+        display: none !important;
+      }
+
+      .team-minimal-index {
+        width: 100% !important;
+        border: none !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+        margin-top: 10px !important;
+      }
+
+      .team-index-row,
+      .team-index-row:hover,
+      .team-index-row.expanded {
+        background: var(--card-bg) !important;
+        border: 1px solid var(--rule) !important;
+        border-radius: 18px !important;
+        overflow: hidden !important;
+        cursor: default !important;
+        transform: none !important;
+      }
+
+      .team-index-row::before {
+        display: none !important;
+      }
+
+      .team-row-main {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        padding: 16px 18px !important;
+        gap: 14px !important;
+      }
+
+      .team-row-left {
+        display: flex !important;
+        align-items: center !important;
+        gap: 14px !important;
+        text-align: left !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+      }
+
+      .team-mobile-avatar {
+        display: block !important;
+        width: 52px !important;
+        height: 52px !important;
+        border-radius: 50% !important;
+        overflow: hidden !important;
+        flex-shrink: 0 !important;
+        border: 1.5px solid var(--rule) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+      }
+
+      .team-mobile-avatar img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        display: block !important;
+      }
+
+      .team-member-meta {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        min-width: 0 !important;
+      }
+
+      .team-row-name {
+        font-family: var(--font-primary) !important;
+        font-size: clamp(17px, 4.2vw, 19px) !important;
+        font-weight: 800 !important;
+        color: var(--ink) !important;
+        line-height: 1.2 !important;
+        text-align: left !important;
+        transform: none !important;
+      }
+
+      .team-index-row:hover .team-row-name {
+        color: var(--ink) !important;
+        transform: none !important;
+      }
+
+      .team-mobile-role {
+        display: block !important;
+        font-family: var(--font-secondary) !important;
+        font-size: 13px !important;
+        color: var(--ink-mid) !important;
+        margin-top: 3px !important;
+        font-weight: 500 !important;
+        text-align: left !important;
+        line-height: 1.35 !important;
+      }
+
+      .team-desktop-role {
+        display: none !important;
       }
 
       .team-row-right {
-        justify-content: flex-start;
-        text-align: left;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        flex-shrink: 0 !important;
+      }
+
+      .team-mobile-num {
+        display: block !important;
+        font-family: var(--font-mono) !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        color: var(--cr) !important;
+        letter-spacing: 0.1em !important;
       }
 
       .team-floating-circle {
@@ -2747,16 +3028,153 @@
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
+      #footer-driver {
+        padding: clamp(24px, 4vh, 40px) 16px !important;
+        min-height: auto !important;
+        height: auto !important;
+      }
+
+      .footer-luxury-card {
+        padding: 36px 18px 20px 18px !important;
+        min-height: auto !important;
+        height: auto !important;
+        gap: 16px !important;
+        justify-content: flex-start !important;
+        overflow: hidden !important;
+        border-radius: 28px !important;
+      }
+
       .f-header-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 24px 16px !important;
+        width: 100% !important;
+      }
+
+      .f-desc-col {
+        grid-column: 1 / -1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .f-statement-title {
+        text-align: center !important;
+        font-size: clamp(22px, 6vw, 28px) !important;
+        margin-bottom: 12px !important;
+      }
+
+      .f-desc-text {
+        text-align: center !important;
+        font-size: 0.85rem !important;
+        max-width: 340px !important;
+        margin: 0 auto 16px auto !important;
+      }
+
+      .f-location-tag {
+        margin: 0 auto 18px auto !important;
+      }
+
+      .f-social-circles {
+        justify-content: center !important;
+        margin: 0 auto !important;
+      }
+
+      .f-nav-col {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        padding: 0 4px !important;
+        box-sizing: border-box !important;
+      }
+
+      .f-col-label {
+        font-size: 0.72rem !important;
+        letter-spacing: 0.12em !important;
+        margin-bottom: 14px !important;
+        color: var(--cr, #C8102E) !important;
+        font-weight: 700 !important;
+      }
+
+      .f-links-clean li {
+        margin-bottom: 10px !important;
+      }
+
+      .f-links-clean a {
+        font-size: 0.88rem !important;
+        color: var(--ink-mid) !important;
+      }
+
+      .f-cta-column {
+        grid-column: 1 / -1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        width: 100% !important;
+        gap: 12px !important;
+        margin-top: 4px !important;
+      }
+
+      .f-action-pill {
+        width: 100% !important;
+        max-width: 360px !important;
+        box-sizing: border-box !important;
+      }
+
+      .f-bottom-cluster {
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-top: 10px !important;
+        padding-top: 0 !important;
+      }
+
+      .f-brand-title-wrap {
+        overflow: hidden !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 4px 0 8px 0 !important;
+        box-sizing: border-box !important;
+      }
+
+      .f-brand-giant-text {
+        font-family: var(--font-primary) !important;
+        font-weight: 900 !important;
+        font-size: clamp(17px, 6.2vw, 40px) !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.02em !important;
+        line-height: 1 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        transform: none !important;
+        box-sizing: border-box !important;
+      }
+
+      .f-brand-giant-text .f-char {
+        transform: translateY(0%) !important;
+        opacity: 1 !important;
       }
 
       .f-outer-bar {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        gap: 8px !important;
+        padding: 16px 20px !important;
+      }
+
+      .f-outer-copyright, .f-outer-dev {
+        text-align: center !important;
+        font-size: 0.74rem !important;
       }
     }
 
@@ -3181,6 +3599,473 @@
       .c-dot,
       .c-ring {
         display: none !important;
+      }
+      #nav .nav-right .nav-cta,
+      #nav .nav-cta,
+      #navContactBtn {
+        display: none !important;
+      }
+
+      /* ── Centered Layout & Typography on Phone View ── */
+      .section-container {
+        padding: 0 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Centered Section Headings, Tag Pills & Descriptions */
+      .sec-tag-pill {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        margin-bottom: 12px !important;
+        align-self: center !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        justify-content: center !important;
+      }
+
+      .sec-heading {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+        font-size: clamp(28px, 7.8vw, 36px) !important;
+        line-height: 1.1 !important;
+      }
+
+      .sec-desc {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+        max-width: 480px !important;
+        font-size: clamp(14px, 3.8vw, 15.5px) !important;
+        line-height: 1.6 !important;
+      }
+
+      /* ── 1. Hero Section Centering ── */
+      #hero {
+        min-height: 85svh !important;
+        padding: clamp(90px, 14vh, 120px) 0 clamp(40px, 6vh, 60px) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      #hero .hero-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        max-width: 520px !important;
+        margin: 0 auto !important;
+      }
+
+      .hero-tag-wrap {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        width: 100% !important;
+        margin-bottom: 14px !important;
+      }
+
+      .hero-headline {
+        text-align: center !important;
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        font-size: clamp(32px, 8.5vw, 44px) !important;
+        line-height: 1.08 !important;
+        letter-spacing: -0.03em !important;
+        margin-bottom: 20px !important;
+      }
+
+      .hero-sub {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        width: 100% !important;
+        max-width: 440px !important;
+        font-size: clamp(14px, 3.8vw, 15.5px) !important;
+        line-height: 1.65 !important;
+        margin-bottom: 28px !important;
+      }
+
+      .hero-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        width: 100% !important;
+        max-width: 320px !important;
+        margin: 0 auto !important;
+      }
+
+      .hero-actions .btn-primary,
+      .hero-actions .btn-ghost {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
+      }
+
+      /* ── 2. Story Section Centering ── */
+      #story {
+        padding: clamp(50px, 8vh, 80px) 0 !important;
+      }
+
+      .story-card-wrap {
+        width: 100% !important;
+      }
+
+      .story-card-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        justify-content: center !important;
+        padding-bottom: 20px !important;
+      }
+
+      .story-statement {
+        text-align: center !important;
+        width: 100% !important;
+        font-size: clamp(22px, 5.8vw, 28px) !important;
+        line-height: 1.2 !important;
+        margin-bottom: 14px !important;
+      }
+
+      .story-meta-badge {
+        margin: 0 auto !important;
+        align-self: center !important;
+      }
+
+      .story-pillars-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+      }
+
+      .story-pillar-item,
+      .story-pillar-item:hover {
+        text-align: left !important;
+        transform: none !important;
+        border-color: var(--rule) !important;
+        box-shadow: none !important;
+      }
+
+      /* ── 4. Core Values / Principles: Centered Intro, Left-Aligned Cards, No Hover Effects ── */
+      #values {
+        padding: clamp(50px, 8vh, 80px) 0 !important;
+        height: auto !important;
+        min-height: auto !important;
+      }
+
+      #values .section-container {
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .val-panel,
+      .val-panel:hover,
+      .val-panel.active,
+      .val-panel:focus {
+        flex: none !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        border-radius: 20px !important;
+        border: 1px solid var(--rule) !important;
+        background: var(--card-bg) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+        transform: none !important;
+        cursor: default !important;
+        padding: 24px 20px !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+      }
+
+      [data-theme="light"] .val-panel.active,
+      [data-theme="light"] .val-panel:hover {
+        background: var(--card-bg) !important;
+        border-color: var(--rule) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03) !important;
+      }
+
+      .val-collapsed-content {
+        display: none !important;
+      }
+
+      .val-expanded-content {
+        opacity: 1 !important;
+        transform: none !important;
+        pointer-events: auto !important;
+        min-width: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        text-align: left !important;
+        align-items: flex-start !important;
+        width: 100% !important;
+      }
+
+      .val-exp-top {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100% !important;
+        margin-bottom: 12px !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .val-exp-meta {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+        text-align: left !important;
+      }
+
+      .val-exp-body {
+        text-align: left !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 0 16px 0 !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .val-exp-title {
+        text-align: left !important;
+        margin: 0 0 10px 0 !important;
+        width: 100% !important;
+        font-size: clamp(20px, 5.5vw, 24px) !important;
+        line-height: 1.15 !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .val-exp-desc {
+        text-align: left !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        font-size: clamp(13.5px, 3.6vw, 15px) !important;
+        line-height: 1.6 !important;
+        color: var(--ink-mid) !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .val-exp-bottom {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100% !important;
+        border-top: 1px solid var(--rule) !important;
+        padding-top: 14px !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      /* ── 5. Our Team: Left-Aligned Editorial Cards (No Center Line) ── */
+      #team {
+        padding: clamp(50px, 8vh, 80px) 0 !important;
+        min-height: auto !important;
+        height: auto !important;
+      }
+
+      #team .section-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        padding: 0 20px !important;
+      }
+
+      #team .sec-tag-pill {
+        margin: 0 auto 12px auto !important;
+        align-self: center !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        justify-content: center !important;
+      }
+
+      .team-header-split {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin-bottom: 24px !important;
+      }
+
+      .team-header-split .sec-heading {
+        text-align: center !important;
+        margin: 0 auto !important;
+        width: 100% !important;
+      }
+
+      .team-header-desc {
+        display: none !important;
+      }
+
+      /* ── 6. Creative Process: Centered Header, Left-Aligned Card Text, No Card Hover ── */
+      #process {
+        padding: clamp(50px, 8vh, 80px) 0 !important;
+        height: auto !important;
+        min-height: auto !important;
+      }
+
+      #process .section-container {
+        align-items: center !important;
+        text-align: center !important;
+      }
+
+      .proc-step-card,
+      .proc-step-card:hover {
+        text-align: left !important;
+        border-color: var(--rule) !important;
+        transform: none !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+      }
+
+      .proc-card-header {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        width: 100% !important;
+      }
+
+      .proc-card-phase {
+        text-align: left !important;
+      }
+
+      .proc-card-title {
+        text-align: left !important;
+        margin: 0 0 8px 0 !important;
+        width: 100% !important;
+      }
+
+      .proc-card-desc {
+        text-align: left !important;
+        margin: 0 0 14px 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+      }
+
+      .proc-card-tags {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: left !important;
+        width: 100% !important;
+      }
+
+      /* ── 7. Brands That Trust Section Centering ── */
+      #clients-section {
+        padding: clamp(50px, 8vh, 80px) 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+      }
+
+      .brands-header-block {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 520px !important;
+        margin: 0 auto clamp(24px, 4vh, 36px) auto !important;
+        padding: 0 20px !important;
+        box-sizing: border-box !important;
+      }
+
+      .bph-label {
+        margin: 0 auto 12px auto !important;
+        align-self: center !important;
+        text-align: center !important;
+        display: inline-flex !important;
+        justify-content: center !important;
+      }
+
+      .brands-title {
+        text-align: center !important;
+        font-size: clamp(28px, 7.8vw, 36px) !important;
+        line-height: 1.1 !important;
+        margin: 0 auto 12px auto !important;
+      }
+
+      .brands-subtitle {
+        text-align: center !important;
+        margin: 0 auto !important;
+        font-size: clamp(14px, 3.8vw, 15.5px) !important;
+        line-height: 1.6 !important;
+      }
+
+      /* ── 8. Call To Action Centering ── */
+      #cta {
+        padding: clamp(40px, 6vh, 60px) 16px !important;
+        min-height: auto !important;
+        height: auto !important;
+      }
+
+      .fcta-container {
+        padding: clamp(36px, 6vh, 48px) 20px !important;
+        border-radius: 28px !important;
+      }
+
+      .fcta-content {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-align: center !important;
+        width: 100% !important;
+      }
+
+      .fcta-title {
+        text-align: center !important;
+        font-size: clamp(28px, 7.5vw, 36px) !important;
+        line-height: 1.12 !important;
+        margin: 0 auto 14px auto !important;
+      }
+
+      .fcta-sub {
+        text-align: center !important;
+        margin: 0 auto 24px auto !important;
+        max-width: 440px !important;
+        font-size: clamp(14px, 3.8vw, 15.5px) !important;
+      }
+
+      .fcta-actions {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 12px !important;
+        width: 100% !important;
+        max-width: 320px !important;
+        margin: 0 auto !important;
+      }
+
+      .fcta-actions .btn-primary,
+      .fcta-actions .btn-ghost {
+        width: 100% !important;
+        text-align: center !important;
+        justify-content: center !important;
       }
     }
 
@@ -3666,10 +4551,17 @@
           data-photo="img/team-ami.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Ami Panchal</span>
+              <div class="team-mobile-avatar">
+                <img src="img/team-ami.jpg" alt="Ami Panchal" loading="lazy" />
+              </div>
+              <div class="team-member-meta">
+                <span class="team-row-name">Ami Panchal</span>
+                <span class="team-row-role team-mobile-role">Founder &amp; Creative + Strategy Head</span>
+              </div>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Founder &amp; Creative + Strategy Head</span>
+              <span class="team-row-role team-desktop-role">Founder &amp; Creative + Strategy Head</span>
+              <span class="team-mobile-num">01</span>
             </div>
           </div>
         </div>
@@ -3679,10 +4571,17 @@
           data-photo="img/team-tusar.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Tushar Panchal</span>
+              <div class="team-mobile-avatar">
+                <img src="img/team-tusar.jpg" alt="Tushar Panchal" loading="lazy" />
+              </div>
+              <div class="team-member-meta">
+                <span class="team-row-name">Tushar Panchal</span>
+                <span class="team-row-role team-mobile-role">Founder &amp; Marketing Head</span>
+              </div>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Founder &amp; Marketing Head</span>
+              <span class="team-row-role team-desktop-role">Founder &amp; Marketing Head</span>
+              <span class="team-mobile-num">02</span>
             </div>
           </div>
         </div>
@@ -3692,10 +4591,17 @@
           data-photo="img/team-elena.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Trusha Panchal</span>
+              <div class="team-mobile-avatar">
+                <img src="img/team-elena.jpg" alt="Trusha Panchal" loading="lazy" />
+              </div>
+              <div class="team-member-meta">
+                <span class="team-row-name">Trusha Panchal</span>
+                <span class="team-row-role team-mobile-role">Senior Graphic Designer</span>
+              </div>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Senior Graphic Designer</span>
+              <span class="team-row-role team-desktop-role">Senior Graphic Designer</span>
+              <span class="team-mobile-num">03</span>
             </div>
           </div>
         </div>
@@ -3705,10 +4611,17 @@
           data-photo="img/team-kaito.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Harsh Patel</span>
+              <div class="team-mobile-avatar">
+                <img src="img/team-kaito.jpg" alt="Harsh Patel" loading="lazy" />
+              </div>
+              <div class="team-member-meta">
+                <span class="team-row-name">Harsh Patel</span>
+                <span class="team-row-role team-mobile-role">Senior Video Editor</span>
+              </div>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Senior Video Editor</span>
+              <span class="team-row-role team-desktop-role">Senior Video Editor</span>
+              <span class="team-mobile-num">04</span>
             </div>
           </div>
         </div>
@@ -3718,10 +4631,17 @@
           data-photo="img/team-ami.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Urvish Mistry</span>
+              <div class="team-mobile-avatar">
+                <img src="img/team-ami.jpg" alt="Urvish Mistry" loading="lazy" />
+              </div>
+              <div class="team-member-meta">
+                <span class="team-row-name">Urvish Mistry</span>
+                <span class="team-row-role team-mobile-role">Junior Video Editor + Community Manager</span>
+              </div>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Junior Video Editor + Community Manager</span>
+              <span class="team-row-role team-desktop-role">Junior Video Editor + Community Manager</span>
+              <span class="team-mobile-num">05</span>
             </div>
           </div>
         </div>
@@ -3731,10 +4651,17 @@
           data-photo="img/team-elena.jpg">
           <div class="team-row-main">
             <div class="team-row-left">
-              <span class="team-row-name">Priyal Lunkar</span>
+              <div class="team-mobile-avatar">
+                <img src="img/team-elena.jpg" alt="Priyal Lunkar" loading="lazy" />
+              </div>
+              <div class="team-member-meta">
+                <span class="team-row-name">Priyal Lunkar</span>
+                <span class="team-row-role team-mobile-role">Social Media Manager</span>
+              </div>
             </div>
             <div class="team-row-right">
-              <span class="team-row-role">Social Media Manager</span>
+              <span class="team-row-role team-desktop-role">Social Media Manager</span>
+              <span class="team-mobile-num">06</span>
             </div>
           </div>
         </div>
@@ -4389,10 +5316,12 @@
       if (valPanels.length > 0) {
         valPanels.forEach(panel => {
           panel.addEventListener('mouseenter', () => {
+            if (window.innerWidth <= 860) return;
             valPanels.forEach(p => p.classList.remove('active'));
             panel.classList.add('active');
           });
           panel.addEventListener('click', () => {
+            if (window.innerWidth <= 860) return;
             valPanels.forEach(p => p.classList.remove('active'));
             panel.classList.add('active');
           });
@@ -4517,6 +5446,15 @@
 
       function updateWorksOnScroll() {
         if (!worksDriver || !worksSet1 || !worksSet2) return;
+        if (window.innerWidth <= 860) {
+          worksSet1.style.opacity = '';
+          worksSet1.style.transform = '';
+          worksSet1.style.pointerEvents = 'auto';
+          worksSet2.style.opacity = '';
+          worksSet2.style.transform = '';
+          worksSet2.style.pointerEvents = 'auto';
+          return;
+        }
         const rect = worksDriver.getBoundingClientRect();
         const totalDist = worksDriver.offsetHeight - window.innerHeight;
         if (totalDist <= 0) return;
@@ -4689,6 +5627,10 @@
           });
           ticking = true;
         }
+      }, { passive: true });
+
+      window.addEventListener('resize', () => {
+        onScroll();
       }, { passive: true });
 
       // Immediate & Smooth Slide-Down Entrance

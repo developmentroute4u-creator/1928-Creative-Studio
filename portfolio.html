@@ -250,6 +250,14 @@
       gap: clamp(10px, 1.4vw, 18px);
     }
 
+    .hero-title-desktop {
+      display: block !important;
+    }
+
+    .hero-title-mobile {
+      display: none !important;
+    }
+
     .hero-rounded-media {
       display: inline-flex;
       align-items: center;
@@ -1465,6 +1473,36 @@
       }
     }
 
+    @media (max-width: 768px) {
+      .hero-title-desktop {
+        display: none !important;
+      }
+
+      .hero-title-mobile {
+        display: flex !important;
+        flex-direction: column !important;
+        font-size: clamp(24px, 6.2vw, 34px) !important;
+        line-height: 1.2 !important;
+        gap: 6px !important;
+      }
+
+      .hero-title-mobile .hst-line {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        flex-wrap: nowrap !important;
+        white-space: nowrap !important;
+        gap: 8px !important;
+      }
+
+      .hero-title-mobile .hero-rounded-media {
+        width: clamp(56px, 15vw, 76px) !important;
+        height: clamp(28px, 7.5vw, 38px) !important;
+        flex-shrink: 0 !important;
+        border-radius: 9px !important;
+      }
+    }
+
     /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
     #nav {
       position: fixed;
@@ -1993,19 +2031,39 @@
        ═══════════════════════════════════════════════════════════ -->
   <section id="portfolio-hero">
     <div class="hero-stage-container">
-      <h1 class="hero-statement-title">
+      <!-- Desktop Hero Title (Original 2 lines strictly on web view > 768px) -->
+      <h1 class="hero-statement-title hero-title-desktop">
         <div class="hst-line">
           <span>WORK THAT</span>
-          <div class="hero-rounded-media" id="heroPill1Media" data-project-id="aurora" title="Explore Aurora Horology">
+          <div class="hero-rounded-media hero-pill-1" id="heroPill1Media" data-project-id="aurora" title="Explore Aurora Horology">
             <img id="heroPill1Img" src="img/port-chronos.jpg" alt="Hero Pill 1 Preview" onerror="this.src='img/port-chronos.jpg';" />
           </div>
           <span>MOVES</span>
         </div>
         <div class="hst-line" style="margin-top: 6px;">
           <span>BRANDS</span>
-          <div class="hero-rounded-media" id="heroPill2Media" data-project-id="veloce" title="Explore Veloce Hypercraft">
+          <div class="hero-rounded-media hero-pill-2" id="heroPill2Media" data-project-id="veloce" title="Explore Veloce Hypercraft">
             <img id="heroPill2Img" src="img/port-veloce.jpg" alt="Hero Pill 2 Preview" onerror="this.src='img/port-veloce.jpg';" />
           </div>
+          <span>FORWARD<span class="hst-dot-red">.</span></span>
+        </div>
+      </h1>
+
+      <!-- Mobile Hero Title (Strictly 3 lines on phone view <= 768px) -->
+      <h1 class="hero-statement-title hero-title-mobile">
+        <div class="hst-line">
+          <span>WORK THAT</span>
+          <div class="hero-rounded-media hero-pill-1" data-project-id="aurora" title="Explore Aurora Horology">
+            <img src="img/port-chronos.jpg" alt="Hero Pill 1 Preview" onerror="this.src='img/port-chronos.jpg';" />
+          </div>
+        </div>
+        <div class="hst-line">
+          <span>MOVES BRANDS</span>
+          <div class="hero-rounded-media hero-pill-2" data-project-id="veloce" title="Explore Veloce Hypercraft">
+            <img src="img/port-veloce.jpg" alt="Hero Pill 2 Preview" onerror="this.src='img/port-veloce.jpg';" />
+          </div>
+        </div>
+        <div class="hst-line">
           <span>FORWARD<span class="hst-dot-red">.</span></span>
         </div>
       </h1>
