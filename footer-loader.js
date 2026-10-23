@@ -109,6 +109,14 @@
   text-align: left !important;
 }
 
+.f-title-br-mobile {
+  display: none !important;
+}
+
+.f-desc-line {
+  display: inline !important;
+}
+
 .f-desc-col .f-desc-text {
   font-family: var(--font-secondary, 'Raleway', sans-serif) !important;
   font-weight: 400 !important;
@@ -204,6 +212,16 @@
   display: flex !important;
   flex-direction: column !important;
   gap: 16px !important;
+}
+
+.f-desc-col .f-social-circles {
+  display: flex !important;
+  margin-top: 10px !important;
+  justify-content: flex-start !important;
+}
+
+.f-cta-column .f-social-circles {
+  display: none !important;
 }
 
 .f-action-pill {
@@ -333,14 +351,17 @@
 
 .f-char {
   display: inline-block !important;
-  opacity: 1 !important;
-  transform: translateY(0%) !important;
-  transition: transform 0.85s cubic-bezier(0.19, 1, 0.22, 1) !important;
-  will-change: transform !important;
+  opacity: 0 !important;
+  transform: translateY(85%) !important;
+  transition-property: transform, opacity !important;
+  transition-duration: 0.85s, 0.65s !important;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1) !important;
+  will-change: transform, opacity !important;
 }
 
 .f-brand-giant-text.revealed .f-char {
   transform: translateY(0%) !important;
+  opacity: 1 !important;
 }
 
 .f-bottom-line {
@@ -363,24 +384,43 @@
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
   #footer-driver {
-    padding: clamp(24px, 4vh, 40px) 16px !important;
-    min-height: auto !important;
-    height: auto !important;
+    position: relative !important;
+    background: var(--bg) !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 20px 16px !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
   }
   .footer-luxury-card {
-    padding: 36px 18px 20px 18px !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
     min-height: auto !important;
     height: auto !important;
-    gap: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
     justify-content: flex-start !important;
-    overflow: hidden !important;
+    padding: 28px 20px 22px 20px !important;
+    gap: 16px !important;
     border-radius: 28px !important;
+    border: 1px solid var(--rule) !important;
+    overflow: hidden !important;
+    position: relative !important;
+    box-sizing: border-box !important;
   }
   .f-header-grid {
     display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 24px 16px !important;
+    grid-template-columns: auto auto !important;
+    justify-content: center !important;
+    column-gap: clamp(24px, 8vw, 42px) !important;
+    row-gap: 16px !important;
     width: 100% !important;
+    margin-bottom: 0 !important;
   }
   .f-desc-col {
     grid-column: 1 / -1 !important;
@@ -388,47 +428,93 @@
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
   }
   .f-statement-title {
     text-align: center !important;
-    font-size: clamp(22px, 6vw, 28px) !important;
-    margin-bottom: 12px !important;
+    font-size: 21px !important;
+    line-height: 1.25 !important;
+    margin: 0 auto 8px auto !important;
+    width: 100% !important;
+    max-width: 290px !important;
+  }
+  .f-title-br-mobile {
+    display: block !important;
   }
   .f-desc-text {
     text-align: center !important;
-    font-size: 0.85rem !important;
-    max-width: 340px !important;
-    margin: 0 auto 16px auto !important;
+    font-size: 0.81rem !important;
+    line-height: 1.48 !important;
+    max-width: 380px !important;
+    margin: 0 auto 10px auto !important;
+    width: 100% !important;
+  }
+  .f-desc-line {
+    display: block !important;
   }
   .f-location-tag {
-    margin: 0 auto 18px auto !important;
+    font-size: 0.66rem !important;
+    letter-spacing: 0.12em !important;
+    margin: 0 auto 12px auto !important;
     text-align: center !important;
+    width: 100% !important;
+    display: block !important;
+  }
+  .f-desc-col .f-social-circles {
+    display: none !important;
   }
   .f-social-circles {
     justify-content: center !important;
     margin: 0 auto !important;
+    gap: 9px !important;
+  }
+  .f-cta-column .f-social-circles {
+    display: flex !important;
+    margin: 6px auto 0 auto !important;
+  }
+  .f-social-circles .f-circle-btn {
+    width: 34px !important;
+    height: 34px !important;
   }
   .f-nav-col {
     display: flex !important;
     flex-direction: column !important;
-    align-items: flex-start !important;
-    text-align: left !important;
+    align-items: center !important;
+    text-align: center !important;
     padding: 0 4px !important;
     box-sizing: border-box !important;
   }
   .f-col-label {
-    font-size: 0.72rem !important;
+    font-size: 0.70rem !important;
     letter-spacing: 0.12em !important;
-    margin-bottom: 14px !important;
+    margin-bottom: 8px !important;
     color: var(--cr, #C8102E) !important;
     font-weight: 700 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  .f-links-clean {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
   }
   .f-links-clean li {
-    margin-bottom: 10px !important;
+    margin-bottom: 6px !important;
+    text-align: center !important;
+    width: 100% !important;
   }
   .f-links-clean a {
-    font-size: 0.88rem !important;
+    font-size: 0.84rem !important;
+    line-height: 1.25 !important;
     color: var(--ink-mid) !important;
+    text-align: center !important;
+    display: inline-block !important;
   }
   .f-cta-column {
     grid-column: 1 / -1 !important;
@@ -436,20 +522,37 @@
     flex-direction: column !important;
     align-items: center !important;
     width: 100% !important;
-    gap: 12px !important;
+    gap: 10px !important;
     margin-top: 4px !important;
   }
   .f-action-pill {
     width: 100% !important;
     max-width: 360px !important;
     box-sizing: border-box !important;
+    padding: 12px 16px !important;
+    border-radius: 16px !important;
+  }
+  .f-action-heading {
+    font-size: 0.86rem !important;
+  }
+  .f-action-sub {
+    font-size: 0.68rem !important;
+  }
+  .f-action-arrow {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 0.80rem !important;
   }
   .f-bottom-cluster {
     overflow: hidden !important;
     width: 100% !important;
     max-width: 100% !important;
-    margin-top: 10px !important;
-    padding-top: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-top: 14px !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    position: relative !important;
   }
   .f-brand-title-wrap {
     overflow: hidden !important;
@@ -458,13 +561,14 @@
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
-    padding: 4px 0 8px 0 !important;
+    padding: 4px 0 2px 0 !important;
+    margin-bottom: 0 !important;
     box-sizing: border-box !important;
   }
   .f-brand-giant-text {
     font-family: var(--font-primary, 'Montserrat', sans-serif) !important;
     font-weight: 900 !important;
-    font-size: clamp(17px, 6.2vw, 40px) !important;
+    font-size: clamp(18px, 6.2vw, 29px) !important;
     white-space: nowrap !important;
     letter-spacing: -0.02em !important;
     line-height: 1 !important;
@@ -477,25 +581,38 @@
     box-sizing: border-box !important;
   }
   .f-brand-giant-text .f-char {
+    display: inline-block !important;
+    transform: translateY(85%) !important;
+    opacity: 0 !important;
+    transition-property: transform, opacity !important;
+    transition-duration: 0.80s, 0.60s !important;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1) !important;
+    will-change: transform, opacity !important;
+  }
+  .f-brand-giant-text.revealed .f-char {
     transform: translateY(0%) !important;
     opacity: 1 !important;
   }
   .f-bottom-line {
-    width: 100% !important;
-    height: 1.5px !important;
-    background: var(--rule) !important;
-    margin: 0 !important;
+    display: none !important;
   }
   .f-outer-bar {
+    margin: 14px auto 0 auto !important;
+    padding: 0 !important;
+    display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     text-align: center !important;
-    gap: 8px !important;
-    padding: 16px 20px !important;
+    gap: 3px !important;
+    box-sizing: border-box !important;
   }
-  .f-outer-copyright, .f-outer-dev {
+  .f-outer-copyright span,
+  .f-outer-dev span,
+  .f-outer-copyright,
+  .f-outer-dev {
     text-align: center !important;
-    font-size: 0.74rem !important;
+    font-size: 0.70rem !important;
+    line-height: 1.3 !important;
   }
 }
 `;
@@ -505,7 +622,7 @@
 
   try {
     sessionStorage.setItem('1928_site_visited', 'true');
-  } catch (e) {}
+  } catch (e) { }
 
   const FOOTER_HTML = `<!-- §7 — MODERN EDITORIAL LUXURY FOOTER -->
 <footer id="footer-driver">
@@ -514,8 +631,12 @@
     <!-- Top Grid: Statement + Socials, Explore Links, Legal & Policy, CTA -->
     <div class="f-header-grid">
       <div class="f-desc-col">
-        <h3 class="f-statement-title">We build brands that create value.</h3>
-        <p class="f-desc-text">1928 Creative Studio is an independent creative studio helping ambitious businesses shape distinctive brands, digital experiences, and meaningful connections.</p>
+        <h3 class="f-statement-title">We build brands <br class="f-title-br-mobile" />that create value.</h3>
+        <p class="f-desc-text">
+          <span class="f-desc-line">1928 Creative Studio is an independent creative studio</span>
+          <span class="f-desc-line">helping ambitious businesses shape distinctive brands,</span>
+          <span class="f-desc-line">digital experiences, and meaningful connections.</span>
+        </p>
         <div class="f-location-tag">India · Global</div>
         <div class="f-social-circles">
           <a href="https://www.instagram.com/1928creativestudio" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Instagram">
@@ -583,17 +704,47 @@
           </div>
         </a>
 
-        <a href="contact.html#start-project-sec" class="f-action-pill cta-secondary">
+        <a href="https://wa.me/918160931928?text=Hello%201928%20Creative%20Studio%2C%20I%20would%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener noreferrer" class="f-action-pill cta-secondary" aria-label="Chat on WhatsApp">
           <div class="f-action-txt">
             <span class="f-action-heading">Let’s talk about your project</span>
             <span class="f-action-sub">Tell us what you're building</span>
           </div>
-          <div class="f-action-arrow" aria-label="Call">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+          <div class="f-action-arrow" aria-label="WhatsApp">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
           </div>
         </a>
+
+        <div class="f-social-circles">
+          <a href="https://www.instagram.com/1928creativestudio" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a href="https://www.facebook.com/1928Creativestudio/" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+            </svg>
+          </a>
+          <a href="https://www.linkedin.com/company/1928-creative-studio/" target="_blank" rel="noopener" class="f-circle-btn" aria-label="LinkedIn">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0 0-3.28 1.64 1.64 0 0 0 0 3.28m1.39 9.74v-8.37H5.07v8.37h2.78z"/>
+            </svg>
+          </a>
+          <a href="https://www.youtube.com/@1928creativestudio" target="_blank" rel="noopener" class="f-circle-btn" aria-label="YouTube">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+          <a href="https://www.behance.net/1928Creativestudio" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Behance">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.084 0-5.625-3.003-5.625-6 0-3.328 1.979-6 5.625-6 3.747 0 5.154 2.662 4.943 5.485h-7.697c.071 1.626.966 3.515 3.013 3.515 1.554 0 2.457-.866 2.842-1.5h2zm-2.884-5c-.073-1.04-.694-2.515-2.217-2.515-1.572 0-2.22 1.378-2.348 2.515h4.565zm-14.842 8h-6v-16h6.732c3.489 0 5.268 1.705 5.268 4.398 0 1.616-.867 2.889-2.027 3.559 1.547.625 2.527 2.057 2.527 3.864 0 2.825-2.037 4.179-5.5 4.179zm-3.5-13.5v4.5h3.048c1.556 0 2.452-.697 2.452-2.25 0-1.553-.896-2.25-2.452-2.25h-3.048zm0 7v4.5h3.297c1.785 0 2.703-.787 2.703-2.25 0-1.463-.918-2.25-2.703-2.25h-3.297z"/>
+            </svg>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -637,19 +788,46 @@
     if (!footerDriver || !footerGiantText || !luxuryCard) return;
 
     const chars = footerGiantText.querySelectorAll('.f-char');
+    // Pure unbroken left-to-right character-by-character wave:
+    // 1 -> 9 -> 2 -> 8 -> C -> R -> E -> A -> T -> I -> V -> E -> S -> T -> U -> D -> I -> O
+    const delayStep = 0.048; // 48ms per character for an organic, undulating ripple
     chars.forEach((char, index) => {
-      char.style.transitionDelay = `${(index * 0.026).toFixed(3)}s`;
+      const delay = `${(index * delayStep).toFixed(3)}s`;
+      char.style.setProperty('transition-delay', delay, 'important');
     });
 
     function checkFooterScroll() {
       const cardRect = luxuryCard.getBoundingClientRect();
-      if (cardRect.top <= window.innerHeight * 0.95) {
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const cardCenterY = cardRect.top + (cardRect.height * 0.5);
+      const viewportCenterY = vh * 0.5;
+      const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+
+      // Primary requirement: animation starts when the complete card (footer) comes to the center of the viewport
+      if (cardCenterY <= viewportCenterY + 45 || isAtBottom) {
         footerGiantText.classList.add('revealed');
+      } else if (cardCenterY > viewportCenterY + 160) {
+        footerGiantText.classList.remove('revealed');
       }
     }
 
+    // Micro-interaction on desktop hover
+    chars.forEach((char) => {
+      char.addEventListener('mouseenter', () => {
+        char.style.transform = 'translateY(-12%)';
+        char.style.color = 'var(--cr, #C8102E)';
+        setTimeout(() => {
+          if (footerGiantText.classList.contains('revealed')) {
+            char.style.transform = 'translateY(0%)';
+          }
+          char.style.color = '';
+        }, 320);
+      });
+    });
+
     window.addEventListener('scroll', checkFooterScroll, { passive: true });
     window.addEventListener('resize', checkFooterScroll, { passive: true });
+    setTimeout(checkFooterScroll, 120);
     checkFooterScroll();
   }
 

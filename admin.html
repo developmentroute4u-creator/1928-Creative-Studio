@@ -3821,24 +3821,6 @@
           </div>
         </div>
 
-        <!-- 7. Inquiries & Leads -->
-        <div class="dash-metric-card" onclick="switchView('inquiries')" style="border-color:rgba(200,16,46,0.35);background:linear-gradient(135deg, rgba(200,16,46,0.06) 0%, var(--card-bg) 100%);cursor:pointer;">
-          <div class="dash-metric-top">
-            <div class="dash-metric-icon primary">
-              <svg viewBox="0 0 24 24"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/><polyline points="8 10 12 14 16 10"/></svg>
-            </div>
-            <span class="dash-metric-tag" style="background:var(--cr);color:#fff;">Inquiries &amp; Leads</span>
-          </div>
-          <div class="dash-metric-mid">
-            <span class="dash-metric-val" id="statInquiriesNum">0</span>
-            <span class="dash-metric-label">Client Briefs Received</span>
-            <span class="dash-metric-sub" id="statNewInquiriesSub" style="color:var(--cr-bright);font-weight:700;">0 New / Unread</span>
-          </div>
-          <div class="dash-metric-footer">
-            <span>Inspect All Inquiries</span>
-            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </div>
-        </div>
       </div>
 
       <!-- Recent Inquiries Preview Widget on Dashboard -->
@@ -4479,18 +4461,40 @@
 
     <!-- ── VIEW 6: SERVICES ── -->
     <section class="view-panel" id="view-services">
-      <div class="panel-header">
-        <div>
-          <h1 class="panel-headline">Core Services &amp; Capabilities</h1>
-          <p class="panel-sub">Manage studio offerings, capability deliverables, and service taglines.</p>
+      <div class="panel-header" id="servicesPanelHeader" style="display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px;">
+        <div id="servicesHeaderLeft">
+          <h1 class="panel-headline" id="servicesPanelTitle">Home Page Services</h1>
+          <p class="panel-sub" id="servicesPanelSub">Manage studio offerings for the interactive Home Page showcase.</p>
         </div>
-        <div class="action-row">
-          <button class="btn-action-primary" onclick="openServiceModal()">+ Add Service</button>
+        <div class="action-row" id="servicesHeaderAction" style="margin:0;display:none;">
+          <button type="button" class="btn-action-primary" onclick="openServiceModal()">+ Add Service</button>
         </div>
       </div>
 
-      <div class="data-grid-matrix" id="servicesGrid">
-        <!-- Rendered dynamically -->
+      <!-- Segmented Sub-navigation Tabs (Exactly 2 Buttons Spanning Full Width) -->
+      <div class="subnav-tabs" style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px;margin-bottom:28px;width:100%;box-sizing:border-box;">
+        <button class="subnav-tab-btn active" id="tabBtnHomeServices" onclick="switchServicesSubTab('home')" type="button">
+          <svg class="subnav-tab-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Home page services</span>
+        </button>
+        <button class="subnav-tab-btn" id="tabBtnDedicatedServices" onclick="switchServicesSubTab('dedicated')" type="button">
+          <svg class="subnav-tab-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <span>Service page offerings</span>
+        </button>
+      </div>
+
+      <!-- ═══ SUB-SECTION 1: HOME PAGE SERVICE SECTION (5 CARDS) ═══ -->
+      <div id="sectionHomeServices">
+        <div class="data-grid-matrix" id="homeServicesGrid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- ═══ SUB-SECTION 2: DEDICATED SERVICE PAGES (6 CARDS) ═══ -->
+      <div id="sectionDedicatedServices" style="display:none;">
+        <div class="data-grid-matrix" id="servicesGrid">
+          <!-- Rendered dynamically -->
+        </div>
       </div>
     </section>
 
@@ -5113,7 +5117,7 @@
               </div>
               <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Submit Button Label</label>
-                <input type="text" class="form-input" id="contactStep5SubmitBtnText" placeholder="Submit Project Brief" />
+                <input type="text" class="form-input" id="contactStep5SubmitBtnText" placeholder="Submit" />
               </div>
             </div>
 
@@ -6220,7 +6224,7 @@
             <span style="font-size:11px;color:var(--ink-mid);margin-top:4px;display:block;">Separate each deliverable with a comma</span>
           </div>
 
-          <div class="modal-section-badge">04 / Service Visual Image Asset (Optional - Overrides Default 3D Kinetic Sculpture)</div>
+          <div class="modal-section-badge">04 / Service Visual Asset</div>
 
           <div class="form-group">
             <label class="form-label">Service Image / Visual Asset</label>
@@ -6245,11 +6249,7 @@
               <div class="media-dropzone" id="serviceImageDropzone">
                 <svg class="dropzone-cloud-icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
                 <div class="dropzone-title">Click to upload service visual or drag &amp; drop here</div>
-                <div class="dropzone-hint">Recommended Ratio: 4:3 (e.g. 1200×900px or 800×600px) · Auto-centered &amp; cropped symmetrically</div>
-              </div>
-
-              <div class="manual-url-wrap" style="margin-top:10px;">
-                <input type="text" class="form-input" id="serviceImageManualInput" placeholder="Or enter image path: img/... or https://..." style="font-size:12px;padding:8px 12px;" />
+                <div class="dropzone-hint">Recommended Ratio: 4:3 (e.g. 1200×900px or 800×600px) · Drag-and-drop or file selection only</div>
               </div>
             </div>
           </div>
@@ -6258,6 +6258,161 @@
         <div class="modal-footer">
           <button type="button" class="btn-action-secondary" onclick="closeModal('serviceModal')">Cancel</button>
           <button type="submit" class="btn-action-primary">Save Service</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MODAL 6.5: HOME PAGE SERVICE CARD EDITOR (INDEX.HTML)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="homeServiceModal">
+    <div class="modal-card" style="max-width:760px;">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title" id="homeServiceModalTitle">Edit Home Page Service Card</h3>
+          <span class="modal-subtitle">Directly updates the interactive showcase card &amp; sliding folder on index.html</span>
+        </div>
+        <button class="btn-icon-square" type="button" onclick="closeModal('homeServiceModal')">✕</button>
+      </div>
+      <form id="homeServiceForm">
+        <div class="modal-body">
+          <input type="hidden" id="homeCardIndex" value="0" />
+
+          <div class="modal-section-badge">01 / Service Identification</div>
+          <div class="form-group">
+            <label class="form-label">Service Number</label>
+            <input type="text" class="form-input" id="homeCardNum" placeholder="01" required />
+            <input type="hidden" id="homeCardWatermark" value="01" />
+          </div>
+
+          <div class="form-row-duo">
+            <div class="form-group">
+              <label class="form-label">Pocket Sheet Title (In Jacket Sleeve)</label>
+              <input type="text" class="form-input" id="homeCardSheetTitle" placeholder="e.g. Logo Design" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pocket Sheet Subtitle / Tag</label>
+              <input type="text" class="form-input" id="homeCardSheetSub" placeholder="e.g. VISUAL IDENTITY · FIRST IMPRESSION" required />
+            </div>
+          </div>
+
+          <div class="modal-section-badge">02 / Showcase Card Narrative Scope</div>
+          <div class="form-group">
+            <label class="form-label">Category Badge (Above Heading)</label>
+            <input type="text" class="form-input" id="homeCardBadge" placeholder="e.g. VISUAL IDENTITY · FIRST IMPRESSION" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Card Title (H3)</label>
+            <input type="text" class="form-input" id="homeCardTitle" placeholder="e.g. 01. Logo Design" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Bold Lead Hook (Opening Emphasis)</label>
+            <input type="text" class="form-input" id="homeCardLead" placeholder="e.g. A distinctive mark that gives your business a memorable identity." />
+            <span style="font-size:11px;color:var(--ink-mid);margin-top:4px;display:block;">Appears as the strong bold lead sentence on the card</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Main Body Description</label>
+            <textarea class="form-textarea" id="homeCardBody" rows="3" placeholder="Describe the service offering and value proposition on index.html..." required></textarea>
+          </div>
+
+          <div class="modal-section-badge">03 / Deliverables &amp; Scope Pills</div>
+          <div class="form-group">
+            <label class="form-label">Key Deliverable Tags (Comma-Separated)</label>
+            <input type="text" class="form-input" id="homeCardDeliverables" placeholder="e.g. Custom Logos, Wordmarks, Monograms, Symbols, Typography" required />
+            <span style="font-size:11px;color:var(--ink-mid);margin-top:4px;display:block;">Separate each tag with a comma</span>
+          </div>
+
+          <div class="modal-section-badge">04 / Target Link &amp; Action CTA</div>
+          <div class="form-row-duo">
+            <div class="form-group">
+              <label class="form-label">CTA Button Label</label>
+              <input type="text" class="form-input" id="homeCardActionText" placeholder="e.g. Explore Service" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Destination Link URL</label>
+              <input type="text" class="form-input" id="homeCardActionLink" placeholder="e.g. service-logo-design.html" required />
+            </div>
+          </div>
+
+          <div class="modal-section-badge">05 / Visual Media Asset</div>
+          <div class="form-group">
+            <label class="form-label">Visual Media Asset (Image or MP4 Video)</label>
+            <div class="media-upload-card" id="homeCardMediaUploadCard">
+              <input type="hidden" id="homeCardMediaUrl" value="" required />
+              <input type="file" id="homeCardFileInput" accept="image/*,video/mp4" style="display:none;" />
+
+              <div class="media-preview-container" id="homeCardPreviewBox" style="display:none;">
+                <div class="media-preview-thumb-wrap">
+                  <img src="" alt="Service Media Preview" class="media-small-thumbnail" id="homeCardPreviewImg" onerror="this.src='img/port-veloce.jpg';" />
+                  <div class="media-preview-meta">
+                    <span class="media-path-pill" id="homeCardPathTxt">assets/uploads/...</span>
+                    <span class="media-storage-tag">📁 Media Asset · Home Showcase</span>
+                  </div>
+                </div>
+                <div class="media-actions-deck">
+                  <button type="button" class="btn-media-change" id="homeCardChangeBtn">Change Asset</button>
+                  <button type="button" class="btn-media-delete" id="homeCardDeleteBtn">Delete Asset</button>
+                </div>
+              </div>
+
+              <div class="media-dropzone" id="homeCardDropzone">
+                <svg class="dropzone-cloud-icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+                <div class="dropzone-title">Click to upload visual media or drag &amp; drop here</div>
+                <div class="dropzone-hint">Supports MP4 video or high-res image (PNG, JPG, WebP) · Drag-and-drop or file selection only</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-action-secondary" onclick="closeModal('homeServiceModal')">Cancel</button>
+          <button type="submit" class="btn-action-primary">Save Home Card</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MODAL 6.6: HOME POCKET JACKET COVER EDITOR (INDEX.HTML)
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="homeCoverModal">
+    <div class="modal-card" style="max-width:620px;">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h3 class="modal-title">Edit Pocket Jacket Sleeve Cover</h3>
+          <span class="modal-subtitle">Configure the physical folder cover sheet and bottom button on index.html</span>
+        </div>
+        <button class="btn-icon-square" type="button" onclick="closeModal('homeCoverModal')">✕</button>
+      </div>
+      <form id="homeCoverForm">
+        <div class="modal-body">
+          <div class="modal-section-badge">01 / Sliding Cover Sheet (Card 0)</div>
+          <div class="form-group">
+            <label class="form-label">Cover Sheet Title</label>
+            <input type="text" class="form-input" id="homeCoverTitle" placeholder="e.g. Capabilities Index" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cover Sheet Subtitle</label>
+            <input type="text" class="form-input" id="homeCoverSub" placeholder="e.g. 06 CORE DISCIPLINES - ONE CREATIVE PARTNER" required />
+          </div>
+
+          <div class="modal-section-badge">02 / Jacket Sleeve Bottom CTA Button</div>
+          <div class="form-group">
+            <label class="form-label">Button Text</label>
+            <input type="text" class="form-input" id="homeCoverBtnText" placeholder="e.g. Explore our capabilities" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Button Target Link</label>
+            <input type="text" class="form-input" id="homeCoverBtnLink" placeholder="e.g. services.html" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-secondary" onclick="closeModal('homeCoverModal')">Cancel</button>
+          <button type="submit" class="btn-action-primary">Save Jacket Cover</button>
         </div>
       </form>
     </div>
@@ -6811,7 +6966,7 @@
       return { refreshUI };
     }
 
-    let blogUploader, blogSpecimenUploader, projectUploader, teamUploader, clientUploader, serviceUploader;
+    let blogUploader, blogSpecimenUploader, projectUploader, teamUploader, clientUploader, serviceUploader, homeCardUploader;
 
     function initAllUploaders() {
       blogUploader = setupMediaUploader({
@@ -6881,8 +7036,18 @@
         pathTxtId: 'serviceImagePathTxt',
         dropzoneId: 'serviceImageDropzone',
         changeBtnId: 'serviceChangeImageBtn',
-        deleteBtnId: 'serviceDeleteImageBtn',
-        manualInputId: 'serviceImageManualInput'
+        deleteBtnId: 'serviceDeleteImageBtn'
+      });
+
+      homeCardUploader = setupMediaUploader({
+        hiddenInputId: 'homeCardMediaUrl',
+        fileInputId: 'homeCardFileInput',
+        previewBoxId: 'homeCardPreviewBox',
+        previewImgId: 'homeCardPreviewImg',
+        pathTxtId: 'homeCardPathTxt',
+        dropzoneId: 'homeCardDropzone',
+        changeBtnId: 'homeCardChangeBtn',
+        deleteBtnId: 'homeCardDeleteBtn'
       });
     }
 
@@ -8460,46 +8625,88 @@
       showToast('Team member saved successfully!');
     });
 
-    // ── 6. CORE SERVICES ENGINE ──
-    function renderServicesGrid() {
-      const grid = document.getElementById('servicesGrid');
-      const services = window.CMSStore.getServices();
+    // ── 6. CORE SERVICES & HOME PAGE SERVICES ENGINE ──
+    function switchServicesSubTab(subTab) {
+      const btnHome = document.getElementById('tabBtnHomeServices');
+      const btnDedicated = document.getElementById('tabBtnDedicatedServices');
+      const secHome = document.getElementById('sectionHomeServices');
+      const secDedicated = document.getElementById('sectionDedicatedServices');
+      const panelTitle = document.getElementById('servicesPanelTitle');
+      const panelSub = document.getElementById('servicesPanelSub');
+      const headerAction = document.getElementById('servicesHeaderAction');
 
-      document.getElementById('statServicesNum').textContent = services.length;
-      document.getElementById('badgeServicesCount').textContent = services.length;
+      if (btnHome) btnHome.classList.remove('active');
+      if (btnDedicated) btnDedicated.classList.remove('active');
 
-      // Populate Pinned Section Header Inputs
-      const headerData = (typeof window.CMSStore.getServicesHeader === 'function') ? window.CMSStore.getServicesHeader() : {
-        headline: 'OUR CORE SERVICES',
-        description: 'From the first visual impression to the way your brand grows in the market, we bring strategy, creativity and execution together under one roof.'
-      };
-      const headlineInp = document.getElementById('servicesHeaderHeadlineInput');
-      const descInp = document.getElementById('servicesHeaderDescInput');
-      if (headlineInp) headlineInp.value = headerData.headline || 'OUR CORE SERVICES';
-      if (descInp) descInp.value = headerData.description || '';
+      if (subTab === 'dedicated') {
+        if (btnDedicated) btnDedicated.classList.add('active');
+        if (panelTitle) panelTitle.textContent = 'Core Capability and Core Service';
+        if (panelSub) panelSub.textContent = 'Manage studio offerings and disciplines for the dedicated services page.';
+        if (headerAction) headerAction.style.display = 'flex';
+        if (secHome) secHome.style.display = 'none';
+        if (secDedicated) secDedicated.style.display = 'block';
+      } else {
+        if (btnHome) btnHome.classList.add('active');
+        if (panelTitle) panelTitle.textContent = 'Home Page Services';
+        if (panelSub) panelSub.textContent = 'Manage studio offerings for the interactive Home Page showcase.';
+        if (headerAction) headerAction.style.display = 'none';
+        if (secHome) secHome.style.display = 'block';
+        if (secDedicated) secDedicated.style.display = 'none';
+      }
+    }
 
-      grid.innerHTML = services.map(s => {
-        const deliv = Array.isArray(s.deliverables) ? s.deliverables : [];
+    function renderHomeServicesGrid() {
+      const grid = document.getElementById('homeServicesGrid');
+      if (!grid) return;
+      const homeServices = (typeof window.CMSStore.getHomeServices === 'function') 
+        ? window.CMSStore.getHomeServices() 
+        : { cards: [] };
+      const cards = Array.isArray(homeServices.cards) ? homeServices.cards : [];
+
+      grid.innerHTML = cards.map((c, idx) => {
+        const deliv = Array.isArray(c.deliverables) ? c.deliverables : [];
+        const subheading = (c.badge || c.sheetSub || c.sheetTitle || 'VISUAL IDENTITY').toUpperCase();
         return `
-          <div class="cms-card" style="padding:24px;position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:border-color 0.2s, transform 0.2s;" onclick="editService('${s.id}')">
+          <div class="cms-card" style="padding:24px;border-radius:16px;background:var(--card-bg);border:1px solid var(--rule);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 16px -2px rgba(0,0,0,0.03);" onclick="editHomeServiceCard(${idx})">
             <div>
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px;">
-                <span style="font-family:var(--font-mono);font-size:11px;color:var(--cr);font-weight:700;letter-spacing:0.04em;">SERVICE / ${s.num}</span>
-                <button type="button" class="btn-action-secondary" style="padding:4px 12px;font-size:11px;border-radius:6px;" onclick="event.stopPropagation(); editService('${s.id}')">Edit</button>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;">
+                <span style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                  ${subheading}
+                </span>
+                <button type="button" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;font-weight:700;border-radius:7px;border:1px solid var(--rule);background:var(--card-bg);color:var(--ink);cursor:pointer;flex-shrink:0;" onclick="event.stopPropagation(); editHomeServiceCard(${idx})">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  <span>EDIT</span>
+                </button>
               </div>
-              <h3 style="font-family:var(--font-primary);font-size:17px;font-weight:800;margin:0 0 4px;color:var(--ink);">${s.title}</h3>
-              <div style="font-size:12px;color:var(--cr);font-weight:600;margin-bottom:10px;">— ${s.tagline || ''}</div>
-              <p style="font-size:13px;color:var(--ink-mid);margin-bottom:16px;line-height:1.5;">${s.desc}</p>
-            </div>
-            <div>
-              ${s.image ? `
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;padding:6px 10px;background:var(--card-alt);border-radius:6px;border:1px solid var(--rule);">
-                  <img src="${s.image}" alt="visual" style="width:28px;height:28px;object-fit:cover;border-radius:4px;" onerror="this.style.display='none';" />
-                  <span style="font-size:11px;color:var(--ink-mid);font-family:var(--font-mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.image}</span>
+
+              <h3 style="font-family:var(--font-primary);font-size:18px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.3;">${c.title}</h3>
+              
+              <p style="font-size:13px;color:var(--ink-mid);margin:0 0 16px;line-height:1.55;">
+                ${c.leadDesc ? `<strong style="color:var(--ink);font-weight:700;">${c.leadDesc}</strong> ` : ''}${c.bodyDesc || c.desc || ''}
+              </p>
+
+              ${c.mediaUrl ? `
+                <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);margin-bottom:14px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  <span style="font-size:11px;color:var(--ink-mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.mediaUrl}</span>
                 </div>
               ` : ''}
-              <div style="display:flex;flex-wrap:wrap;gap:6px;">
-                ${deliv.map(d => `<span style="font-family:var(--font-mono);font-size:10px;background:var(--card-alt);padding:4px 8px;border-radius:4px;color:var(--ink-mid);">${d}</span>`).join('')}
+            </div>
+
+            <div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+                ${deliv.map(d => `<span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">${d}</span>`).join('')}
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-mid);">
+                <span style="display:inline-flex;align-items:center;gap:5px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  <strong style="color:var(--ink);font-weight:600;">${c.actionLink || 'service-detail.html'}</strong>
+                </span>
+                <span style="color:var(--cr);font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                  ${c.actionText || 'Explore'} 
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
               </div>
             </div>
           </div>
@@ -8507,11 +8714,129 @@
       }).join('');
     }
 
-    function saveServicesHeaderAdmin() {
-      const headline = (document.getElementById('servicesHeaderHeadlineInput')?.value || 'OUR CORE SERVICES').trim();
-      const description = (document.getElementById('servicesHeaderDescInput')?.value || '').trim();
-      window.CMSStore.saveServicesHeader({ headline, description });
-      showToast('🎉 Services section header saved & live website synchronized!');
+    function editHomeServiceCard(index) {
+      const homeServices = (typeof window.CMSStore.getHomeServices === 'function') 
+        ? window.CMSStore.getHomeServices() 
+        : { cards: [] };
+      const card = (homeServices.cards && homeServices.cards[index]) || null;
+      if (!card) return;
+
+      document.getElementById('homeCardIndex').value = index;
+      document.getElementById('homeCardNum').value = card.num || ('0' + (index + 1));
+      document.getElementById('homeCardWatermark').value = card.watermark || card.num || ('0' + (index + 1));
+      document.getElementById('homeCardSheetTitle').value = card.sheetTitle || card.title || '';
+      document.getElementById('homeCardSheetSub').value = card.sheetSub || card.badge || '';
+      document.getElementById('homeCardBadge').value = card.badge || '';
+      document.getElementById('homeCardTitle').value = card.title || '';
+      document.getElementById('homeCardLead').value = card.leadDesc || '';
+      document.getElementById('homeCardBody').value = card.bodyDesc || card.desc || '';
+      document.getElementById('homeCardDeliverables').value = Array.isArray(card.deliverables) ? card.deliverables.join(', ') : (card.deliverables || '');
+      document.getElementById('homeCardActionText').value = card.actionText || 'Explore Service';
+      document.getElementById('homeCardActionLink').value = card.actionLink || 'service-logo-design.html';
+      
+      const mediaVal = card.mediaUrl || '';
+      document.getElementById('homeCardMediaUrl').value = mediaVal;
+      if (homeCardUploader && typeof homeCardUploader.refreshUI === 'function') {
+        homeCardUploader.refreshUI();
+      }
+
+      document.getElementById('homeServiceModalTitle').textContent = `Edit Home Service Card ${card.num || (index + 1)}`;
+      document.getElementById('homeServiceModal').classList.add('active');
+    }
+
+    document.getElementById('homeServiceForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const index = parseInt(document.getElementById('homeCardIndex').value, 10);
+      const delivRaw = document.getElementById('homeCardDeliverables').value;
+      const deliverables = delivRaw.split(',').map(d => d.trim()).filter(Boolean);
+      const mediaUrl = document.getElementById('homeCardMediaUrl').value.trim();
+
+      if (!mediaUrl) {
+        showToast('⚠️ Visual media asset is required. Please select or drag & drop a file.', 'error');
+        return;
+      }
+
+      const numVal = document.getElementById('homeCardNum').value.trim();
+      const cardData = {
+        num: numVal,
+        watermark: numVal,
+        sheetTitle: document.getElementById('homeCardSheetTitle').value.trim(),
+        sheetSub: document.getElementById('homeCardSheetSub').value.trim(),
+        badge: document.getElementById('homeCardBadge').value.trim(),
+        title: document.getElementById('homeCardTitle').value.trim(),
+        leadDesc: document.getElementById('homeCardLead').value.trim(),
+        bodyDesc: document.getElementById('homeCardBody').value.trim(),
+        deliverables: deliverables,
+        actionText: document.getElementById('homeCardActionText').value.trim(),
+        actionLink: document.getElementById('homeCardActionLink').value.trim(),
+        mediaUrl: mediaUrl
+      };
+
+      if (typeof window.CMSStore.saveHomeServiceCard === 'function') {
+        window.CMSStore.saveHomeServiceCard(index, cardData);
+      }
+      closeModal('homeServiceModal');
+      renderHomeServicesGrid();
+      showToast('🎉 Home service card saved & index.html synchronized!');
+    });
+
+    function renderServicesGrid() {
+      renderHomeServicesGrid();
+      const grid = document.getElementById('servicesGrid');
+      const services = window.CMSStore.getServices();
+
+      const statNum = document.getElementById('statServicesNum');
+      if (statNum) statNum.textContent = services.length;
+      const badgeCount = document.getElementById('badgeServicesCount');
+      if (badgeCount) badgeCount.textContent = services.length;
+
+      grid.innerHTML = services.map(s => {
+        const deliv = Array.isArray(s.deliverables) ? s.deliverables : [];
+        const subheading = (s.tagline || 'CORE CAPABILITY · STRATEGIC SCOPE').toUpperCase();
+        return `
+          <div class="cms-card" style="padding:24px;border-radius:16px;background:var(--card-bg);border:1px solid var(--rule);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 16px -2px rgba(0,0,0,0.03);" onclick="editService('${s.id}')">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;">
+                <span style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+                  ${subheading}
+                </span>
+                <button type="button" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;font-weight:700;border-radius:7px;border:1px solid var(--rule);background:var(--card-bg);color:var(--ink);cursor:pointer;flex-shrink:0;" onclick="event.stopPropagation(); editService('${s.id}')">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  <span>EDIT</span>
+                </button>
+              </div>
+
+              <h3 style="font-family:var(--font-primary);font-size:18px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.3;">${s.title}</h3>
+              
+              <p style="font-size:13px;color:var(--ink-mid);margin:0 0 16px;line-height:1.55;">${s.desc}</p>
+
+              ${s.image ? `
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);">
+                  <img src="${s.image}" alt="visual" style="width:28px;height:28px;object-fit:cover;border-radius:6px;" onerror="this.style.display='none';" />
+                  <span style="font-size:11px;color:var(--ink-mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.image}</span>
+                </div>
+              ` : ''}
+            </div>
+
+            <div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+                ${deliv.map(d => `<span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">${d}</span>`).join('')}
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-mid);">
+                <span style="display:inline-flex;align-items:center;gap:5px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  <strong style="color:var(--ink);font-weight:600;">services.html#service-${s.num}</strong>
+                </span>
+                <span style="color:var(--cr);font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                  Configure
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     function openServiceModal(sData = null) {
@@ -8525,9 +8850,6 @@
       
       const imgVal = sData ? (sData.image || '') : '';
       document.getElementById('serviceImageInput').value = imgVal;
-      if (document.getElementById('serviceImageManualInput')) {
-        document.getElementById('serviceImageManualInput').value = imgVal;
-      }
       if (serviceUploader) serviceUploader.refreshUI();
 
       document.getElementById('serviceModal').classList.add('active');
@@ -8545,6 +8867,11 @@
       const deliverables = delivRaw.split(',').map(d => d.trim()).filter(Boolean);
       const imgVal = document.getElementById('serviceImageInput').value.trim();
 
+      if (!imgVal) {
+        showToast('⚠️ Service visual asset is required. Please select or drag & drop a file.', 'error');
+        return;
+      }
+
       const data = {
         num: document.getElementById('serviceNumInput').value.trim(),
         tagline: document.getElementById('serviceTaglineInput').value.trim(),
@@ -8558,7 +8885,6 @@
       window.CMSStore.saveService(data);
       closeModal('serviceModal');
       renderServicesGrid();
-      showToast('Service capability saved successfully!');
     });
 
     // ── 7. CLIENT LOGOS ENGINE ──
@@ -8847,7 +9173,7 @@
       setVal('contactField_visionPlaceholder', s5.visionPlaceholder, 'Describe the strategic objectives...');
 
       setVal('contactStep5NdaText', s5.ndaText, 'Execute Bilateral Non-Disclosure Agreement (NDA) prior to review.');
-      setVal('contactStep5SubmitBtnText', s5.submitBtnText, 'Submit Project Brief');
+      setVal('contactStep5SubmitBtnText', s5.submitBtnText, 'Submit');
       setVal('contactStep5SuccessTitle', s5.successTitle, 'BRIEF SUBMITTED.');
       setVal('contactStep5ResetBtnText', s5.resetBtnText, 'Submit Another Brief');
       setVal('contactStep5SuccessDesc', s5.successDesc, 'Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.');
@@ -9063,7 +9389,7 @@
           visionLabel: document.getElementById('contactField_visionLabel')?.value.trim() || 'Project Vision & Strategic Ambition *',
           visionPlaceholder: document.getElementById('contactField_visionPlaceholder')?.value.trim() || 'Describe the strategic objectives...',
           ndaText: document.getElementById('contactStep5NdaText')?.value.trim() || 'Execute Bilateral Non-Disclosure Agreement (NDA) prior to review.',
-          submitBtnText: document.getElementById('contactStep5SubmitBtnText')?.value.trim() || 'Submit Project Brief',
+          submitBtnText: document.getElementById('contactStep5SubmitBtnText')?.value.trim() || 'Submit',
           successTitle: document.getElementById('contactStep5SuccessTitle')?.value.trim() || 'BRIEF SUBMITTED.',
           successDesc: document.getElementById('contactStep5SuccessDesc')?.value.trim() || 'Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.',
           resetBtnText: document.getElementById('contactStep5ResetBtnText')?.value.trim() || 'Submit Another Brief'

@@ -90,13 +90,14 @@
 
     html {
       background: var(--bg);
+      overflow-x: clip;
     }
 
     body {
       background: var(--bg);
       color: var(--ink);
       font-family: var(--font-secondary);
-      overflow-x: hidden;
+      overflow-x: clip;
       transition: background 0.4s var(--sp), color 0.4s var(--sp);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
@@ -362,11 +363,7 @@
     }
 
     .sec-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--cr);
-      box-shadow: 0 0 10px var(--cr);
+      display: none !important;
     }
 
     .sec-heading {
@@ -857,6 +854,7 @@
         grid-template-columns: 1fr;
         gap: 16px;
       }
+
       .story-statement {
         white-space: normal;
       }
@@ -938,9 +936,13 @@
     /* Set 2: Enters softly on scroll */
     #worksSet2 {
       opacity: 0;
-      transform: translateY(20px) scale(0.96);
+      transform: translateY(0) scale(1);
       pointer-events: none;
       z-index: 3;
+    }
+
+    .works-set-indicators {
+      display: none;
     }
 
     .work-duo-card {
@@ -985,15 +987,13 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        180deg,
-        rgba(7, 7, 10, 0.6) 0%,
-        rgba(7, 7, 10, 0.18) 18%,
-        rgba(7, 7, 10, 0.04) 40%,
-        rgba(7, 7, 10, 0.25) 65%,
-        rgba(7, 7, 10, 0.85) 86%,
-        rgba(7, 7, 10, 0.96) 100%
-      );
+      background: linear-gradient(180deg,
+          rgba(7, 7, 10, 0.6) 0%,
+          rgba(7, 7, 10, 0.18) 18%,
+          rgba(7, 7, 10, 0.04) 40%,
+          rgba(7, 7, 10, 0.25) 65%,
+          rgba(7, 7, 10, 0.85) 86%,
+          rgba(7, 7, 10, 0.96) 100%);
       transition: background 0.4s ease;
     }
 
@@ -1002,15 +1002,13 @@
     }
 
     [data-theme="light"] .work-card-media::after {
-      background: linear-gradient(
-        180deg,
-        rgba(7, 7, 10, 0.6) 0%,
-        rgba(7, 7, 10, 0.18) 18%,
-        rgba(7, 7, 10, 0.04) 40%,
-        rgba(7, 7, 10, 0.25) 65%,
-        rgba(7, 7, 10, 0.85) 86%,
-        rgba(7, 7, 10, 0.96) 100%
-      );
+      background: linear-gradient(180deg,
+          rgba(7, 7, 10, 0.6) 0%,
+          rgba(7, 7, 10, 0.18) 18%,
+          rgba(7, 7, 10, 0.04) 40%,
+          rgba(7, 7, 10, 0.25) 65%,
+          rgba(7, 7, 10, 0.85) 86%,
+          rgba(7, 7, 10, 0.96) 100%);
     }
 
     .work-duo-card:hover {
@@ -1193,115 +1191,247 @@
 
     @media (max-width: 860px) {
       #works-driver {
-        height: auto !important;
-        min-height: auto !important;
-        padding: clamp(48px, 7vh, 72px) 0 !important;
+        position: relative !important;
+        height: 380vh !important;
+        min-height: 380vh !important;
+        padding: 0 !important;
+        border-top: 1px solid var(--rule);
+        background: var(--bg);
         overflow: visible !important;
       }
 
       .works-sticky-stage {
-        position: relative !important;
-        top: auto !important;
-        height: auto !important;
-        padding: 0 !important;
-        overflow: visible !important;
+        position: sticky !important;
+        top: 0 !important;
+        height: 100vh !important;
+        height: 100dvh !important;
         display: flex !important;
         flex-direction: column !important;
+        justify-content: center !important;
         align-items: center !important;
+        padding: 16px 16px 12px 16px !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
       }
 
       .works-stage-container {
-        height: auto !important;
+        height: 100% !important;
         width: 100% !important;
+        max-width: 500px !important;
         display: flex !important;
         flex-direction: column !important;
+        justify-content: center !important;
         align-items: center !important;
         text-align: center !important;
-        padding: 0 20px !important;
+        padding: 0 16px !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
       }
 
       .works-stage-container .sec-tag-pill {
         align-self: center !important;
         margin: 0 auto 12px auto !important;
+        display: inline-flex !important;
+        justify-content: center !important;
       }
 
       .works-stage-container .sec-heading {
         text-align: center !important;
-        margin: 0 auto 10px auto !important;
+        font-size: clamp(28px, 7.8vw, 36px) !important;
+        line-height: 1.1 !important;
+        margin: 0 auto 8px auto !important;
+        width: 100% !important;
       }
 
       .works-stage-container .sec-desc {
         text-align: center !important;
-        margin: 0 auto 28px auto !important;
+        margin: 0 auto 16px auto !important;
         max-width: 480px !important;
+        width: 100% !important;
+        font-size: clamp(14px, 3.8vw, 15.5px) !important;
+        line-height: 1.6 !important;
       }
 
       .works-card-stage {
         position: relative !important;
         width: 100% !important;
-        height: auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 20px !important;
-        margin-top: 0 !important;
+        flex: 1 1 auto !important;
+        max-height: clamp(380px, 58vh, 480px) !important;
+        min-height: 350px !important;
+        margin: 0 !important;
         padding: 0 !important;
-        overflow: visible !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        border-radius: 20px !important;
       }
 
       .works-card-set,
       #worksSet1,
       #worksSet2 {
-        position: static !important;
-        inset: auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 20px !important;
+        position: absolute !important;
+        inset: 0 !important;
+        display: block !important;
         width: 100% !important;
-        height: auto !important;
-        opacity: 1 !important;
-        transform: none !important;
-        pointer-events: auto !important;
-        visibility: visible !important;
+        height: 100% !important;
         margin: 0 !important;
-        overflow: visible !important;
+        padding: 0 !important;
+        border: none !important;
+        box-sizing: border-box !important;
+        will-change: transform !important;
+      }
+
+      #worksSet1 {
+        z-index: 2 !important;
+        opacity: 1 !important;
+      }
+
+      #worksSet2 {
+        z-index: 3 !important;
+        opacity: 1 !important;
+        transform: translate3d(105%, 0, 0);
       }
 
       .work-duo-card {
+        position: absolute !important;
+        inset: 0 !important;
+        height: 100% !important;
         width: 100% !important;
-        height: clamp(340px, 48vh, 420px) !important;
-        min-height: 320px !important;
-        position: relative !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
-        border-radius: 24px !important;
-        padding: 24px !important;
+        border-radius: 20px !important;
+        padding: 18px 18px !important;
         box-sizing: border-box !important;
         margin: 0 !important;
+        overflow: hidden !important;
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45) !important;
+        will-change: transform !important;
+      }
+
+      #worksSet1 .work-duo-card:first-child {
+        z-index: 1 !important;
+        transform: translate3d(0, 0, 0);
+      }
+
+      #worksSet1 .work-duo-card:last-child {
+        z-index: 2 !important;
+        transform: translate3d(105%, 0, 0);
+      }
+
+      #worksSet2 .work-duo-card:first-child {
+        z-index: 1 !important;
+        transform: translate3d(0, 0, 0);
+      }
+
+      #worksSet2 .work-duo-card:last-child {
+        z-index: 2 !important;
+        transform: translate3d(105%, 0, 0);
+      }
+
+      .work-card-media {
+        position: absolute !important;
+        inset: 0 !important;
+        z-index: 1 !important;
+      }
+
+      .work-card-img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+      }
+
+      .work-card-content {
+        position: relative !important;
+        z-index: 2 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+        height: 100% !important;
+        width: 100% !important;
+      }
+
+      .work-top-meta {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+      }
+
+      .work-num {
+        font-size: 10.5px !important;
+        letter-spacing: 0.1em !important;
+        color: #fff !important;
       }
 
       .work-bottom-block {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 14px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-end !important;
+        justify-content: space-between !important;
+        gap: 10px !important;
         width: 100% !important;
       }
 
       .work-title {
-        max-width: 100% !important;
-        font-size: clamp(19px, 5.2vw, 22px) !important;
+        flex: 1 1 auto !important;
+        max-width: calc(100% - 44px) !important;
+        font-size: clamp(14px, 3.8vw, 17px) !important;
         line-height: 1.2 !important;
         text-align: left !important;
+        color: #fff !important;
+        margin: 0 !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
       }
 
       .work-bottom-meta {
-        width: 100% !important;
-        justify-content: flex-end !important;
+        flex-shrink: 0 !important;
         margin: 0 !important;
       }
 
-      .works-set-indicators {
+      .work-cta-wrap span {
         display: none !important;
+      }
+
+      .work-cta-arrow {
+        width: 32px !important;
+        height: 32px !important;
+        background: rgba(255, 255, 255, 0.22) !important;
+        backdrop-filter: blur(8px) !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: 1px solid rgba(255, 255, 255, 0.35) !important;
+      }
+
+      .work-cta-arrow svg {
+        width: 14px !important;
+        height: 14px !important;
+        stroke: #fff !important;
+      }
+
+      .works-set-indicators {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 8px !important;
+        margin-top: 10px !important;
+      }
+
+      .works-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 4px;
+        background: var(--ink-dim, rgba(128, 128, 128, 0.4));
+        transition: all 0.35s ease;
+      }
+
+      .works-dot.active {
+        width: 22px;
+        background: var(--cr, #C8102E);
       }
     }
 
@@ -1839,6 +1969,16 @@
       transform: scale(1.12);
     }
 
+    .team-desktop-list {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .team-mobile-grid {
+      display: none !important;
+    }
+
     .team-mobile-avatar,
     .team-mobile-role,
     .team-mobile-num {
@@ -1851,7 +1991,7 @@
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
-        padding: 0 20px !important;
+        padding: 0 16px !important;
       }
 
       #team .sec-tag-pill {
@@ -1869,7 +2009,7 @@
         justify-content: center !important;
         text-align: center !important;
         width: 100% !important;
-        margin-bottom: 24px !important;
+        margin-bottom: 20px !important;
       }
 
       .team-header-split .sec-heading {
@@ -1882,118 +2022,113 @@
         display: none !important;
       }
 
+      /* ── 2-column photo card grid on mobile phone ── */
       .team-minimal-index {
         width: 100% !important;
         border: none !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 12px !important;
-        margin-top: 10px !important;
+        margin-top: 8px !important;
       }
 
-      .team-index-row,
-      .team-index-row:hover,
-      .team-index-row.expanded {
-        background: var(--card-bg) !important;
-        border: 1px solid var(--rule) !important;
-        border-radius: 18px !important;
-        overflow: hidden !important;
-        cursor: default !important;
-        transform: none !important;
-      }
-
-      .team-index-row::before {
+      .team-desktop-list {
         display: none !important;
       }
 
-      .team-row-main {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        padding: 16px 18px !important;
-        gap: 14px !important;
+      .team-mobile-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+        width: 100% !important;
+        margin-top: 0 !important;
       }
 
-      .team-row-left {
-        display: flex !important;
-        align-items: center !important;
-        gap: 14px !important;
-        text-align: left !important;
-        flex: 1 1 auto !important;
-        min-width: 0 !important;
-      }
-
-      .team-mobile-avatar {
-        display: block !important;
-        width: 52px !important;
-        height: 52px !important;
-        border-radius: 50% !important;
+      .team-card {
+        position: relative !important;
+        background: var(--card-bg) !important;
+        border: 1px solid var(--rule) !important;
+        border-radius: 16px !important;
         overflow: hidden !important;
-        flex-shrink: 0 !important;
-        border: 1.5px solid var(--rule) !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+        padding: 8px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 8px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+        user-select: none !important;
+        cursor: default !important;
+        transition: border-color 0.3s ease !important;
       }
 
-      .team-mobile-avatar img {
+      [data-theme="dark"] .team-card {
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+      }
+
+      .team-card-media {
+        position: relative !important;
+        width: 100% !important;
+        aspect-ratio: 1 / 1.15 !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        background: #141418 !important;
+      }
+
+      .team-card-img {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
+        object-position: center 15% !important;
         display: block !important;
       }
 
-      .team-member-meta {
+      .team-card-media::after {
+        content: '' !important;
+        position: absolute !important;
+        inset: 0 !important;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.45) 100%) !important;
+        pointer-events: none !important;
+      }
+
+      .team-card-badge {
+        position: absolute !important;
+        top: 6px !important;
+        right: 6px !important;
+        z-index: 2 !important;
+        background: rgba(0, 0, 0, 0.6) !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        color: #FFFFFF !important;
+        font-family: var(--font-primary) !important;
+        font-size: 9.5px !important;
+        font-weight: 800 !important;
+        letter-spacing: 0.08em !important;
+        padding: 2px 7px !important;
+        border-radius: 10px !important;
+        border: 1px solid rgba(255, 255, 255, 0.22) !important;
+      }
+
+      .team-card-info {
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
         text-align: left !important;
-        min-width: 0 !important;
+        padding: 2px 4px 4px 4px !important;
       }
 
-      .team-row-name {
+      .team-card-name {
         font-family: var(--font-primary) !important;
-        font-size: clamp(17px, 4.2vw, 19px) !important;
-        font-weight: 800 !important;
+        font-weight: 900 !important;
+        font-size: clamp(13px, 3.6vw, 15px) !important;
         color: var(--ink) !important;
         line-height: 1.2 !important;
-        text-align: left !important;
-        transform: none !important;
+        margin: 0 0 2px 0 !important;
+        word-break: break-word !important;
       }
 
-      .team-index-row:hover .team-row-name {
-        color: var(--ink) !important;
-        transform: none !important;
-      }
-
-      .team-mobile-role {
-        display: block !important;
+      .team-card-role {
         font-family: var(--font-secondary) !important;
-        font-size: 13px !important;
-        color: var(--ink-mid) !important;
-        margin-top: 3px !important;
+        font-size: 10px !important;
         font-weight: 500 !important;
-        text-align: left !important;
-        line-height: 1.35 !important;
-      }
-
-      .team-desktop-role {
-        display: none !important;
-      }
-
-      .team-row-right {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: flex-end !important;
-        flex-shrink: 0 !important;
-      }
-
-      .team-mobile-num {
-        display: block !important;
-        font-family: var(--font-mono) !important;
-        font-size: 11.5px !important;
-        font-weight: 700 !important;
-        color: var(--cr) !important;
-        letter-spacing: 0.1em !important;
+        color: var(--ink-mid) !important;
+        line-height: 1.3 !important;
+        margin: 0 !important;
       }
 
       .team-floating-circle {
@@ -2046,8 +2181,8 @@
     }
 
     [data-theme="light"] .process-bg-path {
-      stroke: rgba(0, 0, 0, 0.16);
-      opacity: 0.85;
+      stroke: rgba(0, 0, 0, 0.22);
+      opacity: 0.9;
     }
 
     .process-active-path {
@@ -2163,15 +2298,15 @@
       padding: clamp(22px, 2.6vw, 34px);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      opacity: 0.25;
-      transform: translateY(22px) scale(0.98);
+      opacity: 1;
+      transform: none;
       box-shadow: 0 0 40px rgba(0, 0, 0, 0.03), 0 10px 25px rgba(0, 0, 0, 0.04);
-      transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s, box-shadow 0.4s;
+      transition: border-color 0.4s, box-shadow 0.4s;
     }
 
     .proc-step-item.active .proc-step-card {
       opacity: 1;
-      transform: translateY(0) scale(1);
+      transform: none;
       border-color: rgba(200, 16, 46, 0.28);
       box-shadow: 0 0 45px rgba(0, 0, 0, 0.04), 0 14px 35px rgba(0, 0, 0, 0.06), 0 0 20px rgba(200, 16, 46, 0.04);
     }
@@ -2398,13 +2533,23 @@
     }
 
     @keyframes marqueeL2R {
-      0% { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(-50%, 0, 0); }
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
     }
 
     @keyframes marqueeR2L {
-      0% { transform: translate3d(-50%, 0, 0); }
-      100% { transform: translate3d(0, 0, 0); }
+      0% {
+        transform: translate3d(-50%, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
     }
 
     .marquee-group {
@@ -2700,6 +2845,17 @@
       border-color: var(--ink);
       transform: translateY(-3px);
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+    }
+
+    .fcta-actions .btn-primary svg,
+    .fcta-actions .btn-ghost svg {
+      transition: transform 0.25s var(--sp);
+      flex-shrink: 0;
+    }
+
+    .fcta-actions .btn-primary:hover svg,
+    .fcta-actions .btn-ghost:hover svg {
+      transform: translateX(4px);
     }
 
 
@@ -3172,7 +3328,8 @@
         padding: 16px 20px !important;
       }
 
-      .f-outer-copyright, .f-outer-dev {
+      .f-outer-copyright,
+      .f-outer-dev {
         text-align: center !important;
         font-size: 0.74rem !important;
       }
@@ -3328,7 +3485,7 @@
       position: relative;
     }
 
-    .nav-has-dropdown > a {
+    .nav-has-dropdown>a {
       display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -3344,8 +3501,8 @@
       pointer-events: none;
     }
 
-    .nav-has-dropdown:hover > a,
-    .nav-has-dropdown:focus-within > a {
+    .nav-has-dropdown:hover>a,
+    .nav-has-dropdown:focus-within>a {
       color: var(--cr, #C8102E);
     }
 
@@ -3366,7 +3523,8 @@
       pointer-events: none;
       transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s;
       z-index: 1001;
-      padding-top: 12px; /* mouse bridge */
+      padding-top: 12px;
+      /* mouse bridge */
       width: clamp(210px, 18vw, 230px);
     }
 
@@ -3596,10 +3754,12 @@
       .nav-links {
         display: none;
       }
+
       .c-dot,
       .c-ring {
         display: none !important;
       }
+
       #nav .nav-right .nav-cta,
       #nav .nav-cta,
       #navContactBtn {
@@ -3933,10 +4093,13 @@
       }
 
       .proc-step-card,
-      .proc-step-card:hover {
+      .proc-step-card:hover,
+      .proc-step-item.active .proc-step-card {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
         text-align: left !important;
         border-color: var(--rule) !important;
-        transform: none !important;
         box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
       }
 
@@ -4107,8 +4270,9 @@
       <li class="nav-has-dropdown">
         <a href="services.html" class="nav-link-services">
           Services
-          <svg class="nav-caret" width="8" height="5" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 1.5L5 4.5L9 1.5"/>
+          <svg class="nav-caret" width="8" height="5" viewBox="0 0 10 6" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 1.5L5 4.5L9 1.5" />
           </svg>
         </a>
         <div class="nav-dropdown-menu" aria-label="Services Submenu">
@@ -4117,33 +4281,56 @@
               <a href="service-logo-design.html" class="nav-dropdown-item">
                 <span class="ndi-num">01</span>
                 <span class="ndi-title">Logo Design</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
               <a href="service-brand-identity.html" class="nav-dropdown-item">
                 <span class="ndi-num">02</span>
                 <span class="ndi-title">Brand Identity</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
               <a href="service-website-development.html" class="nav-dropdown-item">
                 <span class="ndi-num">03</span>
                 <span class="ndi-title">Website Development</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
               <a href="service-digital-marketing.html" class="nav-dropdown-item">
                 <span class="ndi-num">04</span>
                 <span class="ndi-title">Digital Marketing</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
               <a href="service-content-creation.html" class="nav-dropdown-item">
                 <span class="ndi-num">05</span>
                 <span class="ndi-title">Content Creation</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
             </div>
             <div class="nav-dropdown-footer">
               <a href="services.html" class="nav-dropdown-foot-link">
                 <span>All Services Overview</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
             </div>
           </div>
@@ -4170,17 +4357,21 @@
 
       <h1 class="hero-headline">
         <span class="anim-mask"><span class="hero-line-1">WE TURN IDEAS</span></span>
-        <span class="anim-mask"><span class="hero-line-2">INTO BRANDS THAT GROW.</span></span>
+        <span class="anim-mask"><span class="hero-line-2">INTO BRANDS THAT GROW</span></span>
       </h1>
 
       <p class="hero-sub">
-        <span class="hl">1928 Creative Studio</span> is a creative partner for ambitious businesses, bringing together <span
-          class="hl">strategy, design, digital and storytelling</span> to build brands with character and businesses with greater potential.
+        <span class="hl">1928 Creative Studio</span> is a creative partner for ambitious businesses, bringing together
+        <span class="hl">strategy, design, digital and storytelling</span> to build brands with character and businesses
+        with greater potential.
       </p>
 
       <div class="hero-actions">
         <a href="#story" class="btn-primary">EXPLORE OUR STORY ↓</a>
-        <a href="contact.html" class="btn-ghost">START A CONVERSATION →</a>
+        <a href="contact.html" class="btn-ghost">
+          <span>START A CONVERSATION</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
 
@@ -4221,7 +4412,8 @@
               <span class="story-pillar-tag">FOUNDATION</span>
             </div>
             <p class="story-pillar-text">
-              1928 Creative Studio was founded by Ami and Tushar, bringing together creative thinking, strategic direction and digital expertise under one roof.
+              1928 Creative Studio was founded by Ami and Tushar, bringing together creative thinking, strategic
+              direction and digital expertise under one roof.
             </p>
             <div class="story-pillar-sub">STRATEGY + CRAFT</div>
           </div>
@@ -4233,7 +4425,8 @@
               <span class="story-pillar-tag">EXPERIENCE</span>
             </div>
             <p class="story-pillar-text">
-              With 10+ years of experience, we work with businesses to shape how they look, how they communicate, and how they grow.
+              With 10+ years of experience, we work with businesses to shape how they look, how they communicate, and
+              how they grow.
             </p>
             <div class="story-pillar-sub">10+ YEARS EXPERTISE</div>
           </div>
@@ -4245,7 +4438,8 @@
               <span class="story-pillar-tag">INTEGRATION</span>
             </div>
             <p class="story-pillar-text">
-              From identity and digital experiences to content, marketing and influence, we help businesses move closer to their goals, with every part of the brand working together.
+              From identity and digital experiences to content, marketing and influence, we help businesses move closer
+              to their goals, with every part of the brand working together.
             </p>
             <div class="story-pillar-sub">COMPLETE LIFECYCLE</div>
           </div>
@@ -4260,9 +4454,11 @@
   <section id="works-driver" class="works-driver">
     <div class="works-sticky-stage" id="worksStickyStage">
       <div class="section-container works-stage-container">
-        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> SELECTED PROJECTS / 1928</div>
-        <h2 class="sec-heading" style="margin-bottom:clamp(6px, 1vh, 12px);">WORK WORTH <span>SHOWING.</span></h2>
-        <p class="sec-desc">A selection of identities, digital experiences and creative work created for businesses with ambition.</p>
+        <div class="sec-tag-pill" style="margin-bottom:clamp(8px, 1.4vh, 14px);"><span class="sec-dot"></span> SELECTED
+          PROJECTS / 1928</div>
+        <h2 class="sec-heading" style="margin-bottom:clamp(6px, 1vh, 12px);">WORK WORTH <span>SHOWING</span></h2>
+        <p class="sec-desc">A selection of identities, digital experiences and creative work created for businesses with
+          ambition.</p>
 
         <div class="works-card-stage" id="worksCardStage">
           <!-- ── SET 1: First 2 Cards (Active Initially) ── -->
@@ -4270,15 +4466,19 @@
             <!-- 01 VIBEE -->
             <a href="portfolio.html?project=vibee" class="work-duo-card" id="workCard1">
               <div class="work-card-media">
-                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg" alt="Vibee — Youth Culture & Apparel Identity" class="work-card-img" />
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg"
+                  alt="Vibee — Youth Culture & Apparel Identity" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
                   <span class="work-num">
-                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
                       <line x1="2" y1="12" x2="22" y2="12"></line>
-                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                      <path
+                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                      </path>
                     </svg>
                     01 / GLOBAL ICON
                   </span>
@@ -4289,7 +4489,10 @@
                     <div class="work-cta-wrap">
                       <span>View Case Study</span>
                       <div class="work-cta-arrow">
-                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg viewBox="0 0 24 24">
+                          <path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        </svg>
                       </div>
                     </div>
                   </div>
@@ -4300,15 +4503,19 @@
             <!-- 02 INFYLI -->
             <a href="portfolio.html?project=infyli" class="work-duo-card" id="workCard2">
               <div class="work-card-media">
-                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg" alt="Infyli — Minimalist Luxury Home Aromatics" class="work-card-img" />
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg"
+                  alt="Infyli — Minimalist Luxury Home Aromatics" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
                   <span class="work-num">
-                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
                       <line x1="2" y1="12" x2="22" y2="12"></line>
-                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                      <path
+                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                      </path>
                     </svg>
                     02 / GLOBAL ICON
                   </span>
@@ -4319,7 +4526,10 @@
                     <div class="work-cta-wrap">
                       <span>View Case Study</span>
                       <div class="work-cta-arrow">
-                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg viewBox="0 0 24 24">
+                          <path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        </svg>
                       </div>
                     </div>
                   </div>
@@ -4333,15 +4543,19 @@
             <!-- 03 MUDRA SCHOOL -->
             <a href="portfolio.html?project=mudra-school" class="work-duo-card" id="workCard3">
               <div class="work-card-media">
-                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg" alt="Mudra School — Classical Arts Digital Presence" class="work-card-img" />
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg"
+                  alt="Mudra School — Classical Arts Digital Presence" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
                   <span class="work-num">
-                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
                       <line x1="2" y1="12" x2="22" y2="12"></line>
-                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                      <path
+                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                      </path>
                     </svg>
                     03 / GLOBAL ICON
                   </span>
@@ -4352,7 +4566,10 @@
                     <div class="work-cta-wrap">
                       <span>View Case Study</span>
                       <div class="work-cta-arrow">
-                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg viewBox="0 0 24 24">
+                          <path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        </svg>
                       </div>
                     </div>
                   </div>
@@ -4363,15 +4580,19 @@
             <!-- 04 AWARDS PLUS -->
             <a href="portfolio.html?project=awards-plus" class="work-duo-card" id="workCard4">
               <div class="work-card-media">
-                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg" alt="Awards Plus — Prestige Corporate Identity" class="work-card-img" />
+                <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg"
+                  alt="Awards Plus — Prestige Corporate Identity" class="work-card-img" />
               </div>
               <div class="work-card-content">
                 <div class="work-top-meta">
                   <span class="work-num">
-                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg class="work-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none"
+                      stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                       <circle cx="12" cy="12" r="10"></circle>
                       <line x1="2" y1="12" x2="22" y2="12"></line>
-                      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                      <path
+                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                      </path>
                     </svg>
                     04 / GLOBAL ICON
                   </span>
@@ -4382,7 +4603,10 @@
                     <div class="work-cta-wrap">
                       <span>View Case Study</span>
                       <div class="work-cta-arrow">
-                        <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        <svg viewBox="0 0 24 24">
+                          <path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        </svg>
                       </div>
                     </div>
                   </div>
@@ -4392,10 +4616,12 @@
           </div>
         </div>
 
-        <!-- Dynamic Indicator Dots for Set 1 / Set 2 -->
+        <!-- Dynamic Indicator Dots for Cards 1 to 4 on Mobile -->
         <div class="works-set-indicators" id="worksSetIndicators">
-          <span class="works-dot active" data-set="1"></span>
-          <span class="works-dot" data-set="2"></span>
+          <span class="works-dot active" data-card="1" data-set="1"></span>
+          <span class="works-dot" data-card="2" data-set="2"></span>
+          <span class="works-dot" data-card="3" data-set="2"></span>
+          <span class="works-dot" data-card="4" data-set="2"></span>
         </div>
       </div>
     </div>
@@ -4407,8 +4633,9 @@
   <section id="values">
     <div class="section-container">
       <div class="sec-tag-pill"><span class="sec-dot"></span> 1928 CREATIVE STUDIO / OUR PRINCIPLES</div>
-      <h2 class="sec-heading">WHAT WE <span>BELIEVE IN.</span></h2>
-      <p class="sec-desc">The principles that shape how we think, create, collaborate, and build brands for meaningful growth.</p>
+      <h2 class="sec-heading">WHAT WE <span>BELIEVE IN</span></h2>
+      <p class="sec-desc">The principles that shape how we think, create, collaborate, and build brands for meaningful
+        growth.</p>
 
       <div class="values-accordion" id="valuesAccordion">
         <!-- ── 01 STRATEGIC THINKING ── -->
@@ -4430,7 +4657,8 @@
 
             <div class="val-exp-body">
               <h3 class="val-exp-title">STRATEGIC THINKING</h3>
-              <p class="val-exp-desc">We start with the bigger picture. Your goals, audience, market and ambition shape every creative decision we make.</p>
+              <p class="val-exp-desc">We start with the bigger picture. Your goals, audience, market and ambition shape
+                every creative decision we make.</p>
             </div>
 
             <div class="val-exp-bottom">
@@ -4460,7 +4688,8 @@
 
             <div class="val-exp-body">
               <h3 class="val-exp-title">DISTINCTIVE CRAFT</h3>
-              <p class="val-exp-desc">Every detail has a role. We create identities and experiences with clarity, character and a visual point of view that people remember.</p>
+              <p class="val-exp-desc">Every detail has a role. We create identities and experiences with clarity,
+                character and a visual point of view that people remember.</p>
             </div>
 
             <div class="val-exp-bottom">
@@ -4490,7 +4719,8 @@
 
             <div class="val-exp-body">
               <h3 class="val-exp-title">HUMAN CONNECTION</h3>
-              <p class="val-exp-desc">Great brands connect before they convert. We build stories, content and experiences that feel relevant, natural and human.</p>
+              <p class="val-exp-desc">Great brands connect before they convert. We build stories, content and
+                experiences that feel relevant, natural and human.</p>
             </div>
 
             <div class="val-exp-bottom">
@@ -4520,7 +4750,8 @@
 
             <div class="val-exp-body">
               <h3 class="val-exp-title">BUILT FOR GROWTH</h3>
-              <p class="val-exp-desc">A stronger brand should create opportunities for a stronger business. We design every touchpoint with growth, relevance and long-term value in mind.</p>
+              <p class="val-exp-desc">A stronger brand should create opportunities for a stronger business. We design
+                every touchpoint with growth, relevance and long-term value in mind.</p>
             </div>
 
             <div class="val-exp-bottom">
@@ -4546,122 +4777,164 @@
       </div>
 
       <div class="team-minimal-index" id="teamMinimalIndex">
-        <!-- 01 AMI PANCHAL -->
-        <div class="team-index-row" data-member="ami" data-name="Ami Panchal" data-role="Founder &amp; Creative + Strategy Head"
-          data-photo="img/team-ami.jpg">
-          <div class="team-row-main">
-            <div class="team-row-left">
-              <div class="team-mobile-avatar">
-                <img src="img/team-ami.jpg" alt="Ami Panchal" loading="lazy" />
-              </div>
-              <div class="team-member-meta">
+        <!-- ── DESKTOP MINIMALIST EDITORIAL LIST (> 860px) ── -->
+        <div class="team-desktop-list">
+          <!-- 01 AMI PANCHAL -->
+          <div class="team-index-row" data-member="ami" data-name="Ami Panchal"
+            data-role="Founder &amp; Creative + Strategy Head" data-photo="img/team-ami.jpg">
+            <div class="team-row-main">
+              <div class="team-row-left">
                 <span class="team-row-name">Ami Panchal</span>
-                <span class="team-row-role team-mobile-role">Founder &amp; Creative + Strategy Head</span>
               </div>
-            </div>
-            <div class="team-row-right">
-              <span class="team-row-role team-desktop-role">Founder &amp; Creative + Strategy Head</span>
-              <span class="team-mobile-num">01</span>
+              <div class="team-row-right">
+                <span class="team-row-role team-desktop-role">Founder &amp; Creative + Strategy Head</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 02 TUSHAR PANCHAL -->
-        <div class="team-index-row" data-member="tushar" data-name="Tushar Panchal" data-role="Founder &amp; Marketing Head"
-          data-photo="img/team-tusar.jpg">
-          <div class="team-row-main">
-            <div class="team-row-left">
-              <div class="team-mobile-avatar">
-                <img src="img/team-tusar.jpg" alt="Tushar Panchal" loading="lazy" />
-              </div>
-              <div class="team-member-meta">
+          <!-- 02 TUSHAR PANCHAL -->
+          <div class="team-index-row" data-member="tushar" data-name="Tushar Panchal"
+            data-role="Founder &amp; Marketing Head" data-photo="img/team-tusar.jpg">
+            <div class="team-row-main">
+              <div class="team-row-left">
                 <span class="team-row-name">Tushar Panchal</span>
-                <span class="team-row-role team-mobile-role">Founder &amp; Marketing Head</span>
               </div>
-            </div>
-            <div class="team-row-right">
-              <span class="team-row-role team-desktop-role">Founder &amp; Marketing Head</span>
-              <span class="team-mobile-num">02</span>
+              <div class="team-row-right">
+                <span class="team-row-role team-desktop-role">Founder &amp; Marketing Head</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 03 TRUSHA PANCHAL -->
-        <div class="team-index-row" data-member="trusha" data-name="Trusha Panchal" data-role="Senior Graphic Designer"
-          data-photo="img/team-elena.jpg">
-          <div class="team-row-main">
-            <div class="team-row-left">
-              <div class="team-mobile-avatar">
-                <img src="img/team-elena.jpg" alt="Trusha Panchal" loading="lazy" />
-              </div>
-              <div class="team-member-meta">
+          <!-- 03 TRUSHA PANCHAL -->
+          <div class="team-index-row" data-member="trusha" data-name="Trusha Panchal"
+            data-role="Senior Graphic Designer" data-photo="img/team-elena.jpg">
+            <div class="team-row-main">
+              <div class="team-row-left">
                 <span class="team-row-name">Trusha Panchal</span>
-                <span class="team-row-role team-mobile-role">Senior Graphic Designer</span>
               </div>
-            </div>
-            <div class="team-row-right">
-              <span class="team-row-role team-desktop-role">Senior Graphic Designer</span>
-              <span class="team-mobile-num">03</span>
+              <div class="team-row-right">
+                <span class="team-row-role team-desktop-role">Senior Graphic Designer</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 04 HARSH PATEL -->
-        <div class="team-index-row" data-member="harsh" data-name="Harsh Patel" data-role="Senior Video Editor"
-          data-photo="img/team-kaito.jpg">
-          <div class="team-row-main">
-            <div class="team-row-left">
-              <div class="team-mobile-avatar">
-                <img src="img/team-kaito.jpg" alt="Harsh Patel" loading="lazy" />
-              </div>
-              <div class="team-member-meta">
+          <!-- 04 HARSH PATEL -->
+          <div class="team-index-row" data-member="harsh" data-name="Harsh Patel" data-role="Senior Video Editor"
+            data-photo="img/team-kaito.jpg">
+            <div class="team-row-main">
+              <div class="team-row-left">
                 <span class="team-row-name">Harsh Patel</span>
-                <span class="team-row-role team-mobile-role">Senior Video Editor</span>
               </div>
-            </div>
-            <div class="team-row-right">
-              <span class="team-row-role team-desktop-role">Senior Video Editor</span>
-              <span class="team-mobile-num">04</span>
+              <div class="team-row-right">
+                <span class="team-row-role team-desktop-role">Senior Video Editor</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- 05 URVISH MISTRY -->
-        <div class="team-index-row" data-member="urvish" data-name="Urvish Mistry" data-role="Junior Video Editor + Community Manager"
-          data-photo="img/team-ami.jpg">
-          <div class="team-row-main">
-            <div class="team-row-left">
-              <div class="team-mobile-avatar">
-                <img src="img/team-ami.jpg" alt="Urvish Mistry" loading="lazy" />
-              </div>
-              <div class="team-member-meta">
+          <!-- 05 URVISH MISTRY -->
+          <div class="team-index-row" data-member="urvish" data-name="Urvish Mistry"
+            data-role="Junior Video Editor + Community Manager" data-photo="img/team-urvish.jpg">
+            <div class="team-row-main">
+              <div class="team-row-left">
                 <span class="team-row-name">Urvish Mistry</span>
-                <span class="team-row-role team-mobile-role">Junior Video Editor + Community Manager</span>
+              </div>
+              <div class="team-row-right">
+                <span class="team-row-role team-desktop-role">Junior Video Editor + Community Manager</span>
               </div>
             </div>
-            <div class="team-row-right">
-              <span class="team-row-role team-desktop-role">Junior Video Editor + Community Manager</span>
-              <span class="team-mobile-num">05</span>
+          </div>
+
+          <!-- 06 PRIYAL LUNKAR -->
+          <div class="team-index-row" data-member="priyal" data-name="Priyal Lunkar" data-role="Social Media Manager"
+            data-photo="img/team-priyal.jpg">
+            <div class="team-row-main">
+              <div class="team-row-left">
+                <span class="team-row-name">Priyal Lunkar</span>
+              </div>
+              <div class="team-row-right">
+                <span class="team-row-role team-desktop-role">Social Media Manager</span>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- 06 PRIYAL LUNKAR -->
-        <div class="team-index-row" data-member="priyal" data-name="Priyal Lunkar" data-role="Social Media Manager"
-          data-photo="img/team-elena.jpg">
-          <div class="team-row-main">
-            <div class="team-row-left">
-              <div class="team-mobile-avatar">
-                <img src="img/team-elena.jpg" alt="Priyal Lunkar" loading="lazy" />
-              </div>
-              <div class="team-member-meta">
-                <span class="team-row-name">Priyal Lunkar</span>
-                <span class="team-row-role team-mobile-role">Social Media Manager</span>
-              </div>
+        <!-- ── MOBILE 2-COLUMN PHOTO CARD GRID (<= 860px) ── -->
+        <div class="team-mobile-grid">
+          <!-- Card 01 -->
+          <div class="team-card" data-member="ami" data-name="Ami Panchal"
+            data-role="Founder &amp; Creative + Strategy Head" data-photo="img/team-ami.jpg">
+            <div class="team-card-media">
+              <img src="img/team-ami.jpg" alt="Ami Panchal" loading="lazy" class="team-card-img" />
+              <div class="team-card-badge">01</div>
             </div>
-            <div class="team-row-right">
-              <span class="team-row-role team-desktop-role">Social Media Manager</span>
-              <span class="team-mobile-num">06</span>
+            <div class="team-card-info">
+              <h3 class="team-card-name">Ami Panchal</h3>
+              <p class="team-card-role">Founder &amp; Creative + Strategy Head</p>
+            </div>
+          </div>
+
+          <!-- Card 02 -->
+          <div class="team-card" data-member="tushar" data-name="Tushar Panchal"
+            data-role="Founder &amp; Marketing Head" data-photo="img/team-tusar.jpg">
+            <div class="team-card-media">
+              <img src="img/team-tusar.jpg" alt="Tushar Panchal" loading="lazy" class="team-card-img" />
+              <div class="team-card-badge">02</div>
+            </div>
+            <div class="team-card-info">
+              <h3 class="team-card-name">Tushar Panchal</h3>
+              <p class="team-card-role">Founder &amp; Marketing Head</p>
+            </div>
+          </div>
+
+          <!-- Card 03 -->
+          <div class="team-card" data-member="trusha" data-name="Trusha Panchal" data-role="Senior Graphic Designer"
+            data-photo="img/team-elena.jpg">
+            <div class="team-card-media">
+              <img src="img/team-elena.jpg" alt="Trusha Panchal" loading="lazy" class="team-card-img" />
+              <div class="team-card-badge">03</div>
+            </div>
+            <div class="team-card-info">
+              <h3 class="team-card-name">Trusha Panchal</h3>
+              <p class="team-card-role">Senior Graphic Designer</p>
+            </div>
+          </div>
+
+          <!-- Card 04 -->
+          <div class="team-card" data-member="harsh" data-name="Harsh Patel" data-role="Senior Video Editor"
+            data-photo="img/team-kaito.jpg">
+            <div class="team-card-media">
+              <img src="img/team-kaito.jpg" alt="Harsh Patel" loading="lazy" class="team-card-img" />
+              <div class="team-card-badge">04</div>
+            </div>
+            <div class="team-card-info">
+              <h3 class="team-card-name">Harsh Patel</h3>
+              <p class="team-card-role">Senior Video Editor</p>
+            </div>
+          </div>
+
+          <!-- Card 05 -->
+          <div class="team-card" data-member="urvish" data-name="Urvish Mistry"
+            data-role="Junior Video Editor + Community Manager" data-photo="img/team-urvish.jpg">
+            <div class="team-card-media">
+              <img src="img/team-urvish.jpg" alt="Urvish Mistry" loading="lazy" class="team-card-img" />
+              <div class="team-card-badge">05</div>
+            </div>
+            <div class="team-card-info">
+              <h3 class="team-card-name">Urvish Mistry</h3>
+              <p class="team-card-role">Junior Video Editor + Community Manager</p>
+            </div>
+          </div>
+
+          <!-- Card 06 -->
+          <div class="team-card" data-member="priyal" data-name="Priyal Lunkar" data-role="Social Media Manager"
+            data-photo="img/team-priyal.jpg">
+            <div class="team-card-media">
+              <img src="img/team-priyal.jpg" alt="Priyal Lunkar" loading="lazy" class="team-card-img" />
+              <div class="team-card-badge">06</div>
+            </div>
+            <div class="team-card-info">
+              <h3 class="team-card-name">Priyal Lunkar</h3>
+              <p class="team-card-role">Social Media Manager</p>
             </div>
           </div>
         </div>
@@ -4680,8 +4953,9 @@
   <section id="process">
     <div class="section-container">
       <div class="sec-tag-pill"><span class="sec-dot"></span> WORKFLOW FRAMEWORK / 1928</div>
-      <h2 class="sec-heading">HOW WE BUILD <span>TOGETHER.</span></h2>
-      <p class="sec-desc">A thoughtful process that brings strategy, creativity and execution together, from the first conversation to meaningful growth.</p>
+      <h2 class="sec-heading">HOW WE BUILD <span>TOGETHER</span></h2>
+      <p class="sec-desc">A thoughtful process that brings strategy, creativity and execution together, from the first
+        conversation to meaningful growth.</p>
 
       <div class="process-serpentine-track" id="processTrack">
         <!-- Connecting SVG Laser Path -->
@@ -4717,7 +4991,8 @@
               <span class="proc-card-phase">PHASE 01 / DISCOVER</span>
               <h3 class="proc-card-title">Understand Before We Build</h3>
             </div>
-            <p class="proc-card-desc">We get close to your business, audience, market and ambitions to understand what makes your opportunity unique.</p>
+            <p class="proc-card-desc">We get close to your business, audience, market and ambitions to understand what
+              makes your opportunity unique.</p>
             <div class="proc-card-tags">
               <span>BUSINESS DISCOVERY</span>
               <span>AUDIENCE</span>
@@ -4734,7 +5009,8 @@
               <span class="proc-card-phase">PHASE 02 / DEFINE</span>
               <h3 class="proc-card-title">Shape the Direction</h3>
             </div>
-            <p class="proc-card-desc">We turn insights into a clear creative and strategic direction that gives your brand a strong foundation.</p>
+            <p class="proc-card-desc">We turn insights into a clear creative and strategic direction that gives your
+              brand a strong foundation.</p>
             <div class="proc-card-tags">
               <span>POSITIONING</span>
               <span>BRAND DIRECTION</span>
@@ -4762,7 +5038,8 @@
               <span class="proc-card-phase">PHASE 03 / CREATE</span>
               <h3 class="proc-card-title">Bring the Brand to Life</h3>
             </div>
-            <p class="proc-card-desc">This is where ideas become identities, digital experiences, content and campaigns designed around your brand.</p>
+            <p class="proc-card-desc">This is where ideas become identities, digital experiences, content and campaigns
+              designed around your brand.</p>
             <div class="proc-card-tags">
               <span>IDENTITY</span>
               <span>DESIGN</span>
@@ -4779,7 +5056,8 @@
               <span class="proc-card-phase">PHASE 04 / CONNECT</span>
               <h3 class="proc-card-title">Take It to the Right People</h3>
             </div>
-            <p class="proc-card-desc">We bring your brand into the market through thoughtful content, digital marketing, social media and creator partnerships.</p>
+            <p class="proc-card-desc">We bring your brand into the market through thoughtful content, digital marketing,
+              social media and creator partnerships.</p>
             <div class="proc-card-tags">
               <span>SOCIAL</span>
               <span>MARKETING</span>
@@ -4808,7 +5086,8 @@
               <span class="proc-card-phase">PHASE 05 / GROW</span>
               <h3 class="proc-card-title">Build What Comes Next</h3>
             </div>
-            <p class="proc-card-desc">We look beyond the launch to help your brand stay relevant, create value and keep moving towards its business goals.</p>
+            <p class="proc-card-desc">We look beyond the launch to help your brand stay relevant, create value and keep
+              moving towards its business goals.</p>
             <div class="proc-card-tags">
               <span>OPTIMISATION</span>
               <span>GROWTH</span>
@@ -4827,11 +5106,12 @@
   <section id="clients-section">
     <div class="brands-header-block">
       <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY / 1928 CLIENTS</div>
-      <h2 class="brands-title">BRANDS THAT TRUST <span>1928.</span></h2>
-      <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their ambitions, and the brands they’re building.</p>
+      <h2 class="brands-title">BRANDS THAT TRUST <span>1928</span></h2>
+      <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their
+        ambitions, and the brands they’re building.</p>
     </div>
 
-        <div class="brands-marquee-stage">
+    <div class="brands-marquee-stage">
       <!-- ── ROW 1 (Left to Right / Normal Direction: Logos 01–20) ── -->
       <div class="brand-row-wrap marquee-left">
         <div class="marquee-track">
@@ -5242,14 +5522,20 @@
       <div class="fcta-content">
         <h2 class="fcta-title">
           <span class="fcta-line-1">YOUR NEXT BIG MOVE</span>
-          <span class="fcta-line-2">STARTS HERE.</span>
+          <span class="fcta-line-2">STARTS HERE</span>
         </h2>
         <p class="fcta-sub">
           Whether you’re building a new brand or taking an existing one further, we’re here to shape what comes next.
         </p>
         <div class="fcta-actions">
-          <a href="contact.html" class="btn-primary">START A CONVERSATION →</a>
-          <a href="portfolio.html" class="btn-ghost">VIEW OUR WORK →</a>
+          <a href="contact.html" class="btn-primary">
+            <span>START A CONVERSATION</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="portfolio.html" class="btn-ghost">
+            <span>VIEW OUR WORK</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -5286,30 +5572,35 @@
       function lerp(a, b, t) { return a + (b - a) * t; }
       function eioq(t) { return t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
 
-      /* ── Custom Cursor ── */
+      /* ── Custom Cursor (Desktop only) ── */
       const dot = document.getElementById('cDot');
       const ring = document.getElementById('cRing');
       let mx = -100, my = -100, rx = -100, ry = -100;
 
-      window.addEventListener('mousemove', (e) => {
-        mx = e.clientX;
-        my = e.clientY;
-        if (dot) {
-          dot.style.left = mx + 'px';
-          dot.style.top = my + 'px';
-        }
-      }, { passive: true });
+      if (window.innerWidth <= 860 || ('ontouchstart' in window && window.innerWidth <= 1024)) {
+        if (dot) dot.style.display = 'none';
+        if (ring) ring.style.display = 'none';
+      } else {
+        window.addEventListener('mousemove', (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+          if (dot) {
+            dot.style.left = mx + 'px';
+            dot.style.top = my + 'px';
+          }
+        }, { passive: true });
 
-      function renderCursor() {
-        rx += (mx - rx) * 0.18;
-        ry += (my - ry) * 0.18;
-        if (ring) {
-          ring.style.left = rx + 'px';
-          ring.style.top = ry + 'px';
+        function renderCursor() {
+          rx += (mx - rx) * 0.18;
+          ry += (my - ry) * 0.18;
+          if (ring) {
+            ring.style.left = rx + 'px';
+            ring.style.top = ry + 'px';
+          }
+          requestAnimationFrame(renderCursor);
         }
-        requestAnimationFrame(renderCursor);
+        renderCursor();
       }
-      renderCursor();
 
       /* ── Interactive Core Values Kinetic Accordion Slabs ── */
       const valPanels = document.querySelectorAll('.val-panel');
@@ -5437,24 +5728,89 @@
         });
       }
 
-
-
       /* ── Best Works 2-Set Pinned Scroll Deck (Soft Crossfade with Zero Text Overlap) ── */
       const worksDriver = document.getElementById('works-driver');
       const worksSet1 = document.getElementById('worksSet1');
       const worksSet2 = document.getElementById('worksSet2');
+      const worksDotsAll = document.querySelectorAll('.works-dot');
+
+      function updateWorksDots(activeCard) {
+        worksDotsAll.forEach(function (d) {
+          d.classList.toggle('active', d.getAttribute('data-card') === String(activeCard));
+        });
+      }
 
       function updateWorksOnScroll() {
         if (!worksDriver || !worksSet1 || !worksSet2) return;
+        const cardsSet1 = worksSet1.querySelectorAll('.work-duo-card');
+        const cardsSet2 = worksSet2.querySelectorAll('.work-duo-card');
+        const card1 = cardsSet1[0];
+        const card2 = cardsSet1[1];
+        const card3 = cardsSet2[0];
+        const card4 = cardsSet2[1];
+
+        /* ── MOBILE: 4 individual cards slide-up progression with live 4-dot indicator ── */
         if (window.innerWidth <= 860) {
-          worksSet1.style.opacity = '';
-          worksSet1.style.transform = '';
-          worksSet1.style.pointerEvents = 'auto';
-          worksSet2.style.opacity = '';
-          worksSet2.style.transform = '';
-          worksSet2.style.pointerEvents = 'auto';
+          if (!card1 || !card2 || !card3 || !card4) return;
+          const mRect = worksDriver.getBoundingClientRect();
+          const mTotalDist = worksDriver.offsetHeight - window.innerHeight;
+          if (mTotalDist <= 0) return;
+
+          const mScrolled = Math.max(0, -mRect.top);
+          const mp = Math.min(1, Math.max(0, mScrolled / mTotalDist));
+
+          // 1. Card 2 enters (mp 0.05 -> 0.28): slides right to left over Card 1 inside worksSet1
+          const p2 = clamp((mp - 0.05) / 0.23, 0, 1);
+          const e2 = eioq(p2);
+          const x2 = (1 - e2) * 105;
+          card2.style.transform = `translate3d(${x2.toFixed(1)}%, 0, 0)`;
+          card1.style.transform = `translate3d(${(-25 * e2).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e2).toFixed(3)})`;
+          card1.style.opacity = `${(1 - 0.35 * e2).toFixed(2)}`;
+
+          // 2. Card 3 enters (mp 0.35 -> 0.58): worksSet2 (carrying Card 3) slides right to left over worksSet1
+          const p3 = clamp((mp - 0.35) / 0.23, 0, 1);
+          const e3 = eioq(p3);
+          const xSet2 = (1 - e3) * 105;
+          worksSet2.style.transform = `translate3d(${xSet2.toFixed(1)}%, 0, 0)`;
+          worksSet1.style.transform = `translate3d(${(-25 * e3).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e3).toFixed(3)})`;
+          worksSet1.style.opacity = `${(1 - 0.35 * e3).toFixed(2)}`;
+
+          // 3. Card 4 enters (mp 0.65 -> 0.88): Card 4 slides right to left over Card 3 inside worksSet2
+          const p4 = clamp((mp - 0.65) / 0.23, 0, 1);
+          const e4 = eioq(p4);
+          const x4 = (1 - e4) * 105;
+          card4.style.transform = `translate3d(${x4.toFixed(1)}%, 0, 0)`;
+          card3.style.transform = `translate3d(${(-25 * e4).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e4).toFixed(3)})`;
+          card3.style.opacity = `${(1 - 0.35 * e4).toFixed(2)}`;
+
+          // Active indicator dot & pointer events
+          let activeCard = 1;
+          if (mp >= 0.75) {
+            activeCard = 4;
+          } else if (mp >= 0.45) {
+            activeCard = 3;
+          } else if (mp >= 0.18) {
+            activeCard = 2;
+          }
+          card1.style.pointerEvents = activeCard === 1 ? 'auto' : 'none';
+          card2.style.pointerEvents = activeCard === 2 ? 'auto' : 'none';
+          card3.style.pointerEvents = activeCard === 3 ? 'auto' : 'none';
+          card4.style.pointerEvents = activeCard === 4 ? 'auto' : 'none';
+
+          updateWorksDots(activeCard);
           return;
         }
+
+        // DESKTOP (> 860px): Clear any mobile transforms on sets and individual cards
+        worksSet1.style.opacity = '';
+        worksSet2.style.opacity = '';
+        const allCards = worksDriver.querySelectorAll('.work-duo-card');
+        allCards.forEach(c => {
+          c.style.transform = '';
+          c.style.opacity = '';
+          c.style.pointerEvents = 'auto';
+        });
+
         const rect = worksDriver.getBoundingClientRect();
         const totalDist = worksDriver.offsetHeight - window.innerHeight;
         if (totalDist <= 0) return;
@@ -5540,8 +5896,9 @@
           const firstRect = firstCircle.getBoundingClientRect();
           const lastRect = lastCircle.getBoundingClientRect();
 
-          const startLineY = vh * 0.80;
-          const endLineY = vh * 0.50;
+          // Smooth progress: starts when Node 1 is at 72% vh, hits 100% when Node 5 arrives at 54% vh
+          const startLineY = vh * 0.72;
+          const endLineY = vh * 0.54;
           const totalSpan = (lastRect.top - firstRect.top) + (startLineY - endLineY);
           const currentPos = startLineY - firstRect.top;
           const progress = Math.min(1, Math.max(0, currentPos / (totalSpan || 1)));
@@ -5551,12 +5908,13 @@
             activePath.style.strokeDashoffset = `${totalLen * (1 - progress)}`;
           }
 
-          // Progressively activate each node and its card as the laser reaches it
+          // Progressively activate each node as the laser reaches it
           items.forEach((item, idx) => {
             const circle = item.querySelector('.proc-node-circle');
             if (!circle) return;
             const cTop = circle.getBoundingClientRect().top;
-            if (cTop <= vh * 0.72) {
+            const itemTrigger = idx / (items.length - 1);
+            if (progress >= (itemTrigger * 0.96) || cTop <= vh * 0.65) {
               item.classList.add('active');
             } else {
               item.classList.remove('active');
@@ -5645,6 +6003,55 @@
           nav.classList.remove('hidden');
         }
       }, 100);
+
+      // Mobile: dot click → scroll to correct card inside works-driver
+      (function () {
+        var dots = document.querySelectorAll('.works-dot');
+        if (!dots.length || !worksDriver) return;
+        dots.forEach(function (dot) {
+          dot.addEventListener('click', function () {
+            if (window.innerWidth > 860) return;
+            var cardNum = parseInt(dot.getAttribute('data-card'), 10) || 1;
+            var driverTop = worksDriver.getBoundingClientRect().top + window.scrollY;
+            var driverH = worksDriver.offsetHeight;
+            var vh = window.innerHeight;
+            var totalDist = driverH - vh;
+            if (totalDist <= 0) return;
+            // Target fractions for Cards 1, 2, 3, 4
+            var targets = { 1: 0.02, 2: 0.33, 3: 0.63, 4: 0.93 };
+            var targetFrac = targets[cardNum] !== undefined ? targets[cardNum] : 0;
+            var targetY = driverTop + totalDist * targetFrac;
+            window.scrollTo({ top: targetY, behavior: 'smooth' });
+          }, { passive: true });
+        });
+
+        // Swipe on works-card-stage (left/up advances to next card, right/down goes back)
+        var stage = document.getElementById('worksCardStage');
+        if (!stage) return;
+        var touchStartX = 0;
+        var touchStartY = 0;
+        stage.addEventListener('touchstart', function (e) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        stage.addEventListener('touchend', function (e) {
+          if (window.innerWidth > 860) return;
+          var dx = touchStartX - e.changedTouches[0].clientX;
+          var dy = touchStartY - e.changedTouches[0].clientY;
+          var delta = Math.abs(dx) > Math.abs(dy) ? dx : dy;
+          if (Math.abs(delta) < 40) return; // ignore tiny taps
+          var driverTop = worksDriver.getBoundingClientRect().top + window.scrollY;
+          var totalDist = worksDriver.offsetHeight - window.innerHeight;
+          if (totalDist <= 0) return;
+          var mScrolled = Math.max(0, -(worksDriver.getBoundingClientRect().top));
+          var currentMp = mScrolled / totalDist;
+          var currentCard = currentMp < 0.18 ? 1 : (currentMp < 0.45 ? 2 : (currentMp < 0.75 ? 3 : 4));
+          var nextCard = delta > 0 ? Math.min(4, currentCard + 1) : Math.max(1, currentCard - 1);
+          var targets = { 1: 0.02, 2: 0.33, 3: 0.63, 4: 0.93 };
+          var targetY = driverTop + totalDist * targets[nextCard];
+          window.scrollTo({ top: targetY, behavior: 'smooth' });
+        }, { passive: true });
+      })();
 
       // Initial execution
       onScroll();
