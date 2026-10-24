@@ -80,7 +80,7 @@ if (!defined('SMTP_REPLY_TO')) {
     define('SMTP_REPLY_TO', getenv('SMTP_REPLY_TO') ?: '1928.Creativestudio@gmail.com');
 }
 if (!defined('ADMIN_NOTIFICATION_EMAIL')) {
-    define('ADMIN_NOTIFICATION_EMAIL', getenv('ADMIN_NOTIFICATION_EMAIL') ?: 'vanshmistry2001@gmail.com'); // Admin email recipient (change later for production)
+    define('ADMIN_NOTIFICATION_EMAIL', getenv('ADMIN_NOTIFICATION_EMAIL') ?: 'info@1928creativestudio.com'); // Admin email recipient (change later for production)
 }
 
 /**
@@ -95,6 +95,17 @@ if (!defined('CLOUDFLARE_TURNSTILE_SECRET_KEY')) {
 if (!defined('ENABLE_TURNSTILE_VERIFY')) {
     // Automatically enabled if secret key is configured, or toggle manually
     define('ENABLE_TURNSTILE_VERIFY', !empty(CLOUDFLARE_TURNSTILE_SECRET_KEY));
+}
+
+/**
+ * WhatsApp Microservice API Configuration:
+ * Can be defined in smtp-config.php or via environment variables.
+ */
+if (!defined('WHATSAPP_API_URL')) {
+    define('WHATSAPP_API_URL', getenv('WHATSAPP_API_URL') ?: 'https://1928creativestudioapi.vanshmistry.com/send-form-notifications');
+}
+if (!defined('WHATSAPP_API_SECRET')) {
+    define('WHATSAPP_API_SECRET', getenv('WHATSAPP_API_SECRET') ?: 'akgsaqcwkuisebsdxpzwqswasogzhlsdlibetpugrjqruckv');
 }
 
 // ══════════════════════════════════════════════════════════════════════════════

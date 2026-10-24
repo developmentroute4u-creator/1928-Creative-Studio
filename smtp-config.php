@@ -40,14 +40,17 @@ define('SMTP_FROM_EMAIL', 'no-reply@1928creativestudio.com');
 define('SMTP_FROM_NAME', '1928 Creative Studio');
 
 if (!defined('ADMIN_NOTIFICATION_EMAIL')) {
-    define('ADMIN_NOTIFICATION_EMAIL', 'vanshmistry2001@gmail.com'); // Admin email recipient (change later for production)
+    define('ADMIN_NOTIFICATION_EMAIL', 'info@1928creativestudio.com'); // Admin email recipient
 }
 
 if (!defined('WHATSAPP_API_URL')) {
+    // Production WhatsApp Microservice Endpoint:
     define(
         'WHATSAPP_API_URL',
-        'http://127.0.0.1:3000/send-form-notifications'
+        'https://1928creativestudioapi.vanshmistry.com/send-form-notifications'
     );
+    // For local development on Laragon/localhost:
+    // define('WHATSAPP_API_URL', 'http://127.0.0.1:3000/send-form-notifications');
 }
 
 if (!defined('WHATSAPP_API_SECRET')) {

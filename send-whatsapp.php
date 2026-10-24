@@ -8,7 +8,11 @@ $payload = json_encode([
     'message' => $message
 ]);
 
-$ch = curl_init('http://127.0.0.1:3000/send-message');
+$apiUrl = defined('WHATSAPP_API_URL') 
+    ? WHATSAPP_API_URL 
+    : 'https://1928creativestudioapi.vanshmistry.com/send-form-notifications';
+
+$ch = curl_init($apiUrl);
 
 curl_setopt_array($ch, [
     CURLOPT_POST => true,

@@ -22,3 +22,5 @@ whatsapp-api/node_modules/
 .wwebjs_cache/
 whatsapp-api/.wwebjs_auth/
 whatsapp-api/.wwebjs_cache/
+
+db.php

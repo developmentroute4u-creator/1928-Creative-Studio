@@ -1,19 +1,50 @@
 <?php
+
 /**
  * 1928 CREATIVE STUDIO — Database Connection Engine (Core PHP & PDO)
  * Foolproof PDO connection for Laragon, XAMPP, and Production MySQL servers
  */
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', '1928_studio_cms');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_CHARSET', 'utf8mb4');
+// Detect the current environment
+$hostName = strtolower($_SERVER['HTTP_HOST'] ?? 'localhost');
+$hostName = preg_replace('/:\d+$/', '', $hostName);
 
-class Database {
+if (
+    $hostName === 'localhost' ||
+    $hostName === '127.0.0.1'
+) {
+    // LOCALHOST DATABASE CONFIGURATION
+
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', '1928_studio_cms');
+    define('DB_USER', 'root');
+    define('DB_PASS', '');
+    define('DB_CHARSET', 'utf8mb4');
+} elseif (
+    $hostName === 'uat.1928creativestudio.com' ||
+    $hostName === '1928creativestudio.com' ||
+    $hostName === 'www.1928creativestudio.com'
+) {
+    // HOSTING / UAT DATABASE CONFIGURATION
+    define('DB_HOST', 'localhost');
+    define('DB_NAME', 'u165532389_uat');
+    define('DB_USER', 'u165532389_uat_root');
+    define('DB_PASS', 'OfE*57PZx/2X');
+    define('DB_CHARSET', 'utf8mb4');
+} else {
+    // Reject unknown environments
+    http_response_code(403);
+    exit('Database configuration is not available for this environment.');
+}
+
+
+
+class Database
+{
     private static ?PDO $instance = null;
 
-    public static function getConnection(): PDO {
+    public static function getConnection(): PDO
+    {
         if (self::$instance === null) {
             $options = [
                 PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
@@ -32,7 +63,7 @@ class Database {
                         $rootDsn = "mysql:host=" . DB_HOST . ";charset=" . DB_CHARSET;
                         $rootPdo = new PDO($rootDsn, DB_USER, DB_PASS, $options);
                         $rootPdo->exec("CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
-                        
+
                         // Connect now to the newly created database
                         $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
                         self::$instance = new PDO($dsn, DB_USER, DB_PASS, $options);
@@ -65,6 +96,7 @@ class Database {
     }
 }
 
-function getDB(): PDO {
+function getDB(): PDO
+{
     return Database::getConnection();
 }
