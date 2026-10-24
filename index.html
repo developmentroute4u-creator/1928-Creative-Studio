@@ -34,6 +34,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
@@ -41,6 +42,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
@@ -48,6 +50,7 @@
       font-style: normal;
       font-display: swap;
     }
+
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
@@ -122,13 +125,14 @@
       font-size: 16px;
       scroll-behavior: auto;
       -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
     }
 
     body {
       background: var(--bg);
       color: var(--ink);
       font-family: var(--font-secondary);
-      overflow-x: hidden;
+      overflow-x: clip;
       cursor: none;
       transition: background .5s var(--ease), color .5s var(--ease);
     }
@@ -189,9 +193,9 @@
       background: var(--cr-lo);
     }
 
-    
-    
-    
+
+
+
     /* ═══════════════════════════════════════════════════════════
        1928 CREATIVE STUDIO — ORGANIC 3D HERO CONSTRUCTION & ASSEMBLY
        (Dead-Center Load -> Upward Shift -> 3D Volumetric Box & 4-Ray Shoot -> Simultaneous Card Entry -> 0-100% Counter)
@@ -219,18 +223,26 @@
       width: clamp(380px, 65vw, 950px);
       height: clamp(300px, 55vh, 700px);
       background: radial-gradient(ellipse 65% 55% at center,
-        rgba(200, 16, 46, 0.22) 0%,
-        rgba(200, 16, 46, 0.04) 50%,
-        transparent 75%
-      );
+          rgba(200, 16, 46, 0.22) 0%,
+          rgba(200, 16, 46, 0.04) 50%,
+          transparent 75%);
       filter: blur(55px);
       opacity: 0.85;
       animation: heroGlowPulse 4s infinite ease-in-out;
     }
 
     @keyframes heroGlowPulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1.0); opacity: 0.75; }
-      50% { transform: translate(-50%, -50%) scale(1.12); opacity: 0.95; }
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1.0);
+        opacity: 0.75;
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.12);
+        opacity: 0.95;
+      }
     }
 
     /* Compact Organic 0 → 100% Loading Counter HUD */
@@ -275,8 +287,17 @@
     }
 
     @keyframes hlPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.7); }
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.35;
+        transform: scale(0.7);
+      }
     }
 
     .hl-text {
@@ -441,22 +462,41 @@
 
     /* Directional Starting Offscreen Coordinates for ALL 8 Cards */
     /* Left Wall Cards -> fly from left */
-    #wc-l1 { transform: translate3d(-100vw, -25vh, 0) rotateY(65deg) scale(0.6); }
-    #wc-l2 { transform: translate3d(-100vw, 35vh, 0) rotateY(65deg) scale(0.6); }
+    #wc-l1 {
+      transform: translate3d(-100vw, -25vh, 0) rotateY(65deg) scale(0.6);
+    }
+
+    #wc-l2 {
+      transform: translate3d(-100vw, 35vh, 0) rotateY(65deg) scale(0.6);
+    }
 
     /* Right Wall Cards -> fly from right */
-    #wc-r1 { transform: translate3d(100vw, -25vh, 0) rotateY(-65deg) scale(0.6); }
-    #wc-r2 { transform: translate3d(100vw, 35vh, 0) rotateY(-65deg) scale(0.6); }
+    #wc-r1 {
+      transform: translate3d(100vw, -25vh, 0) rotateY(-65deg) scale(0.6);
+    }
+
+    #wc-r2 {
+      transform: translate3d(100vw, 35vh, 0) rotateY(-65deg) scale(0.6);
+    }
 
     /* Top Ceiling Card -> flies from top */
-    #wc-t1 { transform: translate3d(0, -100vh, 0) rotateX(-70deg) scale(0.6); }
+    #wc-t1 {
+      transform: translate3d(0, -100vh, 0) rotateX(-70deg) scale(0.6);
+    }
 
     /* Bottom Floor Card -> flies from bottom */
-    #wc-b1 { transform: translate3d(0, 100vh, 0) rotateX(70deg) scale(0.6); }
+    #wc-b1 {
+      transform: translate3d(0, 100vh, 0) rotateX(70deg) scale(0.6);
+    }
 
     /* The Two Back Cards -> fly in from distinct directional trajectories like the other cards */
-    #wc-back1 { transform: translate3d(80vw, -60vh, -400px) rotateY(-45deg) rotateX(15deg) scale(0.5); }
-    #wc-back2 { transform: translate3d(-80vw, 60vh, -400px) rotateY(45deg) rotateX(-15deg) scale(0.5); }
+    #wc-back1 {
+      transform: translate3d(80vw, -60vh, -400px) rotateY(-45deg) rotateX(15deg) scale(0.5);
+    }
+
+    #wc-back2 {
+      transform: translate3d(-80vw, 60vh, -400px) rotateY(45deg) rotateX(-15deg) scale(0.5);
+    }
 
     /* When Step 6 Activates: ALL 8 Cards dock smoothly & slowly into their exact 3D resting slots */
     body.step-6-cards-slow #wc-l1 {
@@ -464,36 +504,43 @@
       filter: blur(0px);
       transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
+
     body.step-6-cards-slow #wc-l2 {
       opacity: 1;
       filter: blur(0px);
       transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
+
     body.step-6-cards-slow #wc-r1 {
       opacity: 1;
       filter: blur(0px);
       transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
+
     body.step-6-cards-slow #wc-r2 {
       opacity: 1;
       filter: blur(0px);
       transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
+
     body.step-6-cards-slow #wc-t1 {
       opacity: 1;
       filter: blur(0px);
       transform: rotateX(0deg) rotateY(0deg) scale(1.0);
     }
+
     body.step-6-cards-slow #wc-b1 {
       opacity: 1;
       filter: blur(0px);
       transform: rotateX(0deg) rotateY(0deg) scale(1.0);
     }
+
     body.step-6-cards-slow #wc-back1 {
       opacity: 1;
       filter: blur(0px);
       transform: rotateY(0deg) rotateX(0deg) scale(1.0);
     }
+
     body.step-6-cards-slow #wc-back2 {
       opacity: 1;
       filter: blur(0px);
@@ -506,7 +553,8 @@
 
     /* ── Immediate Soft Entry (When Navigating Between Internal Pages) ── */
     html.hero-skip-anim body {
-      overflow: auto !important;
+      overflow-x: clip !important;
+      overflow-y: visible !important;
       height: auto !important;
     }
 
@@ -715,7 +763,7 @@
       position: relative;
     }
 
-    .nav-has-dropdown > a {
+    .nav-has-dropdown>a {
       display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -731,8 +779,8 @@
       pointer-events: none;
     }
 
-    .nav-has-dropdown:hover > a,
-    .nav-has-dropdown:focus-within > a {
+    .nav-has-dropdown:hover>a,
+    .nav-has-dropdown:focus-within>a {
       color: var(--cr, #C8102E);
     }
 
@@ -753,7 +801,8 @@
       pointer-events: none;
       transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1), transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.24s;
       z-index: 1001;
-      padding-top: 12px; /* mouse bridge */
+      padding-top: 12px;
+      /* mouse bridge */
       width: clamp(210px, 18vw, 230px);
     }
 
@@ -1392,14 +1441,37 @@
       display: none !important;
     }
 
-    #wc-back1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-01.jpg'); }
-    #wc-back2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-02.jpg'); }
-    #wc-l1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-03.jpg'); }
-    #wc-l2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-04.jpg'); }
-    #wc-r1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-05.jpg'); }
-    #wc-r2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-07.jpg'); }
-    #wc-t1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-06.jpg'); }
-    #wc-b1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-08.jpg'); }
+    #wc-back1 .wc-inner {
+      background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-01.jpg');
+    }
+
+    #wc-back2 .wc-inner {
+      background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-02.jpg');
+    }
+
+    #wc-l1 .wc-inner {
+      background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-03.jpg');
+    }
+
+    #wc-l2 .wc-inner {
+      background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-04.jpg');
+    }
+
+    #wc-r1 .wc-inner {
+      background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-05.jpg');
+    }
+
+    #wc-r2 .wc-inner {
+      background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-07.jpg');
+    }
+
+    #wc-t1 .wc-inner {
+      background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-06.jpg');
+    }
+
+    #wc-b1 .wc-inner {
+      background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-08.jpg');
+    }
 
     /* ── Video / Showreel Pop-up & Right Docking ── */
     .hero-reel {
@@ -1867,6 +1939,24 @@
       margin-top: 6px;
     }
 
+    .pcv-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: transform 0.25s ease;
+    }
+
+    .pcv-arrow svg {
+      display: block;
+      width: 15px;
+      height: 15px;
+    }
+
+    .p-card-v:hover .pcv-arrow {
+      transform: translateX(4px);
+    }
+
     /* Abstract patterns inside media gradients */
     .pcv-art-pattern {
       position: absolute;
@@ -1908,6 +1998,10 @@
       height: 1600vh;
       background: var(--bg);
       overflow-x: clip;
+    }
+
+    .svc-sticky-center {
+      display: none;
     }
 
     #svc-sticky {
@@ -2813,13 +2907,23 @@
     }
 
     @keyframes marqueeL2R {
-      0% { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(-50%, 0, 0); }
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
     }
 
     @keyframes marqueeR2L {
-      0% { transform: translate3d(-50%, 0, 0); }
-      100% { transform: translate3d(0, 0, 0); }
+      0% {
+        transform: translate3d(-50%, 0, 0);
+      }
+
+      100% {
+        transform: translate3d(0, 0, 0);
+      }
     }
 
     .marquee-group {
@@ -2991,6 +3095,10 @@
       gap: 12px;
     }
 
+    .fbc-footer-cta {
+      display: none;
+    }
+
     .fbc-cards-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -3082,12 +3190,44 @@
       color: var(--cr);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: gap .2s;
+      gap: 7px;
+      transition: color .2s;
     }
 
-    .fbc-card:hover .fbc-link {
-      gap: 10px;
+    .fbc-link-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: transform 0.25s ease;
+    }
+
+    .fbc-link-arrow svg {
+      display: block;
+      width: 15px;
+      height: 15px;
+    }
+
+    .fbc-card:hover .fbc-link-arrow {
+      transform: translateX(4px);
+    }
+
+    .fbc-all-arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: transform 0.25s ease;
+    }
+
+    .fbc-all-arrow svg {
+      display: block;
+      width: 15px;
+      height: 15px;
+    }
+
+    .fbc-all:hover .fbc-all-arrow {
+      transform: translateX(4px);
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -3551,14 +3691,17 @@
 
     .f-char {
       display: inline-block;
-      opacity: 1;
-      transform: translateY(50%);
-      transition: transform 0.95s cubic-bezier(0.19, 1, 0.22, 1);
-      will-change: transform;
+      opacity: 0;
+      transform: translateY(85%);
+      transition-property: transform, opacity;
+      transition-duration: 0.85s, 0.65s;
+      transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform, opacity;
     }
 
     .f-brand-giant-text.revealed .f-char {
       transform: translateY(0%);
+      opacity: 1;
     }
 
     .f-bottom-line {
@@ -3603,22 +3746,25 @@
       height: 0 !important;
     }
 
-    html {
-      scrollbar-width: thin;
-      scrollbar-color: var(--cr) var(--bg);
-    }
+    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
+    @media (min-width: 769px) {
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--cr) var(--bg);
+      }
 
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
 
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
 
-    ::-webkit-scrollbar-thumb {
-      background: var(--cr);
-      border-radius: 3px;
+      ::-webkit-scrollbar-thumb {
+        background: var(--cr);
+        border-radius: 3px;
+      }
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -3626,13 +3772,16 @@
        Desktop screens (> 768px) remain 100% untouched.
        ═══════════════════════════════════════════════════════════ */
     .phone-hero,
-    .phone-story-section {
+    .phone-story-section,
+    .phone-manifesto-section {
       display: none !important;
     }
 
     @media (max-width: 768px) {
+
       /* ── Hide Custom Desktop Mouse Cursor ── */
-      #cur, #cur-r {
+      #cur,
+      #cur-r {
         display: none !important;
       }
 
@@ -3656,9 +3805,29 @@
         display: none !important;
       }
 
-      html, body {
+      html,
+      body {
         overflow-x: clip !important;
         max-width: 100vw !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+
+      /* ── Hide Scrolling Sidebar (Scrollbar) on Phone View ── */
+      html, body, * {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar,
+      ::-webkit-scrollbar,
+      ::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-track {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
       }
 
       /* ── 1. PHONE HERO SECTION (First Viewport: 1928 Creative Studio + 2-line Subtitle) ── */
@@ -3709,7 +3878,7 @@
       .ph-grid-bg {
         position: absolute;
         inset: -100px -40px;
-        background-image: 
+        background-image:
           linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
           linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
         background-size: 32px 32px;
@@ -3721,7 +3890,7 @@
       }
 
       [data-theme="light"] .ph-grid-bg {
-        background-image: 
+        background-image:
           linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
           linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
       }
@@ -3802,48 +3971,59 @@
         white-space: nowrap !important;
       }
 
-      /* ── 2. PHONE VIDEO SECTION (Full-Screen Expanded Vertical Video Showreel) ── */
+      /* ── 2. PHONE VIDEO & SYNCHRONIZED BRAND MANIFESTO (Pinned Scroll Stage) ── */
       .phone-story-section {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        min-height: 100svh !important;
-        height: 100svh !important;
+        display: block !important;
+        position: relative !important;
+        height: 240vh !important;
+        min-height: 240vh !important;
         padding: 0 !important;
         margin: 0 !important;
-        background: #000000 !important;
-        position: relative !important;
+        background: var(--bg) !important;
         z-index: 4 !important;
         box-sizing: border-box !important;
         width: 100% !important;
-        overflow: hidden !important;
+        border-top: none !important;
+        border-bottom: 1px solid var(--rule, rgba(255, 255, 255, 0.08)) !important;
       }
 
       .pss-container {
+        position: sticky !important;
+        top: 0 !important;
+        height: 100svh !important;
+        max-height: 100vh !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
         width: 100% !important;
-        max-width: 100% !important;
-        height: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
+        max-width: 440px !important;
+        padding: clamp(16px, 3vh, 26px) 20px !important;
+        margin: 0 auto !important;
         box-sizing: border-box !important;
+        overflow: hidden !important;
       }
 
       .ph-reel-card {
         width: 100% !important;
-        height: 100% !important;
-        border-radius: 0 !important;
+        max-width: 420px !important;
+        height: auto !important;
+        aspect-ratio: 16 / 9.5 !important;
+        border-radius: 20px !important;
         overflow: hidden !important;
         position: relative !important;
         z-index: 1 !important;
-        box-shadow: none !important;
-        border: none !important;
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45), 0 0 28px rgba(200, 16, 46, 0.14) !important;
+        border: 1px solid var(--rule, rgba(255, 255, 255, 0.14)) !important;
         background: #000000 !important;
         box-sizing: border-box !important;
+        margin: 0 auto clamp(16px, 2.5vh, 22px) auto !important;
+        flex-shrink: 0 !important;
+      }
+
+      [data-theme="light"] .ph-reel-card {
+        border-color: rgba(0, 0, 0, 0.1) !important;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08), 0 0 20px rgba(200, 16, 46, 0.08) !important;
       }
 
       .ph-reel-media {
@@ -3867,14 +4047,14 @@
       .ph-reel-overlay {
         position: absolute !important;
         inset: 0 !important;
-        background: linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.85) 100%) !important;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.02) 40%, rgba(0, 0, 0, 0.75) 100%) !important;
         pointer-events: none !important;
         z-index: 1 !important;
       }
 
       .ph-play-btn {
-        width: 68px !important;
-        height: 68px !important;
+        width: 58px !important;
+        height: 58px !important;
         border-radius: 50% !important;
         background: rgba(255, 255, 255, 0.95) !important;
         color: #0A0A0C !important;
@@ -3886,10 +4066,10 @@
         left: 50% !important;
         transform: translate(-50%, -50%) !important;
         z-index: 2 !important;
-        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.5) !important;
-        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5) !important;
+        border: 1px solid rgba(255, 255, 255, 0.5) !important;
         cursor: pointer !important;
-        padding-left: 4px !important;
+        padding-left: 3px !important;
         transition: transform 0.25s, opacity 0.3s !important;
       }
 
@@ -3899,9 +4079,9 @@
 
       .ph-reel-info {
         position: absolute !important;
-        bottom: 32px !important;
-        left: 20px !important;
-        right: 20px !important;
+        bottom: 16px !important;
+        left: 18px !important;
+        right: 18px !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: flex-start !important;
@@ -3912,21 +4092,93 @@
 
       .ph-reel-badge {
         font-family: 'Space Mono', monospace !important;
-        font-size: 0.65rem !important;
+        font-size: 0.62rem !important;
         font-weight: 700 !important;
         letter-spacing: 0.16em !important;
         color: var(--cr, #C8102E) !important;
         text-transform: uppercase !important;
-        margin-bottom: 4px !important;
+        margin-bottom: 2px !important;
       }
 
       .ph-reel-heading {
         font-family: var(--font-primary) !important;
-        font-size: clamp(17px, 4.8vw, 21px) !important;
+        font-size: clamp(14.5px, 4.2vw, 17px) !important;
         font-weight: 700 !important;
         color: #FFFFFF !important;
-        line-height: 1.25 !important;
+        line-height: 1.22 !important;
         letter-spacing: -0.01em !important;
+      }
+
+      /* ── Synchronized Brand Manifesto Statement directly below video ── */
+      .pms-wrapper {
+        width: 100% !important;
+        min-height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+      }
+
+      .pms-statement {
+        font-family: var(--font-primary, 'Gotham', 'Montserrat', sans-serif) !important;
+        font-size: clamp(20px, 5.4vw, 26px) !important;
+        font-weight: 700 !important;
+        line-height: 1.34 !important;
+        letter-spacing: -0.028em !important;
+        color: var(--ink, #FFFFFF) !important;
+        margin: 0 auto !important;
+        max-width: 420px !important;
+        text-align: center !important;
+        word-break: break-word !important;
+      }
+
+      .pms-statement .pm-w {
+        display: inline-block !important;
+        margin-right: 0.22em !important;
+        opacity: 0.10;
+        filter: blur(4px);
+        transform: translateY(4px) scale(0.97);
+        transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          filter 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          color 0.3s;
+        will-change: opacity, filter, transform;
+      }
+
+      .pms-statement .pm-w.active {
+        opacity: 1 !important;
+        filter: blur(0) !important;
+        transform: translateY(0) scale(1) !important;
+        color: var(--ink, #FFFFFF) !important;
+      }
+
+      .pms-statement .pm-w.highlight {
+        font-weight: 800 !important;
+        color: var(--cr, #C8102E);
+      }
+
+      .pms-statement .pm-w.highlight.active {
+        color: var(--cr, #C8102E) !important;
+        text-shadow: none !important;
+      }
+
+      /* Light Theme overrides for Video & Manifesto */
+      [data-theme="light"] .phone-story-section {
+        background: var(--bg, #F5F5F8) !important;
+        border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+      }
+
+      [data-theme="light"] .pms-statement .pm-w.active {
+        color: #0A0A0C !important;
+      }
+
+      [data-theme="light"] .pms-statement .pm-w.highlight.active {
+        color: var(--cr, #C8102E) !important;
+        text-shadow: none !important;
       }
 
       /* ── 3. SELECTED WORK ON PHONES (Sticky Clean Box at Top; Cards Slide Below) ── */
@@ -3978,12 +4230,15 @@
       .psc-title {
         font-family: var(--font-primary) !important;
         font-weight: 700 !important;
-        font-size: clamp(30px, 8.2vw, 38px) !important;
-        line-height: 1.02 !important;
+        font-size: clamp(28px, 7.8vw, 36px) !important;
+        line-height: 1.04 !important;
         text-align: center !important;
-        letter-spacing: -0.035em !important;
+        letter-spacing: -0.03em !important;
         color: var(--ink) !important;
         margin: 0 !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
       }
 
       .psc-title .psc-accent {
@@ -3995,10 +4250,12 @@
         font-family: var(--font-secondary) !important;
         font-size: 13.5px !important;
         line-height: 1.5 !important;
-        margin-top: 10px !important;
+        margin-top: 8px !important;
         max-width: 320px !important;
         text-align: center !important;
         color: var(--ink-mid) !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
       }
 
       .port-cards-flow {
@@ -4035,89 +4292,79 @@
         height: 230px !important;
       }
 
-      /* ── 4. SERVICES ON PHONES (Sticky Clean Box at Top; Sleek Cards Slide Below) ── */
+      /* ── 4. SERVICES ON PHONES (Sequential Card Entrance Pinned Deck) ── */
       #svc-driver {
         position: relative !important;
-        height: auto !important;
-        min-height: auto !important;
-        padding-top: 0 !important;
-        padding-bottom: 72px !important;
-        padding-left: 16px !important;
-        padding-right: 16px !important;
+        height: 420vh !important;
+        min-height: 420vh !important;
+        padding: 0 !important;
+        margin: 0 !important;
         overflow: visible !important;
         background: var(--bg) !important;
       }
 
       #svc-sticky {
-        position: relative !important;
-        top: auto !important;
-        height: auto !important;
-        min-height: auto !important;
-        display: block !important;
-        overflow: visible !important;
-        background: transparent !important;
+        position: sticky !important;
+        top: 0 !important;
+        height: 100vh !important;
+        min-height: 100vh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        overflow: hidden !important;
+        background: var(--bg) !important;
+        z-index: 6 !important;
+        box-sizing: border-box !important;
+        padding: 16px !important;
+        margin: 0 !important;
       }
 
       .svc-spotlight {
         display: none !important;
       }
 
-      .svc-stage {
-        position: relative !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        height: auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 0 !important;
-        overflow: visible !important;
-        box-sizing: border-box !important;
-      }
-
-      /* Sticky Services Center Header on Phone (Matches Selected Work Exactly) */
+      /* Centered Services Header on Phone with comfortable breathing space */
       .svc-sticky-center {
         display: flex !important;
-        position: sticky !important;
-        top: 0 !important;
+        position: relative !important;
+        top: auto !important;
         height: auto !important;
         min-height: auto !important;
-        justify-content: flex-start !important;
-        z-index: 20 !important;
-        background: var(--bg) !important;
-        padding: 56px 20px 18px 20px !important;
-        margin: 0 !important;
+        justify-content: center !important;
+        z-index: 30 !important;
+        background: transparent !important;
+        padding: 0 0 24px 0 !important;
+        margin: 0 auto !important;
         text-align: center !important;
         flex-direction: column !important;
         align-items: center !important;
-        box-shadow: 0 16px 32px var(--bg) !important;
+        box-shadow: none !important;
         opacity: 1 !important;
         transform: none !important;
         pointer-events: auto !important;
         width: 100% !important;
+        max-width: 390px !important;
         box-sizing: border-box !important;
+        flex-shrink: 0 !important;
       }
 
       .svc-sticky-center::after {
-        content: "";
-        position: absolute;
-        bottom: -24px;
-        left: 0;
-        right: 0;
-        height: 24px;
-        background: linear-gradient(to bottom, var(--bg) 0%, transparent 100%);
-        pointer-events: none;
+        display: none !important;
       }
 
       .ssc-title {
         font-family: var(--font-primary) !important;
         font-weight: 700 !important;
-        font-size: clamp(30px, 8.2vw, 38px) !important;
-        line-height: 1.02 !important;
+        font-size: clamp(28px, 7.8vw, 36px) !important;
+        line-height: 1.04 !important;
         text-align: center !important;
-        letter-spacing: -0.035em !important;
+        letter-spacing: -0.03em !important;
         color: var(--ink) !important;
         margin: 0 !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
       }
 
       .ssc-title .ssc-accent {
@@ -4129,14 +4376,15 @@
         font-family: var(--font-secondary) !important;
         font-size: 13.5px !important;
         line-height: 1.5 !important;
-        margin-top: 10px !important;
+        margin-top: 8px !important;
         max-width: 320px !important;
         text-align: center !important;
         color: var(--ink-mid) !important;
-        transition: opacity 0.25s ease;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
       }
 
-      /* HIDE "Built around ideas. Designed for growth." & "Why Choose Us" ON PHONE */
+      /* HIDE desktop-only folder elements ON PHONE */
       #svcHeroCapsule,
       .svc-hero-capsule,
       .svc-capsule-folder-placeholder,
@@ -4147,6 +4395,22 @@
         display: none !important;
       }
 
+      .svc-stage {
+        position: relative !important;
+        width: 100% !important;
+        max-width: 390px !important;
+        flex: none !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0 !important;
+        overflow: visible !important;
+        box-sizing: border-box !important;
+        padding: 0 !important;
+      }
+
       .svc-detail-deck {
         position: relative !important;
         left: auto !important;
@@ -4154,57 +4418,122 @@
         transform: none !important;
         opacity: 1 !important;
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 390px !important;
+        margin: 0 auto !important;
         height: auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 28px !important;
-        padding-top: 10px !important;
+        min-height: 520px !important;
+        display: block !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
         pointer-events: auto !important;
         overflow: visible !important;
       }
 
+      /* ── Phone Service Showcase Cards: Dynamic Proportion Cards ── */
       .svc-showcase-card {
-        position: relative !important;
-        left: auto !important;
-        top: auto !important;
-        transform: none !important;
-        opacity: 1 !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: auto !important;
+        margin: 0 auto !important;
+        transform-origin: center top !important;
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 390px !important;
         height: auto !important;
-        padding: 18px 16px !important;
-        border-radius: 20px !important;
-        pointer-events: auto !important;
+        min-height: 460px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: flex-start !important;
+        padding: 20px 20px 24px 20px !important;
+        border-radius: 22px !important;
+        pointer-events: none !important;
         filter: none !important;
         box-sizing: border-box !important;
-        background: #18181B !important;
+        background: #18181C !important;
         border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2) !important;
+        box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42), 0 0 18px rgba(200, 16, 46, 0.08) !important;
+        margin-bottom: 0 !important;
+        will-change: transform, opacity !important;
+        transition: none !important;
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+        text-rendering: optimizeLegibility !important;
+        backface-visibility: hidden !important;
+      }
+
+      /* Dynamic Height for Cards with longer content to maintain perfect hierarchy */
+      #svcCard3 {
+        min-height: 485px !important;
+      }
+
+      #svcCard4 {
+        min-height: 520px !important;
+      }
+
+      .svc-showcase-card,
+      .svc-showcase-card * {
+        -webkit-font-smoothing: antialiased !important;
+        -moz-osx-font-smoothing: grayscale !important;
+      }
+
+      #svcCard0 {
+        z-index: 10 !important;
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+      }
+
+      #svcCard1 {
+        z-index: 11 !important;
+        transform: translate3d(0, 120vh, 0);
+        opacity: 0;
+      }
+
+      #svcCard2 {
+        z-index: 12 !important;
+        transform: translate3d(0, 120vh, 0);
+        opacity: 0;
+      }
+
+      #svcCard3 {
+        z-index: 13 !important;
+        transform: translate3d(0, 120vh, 0);
+        opacity: 0;
+      }
+
+      #svcCard4 {
+        z-index: 14 !important;
+        transform: translate3d(0, 120vh, 0);
+        opacity: 0;
+      }
+
+      .svc-card-footer {
+        position: relative !important;
+        z-index: 30 !important;
+      }
+
+      .svc-action-link {
+        position: relative !important;
+        z-index: 35 !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        touch-action: manipulation !important;
       }
 
       [data-theme="light"] .svc-showcase-card {
         background: #FFFFFF !important;
-        border-color: rgba(0, 0, 0, 0.1) !important;
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06) !important;
-      }
-
-      /* USER REQUIREMENT: Remove description, heading, and visual identity from cards on phone */
-      .svc-showcase-card .svc-card-header,
-      .svc-showcase-card .svc-badge,
-      .svc-showcase-card h3,
-      .svc-showcase-card p,
-      .svc-showcase-card .svc-card-num-watermark {
-        display: none !important;
+        border-color: rgba(0, 0, 0, 0.08) !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), 0 0 16px rgba(200, 16, 46, 0.06) !important;
       }
 
       .svc-s3-art-frame {
         width: 100% !important;
-        height: 180px !important;
+        height: 125px !important;
         border-radius: 14px !important;
         margin-bottom: 14px !important;
         overflow: hidden !important;
+        position: relative !important;
+        flex-shrink: 0 !important;
       }
 
       .svc-art-video {
@@ -4213,36 +4542,157 @@
         object-fit: cover !important;
       }
 
+      .svc-showcase-card .svc-card-header {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-bottom: 6px !important;
+        flex-shrink: 0 !important;
+      }
+
+      .svc-showcase-card .svc-badge {
+        display: inline-block !important;
+        font-family: 'Space Mono', monospace !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.12em !important;
+        color: var(--cr, #C8102E) !important;
+        text-transform: uppercase !important;
+      }
+
+      .svc-showcase-card h3 {
+        display: block !important;
+        font-family: var(--font-primary) !important;
+        font-size: clamp(20px, 5vw, 22px) !important;
+        font-weight: 700 !important;
+        color: var(--ink, #FFFFFF) !important;
+        margin: 0 0 8px 0 !important;
+        line-height: 1.22 !important;
+        letter-spacing: -0.015em !important;
+        flex-shrink: 0 !important;
+      }
+
+      [data-theme="light"] .svc-showcase-card h3 {
+        color: #0A0A0C !important;
+      }
+
+      .svc-showcase-card p {
+        display: block !important;
+        font-family: var(--font-secondary) !important;
+        font-size: 13.5px !important;
+        line-height: 1.52 !important;
+        color: var(--ink-mid, rgba(255, 255, 255, 0.76)) !important;
+        margin: 0 0 14px 0 !important;
+        flex-shrink: 0 !important;
+      }
+
+      [data-theme="light"] .svc-showcase-card p {
+        color: rgba(0, 0, 0, 0.74) !important;
+      }
+
+      .svc-showcase-card p strong {
+        color: var(--ink, #FFFFFF) !important;
+        font-weight: 600 !important;
+      }
+
+      [data-theme="light"] .svc-showcase-card p strong {
+        color: #0A0A0C !important;
+      }
+
+      .svc-showcase-card .svc-card-num-watermark {
+        display: none !important;
+      }
+
+      /* NO lines above or below deliverables! NO grey rectangular boxes! Comfortable spacing */
       .svc-deliverables {
-        margin: 6px 0 14px 0 !important;
+        margin: 0 0 16px 0 !important;
         display: flex !important;
         flex-wrap: wrap !important;
-        gap: 6px !important;
+        gap: 8px 16px !important;
+        padding: 0 !important;
+        border: none !important;
+        border-top: none !important;
+        border-bottom: none !important;
+        flex-shrink: 0 !important;
       }
 
       .svc-deliv-pill {
-        font-size: 11.5px !important;
-        padding: 5px 11px !important;
+        font-family: var(--font-primary) !important;
+        font-size: 12.5px !important;
+        font-weight: 600 !important;
+        padding: 0 !important;
+        border: none !important;
+        border-radius: 0 !important;
+        background: none !important;
+        box-shadow: none !important;
+        color: var(--ink-mid, rgba(255, 255, 255, 0.74)) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        line-height: 1.35 !important;
       }
 
+      .svc-deliv-pill::before {
+        content: '' !important;
+        display: inline-block !important;
+        width: 4px !important;
+        height: 4px !important;
+        border-radius: 50% !important;
+        background: var(--cr, #C8102E) !important;
+        flex-shrink: 0 !important;
+      }
+
+      [data-theme="light"] .svc-deliv-pill {
+        background: none !important;
+        border: none !important;
+        color: rgba(0, 0, 0, 0.68) !important;
+      }
+
+      /* NO line above footer; comfortable top margin */
       .svc-card-footer {
-        padding-top: 14px !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+        padding-top: 6px !important;
+        margin-top: auto !important;
+        border: none !important;
+        border-top: none !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
         width: 100% !important;
+        flex-shrink: 0 !important;
       }
 
       [data-theme="light"] .svc-card-footer {
-        border-top-color: rgba(0, 0, 0, 0.08) !important;
+        border-top: none !important;
+      }
+
+      .svc-action-link {
+        font-family: var(--font-primary) !important;
+        font-size: 13.5px !important;
+        font-weight: 700 !important;
+        color: var(--cr, #C8102E) !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+      }
+
+      .svc-pagination {
+        font-family: 'Space Mono', monospace !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        color: var(--ink-mid, rgba(255, 255, 255, 0.5)) !important;
+      }
+
+      [data-theme="light"] .svc-pagination {
+        color: rgba(0, 0, 0, 0.5) !important;
       }
 
       /* ── 5. CLIENT LOGOS & BRAND COLLAB ON PHONES ── */
       #brands-driver {
         overflow: hidden !important;
         max-width: 100vw !important;
-        padding: 48px 0 !important;
+        padding: 60px 0 48px 0 !important;
+        margin-top: 36px !important;
         gap: 28px !important;
       }
 
@@ -4292,7 +4742,7 @@
         width: 100% !important;
       }
 
-      .fbc-header > div {
+      .fbc-header>div {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
@@ -4337,28 +4787,57 @@
         max-width: 330px !important;
       }
 
-      .fbc-all {
+      .fbc-header {
+        margin-bottom: 28px !important;
+      }
+
+      .fbc-header .fbc-all {
+        display: none !important;
+      }
+
+      .fbc-footer-cta {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin-top: 26px !important;
+        width: 100% !important;
+      }
+
+      .fbc-more-btn {
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
-        margin: 22px auto 0 auto !important;
-        padding: 12px 26px !important;
-        background: rgba(255, 255, 255, 0.06) !important;
-        border: 1px solid rgba(255, 255, 255, 0.16) !important;
+        gap: 8px !important;
+        padding: 9px 20px !important;
+        background: rgba(255, 255, 255, 0.05) !important;
+        border: 1px solid rgba(255, 255, 255, 0.14) !important;
         border-radius: 999px !important;
         color: var(--ink) !important;
         font-family: var(--font-primary) !important;
-        font-size: 0.82rem !important;
+        font-size: 0.72rem !important;
         font-weight: 700 !important;
-        letter-spacing: 0.05em !important;
+        letter-spacing: 0.08em !important;
         text-transform: uppercase !important;
-        gap: 8px !important;
         text-decoration: none !important;
+        transition: all 0.25s ease !important;
       }
 
-      [data-theme="light"] .fbc-all {
-        background: rgba(0, 0, 0, 0.04) !important;
-        border-color: rgba(0, 0, 0, 0.14) !important;
+      .fbc-more-btn .fbc-more-arrow {
+        color: var(--cr) !important;
+        font-size: 0.85rem !important;
+        display: inline-block !important;
+        transition: transform 0.25s ease !important;
+      }
+
+      .fbc-more-btn:active {
+        transform: scale(0.97) !important;
+        border-color: var(--cr) !important;
+      }
+
+      [data-theme="light"] .fbc-more-btn {
+        background: rgba(0, 0, 0, 0.03) !important;
+        border-color: rgba(0, 0, 0, 0.12) !important;
+        color: #0A0A0C !important;
       }
 
       .fbc-cards-row {
@@ -4402,21 +4881,45 @@
         display: none !important;
       }
 
-      /* ── 7. FOOTER ON PHONES (COMPACT LUXURY CARD, TIGHT PADDING, ZERO DEAD SPACE) ── */
+      /* ── 7. FOOTER ON PHONES (100VH FULL-SCREEN LUXURY CARD, BALANCED SPACING) ── */
+      #footer-driver {
+        position: relative !important;
+        background: var(--bg) !important;
+        min-height: 100vh !important;
+        min-height: 100dvh !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 20px 16px !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+      }
+
       .footer-luxury-card {
-        padding: 36px 18px 20px 18px !important;
+        flex: 0 0 auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
         min-height: auto !important;
         height: auto !important;
-        gap: 16px !important;
+        display: flex !important;
+        flex-direction: column !important;
         justify-content: flex-start !important;
+        padding: 28px 20px 22px 20px !important;
+        gap: 16px !important;
+        border-radius: 28px !important;
+        border: 1px solid var(--rule) !important;
         overflow: hidden !important;
+        position: relative !important;
+        box-sizing: border-box !important;
       }
 
       .f-header-grid {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
-        gap: 24px 16px !important;
+        gap: 16px 14px !important;
         width: 100% !important;
+        margin-bottom: 0 !important;
       }
 
       .f-desc-col {
@@ -4425,28 +4928,49 @@
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
+        width: 100% !important;
+        margin: 0 auto !important;
       }
 
+      .f-desc-col .f-statement-title,
       .f-statement-title {
         text-align: center !important;
-        font-size: clamp(22px, 6vw, 28px) !important;
-        margin-bottom: 12px !important;
+        font-size: 21px !important;
+        line-height: 1.2 !important;
+        margin: 0 auto 8px auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
       }
 
+      .f-desc-col .f-desc-text,
       .f-desc-text {
         text-align: center !important;
-        font-size: 0.85rem !important;
-        max-width: 340px !important;
-        margin: 0 auto 16px auto !important;
+        font-size: 0.82rem !important;
+        line-height: 1.45 !important;
+        max-width: 320px !important;
+        margin: 0 auto 10px auto !important;
+        width: 100% !important;
       }
 
+      .f-desc-col .f-location-tag,
       .f-location-tag {
-        margin: 0 auto 18px auto !important;
+        font-size: 0.66rem !important;
+        letter-spacing: 0.12em !important;
+        margin: 0 auto 12px auto !important;
+        text-align: center !important;
+        width: 100% !important;
+        display: block !important;
       }
 
       .f-social-circles {
         justify-content: center !important;
         margin: 0 auto !important;
+        gap: 9px !important;
+      }
+
+      .f-social-circles .f-circle-btn {
+        width: 34px !important;
+        height: 34px !important;
       }
 
       /* Explore and Studio & Legal links side-by-side */
@@ -4460,19 +4984,26 @@
       }
 
       .f-col-label {
-        font-size: 0.72rem !important;
+        font-size: 0.68rem !important;
         letter-spacing: 0.12em !important;
-        margin-bottom: 14px !important;
+        margin-bottom: 8px !important;
         color: var(--cr, #C8102E) !important;
         font-weight: 700 !important;
       }
 
+      .f-links-clean {
+        gap: 0 !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
       .f-links-clean li {
-        margin-bottom: 10px !important;
+        margin-bottom: 6px !important;
       }
 
       .f-links-clean a {
-        font-size: 0.88rem !important;
+        font-size: 0.82rem !important;
+        line-height: 1.25 !important;
         color: var(--ink-mid) !important;
       }
 
@@ -4483,7 +5014,7 @@
         flex-direction: column !important;
         align-items: center !important;
         width: 100% !important;
-        gap: 12px !important;
+        gap: 10px !important;
         margin-top: 4px !important;
       }
 
@@ -4491,6 +5022,22 @@
         width: 100% !important;
         max-width: 360px !important;
         box-sizing: border-box !important;
+        padding: 12px 16px !important;
+        border-radius: 16px !important;
+      }
+
+      .f-action-heading {
+        font-size: 0.86rem !important;
+      }
+
+      .f-action-sub {
+        font-size: 0.68rem !important;
+      }
+
+      .f-action-arrow {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 0.80rem !important;
       }
 
       /* Bottom Giant Brand Text ("1928 CREATIVE STUDIO" fully visible across width, compact gap above) */
@@ -4498,8 +5045,12 @@
         overflow: hidden !important;
         width: 100% !important;
         max-width: 100% !important;
-        margin-top: 10px !important;
-        padding-top: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 14px !important;
+        margin-bottom: 0 !important;
+        padding: 0 !important;
+        position: relative !important;
       }
 
       .f-brand-title-wrap {
@@ -4509,14 +5060,15 @@
         display: flex !important;
         justify-content: center !important;
         align-items: center !important;
-        padding: 4px 0 8px 0 !important;
+        padding: 4px 0 2px 0 !important;
+        margin-bottom: 0 !important;
         box-sizing: border-box !important;
       }
 
       .f-brand-giant-text {
         font-family: var(--font-primary) !important;
         font-weight: 900 !important;
-        font-size: clamp(17px, 6.2vw, 40px) !important;
+        font-size: clamp(18px, 6.2vw, 29px) !important;
         white-space: nowrap !important;
         letter-spacing: -0.02em !important;
         line-height: 1 !important;
@@ -4530,21 +5082,42 @@
       }
 
       .f-brand-giant-text .f-char {
+        display: inline-block !important;
+        transform: translateY(85%) !important;
+        opacity: 0 !important;
+        transition-property: transform, opacity !important;
+        transition-duration: 0.80s, 0.60s !important;
+        transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
+        will-change: transform, opacity !important;
+      }
+
+      .f-brand-giant-text.revealed .f-char {
         transform: translateY(0%) !important;
         opacity: 1 !important;
       }
 
+      .f-bottom-line {
+        display: none !important;
+      }
+
       .f-outer-bar {
+        margin: 14px auto 0 auto !important;
+        padding: 0 !important;
+        display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
-        gap: 8px !important;
-        padding: 16px 20px !important;
+        gap: 3px !important;
+        box-sizing: border-box !important;
       }
 
-      .f-outer-copyright, .f-outer-dev {
+      .f-outer-copyright span,
+      .f-outer-dev span,
+      .f-outer-copyright,
+      .f-outer-dev {
         text-align: center !important;
-        font-size: 0.74rem !important;
+        font-size: 0.70rem !important;
+        line-height: 1.3 !important;
       }
     }
   </style>
@@ -4567,8 +5140,9 @@
       <li class="nav-has-dropdown">
         <a href="services.html" class="nav-link-services">
           Services
-          <svg class="nav-caret" width="8" height="5" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M1 1.5L5 4.5L9 1.5"/>
+          <svg class="nav-caret" width="8" height="5" viewBox="0 0 10 6" fill="none" stroke="currentColor"
+            stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 1.5L5 4.5L9 1.5" />
           </svg>
         </a>
         <div class="nav-dropdown-menu" aria-label="Services Submenu">
@@ -4577,33 +5151,56 @@
               <a href="service-logo-design.html" class="nav-dropdown-item">
                 <span class="ndi-num">01</span>
                 <span class="ndi-title">Logo Design</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
               <a href="service-brand-identity.html" class="nav-dropdown-item">
                 <span class="ndi-num">02</span>
                 <span class="ndi-title">Brand Identity</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
               <a href="service-website-development.html" class="nav-dropdown-item">
                 <span class="ndi-num">03</span>
                 <span class="ndi-title">Website Development</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
               <a href="service-digital-marketing.html" class="nav-dropdown-item">
                 <span class="ndi-num">04</span>
                 <span class="ndi-title">Digital Marketing</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
               <a href="service-content-creation.html" class="nav-dropdown-item">
                 <span class="ndi-num">05</span>
                 <span class="ndi-title">Content Creation</span>
-                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg class="ndi-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
             </div>
             <div class="nav-dropdown-footer">
               <a href="services.html" class="nav-dropdown-foot-link">
                 <span>All Services Overview</span>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
               </a>
             </div>
           </div>
@@ -4657,19 +5254,28 @@
       <!-- LAYER 1 (z:2) — Architectural Wireframe SVG (4 Box Lines Joining from Corners + 4 Corner Rays Emerging to Screen Corners + Outer Border) -->
       <svg class="hero-corner-rays" id="heroRaysSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
         <!-- 1. The 4 Sides of the Center Box (Starting from the 4 corners and joining together) -->
-        <line class="hero-box-line box-top" id="boxTop" x1="20" y1="20" x2="80" y2="20" stroke="rgba(255,255,255,0.38)" stroke-width="0.18" />
-        <line class="hero-box-line box-bottom" id="boxBottom" x1="20" y1="80" x2="80" y2="80" stroke="rgba(255,255,255,0.38)" stroke-width="0.18" />
-        <line class="hero-box-line box-left" id="boxLeft" x1="20" y1="20" x2="20" y2="80" stroke="rgba(255,255,255,0.38)" stroke-width="0.18" />
-        <line class="hero-box-line box-right" id="boxRight" x1="80" y1="20" x2="80" y2="80" stroke="rgba(255,255,255,0.38)" stroke-width="0.18" />
+        <line class="hero-box-line box-top" id="boxTop" x1="20" y1="20" x2="80" y2="20" stroke="rgba(255,255,255,0.38)"
+          stroke-width="0.18" />
+        <line class="hero-box-line box-bottom" id="boxBottom" x1="20" y1="80" x2="80" y2="80"
+          stroke="rgba(255,255,255,0.38)" stroke-width="0.18" />
+        <line class="hero-box-line box-left" id="boxLeft" x1="20" y1="20" x2="20" y2="80"
+          stroke="rgba(255,255,255,0.38)" stroke-width="0.18" />
+        <line class="hero-box-line box-right" id="boxRight" x1="80" y1="20" x2="80" y2="80"
+          stroke="rgba(255,255,255,0.38)" stroke-width="0.18" />
 
         <!-- 2. The 4 Corner Rays emerging from each corner of the box to the corners of the screen -->
-        <line class="hero-corner-ray ray-tl" id="r1Ray1" x1="20" y1="20" x2="0" y2="0" stroke="rgba(255,255,255,0.32)" stroke-width="0.16" />
-        <line class="hero-corner-ray ray-tr" id="r1Ray2" x1="80" y1="20" x2="100" y2="0" stroke="rgba(255,255,255,0.32)" stroke-width="0.16" />
-        <line class="hero-corner-ray ray-bl" id="r1Ray3" x1="20" y1="80" x2="0" y2="100" stroke="rgba(255,255,255,0.32)" stroke-width="0.16" />
-        <line class="hero-corner-ray ray-br" id="r1Ray4" x1="80" y1="80" x2="100" y2="100" stroke="rgba(255,255,255,0.32)" stroke-width="0.16" />
+        <line class="hero-corner-ray ray-tl" id="r1Ray1" x1="20" y1="20" x2="0" y2="0" stroke="rgba(255,255,255,0.32)"
+          stroke-width="0.16" />
+        <line class="hero-corner-ray ray-tr" id="r1Ray2" x1="80" y1="20" x2="100" y2="0" stroke="rgba(255,255,255,0.32)"
+          stroke-width="0.16" />
+        <line class="hero-corner-ray ray-bl" id="r1Ray3" x1="20" y1="80" x2="0" y2="100" stroke="rgba(255,255,255,0.32)"
+          stroke-width="0.16" />
+        <line class="hero-corner-ray ray-br" id="r1Ray4" x1="80" y1="80" x2="100" y2="100"
+          stroke="rgba(255,255,255,0.32)" stroke-width="0.16" />
 
         <!-- 3. Outer Screen Perimeter -->
-        <rect class="hero-outer-border" id="r1Outer" x="0.2" y="0.2" width="99.6" height="99.6" stroke="rgba(255,255,255,0.28)" fill="none" stroke-width="0.14" />
+        <rect class="hero-outer-border" id="r1Outer" x="0.2" y="0.2" width="99.6" height="99.6"
+          stroke="rgba(255,255,255,0.28)" fill="none" stroke-width="0.14" />
       </svg>
 
       <!-- LAYER 2 (z:3) — 3D Room (Full screen 100vw × 100vh — cards touch outer screen edges) -->
@@ -4678,45 +5284,45 @@
 
           <!-- ROOM 1 BACK WALL: 2 project cards -->
           <div class="room-face back" id="wallBack">
-            <div class="wall-card r1-card" id="wc-back1"
-              style="width:180px;height:120px;top:28px;right:36px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-01.jpg');"></div>
+            <div class="wall-card r1-card" id="wc-back1" style="width:180px;height:120px;top:28px;right:36px;">
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-01.jpg');">
+              </div>
             </div>
-            <div class="wall-card r1-card" id="wc-back2"
-              style="width:160px;height:110px;bottom:28px;left:36px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-02.jpg');"></div>
+            <div class="wall-card r1-card" id="wc-back2" style="width:160px;height:110px;bottom:28px;left:36px;">
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-02.jpg');">
+              </div>
             </div>
           </div>
 
           <!-- ROOM 1 LEFT WALL: 2 cards with 3D perspective tilt -->
           <div class="room-face left" id="wallLeft">
-            <div class="wall-card r1-card" id="wc-l1"
-              style="width:240px;height:155px;top:28px;left:0px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-03.jpg');"></div>
+            <div class="wall-card r1-card" id="wc-l1" style="width:240px;height:155px;top:28px;left:0px;">
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-03.jpg');">
+              </div>
             </div>
-            <div class="wall-card r1-card" id="wc-l2"
-              style="width:190px;height:125px;bottom:46px;left:45px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-04.jpg');"></div>
+            <div class="wall-card r1-card" id="wc-l2" style="width:190px;height:125px;bottom:46px;left:45px;">
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-04.jpg');">
+              </div>
             </div>
           </div>
 
           <!-- ROOM 1 RIGHT WALL: 2 cards with 3D perspective tilt -->
           <div class="room-face right" id="wallRight">
-            <div class="wall-card r1-card" id="wc-r1"
-              style="width:240px;height:155px;top:28px;right:0px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-05.jpg');"></div>
+            <div class="wall-card r1-card" id="wc-r1" style="width:240px;height:155px;top:28px;right:0px;">
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-05.jpg');">
+              </div>
             </div>
-            <div class="wall-card r1-card" id="wc-r2"
-              style="width:190px;height:125px;bottom:46px;right:45px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-07.jpg');"></div>
+            <div class="wall-card r1-card" id="wc-r2" style="width:190px;height:125px;bottom:46px;right:45px;">
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-07.jpg');">
+              </div>
             </div>
           </div>
 
           <!-- TOP WALL (CEILING): 1 card with top-down 3D perspective tilt -->
           <div class="room-face top" id="wallTop">
-            <div class="wall-card r1-card" id="wc-t1"
-              style="width:240px;height:145px;top:0px;right:70px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-06.jpg');"></div>
+            <div class="wall-card r1-card" id="wc-t1" style="width:240px;height:145px;top:0px;right:70px;">
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-06.jpg');">
+              </div>
             </div>
           </div>
 
@@ -4724,7 +5330,8 @@
           <div class="room-face bottom" id="wallBottom">
             <div class="wall-card r1-card" id="wc-b1"
               style="width:240px;height:160px;bottom:0px;left:50%;margin-left:-120px;">
-              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-08.jpg');"></div>
+              <div class="wc-inner" style="background-image: url('img/3D Room Floating Cards (Hero Section)-08.jpg');">
+              </div>
             </div>
           </div>
 
@@ -4788,13 +5395,15 @@
     </div>
   </section>
 
-  <!-- ══ PHONE VIDEO SECTION (Video Showreel; strictly on phone <= 768px; hidden on desktop) ══ -->
+  <!-- ══ PHONE VIDEO & SYNCHRONIZED BRAND MANIFESTO (Strictly on phones <= 768px; hidden on desktop) ══ -->
   <section id="phoneStorySec" class="phone-story-section">
     <div class="pss-container">
-      <!-- The Featured Showreel Video Card -->
+
+      <!-- 1. The Featured Showreel Video Card (Proportional 16:9 Framed Card) -->
       <div class="ph-reel-card" id="phReelCard">
         <div class="ph-reel-media" id="phReelMedia">
-          <video id="phReelVideo" playsinline loop muted preload="metadata" poster="img/3D Room Floating Cards (Hero Section)-01.jpg">
+          <video id="phReelVideo" playsinline loop muted preload="metadata"
+            poster="img/3D Room Floating Cards (Hero Section)-01.jpg">
             <source src="video/Test.mp4" type="video/mp4">
           </video>
           <div class="ph-reel-overlay"></div>
@@ -4809,6 +5418,47 @@
           </div>
         </div>
       </div>
+
+      <!-- 2. Synchronized Brand Manifesto (Moves upward with video; 'Design' active initially; words de-blur on scroll) -->
+      <div class="pms-wrapper" id="pmsWrapper">
+        <div class="pms-statement" id="pmsStatement">
+          <span class="pm-w active">Design</span>
+          <span class="pm-w">on</span>
+          <span class="pm-w">the</span>
+          <span class="pm-w">web</span>
+          <span class="pm-w">isn't</span>
+          <span class="pm-w">static</span>
+          <span class="pm-w">anymore.</span>
+          <span class="pm-w">Today's</span>
+          <span class="pm-w">brands</span>
+          <span class="pm-w">need</span>
+          <span class="pm-w highlight">energy,</span>
+          <span class="pm-w highlight">personality</span>
+          <span class="pm-w">and</span>
+          <span class="pm-w highlight">meaning.</span>
+          <span class="pm-w">We</span>
+          <span class="pm-w">bring</span>
+          <span class="pm-w">together</span>
+          <span class="pm-w highlight">strategy,</span>
+          <span class="pm-w highlight">design</span>
+          <span class="pm-w">and</span>
+          <span class="pm-w highlight">storytelling</span>
+          <span class="pm-w">to</span>
+          <span class="pm-w">build</span>
+          <span class="pm-w">digital</span>
+          <span class="pm-w">experiences</span>
+          <span class="pm-w">that</span>
+          <span class="pm-w highlight">grab</span>
+          <span class="pm-w highlight">attention,</span>
+          <span class="pm-w highlight">move</span>
+          <span class="pm-w highlight">fast</span>
+          <span class="pm-w">and</span>
+          <span class="pm-w highlight">make</span>
+          <span class="pm-w highlight">people</span>
+          <span class="pm-w highlight">feel.</span>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -4817,7 +5467,7 @@
 
     <!-- STICKY BACKGROUND CENTER HEADLINE (Pinned in Viewport Center) -->
     <div class="port-sticky-center" id="portStickyCenter">
-      <h2 class="psc-title">SELECTED<br /><span class="psc-accent">WORK.</span></h2>
+      <h2 class="psc-title">SELECTED<br /><span class="psc-accent">WORK</span></h2>
       <p class="psc-sub">A collection of brands, identities and digital experiences built to create impact.</p>
     </div>
 
@@ -4828,13 +5478,17 @@
       <article class="p-flow-item p-item-1">
         <a href="project-detail.html" class="p-card-v p-card-1">
           <div class="pcv-media">
-            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg" alt="Selected Work 01" style="width:100%;height:100%;object-fit:cover;" />
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg" alt="Selected Work 01"
+              style="width:100%;height:100%;object-fit:cover;" />
             <div class="pcv-badge-top"><span class="pcv-num">01</span><span class="pcv-client">VIBEE</span></div>
           </div>
           <div class="pcv-info">
             <div class="pcv-tags"><span>Branding</span><span>Apparel & Culture</span></div>
             <h3 class="pcv-title">Crafting youth culture, distinctive apparel identity and community storytelling.</h3>
-            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></div>
           </div>
         </a>
       </article>
@@ -4843,13 +5497,17 @@
       <article class="p-flow-item p-item-2">
         <a href="project-detail.html" class="p-card-v p-card-2">
           <div class="pcv-media">
-            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg" alt="Selected Work 02" style="width:100%;height:100%;object-fit:cover;" />
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg" alt="Selected Work 02"
+              style="width:100%;height:100%;object-fit:cover;" />
             <div class="pcv-badge-top"><span class="pcv-num">02</span><span class="pcv-client">INFYLI</span></div>
           </div>
           <div class="pcv-info">
             <div class="pcv-tags"><span>Lifestyle</span><span>Packaging & Identity</span></div>
             <h3 class="pcv-title">Minimalist luxury home aromatics and sensory packaging architecture.</h3>
-            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></div>
           </div>
         </a>
       </article>
@@ -4858,13 +5516,18 @@
       <article class="p-flow-item p-item-3">
         <a href="project-detail.html" class="p-card-v p-card-3">
           <div class="pcv-media">
-            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg" alt="Selected Work 03" style="width:100%;height:100%;object-fit:cover;" />
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg" alt="Selected Work 03"
+              style="width:100%;height:100%;object-fit:cover;" />
             <div class="pcv-badge-top"><span class="pcv-num">03</span><span class="pcv-client">MUDRA SCHOOL</span></div>
           </div>
           <div class="pcv-info">
             <div class="pcv-tags"><span>Arts & Heritage</span><span>Digital Presence</span></div>
-            <h3 class="pcv-title">Preserving classical Indian performing arts through contemporary digital storytelling.</h3>
-            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+            <h3 class="pcv-title">Preserving classical Indian performing arts through contemporary digital storytelling.
+            </h3>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></div>
           </div>
         </a>
       </article>
@@ -4873,13 +5536,17 @@
       <article class="p-flow-item p-item-4">
         <a href="project-detail.html" class="p-card-v p-card-4">
           <div class="pcv-media">
-            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg" alt="Selected Work 04" style="width:100%;height:100%;object-fit:cover;" />
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg" alt="Selected Work 04"
+              style="width:100%;height:100%;object-fit:cover;" />
             <div class="pcv-badge-top"><span class="pcv-num">04</span><span class="pcv-client">AWARDS PLUS</span></div>
           </div>
           <div class="pcv-info">
             <div class="pcv-tags"><span>Corporate</span><span>Prestige Identity</span></div>
             <h3 class="pcv-title">Engineering heirloom executive recognition marks and tactile luxury seals.</h3>
-            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></div>
           </div>
         </a>
       </article>
@@ -4888,13 +5555,18 @@
       <article class="p-flow-item p-item-5">
         <a href="project-detail.html" class="p-card-v p-card-5">
           <div class="pcv-media">
-            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg" alt="Selected Work 05" style="width:100%;height:100%;object-fit:cover;" />
-            <div class="pcv-badge-top"><span class="pcv-num">05</span><span class="pcv-client">LAST MILE ANALYTICS</span></div>
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg" alt="Selected Work 05"
+              style="width:100%;height:100%;object-fit:cover;" />
+            <div class="pcv-badge-top"><span class="pcv-num">05</span><span class="pcv-client">LAST MILE
+                ANALYTICS</span></div>
           </div>
           <div class="pcv-info">
             <div class="pcv-tags"><span>Fintech</span><span>Platform Architecture</span></div>
             <h3 class="pcv-title">Data-driven financial advisory platforms engineered with razor-sharp UX.</h3>
-            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></div>
           </div>
         </a>
       </article>
@@ -4903,14 +5575,19 @@
       <article class="p-flow-item p-item-6">
         <a href="project-detail.html" class="p-card-v p-card-6">
           <div class="pcv-media">
-            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg" alt="Selected Work 06" style="width:100%;height:100%;object-fit:cover;object-position:left center;" />
+            <img src="img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg" alt="Selected Work 06"
+              style="width:100%;height:100%;object-fit:cover;object-position:left center;" />
             <div class="pcv-badge-top"><span class="pcv-num">06</span><span class="pcv-client">ALDA</span>
             </div>
           </div>
           <div class="pcv-info">
             <div class="pcv-tags"><span>Homeware</span><span>Spatial Identity</span></div>
-            <h3 class="pcv-title">Elevating everyday living spaces through precision stainless steel industrial design.</h3>
-            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow">→</span></div>
+            <h3 class="pcv-title">Elevating everyday living spaces through precision stainless steel industrial design.
+            </h3>
+            <div class="pcv-cta">Explore Case Study <span class="pcv-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></div>
           </div>
         </a>
       </article>
@@ -4921,13 +5598,14 @@
   <!-- §4 — SERVICES (Unified Architecture: One Single Persistent Physical Dossier Folder) -->
   <section id="svc-driver">
 
-    <!-- STICKY SERVICES HEADER (Strictly on Phone <= 768px; Hidden on Desktop) -->
-    <div class="svc-sticky-center" id="svcStickyCenter">
-      <h2 class="ssc-title">OUR<br /><span class="ssc-accent">SERVICES.</span></h2>
-      <p class="ssc-sub" id="sscSub">Strategic brand systems, digital experiences and content engineered for growth.</p>
-    </div>
-
     <div id="svc-sticky">
+      <!-- STICKY SERVICES HEADER (Strictly on Phone <= 768px; Hidden on Desktop) -->
+      <div class="svc-sticky-center" id="svcStickyCenter">
+        <h2 class="ssc-title">OUR<br /><span class="ssc-accent">SERVICES</span></h2>
+        <p class="ssc-sub" id="sscSub">Strategic brand systems, digital experiences and content engineered for growth.
+        </p>
+      </div>
+
       <!-- Ambient Spotlight -->
       <div class="svc-spotlight"></div>
 
@@ -4940,12 +5618,13 @@
             <div class="svc-s1-tag">WHAT WE CREATE // 1928 STUDIO</div>
 
             <h2 class="svc-s1-headline">
-              <span>Built around ideas.</span><br />
-              <span style="color: rgba(255, 255, 255, 0.65);">Designed for growth.</span>
+              <span>Built around ideas</span><br />
+              <span style="color: rgba(255, 255, 255, 0.65);">Designed for growth</span>
             </h2>
 
             <p class="svc-s1-desc">
-              <span>From the first idea to the final experience, we bring strategy and creativity together to build brands that connect with people, stand apart in the market, and create lasting business value.</span>
+              <span>From the first idea to the final experience, we bring strategy and creativity together to build
+                brands that connect with people, stand apart in the market, and create lasting business value.</span>
             </p>
 
             <div class="svc-s1-pill">
@@ -5005,7 +5684,10 @@
             <div class="svc-jacket">
               <div></div>
               <div class="svc-jacket-footer">
-                <a href="services.html" class="svc-jacket-btn">Explore our capabilities →</a>
+                <a href="services.html" class="svc-jacket-btn">Explore our capabilities <svg viewBox="0 0 24 24"
+                    width="15" height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg></a>
               </div>
             </div>
           </div>
@@ -5023,33 +5705,40 @@
               <em>1928 Creative Studio</em>
             </h3>
             <p class="svc-why-desc">
-              We believe great creative should do more than look good. It should give your business clarity, build recognition, strengthen connection, and create opportunities for growth.
+              We believe great creative should do more than look good. It should give your business clarity, build
+              recognition, strengthen connection, and create opportunities for growth.
             </p>
             <div class="svc-why-points">
               <div class="svc-why-point">
                 <span class="swp-num">01</span>
                 <div>
                   <strong>STRATEGIC THINKING</strong>
-                  <p class="swp-desc">Every creative decision starts with understanding your business, audience and ambition.</p>
+                  <p class="swp-desc">Every creative decision starts with understanding your business, audience and
+                    ambition.</p>
                 </div>
               </div>
               <div class="svc-why-point">
                 <span class="swp-num">02</span>
                 <div>
                   <strong>DISTINCTIVE CRAFT</strong>
-                  <p class="swp-desc">We create identities and experiences with character, clarity and a point of view.</p>
+                  <p class="swp-desc">We create identities and experiences with character, clarity and a point of view.
+                  </p>
                 </div>
               </div>
               <div class="svc-why-point">
                 <span class="swp-num">03</span>
                 <div>
                   <strong>BUILT FOR GROWTH</strong>
-                  <p class="swp-desc">From brand identity to digital presence and content, every touchpoint is designed to move your business forward.</p>
+                  <p class="swp-desc">From brand identity to digital presence and content, every touchpoint is designed
+                    to move your business forward.</p>
                 </div>
               </div>
             </div>
             <div class="svc-why-footer">
-              <a href="services.html" class="swp-foot-arrow">Explore our capabilities →</a>
+              <a href="services.html" class="swp-foot-arrow">Explore our capabilities <svg viewBox="0 0 24 24"
+                  width="15" height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></a>
             </div>
           </div>
         </div>
@@ -5060,7 +5749,8 @@
           <!-- Card 0: 01 Logo Design -->
           <div class="svc-showcase-card" id="svcCard0">
             <div class="svc-s3-art-frame" style="background: #141416; overflow: hidden;">
-              <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();">
+              <video class="svc-art-video" autoplay loop muted playsinline preload="auto"
+                onloadedmetadata="this.muted=true;this.play();">
                 <source src="video/Logo Section.mp4" type="video/mp4">
                 <source src="video/logo-section.mp4" type="video/mp4">
                 <source src="video/video logo section.mp4" type="video/mp4">
@@ -5071,7 +5761,9 @@
               <span class="svc-badge">VISUAL IDENTITY · FIRST IMPRESSION</span>
             </div>
             <h3>01. Logo Design</h3>
-            <p><strong>A distinctive mark that gives your business a memorable identity.</strong> We create thoughtful logos that capture your brand’s character and give it a strong visual presence across every touchpoint.</p>
+            <p><strong>A distinctive mark that gives your business a memorable identity.</strong> We create thoughtful
+              logos that capture your brand’s character and give it a strong visual presence across every touchpoint.
+            </p>
             <div class="svc-deliverables">
               <span class="svc-deliv-pill">Custom Logos</span>
               <span class="svc-deliv-pill">Wordmarks</span>
@@ -5080,7 +5772,7 @@
               <span class="svc-deliv-pill">Typography</span>
             </div>
             <div class="svc-card-footer">
-              <a href="service-detail.html" class="svc-action-link">
+              <a href="service-logo-design.html" class="svc-action-link" title="Explore Logo Design">
                 Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
                   stroke-width="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
@@ -5102,7 +5794,9 @@
               <span class="svc-badge">BRAND STRATEGY · IDENTITY SYSTEM</span>
             </div>
             <h3>02. Brand Identity Development</h3>
-            <p><strong>A complete identity built around what makes your business different.</strong> We turn your story, positioning and personality into a cohesive brand system designed to build recognition and lasting value.</p>
+            <p><strong>A complete identity built around what makes your business different.</strong> We turn your story,
+              positioning and personality into a cohesive brand system designed to build recognition and lasting value.
+            </p>
             <div class="svc-deliverables">
               <span class="svc-deliv-pill">Brand Strategy</span>
               <span class="svc-deliv-pill">Visual Identity</span>
@@ -5111,7 +5805,7 @@
               <span class="svc-deliv-pill">Guidelines</span>
             </div>
             <div class="svc-card-footer">
-              <a href="service-detail.html" class="svc-action-link">
+              <a href="service-brand-identity.html" class="svc-action-link" title="Explore Brand Identity Development">
                 Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
                   stroke-width="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
@@ -5133,7 +5827,9 @@
               <span class="svc-badge">DIGITAL EXPERIENCE · DESIGN &amp; DEVELOPMENT</span>
             </div>
             <h3>03. Website Design &amp; Development</h3>
-            <p><strong>Digital experiences that make your brand feel as good as it looks.</strong> We design and develop purposeful websites that bring your story to life, create meaningful interactions and turn attention into action.</p>
+            <p><strong>Digital experiences that make your brand feel as good as it looks.</strong> We design and develop
+              purposeful websites that bring your story to life, create meaningful interactions and turn attention into
+              action.</p>
             <div class="svc-deliverables">
               <span class="svc-deliv-pill">UI/UX</span>
               <span class="svc-deliv-pill">Web Design</span>
@@ -5142,7 +5838,7 @@
               <span class="svc-deliv-pill">Motion</span>
             </div>
             <div class="svc-card-footer">
-              <a href="service-detail.html" class="svc-action-link">
+              <a href="service-website-development.html" class="svc-action-link" title="Explore Website Design & Development">
                 Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
                   stroke-width="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
@@ -5164,7 +5860,9 @@
               <span class="svc-badge">DIGITAL PRESENCE · STRATEGY &amp; GROWTH</span>
             </div>
             <h3>04. Social Media &amp; Digital Marketing</h3>
-            <p><strong>A digital presence designed to keep your brand moving forward.</strong> We combine creative thinking with strategic marketing to build visibility, meaningful engagement and stronger connections with your audience.</p>
+            <p><strong>A digital presence designed to keep your brand moving forward.</strong> We combine creative
+              thinking with strategic marketing to build visibility, meaningful engagement and stronger connections with
+              your audience.</p>
             <div class="svc-deliverables">
               <span class="svc-deliv-pill">Social Strategy</span>
               <span class="svc-deliv-pill">Content</span>
@@ -5173,7 +5871,7 @@
               <span class="svc-deliv-pill">SEO</span>
             </div>
             <div class="svc-card-footer">
-              <a href="service-detail.html" class="svc-action-link">
+              <a href="service-digital-marketing.html" class="svc-action-link" title="Explore Social Media & Digital Marketing">
                 Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
                   stroke-width="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
@@ -5195,7 +5893,9 @@
               <span class="svc-badge">CAMPAIGNS · PRODUCTION · CREATOR NETWORK</span>
             </div>
             <h3>05. Content Creation &amp; Influencer Marketing</h3>
-            <p><strong>We create stories worth seeing and partnerships worth remembering.</strong> From original content to carefully chosen creator collaborations, we build campaigns that give your brand a stronger voice, wider reach, and lasting audience connection.</p>
+            <p><strong>We create stories worth seeing and partnerships worth remembering.</strong> From original content
+              to carefully chosen creator collaborations, we build campaigns that give your brand a stronger voice,
+              wider reach, and lasting audience connection.</p>
             <div class="svc-deliverables">
               <span class="svc-deliv-pill">Content Strategy</span>
               <span class="svc-deliv-pill">Creative Production</span>
@@ -5204,7 +5904,7 @@
               <span class="svc-deliv-pill">Social Content</span>
             </div>
             <div class="svc-card-footer">
-              <a href="service-detail.html" class="svc-action-link">
+              <a href="service-content-creation.html" class="svc-action-link" title="Explore Content Creation & Influencer Marketing">
                 Explore Service <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none"
                   stroke-width="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
@@ -5226,11 +5926,12 @@
   <section id="brands-driver">
     <div class="brands-header-block">
       <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY // 1928 CLIENTS</div>
-      <h2 class="brands-title">BRANDS THAT<br /><em>TRUST 1928.</em></h2>
-      <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their ambitions, and the brands they’re building.</p>
+      <h2 class="brands-title">BRANDS THAT<br /><em>TRUST 1928</em></h2>
+      <p class="brands-subtitle">We’re proud to work alongside businesses that trust us with their ideas, their
+        ambitions, and the brands they’re building.</p>
     </div>
 
-        <div class="brands-marquee-stage">
+    <div class="brands-marquee-stage">
       <!-- ── ROW 1 (Left to Right / Normal Direction: Logos 01–20) ── -->
       <div class="brand-row-wrap marquee-left">
         <div class="marquee-track">
@@ -5630,7 +6331,7 @@
   <div id="brands-sticky" style="display:none;">
     <div id="brands-pin-head">
       <div class="bph-label">✦ Trusted By // 05</div>
-      <h2>Brands That<br /><em>Trust Us.</em></h2>
+      <h2>Brands That<br /><em>Trust Us</em></h2>
     </div>
     <div id="brands-train-viewport">
       <div id="brands-train-track">
@@ -5689,10 +6390,15 @@
     <div class="fbc-content">
       <div class="fbc-header">
         <div>
-          <h2>A Different<br /><em>Point of View.</em></h2>
-          <p style="font-family:var(--font-secondary);font-size:0.95rem;color:var(--ink-mid);margin-top:8px;max-width:560px;line-height:1.5;">Ideas, insights and perspectives on branding, design, digital and the business behind great brands.</p>
+          <h2>A Different<br /><em>Point of View</em></h2>
+          <p
+            style="font-family:var(--font-secondary);font-size:0.95rem;color:var(--ink-mid);margin-top:8px;max-width:560px;line-height:1.5;">
+            Ideas, insights and perspectives on branding, design, digital and the business behind great brands.</p>
         </div>
-        <a href="blogs.html" class="fbc-all">Explore All Insights <span>→</span></a>
+        <a href="blogs.html" class="fbc-all">Explore All Insights <span class="fbc-all-arrow"><svg viewBox="0 0 24 24"
+              width="15" height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span></a>
       </div>
       <div class="fbc-cards-row">
         <!-- Perspective 01 -->
@@ -5706,7 +6412,10 @@
               <h4>The Architectural Role of Language in Modern Brand Systems</h4>
               <p>How precise UX copywriting and brand vocabulary define category leadership and emotional equity.</p>
             </div>
-            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"> →</span></span>
+            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></span>
           </div>
         </a>
 
@@ -5721,7 +6430,10 @@
               <h4>Designing Frictionless Micro-Interactions for High-Retention Products</h4>
               <p>Exploring kinetic feedback loops, spatial pacing, and sensory digital choreography.</p>
             </div>
-            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"> →</span></span>
+            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></span>
           </div>
         </a>
 
@@ -5736,9 +6448,19 @@
               <h4>Scaling from Boutique Practice to Global Cultural Authority</h4>
               <p>Strategic frameworks behind iconic studio transformations and non-linear venture expansion.</p>
             </div>
-            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"> →</span></span>
+            <span class="fbc-link">Open Perspective<span class="fbc-link-arrow"><svg viewBox="0 0 24 24" width="15"
+                  height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg></span></span>
           </div>
         </a>
+      </div>
+      <!-- Phone & Tablet Bottom Explore Button -->
+      <div class="fbc-footer-cta">
+        <a href="blogs.html" class="fbc-more-btn">Explore All Insights <span class="fbc-more-arrow"><svg
+              viewBox="0 0 24 24" width="15" height="15" stroke="currentColor" fill="none" stroke-width="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg></span></a>
       </div>
     </div>
   </section>
@@ -5750,8 +6472,12 @@
       <!-- Top Grid: Statement + Socials, Explore Links, Legal & Policy, CTA -->
       <div class="f-header-grid">
         <div class="f-desc-col">
-          <h3 class="f-statement-title">We build brands that create value.</h3>
-          <p class="f-desc-text">1928 Creative Studio is an independent creative studio helping ambitious businesses shape distinctive brands, digital experiences, and meaningful connections.</p>
+          <h3 class="f-statement-title">We build brands <br class="f-title-br-mobile" />that create value.</h3>
+          <p class="f-desc-text">
+            <span class="f-desc-line">1928 Creative Studio is an independent creative studio</span>
+            <span class="f-desc-line">helping ambitious businesses shape distinctive brands,</span>
+            <span class="f-desc-line">digital experiences, and meaningful connections.</span>
+          </p>
           <div class="f-location-tag">India · Global</div>
           <div class="f-social-circles">
             <a href="https://www.instagram.com/1928creativestudio" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Instagram">
@@ -5807,29 +6533,70 @@
         </div>
 
         <div class="f-cta-column">
-          <a href="contact.html" class="f-action-pill cta-primary">
+          <a href="contact.html#start-project-sec" class="f-action-pill cta-primary">
             <div class="f-action-txt">
               <span class="f-action-heading">Have a brand to build?</span>
               <span class="f-action-sub">START A PROJECT</span>
             </div>
             <div class="f-action-arrow" aria-label="Message">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
               </svg>
             </div>
           </a>
 
-          <a href="contact.html" class="f-action-pill cta-secondary">
+          <a href="https://wa.me/918160931928?text=Hello%201928%20Creative%20Studio%2C%20I%20would%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener noreferrer" class="f-action-pill cta-secondary" aria-label="Chat on WhatsApp">
             <div class="f-action-txt">
               <span class="f-action-heading">Let’s talk about your project</span>
               <span class="f-action-sub">Tell us what you're building</span>
             </div>
-            <div class="f-action-arrow" aria-label="Call">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            <div class="f-action-arrow" aria-label="WhatsApp">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
               </svg>
             </div>
           </a>
+
+          <div class="f-social-circles">
+            <a href="https://www.instagram.com/1928creativestudio" target="_blank" rel="noopener" class="f-circle-btn"
+              aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/1928Creativestudio/" target="_blank" rel="noopener" class="f-circle-btn"
+              aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/1928-creative-studio/" target="_blank" rel="noopener"
+              class="f-circle-btn" aria-label="LinkedIn">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 1 0 0-3.28 1.64 1.64 0 0 0 0 3.28m1.39 9.74v-8.37H5.07v8.37h2.78z" />
+              </svg>
+            </a>
+            <a href="https://www.youtube.com/@1928creativestudio" target="_blank" rel="noopener" class="f-circle-btn"
+              aria-label="YouTube">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+              </svg>
+            </a>
+            <a href="https://www.behance.net/1928Creativestudio" target="_blank" rel="noopener" class="f-circle-btn"
+              aria-label="Behance">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-4.084 0-5.625-3.003-5.625-6 0-3.328 1.979-6 5.625-6 3.747 0 5.154 2.662 4.943 5.485h-7.697c.071 1.626.966 3.515 3.013 3.515 1.554 0 2.457-.866 2.842-1.5h2zm-2.884-5c-.073-1.04-.694-2.515-2.217-2.515-1.572 0-2.22 1.378-2.348 2.515h4.565zm-14.842 8h-6v-16h6.732c3.489 0 5.268 1.705 5.268 4.398 0 1.616-.867 2.889-2.027 3.559 1.547.625 2.527 2.057 2.527 3.864 0 2.825-2.037 4.179-5.5 4.179zm-3.5-13.5v4.5h3.048c1.556 0 2.452-.697 2.452-2.25 0-1.553-.896-2.25-2.452-2.25h-3.048zm0 7v4.5h3.297c1.785 0 2.703-.787 2.703-2.25 0-1.463-.918-2.25-2.703-2.25h-3.297z" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
 
@@ -5838,15 +6605,19 @@
         <div class="f-brand-title-wrap" id="footerBrandWrap">
           <h2 class="f-brand-giant-text" id="footerGiantText" aria-label="1928 CREATIVE STUDIO">
             <span class="f-char-word">
-              <span class="f-char">1</span><span class="f-char">9</span><span class="f-char">2</span><span class="f-char">8</span>
+              <span class="f-char">1</span><span class="f-char">9</span><span class="f-char">2</span><span
+                class="f-char">8</span>
             </span>
             <span class="f-char-space">&nbsp;</span>
             <span class="f-char-word">
-              <span class="f-char">C</span><span class="f-char">R</span><span class="f-char">E</span><span class="f-char">A</span><span class="f-char">T</span><span class="f-char">I</span><span class="f-char">V</span><span class="f-char">E</span>
+              <span class="f-char">C</span><span class="f-char">R</span><span class="f-char">E</span><span
+                class="f-char">A</span><span class="f-char">T</span><span class="f-char">I</span><span
+                class="f-char">V</span><span class="f-char">E</span>
             </span>
             <span class="f-char-space">&nbsp;</span>
             <span class="f-char-word">
-              <span class="f-char">S</span><span class="f-char">T</span><span class="f-char">U</span><span class="f-char">D</span><span class="f-char">I</span><span class="f-char">O</span>
+              <span class="f-char">S</span><span class="f-char">T</span><span class="f-char">U</span><span
+                class="f-char">D</span><span class="f-char">I</span><span class="f-char">O</span>
             </span>
           </h2>
         </div>
@@ -5861,11 +6632,114 @@
         <span>1928 Creative Studio © 2026</span>
       </div>
       <div class="f-outer-dev">
-        <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener" class="f-outer-author">UXWITHJAYTHAKER</a></span>
+        <span>Design and developed by <a href="https://uxwithjaythaker.vercel.app/" target="_blank" rel="noopener"
+            class="f-outer-author">UXWITHJAYTHAKER</a></span>
       </div>
     </div>
   </footer>
-  <script src="footer-loader.js"></script>
+  <script src="footer-loader.js?v=20261024_02"></script>
+  <script>
+    (function () {
+      function initFooterBrandAnimation() {
+        var footerDriver = document.getElementById('footer-driver');
+        var luxuryCard = footerDriver ? (footerDriver.querySelector('.footer-luxury-card') || footerDriver) : null;
+        var footerGiantText = document.getElementById('footerGiantText') || (footerDriver ? footerDriver.querySelector('.f-brand-giant-text') : null);
+        if (!footerDriver || !footerGiantText) return;
+
+        var chars = footerGiantText.querySelectorAll('.f-char');
+        var delayStep = 0.048;
+        chars.forEach(function (char, index) {
+          char.style.setProperty('transition-delay', (index * delayStep).toFixed(3) + 's', 'important');
+        });
+
+        function revealFooter() {
+          if (!footerGiantText.classList.contains('revealed')) {
+            footerGiantText.classList.add('revealed');
+          }
+        }
+
+        function unrevealFooter() {
+          if (footerGiantText.classList.contains('revealed')) {
+            footerGiantText.classList.remove('revealed');
+          }
+        }
+
+        if ('IntersectionObserver' in window) {
+          var obs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                revealFooter();
+              } else {
+                var r = entry.boundingClientRect;
+                var vh = window.innerHeight || document.documentElement.clientHeight;
+                if (r.top > vh + 160 || r.bottom < -160) {
+                  unrevealFooter();
+                }
+              }
+            });
+          }, {
+            threshold: [0.01, 0.08, 0.2]
+          });
+          if (luxuryCard) obs.observe(luxuryCard);
+          obs.observe(footerGiantText);
+        }
+
+        function checkFooterScroll() {
+          var cardRect = luxuryCard ? luxuryCard.getBoundingClientRect() : footerDriver.getBoundingClientRect();
+          var textRect = footerGiantText.getBoundingClientRect();
+          var vh = window.innerHeight || document.documentElement.clientHeight;
+          var scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || 0;
+          var docHeight = Math.max(
+            document.body.scrollHeight || 0,
+            document.documentElement.scrollHeight || 0,
+            document.body.offsetHeight || 0,
+            document.documentElement.offsetHeight || 0
+          );
+          var isNearBottom = (scrollY + vh) >= (docHeight - 140);
+          var cardVisible = (cardRect.top <= vh * 0.90 && cardRect.bottom >= 40);
+          var textVisible = (textRect.top <= vh * 0.98 && textRect.bottom >= 0);
+
+          if (cardVisible || textVisible || isNearBottom) {
+            revealFooter();
+          } else if (cardRect.top > vh + 180 || cardRect.bottom < -180) {
+            unrevealFooter();
+          }
+        }
+
+        chars.forEach(function (char) {
+          char.addEventListener('mouseenter', function () {
+            char.style.setProperty('transform', 'translateY(-14%)', 'important');
+            char.style.setProperty('color', 'var(--cr, #C8102E)', 'important');
+            setTimeout(function () {
+              if (footerGiantText.classList.contains('revealed')) {
+                char.style.setProperty('transform', 'translateY(0%)', 'important');
+              } else {
+                char.style.setProperty('transform', 'translateY(85%)', 'important');
+              }
+              char.style.removeProperty('color');
+            }, 320);
+          });
+        });
+
+        window.addEventListener('scroll', checkFooterScroll, { passive: true });
+        window.addEventListener('resize', checkFooterScroll, { passive: true });
+        window.addEventListener('orientationchange', checkFooterScroll, { passive: true });
+        window.addEventListener('load', checkFooterScroll, { passive: true });
+
+        checkFooterScroll();
+        setTimeout(checkFooterScroll, 80);
+        setTimeout(checkFooterScroll, 300);
+        setTimeout(checkFooterScroll, 1000);
+        setTimeout(checkFooterScroll, 2500);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFooterBrandAnimation);
+      } else {
+        initFooterBrandAnimation();
+      }
+    })();
+  </script>
 
 
   <!-- Floating Bottom-Right Theme Toggle Button -->
@@ -6078,60 +6952,70 @@
           if (themeFab) {
             themeFab.classList.add('vis');
           }
-          document.documentElement.classList.remove('hide-scrollbar');
-          document.body.classList.remove('hide-scrollbar');
-          lastSY = sy;
-          return;
-        }
+          document.documentElement.classList.add('hide-scrollbar');
+          document.body.classList.add('hide-scrollbar');
+        } else {
+          // Global Nav Visibility (Desktop):
+          // - In Hero 3D room (heroHp < 0.70): always hidden.
+          // - Starting from "Who We Are" (heroHp >= 0.70):
+          //   * Scrolling UP (sy < lastSY - 2): appears / slides down into view.
+          //   * Scrolling DOWN (sy > lastSY + 2): hides / slides up out of view.
+          const heroH = heroDriver ? (heroDriver.offsetHeight - vh) : 1;
+          const heroHp = heroDriver ? clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1) : 1;
+          // Header starts ONLY after leaving the hero section (starting from the second section)
+          const isPastHero = heroHp >= 0.80 || sy >= (heroDriver ? heroDriver.offsetHeight - 60 : 0);
 
-        // Global Nav Visibility (Desktop):
-        // - In Hero 3D room (heroHp < 0.70): always hidden.
-        // - Starting from "Who We Are" (heroHp >= 0.70):
-        //   * Scrolling UP (sy < lastSY - 2): appears / slides down into view.
-        //   * Scrolling DOWN (sy > lastSY + 2): hides / slides up out of view.
-        const heroH = heroDriver ? (heroDriver.offsetHeight - vh) : 1;
-        const heroHp = heroDriver ? clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1) : 1;
-        // Header starts ONLY after leaving the hero section (starting from the second section)
-        const isPastHero = heroHp >= 0.80 || sy >= (heroDriver ? heroDriver.offsetHeight - 60 : 0);
-
-        if (nav) {
-          if (isPastHero) {
-            if (sy < lastSY - 2) {
-              // Scrolling UP: header comes down smoothly
-              nav.classList.add('visible');
-              nav.classList.remove('hidden');
-            } else if (sy > lastSY + 2) {
-              // Scrolling DOWN: header animates up out of view
+          if (nav) {
+            if (isPastHero) {
+              if (sy < lastSY - 2) {
+                // Scrolling UP: header comes down smoothly
+                nav.classList.add('visible');
+                nav.classList.remove('hidden');
+              } else if (sy > lastSY + 2) {
+                // Scrolling DOWN: header animates up out of view
+                nav.classList.remove('visible');
+                nav.classList.add('hidden');
+              }
+            } else {
+              // Strictly hidden inside the home page hero section on desktop
               nav.classList.remove('visible');
               nav.classList.add('hidden');
             }
-          } else {
-            // Strictly hidden inside the home page hero section on desktop
-            nav.classList.remove('visible');
-            nav.classList.add('hidden');
           }
-        }
 
-        // Theme Button Visibility: Appears the moment the video pops out of the screen (hp >= 0.60) & stays for all subsequent sections
-        const isVideoOrPast = heroHp >= 0.60 || sy >= (heroDriver ? heroDriver.offsetHeight : 0);
+          // Theme Button Visibility: Appears the moment the video pops out of the screen (hp >= 0.60) & stays for all subsequent sections
+          const isVideoOrPast = heroHp >= 0.60 || sy >= (heroDriver ? heroDriver.offsetHeight : 0);
 
-        if (themeFab) {
+          if (themeFab) {
+            if (isVideoOrPast) {
+              themeFab.classList.add('vis');
+            } else {
+              themeFab.classList.remove('vis');
+            }
+          }
+
+          // Scrollbar (Sidebar) Visibility: Removed from hero section to eliminate text/card shifting glitch; restored once video section is reached
           if (isVideoOrPast) {
-            themeFab.classList.add('vis');
+            document.documentElement.classList.remove('hide-scrollbar');
+            document.body.classList.remove('hide-scrollbar');
           } else {
-            themeFab.classList.remove('vis');
+            document.documentElement.classList.add('hide-scrollbar');
+            document.body.classList.add('hide-scrollbar');
           }
-        }
-
-        // Scrollbar (Sidebar) Visibility: Removed from hero section to eliminate text/card shifting glitch; restored once video section is reached
-        if (isVideoOrPast) {
-          document.documentElement.classList.remove('hide-scrollbar');
-          document.body.classList.remove('hide-scrollbar');
-        } else {
-          document.documentElement.classList.add('hide-scrollbar');
-          document.body.classList.add('hide-scrollbar');
         }
         lastSY = sy;
+
+        /* ── §7 Footer Giant Text Reveal ── */
+        const fDriverEl = footerDriver || document.getElementById('footer-driver');
+        const fTextEl = document.getElementById('footerGiantText');
+        if (fDriverEl && fTextEl) {
+          const fRect = fDriverEl.getBoundingClientRect();
+          if (fRect.top <= vh * 0.92 && fRect.bottom >= 40) {
+            if (!fTextEl.classList.contains('revealed')) {
+              fTextEl.classList.add('revealed');
+            }
+          }
+        }
 
         /* ═══ §1 HERO & BRAND STORY ═══ */
         if (heroDriver && heroTitle && roomCube && heroReel && window.innerWidth > 768) {
@@ -6147,7 +7031,7 @@
 
           // Phase 1: 3D Locomotion with Differentiated Speeds (hp: 0.00 -> 0.48)
           const zoomP = clamp(hp / 0.48, 0, 1);
-          
+
           // Background Room zoom curve (steady depth locomotion)
           const bgZoomE = Math.pow(zoomP, 1.18);
           const svgScaleR1 = lerp(1.0, 1.75, bgZoomE);
@@ -6155,7 +7039,7 @@
 
           const room1Z = lerp(0, 1250, bgZoomE);
           const r1CardFade = clamp(1 - clamp((zoomP - 0.68) / 0.32, 0, 1), 0, 1);
-          
+
           // Foreground Text zoom & elevation curve (moves at a distinct, faster rate)
           const textZoomE = Math.pow(zoomP, 1.42);
           const titleScale = lerp(1.0, 2.65, textZoomE);
@@ -6347,24 +7231,71 @@
           }
         }
 
-        /* ═══ §4 SERVICES — Unified Single Persistent Physical Dossier Folder ═══ */
+        /* ═══ §4 SERVICES — Sequential Mobile Card Presentation ═══ */
         if (window.innerWidth <= 768) {
-          // Mobile Phone Services: update sticky header subtitle dynamically
-          const sscSub = document.querySelector('.svc-sticky-center .ssc-sub');
-          const svcCards = document.querySelectorAll('.svc-showcase-card');
-          if (sscSub && svcCards.length) {
-            let activeTitle = "A specialized collection of design, strategy and technology disciplines.";
-            svcCards.forEach((c) => {
-              const r = c.getBoundingClientRect();
-              if (r.top <= vh * 0.45 && r.bottom >= vh * 0.15) {
-                const badge = c.querySelector('.svc-badge');
-                const title = c.querySelector('h3');
-                if (badge && title) {
-                  activeTitle = `${badge.textContent.trim()} — ${title.textContent.trim()}`;
+          if (svcDriver && allShowcaseCards && allShowcaseCards.length) {
+            const svcTop = svcDriver.offsetTop;
+            const svcH = svcDriver.offsetHeight - vh;
+
+            if (sy < svcTop) {
+              // Before reaching services section: only Card 0 ready, all others far below offscreen
+              allShowcaseCards.forEach((card, idx) => {
+                if (!card) return;
+                if (idx === 0) {
+                  card.style.transform = 'translate3d(0, 0, 0) scale(1)';
+                  card.style.opacity = '1';
+                  card.style.pointerEvents = 'auto';
+                } else {
+                  card.style.transform = `translate3d(0, ${vh + 100}px, 0)`;
+                  card.style.opacity = '0';
+                  card.style.pointerEvents = 'none';
                 }
-              }
-            });
-            sscSub.textContent = activeTitle;
+              });
+            } else {
+              const p = svcH > 0 ? clamp((sy - svcTop) / svcH, 0, 1) : 0;
+              // Map entrance of cards across 0% to 78% of scroll progress.
+              // From 78% to 100%, Card 5 stays fully settled on screen with the header,
+              // giving ample breathing room before transitioning into the next section.
+              const cardP = clamp(p / 0.78, 0, 1);
+              const u = cardP * (allShowcaseCards.length - 1); // 0 to 4
+
+              allShowcaseCards.forEach((card, idx) => {
+                if (!card) return;
+                const rel = idx - u;
+
+                if (rel >= 1) {
+                  // Not yet entering: stay completely offscreen below
+                  card.style.transform = `translate3d(0, ${vh + 100}px, 0)`;
+                  card.style.opacity = '0';
+                  card.style.pointerEvents = 'none';
+                } else if (rel > 0) {
+                  // Currently entering from bottom of phone viewport
+                  const t = 1 - rel;
+                  const tE = t * (2 - t); // smooth easeOutQuad
+                  const curY = Math.round((1 - tE) * (vh * 0.95));
+                  card.style.transform = `translate3d(0, ${curY}px, 0)`;
+                  card.style.opacity = '1';
+                  card.style.pointerEvents = t > 0.85 ? 'auto' : 'none';
+                } else {
+                  // Current active card or stacked behind
+                  const behind = -rel; // 0 when active, >= 1 when covered
+                  if (behind >= 1) {
+                    card.style.transform = 'translate3d(0, 0, 0)';
+                    card.style.opacity = '0';
+                    card.style.pointerEvents = 'none';
+                  } else if (behind === 0) {
+                    card.style.transform = 'translate3d(0, 0, 0)';
+                    card.style.opacity = '1';
+                    card.style.pointerEvents = 'auto';
+                  } else {
+                    const opac = Math.max(0, 1 - behind * 1.0);
+                    card.style.transform = 'translate3d(0, 0, 0)';
+                    card.style.opacity = opac.toFixed(2);
+                    card.style.pointerEvents = behind < 0.2 ? 'auto' : 'none';
+                  }
+                }
+              });
+            }
           }
         } else if (svcDriver && svcHeroCapsule && mainSvcFolder) {
           const svcTop = svcDriver.offsetTop;
@@ -7012,7 +7943,7 @@
       if (phPlayBtn && phReelVideo) {
         const togglePhVideo = () => {
           if (phReelVideo.paused) {
-            phReelVideo.play().catch(() => {});
+            phReelVideo.play().catch(() => { });
             phPlayBtn.style.opacity = '0';
           } else {
             phReelVideo.pause();
@@ -7026,13 +7957,68 @@
         if (phReelCard) phReelCard.addEventListener('click', togglePhVideo);
       }
 
+      // ── Phone Brand Manifesto Pinned Scroll Scrub Animation ──
+      (function initPhoneManifestoAnimation() {
+        const section = document.getElementById('phoneStorySec');
+        const statement = document.getElementById('pmsStatement');
+        if (!section || !statement) return;
+        const words = statement.querySelectorAll('.pm-w');
+        if (!words.length) return;
+
+        let manifestoTicking = false;
+
+        function updateManifestoWords() {
+          const vh = window.innerHeight || document.documentElement.clientHeight;
+          const secRect = section.getBoundingClientRect();
+
+          // First word 'Design' is always visible and active
+          if (words[0]) words[0].classList.add('active');
+
+          // The section is pinned while 0 >= secRect.top >= -(secRect.height - vh).
+          // We calculate scrub progress between secRect.top = 0 and secRect.top = -(secRect.height - vh)
+          const totalPinnedScroll = Math.max(1, secRect.height - vh);
+          const currentScrolled = -secRect.top;
+          const progress = Math.max(0, Math.min(1, currentScrolled / totalPinnedScroll));
+
+          const totalWords = words.length;
+          // Words 1 through N illuminate progressively as user scrolls through pinned stage
+          const activeCount = Math.floor(progress * (totalWords - 1));
+
+          for (let i = 1; i < totalWords; i++) {
+            if (i <= activeCount) {
+              words[i].classList.add('active');
+            } else {
+              words[i].classList.remove('active');
+            }
+          }
+
+          manifestoTicking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+          if (!manifestoTicking) {
+            requestAnimationFrame(updateManifestoWords);
+            manifestoTicking = true;
+          }
+        }, { passive: true });
+
+        window.addEventListener('resize', () => {
+          requestAnimationFrame(updateManifestoWords);
+        }, { passive: true });
+
+        // Initial check
+        setTimeout(updateManifestoWords, 300);
+      })();
+
+
+
       window.addEventListener('resize', () => { onScroll(); }, { passive: true });
 
       onScroll();
     })();
   </script>
-  <script src="data-store.js"></script>
-  <script src="site-bridge.js"></script>
+  <script src="data-store.js?v=20261022"></script>
+  <script src="site-bridge.js?v=20261022"></script>
 </body>
 
 </html>

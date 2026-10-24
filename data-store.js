@@ -98,8 +98,8 @@
         { id: 'team-tushar', memberKey: 'tushar', name: 'Tushar Panchal', role: 'Founder & Marketing Head', photo: 'img/team-tusar.jpg', order: 2 },
         { id: 'team-trusha', memberKey: 'trusha', name: 'Trusha Panchal', role: 'Senior Graphic Designer', photo: 'img/team-elena.jpg', order: 3 },
         { id: 'team-harsh', memberKey: 'harsh', name: 'Harsh Patel', role: 'Senior Video Editor', photo: 'img/team-kaito.jpg', order: 4 },
-        { id: 'team-urvish', memberKey: 'urvish', name: 'Urvish Mistry', role: 'Junior Video Editor + Community Manager', photo: 'img/team-ami.jpg', order: 5 },
-        { id: 'team-priyal', memberKey: 'priyal', name: 'Priyal Lunkar', role: 'Social Media Manager', photo: 'img/team-elena.jpg', order: 6 }
+        { id: 'team-urvish', memberKey: 'urvish', name: 'Urvish Mistry', role: 'Junior Video Editor + Community Manager', photo: 'img/team-urvish.jpg', order: 5 },
+        { id: 'team-priyal', memberKey: 'priyal', name: 'Priyal Lunkar', role: 'Social Media Manager', photo: 'img/team-priyal.jpg', order: 6 }
       ],
       process: [
         { step: '01', phase: 'PHASE 01 / DISCOVER', title: 'Understand Before We Build', desc: 'We get close to your business, audience, market and ambitions to understand what makes your opportunity unique.', tags: ['BUSINESS DISCOVERY', 'AUDIENCE', 'MARKET', 'GOALS'] },
@@ -1324,7 +1324,9 @@
       established: '1928',
       location: 'Ahmedabad, India · Global Practice',
       email: 'studio@1928creativestudio.com',
-      phone: '+91 98250 19280',
+      phone: '+91 81609 31928',
+      whatsapp: '+91 81609 31928',
+      whatsappUrl: 'https://wa.me/918160931928?text=Hello%201928%20Creative%20Studio%2C%20I%20would%20like%20to%20talk%20about%20a%20project.',
       socials: {
         instagram: 'https://www.instagram.com/1928creativestudio',
         facebook: 'https://www.facebook.com/1928Creativestudio/',
@@ -1350,6 +1352,96 @@
       servicesHeader: {
         headline: 'OUR CORE SERVICES',
         description: 'From the first visual impression to the way your brand grows in the market, we bring strategy, creativity and execution together under one roof.'
+      },
+      homeServices: {
+        cover: {
+          title: 'Capabilities Index',
+          sub: '06 CORE DISCIPLINES - ONE CREATIVE PARTNER',
+          jacketBtnText: 'Explore our capabilities',
+          jacketBtnLink: 'services.html'
+        },
+        cards: [
+          {
+            id: 'home-card-1',
+            num: '01',
+            watermark: '01',
+            sheetTitle: 'Logo Design',
+            sheetSub: 'VISUAL IDENTITY · FIRST IMPRESSION',
+            badge: 'VISUAL IDENTITY · FIRST IMPRESSION',
+            title: '01. Logo Design',
+            leadDesc: 'A distinctive mark that gives your business a memorable identity.',
+            bodyDesc: 'We create thoughtful logos that capture your brand’s character and give it a strong visual presence across every touchpoint.',
+            deliverables: ['Custom Logos', 'Wordmarks', 'Monograms', 'Symbols', 'Typography'],
+            actionLink: 'service-logo-design.html',
+            actionText: 'Explore Service',
+            pagination: '01 / 05',
+            mediaUrl: ''
+          },
+          {
+            id: 'home-card-2',
+            num: '02',
+            watermark: '02',
+            sheetTitle: 'Brand Identity',
+            sheetSub: 'STRATEGY · GUIDELINE · SYSTEM',
+            badge: 'BRAND STRATEGY · IDENTITY SYSTEM',
+            title: '02. Brand Identity Development',
+            leadDesc: 'A complete identity built around what makes your business different.',
+            bodyDesc: 'We turn your story, positioning and personality into a cohesive brand system designed to build recognition and lasting value.',
+            deliverables: ['Brand Strategy', 'Visual Identity', 'Colour', 'Typography', 'Guidelines'],
+            actionLink: 'service-brand-identity.html',
+            actionText: 'Explore Service',
+            pagination: '02 / 05',
+            mediaUrl: ''
+          },
+          {
+            id: 'home-card-3',
+            num: '03',
+            watermark: '03',
+            sheetTitle: 'Website Design',
+            sheetSub: 'DIGITAL · EXPERIENCE · MOTION',
+            badge: 'DIGITAL EXPERIENCE · DESIGN & DEVELOPMENT',
+            title: '03. Website Design & Development',
+            leadDesc: 'Digital experiences that make your brand feel as good as it looks.',
+            bodyDesc: 'We design and develop purposeful websites that bring your story to life, create meaningful interactions and turn attention into action.',
+            deliverables: ['UI/UX', 'Web Design', 'Development', 'E-commerce', 'Motion'],
+            actionLink: 'service-website-development.html',
+            actionText: 'Explore Service',
+            pagination: '03 / 05',
+            mediaUrl: ''
+          },
+          {
+            id: 'home-card-4',
+            num: '04',
+            watermark: '04',
+            sheetTitle: 'Social & Digital',
+            sheetSub: 'VISIBILITY · CONNECTION · GROWTH',
+            badge: 'DIGITAL PRESENCE · STRATEGY & GROWTH',
+            title: '04. Social Media & Digital Marketing',
+            leadDesc: 'A digital presence designed to keep your brand moving forward.',
+            bodyDesc: 'We combine creative thinking with strategic marketing to build visibility, meaningful engagement and stronger connections with your audience.',
+            deliverables: ['Social Strategy', 'Content', 'Meta Ads', 'Google Ads', 'SEO'],
+            actionLink: 'service-digital-marketing.html',
+            actionText: 'Explore Service',
+            pagination: '04 / 05',
+            mediaUrl: ''
+          },
+          {
+            id: 'home-card-5',
+            num: '05',
+            watermark: '05',
+            sheetTitle: 'Content & Influence',
+            sheetSub: 'STORY · CREATORS · CONNECTION',
+            badge: 'CAMPAIGNS · PRODUCTION · CREATOR NETWORK',
+            title: '05. Content Creation & Influencer Marketing',
+            leadDesc: 'We create stories worth seeing and partnerships worth remembering.',
+            bodyDesc: 'From original content to carefully chosen creator collaborations, we build campaigns that give your brand a stronger voice, wider reach, and lasting audience connection.',
+            deliverables: ['Content Strategy', 'Creative Production', 'Creator Partnerships', 'Campaigns', 'Social Content'],
+            actionLink: 'service-content-creation.html',
+            actionText: 'Explore Service',
+            pagination: '05 / 05',
+            mediaUrl: ''
+          }
+        ]
       },
       homeSelectedProjects: ['vibee', 'infyli', 'mudra-school', 'awards-plus', 'last-mile-analytics', 'alda'],
       perspectives_curation: {
@@ -1461,7 +1553,7 @@
         visionLabel: "Project Vision & Strategic Ambition *",
         visionPlaceholder: "Describe the strategic objectives, core challenges, and architectural scale...",
         ndaText: "Execute Bilateral Non-Disclosure Agreement (NDA) prior to review.",
-        submitBtnText: "Submit Project Brief",
+        submitBtnText: "Submit",
         successTitle: "Brief Submitted.",
         successDesc: "Thank you. Your parameters have been received — our partners will review your scope and follow up within 24 hours.",
         resetBtnText: "Submit Another Brief"
@@ -1505,7 +1597,15 @@
                 servicesHeader: {
                   ...DEFAULT_CMS_DATA.settings.servicesHeader,
                   ...(json.data.settings?.services_header || json.data.settings?.servicesHeader || {})
-                }
+                },
+                homeServices: (() => {
+                  const raw = json.data.settings?.home_services || json.data.settings?.homeServices;
+                  if (!raw) return DEFAULT_CMS_DATA.settings.homeServices;
+                  if (typeof raw === 'string') {
+                    try { return JSON.parse(raw); } catch (e) { return DEFAULT_CMS_DATA.settings.homeServices; }
+                  }
+                  return raw;
+                })()
               },
               contactBrief: json.data.contactBrief ? {
                 header: { ...DEFAULT_CMS_DATA.contactBrief.header, ...(json.data.contactBrief.header || {}) },
@@ -1597,7 +1697,8 @@
               servicesHeader: {
                 ...DEFAULT_CMS_DATA.settings.servicesHeader,
                 ...(parsed.settings?.services_header || parsed.settings?.servicesHeader || {})
-              }
+              },
+              homeServices: parsed.settings?.homeServices || DEFAULT_CMS_DATA.settings.homeServices
             },
             contactBrief: parsed.contactBrief ? {
               header: { ...DEFAULT_CMS_DATA.contactBrief.header, ...(parsed.contactBrief.header || {}) },
@@ -1809,6 +1910,36 @@
       this.data.services = this.data.services.filter(s => s.id !== id);
       this._saveData();
       return true;
+    }
+
+    // ── Home Page Services Methods ──
+    getHomeServices() {
+      return this.data.settings?.homeServices || DEFAULT_CMS_DATA.settings.homeServices;
+    }
+    saveHomeServices(homeData) {
+      if (!this.data.settings) this.data.settings = {};
+      this.data.settings.homeServices = { ...this.getHomeServices(), ...homeData };
+      this._saveData();
+      this._sendToAPI('save_settings', {
+        home_services: this.data.settings.homeServices
+      });
+      return this.data.settings.homeServices;
+    }
+    saveHomeServiceCard(index, cardData) {
+      const current = JSON.parse(JSON.stringify(this.getHomeServices()));
+      if (!Array.isArray(current.cards)) current.cards = [];
+      const idx = parseInt(index, 10);
+      if (idx >= 0 && idx < current.cards.length) {
+        current.cards[idx] = { ...current.cards[idx], ...cardData };
+      } else {
+        current.cards.push(cardData);
+      }
+      return this.saveHomeServices(current);
+    }
+    saveHomeCover(coverData) {
+      const current = JSON.parse(JSON.stringify(this.getHomeServices()));
+      current.cover = { ...(current.cover || {}), ...coverData };
+      return this.saveHomeServices(current);
     }
 
     // ── Clients Methods ──

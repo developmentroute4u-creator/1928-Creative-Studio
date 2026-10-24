@@ -570,23 +570,44 @@
       display: block;
     }
 
-    /* ── Smooth Scrollbar (Signature Crimson) ── */
-    html {
-      scrollbar-width: thin;
-      scrollbar-color: var(--cr) var(--bg);
+    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
+    @media (min-width: 769px) {
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--cr) var(--bg);
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--cr);
+        border-radius: 3px;
+      }
     }
 
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
+    /* ── Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) ── */
+    @media (max-width: 768px) {
+      html, body, * {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
 
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--cr);
-      border-radius: 3px;
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar,
+      ::-webkit-scrollbar,
+      ::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-track {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
+      }
     }
 
     /* ── MAIN ARCHIVE CONTAINER ── */
@@ -831,15 +852,28 @@
       color: var(--ink);
     }
 
-    /* Category Filter Pills */
+    /* Category Filter Pills - Left to Right Horizontal Scrolling Filter */
     .bah-filter-pills-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 4px 2px 8px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .bah-filter-pills-row::-webkit-scrollbar {
+      display: none;
     }
 
     .bah-filter-btn {
+      flex-shrink: 0;
+      white-space: nowrap;
       background: var(--card-alt);
       border: 1px solid var(--rule-m);
       color: var(--ink-mid);
@@ -881,17 +915,9 @@
       transition: background 0.3s ease;
     }
 
-    /* Results summary bar */
+    /* Results summary bar hidden per design */
     .bah-results-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 11.5px;
-      color: var(--ink-dim);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0 4px;
+      display: none !important;
     }
 
     .bah-results-bar strong {
@@ -915,6 +941,155 @@
     @media (max-width: 720px) {
       .blog-directory-grid {
         grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      /* Back to Perspectives Button */
+      .bah-back-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 8px !important;
+        padding: 9px 18px !important;
+        font-size: 11px !important;
+        border-radius: 999px !important;
+      }
+      .bah-back-btn .bbb-arrow {
+        width: 14px !important;
+        height: 14px !important;
+        stroke-width: 2.4 !important;
+      }
+
+      /* Card Action Arrow */
+      .card-arrow-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        padding: 6px 14px !important;
+        border-radius: 999px !important;
+      }
+      .card-arrow-btn svg {
+        width: 13px !important;
+        height: 13px !important;
+        stroke-width: 2.4 !important;
+      }
+
+      /* In-Drawer Reader Panel */
+      .reader-drawer-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+        height: 100dvh !important;
+      }
+      .reader-header-bar {
+        height: auto !important;
+        min-height: 64px !important;
+        padding: max(16px, env(safe-area-inset-top)) 20px 14px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        box-sizing: border-box !important;
+        border-bottom: 1px solid var(--rule-m) !important;
+      }
+      .reader-header-left {
+        display: flex !important;
+        align-items: center !important;
+        align-self: center !important;
+        gap: 10px !important;
+        margin: 0 !important;
+      }
+      .rhl-cat-pill {
+        margin: 0 !important;
+        font-family: var(--font-mono) !important;
+        font-size: 11px !important;
+        font-weight: 800 !important;
+        color: var(--cr) !important;
+        letter-spacing: 0.12em !important;
+        text-transform: uppercase !important;
+      }
+      .rhl-sep {
+        color: var(--rule-heavy) !important;
+      }
+      .rhl-read-time {
+        font-family: var(--font-mono) !important;
+        font-size: 11px !important;
+        color: var(--ink-dim) !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+      }
+      .reader-close-btn,
+      #rdrCloseBtn {
+        width: 38px !important;
+        height: 38px !important;
+        align-self: center !important;
+        margin-left: auto !important;
+        flex-shrink: 0 !important;
+      }
+      .reader-scroll-viewport {
+        padding: 24px 20px 48px !important;
+        box-sizing: border-box !important;
+      }
+      .reader-h1 {
+        font-size: clamp(24px, 6vw, 30px) !important;
+        line-height: 1.18 !important;
+        text-align: left !important;
+      }
+      .reader-lead {
+        font-size: 15px !important;
+        text-align: left !important;
+      }
+      .reader-article-content {
+        text-align: left !important;
+      }
+
+      /* Bottom CTA Deck */
+      .reader-cta-deck {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        gap: 18px !important;
+        padding-top: 28px !important;
+        width: 100% !important;
+      }
+      .reader-cta-deck > div {
+        width: 100% !important;
+        text-align: left !important;
+      }
+      .reader-cta-deck .sec-tag-pill {
+        margin-left: 0 !important;
+        margin-right: auto !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        align-self: flex-start !important;
+        display: inline-flex !important;
+        margin-bottom: 8px !important;
+        width: -moz-fit-content !important;
+        width: fit-content !important;
+      }
+      .rcd-title {
+        font-size: clamp(20px, 4.8vw, 24px) !important;
+        line-height: 1.2 !important;
+        margin-bottom: 8px !important;
+        text-align: left !important;
+      }
+      .rcd-sub {
+        font-size: 14px !important;
+        line-height: 1.55 !important;
+        text-align: left !important;
+        margin-bottom: 0 !important;
+      }
+      .rcd-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 16px 24px !important;
+        box-sizing: border-box !important;
+        text-align: center !important;
+        gap: 10px !important;
+        border-radius: 999px !important;
       }
     }
 
@@ -1627,6 +1802,19 @@
       box-shadow: 0 8px 24px var(--cr-glow);
     }
 
+    .rcd-arrow-svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+      display: inline-block;
+      vertical-align: middle;
+      transition: transform 0.25s var(--sp);
+    }
+
+    .rcd-btn:hover .rcd-arrow-svg {
+      transform: translate(3px, -3px);
+    }
+
     /* ═══════════════════════════════════════════════════════════
        FOOTER — MODERN EDITORIAL LUXURY (Exact Site-wide Standard)
        ═══════════════════════════════════════════════════════════ */
@@ -2188,10 +2376,14 @@
           <!-- Commission CTA Deck -->
           <div class="reader-cta-deck">
             <div>
+              <span class="sec-tag-pill" style="margin-bottom: 8px;">COMMISSION &amp; INQUIRY</span>
               <h3 class="rcd-title">Ready to implement these strategic principles?</h3>
               <p class="rcd-sub">Let's sculpt an enduring, category-defining visual architecture for your brand.</p>
             </div>
-            <a href="contact.html" class="rcd-btn">Initiate Project Commission ↗</a>
+            <a href="contact.html" class="rcd-btn">
+              <span>Initiate Project Commission</span>
+              <svg class="rcd-arrow-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -2200,7 +2392,7 @@
 
   <!-- Modern Luxury Footer Loader -->
   <div id="footer-placeholder"></div>
-  <script src="footer-loader.js"></script>
+  <script src="footer-loader.js?v=20261024_02"></script>
 
   <!-- Floating Theme Switcher FAB -->
   <button id="theme-fab" aria-label="Toggle light/dark theme" title="Toggle Theme">
