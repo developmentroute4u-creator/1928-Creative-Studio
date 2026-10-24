@@ -6637,7 +6637,109 @@
       </div>
     </div>
   </footer>
-  <script src="footer-loader.js"></script>
+  <script src="footer-loader.js?v=20261024_02"></script>
+  <script>
+    (function () {
+      function initFooterBrandAnimation() {
+        var footerDriver = document.getElementById('footer-driver');
+        var luxuryCard = footerDriver ? (footerDriver.querySelector('.footer-luxury-card') || footerDriver) : null;
+        var footerGiantText = document.getElementById('footerGiantText') || (footerDriver ? footerDriver.querySelector('.f-brand-giant-text') : null);
+        if (!footerDriver || !footerGiantText) return;
+
+        var chars = footerGiantText.querySelectorAll('.f-char');
+        var delayStep = 0.048;
+        chars.forEach(function (char, index) {
+          char.style.setProperty('transition-delay', (index * delayStep).toFixed(3) + 's', 'important');
+        });
+
+        function revealFooter() {
+          if (!footerGiantText.classList.contains('revealed')) {
+            footerGiantText.classList.add('revealed');
+          }
+        }
+
+        function unrevealFooter() {
+          if (footerGiantText.classList.contains('revealed')) {
+            footerGiantText.classList.remove('revealed');
+          }
+        }
+
+        if ('IntersectionObserver' in window) {
+          var obs = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                revealFooter();
+              } else {
+                var r = entry.boundingClientRect;
+                var vh = window.innerHeight || document.documentElement.clientHeight;
+                if (r.top > vh + 160 || r.bottom < -160) {
+                  unrevealFooter();
+                }
+              }
+            });
+          }, {
+            threshold: [0.01, 0.08, 0.2]
+          });
+          if (luxuryCard) obs.observe(luxuryCard);
+          obs.observe(footerGiantText);
+        }
+
+        function checkFooterScroll() {
+          var cardRect = luxuryCard ? luxuryCard.getBoundingClientRect() : footerDriver.getBoundingClientRect();
+          var textRect = footerGiantText.getBoundingClientRect();
+          var vh = window.innerHeight || document.documentElement.clientHeight;
+          var scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || 0;
+          var docHeight = Math.max(
+            document.body.scrollHeight || 0,
+            document.documentElement.scrollHeight || 0,
+            document.body.offsetHeight || 0,
+            document.documentElement.offsetHeight || 0
+          );
+          var isNearBottom = (scrollY + vh) >= (docHeight - 140);
+          var cardVisible = (cardRect.top <= vh * 0.90 && cardRect.bottom >= 40);
+          var textVisible = (textRect.top <= vh * 0.98 && textRect.bottom >= 0);
+
+          if (cardVisible || textVisible || isNearBottom) {
+            revealFooter();
+          } else if (cardRect.top > vh + 180 || cardRect.bottom < -180) {
+            unrevealFooter();
+          }
+        }
+
+        chars.forEach(function (char) {
+          char.addEventListener('mouseenter', function () {
+            char.style.setProperty('transform', 'translateY(-14%)', 'important');
+            char.style.setProperty('color', 'var(--cr, #C8102E)', 'important');
+            setTimeout(function () {
+              if (footerGiantText.classList.contains('revealed')) {
+                char.style.setProperty('transform', 'translateY(0%)', 'important');
+              } else {
+                char.style.setProperty('transform', 'translateY(85%)', 'important');
+              }
+              char.style.removeProperty('color');
+            }, 320);
+          });
+        });
+
+        window.addEventListener('scroll', checkFooterScroll, { passive: true });
+        window.addEventListener('resize', checkFooterScroll, { passive: true });
+        window.addEventListener('orientationchange', checkFooterScroll, { passive: true });
+        window.addEventListener('load', checkFooterScroll, { passive: true });
+
+        checkFooterScroll();
+        setTimeout(checkFooterScroll, 80);
+        setTimeout(checkFooterScroll, 300);
+        setTimeout(checkFooterScroll, 1000);
+        setTimeout(checkFooterScroll, 2500);
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFooterBrandAnimation);
+      } else {
+        initFooterBrandAnimation();
+      }
+    })();
+  </script>
 
 
   <!-- Floating Bottom-Right Theme Toggle Button -->
@@ -6902,6 +7004,18 @@
           }
         }
         lastSY = sy;
+
+        /* ── §7 Footer Giant Text Reveal ── */
+        const fDriverEl = footerDriver || document.getElementById('footer-driver');
+        const fTextEl = document.getElementById('footerGiantText');
+        if (fDriverEl && fTextEl) {
+          const fRect = fDriverEl.getBoundingClientRect();
+          if (fRect.top <= vh * 0.92 && fRect.bottom >= 40) {
+            if (!fTextEl.classList.contains('revealed')) {
+              fTextEl.classList.add('revealed');
+            }
+          }
+        }
 
         /* ═══ §1 HERO & BRAND STORY ═══ */
         if (heroDriver && heroTitle && roomCube && heroReel && window.innerWidth > 768) {

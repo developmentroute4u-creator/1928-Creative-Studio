@@ -787,6 +787,15 @@
     const footerGiantText = document.getElementById('footerGiantText') || (footerDriver ? footerDriver.querySelector('.f-brand-giant-text') : null);
     if (!footerDriver || !footerGiantText || !luxuryCard) return;
 
+    // Prevent duplicate registrations while allowing re-checks
+    if (footerGiantText._animInitialized) {
+      if (typeof footerGiantText._checkFooterScroll === 'function') {
+        footerGiantText._checkFooterScroll();
+      }
+      return;
+    }
+    footerGiantText._animInitialized = true;
+
     const chars = footerGiantText.querySelectorAll('.f-char');
     // Pure unbroken left-to-right character-by-character wave:
     // 1 -> 9 -> 2 -> 8 -> C -> R -> E -> A -> T -> I -> V -> E -> S -> T -> U -> D -> I -> O
@@ -796,40 +805,99 @@
       char.style.setProperty('transition-delay', delay, 'important');
     });
 
-    function checkFooterScroll() {
-      const cardRect = luxuryCard.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      const cardCenterY = cardRect.top + (cardRect.height * 0.5);
-      const viewportCenterY = vh * 0.5;
-      const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
-
-      // Primary requirement: animation starts when the complete card (footer) comes to the center of the viewport
-      if (cardCenterY <= viewportCenterY + 45 || isAtBottom) {
+    function revealFooter() {
+      if (!footerGiantText.classList.contains('revealed')) {
         footerGiantText.classList.add('revealed');
-      } else if (cardCenterY > viewportCenterY + 160) {
+      }
+    }
+
+    function unrevealFooter() {
+      if (footerGiantText.classList.contains('revealed')) {
         footerGiantText.classList.remove('revealed');
       }
     }
 
+    // Modern IntersectionObserver: fires reliably across all browsers, viewports, scaling, and zoom
+    if ('IntersectionObserver' in window) {
+      const footerObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            revealFooter();
+          } else {
+            const rect = entry.boundingClientRect;
+            const vh = window.innerHeight || document.documentElement.clientHeight;
+            // Only unreveal if scrolled completely away (top is below screen or bottom is above screen)
+            if (rect.top > vh + 160 || rect.bottom < -160) {
+              unrevealFooter();
+            }
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '0px 0px -30px 0px',
+        threshold: [0.01, 0.08, 0.25, 0.5]
+      });
+
+      footerObserver.observe(luxuryCard);
+      footerObserver.observe(footerGiantText);
+    }
+
+    function checkFooterScroll() {
+      const cardRect = luxuryCard.getBoundingClientRect();
+      const textRect = footerGiantText.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const docHeight = Math.max(
+        document.body.scrollHeight || 0,
+        document.documentElement.scrollHeight || 0,
+        document.body.offsetHeight || 0,
+        document.documentElement.offsetHeight || 0
+      );
+      const scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || 0;
+      const isNearBottom = (scrollY + vh) >= (docHeight - 140);
+
+      // Card is entering viewport, or text is near viewport, or page is scrolled near bottom
+      const cardVisible = (cardRect.top <= vh * 0.90 && cardRect.bottom >= 40);
+      const textVisible = (textRect.top <= vh * 0.98 && textRect.bottom >= 0);
+
+      if (cardVisible || textVisible || isNearBottom) {
+        revealFooter();
+      } else if (cardRect.top > vh + 180 || cardRect.bottom < -180) {
+        unrevealFooter();
+      }
+    }
+    footerGiantText._checkFooterScroll = checkFooterScroll;
+
     // Micro-interaction on desktop hover
     chars.forEach((char) => {
       char.addEventListener('mouseenter', () => {
-        char.style.transform = 'translateY(-12%)';
-        char.style.color = 'var(--cr, #C8102E)';
+        char.style.setProperty('transform', 'translateY(-14%)', 'important');
+        char.style.setProperty('color', 'var(--cr, #C8102E)', 'important');
         setTimeout(() => {
           if (footerGiantText.classList.contains('revealed')) {
-            char.style.transform = 'translateY(0%)';
+            char.style.setProperty('transform', 'translateY(0%)', 'important');
+          } else {
+            char.style.setProperty('transform', 'translateY(85%)', 'important');
           }
-          char.style.color = '';
+          char.style.removeProperty('color');
         }, 320);
       });
     });
 
     window.addEventListener('scroll', checkFooterScroll, { passive: true });
     window.addEventListener('resize', checkFooterScroll, { passive: true });
-    setTimeout(checkFooterScroll, 120);
+    window.addEventListener('orientationchange', checkFooterScroll, { passive: true });
+    window.addEventListener('load', checkFooterScroll, { passive: true });
+
+    // Initial checks (handles dynamic hero load, fonts, images)
     checkFooterScroll();
+    setTimeout(checkFooterScroll, 60);
+    setTimeout(checkFooterScroll, 250);
+    setTimeout(checkFooterScroll, 800);
+    setTimeout(checkFooterScroll, 2000);
   }
+
+  // Expose globally for site-bridge or inline calls
+  window.initFooterAnimation = initFooterAnimation;
 
   function injectFooterHTML(html) {
     const placeholder = document.getElementById('footer-placeholder');
@@ -845,6 +913,7 @@
   function loadFooterComponent() {
     if (document.getElementById('footer-driver')) {
       initFooterAnimation();
+      window.dispatchEvent(new Event('footerLoaded'));
       return;
     }
 

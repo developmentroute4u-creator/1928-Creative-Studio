@@ -3677,6 +3677,16 @@
     applyPhoneScrollbarPolicy();
     window.addEventListener('resize', applyPhoneScrollbarPolicy, { passive: true });
     window.addEventListener('orientationchange', applyPhoneScrollbarPolicy, { passive: true });
+
+    function triggerFooterAnimationSafety() {
+      if (typeof window.initFooterAnimation === 'function') {
+        window.initFooterAnimation();
+      }
+    }
+    triggerFooterAnimationSafety();
+    window.addEventListener('DOMContentLoaded', triggerFooterAnimationSafety);
+    window.addEventListener('load', triggerFooterAnimationSafety);
+    window.addEventListener('footerLoaded', triggerFooterAnimationSafety);
   }
 
   if (document.readyState === 'loading') {
