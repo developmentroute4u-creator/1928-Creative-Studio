@@ -3953,21 +3953,39 @@
       }
     }
 
-    /* ── Smooth scrollbar ─────────────────────────────────── */
-    html {
-      scrollbar-width: thin;
-      scrollbar-color: var(--cr) var(--bg);
+    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
+    @media (min-width: 769px) {
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--cr) var(--bg);
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--cr);
+        border-radius: 3px;
+      }
     }
 
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
+    /* ── Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) ── */
+    @media (max-width: 768px) {
+      html, body {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
 
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: var(--cr);
-      border-radius: 3px;
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar,
+      ::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+      }
     }

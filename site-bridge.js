@@ -1626,6 +1626,26 @@
             max-width: 100vw !important;
           }
 
+          html, body, * {
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+          }
+
+          /* Hide scrolling sidebar / scrollbar completely on phone view across all pages */
+          html::-webkit-scrollbar,
+          body::-webkit-scrollbar,
+          *::-webkit-scrollbar,
+          ::-webkit-scrollbar,
+          ::-webkit-scrollbar-thumb,
+          ::-webkit-scrollbar-track,
+          *::-webkit-scrollbar-thumb,
+          *::-webkit-scrollbar-track {
+            display: none !important;
+            width: 0 !important;
+            height: 0 !important;
+            background: transparent !important;
+          }
+
           /* Hide custom cursor dot & expanding hover ring completely on phone */
           .c-dot,
           .c-ring,
@@ -3647,6 +3667,16 @@
     window.addEventListener('DOMContentLoaded', ensureFooterSocialPlacement);
     window.addEventListener('load', ensureFooterSocialPlacement);
     window.addEventListener('footerLoaded', ensureFooterSocialPlacement);
+
+    function applyPhoneScrollbarPolicy() {
+      if (window.innerWidth <= 768) {
+        document.documentElement.classList.add('hide-scrollbar');
+        document.body.classList.add('hide-scrollbar');
+      }
+    }
+    applyPhoneScrollbarPolicy();
+    window.addEventListener('resize', applyPhoneScrollbarPolicy, { passive: true });
+    window.addEventListener('orientationchange', applyPhoneScrollbarPolicy, { passive: true });
   }
 
   if (document.readyState === 'loading') {

@@ -3746,22 +3746,25 @@
       height: 0 !important;
     }
 
-    html {
-      scrollbar-width: thin;
-      scrollbar-color: var(--cr) var(--bg);
-    }
+    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
+    @media (min-width: 769px) {
+      html {
+        scrollbar-width: thin;
+        scrollbar-color: var(--cr) var(--bg);
+      }
 
-    ::-webkit-scrollbar {
-      width: 6px;
-    }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
 
-    ::-webkit-scrollbar-track {
-      background: var(--bg);
-    }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
 
-    ::-webkit-scrollbar-thumb {
-      background: var(--cr);
-      border-radius: 3px;
+      ::-webkit-scrollbar-thumb {
+        background: var(--cr);
+        border-radius: 3px;
+      }
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -3806,6 +3809,25 @@
       body {
         overflow-x: clip !important;
         max-width: 100vw !important;
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+
+      /* ── Hide Scrolling Sidebar (Scrollbar) on Phone View ── */
+      html, body, * {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+      }
+
+      html::-webkit-scrollbar,
+      body::-webkit-scrollbar,
+      ::-webkit-scrollbar,
+      ::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-track {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        background: transparent !important;
       }
 
       /* ── 1. PHONE HERO SECTION (First Viewport: 1928 Creative Studio + 2-line Subtitle) ── */
@@ -6828,8 +6850,8 @@
           if (themeFab) {
             themeFab.classList.add('vis');
           }
-          document.documentElement.classList.remove('hide-scrollbar');
-          document.body.classList.remove('hide-scrollbar');
+          document.documentElement.classList.add('hide-scrollbar');
+          document.body.classList.add('hide-scrollbar');
         } else {
           // Global Nav Visibility (Desktop):
           // - In Hero 3D room (heroHp < 0.70): always hidden.
