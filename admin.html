@@ -9984,128 +9984,17 @@
             badgeHdrNew.textContent = counts.new > 0 ? `${counts.new} New Briefs Awaiting Review` : `${counts.total || 0} Stored Briefs (Live)`;
           }
 
-          try {
-            localStorage.setItem('1928_contact_inquiries_cache', JSON.stringify(allInquiriesList));
-            localStorage.setItem('1928_contact_inquiries_counts', JSON.stringify(counts));
-          } catch(e) {}
-
           renderInquiriesTable();
           renderDashboardRecentInquiries(allInquiriesList);
 
           if (showToastNotice) {
-            showToast('Refreshed latest client inquiries & briefs');
+            showToast('Refreshed latest client inquiries & briefs directly from MySQL');
           }
         }
       } catch (err) {
-        console.warn('Live API query note:', err);
-        const cached = localStorage.getItem('1928_contact_inquiries_cache');
-        if (cached) {
-          try { allInquiriesList = JSON.parse(cached); } catch(e) {}
-        }
-        if (!allInquiriesList || allInquiriesList.length === 0) {
-          allInquiriesList = [
-            {
-              id: 4,
-              name: 'Sophia Laurent',
-              email: 'sophia@laurent-maison.com',
-              company: 'Maison Laurent Paris',
-              phone: '+33 1 42 68 55 00',
-              service: 'Brand Identity Development',
-              budget: '2 Lakh + (Comprehensive)',
-              timeline: '< 1 Month (Immediate)',
-              session_date: 'Friday, Oct 23, 2026',
-              session_time: '06:00 PM IST',
-              session_summary: 'Friday, Oct 23, 2026 · 06:00 PM IST',
-              vision: 'Bespoke Haute Joaillerie digital atelier with interactive 3D gem visualization.',
-              nda: 'Bilateral NDA Requested',
-              status: 'new',
-              admin_notes: null,
-              created_at: '2026-10-15 22:22:21'
-            },
-            {
-              id: 3,
-              name: 'Vikramaditya Oberoi',
-              email: 'vikram@oberoigroup.com',
-              company: 'Oberoi Heritage Resorts',
-              phone: '+91 99887 76655',
-              service: 'Website Design & Development',
-              budget: '2 Lakh + (Comprehensive)',
-              timeline: '< 1 Month (Immediate)',
-              session_date: 'Friday, Oct 23, 2026',
-              session_time: '04:30 PM IST',
-              session_summary: 'Friday, Oct 23, 2026 · 04:30 PM IST',
-              vision: 'We require an iconic ultra-luxury digital flagship showcasing private palace suites with 3D WebGL panoramic room tour physics.',
-              nda: 'Bilateral NDA Requested',
-              status: 'new',
-              admin_notes: null,
-              created_at: '2026-10-15 21:57:59'
-            },
-            {
-              id: 1,
-              name: 'Alexander Vance',
-              email: 'alexander@vanceholdings.com',
-              company: 'Vance Luxury Group',
-              phone: '+91 98250 88210',
-              service: 'Brand Identity Development',
-              budget: '1 Lakh to 2 Lakh (Flagship Venture)',
-              timeline: '< 1 Month (Immediate)',
-              session_date: 'Monday, Oct 19, 2026',
-              session_time: '02:30 PM IST',
-              session_summary: 'Monday, Oct 19, 2026 · 02:30 PM IST',
-              vision: 'We are preparing to launch a high-end luxury lifestyle maison and require an end-to-end visual identity, bespoke packaging system, and digital flagship.',
-              nda: 'Bilateral NDA Requested',
-              status: 'new',
-              admin_notes: 'Initial inquiry from contact form. Requested bilateral NDA prior to creative review.',
-              created_at: '2026-10-15 21:49:27'
-            },
-            {
-              id: 2,
-              name: 'Meera Singhania',
-              email: 'meera@singhaniacouture.in',
-              company: 'Singhania Haute Couture',
-              phone: '+91 97123 45678',
-              service: 'Website Design & Development',
-              budget: '2 Lakh + (Comprehensive)',
-              timeline: '1 – 3 Months (Standard)',
-              session_date: 'Wednesday, Oct 21, 2026',
-              session_time: '11:00 AM IST',
-              session_summary: 'Wednesday, Oct 21, 2026 · 11:00 AM IST',
-              vision: 'Complete overhaul of our international couture digital flagship with WebGL interactive runway storytelling and private client salon ordering.',
-              nda: 'Standard Review',
-              status: 'in_review',
-              admin_notes: 'Ami reviewed portfolio references. Scheduled for strategy session.',
-              created_at: '2026-10-15 21:49:27'
-            }
-          ];
-        }
-
-        const newCount = allInquiriesList.filter(i => i.status === 'new').length;
-        const totalCount = allInquiriesList.length;
-
-        const elTotal = document.getElementById('inqStatTotal');
-        const elNew = document.getElementById('inqStatNew');
-        if (elTotal) elTotal.textContent = totalCount;
-        if (elNew) elNew.textContent = newCount;
-
-        const badgeSidebar = document.getElementById('badgeInquiriesCount');
-        if (badgeSidebar) {
-          badgeSidebar.textContent = newCount > 0 ? `${newCount} New` : totalCount;
-          badgeSidebar.style.background = newCount > 0 ? 'var(--cr)' : 'var(--rule-heavy)';
-        }
-
-        const badgeContact = document.getElementById('badgeContactCount');
-        if (badgeContact) {
-          badgeContact.textContent = newCount > 0 ? `${newCount} New` : `${totalCount} Briefs`;
-          badgeContact.style.background = newCount > 0 ? 'var(--cr)' : 'var(--rule-heavy)';
-        }
-
-        const badgeTabInq = document.getElementById('badgeTabInquiriesCount');
-        if (badgeTabInq) {
-          badgeTabInq.textContent = newCount > 0 ? `${newCount} New` : totalCount;
-        }
-
+        console.error('Database inquiries query error:', err);
+        allInquiriesList = [];
         renderInquiriesTable();
-        renderDashboardRecentInquiries(allInquiriesList);
       }
     }
 
@@ -10651,6 +10540,12 @@
       initLiveCodeSync();
       refreshAllViews();
       checkDatabaseStatus();
+
+      if (window.CMSStore && typeof window.CMSStore.ready === 'function') {
+        window.CMSStore.ready().then(() => {
+          refreshAllViews();
+        }).catch(() => {});
+      }
 
       // Visual WYSIWYG Editor Listeners
       const vEditor = document.getElementById('blogVisualEditor');

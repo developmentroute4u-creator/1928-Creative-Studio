@@ -631,6 +631,40 @@ try {
             echo json_encode(['status' => 'success', 'message' => 'Studio principle saved to MySQL.', 'principle_id' => $principleId]);
             break;
 
+        case 'delete_principle':
+            $principleId = $inputData['id'] ?? '';
+            $stmt = $db->prepare("DELETE FROM `studio_principles` WHERE `principle_id` = :pid");
+            $stmt->execute([':pid' => $principleId]);
+            echo json_encode(['status' => 'success', 'message' => 'Studio principle deleted from MySQL.']);
+            break;
+
+        // ═══════════════════════════════════════════════════════════
+        // 6C. STUDIO PROFILE & STORY
+        // ═══════════════════════════════════════════════════════════
+        case 'save_profile':
+        case 'update_profile':
+        case 'save_profile_story':
+            $headline = $inputData['storyHeadline'] ?? ($inputData['story_headline'] ?? 'WE TURN AMBITION INTO MOMENTUM.');
+            $desc = $inputData['storyDescription'] ?? ($inputData['story_description'] ?? '');
+            $pillars = $inputData['pillars'] ?? ($inputData['pillars_json'] ?? []);
+            $pillarsJson = is_array($pillars) ? json_encode($pillars) : (string)$pillars;
+
+            $stmt = $db->prepare("
+                INSERT INTO `studio_profile` (`id`, `story_headline`, `story_description`, `pillars_json`)
+                VALUES (1, :hl, :desc, :pj)
+                ON DUPLICATE KEY UPDATE
+                    `story_headline` = VALUES(`story_headline`),
+                    `story_description` = VALUES(`story_description`),
+                    `pillars_json` = VALUES(`pillars_json`)
+            ");
+            $stmt->execute([
+                ':hl'   => $headline,
+                ':desc' => $desc,
+                ':pj'   => $pillarsJson
+            ]);
+            echo json_encode(['status' => 'success', 'message' => 'Studio profile saved to MySQL.']);
+            break;
+
 
         // ═══════════════════════════════════════════════════════════
         // 7. CORE SERVICES CRUD
@@ -676,6 +710,13 @@ try {
             ]);
 
             echo json_encode(['status' => 'success', 'message' => 'Service capability saved to MySQL.', 'service_id' => $serviceId]);
+            break;
+
+        case 'delete_service':
+            $serviceId = $inputData['id'] ?? '';
+            $stmt = $db->prepare("DELETE FROM `services` WHERE `service_id` = :sid");
+            $stmt->execute([':sid' => $serviceId]);
+            echo json_encode(['status' => 'success', 'message' => 'Service capability deleted from MySQL.']);
             break;
 
 

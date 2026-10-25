@@ -1558,16 +1558,13 @@
     initDynamicCMS();
   }
 
+  // Authoritative reaction when MySQL Database finishes loading via PHP
+  if (window.CMSStore && typeof window.CMSStore.ready === 'function') {
+    window.CMSStore.ready().then(initDynamicCMS).catch(() => {});
+  }
+
   // Real-time reactive updates across tabs and local events
   window.addEventListener('1928_cms_updated', initDynamicCMS);
-  window.addEventListener('storage', (e) => {
-    if (e.key && e.key.includes('1928_cms')) {
-      if (window.CMSStore && typeof window.CMSStore.loadFromStorage === 'function') {
-        window.CMSStore.loadFromStorage();
-      }
-      initDynamicCMS();
-    }
-  });
   window.addEventListener('footerLoaded', renderClientLogos);
 
   // Real-Time Live Code & Asset Sync via Server-Sent Events
