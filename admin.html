@@ -4483,10 +4483,198 @@
         </button>
       </div>
 
-      <!-- ═══ SUB-SECTION 1: HOME PAGE SERVICE SECTION (5 CARDS) ═══ -->
+      <!-- ═══ SUB-SECTION 1: HOME PAGE SERVICE SECTION (5 CARDS STATICALLY IN HTML) ═══ -->
       <div id="sectionHomeServices">
         <div class="data-grid-matrix" id="homeServicesGrid">
-          <!-- Rendered dynamically -->
+          <!-- Static Card 0: Logo Design -->
+          <div class="cms-card home-service-card" id="homeCard_0" style="padding:24px;border-radius:16px;background:var(--card-bg);border:1px solid var(--rule);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 16px -2px rgba(0,0,0,0.03);" onclick="editHomeServiceCard(0)">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;">
+                <span class="home-card-badge" style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">VISUAL IDENTITY · FIRST IMPRESSION</span>
+                <button type="button" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;font-weight:700;border-radius:7px;border:1px solid var(--rule);background:var(--card-bg);color:var(--ink);cursor:pointer;flex-shrink:0;" onclick="event.stopPropagation(); editHomeServiceCard(0)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  <span>EDIT</span>
+                </button>
+              </div>
+              <h3 class="home-card-title" style="font-family:var(--font-primary);font-size:18px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.3;">01. Logo Design</h3>
+              <p class="home-card-desc" style="font-size:13px;color:var(--ink-mid);margin:0 0 16px;line-height:1.55;">
+                <strong class="home-card-lead" style="color:var(--ink);font-weight:700;">A distinctive mark that gives your business a memorable identity.</strong>
+                <span class="home-card-body">We create thoughtful logos that capture your brand's character and give it a strong visual presence across every touchpoint.</span>
+              </p>
+              <div class="home-card-media-wrap" style="display:none;align-items:center;gap:8px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);margin-bottom:14px;"></div>
+            </div>
+            <div>
+              <div class="home-card-deliverables" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Custom Logos</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Wordmarks</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Monograms</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Symbols</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Typography</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-mid);">
+                <span style="display:inline-flex;align-items:center;gap:5px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  <strong class="home-card-link" style="color:var(--ink);font-weight:600;">service-logo-design.html</strong>
+                </span>
+                <span style="color:var(--cr);font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                  <span class="home-card-action-text">Explore Service</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Static Card 1: Brand Identity Development -->
+          <div class="cms-card home-service-card" id="homeCard_1" style="padding:24px;border-radius:16px;background:var(--card-bg);border:1px solid var(--rule);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 16px -2px rgba(0,0,0,0.03);" onclick="editHomeServiceCard(1)">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;">
+                <span class="home-card-badge" style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">BRAND STRATEGY · IDENTITY SYSTEM</span>
+                <button type="button" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;font-weight:700;border-radius:7px;border:1px solid var(--rule);background:var(--card-bg);color:var(--ink);cursor:pointer;flex-shrink:0;" onclick="event.stopPropagation(); editHomeServiceCard(1)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  <span>EDIT</span>
+                </button>
+              </div>
+              <h3 class="home-card-title" style="font-family:var(--font-primary);font-size:18px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.3;">02. Brand Identity Development</h3>
+              <p class="home-card-desc" style="font-size:13px;color:var(--ink-mid);margin:0 0 16px;line-height:1.55;">
+                <strong class="home-card-lead" style="color:var(--ink);font-weight:700;">A complete identity built around what makes your business different.</strong>
+                <span class="home-card-body">We turn your story, positioning and personality into a cohesive brand system designed to build recognition and lasting value.</span>
+              </p>
+              <div class="home-card-media-wrap" style="display:none;align-items:center;gap:8px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);margin-bottom:14px;"></div>
+            </div>
+            <div>
+              <div class="home-card-deliverables" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Brand Strategy</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Visual Identity</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Colour</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Typography</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Guidelines</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-mid);">
+                <span style="display:inline-flex;align-items:center;gap:5px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  <strong class="home-card-link" style="color:var(--ink);font-weight:600;">service-brand-identity.html</strong>
+                </span>
+                <span style="color:var(--cr);font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                  <span class="home-card-action-text">Explore Service</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Static Card 2: Website Design & Development -->
+          <div class="cms-card home-service-card" id="homeCard_2" style="padding:24px;border-radius:16px;background:var(--card-bg);border:1px solid var(--rule);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 16px -2px rgba(0,0,0,0.03);" onclick="editHomeServiceCard(2)">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;">
+                <span class="home-card-badge" style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">DIGITAL EXPERIENCE · DESIGN & BUILD</span>
+                <button type="button" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;font-weight:700;border-radius:7px;border:1px solid var(--rule);background:var(--card-bg);color:var(--ink);cursor:pointer;flex-shrink:0;" onclick="event.stopPropagation(); editHomeServiceCard(2)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  <span>EDIT</span>
+                </button>
+              </div>
+              <h3 class="home-card-title" style="font-family:var(--font-primary);font-size:18px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.3;">03. Website Design & Development</h3>
+              <p class="home-card-desc" style="font-size:13px;color:var(--ink-mid);margin:0 0 16px;line-height:1.55;">
+                <strong class="home-card-lead" style="color:var(--ink);font-weight:700;">Digital experiences that make your brand feel as good as it looks.</strong>
+                <span class="home-card-body">We design and develop purposeful websites that bring your story to life, create meaningful interactions and turn attention into action.</span>
+              </p>
+              <div class="home-card-media-wrap" style="display:none;align-items:center;gap:8px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);margin-bottom:14px;"></div>
+            </div>
+            <div>
+              <div class="home-card-deliverables" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">UI/UX</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Web Design</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Development</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">E-commerce</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Motion</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-mid);">
+                <span style="display:inline-flex;align-items:center;gap:5px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  <strong class="home-card-link" style="color:var(--ink);font-weight:600;">service-website-development.html</strong>
+                </span>
+                <span style="color:var(--cr);font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                  <span class="home-card-action-text">Explore Service</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Static Card 3: Social Media & Digital Marketing -->
+          <div class="cms-card home-service-card" id="homeCard_3" style="padding:24px;border-radius:16px;background:var(--card-bg);border:1px solid var(--rule);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 16px -2px rgba(0,0,0,0.03);" onclick="editHomeServiceCard(3)">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;">
+                <span class="home-card-badge" style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">DIGITAL PRESENCE · STRATEGY & CONTENT</span>
+                <button type="button" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;font-weight:700;border-radius:7px;border:1px solid var(--rule);background:var(--card-bg);color:var(--ink);cursor:pointer;flex-shrink:0;" onclick="event.stopPropagation(); editHomeServiceCard(3)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  <span>EDIT</span>
+                </button>
+              </div>
+              <h3 class="home-card-title" style="font-family:var(--font-primary);font-size:18px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.3;">04. Social Media & Digital Marketing</h3>
+              <p class="home-card-desc" style="font-size:13px;color:var(--ink-mid);margin:0 0 16px;line-height:1.55;">
+                <strong class="home-card-lead" style="color:var(--ink);font-weight:700;">Connecting your brand with the people who matter most.</strong>
+                <span class="home-card-body">From social strategy to organic and paid campaigns, we help your business build visibility, foster engagement and drive long-term loyalty.</span>
+              </p>
+              <div class="home-card-media-wrap" style="display:none;align-items:center;gap:8px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);margin-bottom:14px;"></div>
+            </div>
+            <div>
+              <div class="home-card-deliverables" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Social Strategy</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Content Creation</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Paid Media</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Growth Marketing</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Analytics</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-mid);">
+                <span style="display:inline-flex;align-items:center;gap:5px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  <strong class="home-card-link" style="color:var(--ink);font-weight:600;">service-digital-marketing.html</strong>
+                </span>
+                <span style="color:var(--cr);font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                  <span class="home-card-action-text">Explore Service</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Static Card 4: Content Creation & Influencer Marketing -->
+          <div class="cms-card home-service-card" id="homeCard_4" style="padding:24px;border-radius:16px;background:var(--card-bg);border:1px solid var(--rule);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 16px -2px rgba(0,0,0,0.03);" onclick="editHomeServiceCard(4)">
+            <div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;">
+                <span class="home-card-badge" style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">CAMPAIGNS · PRODUCTION · CREATIVE DIRECTION</span>
+                <button type="button" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;font-weight:700;border-radius:7px;border:1px solid var(--rule);background:var(--card-bg);color:var(--ink);cursor:pointer;flex-shrink:0;" onclick="event.stopPropagation(); editHomeServiceCard(4)">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                  <span>EDIT</span>
+                </button>
+              </div>
+              <h3 class="home-card-title" style="font-family:var(--font-primary);font-size:18px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.3;">05. Content Creation & Influencer Marketing</h3>
+              <p class="home-card-desc" style="font-size:13px;color:var(--ink-mid);margin:0 0 16px;line-height:1.55;">
+                <strong class="home-card-lead" style="color:var(--ink);font-weight:700;">Compelling narratives that inspire action and cultivate genuine advocacy.</strong>
+                <span class="home-card-body">We conceptualize, shoot, and produce high-impact photography, reels, and video content, paired with curated influencer partnerships to accelerate brand authority.</span>
+              </p>
+              <div class="home-card-media-wrap" style="display:none;align-items:center;gap:8px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);margin-bottom:14px;"></div>
+            </div>
+            <div>
+              <div class="home-card-deliverables" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Production</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Creative Direction</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Reels & Motion</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Influencer Strategy</span>
+                <span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">Campaigns</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-mid);">
+                <span style="display:inline-flex;align-items:center;gap:5px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  <strong class="home-card-link" style="color:var(--ink);font-weight:600;">service-content-creation.html</strong>
+                </span>
+                <span style="color:var(--cr);font-weight:700;display:inline-flex;align-items:center;gap:4px;">
+                  <span class="home-card-action-text">Explore Service</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -8751,58 +8939,55 @@
         ? homeServices.cards
         : (window.DEFAULT_CMS_DATA?.settings?.homeServices?.cards || []);
 
-      grid.innerHTML = cards.map((c, idx) => {
+      // Update data in-place on the static HTML cards
+      cards.forEach((c, idx) => {
+        const cardEl = document.getElementById(`homeCard_${idx}`);
+        if (!cardEl) return;
+
         const deliv = Array.isArray(c.deliverables) ? c.deliverables : [];
         const subheading = (c.badge || c.sheetSub || c.sheetTitle || 'VISUAL IDENTITY').toUpperCase();
-        return `
-          <div class="cms-card" style="padding:24px;border-radius:16px;background:var(--card-bg);border:1px solid var(--rule);position:relative;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 16px -2px rgba(0,0,0,0.03);" onclick="editHomeServiceCard(${idx})">
-            <div>
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:12px;">
-                <span style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
-                  ${subheading}
-                </span>
-                <button type="button" class="btn-action-secondary" style="display:inline-flex;align-items:center;gap:5px;padding:5px 12px;font-size:11px;font-weight:700;border-radius:7px;border:1px solid var(--rule);background:var(--card-bg);color:var(--ink);cursor:pointer;flex-shrink:0;" onclick="event.stopPropagation(); editHomeServiceCard(${idx})">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                  <span>EDIT</span>
-                </button>
-              </div>
 
-              <h3 style="font-family:var(--font-primary);font-size:18px;font-weight:800;margin:0 0 8px;color:var(--ink);line-height:1.3;">${c.title}</h3>
-              
-              <p style="font-size:13px;color:var(--ink-mid);margin:0 0 16px;line-height:1.55;">
-                ${c.leadDesc ? `<strong style="color:var(--ink);font-weight:700;">${c.leadDesc}</strong> ` : ''}${c.bodyDesc || c.desc || ''}
-              </p>
+        const badgeEl = cardEl.querySelector('.home-card-badge');
+        if (badgeEl) badgeEl.textContent = subheading;
 
-              ${c.mediaUrl ? `
-                <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);margin-bottom:14px;">
-                  ${(/\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(c.mediaUrl) || c.mediaUrl.startsWith('data:video/'))
-                    ? `<video src="${c.mediaUrl}#t=0.1" muted playsinline style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;background:#000;"></video>`
-                    : `<img src="${c.mediaUrl}" alt="media" style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.style.display='none';" />`
-                  }
-                  <span style="font-size:11px;color:var(--ink-mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.mediaUrl}</span>
-                </div>
-              ` : ''}
-            </div>
+        const titleEl = cardEl.querySelector('.home-card-title');
+        if (titleEl && c.title) titleEl.textContent = c.title;
 
-            <div>
-              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;">
-                ${deliv.map(d => `<span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">${d}</span>`).join('')}
-              </div>
+        const leadEl = cardEl.querySelector('.home-card-lead');
+        if (leadEl) leadEl.textContent = c.leadDesc || '';
 
-              <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--rule);font-size:11px;color:var(--ink-mid);">
-                <span style="display:inline-flex;align-items:center;gap:5px;">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                  <strong style="color:var(--ink);font-weight:600;">${c.actionLink || 'service-detail.html'}</strong>
-                </span>
-                <span style="color:var(--cr);font-weight:700;display:inline-flex;align-items:center;gap:4px;">
-                  ${c.actionText || 'Explore'} 
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                </span>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
+        const bodyEl = cardEl.querySelector('.home-card-body');
+        if (bodyEl) bodyEl.textContent = (c.bodyDesc || c.desc || '');
+
+        const delivEl = cardEl.querySelector('.home-card-deliverables');
+        if (delivEl && deliv.length > 0) {
+          delivEl.innerHTML = deliv.map(d => `<span style="font-size:11px;background:var(--card-alt);padding:4px 9px;border-radius:6px;color:var(--ink-mid);border:1px solid var(--rule);font-weight:500;">${d}</span>`).join('');
+        }
+
+        const linkEl = cardEl.querySelector('.home-card-link');
+        if (linkEl && c.actionLink) linkEl.textContent = c.actionLink;
+
+        const actionTextEl = cardEl.querySelector('.home-card-action-text');
+        if (actionTextEl && c.actionText) actionTextEl.textContent = c.actionText;
+
+        const mediaWrap = cardEl.querySelector('.home-card-media-wrap');
+        if (mediaWrap) {
+          if (c.mediaUrl) {
+            mediaWrap.style.display = 'flex';
+            const isVid = (/\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(c.mediaUrl) || c.mediaUrl.startsWith('data:video/'));
+            mediaWrap.innerHTML = `
+              ${isVid 
+                ? `<video src="${c.mediaUrl}#t=0.1" muted playsinline style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;background:#000;"></video>`
+                : `<img src="${c.mediaUrl}" alt="media" style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.style.display='none';" />`
+              }
+              <span style="font-size:11px;color:var(--ink-mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.mediaUrl}</span>
+            `;
+          } else {
+            mediaWrap.style.display = 'none';
+            mediaWrap.innerHTML = '';
+          }
+        }
+      });
     }
 
     function editHomeServiceCard(index) {
