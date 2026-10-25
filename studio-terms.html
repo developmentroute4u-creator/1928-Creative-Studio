@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Terms · 1928 Creative Studio</title>
+  <meta name="description" content="Studio Terms of 1928 Creative Studio — Our standard engagement terms, creative collaboration principles, intellectual property standards, and project guidelines." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gotham';
+      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-secondary);
+      min-height: 100vh;
+      width: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background .3s, color .3s;
+      position: relative;
+    }
+
+    /* ── Custom Cursor ── */
+    #cur {
+      position: fixed;
+      z-index: 99999;
+      pointer-events: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cr);
+      transform: translate(-50%, -50%);
+      transition: width .15s, height .15s;
+    }
+
+    #cur-r {
+      position: fixed;
+      z-index: 99998;
+      pointer-events: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cr);
+      opacity: .4;
+      transform: translate(-50%, -50%);
+      transition: width .28s var(--sm), height .28s var(--sm), opacity .3s, background .3s;
+    }
+
+    body.hov #cur-r {
+      width: 56px;
+      height: 56px;
+      opacity: .85;
+      background: var(--cr-lo);
+    }
+
+    /* ── Top Bar Navigation ── */
+    .legal-nav-header {
+      width: 100%;
+      padding: clamp(16px, 2.5vh, 28px) clamp(24px, 4vw, 64px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 7, 10, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    [data-theme="light"] .legal-nav-header {
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .brand-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .nav-logo-img {
+      height: clamp(32px, 3.5vw, 42px);
+      width: auto;
+      max-width: 190px;
+      display: block;
+      object-fit: contain;
+      transition: opacity 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+    }
+
+    .brand-link:hover .nav-logo-img {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    [data-theme="dark"] .nav-logo-img,
+    body.dark .nav-logo-img {
+      filter: brightness(1.28) contrast(1.08);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ink-mid);
+      text-decoration: none;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--rule);
+      background: var(--card-bg);
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .back-btn:hover {
+      color: var(--ink);
+      border-color: var(--cr);
+      transform: translateY(-1px);
+      background: var(--card-alt);
+    }
+
+    /* ── Legal Content Stage ── */
+    .legal-stage {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: clamp(48px, 7vh, 88px) clamp(24px, 4vw, 40px) clamp(64px, 9vh, 120px);
+      box-sizing: border-box;
+    }
+
+    .legal-tag-badge {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cr);
+      margin-bottom: 20px;
+    }
+
+    .legal-h1 {
+      font-family: var(--font-primary);
+      font-size: clamp(36px, 5.5vw, 68px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+
+    .legal-intro-lead {
+      font-size: clamp(16px, 1.3vw, 19px);
+      line-height: 1.65;
+      color: var(--ink-mid);
+      margin-bottom: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .legal-block-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .legal-item {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 28px 32px;
+      background: var(--card-bg);
+      border: 1px solid var(--rule);
+      border-radius: 16px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .legal-item:hover {
+      border-color: var(--rule-m);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .legal-item-title {
+      font-family: var(--font-primary);
+      font-size: clamp(17px, 1.4vw, 20px);
+      font-weight: 800;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .legal-item-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-mid);
+    }
+
+    .legal-item-desc strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    /* ── Floating Theme FAB ── */
+    #theme-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 9990;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1.5px solid var(--rule-m);
+      color: var(--ink);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.22);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      transition: transform .3s var(--sp), border-color .3s, box-shadow .3s, background .3s;
+    }
+
+    #theme-fab:hover {
+      transform: translateY(-3px) scale(1.08);
+      border-color: var(--cr);
+      box-shadow: 0 14px 40px var(--cr-glow);
+    }
+
+    #theme-fab svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: transform .4s var(--sp);
+    }
+
+    #theme-fab:hover svg {
+      transform: rotate(25deg);
+    }
+
+    [data-theme="dark"] #theme-fab .icon-moon,
+    [data-theme="light"] #theme-fab .icon-sun {
+      display: none;
+    }
+
+    [data-theme="dark"] #theme-fab .icon-sun,
+    [data-theme="light"] #theme-fab .icon-moon {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ══ Custom Cursor Elements ══ -->
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+
+  <!-- ── Top Header Navigation ── -->
+  <header class="legal-nav-header">
+    <a href="index.html" class="brand-link" aria-label="1928 Creative Studio Home">
+      <img src="img/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img" />
+    </a>
+    <a href="javascript:void(0)" onclick="handleGoBack()" class="back-btn" aria-label="Go back to previous page">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      <span>Back</span>
+    </a>
+  </header>
+
+  <!-- ── Main Policy Content ── -->
+  <main class="legal-stage">
+    <div class="legal-tag-badge">
+      <span>STUDIO &amp; LEGAL</span>
+    </div>
+
+    <h1 class="legal-h1">Studio Terms</h1>
+
+    <p class="legal-intro-lead">
+      These Studio Terms define the standards, creative guidelines, intellectual property framework, and collaborative expectations governing engagements between 1928 Creative Studio and our clients. We build long-term value through transparent process, distinct craftsmanship, and mutual accountability.
+    </p>
+
+    <div class="legal-block-list">
+      <!-- 1 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">1. Creative Engagements &amp; Project Scopes</h2>
+        <p class="legal-item-desc">
+          All client partnerships with 1928 Creative Studio—spanning Visual Identity, Logo Design, Website Development, Digital Marketing, and Content Production—are governed by written project proposals, statements of work, or accepted creative briefs detailing deliverables, schedules, and fee structures.
+        </p>
+      </section>
+
+      <!-- 2 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">2. Proposals, Estimates &amp; Commencement</h2>
+        <p class="legal-item-desc">
+          Written estimates and proposals issued by the studio remain valid for the timeframe stated in the proposal document. Creative direction and active production officially commence upon receipt of the agreed deposit or milestone confirmation as defined in the project scope.
+        </p>
+      </section>
+
+      <!-- 3 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">3. Intellectual Property &amp; Asset Ownership</h2>
+        <p class="legal-item-desc">
+          • <strong>Final Deliverables:</strong> Upon project completion and full settlement of all associated invoices, all rights and title to final, approved creative deliverables (including custom logos, brand assets, vector artwork, and compiled web deliverables) transfer to the client for their intended commercial usage.<br />
+          • <strong>Preliminary Explorations:</strong> Preliminary design concepts, unused drafts, rejected sketches, working source methodologies, and proprietary internal toolsets developed independently by 1928 Creative Studio remain the exclusive intellectual property of the studio.
+        </p>
+      </section>
+
+      <!-- 4 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">4. Collaboration &amp; Client Approvals</h2>
+        <p class="legal-item-desc">
+          Exceptional creative outcomes depend on swift, decisive collaboration. Clients agree to provide timely reviews, necessary asset materials (such as high-resolution imagery, copy guidelines, or technical credentials), and milestone approvals to ensure schedules remain aligned with planned launch milestones.
+        </p>
+      </section>
+
+      <!-- 5 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">5. Revisions &amp; Scope Enhancements</h2>
+        <p class="legal-item-desc">
+          Each engagement includes designated feedback rounds specified in the original proposal. Significant modifications outside the initial brief, structural alterations after milestone approval, or additional deliverable requests will be estimated transparently through a scope addendum.
+        </p>
+      </section>
+
+      <!-- 6 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">6. Confidentiality &amp; Mutual Non-Disclosure</h2>
+        <p class="legal-item-desc">
+          Both parties agree to protect and treat with strict confidentiality all proprietary business data, unreleased concepts, strategic roadmaps, commercial terms, and financial information disclosed throughout the duration of the engagement.
+        </p>
+      </section>
+
+      <!-- 7 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">7. Portfolio &amp; Archival Rights</h2>
+        <p class="legal-item-desc">
+          Unless a customized non-disclosure agreement specifies otherwise in writing, 1928 Creative Studio reserves the customary professional right to showcase completed, publicly launched work, case studies, and brand artifacts within our digital portfolio, archives, retrospective presentations, and industry recognitions.
+        </p>
+      </section>
+
+      <!-- 8 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">8. Limitation of Liability</h2>
+        <p class="legal-item-desc">
+          1928 Creative Studio delivers services with the utmost standard of care and professional diligence. The studio shall not be held liable for indirect, incidental, or consequential damages resulting from third-party platform alterations, hosting interruptions, or unauthorized modifications made to delivered assets following final handover.
+        </p>
+      </section>
+
+      <!-- 9 -->
+      <section class="legal-item">
+        <h2 class="legal-item-title">9. Contact Us</h2>
+        <p class="legal-item-desc">
+          For questions, formal notifications, or discussions regarding our Studio Terms, connect directly with our studio:
+        </p>
+        <p style="font-family:var(--font-primary);font-size:16px;font-weight:800;color:var(--ink);margin-top:6px;">
+          1928 Creative Studio
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <!-- ── Floating Theme Toggle ── -->
+  <button id="theme-fab" type="button" aria-label="Toggle visual theme">
+    <svg class="icon-sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+    </svg>
+  </button>
+
+  <script>
+    // ── Dedicated Back Navigation Handler ──
+    function handleGoBack() {
+      if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
+        window.history.back();
+      } else if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = document.referrer || 'index.html';
+      }
+    }
+
+    // ── Global Interactive Custom Cursor ──
+    (function () {
+      const CUR = document.getElementById('cur');
+      const CURR = document.getElementById('cur-r');
+      if (!CUR || !CURR) return;
+      let mx = window.innerWidth / 2, my = window.innerHeight / 2, rx = window.innerWidth / 2, ry = window.innerHeight / 2;
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        CUR.style.left = mx + 'px';
+        CUR.style.top = my + 'px';
+        if (e.target && e.target.closest('a, button, .back-btn, .legal-item, #theme-fab')) {
+          if (!document.body.classList.contains('hov')) document.body.classList.add('hov');
+        } else {
+          if (document.body.classList.contains('hov')) document.body.classList.remove('hov');
+        }
+      }, { passive: true });
+      (function L() {
+        rx += (mx - rx) * 0.14;
+        ry += (my - ry) * 0.14;
+        CURR.style.left = rx + 'px';
+        CURR.style.top = ry + 'px';
+        requestAnimationFrame(L);
+      })();
+    })();
+
+    // ── Unified Theme Synchronization ──
+    (function () {
+      const fab = document.getElementById('theme-fab');
+      if (!fab) return;
+      const html = document.documentElement;
+
+      function applyTheme(t) {
+        html.setAttribute('data-theme', t);
+        try {
+          localStorage.setItem('t28', t);
+          localStorage.setItem('theme-1928', t);
+          localStorage.setItem('theme', t);
+        } catch (e) {}
+      }
+
+      fab.addEventListener('click', () => {
+        const cur = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        applyTheme(cur);
+      });
+    })();
+  </script>
+
+  <!-- ── Global Dynamic Footer ── -->
+  <script src="footer-loader.js?v=20261025_02"></script>
+</body>
+
+</html>
