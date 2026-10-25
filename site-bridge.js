@@ -1126,11 +1126,15 @@
             pagEl.textContent = card.pagination;
           }
 
-          if (card.mediaUrl && card.mediaUrl.trim()) {
+          const coreServices = (typeof window.CMSStore?.getServices === 'function') ? window.CMSStore.getServices() : [];
+          const matchingCoreSvc = coreServices[idx] || coreServices.find(s => parseInt(s.num, 10) === (idx + 1));
+          const effectiveMediaUrl = (card.mediaUrl && card.mediaUrl.trim()) || (matchingCoreSvc && matchingCoreSvc.image && matchingCoreSvc.image.trim()) || '';
+
+          if (effectiveMediaUrl) {
             const artFrame = showcaseCard.querySelector('.svc-s3-art-frame');
             if (artFrame) {
-              const url = card.mediaUrl.trim();
-              if (url.endsWith('.mp4') || url.endsWith('.webm')) {
+              const url = effectiveMediaUrl;
+              if (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/')) {
                 artFrame.innerHTML = `
                   <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;">
                     <source src="${url}" type="video/mp4">

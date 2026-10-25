@@ -1657,14 +1657,20 @@
         const storedHash = localStorage.getItem(STORAGE_KEY + '_code_hash');
         const stored = localStorage.getItem(STORAGE_KEY);
 
-        // If code has changed on disk, automatically synchronize with new code
-        if (storedHash !== codeChecksum || !stored) {
-          console.log('⚡ [1928 CMS] Code change detected. Live-syncing data store with code from backend...');
+        // If no stored data exists in the browser, initialize with factory defaults
+        if (!stored) {
           try {
             localStorage.setItem(STORAGE_KEY + '_code_hash', codeChecksum);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_CMS_DATA));
           } catch (e) {}
           return JSON.parse(JSON.stringify(DEFAULT_CMS_DATA));
+        }
+
+        // When code has changed on disk, update code hash without wiping client/admin stored data
+        if (storedHash !== codeChecksum) {
+          try {
+            localStorage.setItem(STORAGE_KEY + '_code_hash', codeChecksum);
+          } catch (e) {}
         }
 
         if (stored) {

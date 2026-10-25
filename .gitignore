@@ -24,3 +24,6 @@ whatsapp-api/.wwebjs_auth/
 whatsapp-api/.wwebjs_cache/
 
 db.php
+
+# Test and verification screenshots in root
+/*.png

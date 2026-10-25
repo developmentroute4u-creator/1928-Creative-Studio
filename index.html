@@ -5751,9 +5751,7 @@
             <div class="svc-s3-art-frame" style="background: #141416; overflow: hidden;">
               <video class="svc-art-video" autoplay loop muted playsinline preload="auto"
                 onloadedmetadata="this.muted=true;this.play();">
-                <source src="video/Logo Section.mp4" type="video/mp4">
                 <source src="video/logo-section.mp4" type="video/mp4">
-                <source src="video/video logo section.mp4" type="video/mp4">
               </video>
             </div>
             <div class="svc-card-num-watermark">01</div>
@@ -6750,14 +6748,17 @@
       document.addEventListener('mousemove', e => {
         mx = e.clientX; my = e.clientY;
         if (CUR) { CUR.style.left = mx + 'px'; CUR.style.top = my + 'px'; }
-      });
+        if (e.target && e.target.closest('a,button,.port-card,.p-card-v,.blog-card,.marquee-item,.svc-card')) {
+          if (!document.body.classList.contains('hov')) document.body.classList.add('hov');
+        } else {
+          if (document.body.classList.contains('hov')) document.body.classList.remove('hov');
+        }
+      }, { passive: true });
       (function L() {
         rx += (mx - rx) * .11; ry += (my - ry) * .11;
         if (CURR) { CURR.style.left = rx + 'px'; CURR.style.top = ry + 'px'; }
         requestAnimationFrame(L);
       })();
-      document.addEventListener('mouseover', e => { if (e.target.closest('a,button,.port-card,.blog-card,.marquee-item,.svc-card')) document.body.classList.add('hov'); });
-      document.addEventListener('mouseout', e => { if (e.target.closest('a,button,.port-card,.blog-card,.marquee-item,.svc-card')) document.body.classList.remove('hov'); });
 
       /* ── Floating Theme Toggle ──────────────────────────── */
       const DR = document.documentElement;
