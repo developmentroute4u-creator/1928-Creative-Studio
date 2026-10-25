@@ -797,9 +797,8 @@
     footerGiantText._animInitialized = true;
 
     const chars = footerGiantText.querySelectorAll('.f-char');
-    // Pure unbroken left-to-right character-by-character wave:
-    // 1 -> 9 -> 2 -> 8 -> C -> R -> E -> A -> T -> I -> V -> E -> S -> T -> U -> D -> I -> O
-    const delayStep = 0.048; // 48ms per character for an organic, undulating ripple
+    // Pure unbroken left-to-right character-by-character soft wave (1 -> 9 -> 2 -> 8 -> C -> R...)
+    const delayStep = 0.026; // 26ms per character for an ultra-soft, minimal wave
     chars.forEach((char, index) => {
       const delay = `${(index * delayStep).toFixed(3)}s`;
       char.style.setProperty('transition-delay', delay, 'important');
@@ -817,71 +816,28 @@
       }
     }
 
-    // Modern IntersectionObserver: fires reliably across all browsers, viewports, scaling, and zoom
-    if ('IntersectionObserver' in window) {
-      const footerObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            revealFooter();
-          } else {
-            const rect = entry.boundingClientRect;
-            const vh = window.innerHeight || document.documentElement.clientHeight;
-            // Only unreveal if scrolled completely away (top is below screen or bottom is above screen)
-            if (rect.top > vh + 160 || rect.bottom < -160) {
-              unrevealFooter();
-            }
-          }
-        });
-      }, {
-        root: null,
-        rootMargin: '0px 0px -30px 0px',
-        threshold: [0.01, 0.08, 0.25, 0.5]
-      });
-
-      footerObserver.observe(luxuryCard);
-      footerObserver.observe(footerGiantText);
-    }
-
     function checkFooterScroll() {
       const cardRect = luxuryCard.getBoundingClientRect();
-      const textRect = footerGiantText.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
+      const cardCenterY = cardRect.top + (cardRect.height * 0.5);
+      const viewportCenterY = vh * 0.5;
+      const scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || 0;
       const docHeight = Math.max(
         document.body.scrollHeight || 0,
         document.documentElement.scrollHeight || 0,
         document.body.offsetHeight || 0,
         document.documentElement.offsetHeight || 0
       );
-      const scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || 0;
-      const isNearBottom = (scrollY + vh) >= (docHeight - 140);
+      const isAtBottom = (scrollY + vh) >= (docHeight - 40);
 
-      // Card is entering viewport, or text is near viewport, or page is scrolled near bottom
-      const cardVisible = (cardRect.top <= vh * 0.90 && cardRect.bottom >= 40);
-      const textVisible = (textRect.top <= vh * 0.98 && textRect.bottom >= 0);
-
-      if (cardVisible || textVisible || isNearBottom) {
+      // Trigger ONLY when the footer luxury card reaches the center of the viewport (or at bottom of page)
+      if (cardCenterY <= viewportCenterY + 40 || isAtBottom) {
         revealFooter();
-      } else if (cardRect.top > vh + 180 || cardRect.bottom < -180) {
+      } else if (cardCenterY > viewportCenterY + 120) {
         unrevealFooter();
       }
     }
     footerGiantText._checkFooterScroll = checkFooterScroll;
-
-    // Micro-interaction on desktop hover
-    chars.forEach((char) => {
-      char.addEventListener('mouseenter', () => {
-        char.style.setProperty('transform', 'translateY(-14%)', 'important');
-        char.style.setProperty('color', 'var(--cr, #C8102E)', 'important');
-        setTimeout(() => {
-          if (footerGiantText.classList.contains('revealed')) {
-            char.style.setProperty('transform', 'translateY(0%)', 'important');
-          } else {
-            char.style.setProperty('transform', 'translateY(85%)', 'important');
-          }
-          char.style.removeProperty('color');
-        }, 320);
-      });
-    });
 
     window.addEventListener('scroll', checkFooterScroll, { passive: true });
     window.addEventListener('resize', checkFooterScroll, { passive: true });

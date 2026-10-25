@@ -1602,9 +1602,20 @@
                   const raw = json.data.settings?.home_services || json.data.settings?.homeServices;
                   if (!raw) return DEFAULT_CMS_DATA.settings.homeServices;
                   if (typeof raw === 'string') {
-                    try { return JSON.parse(raw); } catch (e) { return DEFAULT_CMS_DATA.settings.homeServices; }
+                    try {
+                      const parsed = JSON.parse(raw);
+                      if (parsed && Array.isArray(parsed.cards) && parsed.cards.length > 0) {
+                        return parsed;
+                      }
+                      return DEFAULT_CMS_DATA.settings.homeServices;
+                    } catch (e) {
+                      return DEFAULT_CMS_DATA.settings.homeServices;
+                    }
                   }
-                  return raw;
+                  if (raw && Array.isArray(raw.cards) && raw.cards.length > 0) {
+                    return raw;
+                  }
+                  return DEFAULT_CMS_DATA.settings.homeServices;
                 })()
               },
               contactBrief: json.data.contactBrief ? {
@@ -1698,7 +1709,9 @@
                 ...DEFAULT_CMS_DATA.settings.servicesHeader,
                 ...(parsed.settings?.services_header || parsed.settings?.servicesHeader || {})
               },
-              homeServices: parsed.settings?.homeServices || DEFAULT_CMS_DATA.settings.homeServices
+              homeServices: (parsed.settings?.homeServices && Array.isArray(parsed.settings.homeServices.cards) && parsed.settings.homeServices.cards.length > 0)
+                ? parsed.settings.homeServices
+                : DEFAULT_CMS_DATA.settings.homeServices
             },
             contactBrief: parsed.contactBrief ? {
               header: { ...DEFAULT_CMS_DATA.contactBrief.header, ...(parsed.contactBrief.header || {}) },
@@ -1914,7 +1927,11 @@
 
     // ── Home Page Services Methods ──
     getHomeServices() {
-      return this.data.settings?.homeServices || DEFAULT_CMS_DATA.settings.homeServices;
+      const hs = this.data.settings?.homeServices;
+      if (hs && Array.isArray(hs.cards) && hs.cards.length > 0) {
+        return hs;
+      }
+      return DEFAULT_CMS_DATA.settings.homeServices;
     }
     saveHomeServices(homeData) {
       if (!this.data.settings) this.data.settings = {};
