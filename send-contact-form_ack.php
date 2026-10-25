@@ -97,17 +97,6 @@ if (!defined('ENABLE_TURNSTILE_VERIFY')) {
     define('ENABLE_TURNSTILE_VERIFY', !empty(CLOUDFLARE_TURNSTILE_SECRET_KEY));
 }
 
-/**
- * WhatsApp Microservice API Configuration:
- * Can be defined in smtp-config.php or via environment variables.
- */
-if (!defined('WHATSAPP_API_URL')) {
-    define('WHATSAPP_API_URL', getenv('WHATSAPP_API_URL') ?: 'https://1928creativestudioapi.vanshmistry.com/send-form-notifications');
-}
-if (!defined('WHATSAPP_API_SECRET')) {
-    define('WHATSAPP_API_SECRET', getenv('WHATSAPP_API_SECRET') ?: 'akgsaqcwkuisebsdxpzwqswasogzhlsdlibetpugrjqruckv');
-}
-
 // ══════════════════════════════════════════════════════════════════════════════
 // 2. PARSE & VALIDATE INCOMING FORM SUBMISSION
 // ══════════════════════════════════════════════════════════════════════════════
@@ -302,153 +291,6 @@ try {
     // Continue so email dispatch can still be attempted even if DB has an issue
 }
 
-
-/* ── WhatsApp notifications: independent of email delivery ── */
-/* ── Customer WhatsApp confirmation ── */
-
-$whatsappResult = [
-    'attempted' => false,
-    'success'   => false,
-    'message'   => 'WhatsApp notification not attempted.'
-];
-
-try {
-    if (!function_exists('curl_init')) {
-        throw new RuntimeException(
-            'PHP cURL extension is not enabled.'
-        );
-    }
-
-    if (
-        !defined('WHATSAPP_API_URL') ||
-        !defined('WHATSAPP_API_SECRET') ||
-        WHATSAPP_API_SECRET === ''
-    ) {
-        throw new RuntimeException(
-            'WhatsApp API configuration is incomplete.'
-        );
-    }
-
-    // Normalize the customer's phone number.
-    $rawPhone = trim((string)$phone);
-    $phoneDigits = preg_replace('/\D+/', '', $rawPhone);
-
-    $countryCodeRaw = trim((string)(
-        $requestData['country_code']
-        ?? $requestData['countryCode']
-        ?? $requestData['dialCode']
-        ?? '+91'
-    ));
-
-    $countryDigits = preg_replace('/\D+/', '', $countryCodeRaw);
-
-    if (strpos($rawPhone, '+') === 0) {
-        // Number already includes its international prefix.
-        $whatsappPhone = $phoneDigits;
-    } elseif (
-        strlen($phoneDigits) > 10 &&
-        $countryDigits !== '' &&
-        strpos($phoneDigits, $countryDigits) === 0
-    ) {
-        // Number already starts with the country code.
-        $whatsappPhone = $phoneDigits;
-    } else {
-        // Add the selected country code to a local number.
-        $whatsappPhone = $countryDigits . $phoneDigits;
-    }
-
-    if (!preg_match('/^\d{8,15}$/', $whatsappPhone)) {
-        throw new RuntimeException(
-            'Customer phone number is invalid for WhatsApp.'
-        );
-    }
-
-    // The Node API requires the customer name and phone.
-    $whatsappPayload = [
-        'name'  => $name,
-        'phone' => $whatsappPhone
-    ];
-
-    $jsonPayload = json_encode(
-        $whatsappPayload,
-        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-    );
-
-    if ($jsonPayload === false) {
-        throw new RuntimeException(
-            'Could not encode the WhatsApp request.'
-        );
-    }
-
-    $ch = curl_init(WHATSAPP_API_URL);
-
-    curl_setopt_array($ch, [
-        CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $jsonPayload,
-        CURLOPT_HTTPHEADER     => [
-            'Content-Type: application/json',
-            'x-api-secret: ' . WHATSAPP_API_SECRET
-        ],
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_CONNECTTIMEOUT => 3,
-        CURLOPT_TIMEOUT        => 35
-    ]);
-
-    $whatsappResult['attempted'] = true;
-
-    $whatsappResponse = curl_exec($ch);
-    $whatsappHttpCode = (int)curl_getinfo(
-        $ch,
-        CURLINFO_HTTP_CODE
-    );
-    $whatsappCurlError = curl_error($ch);
-
-    curl_close($ch);
-
-    if ($whatsappResponse === false) {
-        throw new RuntimeException(
-            'WhatsApp API connection failed: ' . $whatsappCurlError
-        );
-    }
-
-    $responseData = json_decode($whatsappResponse, true);
-
-    if (!is_array($responseData)) {
-        throw new RuntimeException(
-            'WhatsApp API returned an invalid response.'
-        );
-    }
-
-    if (
-        $whatsappHttpCode >= 200 &&
-        $whatsappHttpCode < 300 &&
-        !empty($responseData['success']) &&
-        !empty($responseData['customerSent'])
-    ) {
-        $whatsappResult['success'] = true;
-        $whatsappResult['message'] =
-            'Customer WhatsApp send operation completed.';
-    } else {
-        $whatsappResult['message'] =
-            $responseData['error']
-            ?? $responseData['message']
-            ?? 'WhatsApp API request failed.';
-
-        error_log(
-            '1928 Studio WhatsApp Error. HTTP ' .
-                $whatsappHttpCode . ': ' .
-                $whatsappResult['message']
-        );
-    }
-} catch (Throwable $whatsappError) {
-    $whatsappResult['message'] = $whatsappError->getMessage();
-
-    error_log(
-        '1928 Studio WhatsApp Integration Error: ' .
-            $whatsappError->getMessage()
-    );
-}
-
 // ══════════════════════════════════════════════════════════════════════════════
 // 3. LOAD PHPMAILER
 // ══════════════════════════════════════════════════════════════════════════════
@@ -461,7 +303,6 @@ if (!file_exists($autoloadFile)) {
             'status'     => 'success',
             'message'    => 'Brief received and securely logged in our studio admin panel! Our team will review your mandate within 72 hours.',
             'inquiry_id' => $inquiryId,
-            'whatsapp' => $whatsappResult,
             'saved_to_db' => true,
             'mail_sent'  => false
         ]);
@@ -881,7 +722,6 @@ if ($customerMailSent || $adminMailSent || $savedToDb) {
         'status'          => 'success',
         'message'         => 'Brief received! An acknowledgment email has been sent to ' . htmlspecialchars($email) . ' (we will get back to you within 72 hours).',
         'inquiry_id'      => $inquiryId,
-        'whatsapp'        => $whatsappResult,
         'saved_to_db'     => $savedToDb,
         'mail_sent'       => $customerMailSent,
         'admin_mail_sent' => $adminMailSent,
