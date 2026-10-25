@@ -114,9 +114,17 @@
       if (!allInquiriesList || allInquiriesList.length === 0) {
         tbody.innerHTML = `
           <tr>
-            <td colspan="7" style="text-align:center;padding:60px 24px;color:var(--ink-mid);">
-              <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;">No client inquiries found</div>
-              <p style="font-size:12.5px;margin:0;">There are no submissions matching your active filter "${currentInqFilter}". Submissions from contact.html will appear here instantly.</p>
+            <td colspan="7" style="text-align:center;padding:68px 24px;">
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;">
+                <div style="width:52px;height:52px;border-radius:14px;background:rgba(200,16,46,0.06);border:1px solid rgba(200,16,46,0.18);display:flex;align-items:center;justify-content:center;color:var(--cr);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <div style="font-family:var(--font-primary);font-size:15px;font-weight:800;color:var(--ink);letter-spacing:-0.01em;">No Client Inquiries Logged Yet</div>
+                <p style="font-family:var(--font-secondary);font-size:12.5px;color:var(--ink-mid);margin:0;max-width:420px;line-height:1.5;">New client submissions and strategy session appointments from the contact page will automatically appear here in real-time.</p>
+              </div>
             </td>
           </tr>
         `;
@@ -173,7 +181,22 @@
       if (!tbody) return;
 
       if (!inquiries || inquiries.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--ink-mid);">No client briefs logged yet.</td></tr>`;
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" style="text-align:center;padding:52px 24px;">
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">
+                <div style="width:46px;height:46px;border-radius:12px;background:rgba(200,16,46,0.06);border:1px solid rgba(200,16,46,0.16);display:flex;align-items:center;justify-content:center;color:var(--cr);">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                </div>
+                <div style="font-family:var(--font-primary);font-size:14px;font-weight:800;color:var(--ink);letter-spacing:-0.01em;">No Recent Inquiries Logged Yet</div>
+                <p style="font-family:var(--font-secondary);font-size:12px;color:var(--ink-mid);margin:0;max-width:380px;line-height:1.5;">Live client submissions and strategy session appointments from the contact page will appear here.</p>
+              </div>
+            </td>
+          </tr>
+        `;
         return;
       }
 

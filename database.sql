@@ -1,6 +1,6 @@
 -- 1928 CREATIVE STUDIO — Pure Database-Driven Master Schema & Initial Data
 -- Database: `1928_studio_cms`
--- Generated: 2026-10-25 18:05:32
+-- Generated: 2026-10-25 18:30:40
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -333,16 +333,7 @@ CREATE TABLE `contact_inquiries` (
   KEY `idx_status` (`status`),
   KEY `idx_created_at` (`created_at`),
   KEY `idx_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- Dumping data for `contact_inquiries`
-INSERT INTO `contact_inquiries` (`id`, `name`, `email`, `company`, `phone`, `service`, `budget`, `timeline`, `session_date`, `session_time`, `session_summary`, `vision`, `nda`, `status`, `admin_notes`, `ip_address`, `user_agent`, `created_at`, `updated_at`) VALUES
-(1, 'Alexander Vance', 'alexander@vanceholdings.com', 'Vance Luxury Group', '+91 98250 88210', 'Brand Identity Development', '1 Lakh to 2 Lakh (Flagship Venture)', '< 1 Month (Immediate)', 'Monday, Oct 19, 2026', '02:30 PM IST', 'Monday, Oct 19, 2026 · 02:30 PM IST', 'We are preparing to launch a high-end luxury lifestyle maison and require an end-to-end visual identity, bespoke packaging system, and digital flagship.', 'Bilateral NDA Requested', 'new', 'Initial inquiry from contact form. Requested bilateral NDA prior to creative review.', NULL, NULL, '2026-10-15 21:49:27', '2026-10-15 21:49:27'),
-(2, 'Meera Singhania', 'meera@singhaniacouture.in', 'Singhania Haute Couture', '+91 97123 45678', 'Website Design & Development', '2 Lakh + (Comprehensive)', '1 – 3 Months (Standard)', 'Wednesday, Oct 21, 2026', '11:00 AM IST', 'Wednesday, Oct 21, 2026 · 11:00 AM IST', 'Complete overhaul of our international couture digital flagship with WebGL interactive runway storytelling and private client salon ordering.', 'Standard Review', 'in_review', 'Ami reviewed portfolio references. Scheduled for strategy session.', NULL, NULL, '2026-10-15 21:49:27', '2026-10-15 21:49:27'),
-(3, 'Vikramaditya Oberoi', 'vikram@oberoigroup.com', 'Oberoi Heritage Resorts', '+91 99887 76655', 'Website Design & Development', '2 Lakh + (Comprehensive)', '< 1 Month (Immediate)', 'Friday, Oct 23, 2026', '04:30 PM IST', 'Friday, Oct 23, 2026 · 04:30 PM IST', 'We require an iconic ultra-luxury digital flagship showcasing private palace suites with 3D WebGL panoramic room tour physics.', 'Bilateral NDA Requested', 'new', NULL, '127.0.0.1', 'PHP Test Agent', '2026-10-15 21:57:59', '2026-10-15 21:57:59'),
-(4, 'Sophia Laurent', 'sophia@laurent-maison.com', 'Maison Laurent Paris', '33 1 42 68 55 00', 'Brand Identity Development', '2 Lakh   (Comprehensive)', '< 1 Month (Immediate)', 'Thursday, Oct 15, 2026', '11:00 AM IST', 'Thursday, Oct 15, 2026 · 11:00 AM IST', '', 'on', 'new', NULL, '::1', 'curl/8.21.0', '2026-10-15 22:22:18', '2026-10-15 22:22:18'),
-(5, 'Elena Rostova', 'elena@rostovadesign.com', 'Rostova Architectural Atelier', '+91 98765 43210', 'Full 360° Studio Creative Partnership', '₹30L – ₹60 Lakhs (Flagship Venture)', '1 – 3 Months (Standard)', 'Tuesday, Oct 27, 2026', '02:30 PM IST', 'Tuesday, Oct 27, 2026 · 02:30 PM IST', 'Comprehensive identity, spatial environmental branding, and custom 3D WebGL showcase for our flagship architectural studio in Milan.', 'Bilateral NDA Requested', 'in_review', '', '::1', '', '2026-10-15 23:31:05', '2026-10-16 00:58:26'),
-(6, 'Jay Test', 'jaythakur1928@gmail.com', '1928 Creative Studio Test', '7048892006', 'Brand Identity Development', '2 Lakh + (Comprehensive)', '< 1 Month (Immediate)', 'Friday, Oct 23, 2026', '04:30 PM IST', 'Friday, Oct 23, 2026 · 04:30 PM IST', 'Automated test brief verification.', 'Standard Review', 'new', NULL, '::1', '', '2026-10-16 21:49:20', '2026-10-16 21:49:20');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 -- Table structure for `studio_settings`

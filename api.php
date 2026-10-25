@@ -88,14 +88,7 @@ function checkAndAutoSeed(PDO $db) {
                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
             ");
         }
-        $inqCount = (int)($db->query("SELECT COUNT(*) as cnt FROM `contact_inquiries`")->fetch()['cnt'] ?? 0);
-        if ($inqCount === 0) {
-            $db->exec("
-                INSERT INTO `contact_inquiries` (`name`, `email`, `company`, `phone`, `service`, `budget`, `timeline`, `session_date`, `session_time`, `session_summary`, `vision`, `nda`, `status`, `admin_notes`) VALUES
-                ('Alexander Vance', 'alexander@vanceholdings.com', 'Vance Luxury Group', '+91 98250 88210', 'Brand Identity Development', '1 Lakh to 2 Lakh (Flagship Venture)', '< 1 Month (Immediate)', 'Monday, Oct 19, 2026', '02:30 PM IST', 'Monday, Oct 19, 2026 · 02:30 PM IST', 'We are preparing to launch a high-end luxury lifestyle maison and require an end-to-end visual identity, bespoke packaging system, and digital flagship.', 'Bilateral NDA Requested', 'new', 'Initial inquiry from contact form. Requested bilateral NDA prior to creative review.'),
-                ('Meera Singhania', 'meera@singhaniacouture.in', 'Singhania Haute Couture', '+91 97123 45678', 'Website Design & Development', '2 Lakh + (Comprehensive)', '1 – 3 Months (Standard)', 'Wednesday, Oct 21, 2026', '11:00 AM IST', 'Wednesday, Oct 21, 2026 · 11:00 AM IST', 'Complete overhaul of our international couture digital flagship with WebGL interactive runway storytelling and private client salon ordering.', 'Standard Review', 'in_review', 'Ami reviewed portfolio references. Scheduled for strategy session.');
-            ");
-        }
+
     } catch (Exception $e) {
         // Continue
     }
