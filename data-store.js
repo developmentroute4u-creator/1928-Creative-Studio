@@ -213,7 +213,7 @@
         title: this.data.seo[pageKey].title || '',
         description: this.data.seo[pageKey].description || '',
         keywords: this.data.seo[pageKey].keywords || '',
-        og_image: this.data.seo[pageKey].ogImage || 'img/hero-luxury.jpg'
+        og_image: this.data.seo[pageKey].ogImage || 'assets/img/branding/1928-logo.png'
       });
       return this.data.seo[pageKey];
     }

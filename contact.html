@@ -1248,6 +1248,48 @@
       align-items: center;
       padding-bottom: 8px;
       border-bottom: 1px solid var(--rule);
+      gap: 12px;
+    }
+
+    .sbi-cal-nav-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sbi-cal-nav-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1.5px solid var(--rule-m, rgba(255, 255, 255, 0.18));
+      background: var(--card-alt, rgba(255, 255, 255, 0.04));
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s var(--sp);
+      padding: 0;
+      user-select: none;
+    }
+
+    .sbi-cal-nav-btn:hover:not(:disabled):not(.disabled) {
+      border-color: var(--cr);
+      color: var(--cr-bright);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(200, 16, 46, 0.2);
+      background: rgba(200, 16, 46, 0.08);
+    }
+
+    .sbi-cal-nav-btn:disabled,
+    .sbi-cal-nav-btn.disabled {
+      opacity: 0.28 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+      border-color: var(--rule, rgba(255, 255, 255, 0.1)) !important;
+      background: transparent !important;
+      transform: none !important;
+      box-shadow: none !important;
     }
 
     .sbi-cal-month {
@@ -1256,6 +1298,7 @@
       font-weight: 800;
       color: var(--ink);
       letter-spacing: -0.01em;
+      white-space: nowrap;
     }
 
     .sbi-tz-badge {
@@ -3697,7 +3740,7 @@
   <!-- ══ FIXED NAVIGATION ══ -->
   <nav id="nav" class="visible">
     <a href="index.html" class="nav-logo" aria-label="1928 Creative Studio">
-      <img src="img/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img">
+      <img src="assets/img/branding/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img">
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
@@ -4021,7 +4064,15 @@
                 <!-- Left: Calendar Block -->
                 <div class="sbi-cal-block">
                   <div class="sbi-cal-header">
-                    <span class="sbi-cal-month" id="stepCalMonthTitle">September 2026</span>
+                    <div class="sbi-cal-nav-group">
+                      <button type="button" class="sbi-cal-nav-btn disabled" id="stepCalPrevMonthBtn" aria-label="Previous Month" title="Previous Month" disabled>
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                      </button>
+                      <span class="sbi-cal-month" id="stepCalMonthTitle">October 2026</span>
+                      <button type="button" class="sbi-cal-nav-btn" id="stepCalNextMonthBtn" aria-label="Next Month" title="Next Month">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                      </button>
+                    </div>
                     <div class="sbi-tz-badge">
                       <span class="sb-tz-dot"></span>
                       <span>Asia/Kolkata (GMT+5:30)</span>
@@ -5177,19 +5228,20 @@
       const todayDay = _now.getDate();
       const todayMonth = _now.getMonth();
       const todayYear = _now.getFullYear();
-      // Studio Admin backend integration: Fully booked dates (empty by default; configured via Admin Panel)
+      // Studio Admin backend integration: Fully booked dates (synchronized from MySQL)
       let bookedDays = [];
-      try {
-        const _cb = (window.CMSStore && window.CMSStore.getContactBrief) ? window.CMSStore.getContactBrief() : null;
-        const _s = _cb ? (_cb.step3 || _cb.step4) : null;
-        if (_s && Array.isArray(_s.bookedDays)) {
-          const raw = _s.bookedDays.map(d => parseInt(d, 10)).filter(d => !isNaN(d));
-          const isLegacy = raw.length === 2 && raw.includes(8) && raw.includes(9);
-          if (!isLegacy) bookedDays = raw;
+      function syncLiveBookedDays() {
+        try {
+          const _cb = (window.CMSStore && window.CMSStore.getContactBrief) ? window.CMSStore.getContactBrief() : null;
+          const _s = _cb ? (_cb.step4 || _cb.step3) : null;
+          if (_s && Array.isArray(_s.bookedDays)) {
+            bookedDays = _s.bookedDays.map(d => parseInt(d, 10)).filter(d => !isNaN(d));
+          }
+        } catch (e) {
+          bookedDays = [];
         }
-      } catch (e) {
-        bookedDays = [];
       }
+      syncLiveBookedDays();
 
       const monthNamesList = [
         'January', 'February', 'March', 'April', 'May', 'June',
@@ -5215,49 +5267,76 @@
       };
 
       function getSlotsForDay(day) {
+        try {
+          const cb = (window.CMSStore && window.CMSStore.getContactBrief) ? window.CMSStore.getContactBrief() : null;
+          const s = cb ? (cb.step4 || cb.step3) : null;
+          if (s) {
+            const dayKey = String(day);
+            if (s.dateSlots && Array.isArray(s.dateSlots[dayKey]) && s.dateSlots[dayKey].length) {
+              return s.dateSlots[dayKey];
+            }
+            if (Array.isArray(s.slots) && s.slots.length) {
+              return s.slots;
+            }
+          }
+        } catch (e) {}
         if (dateSlotsRegistry[day]) return dateSlotsRegistry[day];
-        if (day % 3 === 0) {
-          return ['10:30 AM IST', '01:30 PM IST', '04:00 PM IST', '06:30 PM IST'];
-        } else if (day % 2 === 0) {
-          return ['11:00 AM IST', '02:30 PM IST', '05:00 PM IST', '07:30 PM IST'];
-        } else {
-          return ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'];
-        }
+        return ['11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'];
       }
 
       // ═══════════════════════════════════════════════════════════
-      // STEP 4 INTEGRATED STRATEGY SESSION CALENDAR & SLOTS
+      // STEP 4/3 INTEGRATED STRATEGY SESSION CALENDAR & SLOTS
       // ═══════════════════════════════════════════════════════════
       const stepSbDaysGrid = document.getElementById('stepSbDaysGrid');
       const stepSlotSummaryText = document.getElementById('stepSlotSummaryText');
       const stepSlotsCount = document.getElementById('stepSlotsCount');
       const stepSbTimesGrid = document.getElementById('stepSbTimesGrid');
       const stepCalMonthTitle = document.getElementById('stepCalMonthTitle');
+      const stepCalPrevMonthBtn = document.getElementById('stepCalPrevMonthBtn');
+      const stepCalNextMonthBtn = document.getElementById('stepCalNextMonthBtn');
 
-      if (stepCalMonthTitle) {
-        stepCalMonthTitle.textContent = `${monthNamesList[todayMonth]} ${todayYear}`;
-      }
+      const minCalYear = todayYear;
+      const minCalMonth = todayMonth;
+      const minCalDay = todayDay;
 
-      // Start with today (9th) and find next available open date if today is booked or Sunday
-      let initDay = todayDay;
-      const daysInThisMonth = new Date(todayYear, todayMonth + 1, 0).getDate();
-      while (initDay <= daysInThisMonth) {
-        const testD = new Date(todayYear, todayMonth, initDay);
+      let viewCalYear = todayYear;
+      let viewCalMonth = todayMonth;
+
+      // Start with preferred day: Monday 26th if today is 25th (Sunday)
+      let initialCandidateDay = (todayDay === 25) ? 26 : todayDay;
+      const initialMonthDays = new Date(todayYear, todayMonth + 1, 0).getDate();
+      while (initialCandidateDay <= initialMonthDays) {
+        const testD = new Date(todayYear, todayMonth, initialCandidateDay);
         const isSun = testD.getDay() === 0;
-        const isBkd = bookedDays.includes(initDay);
+        const isBkd = bookedDays.includes(initialCandidateDay);
         if (!isSun && !isBkd) break;
-        initDay++;
+        initialCandidateDay++;
       }
-      if (initDay > daysInThisMonth) initDay = todayDay;
+      if (initialCandidateDay > initialMonthDays) initialCandidateDay = todayDay;
 
-      const initDateObj = new Date(todayYear, todayMonth, initDay);
+      const initDateObj = new Date(todayYear, todayMonth, initialCandidateDay);
       let stepSelectedCalDate = {
-        day: initDay,
+        day: initialCandidateDay,
         weekday: weekdaysMap[initDateObj.getDay()],
         month: monthShortNamesList[todayMonth],
         year: todayYear
       };
       let stepSelectedCalTime = '11:00 AM IST';
+
+      function updateCalNavButtonsVisibility() {
+        const isAtMin = (viewCalYear < minCalYear) || (viewCalYear === minCalYear && viewCalMonth <= minCalMonth);
+        if (stepCalPrevMonthBtn) {
+          stepCalPrevMonthBtn.style.visibility = 'visible';
+          stepCalPrevMonthBtn.disabled = isAtMin;
+          if (isAtMin) {
+            stepCalPrevMonthBtn.classList.add('disabled');
+            stepCalPrevMonthBtn.setAttribute('aria-disabled', 'true');
+          } else {
+            stepCalPrevMonthBtn.classList.remove('disabled');
+            stepCalPrevMonthBtn.removeAttribute('aria-disabled');
+          }
+        }
+      }
 
       function updateStepSessionBanner() {
         if (stepSlotSummaryText) {
@@ -5281,7 +5360,7 @@
         stepSbTimesGrid.innerHTML = '';
 
         if (!availableSlots.includes(stepSelectedCalTime)) {
-          stepSelectedCalTime = availableSlots[0];
+          stepSelectedCalTime = availableSlots[0] || '11:00 AM IST';
           updateStepSessionBanner();
         }
 
@@ -5306,15 +5385,53 @@
         attachCursorHover();
       }
 
-      function buildStepStrategyCalendar() {
+      function buildStepStrategyCalendar(preferredDay) {
         if (!stepSbDaysGrid) return;
+
+        updateCalNavButtonsVisibility();
+
+        if (stepCalMonthTitle) {
+          stepCalMonthTitle.textContent = `${monthNamesList[viewCalMonth]} ${viewCalYear}`;
+        }
+
+        const daysInMonth = new Date(viewCalYear, viewCalMonth + 1, 0).getDate();
+        const isCurrentMonthYear = (viewCalYear === minCalYear && viewCalMonth === minCalMonth);
+
+        // Find selected day
+        let targetDay = preferredDay;
+        if (!targetDay) {
+          targetDay = isCurrentMonthYear ? ((todayDay === 25) ? 26 : todayDay) : 1;
+        }
+        if (targetDay > daysInMonth) targetDay = 1;
+
+        let checkDay = targetDay;
+        while (checkDay <= daysInMonth) {
+          const testD = new Date(viewCalYear, viewCalMonth, checkDay);
+          const isSun = testD.getDay() === 0;
+          const isBkd = isCurrentMonthYear && bookedDays.includes(checkDay);
+          const isPast = isCurrentMonthYear && (checkDay < minCalDay);
+          if (!isSun && !isBkd && !isPast) break;
+          checkDay++;
+        }
+        if (checkDay <= daysInMonth) {
+          targetDay = checkDay;
+        }
+
+        const selDateObj = new Date(viewCalYear, viewCalMonth, targetDay);
+        stepSelectedCalDate = {
+          day: targetDay,
+          weekday: weekdaysMap[selDateObj.getDay()],
+          month: monthShortNamesList[viewCalMonth],
+          year: viewCalYear
+        };
+
         stepSbDaysGrid.innerHTML = '';
 
-        const firstDayObj = new Date(todayYear, todayMonth, 1);
+        const firstDayObj = new Date(viewCalYear, viewCalMonth, 1);
         let firstDayOfWeek = firstDayObj.getDay();
         let leadCount = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1;
 
-        const prevMonthLastDate = new Date(todayYear, todayMonth, 0).getDate();
+        const prevMonthLastDate = new Date(viewCalYear, viewCalMonth, 0).getDate();
         for (let i = leadCount - 1; i >= 0; i--) {
           const cell = document.createElement('div');
           cell.className = 'sb-day-cell disabled';
@@ -5322,16 +5439,14 @@
           stepSbDaysGrid.appendChild(cell);
         }
 
-        const daysInMonth = new Date(todayYear, todayMonth + 1, 0).getDate();
-
         for (let day = 1; day <= daysInMonth; day++) {
-          const dateObj = new Date(todayYear, todayMonth, day);
+          const dateObj = new Date(viewCalYear, viewCalMonth, day);
           const dayOfWeek = dateObj.getDay();
           const isSunday = dayOfWeek === 0;
-          const isPast = day < todayDay;
-          const isBooked = bookedDays.includes(day);
+          const isPast = isCurrentMonthYear ? (day < minCalDay) : (viewCalYear < minCalYear || (viewCalYear === minCalYear && viewCalMonth < minCalMonth));
+          const isBooked = isCurrentMonthYear && bookedDays.includes(day);
           const isSelected = day === stepSelectedCalDate.day;
-          const isToday = day === todayDay;
+          const isToday = isCurrentMonthYear && (day === minCalDay);
 
           const cell = document.createElement('button');
           cell.type = 'button';
@@ -5346,23 +5461,18 @@
           cell.setAttribute('data-day', day);
           cell.setAttribute('data-weekday', weekdaysMap[dayOfWeek]);
           if (isBooked) {
-            cell.setAttribute('title', `${monthNamesList[todayMonth]} ${day}, ${todayYear} · Fully Booked`);
+            cell.setAttribute('title', `${monthNamesList[viewCalMonth]} ${day}, ${viewCalYear} · Fully Booked`);
           }
 
-          if (!isSunday && !isPast) {
+          if (!isSunday && !isPast && !isBooked) {
             cell.addEventListener('click', () => {
-              if (isBooked) {
-                showToast(`${monthNamesList[todayMonth]} ${day}, ${todayYear} is fully committed. Please select an open date.`);
-                playLuxuryHaptic(420, 'triangle', 0.05);
-                return;
-              }
               document.querySelectorAll('#stepSbDaysGrid .sb-day-cell').forEach(c => c.classList.remove('active'));
               cell.classList.add('active');
               stepSelectedCalDate = {
                 day: day,
                 weekday: weekdaysMap[dayOfWeek],
-                month: monthShortNamesList[todayMonth],
-                year: todayYear
+                month: monthShortNamesList[viewCalMonth],
+                year: viewCalYear
               };
               updateStepSessionBanner();
               renderStepTimeSlots(day);
@@ -5382,11 +5492,56 @@
           cell.textContent = trail;
           stepSbDaysGrid.appendChild(cell);
         }
+
+        renderStepTimeSlots(stepSelectedCalDate.day);
+        updateStepSessionBanner();
       }
 
-      buildStepStrategyCalendar();
-      renderStepTimeSlots(stepSelectedCalDate.day);
-      updateStepSessionBanner();
+      if (stepCalNextMonthBtn) {
+        stepCalNextMonthBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          viewCalMonth++;
+          if (viewCalMonth > 11) {
+            viewCalMonth = 0;
+            viewCalYear++;
+          }
+          buildStepStrategyCalendar();
+          playLuxuryHaptic(580, 'sine', 0.03);
+        });
+      }
+
+      if (stepCalPrevMonthBtn) {
+        stepCalPrevMonthBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isAtMin = (viewCalYear < minCalYear) || (viewCalYear === minCalYear && viewCalMonth <= minCalMonth);
+          if (isAtMin) return;
+          viewCalMonth--;
+          if (viewCalMonth < 0) {
+            viewCalMonth = 11;
+            viewCalYear--;
+          }
+          buildStepStrategyCalendar();
+          playLuxuryHaptic(580, 'sine', 0.03);
+        });
+      }
+
+      buildStepStrategyCalendar(stepSelectedCalDate.day);
+
+      // Reactive Synchronization: update calendar when CMS data loads or updates from Admin
+      function refreshLiveBookingCalendar() {
+        syncLiveBookedDays();
+        buildStepStrategyCalendar(stepSelectedCalDate ? stepSelectedCalDate.day : null);
+      }
+
+      if (window.CMSStore && typeof window.CMSStore.ready === 'function') {
+        window.CMSStore.ready().then(refreshLiveBookingCalendar).catch(() => {});
+      }
+      window.addEventListener('1928_cms_updated', refreshLiveBookingCalendar);
+      window.addEventListener('storage', (e) => {
+        if (e.key === '1928_db_sync_ping') {
+          setTimeout(refreshLiveBookingCalendar, 150);
+        }
+      });
 
 
 

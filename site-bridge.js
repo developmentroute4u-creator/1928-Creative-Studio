@@ -177,7 +177,7 @@
         date: b.date || 'SEP 2026',
         readTime: b.readTime || '6 Min Read',
         city: b.city || 'Milan, Italy',
-        coverImage: b.coverImage || 'img/port-chronos.jpg',
+        coverImage: b.coverImage || 'assets/img/portfolio/port-chronos.jpg',
         specimenImage: b.specimenImage || '',
         specimenCaption: b.specimenCaption || '1928 EDITORIAL PROVENANCE CAPTURE',
         excerpt: b.excerpt || '',
@@ -251,7 +251,7 @@
         <div class="lbc-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}">
           <div class="featured-monograph-spread" data-article-id="${b.id}" style="cursor:pointer;">
             <div class="fms-blueprint-visual">
-              <img src="${b.coverImage || 'img/port-chronos.jpg'}" alt="${b.title}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='img/port-chronos.jpg';" />
+              <img src="${b.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${b.title}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
               <div class="corner-crosshair cc-tl">+</div>
               <div class="corner-crosshair cc-tr">+</div>
               <div class="corner-crosshair cc-bl">+</div>
@@ -288,7 +288,7 @@
         return `
           <article class="codex-card" data-category="${catSlug}" data-article-id="${b.id}" style="cursor:pointer;">
             <div class="card-image-box">
-              <img src="${b.coverImage || 'img/port-chronos.jpg'}" alt="${b.title}" onerror="this.style.display='none'" />
+              <img src="${b.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${b.title}" onerror="this.style.display='none'" />
               <div class="cib-placeholder">
                 <div class="cib-icon-wrap">
                   <svg class="cib-image-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
@@ -332,7 +332,7 @@
         return `
           <article class="codex-card" data-category="${catSlug}" data-article-id="${b.id}" style="cursor:pointer;">
             <div class="card-image-box">
-              <img src="${b.coverImage || 'img/port-chronos.jpg'}" alt="${b.title}" onerror="this.style.display='none'" />
+              <img src="${b.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${b.title}" onerror="this.style.display='none'" />
             </div>
             <div class="card-body-content">
               <h4 class="cbc-title">${b.title}</h4>
@@ -403,7 +403,7 @@
 
     const p1Id = heroData.pill1ProjectId || 'vibee';
     const proj1 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p1Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p1Id) : null);
-    const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage || heroData.pill1Img || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg') : (heroData.pill1Img || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg');
+    const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage || heroData.pill1Img || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg') : (heroData.pill1Img || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg');
 
     pills1.forEach(pill1 => {
       const imgEl = pill1.querySelector('img') || document.getElementById('heroPill1Img');
@@ -418,7 +418,7 @@
 
     const p2Id = heroData.pill2ProjectId || 'veloce';
     const proj2 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p2Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p2Id) : null);
-    const img2 = proj2 ? (proj2.bannerImage || proj2.coverImage || heroData.pill2Img || 'img/port-veloce.jpg') : (heroData.pill2Img || 'img/port-veloce.jpg');
+    const img2 = proj2 ? (proj2.bannerImage || proj2.coverImage || heroData.pill2Img || 'assets/img/portfolio/port-veloce.jpg') : (heroData.pill2Img || 'assets/img/portfolio/port-veloce.jpg');
 
     pills2.forEach(pill2 => {
       const imgEl = pill2.querySelector('img') || document.getElementById('heroPill2Img');
@@ -452,7 +452,7 @@
           <div class="dzinr-project-card ${spanClass}" data-category="${p.category || 'brand-identity'}" data-project-id="${p.id}" style="cursor:pointer;" onclick="if(typeof window.openProjectModal==='function'){window.openProjectModal('${p.id}');}else if(typeof window.openModal==='function'){window.openModal('${p.id}');}">
             <div class="dpc-img-wrap">
               <span class="dpc-tag-pill">${p.tagPill || p.categoryDisplay || 'Case Study'}</span>
-              <img src="${p.bannerImage || p.coverImage || 'img/port-chronos.jpg'}" alt="${p.title}" loading="lazy" onerror="this.src='img/port-chronos.jpg';" />
+              <img src="${p.bannerImage || p.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${p.title}" loading="lazy" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
             </div>
             <div class="dpc-body">
               <div class="dpc-info">
@@ -483,11 +483,11 @@
 
       function makeWorkCard(p, numStr, subStr, cardId) {
         const title = p.title || 'FEATURED WORK';
-        const img = p.bannerImage || p.coverImage || 'img/port-chronos.jpg';
+        const img = p.bannerImage || p.coverImage || 'assets/img/portfolio/port-chronos.jpg';
         return `
           <a href="portfolio.html?project=${p.id || ''}" class="work-duo-card"${cardId ? ` id="${cardId}"` : ''}>
             <div class="work-card-media">
-              <img src="${img}" alt="${title}" class="work-card-img" onerror="this.src='img/port-chronos.jpg';" />
+              <img src="${img}" alt="${title}" class="work-card-img" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
             </div>
             <div class="work-card-content">
               <div class="work-top-meta">
@@ -547,12 +547,12 @@
         : ['vibee', 'infyli', 'mudra-school', 'awards-plus', 'last-mile-analytics', 'alda'];
 
       const selectedWorkImages = [
-        'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
-        'img/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
-        'img/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
-        'img/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg',
-        'img/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
-        'img/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg'
+        'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
+        'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
+        'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+        'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-04.jpg',
+        'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+        'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg'
       ];
 
       let cardsHtml = '';
@@ -564,7 +564,7 @@
 
         const numStr = slotNum < 10 ? `0${slotNum}` : `${slotNum}`;
         const clientStr = (proj.client || proj.title || 'CASE STUDY').toUpperCase();
-        const img = proj.coverImage || proj.bannerImage || selectedWorkImages[i] || 'img/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';
+        const img = proj.coverImage || proj.bannerImage || selectedWorkImages[i] || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';
         const titleText = proj.summary || proj.subheading || proj.title;
 
         // Parse 2 tags cleanly
@@ -587,7 +587,7 @@
           <article class="p-flow-item p-item-${slotNum}">
             <a href="portfolio.html?project=${proj.id}" class="p-card-v p-card-${slotNum}">
               <div class="pcv-media">
-                <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;object-position:${objPos};transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.src='img/port-chronos.jpg';" />
+                <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;object-position:${objPos};transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
                 <div class="pcv-badge-top"><span class="pcv-num">${numStr}</span><span class="pcv-client">${clientStr}</span></div>
               </div>
               <div class="pcv-info">
@@ -643,7 +643,7 @@
     if (teamIndex && team && team.length) {
       // 1. Desktop Minimalist Editorial List (> 860px)
       const desktopHtml = team.map((m) => {
-        const photoSrc = (m.photo && m.photo.trim()) ? m.photo : 'img/team-ami.jpg';
+        const photoSrc = (m.photo && m.photo.trim()) ? m.photo : 'assets/img/team/team-ami.jpg';
         return `
         <div class="team-index-row" data-member="${m.memberKey || m.id}" data-name="${m.name}" data-role="${m.role}" data-photo="${photoSrc}">
           <div class="team-row-main">
@@ -660,12 +660,12 @@
 
       // 2. Mobile 2-Column Photo Card Grid (<= 860px)
       const mobileHtml = team.map((m, idx) => {
-        const photoSrc = (m.photo && m.photo.trim()) ? m.photo : 'img/team-ami.jpg';
+        const photoSrc = (m.photo && m.photo.trim()) ? m.photo : 'assets/img/team/team-ami.jpg';
         const numStr = String(idx + 1).padStart(2, '0');
         return `
         <div class="team-card" data-member="${m.memberKey || m.id}" data-name="${m.name}" data-role="${m.role}" data-photo="${photoSrc}">
           <div class="team-card-media">
-            <img src="${photoSrc}" alt="${m.name}" loading="lazy" class="team-card-img" onerror="this.onerror=null; this.src='img/team-ami.jpg';" />
+            <img src="${photoSrc}" alt="${m.name}" loading="lazy" class="team-card-img" onerror="this.onerror=null; this.src='assets/img/team/team-ami.jpg';" />
             <div class="team-card-badge">${numStr}</div>
           </div>
           <div class="team-card-info">
@@ -1290,9 +1290,9 @@
       }
     }
 
-    // ── STEP 3: Strategy Session Window (Calendar & Configurable Month) ──
+    // ── STEP 3: Strategy Session Window (Calendar & Dynamic Month Navigation) ──
     const p3 = document.getElementById('stepPane3') || document.getElementById('stepPane4');
-    const sessionConfig = (brief.step3 && brief.step3.defaultYear !== undefined) ? brief.step3 : (brief.step4 || {});
+    const sessionConfig = (brief.step4 && (brief.step4.defaultYear !== undefined || brief.step4.bookedDays !== undefined)) ? brief.step4 : ((brief.step3 && brief.step3.defaultYear !== undefined) ? brief.step3 : (brief.step4 || {}));
     if (p3) {
       const h3 = p3.querySelector('.pane-headline');
       if (h3 && sessionConfig.headline) h3.textContent = sessionConfig.headline;
@@ -1303,12 +1303,20 @@
       if (tzBadge && sessionConfig.timezone) tzBadge.textContent = sessionConfig.timezone;
 
       const now = new Date();
+      const minYear = now.getFullYear();
+      const minMonth = now.getMonth();
+      const minDay = now.getDate();
+
       const s3 = sessionConfig;
       const isLegacySep29 = (s3.defaultYear === 2026 && s3.defaultMonth === 8 && s3.defaultDay === 29);
-      const isPastMonth = (s3.defaultYear !== undefined && s3.defaultMonth !== undefined && (s3.defaultYear < now.getFullYear() || (s3.defaultYear === now.getFullYear() && s3.defaultMonth < now.getMonth())));
+      const isPastConfig = (s3.defaultYear !== undefined && s3.defaultMonth !== undefined && (s3.defaultYear < minYear || (s3.defaultYear === minYear && s3.defaultMonth < minMonth)));
 
-      const targetYear = (isLegacySep29 || isPastMonth || s3.defaultYear === undefined || s3.defaultYear === null) ? now.getFullYear() : parseInt(s3.defaultYear, 10);
-      const targetMonth = (isLegacySep29 || isPastMonth || s3.defaultMonth === undefined || s3.defaultMonth === null) ? now.getMonth() : parseInt(s3.defaultMonth, 10);
+      let calYear = (isLegacySep29 || isPastConfig || s3.defaultYear === undefined || s3.defaultYear === null) ? minYear : parseInt(s3.defaultYear, 10);
+      let calMonth = (isLegacySep29 || isPastConfig || s3.defaultMonth === undefined || s3.defaultMonth === null) ? minMonth : parseInt(s3.defaultMonth, 10);
+      if (calYear < minYear || (calYear === minYear && calMonth < minMonth)) {
+        calYear = minYear;
+        calMonth = minMonth;
+      }
 
       // Booked list: configured via admin panel/backend
       let bookedList = [];
@@ -1324,10 +1332,8 @@
       const weekdaysMap = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
       const monthTitleEl = document.getElementById('stepCalMonthTitle');
-      if (monthTitleEl) {
-        monthTitleEl.textContent = `${monthNames[targetMonth] || 'October'} ${targetYear}`;
-      }
-
+      const prevMonthBtn = document.getElementById('stepCalPrevMonthBtn');
+      const nextMonthBtn = document.getElementById('stepCalNextMonthBtn');
       const daysGrid = document.getElementById('stepSbDaysGrid');
       const summaryText = document.getElementById('stepSlotSummaryText');
       const slotsCount = document.getElementById('stepSlotsCount');
@@ -1337,40 +1343,28 @@
         '11:00 AM IST', '02:30 PM IST', '04:30 PM IST', '06:00 PM IST', '08:00 PM IST'
       ];
 
-      const daysInMonth = new Date(targetYear, targetMonth + 1, 0).getDate();
-      const isCurrentMonthYear = (targetYear === now.getFullYear() && targetMonth === now.getMonth());
-
-      // Base default day: live today (now.getDate() = 9) or s3.defaultDay
-      let baseDay = isCurrentMonthYear ? now.getDate() : (parseInt(s3.defaultDay, 10) || 1);
-      if (isLegacySep29 || isPastMonth) {
-        baseDay = now.getDate();
-      }
-      if (baseDay > daysInMonth) baseDay = 1;
-
-      // Selection logic: Start at baseDay (9th).
-      // If that date is booked through backend/admin OR is a Sunday, search forward for next available open date!
-      let selectedDay = baseDay;
-      while (selectedDay <= daysInMonth) {
-        const testDate = new Date(targetYear, targetMonth, selectedDay);
-        const isSun = testDate.getDay() === 0;
-        const isBkd = bookedList.includes(selectedDay);
-        const isPastDay = isCurrentMonthYear && (selectedDay < now.getDate());
-        if (!isSun && !isBkd && !isPastDay) {
-          break; // Found next available open date!
-        }
-        selectedDay++;
-      }
-      if (selectedDay > daysInMonth) {
-        selectedDay = baseDay;
-      }
-
-      const selDayObj = new Date(targetYear, targetMonth, selectedDay);
-      let selectedWeekday = weekdaysMap[selDayObj.getDay()];
+      let selectedDay = 26;
+      let selectedWeekday = 'Monday';
       let selectedTime = customSlots[0] || '11:00 AM IST';
+
+      function updateNavButtonsState() {
+        const isAtMinMonth = (calYear < minYear) || (calYear === minYear && calMonth <= minMonth);
+        if (prevMonthBtn) {
+          prevMonthBtn.style.visibility = 'visible';
+          prevMonthBtn.disabled = isAtMinMonth;
+          if (isAtMinMonth) {
+            prevMonthBtn.classList.add('disabled');
+            prevMonthBtn.setAttribute('aria-disabled', 'true');
+          } else {
+            prevMonthBtn.classList.remove('disabled');
+            prevMonthBtn.removeAttribute('aria-disabled');
+          }
+        }
+      }
 
       function updateSummary() {
         if (summaryText) {
-          const dateStr = `${selectedWeekday}, ${monthShortNames[targetMonth]} ${selectedDay}, ${targetYear}`;
+          const dateStr = `${selectedWeekday}, ${monthShortNames[calMonth]} ${selectedDay}, ${calYear}`;
           summaryText.textContent = `${dateStr} · ${selectedTime}`;
           summaryText.setAttribute('data-selected-date', dateStr);
           summaryText.setAttribute('data-selected-time', selectedTime);
@@ -1381,20 +1375,27 @@
 
       function renderSlots(dayNum) {
         if (!timesGrid) return;
-        const availableCount = customSlots.length;
+        const dayKey = String(dayNum);
+        let activeSlots = customSlots;
+        if (s3 && s3.dateSlots && Array.isArray(s3.dateSlots[dayKey]) && s3.dateSlots[dayKey].length) {
+          activeSlots = s3.dateSlots[dayKey];
+        } else if (s3 && Array.isArray(s3.slots) && s3.slots.length) {
+          activeSlots = s3.slots;
+        }
+        const availableCount = activeSlots.length;
         if (slotsCount) {
           slotsCount.textContent = `${availableCount} Slots Open`;
         }
 
         timesGrid.innerHTML = '';
-        customSlots.forEach((tStr, idx) => {
+        activeSlots.forEach((tStr, idx) => {
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'sb-time-chip' + (tStr === selectedTime || (!customSlots.includes(selectedTime) && idx === 0) ? ' active' : '');
+          btn.className = 'sb-time-chip' + (tStr === selectedTime || (!activeSlots.includes(selectedTime) && idx === 0) ? ' active' : '');
           btn.setAttribute('data-time', tStr);
           btn.textContent = tStr;
 
-          if (!customSlots.includes(selectedTime) && idx === 0) {
+          if (!activeSlots.includes(selectedTime) && idx === 0) {
             selectedTime = tStr;
             updateSummary();
           }
@@ -1410,16 +1411,59 @@
         });
       }
 
-      if (daysGrid) {
+      function renderMonthCalendar(preferredDay) {
+        if (!daysGrid) return;
+
+        updateNavButtonsState();
+
+        if (monthTitleEl) {
+          monthTitleEl.textContent = `${monthNames[calMonth]} ${calYear}`;
+        }
+
+        const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+        const isCurrentMonthYear = (calYear === minYear && calMonth === minMonth);
+
+        // Find initial selected day for this month
+        let targetDay = preferredDay;
+        if (!targetDay) {
+          if (isCurrentMonthYear) {
+            targetDay = (s3.defaultDay && s3.defaultDay >= minDay) ? parseInt(s3.defaultDay, 10) : minDay;
+          } else {
+            targetDay = 1;
+          }
+        }
+        if (targetDay > daysInMonth) targetDay = 1;
+
+        // Ensure targetDay is not a past day, Sunday, or blackout day
+        let checkDay = targetDay;
+        while (checkDay <= daysInMonth) {
+          const testDate = new Date(calYear, calMonth, checkDay);
+          const isSun = testDate.getDay() === 0;
+          const isBkd = isCurrentMonthYear && bookedList.includes(checkDay);
+          const isPast = isCurrentMonthYear && (checkDay < minDay);
+          if (!isSun && !isBkd && !isPast) {
+            break;
+          }
+          checkDay++;
+        }
+        if (checkDay <= daysInMonth) {
+          selectedDay = checkDay;
+        } else {
+          selectedDay = targetDay;
+        }
+
+        const selDayObj = new Date(calYear, calMonth, selectedDay);
+        selectedWeekday = weekdaysMap[selDayObj.getDay()];
+
         daysGrid.innerHTML = '';
 
         // 1st day of target month (0=Sun, 1=Mon, ..., 6=Sat)
-        const firstDayObj = new Date(targetYear, targetMonth, 1);
+        const firstDayObj = new Date(calYear, calMonth, 1);
         let firstDayOfWeek = firstDayObj.getDay();
         let leadCount = (firstDayOfWeek === 0) ? 6 : firstDayOfWeek - 1;
 
         // Days in previous month
-        const prevMonthLastDate = new Date(targetYear, targetMonth, 0).getDate();
+        const prevMonthLastDate = new Date(calYear, calMonth, 0).getDate();
         for (let i = leadCount - 1; i >= 0; i--) {
           const cell = document.createElement('div');
           cell.className = 'sb-day-cell disabled';
@@ -1428,12 +1472,12 @@
         }
 
         for (let day = 1; day <= daysInMonth; day++) {
-          const dObj = new Date(targetYear, targetMonth, day);
+          const dObj = new Date(calYear, calMonth, day);
           const dow = dObj.getDay();
           const isSun = dow === 0;
-          const isPast = isCurrentMonthYear ? (day < now.getDate()) : (targetYear < now.getFullYear() || (targetYear === now.getFullYear() && targetMonth < now.getMonth()));
-          const isToday = isCurrentMonthYear && (day === now.getDate());
-          const isBooked = bookedList.includes(day);
+          const isPast = isCurrentMonthYear ? (day < minDay) : (calYear < minYear || (calYear === minYear && calMonth < minMonth));
+          const isToday = isCurrentMonthYear && (day === minDay);
+          const isBooked = isCurrentMonthYear && bookedList.includes(day);
           const isSelected = day === selectedDay;
 
           const cell = document.createElement('button');
@@ -1450,12 +1494,11 @@
           cell.setAttribute('data-day', day);
           cell.setAttribute('data-weekday', weekdaysMap[dow]);
           if (isBooked) {
-            cell.setAttribute('title', `${monthNames[targetMonth]} ${day}, ${targetYear} · Fully Booked`);
+            cell.setAttribute('title', `${monthNames[calMonth]} ${day}, ${calYear} · Fully Booked`);
           }
 
-          if (!isSun && !isPast) {
+          if (!isSun && !isPast && !isBooked) {
             cell.addEventListener('click', () => {
-              if (isBooked) return;
               daysGrid.querySelectorAll('.sb-day-cell').forEach(c => c.classList.remove('active'));
               cell.classList.add('active');
               selectedDay = day;
@@ -1481,6 +1524,39 @@
         renderSlots(selectedDay);
         updateSummary();
       }
+
+      // Attach Month Navigation Listeners (once)
+      if (nextMonthBtn && !nextMonthBtn._hasCalListener) {
+        nextMonthBtn._hasCalListener = true;
+        nextMonthBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          calMonth++;
+          if (calMonth > 11) {
+            calMonth = 0;
+            calYear++;
+          }
+          renderMonthCalendar();
+        });
+      }
+
+      if (prevMonthBtn && !prevMonthBtn._hasCalListener) {
+        prevMonthBtn._hasCalListener = true;
+        prevMonthBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isAtMin = (calYear < minYear) || (calYear === minYear && calMonth <= minMonth);
+          if (isAtMin) return;
+          calMonth--;
+          if (calMonth < 0) {
+            calMonth = 11;
+            calYear--;
+          }
+          renderMonthCalendar();
+        });
+      }
+
+      // Initial Calendar Render with configured day or next business day
+      const initialPreferredDay = (isCurrentMonthYear && s3.defaultDay) ? parseInt(s3.defaultDay, 10) : (minDay === 25 ? 26 : minDay);
+      renderMonthCalendar(initialPreferredDay);
     }
 
     // ── STEP 4: Credentials & Success Overlay ──
@@ -3492,7 +3568,7 @@
         <div class="nmd-panel" id="nmdPanel">
           <div class="nmd-header">
             <a href="index.html" class="nmd-logo" aria-label="1928 Creative Studio">
-              <img src="img/1928-logo.png" alt="1928 Creative Studio">
+              <img src="assets/img/branding/1928-logo.png" alt="1928 Creative Studio">
             </a>
             <button type="button" class="nmd-close-btn" id="nmdCloseBtn" aria-label="Close Navigation">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">

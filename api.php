@@ -160,7 +160,7 @@ try {
             // B. Profile & Story
             $profileStmt = $db->query("SELECT * FROM `studio_profile` LIMIT 1");
             $profileRow = $profileStmt->fetch();
-            $pillars = $profileRow ? json_decode($profileRow['pillars_json'], true) : [];
+            $pillars = (!empty($profileRow['pillars_json'])) ? (json_decode($profileRow['pillars_json'], true) ?: []) : [];
 
             // Team Members
             $teamStmt = $db->query("SELECT * FROM `team_members` WHERE `active` = 1 ORDER BY `display_order` ASC");
@@ -186,7 +186,7 @@ try {
                     'pill' => $p['pill'],
                     'title' => $p['title'],
                     'desc' => $p['description'],
-                    'tags' => json_decode($p['tags_json'], true) ?: []
+                    'tags' => !empty($p['tags_json']) ? (json_decode($p['tags_json'], true) ?: []) : []
                 ];
             }, $principlesRows);
 
@@ -209,7 +209,7 @@ try {
                     'tagline' => $s['tagline'],
                     'desc' => $s['description'],
                     'image' => (!empty($s['image_url']) && file_exists(__DIR__ . '/' . $s['image_url'])) ? $s['image_url'] : '',
-                    'deliverables' => json_decode($s['deliverables_json'], true) ?: [],
+                    'deliverables' => !empty($s['deliverables_json']) ? (json_decode($s['deliverables_json'], true) ?: []) : [],
                     'order' => (int)$s['display_order']
                 ];
             }, $svcRows);
@@ -249,7 +249,7 @@ try {
                     'challenge' => $p['challenge'],
                     'approach' => $p['approach'],
                     'impact' => $p['impact'],
-                    'metrics' => json_decode($p['metrics_json'], true) ?: [],
+                    'metrics' => !empty($p['metrics_json']) ? (json_decode($p['metrics_json'], true) ?: []) : [],
                     'featured' => (bool)$p['featured'],
                     'order' => (int)$p['display_order']
                 ];
@@ -319,7 +319,7 @@ try {
             $title = $inputData['title'] ?? '';
             $desc = $inputData['description'] ?? '';
             $keywords = $inputData['keywords'] ?? '';
-            $ogImage = $inputData['og_image'] ?? 'img/hero-luxury.jpg';
+            $ogImage = $inputData['og_image'] ?? 'assets/img/branding/1928-logo.png';
 
             $stmt = $db->prepare("
                 INSERT INTO `seo_meta` (`page_key`, `title`, `description`, `keywords`, `og_image`)
@@ -359,7 +359,7 @@ try {
             $authorBio = $inputData['bio'] ?? ($inputData['authorBio'] ?? '');
             $dateText = $inputData['date'] ?? date('M Y');
             $readTime = $inputData['readTime'] ?? '6 MIN READ';
-            $coverImage = $inputData['coverImage'] ?? 'img/port-chronos.jpg';
+            $coverImage = $inputData['coverImage'] ?? 'assets/img/portfolio/port-chronos.jpg';
             $specimenImage = $inputData['specimenImage'] ?? '';
             $specimenCaption = $inputData['specimenCaption'] ?? '';
             $excerpt = $inputData['excerpt'] ?? '';
@@ -442,7 +442,7 @@ try {
             $tagPill = $inputData['tagPill'] ?? 'Case Study';
             $gridSpan = $inputData['gridSpan'] ?? 'bento-compact';
             $year = $inputData['year'] ?? date('Y');
-            $coverImage = $inputData['coverImage'] ?? 'img/port-chronos.jpg';
+            $coverImage = $inputData['coverImage'] ?? 'assets/img/portfolio/port-chronos.jpg';
             $summary = $inputData['summary'] ?? '';
             $challenge = $inputData['challenge'] ?? '';
             $approach = $inputData['approach'] ?? '';
@@ -562,7 +562,7 @@ try {
             $memberKey = $inputData['id'] ?? $inputData['memberKey'] ?? ('team-' . substr(md5(uniqid()), 0, 8));
             $name = $inputData['name'] ?? '';
             $role = $inputData['role'] ?? '';
-            $photo = $inputData['photo'] ?? 'img/team-ami.jpg';
+            $photo = $inputData['photo'] ?? 'assets/img/team/team-ami.jpg';
             $order = isset($inputData['order']) ? (int)$inputData['order'] : 1;
 
             $stmt = $db->prepare("
@@ -739,7 +739,7 @@ try {
                 $baseName = strtolower(basename($fullPath));
                 if ($baseName === 'favicon.svg' || $baseName === 'logo.svg') return false;
                 $relDir = strtolower(substr($fullPath, strlen($baseDir) + 1));
-                if (strpos($relDir, 'img') !== 0 && strpos($relDir, 'assets') !== 0) return false;
+                if (strpos($relDir, 'img') !== 0 && strpos($relDir, 'assets') !== 0 && strpos($relDir, 'video') !== 0) return false;
                 if (file_exists($fullPath) && is_file($fullPath)) {
                     @unlink($fullPath);
                     return true;
@@ -772,8 +772,8 @@ try {
                 if (move_uploaded_file($file['tmp_name'], $destPath)) {
                     $relPath = 'assets/uploads/' . $uniqueName;
                     
-                    // Automatically delete replaced previous image
-                    $prevImg = $_POST['previousImage'] ?? ($_POST['oldFilePath'] ?? ($_POST['previous_image'] ?? null));
+                    // Automatically delete replaced previous image or video
+                    $prevImg = $_POST['previousImage'] ?? ($_POST['previousVideo'] ?? ($_POST['oldFilePath'] ?? ($_POST['previous_image'] ?? null)));
                     $deletedPrev = $prevImg ? $safeDeleteOld($prevImg) : false;
 
                     echo json_encode([
@@ -817,7 +817,7 @@ try {
 
                 if (file_put_contents($destPath, $decoded) !== false) {
                     $relPath = 'assets/uploads/' . $uniqueName;
-                    $prevImg = $inputData['previousImage'] ?? ($inputData['oldFilePath'] ?? null);
+                    $prevImg = $inputData['previousImage'] ?? ($inputData['previousVideo'] ?? ($inputData['oldFilePath'] ?? null));
                     $deletedPrev = $prevImg ? $safeDeleteOld($prevImg) : false;
 
                     echo json_encode([

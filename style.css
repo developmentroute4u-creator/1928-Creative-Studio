@@ -1395,14 +1395,14 @@
       display: none !important;
     }
 
-    #wc-back1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-01.jpg'); }
-    #wc-back2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-02.jpg'); }
-    #wc-l1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-03.jpg'); }
-    #wc-l2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-04.jpg'); }
-    #wc-r1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-05.jpg'); }
-    #wc-r2 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-07.jpg'); }
-    #wc-t1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-06.jpg'); }
-    #wc-b1 .wc-inner { background-image: url('img/3D%20Room%20Floating%20Cards%20(Hero%20Section)-08.jpg'); }
+    #wc-back1 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-01.jpg'); }
+    #wc-back2 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-02.jpg'); }
+    #wc-l1 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-03.jpg'); }
+    #wc-l2 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-04.jpg'); }
+    #wc-r1 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-05.jpg'); }
+    #wc-r2 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-07.jpg'); }
+    #wc-t1 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-06.jpg'); }
+    #wc-b1 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-08.jpg'); }
 
     /* ── Video / Showreel Pop-up & Right Docking ── */
     .hero-reel {

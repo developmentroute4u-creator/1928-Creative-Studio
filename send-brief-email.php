@@ -31,7 +31,7 @@ function generateBriefEmailHtml(array $briefData): string
         '{{selected_time}}'        => htmlspecialchars($briefData['time'] ?? $briefData['selected_time'] ?? '11:00 AM', ENT_QUOTES, 'UTF-8'),
         '{{contact_phone}}'        => htmlspecialchars($briefData['phone'] ?? $briefData['contact_phone'] ?? 'Direct Line', ENT_QUOTES, 'UTF-8'),
         '{{nda_status}}'           => htmlspecialchars($briefData['nda'] ?? $briefData['nda_status'] ?? 'Standard Review', ENT_QUOTES, 'UTF-8'),
-        '{{logo_url}}'             => htmlspecialchars($briefData['logo_url'] ?? 'img/1928-logo-white-email.png', ENT_QUOTES, 'UTF-8'),
+        '{{logo_url}}'             => htmlspecialchars($briefData['logo_url'] ?? 'assets/img/branding/1928-logo-white-email.png', ENT_QUOTES, 'UTF-8'),
     ];
 
     return str_replace(array_keys($replacements), array_values($replacements), $html);
