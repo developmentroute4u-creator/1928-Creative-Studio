@@ -960,7 +960,8 @@
       overflow: hidden;
     }
 
-    .svc-card-right img {
+    .svc-card-right img,
+    .svc-card-right video {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -1315,7 +1316,8 @@
         margin-bottom: 12px !important;
       }
 
-      .svc-card-right img {
+      .svc-card-right img,
+      .svc-card-right video {
         width: 100% !important;
         height: 100% !important;
         object-fit: cover !important;
@@ -2684,7 +2686,7 @@
       <!-- Revolving Floating Service Icon Discs -->
       <div class="hero-orbit-icons" id="heroOrbitIcons">
         <!-- 01 Logo Design -->
-        <a href="#service-01" class="orbit-icon-node" data-service="LOGO DESIGN" data-idx="0" aria-label="Logo Design">
+        <a href="service-logo-design.html" class="orbit-icon-node" data-service="LOGO DESIGN" data-idx="0" aria-label="Logo Design">
           <span class="oin-tag">01</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
             stroke-linejoin="round">
@@ -2696,7 +2698,7 @@
         </a>
 
         <!-- 02 Brand Identity -->
-        <a href="#service-02" class="orbit-icon-node" data-service="BRAND IDENTITY" data-idx="1"
+        <a href="service-brand-identity.html" class="orbit-icon-node" data-service="BRAND IDENTITY" data-idx="1"
           aria-label="Brand Identity">
           <span class="oin-tag">02</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
@@ -2709,7 +2711,7 @@
         </a>
 
         <!-- 03 Web Design & Dev -->
-        <a href="#service-03" class="orbit-icon-node" data-service="WEB DESIGN & DEV" data-idx="2"
+        <a href="service-website-development.html" class="orbit-icon-node" data-service="WEB DESIGN & DEV" data-idx="2"
           aria-label="Web Design & Dev">
           <span class="oin-tag">03</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
@@ -2720,7 +2722,7 @@
         </a>
 
         <!-- 04 Social & Digital -->
-        <a href="#service-04" class="orbit-icon-node" data-service="SOCIAL & DIGITAL" data-idx="3"
+        <a href="service-digital-marketing.html" class="orbit-icon-node" data-service="SOCIAL & DIGITAL" data-idx="3"
           aria-label="Social & Digital">
           <span class="oin-tag">04</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
@@ -2731,7 +2733,7 @@
         </a>
 
         <!-- 05 Content & Creators -->
-        <a href="#service-05" class="orbit-icon-node" data-service="CONTENT & CREATORS" data-idx="4"
+        <a href="service-content-creation.html" class="orbit-icon-node" data-service="CONTENT & CREATORS" data-idx="4"
           aria-label="Content & Creators">
           <span class="oin-tag">05</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
@@ -3175,7 +3177,7 @@
 
   <!-- 6. MODERN EDITORIAL LUXURY EXIT FOOTER (Referenced from footer.html) -->
   <div id="footer-placeholder"></div>
-  <script src="footer-loader.js?v=20261024_02"></script>
+  <script src="footer-loader.js?v=20261025_02"></script>
 
 
   <!-- Floating Theme Toggle FAB (Dark / Light) -->
@@ -3281,24 +3283,9 @@
           });
 
           state.el.addEventListener('click', (e) => {
-            e.preventDefault();
-            const servicesSection = document.getElementById('services');
-            if (servicesSection) {
-              const vh = window.innerHeight;
-              const secRect = servicesSection.getBoundingClientRect();
-              const secTop = window.scrollY + secRect.top;
-              const secHeight = servicesSection.offsetHeight;
-              const totalScrollable = secHeight - vh;
-              const cardCount = nodeStates.length;
-              const step = 1 / Math.max(cardCount - 1, 1);
-
-              const targetProgress = state.idx * step;
-              const targetScrollY = secTop + (totalScrollable * targetProgress);
-
-              window.scrollTo({
-                top: targetScrollY,
-                behavior: 'smooth'
-              });
+            const targetUrl = state.el.getAttribute('href');
+            if (targetUrl && !targetUrl.startsWith('#')) {
+              window.location.href = targetUrl;
             }
           });
         });

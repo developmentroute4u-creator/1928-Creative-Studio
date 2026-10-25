@@ -1602,9 +1602,20 @@
                   const raw = json.data.settings?.home_services || json.data.settings?.homeServices;
                   if (!raw) return DEFAULT_CMS_DATA.settings.homeServices;
                   if (typeof raw === 'string') {
-                    try { return JSON.parse(raw); } catch (e) { return DEFAULT_CMS_DATA.settings.homeServices; }
+                    try {
+                      const parsed = JSON.parse(raw);
+                      if (parsed && Array.isArray(parsed.cards) && parsed.cards.length > 0) {
+                        return parsed;
+                      }
+                      return DEFAULT_CMS_DATA.settings.homeServices;
+                    } catch (e) {
+                      return DEFAULT_CMS_DATA.settings.homeServices;
+                    }
                   }
-                  return raw;
+                  if (raw && Array.isArray(raw.cards) && raw.cards.length > 0) {
+                    return raw;
+                  }
+                  return DEFAULT_CMS_DATA.settings.homeServices;
                 })()
               },
               contactBrief: json.data.contactBrief ? {
@@ -1646,14 +1657,20 @@
         const storedHash = localStorage.getItem(STORAGE_KEY + '_code_hash');
         const stored = localStorage.getItem(STORAGE_KEY);
 
-        // If code has changed on disk, automatically synchronize with new code
-        if (storedHash !== codeChecksum || !stored) {
-          console.log('⚡ [1928 CMS] Code change detected. Live-syncing data store with code from backend...');
+        // If no stored data exists in the browser, initialize with factory defaults
+        if (!stored) {
           try {
             localStorage.setItem(STORAGE_KEY + '_code_hash', codeChecksum);
             localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_CMS_DATA));
           } catch (e) {}
           return JSON.parse(JSON.stringify(DEFAULT_CMS_DATA));
+        }
+
+        // When code has changed on disk, update code hash without wiping client/admin stored data
+        if (storedHash !== codeChecksum) {
+          try {
+            localStorage.setItem(STORAGE_KEY + '_code_hash', codeChecksum);
+          } catch (e) {}
         }
 
         if (stored) {
@@ -1698,7 +1715,9 @@
                 ...DEFAULT_CMS_DATA.settings.servicesHeader,
                 ...(parsed.settings?.services_header || parsed.settings?.servicesHeader || {})
               },
-              homeServices: parsed.settings?.homeServices || DEFAULT_CMS_DATA.settings.homeServices
+              homeServices: (parsed.settings?.homeServices && Array.isArray(parsed.settings.homeServices.cards) && parsed.settings.homeServices.cards.length > 0)
+                ? parsed.settings.homeServices
+                : DEFAULT_CMS_DATA.settings.homeServices
             },
             contactBrief: parsed.contactBrief ? {
               header: { ...DEFAULT_CMS_DATA.contactBrief.header, ...(parsed.contactBrief.header || {}) },
@@ -1914,7 +1933,11 @@
 
     // ── Home Page Services Methods ──
     getHomeServices() {
-      return this.data.settings?.homeServices || DEFAULT_CMS_DATA.settings.homeServices;
+      const hs = this.data.settings?.homeServices;
+      if (hs && Array.isArray(hs.cards) && hs.cards.length > 0) {
+        return hs;
+      }
+      return DEFAULT_CMS_DATA.settings.homeServices;
     }
     saveHomeServices(homeData) {
       if (!this.data.settings) this.data.settings = {};

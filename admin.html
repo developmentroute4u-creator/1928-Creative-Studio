@@ -6224,32 +6224,32 @@
             <span style="font-size:11px;color:var(--ink-mid);margin-top:4px;display:block;">Separate each deliverable with a comma</span>
           </div>
 
-          <div class="modal-section-badge">04 / Service Visual Asset</div>
+          <div class="modal-section-badge">04 / Service Visual Media Asset</div>
 
           <div class="form-group">
-            <label class="form-label">Service Image / Visual Asset</label>
+            <label class="form-label">Service Media / Visual Asset (Image or MP4 Video)</label>
             <div class="media-upload-card" id="serviceImageUploadCard">
               <input type="hidden" id="serviceImageInput" value="" />
-              <input type="file" id="serviceImageFileInput" accept="image/*" style="display:none;" />
+              <input type="file" id="serviceImageFileInput" accept="image/*,video/mp4,video/*" style="display:none;" />
 
               <div class="media-preview-container" id="serviceImagePreviewBox" style="display:none;">
                 <div class="media-preview-thumb-wrap">
-                  <img src="" alt="Service Visual" class="media-small-thumbnail" id="serviceImagePreviewImg" onerror="this.src='img/port-veloce.jpg';" />
+                  <img src="" alt="Service Visual" class="media-small-thumbnail" id="serviceImagePreviewImg" onerror="this.style.opacity='0.2';" />
                   <div class="media-preview-meta">
                     <span class="media-path-pill" id="serviceImagePathTxt">assets/uploads/...</span>
                     <span class="media-storage-tag">📁 Assets Folder · Live Service Page</span>
                   </div>
                 </div>
                 <div class="media-actions-deck">
-                  <button type="button" class="btn-media-change" id="serviceChangeImageBtn">Change Image</button>
-                  <button type="button" class="btn-media-delete" id="serviceDeleteImageBtn">Delete Image</button>
+                  <button type="button" class="btn-media-change" id="serviceChangeImageBtn">Change Asset</button>
+                  <button type="button" class="btn-media-delete" id="serviceDeleteImageBtn">Delete Asset</button>
                 </div>
               </div>
 
               <div class="media-dropzone" id="serviceImageDropzone">
                 <svg class="dropzone-cloud-icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
-                <div class="dropzone-title">Click to upload service visual or drag &amp; drop here</div>
-                <div class="dropzone-hint">Recommended Ratio: 4:3 (e.g. 1200×900px or 800×600px) · Drag-and-drop or file selection only</div>
+                <div class="dropzone-title">Click to upload service visual media or drag &amp; drop here</div>
+                <div class="dropzone-hint">Supports MP4 video or high-res image (PNG, JPG, WebP) · Drag-and-drop or file selection only</div>
               </div>
             </div>
           </div>
@@ -6347,7 +6347,7 @@
 
               <div class="media-preview-container" id="homeCardPreviewBox" style="display:none;">
                 <div class="media-preview-thumb-wrap">
-                  <img src="" alt="Service Media Preview" class="media-small-thumbnail" id="homeCardPreviewImg" onerror="this.src='img/port-veloce.jpg';" />
+                  <img src="" alt="Service Media Preview" class="media-small-thumbnail" id="homeCardPreviewImg" onerror="this.style.opacity='0.2';" />
                   <div class="media-preview-meta">
                     <span class="media-path-pill" id="homeCardPathTxt">assets/uploads/...</span>
                     <span class="media-storage-tag">📁 Media Asset · Home Showcase</span>
@@ -6629,6 +6629,9 @@
         loadContactInquiries();
         loadStudioContactSettings();
       }
+      if (viewName === 'services') {
+        renderHomeServicesGrid();
+      }
       refreshAllViews();
     }
 
@@ -6852,19 +6855,101 @@
       const deleteBtn = document.getElementById(deleteBtnId);
       const manualInput = manualInputId ? document.getElementById(manualInputId) : null;
 
+      const isVideoAsset = (url) => {
+        if (!url || typeof url !== 'string') return false;
+        const clean = url.split('?')[0].split('#')[0].toLowerCase();
+        return clean.endsWith('.mp4') || clean.endsWith('.webm') || clean.endsWith('.mov') || clean.endsWith('.m4v') || clean.endsWith('.ogg') || url.startsWith('data:video/');
+      };
+
+      // Create or locate companion video element for real-time video thumbnail preview
+      let previewVideo = null;
+      if (previewImg && previewImg.parentElement) {
+        previewVideo = previewImg.parentElement.querySelector('video.media-preview-video');
+        if (!previewVideo) {
+          previewVideo = document.createElement('video');
+          previewVideo.className = 'media-small-thumbnail media-preview-video';
+          previewVideo.muted = true;
+          previewVideo.playsInline = true;
+          previewVideo.preload = 'auto';
+          previewVideo.autoplay = false;
+          previewVideo.style.display = 'none';
+          previewVideo.style.objectFit = 'cover';
+          previewVideo.style.background = '#000';
+          previewVideo.style.cursor = 'pointer';
+          previewVideo.title = 'Hover to preview video snippet';
+
+          previewVideo.addEventListener('mouseenter', () => {
+            previewVideo.play().catch(() => {});
+          });
+          previewVideo.addEventListener('mouseleave', () => {
+            previewVideo.pause();
+            try { previewVideo.currentTime = 0.1; } catch (e) {}
+          });
+
+          previewImg.parentElement.insertBefore(previewVideo, previewImg);
+        }
+      }
+
       function refreshUI() {
-        const val = hiddenInput.value.trim();
+        const val = hiddenInput ? hiddenInput.value.trim() : '';
         if (val) {
-          previewBox.style.display = 'flex';
-          dropzone.style.display = 'none';
-          previewImg.src = val;
-          pathTxt.textContent = val;
+          if (previewBox) previewBox.style.display = 'flex';
+          if (dropzone) dropzone.style.display = 'none';
+          if (pathTxt) pathTxt.textContent = val;
           if (manualInput) manualInput.value = val;
+
+          if (isVideoAsset(val)) {
+            // Video asset: Show real video frame thumbnail derived from the video itself
+            if (previewVideo) {
+              previewVideo.style.display = 'block';
+              const vidSrc = val.includes('#') ? val : (val + '#t=0.1');
+              if (!previewVideo.src.endsWith(val) && previewVideo.src !== vidSrc) {
+                previewVideo.src = vidSrc;
+                previewVideo.load();
+                previewVideo.onloadeddata = () => {
+                  try { previewVideo.currentTime = 0.1; } catch (e) {}
+                  try {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = previewVideo.videoWidth || 320;
+                    canvas.height = previewVideo.videoHeight || 180;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(previewVideo, 0, 0, canvas.width, canvas.height);
+                    const snap = canvas.toDataURL('image/jpeg', 0.85);
+                    if (snap && snap.length > 100 && previewImg) {
+                      previewImg.src = snap;
+                    }
+                  } catch (err) {}
+                };
+              }
+            }
+            if (previewImg) {
+              previewImg.style.display = 'none';
+            }
+          } else {
+            // Standard image asset
+            if (previewVideo) {
+              previewVideo.style.display = 'none';
+              previewVideo.pause();
+              previewVideo.removeAttribute('src');
+            }
+            if (previewImg) {
+              previewImg.style.display = 'block';
+              previewImg.src = val;
+            }
+          }
         } else {
-          previewBox.style.display = 'none';
-          dropzone.style.display = 'flex';
-          previewImg.src = '';
-          pathTxt.textContent = '';
+          if (previewBox) previewBox.style.display = 'none';
+          if (dropzone) dropzone.style.display = 'flex';
+          if (previewVideo) {
+            previewVideo.style.display = 'none';
+            previewVideo.pause();
+            previewVideo.removeAttribute('src');
+          }
+          if (previewImg) {
+            previewImg.style.display = 'block';
+            previewImg.src = '';
+          }
+          if (pathTxt) pathTxt.textContent = '';
           if (manualInput) manualInput.value = '';
         }
       }
@@ -8652,16 +8737,19 @@
         if (headerAction) headerAction.style.display = 'none';
         if (secHome) secHome.style.display = 'block';
         if (secDedicated) secDedicated.style.display = 'none';
+        renderHomeServicesGrid();
       }
     }
 
     function renderHomeServicesGrid() {
       const grid = document.getElementById('homeServicesGrid');
       if (!grid) return;
-      const homeServices = (typeof window.CMSStore.getHomeServices === 'function') 
+      const homeServices = (typeof window.CMSStore?.getHomeServices === 'function') 
         ? window.CMSStore.getHomeServices() 
-        : { cards: [] };
-      const cards = Array.isArray(homeServices.cards) ? homeServices.cards : [];
+        : (window.DEFAULT_CMS_DATA?.settings?.homeServices || { cards: [] });
+      const cards = (homeServices && Array.isArray(homeServices.cards) && homeServices.cards.length > 0)
+        ? homeServices.cards
+        : (window.DEFAULT_CMS_DATA?.settings?.homeServices?.cards || []);
 
       grid.innerHTML = cards.map((c, idx) => {
         const deliv = Array.isArray(c.deliverables) ? c.deliverables : [];
@@ -8687,7 +8775,10 @@
 
               ${c.mediaUrl ? `
                 <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);margin-bottom:14px;">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                  ${(/\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(c.mediaUrl) || c.mediaUrl.startsWith('data:video/'))
+                    ? `<video src="${c.mediaUrl}#t=0.1" muted playsinline style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;background:#000;"></video>`
+                    : `<img src="${c.mediaUrl}" alt="media" style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.style.display='none';" />`
+                  }
                   <span style="font-size:11px;color:var(--ink-mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.mediaUrl}</span>
                 </div>
               ` : ''}
@@ -8812,7 +8903,10 @@
 
               ${s.image ? `
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:6px 10px;background:var(--card-alt);border-radius:8px;border:1px solid var(--rule);">
-                  <img src="${s.image}" alt="visual" style="width:28px;height:28px;object-fit:cover;border-radius:6px;" onerror="this.style.display='none';" />
+                  ${(/\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(s.image) || s.image.startsWith('data:video/'))
+                    ? `<video src="${s.image}#t=0.1" muted playsinline style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;background:#000;"></video>`
+                    : `<img src="${s.image}" alt="visual" style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.style.display='none';" />`
+                  }
                   <span style="font-size:11px;color:var(--ink-mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${s.image}</span>
                 </div>
               ` : ''}
@@ -8883,8 +8977,30 @@
       if (id) data.id = id;
 
       window.CMSStore.saveService(data);
+
+      // Keep home services cards in sync if matching service num (01 to 05)
+      try {
+        const sNum = parseInt(data.num, 10);
+        if (!isNaN(sNum) && sNum >= 1 && sNum <= 5) {
+          const cardIdx = sNum - 1;
+          const homeData = (typeof window.CMSStore.getHomeServices === 'function') ? window.CMSStore.getHomeServices() : null;
+          if (homeData && Array.isArray(homeData.cards) && homeData.cards[cardIdx]) {
+            const card = homeData.cards[cardIdx];
+            card.sheetTitle = data.title;
+            card.title = `${data.num}. ${data.title}`;
+            if (data.desc) card.bodyDesc = data.desc;
+            if (data.image) card.mediaUrl = data.image;
+            if (data.deliverables && data.deliverables.length) card.deliverables = data.deliverables;
+            if (typeof window.CMSStore.saveHomeServiceCard === 'function') {
+              window.CMSStore.saveHomeServiceCard(cardIdx, card);
+            }
+          }
+        }
+      } catch (err) {}
+
       closeModal('serviceModal');
       renderServicesGrid();
+      showToast('🎉 Service saved & synchronized across live pages!');
     });
 
     // ── 7. CLIENT LOGOS ENGINE ──
@@ -9765,6 +9881,7 @@
       loadPortfolioHeroForm();
       loadHomeShowcaseForm();
       renderProfileView();
+      renderHomeServicesGrid();
       renderServicesGrid();
       renderClientsGrid();
       renderContactAdminView();

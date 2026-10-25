@@ -905,9 +905,16 @@
 
     // B. Revolving Orbit Icons (#heroOrbitIcons)
     const orbitContainer = document.getElementById('heroOrbitIcons');
+    const serviceUrls = [
+      'service-logo-design.html',
+      'service-brand-identity.html',
+      'service-website-development.html',
+      'service-digital-marketing.html',
+      'service-content-creation.html'
+    ];
     if (orbitContainer && !orbitContainer.children.length) {
       orbitContainer.innerHTML = services.map((s, idx) => `
-        <a href="#service-0${idx + 1}" class="orbit-icon-node" data-service="${(s.title || '').toUpperCase()}" data-idx="${idx}" aria-label="${s.title}">
+        <a href="${serviceUrls[idx] || s.pageUrl || `service-logo-design.html`}" class="orbit-icon-node" data-service="${(s.title || '').toUpperCase()}" data-idx="${idx}" aria-label="${s.title}">
           <span class="oin-tag">0${idx + 1}</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -943,17 +950,31 @@
               <span class="svc-chip-item"><span class="svc-chip-dot"></span> ${d}</span>
             `).join('');
           }
+          const isVidAsset = (url) => !!(url && (/\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(url) || url.startsWith('data:video/')));
+          const renderServiceVisual = (imgUrl, title, idx, num) => {
+            if (!imgUrl) return getServiceSculptureHTML(idx, num);
+            if (isVidAsset(imgUrl)) {
+              return `<video class="svc-card-media-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;"><source src="${imgUrl}" type="video/mp4"></video>`;
+            }
+            return `<img src="${imgUrl}" alt="${title || ''}" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />`;
+          };
+
           const rightEl = card.querySelector('.svc-card-right');
           if (rightEl) {
-            if (s.image) {
-              rightEl.innerHTML = `<img src="${s.image}" alt="${s.title}" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${s.num || `0${idx + 1}`}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />`;
-            } else {
-              rightEl.innerHTML = getServiceSculptureHTML(idx, s.num || `0${idx + 1}`);
-            }
+            rightEl.innerHTML = renderServiceVisual(s.image, s.title, idx, s.num || `0${idx + 1}`);
           }
         });
       } else {
-        // Render dynamically with accurate sculptures or custom image
+        // Render dynamically with accurate sculptures or custom image/video
+        const isVidAsset = (url) => !!(url && (/\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(url) || url.startsWith('data:video/')));
+        const renderServiceVisual = (imgUrl, title, idx, num) => {
+          if (!imgUrl) return getServiceSculptureHTML(idx, num);
+          if (isVidAsset(imgUrl)) {
+            return `<video class="svc-card-media-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;"><source src="${imgUrl}" type="video/mp4"></video>`;
+          }
+          return `<img src="${imgUrl}" alt="${title || ''}" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />`;
+        };
+
         deck.innerHTML = services.map((s, idx) => {
           const num = s.num || `0${idx + 1}`;
           const rawTag = (s.tagline || 'PRACTICE').replace(/^\s*—?\s*/, '').replace(/^\s*0\d\s*[\/·-]?\s*/, '').replace('//', '/');
@@ -978,7 +999,7 @@
                 </div>
               </div>
               <div class="svc-card-right">
-                ${s.image ? `<img src="${s.image}" alt="${s.title}" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />` : getServiceSculptureHTML(idx, s.num || `0${idx + 1}`)}
+                ${renderServiceVisual(s.image, s.title, idx, num)}
               </div>
             </article>
           `;
@@ -1105,11 +1126,15 @@
             pagEl.textContent = card.pagination;
           }
 
-          if (card.mediaUrl && card.mediaUrl.trim()) {
+          const coreServices = (typeof window.CMSStore?.getServices === 'function') ? window.CMSStore.getServices() : [];
+          const matchingCoreSvc = coreServices[idx] || coreServices.find(s => parseInt(s.num, 10) === (idx + 1));
+          const effectiveMediaUrl = (card.mediaUrl && card.mediaUrl.trim()) || (matchingCoreSvc && matchingCoreSvc.image && matchingCoreSvc.image.trim()) || '';
+
+          if (effectiveMediaUrl) {
             const artFrame = showcaseCard.querySelector('.svc-s3-art-frame');
             if (artFrame) {
-              const url = card.mediaUrl.trim();
-              if (url.endsWith('.mp4') || url.endsWith('.webm')) {
+              const url = effectiveMediaUrl;
+              if (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/')) {
                 artFrame.innerHTML = `
                   <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;">
                     <source src="${url}" type="video/mp4">

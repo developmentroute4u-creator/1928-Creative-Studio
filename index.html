@@ -5751,9 +5751,7 @@
             <div class="svc-s3-art-frame" style="background: #141416; overflow: hidden;">
               <video class="svc-art-video" autoplay loop muted playsinline preload="auto"
                 onloadedmetadata="this.muted=true;this.play();">
-                <source src="video/Logo Section.mp4" type="video/mp4">
                 <source src="video/logo-section.mp4" type="video/mp4">
-                <source src="video/video logo section.mp4" type="video/mp4">
               </video>
             </div>
             <div class="svc-card-num-watermark">01</div>
@@ -6637,7 +6635,7 @@
       </div>
     </div>
   </footer>
-  <script src="footer-loader.js?v=20261024_02"></script>
+  <script src="footer-loader.js?v=20261025_02"></script>
   <script>
     (function () {
       function initFooterBrandAnimation() {
@@ -6647,7 +6645,7 @@
         if (!footerDriver || !footerGiantText) return;
 
         var chars = footerGiantText.querySelectorAll('.f-char');
-        var delayStep = 0.048;
+        var delayStep = 0.026; // 26ms per character for an ultra-soft, minimal wave
         chars.forEach(function (char, index) {
           char.style.setProperty('transition-delay', (index * delayStep).toFixed(3) + 's', 'important');
         });
@@ -6664,30 +6662,11 @@
           }
         }
 
-        if ('IntersectionObserver' in window) {
-          var obs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-              if (entry.isIntersecting) {
-                revealFooter();
-              } else {
-                var r = entry.boundingClientRect;
-                var vh = window.innerHeight || document.documentElement.clientHeight;
-                if (r.top > vh + 160 || r.bottom < -160) {
-                  unrevealFooter();
-                }
-              }
-            });
-          }, {
-            threshold: [0.01, 0.08, 0.2]
-          });
-          if (luxuryCard) obs.observe(luxuryCard);
-          obs.observe(footerGiantText);
-        }
-
         function checkFooterScroll() {
           var cardRect = luxuryCard ? luxuryCard.getBoundingClientRect() : footerDriver.getBoundingClientRect();
-          var textRect = footerGiantText.getBoundingClientRect();
           var vh = window.innerHeight || document.documentElement.clientHeight;
+          var cardCenterY = cardRect.top + (cardRect.height * 0.5);
+          var viewportCenterY = vh * 0.5;
           var scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || 0;
           var docHeight = Math.max(
             document.body.scrollHeight || 0,
@@ -6695,31 +6674,15 @@
             document.body.offsetHeight || 0,
             document.documentElement.offsetHeight || 0
           );
-          var isNearBottom = (scrollY + vh) >= (docHeight - 140);
-          var cardVisible = (cardRect.top <= vh * 0.90 && cardRect.bottom >= 40);
-          var textVisible = (textRect.top <= vh * 0.98 && textRect.bottom >= 0);
+          var isAtBottom = (scrollY + vh) >= (docHeight - 40);
 
-          if (cardVisible || textVisible || isNearBottom) {
+          // Trigger ONLY when the footer luxury card reaches the center of the viewport (or at bottom of page)
+          if (cardCenterY <= viewportCenterY + 40 || isAtBottom) {
             revealFooter();
-          } else if (cardRect.top > vh + 180 || cardRect.bottom < -180) {
+          } else if (cardCenterY > viewportCenterY + 120) {
             unrevealFooter();
           }
         }
-
-        chars.forEach(function (char) {
-          char.addEventListener('mouseenter', function () {
-            char.style.setProperty('transform', 'translateY(-14%)', 'important');
-            char.style.setProperty('color', 'var(--cr, #C8102E)', 'important');
-            setTimeout(function () {
-              if (footerGiantText.classList.contains('revealed')) {
-                char.style.setProperty('transform', 'translateY(0%)', 'important');
-              } else {
-                char.style.setProperty('transform', 'translateY(85%)', 'important');
-              }
-              char.style.removeProperty('color');
-            }, 320);
-          });
-        });
 
         window.addEventListener('scroll', checkFooterScroll, { passive: true });
         window.addEventListener('resize', checkFooterScroll, { passive: true });
@@ -6785,14 +6748,17 @@
       document.addEventListener('mousemove', e => {
         mx = e.clientX; my = e.clientY;
         if (CUR) { CUR.style.left = mx + 'px'; CUR.style.top = my + 'px'; }
-      });
+        if (e.target && e.target.closest('a,button,.port-card,.p-card-v,.blog-card,.marquee-item,.svc-card')) {
+          if (!document.body.classList.contains('hov')) document.body.classList.add('hov');
+        } else {
+          if (document.body.classList.contains('hov')) document.body.classList.remove('hov');
+        }
+      }, { passive: true });
       (function L() {
         rx += (mx - rx) * .11; ry += (my - ry) * .11;
         if (CURR) { CURR.style.left = rx + 'px'; CURR.style.top = ry + 'px'; }
         requestAnimationFrame(L);
       })();
-      document.addEventListener('mouseover', e => { if (e.target.closest('a,button,.port-card,.blog-card,.marquee-item,.svc-card')) document.body.classList.add('hov'); });
-      document.addEventListener('mouseout', e => { if (e.target.closest('a,button,.port-card,.blog-card,.marquee-item,.svc-card')) document.body.classList.remove('hov'); });
 
       /* ── Floating Theme Toggle ──────────────────────────── */
       const DR = document.documentElement;
@@ -7005,14 +6971,23 @@
         }
         lastSY = sy;
 
-        /* ── §7 Footer Giant Text Reveal ── */
+        /* ── §7 Footer Giant Text Reveal (Centered Trigger) ── */
         const fDriverEl = footerDriver || document.getElementById('footer-driver');
+        const fCardEl = fDriverEl ? (fDriverEl.querySelector('.footer-luxury-card') || fDriverEl) : null;
         const fTextEl = document.getElementById('footerGiantText');
-        if (fDriverEl && fTextEl) {
-          const fRect = fDriverEl.getBoundingClientRect();
-          if (fRect.top <= vh * 0.92 && fRect.bottom >= 40) {
+        if (fDriverEl && fCardEl && fTextEl) {
+          const cardRect = fCardEl.getBoundingClientRect();
+          const cardCenterY = cardRect.top + (cardRect.height * 0.5);
+          const viewportCenterY = vh * 0.5;
+          const isAtBottom = (sy + vh) >= (document.documentElement.scrollHeight - 40);
+
+          if (cardCenterY <= viewportCenterY + 40 || isAtBottom) {
             if (!fTextEl.classList.contains('revealed')) {
               fTextEl.classList.add('revealed');
+            }
+          } else if (cardCenterY > viewportCenterY + 120) {
+            if (fTextEl.classList.contains('revealed')) {
+              fTextEl.classList.remove('revealed');
             }
           }
         }
