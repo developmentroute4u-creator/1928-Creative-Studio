@@ -89,6 +89,46 @@ function checkAndAutoSeed(PDO $db) {
             ");
         }
 
+        // Auto-migration for site_routes table and route_slug in seo_meta
+        $seoCols = $db->query("SHOW COLUMNS FROM `seo_meta`")->fetchAll(PDO::FETCH_COLUMN);
+        if (!in_array('route_slug', $seoCols)) {
+            $db->exec("ALTER TABLE `seo_meta` ADD COLUMN `route_slug` VARCHAR(150) NULL AFTER `page_key`");
+        }
+
+        $routesTableCheck = $db->query("SHOW TABLES LIKE 'site_routes'")->fetch();
+        if (!$routesTableCheck) {
+            $db->exec("
+                CREATE TABLE IF NOT EXISTS `site_routes` (
+                  `id` INT NOT NULL AUTO_INCREMENT,
+                  `route_key` VARCHAR(100) NOT NULL UNIQUE,
+                  `slug` VARCHAR(150) NOT NULL UNIQUE,
+                  `target_type` VARCHAR(50) NOT NULL DEFAULT 'service',
+                  `target_file` VARCHAR(150) NOT NULL,
+                  `target_id` VARCHAR(100) DEFAULT NULL,
+                  `is_active` TINYINT(1) NOT NULL DEFAULT 1,
+                  `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                  PRIMARY KEY (`id`),
+                  KEY `idx_slug` (`slug`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+            ");
+            $defaultRoutes = [
+                ['service_logo_design', 'logo-design', 'service', 'service-logo-design.html', 'svc-logo'],
+                ['service_brand_identity', 'brand-identity', 'service', 'service-brand-identity.html', 'svc-brand'],
+                ['service_website_development', 'website-development', 'service', 'service-website-development.html', 'svc-web'],
+                ['service_digital_marketing', 'digital-marketing', 'service', 'service-digital-marketing.html', 'svc-social'],
+                ['service_content_creation', 'content-creation', 'service', 'service-content-creation.html', 'svc-content'],
+                ['blogs', 'perspectives', 'page', 'blogs.html', 'page-blogs'],
+                ['services', 'services', 'page', 'services.html', 'page-services'],
+                ['portfolio', 'portfolio', 'page', 'portfolio.html', 'page-portfolio'],
+                ['about', 'about', 'page', 'about.html', 'page-about'],
+                ['contact', 'contact', 'page', 'contact.html', 'page-contact']
+            ];
+            $rStmt = $db->prepare("INSERT IGNORE INTO `site_routes` (`route_key`, `slug`, `target_type`, `target_file`, `target_id`, `is_active`) VALUES (?, ?, ?, ?, ?, 1)");
+            foreach ($defaultRoutes as $dr) {
+                $rStmt->execute($dr);
+            }
+        }
+
     } catch (Exception $e) {
         // Continue
     }
@@ -136,7 +176,23 @@ try {
         case 'get_all':
             $response = [];
 
-            // A. SEO Metadata
+            // A. SEO Metadata & Dynamic Routes
+            $routesStmt = $db->query("SELECT * FROM `site_routes` ORDER BY `id` ASC");
+            $routeRows = $routesStmt ? $routesStmt->fetchAll() : [];
+            $routesMap = [];
+            foreach ($routeRows as $rt) {
+                $routesMap[$rt['route_key']] = [
+                    'id' => (int)$rt['id'],
+                    'routeKey' => $rt['route_key'],
+                    'slug' => $rt['slug'],
+                    'targetType' => $rt['target_type'],
+                    'targetFile' => $rt['target_file'],
+                    'targetId' => $rt['target_id'],
+                    'isActive' => (int)$rt['is_active']
+                ];
+            }
+            $response['routes'] = $routesMap;
+
             $seoStmt = $db->query("SELECT * FROM `seo_meta`");
             $seoRows = $seoStmt->fetchAll();
             $seoMap = [];
@@ -145,7 +201,8 @@ try {
                     'title' => $row['title'],
                     'description' => $row['description'],
                     'keywords' => $row['keywords'],
-                    'ogImage' => $row['og_image']
+                    'ogImage' => $row['og_image'],
+                    'routeSlug' => $row['route_slug'] ?? ($routesMap[$row['page_key']]['slug'] ?? '')
                 ];
             }
             $response['seo'] = $seoMap;
@@ -313,26 +370,139 @@ try {
             $desc = $inputData['description'] ?? '';
             $keywords = $inputData['keywords'] ?? '';
             $ogImage = $inputData['og_image'] ?? 'assets/img/branding/1928-logo.png';
+            $routeSlug = isset($inputData['route_slug']) ? trim((string)$inputData['route_slug']) : (isset($inputData['slug']) ? trim((string)$inputData['slug']) : null);
+
+            $cleanSlug = null;
+            if ($routeSlug !== null && $routeSlug !== '') {
+                $cleanSlug = strtolower(preg_replace('/[^a-zA-Z0-9\/-]+/', '-', $routeSlug));
+                $cleanSlug = trim($cleanSlug, '/-');
+            }
+
+            // Handle blog article specific SEO/Slug update
+            if (str_starts_with($pageKey, 'blog_')) {
+                $blogId = substr($pageKey, 5);
+                if (!empty($cleanSlug)) {
+                    $bStmt = $db->prepare("UPDATE `blogs` SET `slug` = :slug WHERE `blog_id` = :bid");
+                    $bStmt->execute([':slug' => $cleanSlug, ':bid' => $blogId]);
+                }
+                echo json_encode([
+                    'status' => 'success',
+                    'page_key' => $pageKey,
+                    'slug' => $cleanSlug,
+                    'message' => "Perspective route updated to '/perspectives/{$cleanSlug}'."
+                ]);
+                break;
+            }
 
             $stmt = $db->prepare("
-                INSERT INTO `seo_meta` (`page_key`, `title`, `description`, `keywords`, `og_image`)
-                VALUES (:pk, :title, :desc, :kw, :og)
+                INSERT INTO `seo_meta` (`page_key`, `route_slug`, `title`, `description`, `keywords`, `og_image`)
+                VALUES (:pk, :rslug, :title, :desc, :kw, :og)
                 ON DUPLICATE KEY UPDATE
                     `title` = VALUES(`title`),
                     `description` = VALUES(`description`),
                     `keywords` = VALUES(`keywords`),
-                    `og_image` = VALUES(`og_image`)
+                    `og_image` = VALUES(`og_image`),
+                    `route_slug` = COALESCE(VALUES(`route_slug`), `route_slug`)
             ");
             $stmt->execute([
                 ':pk' => $pageKey,
+                ':rslug' => $cleanSlug,
                 ':title' => $title,
                 ':desc' => $desc,
                 ':kw' => $keywords,
                 ':og' => $ogImage
             ]);
 
-            echo json_encode(['status' => 'success', 'message' => "SEO for '$pageKey' updated in MySQL."]);
+            // Sync with site_routes table if a slug was provided
+            if (!empty($cleanSlug)) {
+                $rStmt = $db->prepare("
+                    INSERT INTO `site_routes` (`route_key`, `slug`, `target_type`, `target_file`, `is_active`)
+                    VALUES (:rk, :slug, 'page', CONCAT(:tf, '.html'), 1)
+                    ON DUPLICATE KEY UPDATE `slug` = VALUES(`slug`)
+                ");
+                $rStmt->execute([
+                    ':rk' => $pageKey,
+                    ':slug' => $cleanSlug,
+                    ':tf' => str_replace('_', '-', $pageKey)
+                ]);
+            }
+
+            echo json_encode([
+                'status' => 'success', 
+                'page_key' => $pageKey, 
+                'slug' => $cleanSlug,
+                'message' => "SEO settings and URL route for '{$pageKey}' saved and synchronized with PHP router."
+            ]);
             break;
+
+        case 'get_routes':
+            $routesStmt = $db->query("SELECT * FROM `site_routes` ORDER BY `id` ASC");
+            $routeRows = $routesStmt ? $routesStmt->fetchAll() : [];
+
+            $blogsStmt = $db->query("SELECT `blog_id`, `slug`, `title` FROM `blogs` ORDER BY `display_order` ASC");
+            $blogRows = $blogsStmt ? $blogsStmt->fetchAll() : [];
+
+            echo json_encode([
+                'status' => 'success',
+                'routes' => $routeRows,
+                'blogs' => $blogRows
+            ]);
+            break;
+
+        case 'save_route':
+            $routeKey = trim((string)($inputData['route_key'] ?? ''));
+            $newSlug = trim((string)($inputData['slug'] ?? ''));
+            $isBlog = !empty($inputData['is_blog']) || str_starts_with($routeKey, 'blog_') || !empty($inputData['blog_id']);
+            $blogId = $inputData['blog_id'] ?? ($isBlog ? str_replace('blog_', '', $routeKey) : '');
+
+            $cleanSlug = strtolower(preg_replace('/[^a-zA-Z0-9\/-]+/', '-', $newSlug));
+            $cleanSlug = trim($cleanSlug, '/-');
+
+            if (empty($cleanSlug)) {
+                echo json_encode(['status' => 'error', 'message' => 'Route URL slug cannot be empty.']);
+                break;
+            }
+
+            if ($isBlog && !empty($blogId)) {
+                $check = $db->prepare("SELECT `id` FROM `blogs` WHERE `slug` = :slug AND `blog_id` != :bid LIMIT 1");
+                $check->execute([':slug' => $cleanSlug, ':bid' => $blogId]);
+                if ($check->fetch()) {
+                    echo json_encode(['status' => 'error', 'message' => "The slug '{$cleanSlug}' is already assigned to another perspective."]);
+                    break;
+                }
+
+                $stmt = $db->prepare("UPDATE `blogs` SET `slug` = :slug WHERE `blog_id` = :bid");
+                $stmt->execute([':slug' => $cleanSlug, ':bid' => $blogId]);
+
+                echo json_encode([
+                    'status' => 'success',
+                    'route_key' => $routeKey,
+                    'slug' => $cleanSlug,
+                    'message' => "Perspective URL route updated to '/perspectives/{$cleanSlug}'."
+                ]);
+                break;
+            } else {
+                $check = $db->prepare("SELECT `id` FROM `site_routes` WHERE `slug` = :slug AND `route_key` != :rk LIMIT 1");
+                $check->execute([':slug' => $cleanSlug, ':rk' => $routeKey]);
+                if ($check->fetch()) {
+                    echo json_encode(['status' => 'error', 'message' => "The route slug '{$cleanSlug}' is already assigned to another page."]);
+                    break;
+                }
+
+                $stmt = $db->prepare("UPDATE `site_routes` SET `slug` = :slug WHERE `route_key` = :rk");
+                $stmt->execute([':slug' => $cleanSlug, ':rk' => $routeKey]);
+
+                $stmtSeo = $db->prepare("UPDATE `seo_meta` SET `route_slug` = :slug WHERE `page_key` = :pk");
+                $stmtSeo->execute([':slug' => $cleanSlug, ':pk' => $routeKey]);
+
+                echo json_encode([
+                    'status' => 'success',
+                    'route_key' => $routeKey,
+                    'slug' => $cleanSlug,
+                    'message' => "Page URL route updated to '/{$cleanSlug}' and synchronized with PHP router."
+                ]);
+                break;
+            }
 
 
         // ═══════════════════════════════════════════════════════════

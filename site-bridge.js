@@ -1617,7 +1617,105 @@
   // ═══════════════════════════════════════════════════════════
   // 8. MASTER INITIALIZATION & MULTI-TAB BROADCAST
   // ═══════════════════════════════════════════════════════════
+  
+  // ═══════════════════════════════════════════════════════════
+  // 7.1 DYNAMIC PHP ROUTE SYNCHRONIZER
+  // ═══════════════════════════════════════════════════════════
+  function syncWebsitePageRoutes() {
+    if (!window.CMSStore) return;
+
+    const routes = (typeof window.CMSStore.getRoutes === 'function') ? window.CMSStore.getRoutes() : {};
+    const blogs = (typeof window.CMSStore.getBlogs === 'function') ? window.CMSStore.getBlogs() : [];
+
+    const fileToKeyMap = {
+      'service-logo-design.html': 'service_logo_design',
+      'service-brand-identity.html': 'service_brand_identity',
+      'service-website-development.html': 'service_website_development',
+      'service-digital-marketing.html': 'service_digital_marketing',
+      'service-content-creation.html': 'service_content_creation',
+      'services.html': 'services',
+      'blogs.html': 'blogs',
+      'all-blogs.html': 'blogs',
+      'portfolio.html': 'portfolio',
+      'about.html': 'about',
+      'contact.html': 'contact'
+    };
+
+    // Determine subfolder base prefix (e.g. "/1928/" or "/")
+    const pathname = window.location.pathname || '';
+    const isSubfolder = pathname.includes('/1928/');
+    const basePath = isSubfolder ? '/1928/' : '/';
+
+    // 1. Rewrite all navigation & link tags
+    document.querySelectorAll('a[href]').forEach(a => {
+      const rawHref = a.getAttribute('href');
+      if (!rawHref) return;
+      if (rawHref.startsWith('http://') || rawHref.startsWith('https://') || rawHref.startsWith('mailto:') || rawHref.startsWith('tel:') || rawHref.startsWith('#') || rawHref.startsWith('javascript:')) return;
+
+      const [pathOnly, queryPart] = rawHref.split('?');
+      const cleanPath = pathOnly.split('#')[0].replace(/^\.?\//, '');
+      const queryStr = queryPart ? `?${queryPart}` : '';
+
+      if (fileToKeyMap[cleanPath]) {
+        const key = fileToKeyMap[cleanPath];
+        let slug = routes[key]?.slug;
+        if (!slug && window.CMSStore.getRoute) {
+          slug = window.CMSStore.getRoute(key);
+        }
+        if (slug !== undefined && slug !== null) {
+          const finalHref = slug ? `${basePath}${slug}${queryStr}` : `${basePath}${queryStr}`;
+          a.setAttribute('href', finalHref);
+        }
+      }
+
+      // Also rewrite perspective article links
+      if (cleanPath === 'blog-detail.html' && queryPart) {
+        const params = new URLSearchParams(queryPart);
+        const targetId = params.get('slug') || params.get('id');
+        if (targetId) {
+          const foundBlog = blogs.find(b => b.slug === targetId || b.id === targetId || b.blog_id === targetId);
+          if (foundBlog && foundBlog.slug) {
+            a.setAttribute('href', `${basePath}perspectives/${foundBlog.slug}`);
+          }
+        }
+      }
+    });
+
+    // 2. Rewrite orbit icon nodes & service action buttons
+    const orbitNodes = document.querySelectorAll('.orbit-icon-node');
+    const serviceKeys = [
+      'service_logo_design',
+      'service_brand_identity',
+      'service_website_development',
+      'service_digital_marketing',
+      'service_content_creation'
+    ];
+    orbitNodes.forEach((node, idx) => {
+      const key = serviceKeys[idx];
+      if (key) {
+        const slug = routes[key]?.slug || (window.CMSStore.getRoute ? window.CMSStore.getRoute(key) : null);
+        if (slug) {
+          node.setAttribute('href', `${basePath}${slug}`);
+        }
+      }
+    });
+
+    // 3. Perspectives & Blog Cards
+    document.querySelectorAll('[data-article-id]').forEach(card => {
+      const aid = card.getAttribute('data-article-id');
+      const foundBlog = blogs.find(b => b.id === aid || b.blog_id === aid);
+      if (foundBlog && foundBlog.slug) {
+        card.setAttribute('data-article-slug', foundBlog.slug);
+        const cardLink = card.querySelector('a');
+        if (cardLink && (!cardLink.getAttribute('href') || cardLink.getAttribute('href').includes('blogs.html') || cardLink.getAttribute('href').includes('all-blogs.html') || cardLink.getAttribute('href').includes('blog-detail.html'))) {
+          cardLink.setAttribute('href', `${basePath}perspectives/${foundBlog.slug}`);
+        }
+      }
+    });
+  }
+
   function initDynamicCMS() {
+    syncWebsitePageRoutes();
     applySEOMetadata();
     renderClientLogos();
     renderPerspectivesPage();

@@ -4,6 +4,7 @@ $db = getDB();
 
 $tables = [
     'seo_meta',
+    'site_routes',
     'studio_profile',
     'studio_principles',
     'team_members',

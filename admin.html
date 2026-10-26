@@ -312,11 +312,20 @@
       <div class="panel-header">
         <div>
           <h1 class="panel-headline">SEO &amp; Metadata Engine</h1>
-          <p class="panel-sub">Customize search engine titles, meta descriptions, and keywords per page.</p>
+          <p class="panel-sub">Customize search engine titles, meta descriptions, and live PHP route slugs per page.</p>
+        </div>
+        <div class="action-row">
+          <button type="submit" form="seoForm" class="btn-action-primary" id="btnSaveSEO">
+            <span>Save SEO Settings</span>
+            <svg class="btn-arrow-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="13 6 19 12 13 18"></polyline>
+            </svg>
+          </button>
         </div>
       </div>
 
-      <div style="max-width:840px;">
+      <form id="seoForm" style="width:100%;">
         <div class="form-group">
           <label class="form-label">Select Page</label>
           
@@ -330,11 +339,26 @@
               <div class="custom-option selected" data-value="home">Home Page (index.html)</div>
               <div class="custom-option" data-value="about">About Page (about.html)</div>
               <div class="custom-option" data-value="services">Main Services Page (services.html)</div>
-              <div class="custom-option" data-value="service_logo_design">↳ Service 01: Logo Design (service-logo-design.html)</div>
-              <div class="custom-option" data-value="service_brand_identity">↳ Service 02: Brand Identity (service-brand-identity.html)</div>
-              <div class="custom-option" data-value="service_website_development">↳ Service 03: Website Design &amp; Dev (service-website-development.html)</div>
-              <div class="custom-option" data-value="service_digital_marketing">↳ Service 04: Digital Marketing (service-digital-marketing.html)</div>
-              <div class="custom-option" data-value="service_content_creation">↳ Service 05: Content Creation (service-content-creation.html)</div>
+              <div class="custom-option custom-option-sub" data-value="service_logo_design">
+                <span class="opt-sub-arrow"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg></span>
+                <span>Service 01: Logo Design (service-logo-design.html)</span>
+              </div>
+              <div class="custom-option custom-option-sub" data-value="service_brand_identity">
+                <span class="opt-sub-arrow"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg></span>
+                <span>Service 02: Brand Identity (service-brand-identity.html)</span>
+              </div>
+              <div class="custom-option custom-option-sub" data-value="service_website_development">
+                <span class="opt-sub-arrow"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg></span>
+                <span>Service 03: Website Design &amp; Dev (service-website-development.html)</span>
+              </div>
+              <div class="custom-option custom-option-sub" data-value="service_digital_marketing">
+                <span class="opt-sub-arrow"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg></span>
+                <span>Service 04: Digital Marketing (service-digital-marketing.html)</span>
+              </div>
+              <div class="custom-option custom-option-sub" data-value="service_content_creation">
+                <span class="opt-sub-arrow"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg></span>
+                <span>Service 05: Content Creation (service-content-creation.html)</span>
+              </div>
               <div class="custom-option" data-value="portfolio">Portfolio Page (portfolio.html)</div>
               <div class="custom-option" data-value="blogs">Perspectives Page (blogs.html)</div>
               <div class="custom-option" data-value="contact">Contact Page (contact.html)</div>
@@ -342,6 +366,21 @@
           </div>
           <!-- Hidden input for form sync -->
           <input type="hidden" id="seoPageSelector" value="home" />
+        </div>
+
+        <!-- Dynamic URL Slug & Routing Coordinate -->
+        <div class="form-group" id="seoSlugFormGroup">
+          <label class="form-label">Live Page URL / Custom Route Slug</label>
+          <div class="route-input-group">
+            <span class="route-prefix" id="seoRoutePrefix">https://1928creativestudio.com/</span>
+            <input type="text" class="route-slug-field" id="seoSlugInput" placeholder="e.g. logo-design" autocomplete="off" />
+            <a href="#" target="_blank" class="route-icon-btn" id="btnVisitLiveSlug" title="Open Live URL in New Tab">
+              <svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+            <button type="button" class="route-icon-btn" id="btnCopyLiveSlug" title="Copy Live URL to Clipboard">
+              <svg style="width:14px;height:14px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+            </button>
+          </div>
         </div>
 
         <!-- Google SERP Snippet Preview -->
@@ -352,28 +391,24 @@
           <div class="serp-desc" id="serpPreviewDesc">Luxury brand architecture practice.</div>
         </div>
 
-        <form id="seoForm">
-          <div class="form-group">
-            <label class="form-label">Meta Title (<span id="titleCharCount">0</span>/60 chars)</label>
-            <input type="text" class="form-input" id="seoTitleInput" required />
-            <span class="form-hint">Appears in Google search results and browser tabs.</span>
-          </div>
+        <div class="form-group">
+          <label class="form-label">Meta Title (<span id="titleCharCount">0</span>/60 chars)</label>
+          <input type="text" class="form-input" id="seoTitleInput" required />
+          <span class="form-hint">Appears in Google search results and browser tabs.</span>
+        </div>
 
-          <div class="form-group">
-            <label class="form-label">Meta Description (<span id="descCharCount">0</span>/160 chars)</label>
-            <textarea class="form-textarea" id="seoDescInput" rows="3" required></textarea>
-            <span class="form-hint">Clear summary of the page for search engine snippets and social cards.</span>
-          </div>
+        <div class="form-group">
+          <label class="form-label">Meta Description (<span id="descCharCount">0</span>/160 chars)</label>
+          <textarea class="form-textarea" id="seoDescInput" rows="3" required></textarea>
+          <span class="form-hint">Clear summary of the page for search engine snippets and social cards.</span>
+        </div>
 
-          <div class="form-group">
-            <label class="form-label">Meta Keywords</label>
-            <input type="text" class="form-input" id="seoKeywordsInput" placeholder="comma-separated keywords" />
-            <span class="form-hint">e.g. brand strategy, luxury web design, ahmedabad agency</span>
-          </div>
-
-          <button type="submit" class="btn-action-primary">Save SEO Settings</button>
-        </form>
-      </div>
+        <div class="form-group">
+          <label class="form-label">Meta Keywords</label>
+          <input type="text" class="form-input" id="seoKeywordsInput" placeholder="comma-separated keywords" />
+          <span class="form-hint">e.g. brand strategy, luxury web design, ahmedabad agency</span>
+        </div>
+      </form>
     </section>
 
     <!-- ── VIEW 3: PERSPECTIVES / BLOGS ── -->
@@ -1961,6 +1996,14 @@
           <div class="form-group">
             <label class="form-label">Article Title</label>
             <input type="text" class="form-input" id="blogTitleInput" placeholder="e.g. The Mathematics of Visual Silence" required />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Perspective Custom URL Slug</label>
+            <div class="route-input-group">
+              <span class="route-prefix">https://1928creativestudio.com/perspectives/</span>
+              <input type="text" class="route-slug-field" id="blogSlugInput" placeholder="e.g. monolithic-luxury-monogram" autocomplete="off" />
+            </div>
           </div>
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">

@@ -1,6 +1,6 @@
 -- 1928 CREATIVE STUDIO — Pure Database-Driven Master Schema & Initial Data
 -- Database: `1928_studio_cms`
--- Generated: 2026-10-25 18:30:40
+-- Generated: 2026-10-26 08:39:52
 
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `seo_meta`;
 CREATE TABLE `seo_meta` (
   `id` int NOT NULL AUTO_INCREMENT,
   `page_key` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `route_slug` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `keywords` text COLLATE utf8mb4_unicode_ci,
@@ -18,17 +19,54 @@ CREATE TABLE `seo_meta` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `page_key` (`page_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for `seo_meta`
-INSERT INTO `seo_meta` (`id`, `page_key`, `title`, `description`, `keywords`, `og_image`, `updated_at`) VALUES
-(1, 'global', '1928 Creative Studio', '1928 Creative Studio sculpts iconic visual identities, immersive digital platforms, spatial environments, and transformative brand campaigns.', 'brand engineering, luxury identity, webgl digital platforms, spatial design, strategy, creative studio', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08'),
-(2, 'home', '1928 Creative Studio · Independent Brand Engineering & Digital Architecture', '1928 Creative Studio sculpts iconic visual identities, immersive digital platforms, spatial environments, and transformative brand campaigns.', '1928 creative studio, brand architecture, luxury branding agency, high-end web design, digital experiences, ahmedabad branding studio', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08'),
-(3, 'about', 'About · 1928 Creative Studio — Origins, Philosophy & Principles', '1928 Creative Studio is an independent brand engineering practice sculpting iconic visual identities, spatial environments, and digital platforms.', 'about 1928 studio, brand philosophy, studio origins, strategic design practice, creative direction, design team', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08'),
-(4, 'services', 'Services & Capabilities · 1928 Creative Studio', 'Comprehensive creative capabilities: Brand Strategy, Visual Identity Systems, WebGL Digital Architecture, Spatial Design, and High-Impact Content Creation.', 'brand identity services, web design services, packaging design, digital marketing, corporate branding, webgl development', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08'),
-(5, 'portfolio', 'Work & Archives · 1928 Creative Studio', 'A curated selection of branding, digital experiences, content, and spatial work created to solve real business challenges and build market leaders.', '1928 portfolio, luxury case studies, brand identity projects, web design portfolio, packaging design showcase', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08'),
-(6, 'blogs', 'Perspectives · 1928 Creative Studio — Strategic Design Research & Cultural Theorems', 'A provocative research laboratory and editorial codex exploring mathematical brand geometry, computational spatial physics, and luxury market dominance.', 'design perspectives, brand research, typography theorems, digital architecture insights, creative strategy blog', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08'),
-(7, 'contact', 'Start a Project · 1928 Creative Studio', 'Connect with 1928 Creative Studio to engineer your next iconic visual identity, digital flagship, or transformative brand expansion.', 'contact 1928, hire branding agency, project inquiry, luxury studio contact, creative consultation', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08');
+INSERT INTO `seo_meta` (`id`, `page_key`, `route_slug`, `title`, `description`, `keywords`, `og_image`, `updated_at`) VALUES
+(1, 'global', NULL, '1928 Creative Studio', '1928 Creative Studio sculpts iconic visual identities, immersive digital platforms, spatial environments, and transformative brand campaigns.', 'brand engineering, luxury identity, webgl digital platforms, spatial design, strategy, creative studio', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08'),
+(2, 'home', NULL, '1928 Creative Studio · Independent Brand Engineering & Digital Architecture', '1928 Creative Studio sculpts iconic visual identities, immersive digital platforms, spatial environments, and transformative brand campaigns.', '1928 creative studio, brand architecture, luxury branding agency, high-end web design, digital experiences, ahmedabad branding studio', 'assets/img/branding/1928-logo.png', '2026-10-25 19:49:08'),
+(3, 'about', 'about', 'About · 1928 Creative Studio — Origins, Philosophy & Principles', '1928 Creative Studio is an independent brand engineering practice sculpting iconic visual identities, spatial environments, and digital platforms.', 'about 1928 studio, brand philosophy, studio origins, strategic design practice, creative direction, design team', 'assets/img/branding/1928-logo.png', '2026-10-26 13:53:16'),
+(4, 'services', 'services', 'Services & Capabilities · 1928 Creative Studio', 'Comprehensive creative capabilities: Brand Strategy, Visual Identity Systems, WebGL Digital Architecture, Spatial Design, and High-Impact Content Creation.', 'brand identity services, web design services, packaging design, digital marketing, corporate branding, webgl development', 'assets/img/branding/1928-logo.png', '2026-10-26 13:53:16'),
+(5, 'portfolio', 'portfolio', 'Work & Archives · 1928 Creative Studio', 'A curated selection of branding, digital experiences, content, and spatial work created to solve real business challenges and build market leaders.', '1928 portfolio, luxury case studies, brand identity projects, web design portfolio, packaging design showcase', 'assets/img/branding/1928-logo.png', '2026-10-26 13:53:16'),
+(6, 'blogs', 'perspectives', 'Perspectives · 1928 Creative Studio — Strategic Design Research & Cultural Theorems', 'A provocative research laboratory and editorial codex exploring mathematical brand geometry, computational spatial physics, and luxury market dominance.', 'design perspectives, brand research, typography theorems, digital architecture insights, creative strategy blog', 'assets/img/branding/1928-logo.png', '2026-10-26 13:53:16'),
+(7, 'contact', 'contact', 'Start a Project · 1928 Creative Studio', 'Connect with 1928 Creative Studio to engineer your next iconic visual identity, digital flagship, or transformative brand expansion.', 'contact 1928, hire branding agency, project inquiry, luxury studio contact, creative consultation', 'assets/img/branding/1928-logo.png', '2026-10-26 13:53:16'),
+(8, 'service_logo_design', 'logo-design', 'Logo Design & Visual Identity · 1928 Creative Studio', 'A distinctive mark that gives your business a memorable identity. Thoughtful logos that capture brand character across every touchpoint.', 'logo design, wordmarks, monograms, brand symbols, typography', 'assets/img/branding/1928-logo.png', '2026-10-26 14:09:42'),
+(9, 'service_brand_identity', 'brand-identity', 'Brand Identity Development · 1928 Creative Studio', 'A complete identity built around what makes your business different. Turn positioning and personality into a cohesive brand system.', 'brand strategy, visual identity, colour palettes, typography, guidelines', 'assets/img/branding/1928-logo.png', '2026-10-26 14:09:42'),
+(10, 'service_website_development', 'website-development', 'Website Design & Development · 1928 Creative Studio', 'Digital experiences that make your brand feel as good as it looks. Purposeful websites bringing your story to life with motion and interactivity.', 'ui/ux, luxury web design, modern web development, e-commerce, interactive digital motion', 'assets/img/branding/1928-logo.png', '2026-10-26 14:09:42'),
+(11, 'service_digital_marketing', 'digital-marketing', 'Social Media & Digital Marketing · 1928 Creative Studio', 'A digital presence designed to keep your brand moving forward. Strategic marketing building visibility, engagement and audience connections.', 'social strategy, digital marketing, meta ads, google ads, seo architecture', 'assets/img/branding/1928-logo.png', '2026-10-26 14:09:42'),
+(12, 'service_content_creation', 'content-creation', 'Content Creation & Influencer Marketing · 1928 Creative Studio', 'We create stories worth seeing and partnerships worth remembering. Original content and curated creator collaborations giving brands a stronger voice.', 'content strategy, creative production, creator partnerships, influencer campaigns, social content', 'assets/img/branding/1928-logo.png', '2026-10-26 14:09:42');
+
+-- --------------------------------------------------------
+-- Table structure for `site_routes`
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS `site_routes`;
+CREATE TABLE `site_routes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `route_key` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `target_type` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'service',
+  `target_file` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `target_id` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT '1',
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `route_key` (`route_key`),
+  UNIQUE KEY `slug` (`slug`),
+  KEY `idx_slug` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Dumping data for `site_routes`
+INSERT INTO `site_routes` (`id`, `route_key`, `slug`, `target_type`, `target_file`, `target_id`, `is_active`, `updated_at`) VALUES
+(1, 'service_logo_design', 'logo-design', 'service', 'service-logo-design.html', 'svc-logo', 1, '2026-10-26 14:09:08'),
+(2, 'service_brand_identity', 'brand-identity', 'service', 'service-brand-identity.html', 'svc-brand', 1, '2026-10-26 13:53:16'),
+(3, 'service_website_development', 'website-development', 'service', 'service-website-development.html', 'svc-web', 1, '2026-10-26 13:53:16'),
+(4, 'service_digital_marketing', 'digital-marketing', 'service', 'service-digital-marketing.html', 'svc-social', 1, '2026-10-26 13:53:16'),
+(5, 'service_content_creation', 'content-creation', 'service', 'service-content-creation.html', 'svc-content', 1, '2026-10-26 13:53:16'),
+(6, 'blogs', 'perspectives', 'page', 'blogs.html', 'page-blogs', 1, '2026-10-26 13:53:16'),
+(7, 'services', 'services', 'page', 'services.html', 'page-services', 1, '2026-10-26 13:53:16'),
+(8, 'portfolio', 'portfolio', 'page', 'portfolio.html', 'page-portfolio', 1, '2026-10-26 13:53:16'),
+(9, 'about', 'about', 'page', 'about.html', 'page-about', 1, '2026-10-26 13:53:16'),
+(10, 'contact', 'contact', 'page', 'contact.html', 'page-contact', 1, '2026-10-26 13:53:16');
 
 -- --------------------------------------------------------
 -- Table structure for `studio_profile`
@@ -287,7 +325,7 @@ CREATE TABLE `blogs` (
 
 -- Dumping data for `blogs`
 INSERT INTO `blogs` (`id`, `blog_id`, `slug`, `title`, `category`, `category_slug`, `city`, `author`, `author_role`, `author_bio`, `initials`, `date_text`, `read_time`, `cover_image`, `specimen_image`, `specimen_caption`, `excerpt`, `content_html`, `sections_json`, `related_json`, `published`, `display_order`, `created_at`, `updated_at`) VALUES
-(1, 'art-monogram', 'monolithic-luxury-monogram', 'New The Monolithic Luxury Monogram as an Enduring Landmark', 'BRAND ARCHITECTURE', 'brand-architecture', 'Milan, Italy', 'Jiya Thaker', 'Studio Principal & Brand Architect', '', 'PD', 'SEP 2026', '6 MIN READ', 'assets/uploads/1928_1790272451_Findade-Logo.png', '', '1928 EDITORIAL PROVENANCE CAPTURE', 'How high-growth luxury houses engineer mathematically rigorous marks to command enduring global authority.', '<div class=\"reader-pullquote\"><p>“Highlight a key perspective or architectural takeaway quote here...”</p></div><p></p><p>Real-time dynamic content reflection across live website</p><p></p>', '[{\"id\":\"sec-shift\",\"title\":\"01. The Strategic Shift\"},{\"id\":\"sec-geometry\",\"title\":\"02. Mathematical Geometry\"},{\"id\":\"sec-takeaways\",\"title\":\"03. Strategic Takeaways\"}]', '[\"art-spatial\",\"art-webgl\"]', 1, 1, '2026-09-23 22:27:53', '2026-09-25 21:40:08'),
+(1, 'art-monogram', 'monolithic-luxury-monogram', 'New The Monolithic Luxury Monogram as an Enduring Landmark', 'BRAND ARCHITECTURE', 'brand-architecture', 'Milan, Italy', 'Jiya Thaker', 'Studio Principal & Brand Architect', '', 'PD', 'SEP 2026', '6 MIN READ', 'assets/uploads/1928_1790272451_Findade-Logo.png', '', '1928 EDITORIAL PROVENANCE CAPTURE', 'How high-growth luxury houses engineer mathematically rigorous marks to command enduring global authority.', '<div class=\"reader-pullquote\"><p>“Highlight a key perspective or architectural takeaway quote here...”</p></div><p></p><p>Real-time dynamic content reflection across live website</p><p></p>', '[{\"id\":\"sec-shift\",\"title\":\"01. The Strategic Shift\"},{\"id\":\"sec-geometry\",\"title\":\"02. Mathematical Geometry\"},{\"id\":\"sec-takeaways\",\"title\":\"03. Strategic Takeaways\"}]', '[\"art-spatial\",\"art-webgl\"]', 1, 1, '2026-09-23 22:27:53', '2026-10-26 14:09:08'),
 (2, 'art-spatial', 'spatial-choreography-flagship-retail', 'Spatial Choreography Across Modern Architectural Luxury Flagship Retail', 'SPATIAL DESIGN', 'spatial-design', 'Milan, Italy', 'Elena Vance', 'Spatial Design Director', NULL, 'EV', 'AUG 2026', '6 MIN READ', 'assets/img/portfolio/port-veloce.jpg', NULL, NULL, 'Choreographing visitor trajectories through brutalist travertine monoliths, directional acoustics, and negative-space compression.', '<h2>01. The Sensory Environment</h2><p>Physical retail in 2026 is no longer about inventory distribution; it is sensory brand communion. When a client crosses the threshold into a physical flagship, every sensory input—the acoustic reverberation time of polished concrete, the color temperature of 2700K recessed spotlights, and the scent of custom cedarwood—instantly primes their valuation perception.</p><div class=\"reader-pullquote\"><p>\"The space itself is the most powerful salesperson. When architecture radiates permanence, price resistance dissipates.\"</p></div><h2>02. Monolithic Material Physics</h2><p>We specify raw split-face travertine, blackened brushed steel, and acoustic felt panels to establish a temple-like reverence. Clients spend 3.2x longer inside acoustically damped private VIP suites than open retail floors.</p>', NULL, NULL, 1, 2, '2026-09-23 22:27:53', '2026-10-25 19:49:08'),
 (3, 'art-webgl', 'computational-raytracing-webgl', 'Zero Latency Computational Raytracing in WebGL Interactive Ecosystems', 'COMPUTATIONAL WEBGL', 'computational-webgl', 'Tokyo, Japan', 'Kaito Tanaka', 'Lead Shader Engineer', NULL, 'KT', 'AUG 2026', '5 MIN READ', 'assets/img/portfolio/port-lumina.jpg', NULL, NULL, 'Synthesizing custom GLSL physically-based surface shaders for real-time metallic reflections at native 120 FPS.', '<h2>01. Beyond the Flat 2D Web</h2><p>Static JPEG mockups and auto-playing video loops are remnants of a bygone digital era. The contemporary luxury buyer demands agency—the power to inspect sub-millimeter stitching on an automotive interior or rotate a tourbillon watch under real-time procedural lighting.</p><div class=\"reader-pullquote\"><p>\"Interactive 3D WebGL is not a gimmick; it is the closest digital surrogate to physical touch.\"</p></div><h2>02. Custom GLSL Fragment Shaders</h2><p>By compiling custom GLSL fragment shaders and implementing procedural normal map decompression, we achieve buttery 120fps performance across mobile Safari and desktop Chrome without draining device thermals.</p>', NULL, NULL, 1, 3, '2026-09-23 22:27:53', '2026-10-25 19:49:08'),
 (4, 'art-fluted', 'tactile-acoustic-snaps-travertine', 'Tactile Acoustic Snaps and Travertine in Bespoke Packaging', 'PACKAGING & SPATIAL', 'packaging-spatial', 'Paris, France', 'Ami Patel', 'Materials & Packaging Specialist', NULL, 'AP', 'JUL 2026', '8 MIN READ', 'assets/img/portfolio/port-kroma.jpg', NULL, NULL, 'The psychophysics of 45-decibel acoustic closures, haptic friction coefficients, and unboxing rituals in ultra-luxury design.', '<h2>01. The Tactile Physics of Glass</h2><p>Weight is perceived as quality. A perfume vessel weighing 480 grams with an internal magnetic snap rated at 1.2 Newtons immediately communicates $300+ value before the atomizer is ever depressed.</p><div class=\"reader-pullquote\"><p>\"The tactile sensation of opening a luxury package triggers dopamine pathways faster than visual advertising.\"</p></div><h2>02. Light Refraction &amp; Fluting Tolerances</h2><p>Precision micro-fluting cut into lead-free crystal glass bends ambient gallery spotlights into vertical prismatic rays, transforming the fragrance liquid into a radiant glowing beacon.</p>', NULL, NULL, 1, 4, '2026-09-23 22:27:53', '2026-10-25 19:49:08'),

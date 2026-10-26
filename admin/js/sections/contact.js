@@ -371,14 +371,14 @@
       const isCustomized = !isDefault && !!(contactDateSlotsState[selectedSlotDateKey] && contactDateSlotsState[selectedSlotDateKey].length);
 
       let headerBanner = `
-        <div style="grid-column: 1 / -1; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding:8px 12px; background:rgba(255,255,255,0.03); border:1px solid var(--rule); border-radius:8px; margin-bottom:4px;">
-          <div style="font-size:12px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:8px;">
+        <div class="slot-header-banner">
+          <div style="font-size:12.5px; font-weight:700; color:var(--ink); display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
             <span style="display:inline-flex;align-items:center;gap:7px;">${isDefault ? '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cr);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg> Studio Default Consultation Slots' : `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--ink);"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> Slots for ${monthStr} ${selectedSlotDateKey}, ${adminCalYear}`}</span>
-            ${!isDefault && isCustomized ? '<span class="inq-pill inq-pill-new" style="font-size:10px;padding:2px 6px;">Customized for this date</span>' : ''}
+            ${!isDefault && isCustomized ? '<span class="slot-custom-badge">Customized for this date</span>' : ''}
             ${!isDefault && !isCustomized ? '<span style="font-size:11px;color:var(--ink-dim);font-weight:400;">(Inheriting Studio Default)</span>' : ''}
           </div>
           ${!isDefault && isCustomized ? `
-            <button type="button" class="btn-action-secondary" style="padding:3px 10px;font-size:11px;border-color:var(--rule-m);" onclick="resetSlotDateToDefault('${selectedSlotDateKey}')">
+            <button type="button" class="btn-action-secondary" style="padding:4px 12px;font-size:11.5px;font-weight:600;border-radius:6px;" onclick="resetSlotDateToDefault('${selectedSlotDateKey}')">
               Reset to Studio Default
             </button>
           ` : ''}

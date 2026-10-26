@@ -210,6 +210,7 @@
       document.getElementById('blogModalTitle').textContent = blogData ? 'Edit Perspective' : 'Add New Perspective';
       document.getElementById('blogIdInput').value = blogData ? blogData.id : '';
       document.getElementById('blogTitleInput').value = blogData ? blogData.title : '';
+      document.getElementById('blogSlugInput').value = blogData ? (blogData.slug || '') : '';
       document.getElementById('blogCategoryInput').value = blogData ? blogData.category : 'TYPOGRAPHIC THEORY';
       document.getElementById('blogReadTimeInput').value = blogData ? (blogData.readTime || '') : '6 MIN READ';
       document.getElementById('blogDateInput').value = blogData ? (blogData.date || '') : 'SEP 2026';
@@ -299,8 +300,10 @@
       const related2 = document.getElementById('blogRelated2Input').value.trim();
       const related = [related1, related2].filter(Boolean);
 
+      const slugVal = document.getElementById('blogSlugInput').value.trim();
       const data = {
         title: document.getElementById('blogTitleInput').value.trim(),
+        slug: slugVal ? slugVal.toLowerCase().replace(/[^a-z0-9\/-]+/g, '-').replace(/^\/+|\/+$/g, '') : undefined,
         category: document.getElementById('blogCategoryInput').value.trim(),
         readTime: document.getElementById('blogReadTimeInput').value.trim(),
         date: document.getElementById('blogDateInput').value.trim(),

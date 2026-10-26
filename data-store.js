@@ -101,6 +101,7 @@
               clients: Array.isArray(d.clients) ? d.clients : [],
               portfolio: Array.isArray(d.portfolio) ? d.portfolio : [],
               blogs: Array.isArray(d.blogs) ? d.blogs : [],
+              routes: d.routes || {},
               settings: d.settings || {},
               contactBrief: d.contactBrief || null,
               inquiriesStats: d.inquiriesStats || { total: 0, new: 0 }
@@ -207,15 +208,59 @@
     updateSEO(pageKey, seoData) {
       if (!this.data.seo[pageKey]) this.data.seo[pageKey] = {};
       this.data.seo[pageKey] = { ...this.data.seo[pageKey], ...seoData };
+      const routeSlug = seoData.routeSlug || seoData.route_slug || seoData.slug || this.data.seo[pageKey].routeSlug || '';
+      if (routeSlug) {
+        this.data.seo[pageKey].routeSlug = routeSlug;
+        if (this.data.routes && this.data.routes[pageKey]) {
+          this.data.routes[pageKey].slug = routeSlug;
+        }
+      }
       this._notify();
       this._sendToAPI('save_seo', {
         page_key: pageKey,
         title: this.data.seo[pageKey].title || '',
         description: this.data.seo[pageKey].description || '',
         keywords: this.data.seo[pageKey].keywords || '',
-        og_image: this.data.seo[pageKey].ogImage || 'assets/img/branding/1928-logo.png'
+        og_image: this.data.seo[pageKey].ogImage || 'assets/img/branding/1928-logo.png',
+        route_slug: routeSlug
       });
       return this.data.seo[pageKey];
+    }
+
+    // Dynamic Route Management
+    getRoutes() {
+      return this.data.routes || {};
+    }
+
+    getRoute(routeKey) {
+      if (this.data.routes && this.data.routes[routeKey]) {
+        return this.data.routes[routeKey].slug;
+      }
+      if (this.data.seo && this.data.seo[routeKey] && this.data.seo[routeKey].routeSlug) {
+        return this.data.seo[routeKey].routeSlug;
+      }
+      return null;
+    }
+
+    async updateRoute(routeKey, newSlug, isBlog = false, blogId = '') {
+      const clean = (newSlug || '').toLowerCase().replace(/[^a-z0-9\/-]+/g, '-').replace(/^\/+|\/+$/g, '');
+      if (this.data.routes && this.data.routes[routeKey]) {
+        this.data.routes[routeKey].slug = clean;
+      }
+      if (this.data.seo && this.data.seo[routeKey]) {
+        this.data.seo[routeKey].routeSlug = clean;
+      }
+      if (isBlog && blogId && this.data.blogs) {
+        const b = this.data.blogs.find(item => item.id === blogId);
+        if (b) b.slug = clean;
+      }
+      this._notify();
+      return await this._sendToAPI('save_route', {
+        route_key: routeKey,
+        slug: clean,
+        is_blog: isBlog,
+        blog_id: blogId
+      });
     }
 
     // ═══════════════════════════════════════════════════════════

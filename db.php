@@ -11,7 +11,10 @@ $hostName = preg_replace('/:\d+$/', '', $hostName);
 
 if (
     $hostName === 'localhost' ||
-    $hostName === '127.0.0.1'
+    $hostName === '127.0.0.1' ||
+    $hostName === '1928.test' ||
+    str_ends_with($hostName, '.test') ||
+    str_ends_with($hostName, '.local')
 ) {
     // LOCALHOST DATABASE CONFIGURATION
 

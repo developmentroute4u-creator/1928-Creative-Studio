@@ -1,0 +1,19 @@
+# ==============================================================================
+# 1928 CREATIVE STUDIO — Apache Clean URL & Dynamic PHP Routing Engine
+# ==============================================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Prevent directory indexing
+    Options -Indexes
+
+    # Pass through existing static files and physical directories directly
+    # (assets, css, js, images, uploads, api.php, admin.html, etc.)
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Route all custom page routes and dynamic slugs to router.php
+    RewriteRule ^(.*)$ router.php?route=$1 [QSA,L]
+</IfModule>

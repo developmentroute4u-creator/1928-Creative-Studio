@@ -577,7 +577,7 @@
           e.stopPropagation();
           const val = opt.getAttribute('data-value');
           hiddenInput.value = val;
-          selectedText.textContent = opt.textContent;
+          selectedText.innerHTML = opt.innerHTML;
 
           options.forEach(o => o.classList.remove('selected'));
           opt.classList.add('selected');
