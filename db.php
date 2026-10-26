@@ -32,7 +32,7 @@ if (
     define('DB_HOST', 'localhost');
     define('DB_NAME', 'u165532389_uat');
     define('DB_USER', 'u165532389_uat_root');
-    define('DB_PASS', 'OfE*57PZx/2X');
+    define('DB_PASS', '4U^tQB$/dF$C');
     define('DB_CHARSET', 'utf8mb4');
 } else {
     // Reject unknown environments
