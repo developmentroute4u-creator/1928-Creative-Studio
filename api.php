@@ -415,6 +415,13 @@ try {
 
             // Sync with site_routes table if a slug was provided
             if (!empty($cleanSlug)) {
+                $check = $db->prepare("SELECT `route_key` FROM `site_routes` WHERE `slug` = :slug AND `route_key` != :rk LIMIT 1");
+                $check->execute([':slug' => $cleanSlug, ':rk' => $pageKey]);
+                if ($check->fetch()) {
+                    echo json_encode(['status' => 'error', 'message' => "The route slug '{$cleanSlug}' is already assigned to another page."]);
+                    break;
+                }
+
                 $rStmt = $db->prepare("
                     INSERT INTO `site_routes` (`route_key`, `slug`, `target_type`, `target_file`, `is_active`)
                     VALUES (:rk, :slug, 'page', CONCAT(:tf, '.html'), 1)

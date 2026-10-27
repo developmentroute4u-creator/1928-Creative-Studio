@@ -97,9 +97,8 @@ if (file_exists($candidateFile)) {
     $keyStmt = $db->prepare("SELECT * FROM `site_routes` WHERE `target_file` = :tf LIMIT 1");
     $keyStmt->execute([':tf' => $baseName]);
     $found = $keyStmt->fetch();
-    
-    // If there is an active custom slug and request was for raw .html, 301 redirect to clean URL
-    if ($found && !empty($found['slug']) && $route === $baseName) {
+    // If there is an active custom slug and the request is not using it (e.g. legacy name or .html), 301 redirect
+    if ($found && !empty($found['slug']) && $route !== $found['slug']) {
         $cleanUrl = getBaseUrl() . '/' . $found['slug'];
         header("Location: $cleanUrl", true, 301);
         exit;

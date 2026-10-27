@@ -205,18 +205,21 @@
       return this.data.seo;
     }
 
-    updateSEO(pageKey, seoData) {
+    async updateSEO(pageKey, seoData) {
+      if (!this.data.seo) this.data.seo = {};
       if (!this.data.seo[pageKey]) this.data.seo[pageKey] = {};
       this.data.seo[pageKey] = { ...this.data.seo[pageKey], ...seoData };
-      const routeSlug = seoData.routeSlug || seoData.route_slug || seoData.slug || this.data.seo[pageKey].routeSlug || '';
+      const routeSlug = (seoData.routeSlug || seoData.route_slug || seoData.slug || this.data.seo[pageKey].routeSlug || '').toLowerCase().replace(/[^a-z0-9\/-]+/g, '-').replace(/^\/+|\/+$/g, '');
       if (routeSlug) {
         this.data.seo[pageKey].routeSlug = routeSlug;
-        if (this.data.routes && this.data.routes[pageKey]) {
+        if (!this.data.routes) this.data.routes = {};
+        if (!this.data.routes[pageKey]) {
+          this.data.routes[pageKey] = { routeKey: pageKey, slug: routeSlug };
+        } else {
           this.data.routes[pageKey].slug = routeSlug;
         }
       }
-      this._notify();
-      this._sendToAPI('save_seo', {
+      const ok = await this._sendToAPI('save_seo', {
         page_key: pageKey,
         title: this.data.seo[pageKey].title || '',
         description: this.data.seo[pageKey].description || '',
@@ -224,6 +227,7 @@
         og_image: this.data.seo[pageKey].ogImage || 'assets/img/branding/1928-logo.png',
         route_slug: routeSlug
       });
+      this._notify();
       return this.data.seo[pageKey];
     }
 

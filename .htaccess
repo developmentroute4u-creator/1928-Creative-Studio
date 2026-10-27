@@ -4,16 +4,22 @@
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
+    RewriteBase /
 
-    # Prevent directory indexing
-    Options -Indexes
+    # Prevent directory indexing and disable content negotiation (MultiViews)
+    Options -Indexes -MultiViews
 
-    # Pass through existing static files and physical directories directly
-    # (assets, css, js, images, uploads, api.php, admin.html, etc.)
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
+    # Direct pass-through for admin panel, API, and essential entry points
+    RewriteRule ^admin\.html$ - [L]
+    RewriteRule ^api\.php$ - [L]
+
+    # Pass through physical asset and media directories directly
+    RewriteRule ^(admin|assets|css|js|images|uploads|vendor|whatsapp-api)/ - [L]
+
+    # Pass through static resources directly by extension
+    RewriteCond %{REQUEST_URI} \.(css|js|json|svg|png|jpg|jpeg|webp|gif|ico|woff|woff2|ttf|eot|mp4|webm|pdf)$ [NC]
     RewriteRule ^ - [L]
 
-    # Route all custom page routes and dynamic slugs to router.php
+    # Route all custom page routes, clean URLs, and dynamic slugs to router.php
     RewriteRule ^(.*)$ router.php?route=$1 [QSA,L]
 </IfModule>

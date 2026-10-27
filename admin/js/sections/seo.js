@@ -203,8 +203,8 @@
     });
 
     // Form Submit (Save SEO & URL Route)
-    document.getElementById('seoForm')?.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    async function handleSEOSubmit(e) {
+      if (e) e.preventDefault();
       const pageKey = document.getElementById('seoPageSelector').value;
       const title = document.getElementById('seoTitleInput').value.trim();
       const desc = document.getElementById('seoDescInput').value.trim();
@@ -216,17 +216,32 @@
         await window.CMSStore.updateRoute(pageKey, slug, true, blogId);
         showToast(`Perspective route updated to '/perspectives/${slug}'!`);
       } else {
-        window.CMSStore.updateSEO(pageKey, {
+        await window.CMSStore.updateSEO(pageKey, {
           title,
           description: desc,
           keywords,
           route_slug: slug
         });
+        if (slug) {
+          await window.CMSStore.updateRoute(pageKey, slug);
+        }
         showToast(`SEO & Route '/${slug}' saved and synchronized successfully!`);
       }
 
       renderRouteRegistry();
       updateSERPPreview();
+    }
+
+    document.getElementById('seoForm')?.addEventListener('submit', handleSEOSubmit);
+    document.getElementById('btnSaveSEO')?.addEventListener('click', (e) => {
+      const form = document.getElementById('seoForm');
+      if (form) {
+        if (typeof form.requestSubmit === 'function') {
+          form.requestSubmit();
+        } else {
+          handleSEOSubmit(e);
+        }
+      }
     });
 
     // Initial load when CMSStore is ready
