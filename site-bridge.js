@@ -1761,8 +1761,8 @@
   window.addEventListener('1928_cms_updated', initDynamicCMS);
   window.addEventListener('footerLoaded', renderClientLogos);
 
-  // Real-Time Live Code & Asset Sync via Server-Sent Events
-  if (typeof EventSource !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '1928.test' || window.location.port === '3000')) {
+  // Real-Time Live Code & Asset Sync via Server-Sent Events (Opt-in dev only)
+  if (typeof EventSource !== 'undefined' && window.__ENABLE_LIVE_SYNC__ === true) {
     try {
       const liveSource = new EventSource('/api/live-sync');
       liveSource.addEventListener('code_change', (e) => {
@@ -1789,6 +1789,9 @@
           }
         } catch (err) { }
       });
+      liveSource.onerror = () => {
+        try { liveSource.close(); } catch (e) {}
+      };
     } catch (e) { }
   }
 

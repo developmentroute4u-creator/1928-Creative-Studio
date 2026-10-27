@@ -136,8 +136,8 @@
         refreshAllViews();
       });
 
-      // Connect to Server-Sent Events from backend
-      if (typeof EventSource !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '1928.test' || window.location.port === '3000')) {
+      // Connect to Server-Sent Events from backend only if explicitly enabled
+      if (typeof EventSource !== 'undefined' && window.__ENABLE_LIVE_SYNC__ === true) {
         try {
           const es = new EventSource('/api/live-sync');
           es.addEventListener('connected', () => {
@@ -183,9 +183,16 @@
           });
 
           es.onerror = () => {
-            if (syncText) syncText.textContent = 'Code Sync: Local';
+            if (syncText) syncText.textContent = 'Database: MySQL Live';
+            try { es.close(); } catch (e) {}
           };
         } catch (e) {}
+      } else {
+        if (syncText) syncText.textContent = 'Database: MySQL Live';
+        if (syncPill) {
+          syncPill.style.borderColor = 'rgba(16,185,129,0.4)';
+          syncPill.style.color = '#10B981';
+        }
       }
     }
 

@@ -29,6 +29,15 @@ if (strpos($route, '?') !== false) {
 }
 $route = strtolower($route);
 
+// Graceful handler for live-sync (returns 200 SSE stream to avoid 404s)
+if ($route === 'api/live-sync' || $route === 'live-sync') {
+    header('Content-Type: text/event-stream; charset=utf-8');
+    header('Cache-Control: no-cache, no-store, must-revalidate');
+    header('Connection: keep-alive');
+    echo "event: connected\ndata: {\"status\":\"connected\",\"engine\":\"php_sse\"}\n\n";
+    exit;
+}
+
 // 2. Default route (Home)
 if ($route === '' || $route === 'index.html' || $route === 'home') {
     if ($route === 'index.html' || $route === 'home') {
