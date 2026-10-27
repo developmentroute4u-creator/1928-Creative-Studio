@@ -1134,8 +1134,8 @@
             const artFrame = showcaseCard.querySelector('.svc-s3-art-frame');
             if (artFrame) {
               let url = effectiveMediaUrl;
-              if (url.includes('Screen-Recording')) {
-                url = (idx === 0) ? 'assets/video/logo-section.mp4' : '';
+              if (url.includes('Screen-Recording') || url.includes('logo-section.mp4')) {
+                url = (matchingCoreSvc && matchingCoreSvc.image) ? matchingCoreSvc.image : ((idx === 0) ? 'assets/services/svc_1.jpg' : '');
               }
               if (url && (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/'))) {
                 const fallbackImg = (matchingCoreSvc && matchingCoreSvc.image) ? matchingCoreSvc.image : 'assets/services/svc_1.jpg';
