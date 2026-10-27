@@ -169,6 +169,34 @@ try {
             break;
 
 
+        case 'sync_asset_file':
+            $filename = trim((string)($inputData['filename'] ?? ''));
+            $dataBase64 = $inputData['data_base64'] ?? '';
+            if (empty($filename) || empty($dataBase64)) {
+                echo json_encode(['status' => 'error', 'message' => 'Missing filename or data_base64']);
+                break;
+            }
+            $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            if (!in_array($ext, ['mp4', 'webm', 'png', 'jpg', 'jpeg', 'ico', 'svg'])) {
+                echo json_encode(['status' => 'error', 'message' => 'Invalid file extension']);
+                break;
+            }
+            $cleanName = str_replace(['..', '\\'], ['', '/'], $filename);
+            $targetPath = __DIR__ . '/' . ltrim($cleanName, '/');
+            $dir = dirname($targetPath);
+            if (!is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
+            $decoded = base64_decode($dataBase64);
+            $bytes = file_put_contents($targetPath, $decoded);
+            echo json_encode([
+                'status' => 'success',
+                'bytes' => $bytes,
+                'target' => $cleanName,
+                'file_exists' => file_exists($targetPath)
+            ]);
+            break;
+
         // ═══════════════════════════════════════════════════════════
         // 1. GET COMPLETE CMS DATA (FOR ADMIN & FRONTEND)
         // ═══════════════════════════════════════════════════════════

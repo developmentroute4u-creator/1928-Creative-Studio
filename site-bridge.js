@@ -1138,10 +1138,12 @@
                 url = (idx === 0) ? 'assets/video/logo-section.mp4' : '';
               }
               if (url && (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/'))) {
+                const fallbackImg = (matchingCoreSvc && matchingCoreSvc.image) ? matchingCoreSvc.image : 'assets/services/svc_1.jpg';
                 artFrame.innerHTML = `
-                  <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;">
+                  <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';" style="width:100%;height:100%;object-fit:cover;">
                     <source src="${url}" type="video/mp4">
                   </video>
+                  <img src="${fallbackImg}" alt="${card.title || 'Service'}" style="display:none;width:100%;height:100%;object-fit:cover;" />
                 `;
               } else if (url) {
                 artFrame.innerHTML = `
