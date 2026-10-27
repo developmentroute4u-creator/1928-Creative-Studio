@@ -1128,28 +1128,19 @@
 
           const coreServices = (typeof window.CMSStore?.getServices === 'function') ? window.CMSStore.getServices() : [];
           const matchingCoreSvc = coreServices[idx] || coreServices.find(s => parseInt(s.num, 10) === (idx + 1));
-          const defaultImgs = [
-            'assets/services/svc_1.jpg',
-            'assets/services/svc_2.jpg',
-            'assets/services/svc_3.jpg',
-            'assets/services/svc_4.jpg',
-            'assets/services/svc_5.jpg'
-          ];
-          const fallbackDefault = defaultImgs[idx] || 'assets/services/svc_1.jpg';
-          const effectiveMediaUrl = (card.mediaUrl && card.mediaUrl.trim()) || (matchingCoreSvc && matchingCoreSvc.image && matchingCoreSvc.image.trim()) || fallbackDefault;
+          const effectiveMediaUrl = (card.mediaUrl && card.mediaUrl.trim()) || (matchingCoreSvc && matchingCoreSvc.image && matchingCoreSvc.image.trim()) || '';
 
           if (effectiveMediaUrl) {
             const artFrame = showcaseCard.querySelector('.svc-s3-art-frame');
             if (artFrame) {
               let url = effectiveMediaUrl;
-              if (url === 'assets/video/logo-section.mp4') {
-                url = (matchingCoreSvc && matchingCoreSvc.image) ? matchingCoreSvc.image : fallbackDefault;
+              if (url.includes('Screen-Recording') || url.includes('logo-section.mp4')) {
+                url = (matchingCoreSvc && matchingCoreSvc.image) ? matchingCoreSvc.image : ((idx === 0) ? 'assets/services/svc_1.jpg' : '');
               }
-              const isVideo = (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/'));
-              if (isVideo) {
-                const fallbackImg = (matchingCoreSvc && matchingCoreSvc.image) ? matchingCoreSvc.image : fallbackDefault;
+              if (url && (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/'))) {
+                const fallbackImg = (matchingCoreSvc && matchingCoreSvc.image) ? matchingCoreSvc.image : 'assets/services/svc_1.jpg';
                 artFrame.innerHTML = `
-                  <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';" style="width:100%;height:100%;object-fit:cover;display:block;">
+                  <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';" style="width:100%;height:100%;object-fit:cover;">
                     <source src="${url}" type="video/mp4">
                   </video>
                   <img src="${fallbackImg}" alt="${card.title || 'Service'}" style="display:none;width:100%;height:100%;object-fit:cover;" />

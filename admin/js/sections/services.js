@@ -72,26 +72,15 @@
 
         const mediaWrap = cardEl.querySelector('.home-card-media-wrap');
         if (mediaWrap) {
-          const defaultImgs = [
-            'assets/services/svc_1.jpg',
-            'assets/services/svc_2.jpg',
-            'assets/services/svc_3.jpg',
-            'assets/services/svc_4.jpg',
-            'assets/services/svc_5.jpg'
-          ];
-          const coreServices = (typeof window.CMSStore?.getServices === 'function') ? window.CMSStore.getServices() : [];
-          const matchingCoreSvc = coreServices[idx] || coreServices.find(s => parseInt(s.num, 10) === (idx + 1));
-          const effectiveUrl = (c.mediaUrl && c.mediaUrl.trim()) || (matchingCoreSvc && matchingCoreSvc.image && matchingCoreSvc.image.trim()) || defaultImgs[idx] || '';
-
-          if (effectiveUrl) {
+          if (c.mediaUrl) {
             mediaWrap.style.display = 'flex';
-            const isVid = (/\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(effectiveUrl) || effectiveUrl.startsWith('data:video/'));
+            const isVid = (/\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(c.mediaUrl) || c.mediaUrl.startsWith('data:video/'));
             mediaWrap.innerHTML = `
               ${isVid 
-                ? `<video src="${effectiveUrl}#t=0.1" muted playsinline style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;background:#000;"></video>`
-                : `<img src="${effectiveUrl}" alt="media" style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.style.display='none';" />`
+                ? `<video src="${c.mediaUrl}#t=0.1" muted playsinline style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;background:#000;"></video>`
+                : `<img src="${c.mediaUrl}" alt="media" style="width:28px;height:28px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.style.display='none';" />`
               }
-              <span style="font-size:11px;color:var(--ink-mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${effectiveUrl}</span>
+              <span style="font-size:11px;color:var(--ink-mid);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.mediaUrl}</span>
             `;
           } else {
             mediaWrap.style.display = 'none';
@@ -111,7 +100,7 @@
       document.getElementById('homeCardIndex').value = index;
       document.getElementById('homeCardNum').value = card.num || ('0' + (index + 1));
       document.getElementById('homeCardWatermark').value = card.watermark || card.num || ('0' + (index + 1));
-      document.getElementById('homeCardSheetTitle').value = card.sheetTitle || (card.title ? card.title.replace(/^\d{1,2}\.\s*/, '') : '');
+      document.getElementById('homeCardSheetTitle').value = card.sheetTitle || card.title || '';
       document.getElementById('homeCardSheetSub').value = card.sheetSub || card.badge || '';
       document.getElementById('homeCardBadge').value = card.badge || '';
       document.getElementById('homeCardTitle').value = card.title || '';
@@ -121,17 +110,7 @@
       document.getElementById('homeCardActionText').value = card.actionText || 'Explore Service';
       document.getElementById('homeCardActionLink').value = card.actionLink || 'service-logo-design.html';
       
-      const defaultImgs = [
-        'assets/services/svc_1.jpg',
-        'assets/services/svc_2.jpg',
-        'assets/services/svc_3.jpg',
-        'assets/services/svc_4.jpg',
-        'assets/services/svc_5.jpg'
-      ];
-      const coreServices = (typeof window.CMSStore?.getServices === 'function') ? window.CMSStore.getServices() : [];
-      const matchingCoreSvc = coreServices[index] || coreServices.find(s => parseInt(s.num, 10) === (index + 1));
-      const mediaVal = card.mediaUrl || (matchingCoreSvc && matchingCoreSvc.image) || defaultImgs[index] || '';
-
+      const mediaVal = card.mediaUrl || '';
       document.getElementById('homeCardMediaUrl').value = mediaVal;
       if (homeCardUploader && typeof homeCardUploader.refreshUI === 'function') {
         homeCardUploader.refreshUI();
@@ -148,23 +127,13 @@
       const deliverables = delivRaw.split(',').map(d => d.trim()).filter(Boolean);
       const mediaUrl = document.getElementById('homeCardMediaUrl').value.trim();
 
-      const defaultImgs = [
-        'assets/services/svc_1.jpg',
-        'assets/services/svc_2.jpg',
-        'assets/services/svc_3.jpg',
-        'assets/services/svc_4.jpg',
-        'assets/services/svc_5.jpg'
-      ];
-      const coreServices = (typeof window.CMSStore?.getServices === 'function') ? window.CMSStore.getServices() : [];
-      const matchingCoreSvc = coreServices[index] || coreServices.find(s => parseInt(s.num, 10) === (index + 1));
-      const finalMediaUrl = mediaUrl || (matchingCoreSvc && matchingCoreSvc.image) || defaultImgs[index] || '';
+      if (!mediaUrl) {
+        showToast('⚠️ Visual media asset is required. Please select or drag & drop a file.', 'error');
+        return;
+      }
 
       const numVal = document.getElementById('homeCardNum').value.trim();
-      const homeServices = (typeof window.CMSStore.getHomeServices === 'function') ? window.CMSStore.getHomeServices() : { cards: [] };
-      const existingCard = (homeServices.cards && homeServices.cards[index]) || {};
-
       const cardData = {
-        ...existingCard,
         num: numVal,
         watermark: numVal,
         sheetTitle: document.getElementById('homeCardSheetTitle').value.trim(),
@@ -176,7 +145,7 @@
         deliverables: deliverables,
         actionText: document.getElementById('homeCardActionText').value.trim(),
         actionLink: document.getElementById('homeCardActionLink').value.trim(),
-        mediaUrl: finalMediaUrl
+        mediaUrl: mediaUrl
       };
 
       if (typeof window.CMSStore.saveHomeServiceCard === 'function') {
@@ -302,9 +271,8 @@
           const homeData = (typeof window.CMSStore.getHomeServices === 'function') ? window.CMSStore.getHomeServices() : null;
           if (homeData && Array.isArray(homeData.cards) && homeData.cards[cardIdx]) {
             const card = homeData.cards[cardIdx];
-            const cleanTitle = data.title.replace(/^\d{1,2}\.\s*/, '').trim();
-            card.sheetTitle = cleanTitle;
-            card.title = `${data.num}. ${cleanTitle}`;
+            card.sheetTitle = data.title;
+            card.title = `${data.num}. ${data.title}`;
             if (data.desc) card.bodyDesc = data.desc;
             if (data.image) card.mediaUrl = data.image;
             if (data.deliverables && data.deliverables.length) card.deliverables = data.deliverables;
