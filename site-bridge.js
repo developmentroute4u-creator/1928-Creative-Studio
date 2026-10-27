@@ -1134,16 +1134,16 @@
             const artFrame = showcaseCard.querySelector('.svc-s3-art-frame');
             if (artFrame) {
               let url = effectiveMediaUrl;
-              if (url.includes('1928_1792831281_Screen-Recording-2026-09-23-164649.mp4')) {
-                url = 'assets/video/logo-section.mp4';
+              if (url.includes('Screen-Recording')) {
+                url = (idx === 0) ? 'assets/video/logo-section.mp4' : '';
               }
-              if (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/')) {
+              if (url && (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/'))) {
                 artFrame.innerHTML = `
                   <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;">
                     <source src="${url}" type="video/mp4">
                   </video>
                 `;
-              } else {
+              } else if (url) {
                 artFrame.innerHTML = `
                   <img src="${url}" alt="${card.title || 'Service'}" style="width:100%;height:100%;object-fit:cover;display:block;" />
                 `;

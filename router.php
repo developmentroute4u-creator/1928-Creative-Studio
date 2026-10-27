@@ -170,6 +170,11 @@ function serveFileWithSEO(string $filePath, string $pageKey, ?array $routeData =
         }
     }
 
+    // Base tag to guarantee all relative assets (css, js, img) resolve cleanly on all route depths
+    if (!preg_match('/<base\s+href=/i', $html)) {
+        $html = str_ireplace('<head>', "<head>\n  <base href=\"{$baseUrl}/\">", $html);
+    }
+
     // Canonical link tag
     if (!empty($canonicalUrl)) {
         if (preg_match('/<link\s+rel=["\']canonical["\']/i', $html)) {
@@ -208,6 +213,11 @@ function serveBlogDetail(string $filePath, array $blog): void {
         $html = preg_replace('/<meta\s+name=["\']description["\']\s+content=["\'].*?["\']/is', "<meta name=\"description\" content=\"{$safeDesc}\"", $html);
     } else {
         $html = str_ireplace('</head>', "  <meta name=\"description\" content=\"{$safeDesc}\">\n</head>", $html);
+    }
+
+    // Base tag to guarantee all relative assets (css, js, img) resolve cleanly on all route depths
+    if (!preg_match('/<base\s+href=/i', $html)) {
+        $html = str_ireplace('<head>', "<head>\n  <base href=\"{$baseUrl}/\">", $html);
     }
 
     // Canonical link tag

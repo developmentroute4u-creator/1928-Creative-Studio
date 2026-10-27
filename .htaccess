@@ -4,12 +4,11 @@
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteBase /
 
     # Prevent directory indexing and disable content negotiation (MultiViews)
     Options -Indexes -MultiViews
 
-    # Direct pass-through for admin panel, API, and essential entry points
+    # Direct pass-through for admin control panel, API, and essential entry points
     RewriteRule ^admin\.html$ - [L]
     RewriteRule ^api\.php$ - [L]
 
@@ -21,14 +20,15 @@
     RewriteRule ^ - [L]
 
     # Route all custom page routes, clean URLs, and dynamic slugs to router.php
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ router.php [QSA,L]
 </IfModule>
 
 <IfModule mod_headers.c>
-    # Prevent aggressive CDN/browser caching on admin control panel and API
+    # Prevent aggressive CDN/browser caching on admin control panel, API, and core scripts
     <FilesMatch "(admin\.html|api\.php|data-store\.js)$">
         Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
         Header set Pragma "no-cache"
         Header set Expires "0"
     </FilesMatch>
 </IfModule>
-
