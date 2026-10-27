@@ -286,7 +286,7 @@ try {
                     'title' => $s['title'],
                     'tagline' => $s['tagline'],
                     'desc' => $s['description'],
-                    'image' => (!empty($s['image_url']) && file_exists(__DIR__ . '/' . $s['image_url'])) ? $s['image_url'] : '',
+                    'image' => $s['image_url'] ?? '',
                     'deliverables' => !empty($s['deliverables_json']) ? (json_decode($s['deliverables_json'], true) ?: []) : [],
                     'order' => (int)$s['display_order']
                 ];
