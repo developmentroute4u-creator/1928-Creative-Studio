@@ -1237,9 +1237,14 @@ try {
             echo json_encode(['status' => 'success', 'message' => 'Perspectives section curation saved to MySQL.']);
             break;
 
+        case 'save_setting':
         case 'save_settings':
-            foreach ($inputData as $k => $v) {
-                $valStr = is_array($v) ? json_encode($v) : (string)$v;
+            $settings = (isset($inputData['settings']) && is_array($inputData['settings']))
+                ? $inputData['settings']
+                : $inputData;
+            foreach ($settings as $k => $v) {
+                if ($k === 'action' || $k === 'settings') continue;
+                $valStr = is_array($v) ? json_encode($v, JSON_UNESCAPED_SLASHES) : (string)$v;
                 $stmt = $db->prepare("
                     INSERT INTO `studio_settings` (`setting_key`, `setting_value`)
                     VALUES (:k, :v)
@@ -1247,6 +1252,8 @@ try {
                 ");
                 $stmt->execute([':k' => $k, ':v' => $valStr]);
             }
+            // Delete rogue 'settings' key if present
+            $db->exec("DELETE FROM `studio_settings` WHERE `setting_key` = 'settings'");
             echo json_encode(['status' => 'success', 'message' => 'Settings saved to MySQL.']);
             break;
 
