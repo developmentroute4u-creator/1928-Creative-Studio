@@ -455,6 +455,35 @@ try {
                     break;
                 }
 
+                // Check existing slug to record redirect history
+                $oldStmt = $db->prepare("SELECT `slug` FROM `site_routes` WHERE `route_key` = :rk LIMIT 1");
+                $oldStmt->execute([':rk' => $pageKey]);
+                $oldSlug = $oldStmt->fetchColumn();
+
+                if (!empty($oldSlug) && $oldSlug !== $cleanSlug) {
+                    $db->exec("
+                        CREATE TABLE IF NOT EXISTS `route_redirects` (
+                          `id` INT AUTO_INCREMENT PRIMARY KEY,
+                          `route_key` VARCHAR(64) NOT NULL,
+                          `old_slug` VARCHAR(191) NOT NULL UNIQUE,
+                          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                          INDEX `idx_old_slug` (`old_slug`),
+                          INDEX `idx_route_key` (`route_key`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                    ");
+                    $redStmt = $db->prepare("
+                        INSERT INTO `route_redirects` (`route_key`, `old_slug`)
+                        VALUES (:rk, :os)
+                        ON DUPLICATE KEY UPDATE `route_key` = VALUES(`route_key`)
+                    ");
+                    $redStmt->execute([':rk' => $pageKey, ':os' => $oldSlug]);
+                }
+                if (!empty($cleanSlug)) {
+                    $delStmt = $db->prepare("DELETE FROM `route_redirects` WHERE `old_slug` = :slug");
+                    $delStmt->execute([':slug' => $cleanSlug]);
+                }
+
                 $rStmt = $db->prepare("
                     INSERT INTO `site_routes` (`route_key`, `slug`, `target_type`, `target_file`, `is_active`)
                     VALUES (:rk, :slug, :tt, :tf, 1)
@@ -530,6 +559,34 @@ try {
                     break;
                 }
 
+                $oldBlogStmt = $db->prepare("SELECT `slug` FROM `blogs` WHERE `blog_id` = :bid LIMIT 1");
+                $oldBlogStmt->execute([':bid' => $blogId]);
+                $oldBlogSlug = $oldBlogStmt->fetchColumn();
+
+                if (!empty($oldBlogSlug) && $oldBlogSlug !== $cleanSlug) {
+                    $db->exec("
+                        CREATE TABLE IF NOT EXISTS `route_redirects` (
+                          `id` INT AUTO_INCREMENT PRIMARY KEY,
+                          `route_key` VARCHAR(64) NOT NULL,
+                          `old_slug` VARCHAR(191) NOT NULL UNIQUE,
+                          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                          INDEX `idx_old_slug` (`old_slug`),
+                          INDEX `idx_route_key` (`route_key`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                    ");
+                    $redStmt = $db->prepare("
+                        INSERT INTO `route_redirects` (`route_key`, `old_slug`)
+                        VALUES (:rk, :os)
+                        ON DUPLICATE KEY UPDATE `route_key` = VALUES(`route_key`)
+                    ");
+                    $redStmt->execute([':rk' => 'blog_' . $blogId, ':os' => $oldBlogSlug]);
+                }
+                if (!empty($cleanSlug)) {
+                    $delStmt = $db->prepare("DELETE FROM `route_redirects` WHERE `old_slug` = :slug");
+                    $delStmt->execute([':slug' => $cleanSlug]);
+                }
+
                 $stmt = $db->prepare("UPDATE `blogs` SET `slug` = :slug WHERE `blog_id` = :bid");
                 $stmt->execute([':slug' => $cleanSlug, ':bid' => $blogId]);
 
@@ -562,6 +619,34 @@ try {
                     if ($check->fetch()) {
                         echo json_encode(['status' => 'error', 'message' => "The route slug '{$cleanSlug}' is already assigned to another page."]);
                         break;
+                    }
+
+                    $oldStmt = $db->prepare("SELECT `slug` FROM `site_routes` WHERE `route_key` = :rk LIMIT 1");
+                    $oldStmt->execute([':rk' => $routeKey]);
+                    $oldSlug = $oldStmt->fetchColumn();
+
+                    if (!empty($oldSlug) && $oldSlug !== $cleanSlug) {
+                        $db->exec("
+                            CREATE TABLE IF NOT EXISTS `route_redirects` (
+                              `id` INT AUTO_INCREMENT PRIMARY KEY,
+                              `route_key` VARCHAR(64) NOT NULL,
+                              `old_slug` VARCHAR(191) NOT NULL UNIQUE,
+                              `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                              `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                              INDEX `idx_old_slug` (`old_slug`),
+                              INDEX `idx_route_key` (`route_key`)
+                            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                        ");
+                        $redStmt = $db->prepare("
+                            INSERT INTO `route_redirects` (`route_key`, `old_slug`)
+                            VALUES (:rk, :os)
+                            ON DUPLICATE KEY UPDATE `route_key` = VALUES(`route_key`)
+                        ");
+                        $redStmt->execute([':rk' => $routeKey, ':os' => $oldSlug]);
+                    }
+                    if (!empty($cleanSlug)) {
+                        $delStmt = $db->prepare("DELETE FROM `route_redirects` WHERE `old_slug` = :slug");
+                        $delStmt->execute([':slug' => $cleanSlug]);
                     }
 
                     $stmt = $db->prepare("

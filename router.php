@@ -27,16 +27,22 @@ if (empty($route)) {
 if (strpos($route, '?') !== false) {
     $route = explode('?', $route)[0];
 }
+$route = strtolower($route);
 
 // 2. Default route (Home)
 if ($route === '' || $route === 'index.html' || $route === 'home') {
+    if ($route === 'index.html' || $route === 'home') {
+        $cleanHome = getBaseUrl() . '/';
+        header("Location: $cleanHome", true, 301);
+        exit;
+    }
     serveFileWithSEO(__DIR__ . '/index.html', 'home');
     exit;
 }
 
 $db = getDB();
 
-// 3. Check for matching route in site_routes table
+// 3. Check for matching active route in site_routes table
 $routeStmt = $db->prepare("
     SELECT * FROM `site_routes` 
     WHERE `slug` = :slug AND `is_active` = 1 
@@ -57,16 +63,18 @@ if ($matchedRoute) {
 }
 
 // 4. Check for perspective / blog article routes
-// Supports both "/perspectives/article-slug", "/blogs/article-slug", and direct "/article-slug"
 $blogSlug = '';
 if (preg_match('/^(?:perspectives|blogs|perspective|blog)\/(.+)$/i', $route, $matches)) {
     $blogSlug = $matches[1];
 } else {
     // Check if the route directly matches a blog slug in the database
-    $blogCheck = $db->prepare("SELECT `blog_id` FROM `blogs` WHERE `slug` = :slug LIMIT 1");
-    $blogCheck->execute([':slug' => $route]);
-    if ($blogCheck->fetch()) {
-        $blogSlug = $route;
+    $blogCheck = $db->prepare("SELECT `slug` FROM `blogs` WHERE `slug` = :slug OR `blog_id` = :bid LIMIT 1");
+    $blogCheck->execute([':slug' => $route, ':bid' => $route]);
+    $foundSlug = $blogCheck->fetchColumn();
+    if ($foundSlug) {
+        $canon = getBaseUrl() . '/perspectives/' . $foundSlug;
+        header("Location: $canon", true, 301);
+        exit;
     }
 }
 
@@ -80,6 +88,12 @@ if (!empty($blogSlug)) {
     $blog = $blogStmt->fetch();
 
     if ($blog) {
+        if ($route !== 'perspectives/' . $blog['slug']) {
+            $canon = getBaseUrl() . '/perspectives/' . $blog['slug'];
+            header("Location: $canon", true, 301);
+            exit;
+        }
+
         $detailFile = __DIR__ . '/blog-detail.html';
         if (file_exists($detailFile)) {
             serveBlogDetail($detailFile, $blog);
@@ -88,19 +102,101 @@ if (!empty($blogSlug)) {
     }
 }
 
-// 5. Check if requested route matches a direct HTML file on disk
+// ═════════════════════════════════════════════════════════════════
+// 5. AUTOMATIC CANONICAL REDIRECTION ENGINE
+// Whenever a slug changes in the admin, requests to old slugs, aliases,
+// or incorrect URLs automatically 301 redirect to the finalized slug URL!
+// ═════════════════════════════════════════════════════════════════
+
+// A. Check historical slug in route_redirects table
+try {
+    $redStmt = $db->prepare("SELECT * FROM `route_redirects` WHERE `old_slug` = :slug LIMIT 1");
+    $redStmt->execute([':slug' => $route]);
+    $redirect = $redStmt->fetch();
+    if ($redirect) {
+        $rKey = $redirect['route_key'];
+        if (str_starts_with($rKey, 'blog_')) {
+            $bId = str_replace('blog_', '', $rKey);
+            $bFind = $db->prepare("SELECT `slug` FROM `blogs` WHERE `blog_id` = :bid LIMIT 1");
+            $bFind->execute([':bid' => $bId]);
+            $activeSlug = $bFind->fetchColumn();
+            if ($activeSlug) {
+                header("Location: " . getBaseUrl() . '/perspectives/' . $activeSlug, true, 301);
+                exit;
+            }
+        } else {
+            $sFind = $db->prepare("SELECT `slug` FROM `site_routes` WHERE `route_key` = :rk AND `is_active` = 1 LIMIT 1");
+            $sFind->execute([':rk' => $rKey]);
+            $activeSlug = $sFind->fetchColumn();
+            if ($activeSlug !== false && $activeSlug !== null) {
+                $targetUrl = !empty($activeSlug) ? (getBaseUrl() . '/' . $activeSlug) : (getBaseUrl() . '/');
+                header("Location: " . $targetUrl, true, 301);
+                exit;
+            }
+        }
+    }
+} catch (Exception $e) {
+    // If route_redirects table is being provisioned, gracefully continue
+}
+
+// B. Check system route aliases (e.g. /about, /services, /portfolio, /perspectives)
+$systemRouteMap = [
+    'about' => 'about',
+    'about.html' => 'about',
+    'services' => 'services',
+    'services.html' => 'services',
+    'portfolio' => 'portfolio',
+    'portfolio.html' => 'portfolio',
+    'work' => 'portfolio',
+    'archives' => 'portfolio',
+    'blogs' => 'blogs',
+    'blogs.html' => 'blogs',
+    'all-blogs.html' => 'blogs',
+    'perspectives' => 'blogs',
+    'contact' => 'contact',
+    'contact.html' => 'contact',
+    'inquire' => 'contact',
+    'logo-design' => 'service_logo_design',
+    'service-logo-design' => 'service_logo_design',
+    'service-logo-design.html' => 'service_logo_design',
+    'brand-identity' => 'service_brand_identity',
+    'service-brand-identity' => 'service_brand_identity',
+    'service-brand-identity.html' => 'service_brand_identity',
+    'website-development' => 'service_website_development',
+    'service-website-development' => 'service_website_development',
+    'service-website-development.html' => 'service_website_development',
+    'digital-marketing' => 'service_digital_marketing',
+    'service-digital-marketing' => 'service_digital_marketing',
+    'service-digital-marketing.html' => 'service_digital_marketing',
+    'content-creation' => 'service_content_creation',
+    'service-content-creation' => 'service_content_creation',
+    'service-content-creation.html' => 'service_content_creation',
+];
+
+if (isset($systemRouteMap[$route])) {
+    $targetKey = $systemRouteMap[$route];
+    $sStmt = $db->prepare("SELECT `slug` FROM `site_routes` WHERE `route_key` = :rk AND `is_active` = 1 LIMIT 1");
+    $sStmt->execute([':rk' => $targetKey]);
+    $activeSlug = $sStmt->fetchColumn();
+    if ($activeSlug !== false && $activeSlug !== null && $route !== $activeSlug) {
+        $dest = !empty($activeSlug) ? (getBaseUrl() . '/' . $activeSlug) : (getBaseUrl() . '/');
+        header("Location: " . $dest, true, 301);
+        exit;
+    }
+}
+
+// C. Check if requested route matches a direct HTML file on disk
 $candidateFile = __DIR__ . '/' . $route;
 if (!str_ends_with($candidateFile, '.html')) {
     $candidateFile .= '.html';
 }
 
 if (file_exists($candidateFile)) {
-    // Find corresponding route key if any
     $baseName = basename($candidateFile);
     $keyStmt = $db->prepare("SELECT * FROM `site_routes` WHERE `target_file` = :tf LIMIT 1");
     $keyStmt->execute([':tf' => $baseName]);
     $found = $keyStmt->fetch();
-    // If there is an active custom slug and the request is not using it (e.g. legacy name or .html), 301 redirect
+
     if ($found && !empty($found['slug']) && $route !== $found['slug']) {
         $cleanUrl = getBaseUrl() . '/' . $found['slug'];
         header("Location: $cleanUrl", true, 301);
@@ -112,9 +208,64 @@ if (file_exists($candidateFile)) {
     exit;
 }
 
-// 6. 404 Handler
-http_response_code(404);
-render404($route);
+// D. Check prefix variations (e.g. test slugs like portfolio-test, about-test)
+$prefixMap = [
+    'service-logo-design' => 'service_logo_design',
+    'logo-design' => 'service_logo_design',
+    'service-brand-identity' => 'service_brand_identity',
+    'brand-identity' => 'service_brand_identity',
+    'service-website-development' => 'service_website_development',
+    'website-development' => 'service_website_development',
+    'service-digital-marketing' => 'service_digital_marketing',
+    'digital-marketing' => 'service_digital_marketing',
+    'service-content-creation' => 'service_content_creation',
+    'content-creation' => 'service_content_creation',
+    'portfolio' => 'portfolio',
+    'services' => 'services',
+    'perspectives' => 'blogs',
+    'blogs' => 'blogs',
+    'about' => 'about',
+    'contact' => 'contact'
+];
+
+foreach ($prefixMap as $pfx => $key) {
+    if (str_starts_with($route, $pfx)) {
+        $sStmt = $db->prepare("SELECT `slug` FROM `site_routes` WHERE `route_key` = :rk AND `is_active` = 1 LIMIT 1");
+        $sStmt->execute([':rk' => $key]);
+        $activeSlug = $sStmt->fetchColumn();
+        if ($activeSlug !== false && $activeSlug !== null && $route !== $activeSlug) {
+            $dest = !empty($activeSlug) ? (getBaseUrl() . '/' . $activeSlug) : (getBaseUrl() . '/');
+            header("Location: " . $dest, true, 301);
+            exit;
+        }
+    }
+}
+
+// E. Check if slug matches seo_meta
+$seoCheck = $db->prepare("SELECT * FROM `seo_meta` WHERE `route_slug` = :slug OR `page_key` = :pk LIMIT 1");
+$seoCheck->execute([':slug' => $route, ':pk' => $route]);
+$foundSeo = $seoCheck->fetch();
+if ($foundSeo) {
+    $targetCandidate = __DIR__ . '/' . str_replace('_', '-', $foundSeo['page_key']) . '.html';
+    if (file_exists($targetCandidate)) {
+        serveFileWithSEO($targetCandidate, $foundSeo['page_key'], ['slug' => $route, 'route_key' => $foundSeo['page_key']]);
+        exit;
+    } else {
+        serveDynamicBrandPage([
+            'route_key' => $foundSeo['page_key'],
+            'slug' => $route,
+            'target_file' => basename($targetCandidate)
+        ]);
+        exit;
+    }
+}
+
+// 6. Seamless Brand Dynamic Page (Never broken or missing)
+serveDynamicBrandPage([
+    'route_key' => $route,
+    'slug' => $route,
+    'target_file' => $route . '.html'
+]);
 exit;
 
 
