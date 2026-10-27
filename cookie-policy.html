@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cookie Policy Â· 1928 Creative Studio</title>
+  <title>Cookie Policy · 1928 Creative Studio</title>
   <meta name="description" content="This Cookie Policy explains how 1928 Creative Studio uses cookies and similar technologies when you visit our website." />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <script>
@@ -74,7 +74,7 @@
       position: relative;
     }
 
-    /* â”€â”€ Custom Cursor â”€â”€ */
+    /* ── Custom Cursor ── */
     #cur {
       position: fixed;
       z-index: 99999;
@@ -107,7 +107,7 @@
       background: var(--cr-lo);
     }
 
-    /* â”€â”€ Top Bar Navigation â”€â”€ */
+    /* ── Top Bar Navigation ── */
     .legal-nav-header {
       width: 100%;
       padding: clamp(16px, 2.5vh, 28px) clamp(24px, 4vw, 64px);
@@ -178,7 +178,7 @@
       background: var(--card-alt);
     }
 
-    /* â”€â”€ Legal Content Stage â”€â”€ */
+    /* ── Legal Content Stage ── */
     .legal-stage {
       width: 100%;
       max-width: 920px;
@@ -277,7 +277,7 @@
       min-width: 145px;
     }
 
-    /* â”€â”€ Floating Theme FAB â”€â”€ */
+    /* ── Floating Theme FAB ── */
     #theme-fab {
       position: fixed;
       bottom: 28px;
@@ -332,11 +332,11 @@
 </head>
 
 <body>
-  <!-- â•â• Custom Cursor Elements â•â• -->
+  <!-- ══ Custom Cursor Elements ══ -->
   <div id="cur"></div>
   <div id="cur-r"></div>
 
-  <!-- â”€â”€ Top Header Navigation â”€â”€ -->
+  <!-- ── Top Header Navigation ── -->
   <header class="legal-nav-header">
     <a href="index.html" class="brand-link" aria-label="1928 Creative Studio Home">
       <img src="assets/img/branding/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img" />
@@ -349,7 +349,7 @@
     </a>
   </header>
 
-  <!-- â”€â”€ Main Policy Content â”€â”€ -->
+  <!-- ── Main Policy Content ── -->
   <main class="legal-stage">
     <div class="legal-tag-badge">
       <span>STUDIO &amp; LEGAL</span>
@@ -438,7 +438,7 @@
     </div>
   </main>
 
-  <!-- â”€â”€ Floating Theme Toggle â”€â”€ -->
+  <!-- ── Floating Theme Toggle ── -->
   <button id="theme-fab" type="button" aria-label="Toggle visual theme">
     <svg class="icon-sun" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="5"></circle>
@@ -457,7 +457,7 @@
   </button>
 
   <script>
-    // â”€â”€ Dedicated Back Navigation Handler â”€â”€
+    // ── Dedicated Back Navigation Handler ──
     function handleGoBack() {
       if (window.history.length > 1 && document.referrer && document.referrer.indexOf(window.location.host) !== -1) {
         window.history.back();
@@ -468,7 +468,7 @@
       }
     }
 
-    // â”€â”€ Global Interactive Custom Cursor â”€â”€
+    // ── Global Interactive Custom Cursor ──
     (function () {
       const CUR = document.getElementById('cur');
       const CURR = document.getElementById('cur-r');
@@ -493,7 +493,7 @@
       })();
     })();
 
-    // â”€â”€ Unified Theme Synchronization â”€â”€
+    // ── Unified Theme Synchronization ──
     (function () {
       const fab = document.getElementById('theme-fab');
       if (!fab) return;
@@ -515,7 +515,7 @@
     })();
   </script>
 
-  <!-- â”€â”€ Global Dynamic Footer â”€â”€ -->
+  <!-- ── Global Dynamic Footer ── -->
   <script src="footer-loader.js?v=20261025_02"></script>
 </body>
 

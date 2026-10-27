@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Under Development Â· 1928 Creative Studio</title>
-  <meta name="description" content="1928 Creative Studio â€” This page is currently under development." />
+  <title>Under Development · 1928 Creative Studio</title>
+  <meta name="description" content="1928 Creative Studio — This page is currently under development." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* â”€â”€ Gotham Primary & Raleway Secondary Font System â”€â”€ */
+    /* ── Gotham Primary & Raleway Secondary Font System ── */
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham'), local('Gotham-Book'), local('Gotham Book');
@@ -102,7 +102,7 @@
       transition: transform .12s ease-out, width .25s, height .25s;
     }
 
-    /* â”€â”€ Minimal Top Navigation â”€â”€ */
+    /* ── Minimal Top Navigation ── */
     .top-bar {
       width: 100%;
       max-width: 1500px;
@@ -136,7 +136,7 @@
       display: inline-block;
     }
 
-    /* â”€â”€ Floating Fixed Theme Toggle Button (Bottom-Right Corner) â”€â”€ */
+    /* ── Floating Fixed Theme Toggle Button (Bottom-Right Corner) ── */
     #theme-fab {
       position: fixed;
       bottom: 28px;
@@ -188,7 +188,7 @@
       display: block;
     }
 
-    /* â”€â”€ Creative Centered Hero Statement â”€â”€ */
+    /* ── Creative Centered Hero Statement ── */
     .center-container {
       display: flex;
       flex-direction: column;
@@ -280,7 +280,7 @@
       transform: translate(3px, -3px);
     }
 
-    /* â”€â”€ Minimal Bottom Sub-Bar â”€â”€ */
+    /* ── Minimal Bottom Sub-Bar ── */
     .bottom-bar {
       width: 100%;
       max-width: 1500px;
@@ -312,7 +312,7 @@
       }
     }
 
-    /* â”€â”€ Smooth scrollbar on Desktop / Web view (> 768px) â”€â”€ */
+    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
     @media (min-width: 769px) {
       html {
         scrollbar-width: thin;
@@ -333,7 +333,7 @@
       }
     }
 
-    /* â”€â”€ Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) â”€â”€ */
+    /* ── Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) ── */
     @media (max-width: 768px) {
       html, body, * {
         scrollbar-width: none !important;
@@ -382,7 +382,7 @@
 
       <a href="index.html" class="return-pill">
         <span>Return to Homepage</span>
-        <span class="arr">â†—</span>
+        <span class="arr">↗</span>
       </a>
     </main>
   </div>
@@ -431,7 +431,7 @@
         const now = new Date();
         const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
         const timeStr = now.toLocaleTimeString('en-US', options);
-        clockEl.textContent = `Ahmedabad, India Â· ${timeStr} Â· 28Â°C â˜€`;
+        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
       }
       updateClock();
       setInterval(updateClock, 30000);
@@ -480,8 +480,8 @@
   </script>
 
   <!-- CMS Live Bridge -->
-  <script src="data-store.js"></script>
-  <script src="site-bridge.js"></script>
+  <script src="data-store.js?v=20261027_v3"></script>
+  <script src="site-bridge.js?v=20261027_v3"></script>
 </body>
 
 </html>

@@ -55,6 +55,11 @@
       if (viewName === 'services') {
         renderHomeServicesGrid();
       }
+      if (viewName === 'seo') {
+        if (typeof window.loadSEOForm === 'function') {
+          window.loadSEOForm();
+        }
+      }
       refreshAllViews();
     }
 

@@ -198,6 +198,20 @@
     // 1. SEO METADATA (MySQL: seo_meta)
     // ═══════════════════════════════════════════════════════════
     getSEO(pageKey = 'global') {
+      const pageSEO = this.data.seo[pageKey];
+      if (pageSEO && pageSEO.title && pageSEO.title.trim()) {
+        return pageSEO;
+      }
+      if (pageKey === 'home') {
+        const globalSEO = this.data.seo.global || {};
+        return {
+          title: (pageSEO && pageSEO.title && pageSEO.title.trim()) ? pageSEO.title : (globalSEO.title || '1928 Creative Studio · Independent Brand Engineering & Digital Architecture'),
+          description: (pageSEO && pageSEO.description && pageSEO.description.trim()) ? pageSEO.description : (globalSEO.description || '1928 Creative Studio sculpts iconic visual identities, immersive digital platforms, spatial environments, and transformative brand campaigns.'),
+          keywords: (pageSEO && pageSEO.keywords && pageSEO.keywords.trim()) ? pageSEO.keywords : (globalSEO.keywords || '1928 creative studio, brand architecture, luxury branding agency, high-end web design, digital experiences, ahmedabad branding studio'),
+          ogImage: pageSEO?.ogImage || globalSEO.ogImage || 'assets/img/branding/1928-logo.png',
+          routeSlug: ''
+        };
+      }
       return this.data.seo[pageKey] || this.data.seo.global || {};
     }
 

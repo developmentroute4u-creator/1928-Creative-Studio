@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>1928 Creative Studio â€” Ideas Take Shape</title>
+  <title>1928 Creative Studio — Ideas Take Shape</title>
   <meta name="description"
     content="1928 Creative Studio is an independent brand consultancy and design practice. We craft iconic identities, spatial experiences, and digital ecosystems." />
   <script>
@@ -26,7 +26,7 @@
     rel="stylesheet" />
 
   <style>
-    /* â”€â”€ Gotham Primary & Raleway Secondary Font System â”€â”€ */
+    /* ── Gotham Primary & Raleway Secondary Font System ── */
     @font-face {
       font-family: 'Gotham';
       src: local('Gotham'), local('Gotham-Book'), local('Gotham Book');
@@ -59,14 +59,14 @@
       font-display: swap;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   1928 CREATIVE STUDIO â€” COMPLETE UNIFIED SINGLE-FILE ENGINE
-   Pure CSS â€” No Tailwind, No frameworks
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════════════════════════════════════════════
+   1928 CREATIVE STUDIO — COMPLETE UNIFIED SINGLE-FILE ENGINE
+   Pure CSS — No Tailwind, No frameworks
+   ═══════════════════════════════════════════════════════════ */
 
-    /* â”€â”€ Design System Tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Design System Tokens ──────────────────────────────── */
     :root {
-      /* Palette â€” Light Theme (Pure White Canvas) */
+      /* Palette — Light Theme (Pure White Canvas) */
       --bg: #FFFFFF;
       --bg-alt: #F7F7F7;
       --ink: #0A0A0A;
@@ -96,7 +96,7 @@
     }
 
     [data-theme="dark"] {
-      /* Palette â€” Dark Theme (Primary Default) */
+      /* Palette — Dark Theme (Primary Default) */
       --bg: #0A0A0C;
       --bg-alt: #111114;
       --ink: #F5F4F0;
@@ -112,7 +112,7 @@
       --card-shadow-lg: 0 32px 80px rgba(0, 0, 0, 0.4);
     }
 
-    /* â”€â”€ Reset â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Reset ────────────────────────────────────────────── */
     *,
     *::before,
     *::after {
@@ -160,7 +160,7 @@
       max-width: 100%;
     }
 
-    /* â”€â”€ Custom Cursor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Custom Cursor ────────────────────────────────────── */
     #cur {
       position: fixed;
       z-index: 99999;
@@ -196,10 +196,10 @@
 
 
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       1928 CREATIVE STUDIO â€” ORGANIC 3D HERO CONSTRUCTION & ASSEMBLY
+    /* ═══════════════════════════════════════════════════════════
+       1928 CREATIVE STUDIO — ORGANIC 3D HERO CONSTRUCTION & ASSEMBLY
        (Dead-Center Load -> Upward Shift -> 3D Volumetric Box & 4-Ray Shoot -> Simultaneous Card Entry -> 0-100% Counter)
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+       ═══════════════════════════════════════════════════════════ */
     body.hero-loading-active {
       overflow: hidden !important;
       height: 100vh !important;
@@ -245,7 +245,7 @@
       }
     }
 
-    /* Compact Organic 0 â†’ 100% Loading Counter HUD */
+    /* Compact Organic 0 → 100% Loading Counter HUD */
     .hero-loading-hud {
       position: absolute;
       bottom: clamp(20px, 3.5vh, 36px);
@@ -333,7 +333,7 @@
       color: #0A0A0A;
     }
 
-    /* â”€â”€ STEP 1: Only "1928" Comes First â”€â”€ */
+    /* ── STEP 1: Only "1928" Comes First ── */
     .hero-title {
       position: absolute;
       z-index: 15;
@@ -366,7 +366,7 @@
       filter: blur(0px);
     }
 
-    /* â”€â”€ STEP 2: "Creative Studio." Comes â”€â”€ */
+    /* ── STEP 2: "Creative Studio." Comes ── */
     .hero-title h1 span.hero-part-2 {
       display: inline-block;
       opacity: 0;
@@ -382,7 +382,7 @@
       filter: blur(0px);
     }
 
-    /* â”€â”€ STEP 3: Description at the Bottom Comes in a Soft, Proper Manner â”€â”€ */
+    /* ── STEP 3: Description at the Bottom Comes in a Soft, Proper Manner ── */
     .hero-title .hero-sub {
       opacity: 0;
       transform: translateY(18px);
@@ -396,7 +396,7 @@
       filter: blur(0px);
     }
 
-    /* â”€â”€ STEP 4: The Center Box is Created (Not the Emerging Lines) â”€â”€ */
+    /* ── STEP 4: The Center Box is Created (Not the Emerging Lines) ── */
     .hero-corner-rays {
       position: absolute;
       inset: 0;
@@ -422,7 +422,7 @@
       stroke-dashoffset: 0;
     }
 
-    /* â”€â”€ STEP 5: Once Box is Complete, the 4 Lines Go to the 4 Screen Corners â”€â”€ */
+    /* ── STEP 5: Once Box is Complete, the 4 Lines Go to the 4 Screen Corners ── */
     .hero-corner-ray {
       stroke-dasharray: 45;
       stroke-dashoffset: 45;
@@ -443,7 +443,7 @@
       stroke-dashoffset: 0;
     }
 
-    /* â”€â”€ STEP 6: The Cards Come Slowly & Properly (Seen clearly with tactile grace) â”€â”€ */
+    /* ── STEP 6: The Cards Come Slowly & Properly (Seen clearly with tactile grace) ── */
     .room-scene {
       position: absolute;
       inset: 0;
@@ -551,7 +551,7 @@
       filter: none !important;
     }
 
-    /* â”€â”€ Immediate Soft Entry (When Navigating Between Internal Pages) â”€â”€ */
+    /* ── Immediate Soft Entry (When Navigating Between Internal Pages) ── */
     html.hero-skip-anim body {
       overflow-x: clip !important;
       overflow-y: visible !important;
@@ -590,7 +590,7 @@
       display: none !important;
     }
 
-    /* â”€â”€ Fixed Navigation Header (Unified Frosted Glassmorphism) â”€â”€ */
+    /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
     #nav {
       position: fixed;
       top: 0;
@@ -712,7 +712,7 @@
       transform: scaleX(1);
     }
 
-    /* â”€â”€ Clean Minimal Luxury Active Page Header Link â”€â”€ */
+    /* ── Clean Minimal Luxury Active Page Header Link ── */
     .nav-links a.active {
       font-weight: 800;
       color: #0A0A0A;
@@ -756,9 +756,9 @@
       color: #ffffff;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    /* ═══════════════════════════════════════════════════════════
        BESPOKE ATELIER SERVICES DROPDOWN SYSTEM
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+       ═══════════════════════════════════════════════════════════ */
     .nav-has-dropdown {
       position: relative;
     }
@@ -995,7 +995,7 @@
       gap: 14px;
     }
 
-    /* â”€â”€ Floating Fixed Theme Toggle Button (Bottom-Right Corner) â”€â”€ */
+    /* ── Floating Fixed Theme Toggle Button (Bottom-Right Corner) ── */
     #theme-fab {
       position: fixed;
       bottom: 28px;
@@ -1097,9 +1097,9 @@
       transition: fill 0.3s;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   Â§1 â€” HERO SECTION (Full Bleed 3D Room & 2-Box Frame Architecture)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════════════════════════════════════════════
+   §1 — HERO SECTION (Full Bleed 3D Room & 2-Box Frame Architecture)
+   ═══════════════════════════════════════════════════════════ */
     #hero-driver {
       position: relative;
       height: 550vh;
@@ -1117,7 +1117,7 @@
       justify-content: center;
     }
 
-    /* â”€â”€ Architectural Wireframe SVG â€” zooms forward with camera â”€â”€ */
+    /* ── Architectural Wireframe SVG — zooms forward with camera ── */
     .hero-corner-rays {
       position: absolute;
       inset: 0;
@@ -1181,7 +1181,7 @@
       stroke: rgba(255, 255, 255, 0.28);
     }
 
-    /* â”€â”€ Inner Rectangle Box (Clear Text Zone) â”€â”€ */
+    /* ── Inner Rectangle Box (Clear Text Zone) ── */
     .hero-frame {
       position: absolute;
       left: 20vw;
@@ -1198,7 +1198,7 @@
       border-color: rgba(245, 244, 240, 0.12);
     }
 
-    /* â”€â”€ Centered Brand Text (Vector High-Definition, Zero Pixelation) â”€â”€ */
+    /* ── Centered Brand Text (Vector High-Definition, Zero Pixelation) ── */
     .hero-title {
       position: absolute;
       z-index: 15;
@@ -1293,7 +1293,7 @@
       gap: 10px;
     }
 
-    /* â”€â”€ 3D Room Container & Vanishing Lines â”€â”€ */
+    /* ── 3D Room Container & Vanishing Lines ── */
     .room-scene {
       position: absolute;
       inset: 0;
@@ -1314,7 +1314,7 @@
       will-change: transform;
     }
 
-    /* â”€â”€ Room Faces (clean monochrome surfaces â€” zero extra border lines) â”€â”€ */
+    /* ── Room Faces (clean monochrome surfaces — zero extra border lines) ── */
     .room-face {
       position: absolute;
       overflow: visible;
@@ -1361,7 +1361,7 @@
       background: transparent;
     }
 
-    /* â”€â”€ Sleek Grayscale / White Architectural Project Cards â”€â”€ */
+    /* ── Sleek Grayscale / White Architectural Project Cards ── */
     .wall-card {
       position: absolute;
       border-radius: 10px;
@@ -1473,7 +1473,7 @@
       background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-08.jpg');
     }
 
-    /* â”€â”€ Video / Showreel Pop-up & Right Docking â”€â”€ */
+    /* ── Video / Showreel Pop-up & Right Docking ── */
     .hero-reel {
       position: absolute;
       z-index: 25;
@@ -1532,9 +1532,9 @@
       animation: reelScan 8s linear infinite;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   Â§2 â€” BRAND STORY (Split Layout with Right Docked Video & Word Reveal)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════════════════════════════════════════════
+   §2 — BRAND STORY (Split Layout with Right Docked Video & Word Reveal)
+   ═══════════════════════════════════════════════════════════ */
     .hero-story-wrap {
       position: absolute;
       left: clamp(32px, 6vw, 84px);
@@ -1612,9 +1612,9 @@
       font-weight: 700;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   Â§3 â€” SELECTED WORK (Interbrand-Style Vertical Parallax Showcase)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════════════════════════════════════════════
+   §3 — SELECTED WORK (Interbrand-Style Vertical Parallax Showcase)
+   ═══════════════════════════════════════════════════════════ */
     #port-driver {
       position: relative;
       background: var(--bg);
@@ -1904,7 +1904,7 @@
     }
 
     .pcv-tags span:not(:last-child)::after {
-      content: 'Â·';
+      content: '·';
       margin: 0 8px;
       color: var(--ink-dim);
       font-weight: 700;
@@ -1990,9 +1990,9 @@
       background-image: radial-gradient(circle at 70% 40%, rgba(99, 102, 241, 0.5) 0%, transparent 60%);
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   Â§4 â€” SERVICES (Unified Architecture with Single Persistent Physical Dossier Folder)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════════════════════════════════════════════
+   §4 — SERVICES (Unified Architecture with Single Persistent Physical Dossier Folder)
+   ═══════════════════════════════════════════════════════════ */
     #svc-driver {
       position: relative;
       height: 1600vh;
@@ -2046,7 +2046,7 @@
       justify-content: center;
     }
 
-    /* â•â•â• 1. HERO CAPSULE BACKGROUND (Phase 1) â•â•â• */
+    /* ═══ 1. HERO CAPSULE BACKGROUND (Phase 1) ═══ */
     .svc-hero-capsule {
       position: absolute;
       left: 50%;
@@ -2140,7 +2140,7 @@
       margin-top: 8px;
     }
 
-    /* â•â•â• 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER â•â•â• */
+    /* ═══ 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER ═══ */
     .svc-main-folder {
       position: absolute;
       left: 50%;
@@ -2295,7 +2295,7 @@
       gap: 9px;
     }
 
-    /* â•â•â• 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) â•â•â• */
+    /* ═══ 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) ═══ */
     .svc-s2-menu {
       position: absolute;
       left: 50%;
@@ -2460,7 +2460,7 @@
       gap: 10px;
     }
 
-    /* â•â•â• 4. DETAIL SHOWCASE DECK (Phase 3 Right) â•â•â• */
+    /* ═══ 4. DETAIL SHOWCASE DECK (Phase 3 Right) ═══ */
     .svc-detail-deck {
       position: absolute;
       left: 50%;
@@ -2789,9 +2789,9 @@
 
 
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       Â§5 â€” BRAND PARTNERS (3-Row Infinite Dual-Direction Logo Marquee)
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════════════════════════════════════════════
+       §5 — BRAND PARTNERS (3-Row Infinite Dual-Direction Logo Marquee)
+       ═══════════════════════════════════════════════════════════ */
     #brands-driver {
       position: relative;
       background: var(--bg);
@@ -2861,7 +2861,7 @@
       margin: 0;
     }
 
-    /* â”€â”€ 3-Row Infinite Marquee Stage â”€â”€ */
+    /* ── 3-Row Infinite Marquee Stage ── */
     .brands-marquee-stage {
       --marquee-speed: 45s;
       width: 100%;
@@ -2933,7 +2933,7 @@
       flex-shrink: 0;
     }
 
-    /* â”€â”€ Individual Brand Logo Card â”€â”€ */
+    /* ── Individual Brand Logo Card ── */
     .brand-logo-card {
       min-width: clamp(225px, 18vw, 275px);
       height: clamp(92px, 10.5vh, 106px);
@@ -2997,9 +2997,9 @@
       color: var(--ink);
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    /* ═══════════════════════════════════════════════════════════
        PRESERVED FOR FUTURE USE: THREAD & FUNNEL ANIMATION CSS
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+       ═══════════════════════════════════════════════════════════ */
     /*
     #brands-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
     #brands-pin-head { position: absolute; left: 0; right: 0; text-align: center; padding: 0 5vw; transform: translateY(100vh); will-change: transform, opacity; z-index: 3; }
@@ -3230,9 +3230,9 @@
       transform: translateX(4px);
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       Â§6 â€” FRESH PERSPECTIVES & INSIGHTS (Signature 3-Card Grid)
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════════════════════════════════════════════
+       §6 — FRESH PERSPECTIVES & INSIGHTS (Signature 3-Card Grid)
+       ═══════════════════════════════════════════════════════════ */
     #blog-section {
       padding: clamp(90px, 12vh, 140px) clamp(24px, 5vw, 64px);
       background: var(--bg);
@@ -3391,9 +3391,9 @@
       letter-spacing: .04em;
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   Â§7 â€” MODERN EDITORIAL LUXURY FOOTER (Uncluttered Balanced Card)
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+    /* ═══════════════════════════════════════════════════════════
+   §7 — MODERN EDITORIAL LUXURY FOOTER (Uncluttered Balanced Card)
+   ═══════════════════════════════════════════════════════════ */
     #footer-driver {
       position: relative;
       background: var(--bg);
@@ -3637,7 +3637,7 @@
       color: var(--bg);
     }
 
-    /* â”€â”€ Bottom Cluster: Staggered Character Emergence Headline (Half-Cut to Full Wave) â”€â”€ */
+    /* ── Bottom Cluster: Staggered Character Emergence Headline (Half-Cut to Full Wave) ── */
     .f-bottom-cluster {
       width: 100%;
       display: flex;
@@ -3732,7 +3732,7 @@
       }
     }
 
-    /* â”€â”€ Smooth scrollbar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /* ── Smooth scrollbar ─────────────────────────────────── */
     html.hide-scrollbar,
     body.hide-scrollbar {
       scrollbar-width: none !important;
@@ -3746,7 +3746,7 @@
       height: 0 !important;
     }
 
-    /* â”€â”€ Smooth scrollbar on Desktop / Web view (> 768px) â”€â”€ */
+    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
     @media (min-width: 769px) {
       html {
         scrollbar-width: thin;
@@ -3767,10 +3767,10 @@
       }
     }
 
-    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+    /* ═══════════════════════════════════════════════════════════
        MOBILE PHONE RESPONSIVE STYLES (Screen width <= 768px ONLY)
        Desktop screens (> 768px) remain 100% untouched.
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+       ═══════════════════════════════════════════════════════════ */
     .phone-hero,
     .phone-story-section,
     .phone-manifesto-section {
@@ -3779,13 +3779,13 @@
 
     @media (max-width: 768px) {
 
-      /* â”€â”€ Hide Custom Desktop Mouse Cursor â”€â”€ */
+      /* ── Hide Custom Desktop Mouse Cursor ── */
       #cur,
       #cur-r {
         display: none !important;
       }
 
-      /* â”€â”€ Hide Desktop 3D Room & Animation Layers â”€â”€ */
+      /* ── Hide Desktop 3D Room & Animation Layers ── */
       #roomScene,
       #heroRaysSvg,
       #heroFrame,
@@ -3798,7 +3798,7 @@
         display: none !important;
       }
 
-      /* â”€â”€ Header on phone: Hide 'Start Project' button; only logo & hamburger icon remain â”€â”€ */
+      /* ── Header on phone: Hide 'Start Project' button; only logo & hamburger icon remain ── */
       #nav .nav-right .nav-cta,
       #nav .nav-cta,
       #navContactBtn {
@@ -3813,7 +3813,7 @@
         -ms-overflow-style: none !important;
       }
 
-      /* â”€â”€ Hide Scrolling Sidebar (Scrollbar) on Phone View â”€â”€ */
+      /* ── Hide Scrolling Sidebar (Scrollbar) on Phone View ── */
       html, body, * {
         scrollbar-width: none !important;
         -ms-overflow-style: none !important;
@@ -3830,7 +3830,7 @@
         background: transparent !important;
       }
 
-      /* â”€â”€ 1. PHONE HERO SECTION (First Viewport: 1928 Creative Studio + 2-line Subtitle) â”€â”€ */
+      /* ── 1. PHONE HERO SECTION (First Viewport: 1928 Creative Studio + 2-line Subtitle) ── */
       #hero-driver {
         position: relative !important;
         height: 100svh !important;
@@ -3971,7 +3971,7 @@
         white-space: nowrap !important;
       }
 
-      /* â”€â”€ 2. PHONE VIDEO & SYNCHRONIZED BRAND MANIFESTO (Pinned Scroll Stage) â”€â”€ */
+      /* ── 2. PHONE VIDEO & SYNCHRONIZED BRAND MANIFESTO (Pinned Scroll Stage) ── */
       .phone-story-section {
         display: block !important;
         position: relative !important;
@@ -4109,7 +4109,7 @@
         letter-spacing: -0.01em !important;
       }
 
-      /* â”€â”€ Synchronized Brand Manifesto Statement directly below video â”€â”€ */
+      /* ── Synchronized Brand Manifesto Statement directly below video ── */
       .pms-wrapper {
         width: 100% !important;
         min-height: auto !important;
@@ -4181,7 +4181,7 @@
         text-shadow: none !important;
       }
 
-      /* â”€â”€ 3. SELECTED WORK ON PHONES (Sticky Clean Box at Top; Cards Slide Below) â”€â”€ */
+      /* ── 3. SELECTED WORK ON PHONES (Sticky Clean Box at Top; Cards Slide Below) ── */
       #port-driver {
         position: relative !important;
         padding-top: 0 !important;
@@ -4292,7 +4292,7 @@
         height: 230px !important;
       }
 
-      /* â”€â”€ 4. SERVICES ON PHONES (Sequential Card Entrance Pinned Deck) â”€â”€ */
+      /* ── 4. SERVICES ON PHONES (Sequential Card Entrance Pinned Deck) ── */
       #svc-driver {
         position: relative !important;
         height: 420vh !important;
@@ -4429,7 +4429,7 @@
         overflow: visible !important;
       }
 
-      /* â”€â”€ Phone Service Showcase Cards: Dynamic Proportion Cards â”€â”€ */
+      /* ── Phone Service Showcase Cards: Dynamic Proportion Cards ── */
       .svc-showcase-card {
         position: absolute !important;
         top: 0 !important;
@@ -4687,7 +4687,7 @@
         color: rgba(0, 0, 0, 0.5) !important;
       }
 
-      /* â”€â”€ 5. CLIENT LOGOS & BRAND COLLAB ON PHONES â”€â”€ */
+      /* ── 5. CLIENT LOGOS & BRAND COLLAB ON PHONES ── */
       #brands-driver {
         overflow: hidden !important;
         max-width: 100vw !important;
@@ -4715,7 +4715,7 @@
         max-width: 100vw !important;
       }
 
-      /* â”€â”€ 6. FRESH PERSPECTIVES & INSIGHTS (ALL CENTERED; SIGNATURE EDITORIAL HEADING; CENTERED LINK) â”€â”€ */
+      /* ── 6. FRESH PERSPECTIVES & INSIGHTS (ALL CENTERED; SIGNATURE EDITORIAL HEADING; CENTERED LINK) ── */
       #blog-section {
         padding: 56px 20px 72px 20px !important;
         display: flex !important;
@@ -4881,7 +4881,7 @@
         display: none !important;
       }
 
-      /* â”€â”€ 7. FOOTER ON PHONES (100VH FULL-SCREEN LUXURY CARD, BALANCED SPACING) â”€â”€ */
+      /* ── 7. FOOTER ON PHONES (100VH FULL-SCREEN LUXURY CARD, BALANCED SPACING) ── */
       #footer-driver {
         position: relative !important;
         background: var(--bg) !important;
@@ -5125,11 +5125,11 @@
 
 <body class="hide-scrollbar">
 
-  <!-- â•â• CUSTOM CURSOR â•â• -->
+  <!-- ══ CUSTOM CURSOR ══ -->
   <div id="cur"></div>
   <div id="cur-r"></div>
 
-  <!-- â•â• FIXED NAVIGATION â•â• -->
+  <!-- ══ FIXED NAVIGATION ══ -->
   <nav id="nav">
     <a href="index.html" class="nav-logo" aria-label="1928 Creative Studio">
       <img src="assets/img/branding/1928-logo.png" alt="1928 Creative Studio" class="nav-logo-img">
@@ -5214,7 +5214,7 @@
     </div>
   </nav>
 
-  <!-- Â§1 â€” HERO (Full Bleed 3D Room with Coordinated Loading Sequence) -->
+  <!-- §1 — HERO (Full Bleed 3D Room with Coordinated Loading Sequence) -->
   <section id="hero-driver">
     <div id="hero-sticky">
       <!-- Ambient Glow & Background Layer -->
@@ -5234,7 +5234,7 @@
         </div>
       </div>
 
-      <!-- â•â• PHONE HERO VIEW (Strictly scoped to phones <= 768px; hidden on desktop) â•â• -->
+      <!-- ══ PHONE HERO VIEW (Strictly scoped to phones <= 768px; hidden on desktop) ══ -->
       <div class="phone-hero" id="phoneHero">
         <div class="ph-grid-bg"></div>
         <div class="ph-glow"></div>
@@ -5250,8 +5250,8 @@
         </p>
       </div>
 
-      <!-- LAYER 1 (z:2) â€” Architectural Wireframe SVG (Center Box + 4 Corner Rays + Outer Border) -->
-      <!-- LAYER 1 (z:2) â€” Architectural Wireframe SVG (4 Box Lines Joining from Corners + 4 Corner Rays Emerging to Screen Corners + Outer Border) -->
+      <!-- LAYER 1 (z:2) — Architectural Wireframe SVG (Center Box + 4 Corner Rays + Outer Border) -->
+      <!-- LAYER 1 (z:2) — Architectural Wireframe SVG (4 Box Lines Joining from Corners + 4 Corner Rays Emerging to Screen Corners + Outer Border) -->
       <svg class="hero-corner-rays" id="heroRaysSvg" viewBox="0 0 100 100" preserveAspectRatio="none">
         <!-- 1. The 4 Sides of the Center Box (Starting from the 4 corners and joining together) -->
         <line class="hero-box-line box-top" id="boxTop" x1="20" y1="20" x2="80" y2="20" stroke="rgba(255,255,255,0.38)"
@@ -5278,7 +5278,7 @@
           stroke="rgba(255,255,255,0.28)" fill="none" stroke-width="0.14" />
       </svg>
 
-      <!-- LAYER 2 (z:3) â€” 3D Room (Full screen 100vw Ã— 100vh â€” cards touch outer screen edges) -->
+      <!-- LAYER 2 (z:3) — 3D Room (Full screen 100vw Ã— 100vh — cards touch outer screen edges) -->
       <div class="room-scene" id="roomScene">
         <div class="room-cube" id="roomCube">
 
@@ -5338,7 +5338,7 @@
         </div>
       </div>
 
-      <!-- LAYER 2.5 (z:15) â€” Crisp Center Brand Headline -->
+      <!-- LAYER 2.5 (z:15) — Crisp Center Brand Headline -->
       <div class="hero-title" id="heroTitle">
         <h1>
           <span class="hero-part-1" id="hPart1">1928</span><br />
@@ -5349,16 +5349,16 @@
         </div>
       </div>
 
-      <!-- LAYER 3 (z:8) â€” Single Inner rectangle box -->
+      <!-- LAYER 3 (z:8) — Single Inner rectangle box -->
       <div class="hero-frame" id="heroFrame"></div>
 
-      <!-- LAYER 4.5 (z:22) â€” Whiteout / Portal Flash Transition Overlay -->
+      <!-- LAYER 4.5 (z:22) — Whiteout / Portal Flash Transition Overlay -->
       <div id="heroWhiteout" style="
         position:absolute;inset:0;background:var(--bg);
         opacity:0;pointer-events:none;z-index:22;will-change:opacity;
       "></div>
 
-      <!-- LAYER 4.8 (z:20) â€” Brand Story Block (Left Split inside Viewport) -->
+      <!-- LAYER 4.8 (z:20) — Brand Story Block (Left Split inside Viewport) -->
       <div class="hero-story-wrap" id="heroStoryWrap">
         <div class="story-block" id="storyBlock">
           <div class="story-tag" id="storyTag">Who We Are</div>
@@ -5384,7 +5384,7 @@
         </div>
       </div>
 
-      <!-- LAYER 5 (z:25) â€” Video Showreel -->
+      <!-- LAYER 5 (z:25) — Video Showreel -->
       <div class="hero-reel" id="heroReel">
         <div class="reel-inner">
           <div class="reel-play"><svg viewBox="0 0 24 24">
@@ -5395,7 +5395,7 @@
     </div>
   </section>
 
-  <!-- â•â• PHONE VIDEO & SYNCHRONIZED BRAND MANIFESTO (Strictly on phones <= 768px; hidden on desktop) â•â• -->
+  <!-- ══ PHONE VIDEO & SYNCHRONIZED BRAND MANIFESTO (Strictly on phones <= 768px; hidden on desktop) ══ -->
   <section id="phoneStorySec" class="phone-story-section">
     <div class="pss-container">
 
@@ -5462,7 +5462,7 @@
     </div>
   </section>
 
-  <!-- Â§3 â€” SELECTED WORK (Interbrand-Style Vertical Parallax Showcase with Sticky Center Headline) -->
+  <!-- §3 — SELECTED WORK (Interbrand-Style Vertical Parallax Showcase with Sticky Center Headline) -->
   <section id="port-driver" class="port-parallax-section">
 
     <!-- STICKY BACKGROUND CENTER HEADLINE (Pinned in Viewport Center) -->
@@ -5595,7 +5595,7 @@
     </div>
   </section>
 
-  <!-- Â§4 â€” SERVICES (Unified Architecture: One Single Persistent Physical Dossier Folder) -->
+  <!-- §4 — SERVICES (Unified Architecture: One Single Persistent Physical Dossier Folder) -->
   <section id="svc-driver">
 
     <div id="svc-sticky">
@@ -5611,7 +5611,7 @@
 
       <div class="svc-stage" id="svcStage">
 
-        <!-- â•â•â• 1. HERO CAPSULE BACKGROUND (Phase 1) â•â•â• -->
+        <!-- ═══ 1. HERO CAPSULE BACKGROUND (Phase 1) ═══ -->
         <div class="svc-hero-capsule" id="svcHeroCapsule">
           <div class="svc-capsule-folder-placeholder"></div>
           <div class="svc-hero-right-content" id="svcHeroRight">
@@ -5628,12 +5628,12 @@
             </p>
 
             <div class="svc-s1-pill">
-              <span>Branding Â· Digital Â· Content Â· Growth</span>
+              <span>Branding · Digital · Content · Growth</span>
             </div>
           </div>
         </div>
 
-        <!-- â•â•â• 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER â•â•â• -->
+        <!-- ═══ 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER ═══ -->
         <div class="svc-main-folder" id="mainSvcFolder">
           <div class="svc-folder-back"></div>
           <div class="svc-folder-wrap">
@@ -5649,35 +5649,35 @@
               <div class="svc-sheet svc-sheet-s1" id="svcSheet0">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Logo Design</div>
-                  <div class="svc-sheet-sub">VISUAL IDENTITY Â· FIRST IMPRESSION</div>
+                  <div class="svc-sheet-sub">VISUAL IDENTITY · FIRST IMPRESSION</div>
                 </div>
               </div>
               <!-- Service Card 2 -->
               <div class="svc-sheet svc-sheet-s2" id="svcSheet1">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Brand Identity</div>
-                  <div class="svc-sheet-sub">STRATEGY Â· GUIDELINE Â· SYSTEM</div>
+                  <div class="svc-sheet-sub">STRATEGY · GUIDELINE · SYSTEM</div>
                 </div>
               </div>
               <!-- Service Card 3 -->
               <div class="svc-sheet svc-sheet-s3" id="svcSheet2">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Website Design</div>
-                  <div class="svc-sheet-sub">DIGITAL Â· EXPERIENCE Â· MOTION</div>
+                  <div class="svc-sheet-sub">DIGITAL · EXPERIENCE · MOTION</div>
                 </div>
               </div>
               <!-- Service Card 4 -->
               <div class="svc-sheet svc-sheet-s4" id="svcSheet3">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Social &amp; Digital</div>
-                  <div class="svc-sheet-sub">VISIBILITY Â· CONNECTION Â· GROWTH</div>
+                  <div class="svc-sheet-sub">VISIBILITY · CONNECTION · GROWTH</div>
                 </div>
               </div>
               <!-- Service Card 5 -->
               <div class="svc-sheet svc-sheet-s5" id="svcSheet4">
                 <div class="svc-sheet-header-block">
                   <div class="svc-sheet-title">Content &amp; Influence</div>
-                  <div class="svc-sheet-sub">STORY Â· CREATORS Â· CONNECTION</div>
+                  <div class="svc-sheet-sub">STORY · CREATORS · CONNECTION</div>
                 </div>
               </div>
             </div>
@@ -5693,7 +5693,7 @@
           </div>
         </div>
 
-        <!-- â•â•â• 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) â•â•â• -->
+        <!-- ═══ 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) ═══ -->
         <div class="svc-s2-menu" id="svcFiveMenu">
           <div class="svc-why-card">
             <div class="svc-why-badge">
@@ -5743,7 +5743,7 @@
           </div>
         </div>
 
-        <!-- â•â•â• 4. DETAIL SHOWCASE DECK (Phase 3 Right) â•â•â• -->
+        <!-- ═══ 4. DETAIL SHOWCASE DECK (Phase 3 Right) ═══ -->
         <div class="svc-detail-deck" id="svcDetailDeck">
 
           <!-- Card 0: 01 Logo Design -->
@@ -5756,11 +5756,11 @@
             </div>
             <div class="svc-card-num-watermark">01</div>
             <div class="svc-card-header">
-              <span class="svc-badge">VISUAL IDENTITY Â· FIRST IMPRESSION</span>
+              <span class="svc-badge">VISUAL IDENTITY · FIRST IMPRESSION</span>
             </div>
             <h3>01. Logo Design</h3>
             <p><strong>A distinctive mark that gives your business a memorable identity.</strong> We create thoughtful
-              logos that capture your brandâ€™s character and give it a strong visual presence across every touchpoint.
+              logos that capture your brand's character and give it a strong visual presence across every touchpoint.
             </p>
             <div class="svc-deliverables">
               <span class="svc-deliv-pill">Custom Logos</span>
@@ -5789,7 +5789,7 @@
             </div>
             <div class="svc-card-num-watermark">02</div>
             <div class="svc-card-header">
-              <span class="svc-badge">BRAND STRATEGY Â· IDENTITY SYSTEM</span>
+              <span class="svc-badge">BRAND STRATEGY · IDENTITY SYSTEM</span>
             </div>
             <h3>02. Brand Identity Development</h3>
             <p><strong>A complete identity built around what makes your business different.</strong> We turn your story,
@@ -5822,7 +5822,7 @@
             </div>
             <div class="svc-card-num-watermark">03</div>
             <div class="svc-card-header">
-              <span class="svc-badge">DIGITAL EXPERIENCE Â· DESIGN &amp; DEVELOPMENT</span>
+              <span class="svc-badge">DIGITAL EXPERIENCE · DESIGN &amp; DEVELOPMENT</span>
             </div>
             <h3>03. Website Design &amp; Development</h3>
             <p><strong>Digital experiences that make your brand feel as good as it looks.</strong> We design and develop
@@ -5855,7 +5855,7 @@
             </div>
             <div class="svc-card-num-watermark">04</div>
             <div class="svc-card-header">
-              <span class="svc-badge">DIGITAL PRESENCE Â· STRATEGY &amp; GROWTH</span>
+              <span class="svc-badge">DIGITAL PRESENCE · STRATEGY &amp; GROWTH</span>
             </div>
             <h3>04. Social Media &amp; Digital Marketing</h3>
             <p><strong>A digital presence designed to keep your brand moving forward.</strong> We combine creative
@@ -5888,7 +5888,7 @@
             </div>
             <div class="svc-card-num-watermark">05</div>
             <div class="svc-card-header">
-              <span class="svc-badge">CAMPAIGNS Â· PRODUCTION Â· CREATOR NETWORK</span>
+              <span class="svc-badge">CAMPAIGNS · PRODUCTION · CREATOR NETWORK</span>
             </div>
             <h3>05. Content Creation &amp; Influencer Marketing</h3>
             <p><strong>We create stories worth seeing and partnerships worth remembering.</strong> From original content
@@ -5918,19 +5918,19 @@
     </div>
   </section>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       Â§5 â€” BRAND PARTNERS (3-Row Infinite Dual-Direction Logo Marquee)
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════════════════════════════════════════════════
+       §5 — BRAND PARTNERS (3-Row Infinite Dual-Direction Logo Marquee)
+       ═══════════════════════════════════════════════════════════ -->
   <section id="brands-driver">
     <div class="brands-header-block">
       <div class="bph-label"><span class="bph-dot"></span> TRUSTED BY // 1928 CLIENTS</div>
       <h2 class="brands-title">BRANDS THAT<br /><em>TRUST 1928</em></h2>
-      <p class="brands-subtitle">Weâ€™re proud to work alongside businesses that trust us with their ideas, their
-        ambitions, and the brands theyâ€™re building.</p>
+      <p class="brands-subtitle">We're proud to work alongside businesses that trust us with their ideas, their
+        ambitions, and the brands they're building.</p>
     </div>
 
     <div class="brands-marquee-stage">
-      <!-- â”€â”€ ROW 1 (Left to Right / Normal Direction: Logos 01â€“20) â”€â”€ -->
+      <!-- ── ROW 1 (Left to Right / Normal Direction: Logos 01 – 20) ── -->
       <div class="brand-row-wrap marquee-left">
         <div class="marquee-track">
           <div class="marquee-group">
@@ -6060,7 +6060,7 @@
         </div>
       </div>
 
-      <!-- â”€â”€ ROW 2 (Right to Left / Reverse Direction: Logos 21â€“40) â”€â”€ -->
+      <!-- ── ROW 2 (Right to Left / Reverse Direction: Logos 21 – 40) ── -->
       <div class="brand-row-wrap marquee-right">
         <div class="marquee-track">
           <div class="marquee-group">
@@ -6190,7 +6190,7 @@
         </div>
       </div>
 
-      <!-- â”€â”€ ROW 3 (Left to Right / Normal Direction: Logos 41â€“60) â”€â”€ -->
+      <!-- ── ROW 3 (Left to Right / Normal Direction: Logos 41 – 60) ── -->
       <div class="brand-row-wrap marquee-left">
         <div class="marquee-track">
           <div class="marquee-group">
@@ -6322,49 +6322,49 @@
     </div>
   </section>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+  <!-- ═══════════════════════════════════════════════════════════
        PRESERVED FOR FUTURE USE: THREAD & FUNNEL ANIMATION - START
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+       ═══════════════════════════════════════════════════════════ -->
   <!--
   <div id="brands-sticky" style="display:none;">
     <div id="brands-pin-head">
-      <div class="bph-label">âœ¦ Trusted By // 05</div>
+      <div class="bph-label">✦ Trusted By // 05</div>
       <h2>Brands That<br /><em>Trust Us</em></h2>
     </div>
     <div id="brands-train-viewport">
       <div id="brands-train-track">
         <div class="brand-train-card">
-          <div class="btc-top"><span class="btc-glyph">â—ª</span><span class="btc-counter">01 / 07</span></div>
+          <div class="btc-top"><span class="btc-glyph">▪</span><span class="btc-counter">01 / 07</span></div>
           <div class="btc-center"><span class="btc-name">VELOX APEX</span></div>
           <div class="btc-bottom"><span class="btc-category">Brand Architecture</span></div>
         </div>
         <div class="brand-train-card">
-          <div class="btc-top"><span class="btc-glyph">âˆ¿</span><span class="btc-counter">02 / 07</span></div>
+          <div class="btc-top"><span class="btc-glyph">∿</span><span class="btc-counter">02 / 07</span></div>
           <div class="btc-center"><span class="btc-name">KINESIS</span></div>
           <div class="btc-bottom"><span class="btc-category">Spatial Identity</span></div>
         </div>
         <div class="brand-train-card">
-          <div class="btc-top"><span class="btc-glyph">â—Ž</span><span class="btc-counter">03 / 07</span></div>
+          <div class="btc-top"><span class="btc-glyph">◎</span><span class="btc-counter">03 / 07</span></div>
           <div class="btc-center"><span class="btc-name style-aura">aura</span></div>
           <div class="btc-bottom"><span class="btc-category">Visual Systems</span></div>
         </div>
         <div class="brand-train-card">
-          <div class="btc-top"><span class="btc-glyph">â¬¡</span><span class="btc-counter">04 / 07</span></div>
+          <div class="btc-top"><span class="btc-glyph">⬡</span><span class="btc-counter">04 / 07</span></div>
           <div class="btc-center"><span class="btc-name style-jukku">Jukku</span></div>
           <div class="btc-bottom"><span class="btc-category">Digital Growth</span></div>
         </div>
         <div class="brand-train-card">
-          <div class="btc-top"><span class="btc-glyph">â—‰</span><span class="btc-counter">05 / 07</span></div>
+          <div class="btc-top"><span class="btc-glyph">◉</span><span class="btc-counter">05 / 07</span></div>
           <div class="btc-center"><span class="btc-name">SYNAPSE</span></div>
           <div class="btc-bottom"><span class="btc-category">Product Architecture</span></div>
         </div>
         <div class="brand-train-card">
-          <div class="btc-top"><span class="btc-glyph">â—ˆ</span><span class="btc-counter">06 / 07</span></div>
+          <div class="btc-top"><span class="btc-glyph">◈</span><span class="btc-counter">06 / 07</span></div>
           <div class="btc-center"><span class="btc-name">MONOLITH</span></div>
           <div class="btc-bottom"><span class="btc-category">Spatial Design</span></div>
         </div>
         <div class="brand-train-card">
-          <div class="btc-top"><span class="btc-glyph">âŽ”</span><span class="btc-counter">07 / 07</span></div>
+          <div class="btc-top"><span class="btc-glyph">⎔</span><span class="btc-counter">07 / 07</span></div>
           <div class="btc-center"><span class="btc-name">SOLARIS</span></div>
           <div class="btc-bottom"><span class="btc-category">Energy &amp; Innovation</span></div>
         </div>
@@ -6381,9 +6381,9 @@
   -->
   <!-- PRESERVED FOR FUTURE USE: THREAD & FUNNEL ANIMATION - END -->
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       Â§6 â€” FRESH PERSPECTIVES & INSIGHTS (Signature 3-Card Grid)
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════════════════════════════════════════════════
+       §6 — FRESH PERSPECTIVES & INSIGHTS (Signature 3-Card Grid)
+       ═══════════════════════════════════════════════════════════ -->
   <section id="blog-section">
     <div class="fbc-content">
       <div class="fbc-header">
@@ -6463,7 +6463,7 @@
     </div>
   </section>
 
-  <!-- Â§7 â€” MODERN EDITORIAL LUXURY FOOTER -->
+  <!-- §7 — MODERN EDITORIAL LUXURY FOOTER -->
   <footer id="footer-driver">
     <div class="footer-luxury-card">
 
@@ -6476,7 +6476,7 @@
             <span class="f-desc-line">helping ambitious businesses shape distinctive brands,</span>
             <span class="f-desc-line">digital experiences, and meaningful connections.</span>
           </p>
-          <div class="f-location-tag">India Â· Global</div>
+          <div class="f-location-tag">India · Global</div>
           <div class="f-social-circles">
             <a href="https://www.instagram.com/1928creativestudio" target="_blank" rel="noopener" class="f-circle-btn" aria-label="Instagram">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -6545,7 +6545,7 @@
 
           <a href="https://wa.me/918160931928?text=Hello%201928%20Creative%20Studio%2C%20I%20would%20like%20to%20talk%20about%20a%20project." target="_blank" rel="noopener noreferrer" class="f-action-pill cta-secondary" aria-label="Chat on WhatsApp">
             <div class="f-action-txt">
-              <span class="f-action-heading">Letâ€™s talk about your project</span>
+              <span class="f-action-heading">Let's talk about your project</span>
               <span class="f-action-sub">Tell us what you're building</span>
             </div>
             <div class="f-action-arrow" aria-label="WhatsApp">
@@ -6724,14 +6724,14 @@
     </svg>
   </button>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-     JAVASCRIPT â€” Scroll Engine & Animation Choreography
-     â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT — Scroll Engine & Animation Choreography
+     ═══════════════════════════════════════════════════════════ -->
   <script>
     (function () {
       'use strict';
 
-      /* â”€â”€ Utilities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+      /* ── Utilities ────────────────────────────────────── */
       function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
       function lerp(a, b, t) { return a + (b - a) * t; }
       function eio(t) { return t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
@@ -6740,7 +6740,7 @@
         return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - .75) * c4) + 1;
       }
 
-      /* â”€â”€ Custom Cursor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+      /* ── Custom Cursor ─────────────────────────────────── */
       const CUR = document.getElementById('cur');
       const CURR = document.getElementById('cur-r');
       let mx = window.innerWidth / 2, my = window.innerHeight / 2, rx = window.innerWidth / 2, ry = window.innerHeight / 2;
@@ -6759,7 +6759,7 @@
         requestAnimationFrame(L);
       })();
 
-      /* â”€â”€ Floating Theme Toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+      /* ── Floating Theme Toggle ──────────────────────────── */
       const DR = document.documentElement;
       const initTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark';
       DR.setAttribute('data-theme', initTheme);
@@ -6773,10 +6773,10 @@
         });
       }
 
-      /* â”€â”€ Cached DOM Elements & Section References â”€â”€â”€â”€â”€â”€â”€â”€ */
+      /* ── Cached DOM Elements & Section References ──────── */
       const nav = document.getElementById('nav');
 
-      // Â§1 Hero Elements
+      // §1 Hero Elements
       const heroDriver = document.getElementById('hero-driver');
       const heroTitle = document.getElementById('heroTitle');
       const heroReel = document.getElementById('heroReel');
@@ -6790,19 +6790,19 @@
       const r1Rays = ['r1Ray1', 'r1Ray2', 'r1Ray3', 'r1Ray4'].map(id => document.getElementById(id));
       const heroAmbient = document.querySelector('.hero-loading-ambient');
 
-      // Â§2 Story Elements
+      // §2 Story Elements
       const heroStoryWrap = document.getElementById('heroStoryWrap');
       const storyBlock = document.getElementById('storyBlock');
       const storyTag = document.getElementById('storyTag');
       const storyWords = document.querySelectorAll('.story-words-block .sw');
 
-      // Â§3 Portfolio Elements
+      // §3 Portfolio Elements
       const portDriver = document.getElementById('port-driver');
       const portStickyCenter = document.getElementById('portStickyCenter');
       const portFlowCards = document.querySelectorAll('.p-card-v');
       const lastPortCard = document.querySelector('.p-card-6') || document.querySelector('.p-item-6');
 
-      // Â§4 Services Elements
+      // §4 Services Elements
       const svcDriver = document.getElementById('svc-driver');
       const svcHeroCapsule = document.getElementById('svcHeroCapsule');
       const svcHeroRight = document.getElementById('svcHeroRight');
@@ -6827,7 +6827,7 @@
       ];
       const totalSvcCards = 5;
 
-      // Â§5 Brands Elements
+      // §5 Brands Elements
       const brandsDriver = document.getElementById('brands-driver');
       const brandsSticky = document.getElementById('brands-sticky');
       const brandsPinHead = document.getElementById('brands-pin-head');
@@ -6839,7 +6839,7 @@
       const funnelBorderBottom = document.getElementById('funnelBorderBottom');
       const funnelBlogStage = document.getElementById('funnelBlogStage');
 
-      // Â§7 Footer Elements
+      // §7 Footer Elements
       const footerDriver = document.getElementById('footer-driver');
       const fgTop = document.getElementById('fgTop');
       const fgBottom = document.getElementById('fgBottom');
@@ -6891,7 +6891,7 @@
 
       let lastSY = 0;
 
-      /* â”€â”€ Master Scroll Handler â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+      /* ── Master Scroll Handler ─────────────────── */
       function onScroll(forcedSY) {
         const sy = (typeof forcedSY === 'number') ? forcedSY : window.scrollY;
         const vh = window.innerHeight;
@@ -6970,7 +6970,7 @@
         }
         lastSY = sy;
 
-        /* â”€â”€ Â§7 Footer Giant Text Reveal (Centered Trigger) â”€â”€ */
+        /* ── §7 Footer Giant Text Reveal (Centered Trigger) ── */
         const fDriverEl = footerDriver || document.getElementById('footer-driver');
         const fCardEl = fDriverEl ? (fDriverEl.querySelector('.footer-luxury-card') || fDriverEl) : null;
         const fTextEl = document.getElementById('footerGiantText');
@@ -6991,7 +6991,7 @@
           }
         }
 
-        /* â•â•â• Â§1 HERO & BRAND STORY â•â•â• */
+        /* ═══ §1 HERO & BRAND STORY ═══ */
         if (heroDriver && heroTitle && roomCube && heroReel && window.innerWidth > 768) {
           const heroH = heroDriver.offsetHeight - vh;
           const hp = clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1);
@@ -7152,7 +7152,7 @@
           }
         }
 
-        /* â•â•â• Â§3 SELECTED WORK â€” Parallax Showcase with Sticky Center Headline â•â•â• */
+        /* ═══ §3 SELECTED WORK — Parallax Showcase with Sticky Center Headline ═══ */
         if (portDriver && window.innerWidth > 768) {
           const portTop = portDriver.offsetTop;
 
@@ -7205,7 +7205,7 @@
           }
         }
 
-        /* â•â•â• Â§4 SERVICES â€” Sequential Mobile Card Presentation â•â•â• */
+        /* ═══ §4 SERVICES — Sequential Mobile Card Presentation ═══ */
         if (window.innerWidth <= 768) {
           if (svcDriver && allShowcaseCards && allShowcaseCards.length) {
             const svcTop = svcDriver.offsetTop;
@@ -7593,22 +7593,22 @@
           }
         }
 
-        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+        /* ═══════════════════════════════════════════════════════════
            PRESERVED FOR FUTURE USE: THREAD & FUNNEL SCROLL ORCHESTRATION - START
-           â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+           ═══════════════════════════════════════════════════════════ */
         /*
         if (brandsDriver && brandsPinHead) {
           const bTop = brandsDriver.offsetTop;
           const bH = brandsDriver.offsetHeight - vh;
           const bp = clamp((sy - bTop) / (bH || 1), 0, 1);
 
-          // Phase 1 (bp: 0 â†’ 0.14): Heading rises from bottom (100vh) â†’ balanced upper-center pin (12vh)
+          // Phase 1 (bp: 0 → 0.14): Heading rises from bottom (100vh) → balanced upper-center pin (12vh)
           const riseP = clamp(bp / 0.14, 0, 1);
           const headY = lerp(vh, vh * 0.12, eioq(riseP));
           brandsPinHead.style.transform = `translateY(${headY}px)`;
 
           if (bp < 0.14) {
-            // Header is rising â€” hide cards, funnel and stage
+            // Header is rising — hide cards, funnel and stage
             if (brandsTrainViewport) brandsTrainViewport.style.opacity = '0';
             if (brandsTrainTrack) brandsTrainTrack.style.transform = `translateX(${window.innerWidth}px)`;
             if (card7FunnelPath) card7FunnelPath.setAttribute('d', `M ${window.innerWidth} ${vh / 2} L ${window.innerWidth} 0 L ${window.innerWidth} ${vh} Z`);
@@ -7747,7 +7747,7 @@
         */
       }
 
-      /* â”€â”€ Blog Cards Reveal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+      /* ── Blog Cards Reveal ─────────────────────────── */
       const blogCards = document.querySelectorAll('.blog-card');
       if (blogCards.length) {
         const blogObs = new IntersectionObserver(entries => {
@@ -7761,7 +7761,7 @@
         blogCards.forEach(c => blogObs.observe(c));
       }
 
-      /* â”€â”€ Scroll Listener (RAF-throttled) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+      /* ── Scroll Listener (RAF-throttled) ───────────── */
       let ticking = false;
       window.addEventListener('scroll', () => {
         if (!ticking) {
@@ -7770,9 +7770,9 @@
         }
       }, { passive: true });
 
-      /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-         1928 CREATIVE STUDIO â€” CINEMATIC 3D HERO LOADING JS
-         â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+      /* ═══════════════════════════════════════════════════════════
+         1928 CREATIVE STUDIO — CINEMATIC 3D HERO LOADING JS
+         ═══════════════════════════════════════════════════════════ */
       (function initHeroLoadingAssembly() {
         if (window.innerWidth <= 768) {
           // Phone view: Instant luxury entrance, zero 7.3s HUD wait
@@ -7931,7 +7931,7 @@
         if (phReelCard) phReelCard.addEventListener('click', togglePhVideo);
       }
 
-      // â”€â”€ Phone Brand Manifesto Pinned Scroll Scrub Animation â”€â”€
+      // ── Phone Brand Manifesto Pinned Scroll Scrub Animation ──
       (function initPhoneManifestoAnimation() {
         const section = document.getElementById('phoneStorySec');
         const statement = document.getElementById('pmsStatement');
@@ -7991,8 +7991,8 @@
       onScroll();
     })();
   </script>
-  <script src="data-store.js?v=20261027_v2"></script>
-  <script src="site-bridge.js?v=20261027_v2"></script>
+  <script src="data-store.js?v=20261027_v3"></script>
+  <script src="site-bridge.js?v=20261027_v3"></script>
 </body>
 
 </html>

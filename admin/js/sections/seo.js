@@ -47,9 +47,19 @@
         const seo = window.CMSStore.getSEO(pageKey);
         const storedRoute = (window.CMSStore.getRoute ? window.CMSStore.getRoute(pageKey) : null) || seo.routeSlug || (DEFAULT_SYSTEM_ROUTES[pageKey]?.slug ?? '');
 
-        titleInput.value = seo.title || '';
-        descInput.value = seo.description || '';
-        kwInput.value = seo.keywords || '';
+        let pageTitle = (seo && seo.title) ? seo.title : '';
+        let pageDesc = (seo && seo.description) ? seo.description : '';
+        let pageKw = (seo && seo.keywords) ? seo.keywords : '';
+
+        if (pageKey === 'home' && !pageTitle) {
+          pageTitle = '1928 Creative Studio · Independent Brand Engineering & Digital Architecture';
+          pageDesc = pageDesc || '1928 Creative Studio sculpts iconic visual identities, immersive digital platforms, spatial environments, and transformative brand campaigns.';
+          pageKw = pageKw || '1928 creative studio, brand architecture, luxury branding agency, high-end web design, digital experiences, ahmedabad branding studio';
+        }
+
+        titleInput.value = pageTitle;
+        descInput.value = pageDesc;
+        kwInput.value = pageKw;
         slugInput.value = storedRoute || '';
         if (prefixEl) prefixEl.textContent = 'https://1928creativestudio.com/';
       }
@@ -242,6 +252,16 @@
           handleSEOSubmit(e);
         }
       }
+    });
+
+    // Expose functions globally for admin router and core reactivity
+    window.loadSEOForm = loadSEOForm;
+    window.updateSERPPreview = updateSERPPreview;
+
+    // Reactively refresh SEO form whenever MySQL data updates or reloads
+    window.addEventListener('1928_cms_updated', () => {
+      populateBlogOptionsInDropdown();
+      loadSEOForm();
     });
 
     // Initial load when CMSStore is ready
