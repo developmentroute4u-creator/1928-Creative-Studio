@@ -223,16 +223,45 @@
       if (!this.data.seo) this.data.seo = {};
       if (!this.data.seo[pageKey]) this.data.seo[pageKey] = {};
       this.data.seo[pageKey] = { ...this.data.seo[pageKey], ...seoData };
-      const routeSlug = (seoData.routeSlug || seoData.route_slug || seoData.slug || this.data.seo[pageKey].routeSlug || '').toLowerCase().replace(/[^a-z0-9\/-]+/g, '-').replace(/^\/+|\/+$/g, '');
-      if (routeSlug) {
-        this.data.seo[pageKey].routeSlug = routeSlug;
-        if (!this.data.routes) this.data.routes = {};
-        if (!this.data.routes[pageKey]) {
-          this.data.routes[pageKey] = { routeKey: pageKey, slug: routeSlug };
-        } else {
-          this.data.routes[pageKey].slug = routeSlug;
-        }
+
+      const defaultSlugs = {
+        home: '',
+        about: 'about',
+        services: 'services',
+        service_logo_design: 'logo-design',
+        service_brand_identity: 'brand-identity',
+        service_website_development: 'website-development',
+        service_digital_marketing: 'digital-marketing',
+        service_content_creation: 'content-creation',
+        portfolio: 'portfolio',
+        blogs: 'perspectives',
+        contact: 'contact'
+      };
+
+      let inputSlug = '';
+      if (seoData.route_slug !== undefined) {
+        inputSlug = seoData.route_slug;
+      } else if (seoData.routeSlug !== undefined) {
+        inputSlug = seoData.routeSlug;
+      } else if (seoData.slug !== undefined) {
+        inputSlug = seoData.slug;
+      } else {
+        inputSlug = this.data.seo[pageKey].routeSlug || '';
       }
+
+      let routeSlug = (inputSlug || '').toLowerCase().replace(/[^a-z0-9\/-]+/g, '-').replace(/^\/+|\/+$/g, '');
+      if (!routeSlug && defaultSlugs[pageKey] !== undefined) {
+        routeSlug = defaultSlugs[pageKey];
+      }
+
+      this.data.seo[pageKey].routeSlug = routeSlug;
+      if (!this.data.routes) this.data.routes = {};
+      if (!this.data.routes[pageKey]) {
+        this.data.routes[pageKey] = { routeKey: pageKey, slug: routeSlug };
+      } else {
+        this.data.routes[pageKey].slug = routeSlug;
+      }
+
       const ok = await this._sendToAPI('save_seo', {
         page_key: pageKey,
         title: this.data.seo[pageKey].title || '',
@@ -254,22 +283,43 @@
       if (this.data.routes && this.data.routes[routeKey]) {
         return this.data.routes[routeKey].slug;
       }
-      if (this.data.seo && this.data.seo[routeKey] && this.data.seo[routeKey].routeSlug) {
+      if (this.data.seo && this.data.seo[routeKey] && this.data.seo[routeKey].routeSlug !== undefined) {
         return this.data.seo[routeKey].routeSlug;
       }
       return null;
     }
 
     async updateRoute(routeKey, newSlug, isBlog = false, blogId = '') {
-      const clean = (newSlug || '').toLowerCase().replace(/[^a-z0-9\/-]+/g, '-').replace(/^\/+|\/+$/g, '');
+      let clean = (newSlug || '').toLowerCase().replace(/[^a-z0-9\/-]+/g, '-').replace(/^\/+|\/+$/g, '');
+      const defaultSlugs = {
+        home: '',
+        about: 'about',
+        services: 'services',
+        service_logo_design: 'logo-design',
+        service_brand_identity: 'brand-identity',
+        service_website_development: 'website-development',
+        service_digital_marketing: 'digital-marketing',
+        service_content_creation: 'content-creation',
+        portfolio: 'portfolio',
+        blogs: 'perspectives',
+        contact: 'contact'
+      };
+
+      if (!clean && defaultSlugs[routeKey] !== undefined) {
+        clean = defaultSlugs[routeKey];
+      }
+
       if (this.data.routes && this.data.routes[routeKey]) {
         this.data.routes[routeKey].slug = clean;
+      } else {
+        if (!this.data.routes) this.data.routes = {};
+        this.data.routes[routeKey] = { routeKey, slug: clean };
       }
       if (this.data.seo && this.data.seo[routeKey]) {
         this.data.seo[routeKey].routeSlug = clean;
       }
       if (isBlog && blogId && this.data.blogs) {
-        const b = this.data.blogs.find(item => item.id === blogId);
+        const b = this.data.blogs.find(item => item.id === blogId || item.blog_id === blogId);
         if (b) b.slug = clean;
       }
       this._notify();

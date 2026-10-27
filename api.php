@@ -394,6 +394,24 @@ try {
                 break;
             }
 
+            $defaultSlugs = [
+                'home' => '',
+                'about' => 'about',
+                'services' => 'services',
+                'service_logo_design' => 'logo-design',
+                'service_brand_identity' => 'brand-identity',
+                'service_website_development' => 'website-development',
+                'service_digital_marketing' => 'digital-marketing',
+                'service_content_creation' => 'content-creation',
+                'portfolio' => 'portfolio',
+                'blogs' => 'perspectives',
+                'contact' => 'contact'
+            ];
+
+            if (empty($cleanSlug) && isset($defaultSlugs[$pageKey])) {
+                $cleanSlug = $defaultSlugs[$pageKey];
+            }
+
             $stmt = $db->prepare("
                 INSERT INTO `seo_meta` (`page_key`, `route_slug`, `title`, `description`, `keywords`, `og_image`)
                 VALUES (:pk, :rslug, :title, :desc, :kw, :og)
@@ -402,7 +420,7 @@ try {
                     `description` = VALUES(`description`),
                     `keywords` = VALUES(`keywords`),
                     `og_image` = VALUES(`og_image`),
-                    `route_slug` = COALESCE(VALUES(`route_slug`), `route_slug`)
+                    `route_slug` = VALUES(`route_slug`)
             ");
             $stmt->execute([
                 ':pk' => $pageKey,
@@ -413,8 +431,23 @@ try {
                 ':og' => $ogImage
             ]);
 
-            // Sync with site_routes table if a slug was provided
-            if (!empty($cleanSlug)) {
+            // Sync with site_routes table for pages
+            if ($pageKey !== 'home') {
+                $targetFiles = [
+                    'about' => 'about.html',
+                    'services' => 'services.html',
+                    'service_logo_design' => 'service-logo-design.html',
+                    'service_brand_identity' => 'service-brand-identity.html',
+                    'service_website_development' => 'service-website-development.html',
+                    'service_digital_marketing' => 'service-digital-marketing.html',
+                    'service_content_creation' => 'service-content-creation.html',
+                    'portfolio' => 'portfolio.html',
+                    'blogs' => 'blogs.html',
+                    'contact' => 'contact.html'
+                ];
+                $targetType = str_starts_with($pageKey, 'service_') ? 'service' : 'page';
+                $targetFile = $targetFiles[$pageKey] ?? (str_replace('_', '-', $pageKey) . '.html');
+
                 $check = $db->prepare("SELECT `route_key` FROM `site_routes` WHERE `slug` = :slug AND `route_key` != :rk LIMIT 1");
                 $check->execute([':slug' => $cleanSlug, ':rk' => $pageKey]);
                 if ($check->fetch()) {
@@ -424,13 +457,14 @@ try {
 
                 $rStmt = $db->prepare("
                     INSERT INTO `site_routes` (`route_key`, `slug`, `target_type`, `target_file`, `is_active`)
-                    VALUES (:rk, :slug, 'page', CONCAT(:tf, '.html'), 1)
-                    ON DUPLICATE KEY UPDATE `slug` = VALUES(`slug`)
+                    VALUES (:rk, :slug, :tt, :tf, 1)
+                    ON DUPLICATE KEY UPDATE `slug` = VALUES(`slug`), `target_file` = VALUES(`target_file`)
                 ");
                 $rStmt->execute([
                     ':rk' => $pageKey,
                     ':slug' => $cleanSlug,
-                    ':tf' => str_replace('_', '-', $pageKey)
+                    ':tt' => $targetType,
+                    ':tf' => $targetFile
                 ]);
             }
 
@@ -465,7 +499,25 @@ try {
             $cleanSlug = strtolower(preg_replace('/[^a-zA-Z0-9\/-]+/', '-', $newSlug));
             $cleanSlug = trim($cleanSlug, '/-');
 
-            if (empty($cleanSlug)) {
+            $defaultSlugs = [
+                'home' => '',
+                'about' => 'about',
+                'services' => 'services',
+                'service_logo_design' => 'logo-design',
+                'service_brand_identity' => 'brand-identity',
+                'service_website_development' => 'website-development',
+                'service_digital_marketing' => 'digital-marketing',
+                'service_content_creation' => 'content-creation',
+                'portfolio' => 'portfolio',
+                'blogs' => 'perspectives',
+                'contact' => 'contact'
+            ];
+
+            if (empty($cleanSlug) && isset($defaultSlugs[$routeKey])) {
+                $cleanSlug = $defaultSlugs[$routeKey];
+            }
+
+            if (empty($cleanSlug) && $routeKey !== 'home') {
                 echo json_encode(['status' => 'error', 'message' => 'Route URL slug cannot be empty.']);
                 break;
             }
@@ -489,15 +541,41 @@ try {
                 ]);
                 break;
             } else {
-                $check = $db->prepare("SELECT `id` FROM `site_routes` WHERE `slug` = :slug AND `route_key` != :rk LIMIT 1");
-                $check->execute([':slug' => $cleanSlug, ':rk' => $routeKey]);
-                if ($check->fetch()) {
-                    echo json_encode(['status' => 'error', 'message' => "The route slug '{$cleanSlug}' is already assigned to another page."]);
-                    break;
-                }
+                $targetFiles = [
+                    'about' => 'about.html',
+                    'services' => 'services.html',
+                    'service_logo_design' => 'service-logo-design.html',
+                    'service_brand_identity' => 'service-brand-identity.html',
+                    'service_website_development' => 'service-website-development.html',
+                    'service_digital_marketing' => 'service-digital-marketing.html',
+                    'service_content_creation' => 'service-content-creation.html',
+                    'portfolio' => 'portfolio.html',
+                    'blogs' => 'blogs.html',
+                    'contact' => 'contact.html'
+                ];
+                $targetType = str_starts_with($routeKey, 'service_') ? 'service' : 'page';
+                $targetFile = $targetFiles[$routeKey] ?? (str_replace('_', '-', $routeKey) . '.html');
 
-                $stmt = $db->prepare("UPDATE `site_routes` SET `slug` = :slug WHERE `route_key` = :rk");
-                $stmt->execute([':slug' => $cleanSlug, ':rk' => $routeKey]);
+                if ($routeKey !== 'home') {
+                    $check = $db->prepare("SELECT `id` FROM `site_routes` WHERE `slug` = :slug AND `route_key` != :rk LIMIT 1");
+                    $check->execute([':slug' => $cleanSlug, ':rk' => $routeKey]);
+                    if ($check->fetch()) {
+                        echo json_encode(['status' => 'error', 'message' => "The route slug '{$cleanSlug}' is already assigned to another page."]);
+                        break;
+                    }
+
+                    $stmt = $db->prepare("
+                        INSERT INTO `site_routes` (`route_key`, `slug`, `target_type`, `target_file`, `is_active`)
+                        VALUES (:rk, :slug, :tt, :tf, 1)
+                        ON DUPLICATE KEY UPDATE `slug` = VALUES(`slug`), `target_file` = VALUES(`target_file`)
+                    ");
+                    $stmt->execute([
+                        ':rk' => $routeKey,
+                        ':slug' => $cleanSlug,
+                        ':tt' => $targetType,
+                        ':tf' => $targetFile
+                    ]);
+                }
 
                 $stmtSeo = $db->prepare("UPDATE `seo_meta` SET `route_slug` = :slug WHERE `page_key` = :pk");
                 $stmtSeo->execute([':slug' => $cleanSlug, ':pk' => $routeKey]);

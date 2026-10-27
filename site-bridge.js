@@ -1631,6 +1631,7 @@
     const blogs = (typeof window.CMSStore.getBlogs === 'function') ? window.CMSStore.getBlogs() : [];
 
     const fileToKeyMap = {
+      'index.html': 'home',
       'service-logo-design.html': 'service_logo_design',
       'service-brand-identity.html': 'service_brand_identity',
       'service-website-development.html': 'service_website_development',
@@ -1655,12 +1656,26 @@
       if (!rawHref) return;
       if (rawHref.startsWith('http://') || rawHref.startsWith('https://') || rawHref.startsWith('mailto:') || rawHref.startsWith('tel:') || rawHref.startsWith('#') || rawHref.startsWith('javascript:')) return;
 
-      const [pathOnly, queryPart] = rawHref.split('?');
-      const cleanPath = pathOnly.split('#')[0].replace(/^\.?\//, '');
+      if (!a.dataset.origHref) {
+        a.dataset.origHref = rawHref;
+      }
+
+      const [pathOnly, queryPart] = a.dataset.origHref.split('?');
+      let cleanPath = pathOnly.split('#')[0].replace(/^\.?\//, '').replace(/^1928\//, '');
       const queryStr = queryPart ? `?${queryPart}` : '';
 
-      if (fileToKeyMap[cleanPath]) {
-        const key = fileToKeyMap[cleanPath];
+      let key = fileToKeyMap[cleanPath];
+      if (!key) {
+        // Fallback: match by known route key or existing slug
+        for (const [k, r] of Object.entries(routes)) {
+          if (r && (r.slug === cleanPath || r.target_file === cleanPath || k === cleanPath)) {
+            key = k;
+            break;
+          }
+        }
+      }
+
+      if (key) {
         let slug = routes[key]?.slug;
         if (!slug && window.CMSStore.getRoute) {
           slug = window.CMSStore.getRoute(key);

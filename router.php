@@ -50,6 +50,9 @@ if ($matchedRoute) {
     if (file_exists($targetFile)) {
         serveFileWithSEO($targetFile, $matchedRoute['route_key'], $matchedRoute);
         exit;
+    } else {
+        serveDynamicBrandPage($matchedRoute);
+        exit;
     }
 }
 
@@ -254,6 +257,270 @@ function serveBlogDetail(string $filePath, array $blog): void {
     echo $html;
 }
 
+function serveDynamicBrandPage(array $routeData): void {
+    $baseUrl = getBaseUrl();
+    $pageKey = $routeData['route_key'] ?? 'page';
+    $slug = $routeData['slug'] ?? '';
+    $canonicalUrl = $baseUrl . ($slug ? '/' . $slug : '');
+
+    $db = getDB();
+    $seoStmt = $db->prepare("SELECT * FROM `seo_meta` WHERE `page_key` = :pk LIMIT 1");
+    $seoStmt->execute([':pk' => $pageKey]);
+    $seo = $seoStmt->fetch();
+
+    $cleanTitle = !empty($seo['title']) ? $seo['title'] : (ucwords(str_replace(['_', '-'], ' ', $pageKey)) . ' · 1928 Creative Studio');
+    $cleanDesc = !empty($seo['description']) ? $seo['description'] : '1928 Creative Studio sculpts iconic visual identities, immersive digital platforms, spatial environments, and transformative brand campaigns.';
+    $cleanKw = !empty($seo['keywords']) ? $seo['keywords'] : '1928 creative studio, brand architecture, luxury branding agency, digital experiences';
+
+    $safeTitle = htmlspecialchars($cleanTitle, ENT_QUOTES, 'UTF-8');
+    $safeDesc = htmlspecialchars($cleanDesc, ENT_QUOTES, 'UTF-8');
+    $safeKw = htmlspecialchars($cleanKw, ENT_QUOTES, 'UTF-8');
+    $pageHeading = ucwords(str_replace(['_', '-'], ' ', $slug ?: $pageKey));
+
+    header('Content-Type: text/html; charset=utf-8');
+    echo <<<HTML
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{$safeTitle}</title>
+  <meta name="description" content="{$safeDesc}">
+  <meta name="keywords" content="{$safeKw}">
+  <link rel="canonical" href="{$canonicalUrl}" />
+  <base href="{$baseUrl}/">
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="alternate icon" type="image/png" href="favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Raleway:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <style>
+    :root {
+      --bg-void: #07070A;
+      --gold-accent: #C9A96E;
+      --gold-light: #DFCA9B;
+      --ink-pure: #F7F7FA;
+      --ink-mid: rgba(247, 247, 250, 0.65);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: var(--bg-void);
+      color: var(--ink-pure);
+      font-family: 'Raleway', -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .brand-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 76px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(7, 7, 10, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 1000;
+    }
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--ink-pure);
+    }
+    .brand-monogram {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--ink-pure);
+    }
+    .brand-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-accent);
+      padding-left: 10px;
+      border-left: 1px solid rgba(201, 169, 110, 0.35);
+    }
+    .brand-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .brand-nav-links a {
+      color: var(--ink-mid);
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.25s ease;
+    }
+    .brand-nav-links a:hover {
+      color: var(--gold-accent);
+    }
+    .brand-main {
+      flex: 1;
+      padding: 160px 40px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .kicker-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-accent);
+      padding: 8px 18px;
+      background: rgba(201, 169, 110, 0.08);
+      border: 1px solid rgba(201, 169, 110, 0.25);
+      border-radius: 999px;
+      margin-bottom: 24px;
+    }
+    .brand-hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+      max-width: 900px;
+    }
+    .brand-hero-desc {
+      font-size: clamp(16px, 1.8vw, 19px);
+      color: var(--ink-mid);
+      line-height: 1.7;
+      max-width: 680px;
+      margin-bottom: 40px;
+    }
+    .brand-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 32px;
+      background: var(--gold-accent);
+      color: #07070A;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .btn-gold:hover {
+      background: #F7F7FA;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(201, 169, 110, 0.25);
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 30px;
+      background: transparent;
+      color: var(--ink-pure);
+      border: 1px solid var(--border-subtle);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold-accent);
+      color: var(--gold-accent);
+    }
+    .brand-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--ink-mid);
+      background: rgba(7, 7, 10, 0.95);
+    }
+    @media (max-width: 768px) {
+      .brand-nav { padding: 0 20px; }
+      .brand-nav-links { display: none; }
+      .brand-main { padding: 120px 20px 60px; }
+      .brand-footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="brand-nav">
+    <a href="{$baseUrl}/" class="brand-logo-wrap">
+      <span class="brand-monogram">1928</span>
+      <span class="brand-tag">Creative Studio</span>
+    </a>
+    <div class="brand-nav-links">
+      <a href="portfolio">Work</a>
+      <a href="services">Capabilities</a>
+      <a href="about">Philosophy</a>
+      <a href="perspectives">Perspectives</a>
+      <a href="contact">Inquire</a>
+    </div>
+  </nav>
+
+  <main class="brand-main">
+    <div class="kicker-badge">
+      <span>●</span> Active Practice Coordinate · /{$slug}
+    </div>
+    <h1 class="brand-hero-title">{$pageHeading}</h1>
+    <p class="brand-hero-desc">{$safeDesc}</p>
+    <div class="brand-actions">
+      <a href="services" class="btn-gold">Explore Capabilities</a>
+      <a href="contact" class="btn-outline">Initiate Project</a>
+      <a href="{$baseUrl}/" class="btn-outline">Studio Domain</a>
+    </div>
+  </main>
+
+  <footer class="brand-footer">
+    <div>&copy; 1928 Creative Studio. All Rights Reserved.</div>
+    <div>Ahmedabad · Mumbai · London</div>
+  </footer>
+
+  <script src="data-store.js"></script>
+  <script src="site-bridge.js"></script>
+</body>
+</html>
+HTML;
+}
+
 function render404(string $attemptedRoute): void {
     $baseUrl = getBaseUrl();
     echo <<<HTML
@@ -262,22 +529,75 @@ function render404(string $attemptedRoute): void {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 · Landmark Not Found · 1928 Creative Studio</title>
+  <title>404 · Landmark Uncharted · 1928 Creative Studio</title>
+  <base href="{$baseUrl}/">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="alternate icon" type="image/png" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Raleway:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Raleway:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-void: #07070A;
+      --gold-accent: #C9A96E;
+      --ink-pure: #F7F7FA;
+      --ink-mid: rgba(247, 247, 250, 0.65);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+    }
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      background: #07070A;
-      color: #F7F7FA;
+      background: var(--bg-void);
+      color: var(--ink-pure);
       font-family: 'Raleway', -apple-system, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
+    }
+    .brand-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 76px;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(7, 7, 10, 0.85);
+      backdrop-filter: blur(16px);
+      z-index: 1000;
+    }
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--ink-pure);
+    }
+    .brand-monogram {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+    .brand-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-accent);
+      padding-left: 10px;
+      border-left: 1px solid rgba(201, 169, 110, 0.35);
+    }
+    .content-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 120px 24px 60px;
       text-align: center;
     }
     .kicker {
@@ -285,21 +605,21 @@ function render404(string $attemptedRoute): void {
       font-size: 11px;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: #C9A96E;
+      color: var(--gold-accent);
       margin-bottom: 16px;
     }
     h1 {
       font-family: 'Montserrat', sans-serif;
-      font-size: clamp(32px, 5vw, 56px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-size: clamp(34px, 5.5vw, 60px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
       margin-bottom: 16px;
       line-height: 1.1;
     }
     p {
-      color: rgba(247, 247, 250, 0.65);
+      color: var(--ink-mid);
       font-size: 15px;
-      max-width: 480px;
+      max-width: 500px;
       line-height: 1.6;
       margin-bottom: 32px;
     }
@@ -318,9 +638,9 @@ function render404(string $attemptedRoute): void {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      padding: 14px 28px;
-      background: #F7F7FA;
-      color: #07070A;
+      padding: 15px 32px;
+      background: var(--ink-pure);
+      color: var(--bg-void);
       font-family: 'Montserrat', sans-serif;
       font-size: 11px;
       font-weight: 700;
@@ -331,17 +651,25 @@ function render404(string $attemptedRoute): void {
       transition: all 0.3s ease;
     }
     .btn-return:hover {
-      background: #C9A96E;
-      color: #07070A;
-      transform: translateY(-1px);
+      background: var(--gold-accent);
+      color: var(--bg-void);
+      transform: translateY(-2px);
     }
   </style>
 </head>
 <body>
-  <div class="kicker">Index Lookup Error · 404</div>
-  <h1>Landmark Uncharted</h1>
-  <p>The destination route does not resolve to an active practice coordinate.<br><span class="route-token">/{$attemptedRoute}</span></p>
-  <a href="{$baseUrl}/" class="btn-return">Return to Studio Domain</a>
+  <nav class="brand-nav">
+    <a href="{$baseUrl}/" class="brand-logo-wrap">
+      <span class="brand-monogram">1928</span>
+      <span class="brand-tag">Creative Studio</span>
+    </a>
+  </nav>
+  <div class="content-box">
+    <div class="kicker">Index Lookup Error · 404</div>
+    <h1>Landmark Uncharted</h1>
+    <p>The destination route does not resolve to an active practice coordinate.<br><span class="route-token">/{$attemptedRoute}</span></p>
+    <a href="{$baseUrl}/" class="btn-return">Return to Studio Domain</a>
+  </div>
 </body>
 </html>
 HTML;

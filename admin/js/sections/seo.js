@@ -213,45 +213,72 @@
     });
 
     // Form Submit (Save SEO & URL Route)
+    let isSavingSEO = false;
     async function handleSEOSubmit(e) {
       if (e) e.preventDefault();
-      const pageKey = document.getElementById('seoPageSelector').value;
-      const title = document.getElementById('seoTitleInput').value.trim();
-      const desc = document.getElementById('seoDescInput').value.trim();
-      const keywords = document.getElementById('seoKeywordsInput').value.trim();
-      const slug = document.getElementById('seoSlugInput').value.trim();
+      if (isSavingSEO) return;
+      isSavingSEO = true;
 
-      if (pageKey.startsWith('blog_')) {
-        const blogId = pageKey.replace('blog_', '');
-        await window.CMSStore.updateRoute(pageKey, slug, true, blogId);
-        showToast(`Perspective route updated to '/perspectives/${slug}'!`);
-      } else {
-        await window.CMSStore.updateSEO(pageKey, {
-          title,
-          description: desc,
-          keywords,
-          route_slug: slug
-        });
-        if (slug) {
-          await window.CMSStore.updateRoute(pageKey, slug);
-        }
-        showToast(`SEO & Route '/${slug}' saved and synchronized successfully!`);
+      const saveBtn = document.getElementById('btnSaveSEO');
+      const origBtnHtml = saveBtn ? saveBtn.innerHTML : '';
+      if (saveBtn) {
+        saveBtn.disabled = true;
+        saveBtn.style.opacity = '0.7';
+        saveBtn.style.pointerEvents = 'none';
       }
 
-      renderRouteRegistry();
-      updateSERPPreview();
+      try {
+        const pageKey = document.getElementById('seoPageSelector').value;
+        const title = document.getElementById('seoTitleInput').value.trim();
+        const desc = document.getElementById('seoDescInput').value.trim();
+        const keywords = document.getElementById('seoKeywordsInput').value.trim();
+        let slug = document.getElementById('seoSlugInput').value.trim();
+
+        // If the user removed the link, automatically default back to system standard slug
+        if (!slug && DEFAULT_SYSTEM_ROUTES[pageKey] && pageKey !== 'home') {
+          slug = DEFAULT_SYSTEM_ROUTES[pageKey].slug;
+          document.getElementById('seoSlugInput').value = slug;
+        }
+
+        if (pageKey.startsWith('blog_')) {
+          const blogId = pageKey.replace('blog_', '');
+          await window.CMSStore.updateRoute(pageKey, slug, true, blogId);
+          showToast(`Perspective route updated to '/perspectives/${slug}'!`);
+        } else {
+          await window.CMSStore.updateSEO(pageKey, {
+            title,
+            description: desc,
+            keywords,
+            route_slug: slug
+          });
+          await window.CMSStore.updateRoute(pageKey, slug);
+          const displaySlug = slug ? `/${slug}` : '/';
+          showToast(`SEO & Route '${displaySlug}' saved and synchronized successfully!`);
+        }
+
+        renderRouteRegistry();
+        updateSERPPreview();
+      } catch (err) {
+        console.error('Error saving SEO:', err);
+        showToast('Error saving SEO settings. Please try again.');
+      } finally {
+        isSavingSEO = false;
+        if (saveBtn) {
+          saveBtn.disabled = false;
+          saveBtn.style.opacity = '';
+          saveBtn.style.pointerEvents = '';
+          saveBtn.innerHTML = origBtnHtml;
+        }
+      }
     }
 
-    document.getElementById('seoForm')?.addEventListener('submit', handleSEOSubmit);
+    document.getElementById('seoForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      handleSEOSubmit(e);
+    });
     document.getElementById('btnSaveSEO')?.addEventListener('click', (e) => {
-      const form = document.getElementById('seoForm');
-      if (form) {
-        if (typeof form.requestSubmit === 'function') {
-          form.requestSubmit();
-        } else {
-          handleSEOSubmit(e);
-        }
-      }
+      e.preventDefault();
+      handleSEOSubmit(e);
     });
 
     // Expose functions globally for admin router and core reactivity
