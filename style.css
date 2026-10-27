@@ -1,41 +1,41 @@
-/* ── Gotham Primary & Raleway Secondary Font System ── */
+/* â”€â”€ Gotham Primary & Raleway Secondary Font System â”€â”€ */
     @font-face {
       font-family: 'Gotham';
-      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
+      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gotham';
-      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
+      src: local('Gotham-Medium'), local('Gotham Medium');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gotham';
-      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
+      src: local('Gotham-Bold'), local('Gotham Bold');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gotham';
-      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
+      src: local('Gotham-Black'), local('Gotham Black');
       font-weight: 900;
       font-style: normal;
       font-display: swap;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-   1928 CREATIVE STUDIO — COMPLETE UNIFIED SINGLE-FILE ENGINE
-   Pure CSS — No Tailwind, No frameworks
-   ═══════════════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   1928 CREATIVE STUDIO â€” COMPLETE UNIFIED SINGLE-FILE ENGINE
+   Pure CSS â€” No Tailwind, No frameworks
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-    /* ── Design System Tokens ──────────────────────────────── */
+    /* â”€â”€ Design System Tokens â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     :root {
-      /* Palette — Light Theme (Pure White Canvas) */
+      /* Palette â€” Light Theme (Pure White Canvas) */
       --bg: #FFFFFF;
       --bg-alt: #F7F7F7;
       --ink: #0A0A0A;
@@ -68,7 +68,7 @@
     }
 
     [data-theme="dark"] {
-      /* Palette — Dark Theme (Primary Default) */
+      /* Palette â€” Dark Theme (Primary Default) */
       --bg: #0A0A0C;
       --bg-alt: #111114;
       --ink: #F5F4F0;
@@ -87,7 +87,7 @@
       --card-shadow-lg: 0 32px 80px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
-    /* ── Reset ────────────────────────────────────────────── */
+    /* â”€â”€ Reset â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     *,
     *::before,
     *::after {
@@ -134,7 +134,7 @@
       max-width: 100%;
     }
 
-    /* ── Custom Cursor ────────────────────────────────────── */
+    /* â”€â”€ Custom Cursor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
     #cur {
       position: fixed;
       z-index: 99999;
@@ -170,10 +170,10 @@
     
     
     
-    /* ═══════════════════════════════════════════════════════════
-       1928 CREATIVE STUDIO — ORGANIC 3D HERO CONSTRUCTION & ASSEMBLY
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       1928 CREATIVE STUDIO â€” ORGANIC 3D HERO CONSTRUCTION & ASSEMBLY
        (Dead-Center Load -> Upward Shift -> 3D Volumetric Box & 4-Ray Shoot -> Simultaneous Card Entry -> 0-100% Counter)
-       ═══════════════════════════════════════════════════════════ */
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     body.hero-loading-active {
       overflow: hidden !important;
       height: 100vh !important;
@@ -211,7 +211,7 @@
       50% { transform: translate(-50%, -50%) scale(1.12); opacity: 0.95; }
     }
 
-    /* Compact Organic 0 → 100% Loading Counter HUD */
+    /* Compact Organic 0 â†’ 100% Loading Counter HUD */
     .hero-loading-hud {
       position: absolute;
       bottom: clamp(20px, 3.5vh, 36px);
@@ -358,7 +358,7 @@
       filter: blur(0px);
     }
 
-    /* ── STEP 4: The Center Box is Created (Not the Emerging Lines) ── */
+    /* â”€â”€ STEP 4: The Center Box is Created (Not the Emerging Lines) â”€â”€ */
     .hero-corner-rays {
       position: absolute;
       inset: 0;
@@ -384,7 +384,7 @@
       stroke-dashoffset: 0;
     }
 
-    /* ── STEP 5: Once Box is Complete, the 4 Lines Go to the 4 Screen Corners ── */
+    /* â”€â”€ STEP 5: Once Box is Complete, the 4 Lines Go to the 4 Screen Corners â”€â”€ */
     .hero-corner-ray {
       stroke-dasharray: 45;
       stroke-dashoffset: 45;
@@ -511,7 +511,7 @@
       display: none !important;
     }
 
-    /* ── Fixed Navigation Header (Hidden on Hero Landing, Frosted Glass on scroll) ── */
+    /* â”€â”€ Fixed Navigation Header (Hidden on Hero Landing, Frosted Glass on scroll) â”€â”€ */
     #nav {
       position: fixed;
       top: 0;
@@ -624,7 +624,7 @@
       transform: scaleX(1);
     }
 
-    /* ── Clean Minimal Luxury Active Page Header Link ── */
+    /* â”€â”€ Clean Minimal Luxury Active Page Header Link â”€â”€ */
     .nav-links a.active {
       font-weight: 800;
       color: #0A0A0A;
@@ -668,9 +668,9 @@
       color: #ffffff;
     }
 
-    /* ═══════════════════════════════════════════════════════════
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
        LUXURY ATELIER SERVICES DROPDOWN SYSTEM
-       ═══════════════════════════════════════════════════════════ */
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .nav-has-dropdown {
       position: relative;
     }
@@ -949,7 +949,7 @@
       gap: 14px;
     }
 
-    /* ── Floating Fixed Theme Toggle Button (Bottom-Right Corner) ── */
+    /* â”€â”€ Floating Fixed Theme Toggle Button (Bottom-Right Corner) â”€â”€ */
     #theme-fab {
       position: fixed;
       bottom: 28px;
@@ -1051,9 +1051,9 @@
       transition: fill 0.3s;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-   §1 — HERO SECTION (Full Bleed 3D Room & 2-Box Frame Architecture)
-   ═══════════════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   Â§1 â€” HERO SECTION (Full Bleed 3D Room & 2-Box Frame Architecture)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     #hero-driver {
       position: relative;
       height: 550vh;
@@ -1071,7 +1071,7 @@
       justify-content: center;
     }
 
-    /* ── Architectural Wireframe SVG — zooms forward with camera ── */
+    /* â”€â”€ Architectural Wireframe SVG â€” zooms forward with camera â”€â”€ */
     .hero-corner-rays {
       position: absolute;
       inset: 0;
@@ -1135,7 +1135,7 @@
       stroke: rgba(255, 255, 255, 0.28);
     }
 
-    /* ── Inner Rectangle Box (Clear Text Zone) ── */
+    /* â”€â”€ Inner Rectangle Box (Clear Text Zone) â”€â”€ */
     .hero-frame {
       position: absolute;
       left: 20vw;
@@ -1152,7 +1152,7 @@
       border-color: rgba(245, 244, 240, 0.12);
     }
 
-    /* ── Centered Brand Text (Vector High-Definition, Zero Pixelation) ── */
+    /* â”€â”€ Centered Brand Text (Vector High-Definition, Zero Pixelation) â”€â”€ */
     .hero-title {
       position: absolute;
       z-index: 15;
@@ -1247,7 +1247,7 @@
       gap: 10px;
     }
 
-    /* ── 3D Room Container & Vanishing Lines ── */
+    /* â”€â”€ 3D Room Container & Vanishing Lines â”€â”€ */
     .room-scene {
       position: absolute;
       inset: 0;
@@ -1268,7 +1268,7 @@
       will-change: transform;
     }
 
-    /* ── Room Faces (clean monochrome surfaces — zero extra border lines) ── */
+    /* â”€â”€ Room Faces (clean monochrome surfaces â€” zero extra border lines) â”€â”€ */
     .room-face {
       position: absolute;
       overflow: visible;
@@ -1315,7 +1315,7 @@
       background: transparent;
     }
 
-    /* ── Sleek Grayscale / White Architectural Project Cards ── */
+    /* â”€â”€ Sleek Grayscale / White Architectural Project Cards â”€â”€ */
     .wall-card {
       position: absolute;
       border-radius: 10px;
@@ -1404,7 +1404,7 @@
     #wc-t1 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-06.jpg'); }
     #wc-b1 .wc-inner { background-image: url('assets/img/hero/3D%20Room%20Floating%20Cards%20(Hero%20Section)-08.jpg'); }
 
-    /* ── Video / Showreel Pop-up & Right Docking ── */
+    /* â”€â”€ Video / Showreel Pop-up & Right Docking â”€â”€ */
     .hero-reel {
       position: absolute;
       z-index: 25;
@@ -1463,9 +1463,9 @@
       animation: reelScan 8s linear infinite;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-   §2 — BRAND STORY (Split Layout with Right Docked Video & Word Reveal)
-   ═══════════════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   Â§2 â€” BRAND STORY (Split Layout with Right Docked Video & Word Reveal)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     .hero-story-wrap {
       position: absolute;
       left: clamp(32px, 6vw, 84px);
@@ -1543,9 +1543,9 @@
       font-weight: 700;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-   §3 — SELECTED WORK (Interbrand-Style Vertical Parallax Showcase)
-   ═══════════════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   Â§3 â€” SELECTED WORK (Interbrand-Style Vertical Parallax Showcase)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     #port-driver {
       position: relative;
       background: var(--bg);
@@ -1831,7 +1831,7 @@
     }
 
     .pcv-tags span:not(:last-child)::after {
-      content: '·';
+      content: 'Â·';
       margin: 0 8px;
       color: var(--ink-dim);
       font-weight: 700;
@@ -1917,9 +1917,9 @@
       background-image: radial-gradient(circle at 70% 40%, rgba(99, 102, 241, 0.5) 0%, transparent 60%);
     }
 
-    /* ═══════════════════════════════════════════════════════════
-   §4 — SERVICES (Unified Architecture with Single Persistent Physical Dossier Folder)
-   ═══════════════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   Â§4 â€” SERVICES (Unified Architecture with Single Persistent Physical Dossier Folder)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     #svc-driver {
       position: relative;
       height: 1600vh;
@@ -1969,7 +1969,7 @@
       justify-content: center;
     }
 
-    /* ═══ 1. HERO CAPSULE BACKGROUND (Phase 1) ═══ */
+    /* â•â•â• 1. HERO CAPSULE BACKGROUND (Phase 1) â•â•â• */
     .svc-hero-capsule {
       position: absolute;
       left: 50%;
@@ -2063,7 +2063,7 @@
       margin-top: 8px;
     }
 
-    /* ═══ 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER ═══ */
+    /* â•â•â• 2. THE SINGLE PERSISTENT PHYSICAL DOSSIER FOLDER â•â•â• */
     .svc-main-folder {
       position: absolute;
       left: 50%;
@@ -2210,7 +2210,7 @@
       margin-top: 5px;
     }
 
-    /* ═══ 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) ═══ */
+    /* â•â•â• 3. WHY CHOOSE OUR STUDIO CARD (Phase 2 Left) â•â•â• */
     .svc-s2-menu {
       position: absolute;
       left: 50%;
@@ -2375,7 +2375,7 @@
       gap: 10px;
     }
 
-    /* ═══ 4. DETAIL SHOWCASE DECK (Phase 3 Right) ═══ */
+    /* â•â•â• 4. DETAIL SHOWCASE DECK (Phase 3 Right) â•â•â• */
     .svc-detail-deck {
       position: absolute;
       left: 50%;
@@ -2704,11 +2704,11 @@
 
 
 
-    /* ═══════════════════════════════════════════════════════════
-   §5 — BRAND PARTNERS (Scroll-Driven Sticky Pin)
-   ═══════════════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   Â§5 â€” BRAND PARTNERS (Scroll-Driven Sticky Pin)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-    /* Tall scroll driver — gives ample room for header arrival, card train flow, line opening, perspective stage hold & footer exit */
+    /* Tall scroll driver â€” gives ample room for header arrival, card train flow, line opening, perspective stage hold & footer exit */
     #brands-driver {
       height: 660vh;
       position: relative;
@@ -2716,7 +2716,7 @@
       z-index: 5;
     }
 
-    /* Sticky full-screen canvas — blank until animation starts */
+    /* Sticky full-screen canvas â€” blank until animation starts */
     #brands-sticky {
       position: sticky;
       top: 0;
@@ -2729,7 +2729,7 @@
       justify-content: flex-start;
     }
 
-    /* ── Pinned Heading (travels from bottom → balanced upper-center lockup) ── */
+    /* â”€â”€ Pinned Heading (travels from bottom â†’ balanced upper-center lockup) â”€â”€ */
     #brands-pin-head {
       position: absolute;
       left: 0;
@@ -2770,7 +2770,7 @@
       color: var(--cr);
     }
 
-    /* ── Continuous Card Train Viewport (Generous 520px height to guarantee zero shadow clipping) ── */
+    /* â”€â”€ Continuous Card Train Viewport (Generous 520px height to guarantee zero shadow clipping) â”€â”€ */
     #brands-train-viewport {
       position: absolute;
       left: 0;
@@ -2790,7 +2790,7 @@
       transition: opacity 0.3s ease;
     }
 
-    /* Horizontal train track of cards — moves right to left on scroll */
+    /* Horizontal train track of cards â€” moves right to left on scroll */
     #brands-train-track {
       display: flex;
       align-items: center;
@@ -2802,7 +2802,7 @@
       will-change: transform;
     }
 
-    /* Individual Brand Card in the train — Ultra-soft pure Gaussian diffused shadow */
+    /* Individual Brand Card in the train â€” Ultra-soft pure Gaussian diffused shadow */
     .brand-train-card {
       position: relative;
       z-index: 8;
@@ -2927,7 +2927,7 @@
       font-weight: 700;
     }
 
-    /* ── Section 5 → Section 6 Flared Funnel Attached to Card 7 ── */
+    /* â”€â”€ Section 5 â†’ Section 6 Flared Funnel Attached to Card 7 â”€â”€ */
     #card7-funnel-container {
       position: absolute;
       inset: 0;
@@ -2959,7 +2959,7 @@
       transition: opacity .2s ease;
     }
 
-    /* ── Individual Brand Logo Card ── */
+    /* â”€â”€ Individual Brand Logo Card â”€â”€ */
     .brand-logo-card {
       min-width: clamp(225px, 18vw, 275px);
       height: clamp(92px, 10.5vh, 106px);
@@ -3183,9 +3183,9 @@
       transform: translateX(4px);
     }
 
-    /* ═══════════════════════════════════════════════════════════
-   §6 — LATEST BLOG (Creative Editorial Grid)
-   ═══════════════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   Â§6 â€” LATEST BLOG (Creative Editorial Grid)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     #blog-section {
       padding: 120px 64px;
       background: var(--bg);
@@ -3338,9 +3338,9 @@
       letter-spacing: .04em;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-   §7 — MODERN EDITORIAL LUXURY FOOTER (Uncluttered Balanced Card)
-   ═══════════════════════════════════════════════════════════ */
+    /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   Â§7 â€” MODERN EDITORIAL LUXURY FOOTER (Uncluttered Balanced Card)
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
     #footer-driver {
       position: relative;
       background: var(--bg);
@@ -3602,7 +3602,7 @@
       color: var(--bg);
     }
 
-    /* ── Bottom Cluster: Staggered Character Emergence Headline (Half-Cut to Full Wave) ── */
+    /* â”€â”€ Bottom Cluster: Staggered Character Emergence Headline (Half-Cut to Full Wave) â”€â”€ */
     .f-bottom-cluster {
       width: 100%;
       display: flex;
@@ -3953,7 +3953,7 @@
       }
     }
 
-    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
+    /* â”€â”€ Smooth scrollbar on Desktop / Web view (> 768px) â”€â”€ */
     @media (min-width: 769px) {
       html {
         scrollbar-width: thin;
@@ -3974,7 +3974,7 @@
       }
     }
 
-    /* ── Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) ── */
+    /* â”€â”€ Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) â”€â”€ */
     @media (max-width: 768px) {
       html, body {
         scrollbar-width: none !important;

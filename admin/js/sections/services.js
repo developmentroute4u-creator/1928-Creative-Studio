@@ -34,10 +34,10 @@
       if (!grid) return;
       const homeServices = (typeof window.CMSStore?.getHomeServices === 'function') 
         ? window.CMSStore.getHomeServices() 
-        : (window.DEFAULT_CMS_DATA?.settings?.homeServices || { cards: [] });
+        : { cards: [] };
       const cards = (homeServices && Array.isArray(homeServices.cards) && homeServices.cards.length > 0)
         ? homeServices.cards
-        : (window.DEFAULT_CMS_DATA?.settings?.homeServices?.cards || []);
+        : [];
 
       // Update data in-place on the static HTML cards
       cards.forEach((c, idx) => {

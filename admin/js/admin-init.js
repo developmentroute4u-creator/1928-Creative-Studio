@@ -137,7 +137,7 @@
       });
 
       // Connect to Server-Sent Events from backend
-      if (typeof EventSource !== 'undefined') {
+      if (typeof EventSource !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '1928.test' || window.location.port === '3000')) {
         try {
           const es = new EventSource('/api/live-sync');
           es.addEventListener('connected', () => {

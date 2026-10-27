@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Under Development · 1928 Creative Studio</title>
-  <meta name="description" content="1928 Creative Studio — This page is currently under development." />
+  <title>Under Development Â· 1928 Creative Studio</title>
+  <meta name="description" content="1928 Creative Studio â€” This page is currently under development." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -15,31 +15,31 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
-    /* ── Gotham Primary & Raleway Secondary Font System ── */
+    /* â”€â”€ Gotham Primary & Raleway Secondary Font System â”€â”€ */
     @font-face {
       font-family: 'Gotham';
-      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book'), url('https://fonts.cdnfonts.com/s/14897/GothamBook.woff') format('woff');
+      src: local('Gotham'), local('Gotham-Book'), local('Gotham Book');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gotham';
-      src: local('Gotham-Medium'), local('Gotham Medium'), url('https://fonts.cdnfonts.com/s/14897/GothamMedium.woff') format('woff');
+      src: local('Gotham-Medium'), local('Gotham Medium');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gotham';
-      src: local('Gotham-Bold'), local('Gotham Bold'), url('https://fonts.cdnfonts.com/s/14897/GothamBold.woff') format('woff');
+      src: local('Gotham-Bold'), local('Gotham Bold');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gotham';
-      src: local('Gotham-Black'), local('Gotham Black'), url('https://fonts.cdnfonts.com/s/14897/GothamBlack.woff') format('woff');
+      src: local('Gotham-Black'), local('Gotham Black');
       font-weight: 900;
       font-style: normal;
       font-display: swap;
@@ -102,7 +102,7 @@
       transition: transform .12s ease-out, width .25s, height .25s;
     }
 
-    /* ── Minimal Top Navigation ── */
+    /* â”€â”€ Minimal Top Navigation â”€â”€ */
     .top-bar {
       width: 100%;
       max-width: 1500px;
@@ -136,7 +136,7 @@
       display: inline-block;
     }
 
-    /* ── Floating Fixed Theme Toggle Button (Bottom-Right Corner) ── */
+    /* â”€â”€ Floating Fixed Theme Toggle Button (Bottom-Right Corner) â”€â”€ */
     #theme-fab {
       position: fixed;
       bottom: 28px;
@@ -188,7 +188,7 @@
       display: block;
     }
 
-    /* ── Creative Centered Hero Statement ── */
+    /* â”€â”€ Creative Centered Hero Statement â”€â”€ */
     .center-container {
       display: flex;
       flex-direction: column;
@@ -280,7 +280,7 @@
       transform: translate(3px, -3px);
     }
 
-    /* ── Minimal Bottom Sub-Bar ── */
+    /* â”€â”€ Minimal Bottom Sub-Bar â”€â”€ */
     .bottom-bar {
       width: 100%;
       max-width: 1500px;
@@ -312,7 +312,7 @@
       }
     }
 
-    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
+    /* â”€â”€ Smooth scrollbar on Desktop / Web view (> 768px) â”€â”€ */
     @media (min-width: 769px) {
       html {
         scrollbar-width: thin;
@@ -333,7 +333,7 @@
       }
     }
 
-    /* ── Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) ── */
+    /* â”€â”€ Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) â”€â”€ */
     @media (max-width: 768px) {
       html, body, * {
         scrollbar-width: none !important;
@@ -382,7 +382,7 @@
 
       <a href="index.html" class="return-pill">
         <span>Return to Homepage</span>
-        <span class="arr">↗</span>
+        <span class="arr">â†—</span>
       </a>
     </main>
   </div>
@@ -431,7 +431,7 @@
         const now = new Date();
         const options = { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit', hour12: true };
         const timeStr = now.toLocaleTimeString('en-US', options);
-        clockEl.textContent = `Ahmedabad, India · ${timeStr} · 28°C ☀`;
+        clockEl.textContent = `Ahmedabad, India Â· ${timeStr} Â· 28Â°C â˜€`;
       }
       updateClock();
       setInterval(updateClock, 30000);

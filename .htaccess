@@ -21,5 +21,14 @@
     RewriteRule ^ - [L]
 
     # Route all custom page routes, clean URLs, and dynamic slugs to router.php
-    RewriteRule ^(.*)$ router.php?route=$1 [QSA,L]
 </IfModule>
+
+<IfModule mod_headers.c>
+    # Prevent aggressive CDN/browser caching on admin control panel and API
+    <FilesMatch "(admin\.html|api\.php|data-store\.js)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+

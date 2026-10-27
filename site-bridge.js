@@ -1133,7 +1133,10 @@
           if (effectiveMediaUrl) {
             const artFrame = showcaseCard.querySelector('.svc-s3-art-frame');
             if (artFrame) {
-              const url = effectiveMediaUrl;
+              let url = effectiveMediaUrl;
+              if (url.includes('1928_1792831281_Screen-Recording-2026-09-23-164649.mp4')) {
+                url = 'assets/video/logo-section.mp4';
+              }
               if (url.endsWith('.mp4') || url.endsWith('.webm') || url.includes('.mp4?') || url.startsWith('data:video/')) {
                 artFrame.innerHTML = `
                   <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;">
@@ -1742,7 +1745,7 @@
   window.addEventListener('footerLoaded', renderClientLogos);
 
   // Real-Time Live Code & Asset Sync via Server-Sent Events
-  if (typeof EventSource !== 'undefined') {
+  if (typeof EventSource !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '1928.test' || window.location.port === '3000')) {
     try {
       const liveSource = new EventSource('/api/live-sync');
       liveSource.addEventListener('code_change', (e) => {

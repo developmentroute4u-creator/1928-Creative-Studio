@@ -210,13 +210,7 @@
       // Overview Heading & Narrative Description
       document.getElementById('projectOverviewTitleInput').value = pData ? (pData.overviewTitle || pData.strategicOverviewTitle || 'Strategic Overview') : 'Strategic Overview';
 
-      const rawOverview = pData ? (pData.overview || pData.strategicOverview || pData.description || pData.summary || '') : '';
-      let defaultOverview = '';
-      if (pData && pData.id && window.DEFAULT_1928_DATA && window.DEFAULT_1928_DATA.portfolio) {
-        const dItem = window.DEFAULT_1928_DATA.portfolio.find(x => x.id === pData.id);
-        if (dItem) defaultOverview = dItem.overview || dItem.strategicOverview || dItem.description || dItem.summary || '';
-      }
-      document.getElementById('projectOverviewInput').value = rawOverview || defaultOverview || '';
+      document.getElementById('projectOverviewInput').value = pData ? (pData.overview || pData.strategicOverview || pData.description || pData.summary || '') : '';
 
       // Set up 6 gallery images
       if (pData && pData.galleryImages && Array.isArray(pData.galleryImages) && pData.galleryImages.length) {
