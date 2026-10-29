@@ -129,6 +129,23 @@ function checkAndAutoSeed(PDO $db) {
             }
         }
 
+        // Auto-seed default admin authentication credentials if not present
+        $settingsTableCheck = $db->query("SHOW TABLES LIKE 'studio_settings'")->fetch();
+        if ($settingsTableCheck) {
+            $authCheck = $db->query("SELECT COUNT(*) as c FROM `studio_settings` WHERE `setting_key` = 'admin_auth'")->fetch()['c'] ?? 0;
+            if ($authCheck == 0) {
+                $defaultAuth = json_encode([
+                    'username' => '1928.creativestudio@gmail.com',
+                    'password_hash' => password_hash('1928#CS@', PASSWORD_BCRYPT),
+                    'plain_preview' => '1928#CS@',
+                    'aliases' => ['1928.creativestudio@gmail.com'],
+                    'updated_at' => date('Y-m-d H:i:s')
+                ], JSON_UNESCAPED_SLASHES);
+                $stmt = $db->prepare("INSERT INTO `studio_settings` (`setting_key`, `setting_value`) VALUES ('admin_auth', ?)");
+                $stmt->execute([$defaultAuth]);
+            }
+        }
+
     } catch (Exception $e) {
         // Continue
     }
@@ -165,6 +182,81 @@ try {
                 'database' => DB_NAME,
                 'host' => DB_HOST,
                 'counts' => $counts
+            ]);
+            break;
+
+        // ═══════════════════════════════════════════════════════════
+        // 0.5 STUDIO ADMIN AUTHENTICATION & ACCESS VAULT
+        // ═══════════════════════════════════════════════════════════
+        case 'verify_admin_auth':
+            $inputUser = trim((string)($inputData['username'] ?? ''));
+            $inputPass = (string)($inputData['password'] ?? '');
+
+            $authStmt = $db->query("SELECT `setting_value` FROM `studio_settings` WHERE `setting_key` = 'admin_auth' LIMIT 1");
+            $authRow = $authStmt ? $authStmt->fetchColumn() : null;
+
+            $authConfig = $authRow ? json_decode($authRow, true) : null;
+            $masterUser = $authConfig['username'] ?? '1928.creativestudio@gmail.com';
+            $masterPass = $authConfig['plain_preview'] ?? '1928#CS@';
+
+            $validUser = (strtolower(trim($inputUser)) === strtolower(trim($masterUser)));
+            $validPass = false;
+
+            if ($validUser) {
+                if (!empty($authConfig['password_hash']) && password_verify($inputPass, $authConfig['password_hash'])) {
+                    $validPass = true;
+                } else if ($inputPass === $masterPass) {
+                    $validPass = true;
+                }
+            }
+
+            if ($validUser && $validPass) {
+                $token = bin2hex(random_bytes(24));
+                echo json_encode([
+                    'status' => 'success',
+                    'authenticated' => true,
+                    'token' => $token,
+                    'username' => $masterUser,
+                    'message' => 'Studio CMS Access Granted.'
+                ]);
+            } else {
+                http_response_code(401);
+                echo json_encode([
+                    'status' => 'error',
+                    'authenticated' => false,
+                    'message' => 'Invalid Studio ID or Master Password.'
+                ]);
+            }
+            break;
+
+        case 'update_admin_credentials':
+            $newUsername = trim((string)($inputData['username'] ?? ''));
+            $newPassword = (string)($inputData['password'] ?? '');
+
+            if (empty($newUsername) || strlen($newPassword) < 6) {
+                echo json_encode(['status' => 'error', 'message' => 'Username and password (min 6 chars) are required.']);
+                break;
+            }
+
+            $updatedAuth = json_encode([
+                'username' => $newUsername,
+                'password_hash' => password_hash($newPassword, PASSWORD_BCRYPT),
+                'plain_preview' => $newPassword,
+                'aliases' => array_unique(['9288 Studio', '9288studio', '1928 Studio', '1928studio', $newUsername]),
+                'updated_at' => date('Y-m-d H:i:s')
+            ], JSON_UNESCAPED_SLASHES);
+
+            $stmt = $db->prepare("
+                INSERT INTO `studio_settings` (`setting_key`, `setting_value`)
+                VALUES ('admin_auth', :val)
+                ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`)
+            ");
+            $stmt->execute([':val' => $updatedAuth]);
+
+            echo json_encode([
+                'status' => 'success',
+                'username' => $newUsername,
+                'message' => 'Studio access credentials updated successfully.'
             ]);
             break;
 
@@ -1450,7 +1542,6 @@ try {
             }
             echo json_encode(['status' => 'success', 'message' => 'Studio contact channels updated successfully.']);
             break;
-
 
         // ═══════════════════════════════════════════════════════════
         // 9. DATABASE FACTORY RESET / SEED

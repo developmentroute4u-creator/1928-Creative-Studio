@@ -16,17 +16,137 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="admin/css/admin.css" />
+
+  <!-- Anti-flash security verification: hides protected panels until unlocked -->
+  <style id="authGateInitialStyle">
+    body:not(.auth-unlocked) #sidebar,
+    body:not(.auth-unlocked) #main-content {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+    }
+    body.auth-unlocked #sidebar,
+    body.auth-unlocked #main-content {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      visibility: visible !important;
+    }
+  </style>
+  <script>
+    (function() {
+      try {
+        var s = sessionStorage.getItem('1928_admin_session') || localStorage.getItem('1928_admin_session');
+        if (s) {
+          var p = JSON.parse(s);
+          if (p && p.authenticated && (Date.now() - (p.timestamp || 0) < 30 * 24 * 60 * 60 * 1000)) {
+            document.documentElement.classList.add('auth-verified');
+            document.addEventListener('DOMContentLoaded', function() {
+              document.body.classList.add('auth-unlocked');
+            });
+          }
+        }
+      } catch(e) {}
+    })();
+  </script>
 </head>
 
 <body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       STUDIO CMS SECURITY VAULT · LOGIN GATEWAY (WHITE THEME DEFAULT)
+       ═══════════════════════════════════════════════════════════ -->
+  <div id="adminAuthGate" class="admin-auth-overlay" data-auth-theme="light" role="dialog" aria-modal="true" aria-label="Studio CMS Authentication">
+
+    <!-- Outer Gate Wrapper -->
+    <div class="auth-gate-wrapper">
+
+      <!-- Large Prominent Centered Studio Logo ABOVE the card -->
+      <div class="auth-above-card-logo-wrap">
+        <img src="assets/img/branding/1928-logo-horizontal-crimson.png" alt="1928 Creative Studio" class="auth-card-logo auth-card-logo-crimson" />
+        <img src="assets/img/branding/1928-logo-horizontal-white.png" alt="1928 Creative Studio" class="auth-card-logo auth-card-logo-white" />
+      </div>
+
+      <!-- Center Card -->
+      <div class="auth-gate-card" id="authGateCard">
+        <div class="auth-gate-header">
+          <h1 class="auth-gate-title">Admin Identification</h1>
+          <p class="auth-gate-sub">Enter authorized studio credentials to access master controls and client intelligence.</p>
+        </div>
+
+      <div id="authErrorMessage" class="auth-error-pill" style="display:none;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="authErrorText">Invalid credentials. Please verify your Studio ID and Password.</span>
+      </div>
+
+      <form id="adminAuthForm" autocomplete="on">
+        <div class="auth-input-group">
+          <label class="auth-input-label" for="authStudioId">
+            <span>Studio Identifier</span>
+            <span style="font-size:9.5px;color:var(--auth-input-sublabel,#71717A);">ID / EMAIL</span>
+          </label>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" id="authStudioId" class="auth-gate-input" placeholder="Enter the email or ID" autocomplete="username" spellcheck="false" required />
+          </div>
+        </div>
+
+        <div class="auth-input-group">
+          <label class="auth-input-label" for="authMasterPassword">
+            <span>Master Password</span>
+            <span style="font-size:9.5px;color:var(--auth-input-sublabel,#71717A);">SECURE KEY</span>
+          </label>
+          <div class="auth-input-wrapper">
+            <span class="auth-input-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input type="password" id="authMasterPassword" class="auth-gate-input" placeholder="Enter master password" autocomplete="current-password" required />
+            <button type="button" class="auth-pwd-toggle" id="toggleAuthPasswordBtn" aria-label="Toggle password visibility" title="Show/Hide Password">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-meta-row">
+          <label class="auth-remember-label">
+            <input type="checkbox" id="authRememberMe" checked />
+            <span>Keep session active on this device</span>
+          </label>
+        </div>
+
+        <button type="submit" id="btnAuthSubmit" class="auth-submit-btn">
+          <span class="btn-text">Unlock Studio CMS</span>
+          <svg class="btn-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+      </form>
+
+      <div class="auth-footer-meta">
+        <span>1928 Creative Studio</span>
+        <span>Management Portal</span>
+      </div>
+    </div>
+  </div>
+
+    <!-- Bottom-Right Floating Theme Switcher Button -->
+    <button type="button" id="authThemeToggleBtn" class="auth-theme-fab" aria-label="Switch Theme" title="Switch Theme (Light / Dark)">
+      <span class="theme-icon-to-dark" title="Switch to Dark Theme">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </span>
+      <span class="theme-icon-to-light" title="Switch to Light Theme">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </span>
+    </button>
+  </div>
 
   <!-- ═══════════════════════════════════════════════════════════
        LEFT SIDEBAR NAVIGATION
        ═══════════════════════════════════════════════════════════ -->
   <aside id="sidebar">
     <div class="sidebar-brand">
-      <a href="index.html" class="sidebar-logo">
-        <span class="sidebar-logo-num">1928</span>
+      <a href="index.html" class="sidebar-logo" title="1928 Creative Studio · Preview Live Site">
+        <img src="assets/img/branding/1928-logo-white-email.png" alt="1928 Creative Studio" class="sidebar-brand-img dark-logo" />
+        <img src="assets/img/branding/1928-logo.png" alt="1928 Creative Studio" class="sidebar-brand-img light-logo" />
         <span class="sidebar-logo-tag">STUDIO CMS</span>
       </a>
       <button class="btn-icon-square sidebar-toggle-mob" id="sidebarCloseBtn" aria-label="Close Sidebar">✕</button>
@@ -131,6 +251,14 @@
           <span class="db-dot"></span>
           <span id="dbStatusText">MySQL: 1928_studio_cms</span>
         </div>
+        <button type="button" class="btn-topbar-auth" onclick="openSecuritySettings()" title="Studio Security & Change Password">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Security</span>
+        </button>
+        <button type="button" class="btn-topbar-auth" onclick="lockStudioAdmin()" title="Lock Studio CMS & Sign Out">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          <span>Lock CMS</span>
+        </button>
         <button class="btn-icon-square" id="themeToggleBtn" title="Toggle Dark/Light Mode">☀</button>
       </div>
     </header>
@@ -3107,6 +3235,56 @@
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       MODAL: STUDIO SECURITY & CREDENTIALS ROTATION
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="modalChangeCredentials">
+    <div class="modal-card" style="max-width:480px;">
+      <div class="modal-header">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:34px;height:34px;border-radius:8px;background:rgba(200,16,46,0.14);border:1px solid rgba(200,16,46,0.3);display:flex;align-items:center;justify-content:center;color:var(--cr);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h3 style="font-family:var(--font-primary);font-size:16px;font-weight:700;margin:0;">Studio Security &amp; Credentials</h3>
+            <p style="font-size:12px;color:var(--ink-mid);margin:0;">Update master Studio ID and access password</p>
+          </div>
+        </div>
+        <button class="btn-icon-square" onclick="closeModal('modalChangeCredentials')" aria-label="Close Modal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div style="background:rgba(255,255,255,0.03);border:1px solid var(--rule);border-radius:10px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:12px;color:var(--ink-mid);">Current Active Studio ID:</span>
+          <span id="mSecCurrentUsername" style="font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--ink);background:rgba(200,16,46,0.12);padding:3px 8px;border-radius:4px;border:1px solid rgba(200,16,46,0.25);">9288 Studio</span>
+        </div>
+
+        <div id="mSecErrorBox" style="display:none;background:rgba(185,28,28,0.15);border:1px solid rgba(185,28,28,0.4);color:#FCA5A5;padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:14px;"></div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">New Studio ID / Username</label>
+          <input type="text" class="form-input" id="mSecUsername" placeholder="e.g. 9288 Studio" />
+          <span style="font-size:11px;color:var(--ink-dim);margin-top:4px;display:block;">This is the ID you will use to log into the studio CMS.</span>
+        </div>
+
+        <div class="form-group" style="margin-bottom:14px;">
+          <label class="form-label">New Master Password</label>
+          <input type="password" class="form-input" id="mSecNewPassword" placeholder="Minimum 6 characters (mix letters, numbers, symbols)" />
+        </div>
+
+        <div class="form-group" style="margin-bottom:6px;">
+          <label class="form-label">Confirm Master Password</label>
+          <input type="password" class="form-input" id="mSecConfirmPassword" placeholder="Re-enter new password" />
+        </div>
+      </div>
+
+      <div class="modal-footer" style="display:flex;justify-content:space-between;align-items:center;">
+        <button type="button" class="btn-action-secondary" onclick="closeModal('modalChangeCredentials')">Cancel</button>
+        <button type="button" class="btn-action-primary" id="btnSaveCredentials" onclick="saveSecurityCredentials()">Save &amp; Update Credentials</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div id="toast-wrap"></div>
 
@@ -3115,6 +3293,7 @@
 
     <!-- ══ MODULAR ADMIN SECTION CONTROLLERS ══ -->
   <script src="admin/js/admin-core.js?v=20261027_v3"></script>
+  <script src="admin/js/sections/auth.js?v=20261029_v1"></script>
   <script src="admin/js/sections/dashboard.js?v=20261027_v3"></script>
   <script src="admin/js/sections/inquiries.js?v=20261027_v3"></script>
   <script src="admin/js/sections/seo.js?v=20261027_v3"></script>
