@@ -59,6 +59,24 @@ class Database
                 // Try direct connection to target database
                 $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
                 self::$instance = new PDO($dsn, DB_USER, DB_PASS, $options);
+
+                // Auto-create database_media table for 100% database storage of all images and videos
+                try {
+                    self::$instance->exec("
+                        CREATE TABLE IF NOT EXISTS `database_media` (
+                          `id` INT NOT NULL AUTO_INCREMENT,
+                          `media_id` VARCHAR(255) NOT NULL UNIQUE,
+                          `file_name` VARCHAR(255) NOT NULL,
+                          `mime_type` VARCHAR(100) NOT NULL,
+                          `file_size` BIGINT NOT NULL,
+                          `file_data` LONGBLOB NOT NULL,
+                          `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+                          `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                          PRIMARY KEY (`id`),
+                          KEY `idx_file_name` (`file_name`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                    ");
+                } catch (\Throwable $t) {}
             } catch (PDOException $e) {
                 // If database does not exist yet (Error 1049), auto-create it
                 if ($e->getCode() == 1049 || strpos($e->getMessage(), 'Unknown database') !== false) {
@@ -70,6 +88,24 @@ class Database
                         // Connect now to the newly created database
                         $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
                         self::$instance = new PDO($dsn, DB_USER, DB_PASS, $options);
+
+                // Auto-create database_media table for 100% database storage of all images and videos
+                try {
+                    self::$instance->exec("
+                        CREATE TABLE IF NOT EXISTS `database_media` (
+                          `id` INT NOT NULL AUTO_INCREMENT,
+                          `media_id` VARCHAR(255) NOT NULL UNIQUE,
+                          `file_name` VARCHAR(255) NOT NULL,
+                          `mime_type` VARCHAR(100) NOT NULL,
+                          `file_size` BIGINT NOT NULL,
+                          `file_data` LONGBLOB NOT NULL,
+                          `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+                          `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                          PRIMARY KEY (`id`),
+                          KEY `idx_file_name` (`file_name`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                    ");
+                } catch (\Throwable $t) {}
 
                         // Auto-seed schema from database.sql
                         $sqlFile = __DIR__ . '/database.sql';

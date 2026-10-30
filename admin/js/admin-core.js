@@ -334,6 +334,13 @@
               if (!previewVideo.src.endsWith(val) && previewVideo.src !== vidSrc) {
                 previewVideo.src = vidSrc;
                 previewVideo.load();
+                previewVideo.onerror = () => {
+                  previewVideo.style.display = 'none';
+                  if (previewImg) {
+                    previewImg.style.display = 'block';
+                    previewImg.src = 'assets/img/branding/1928-logo.png';
+                  }
+                };
                 previewVideo.onloadeddata = () => {
                   try { previewVideo.currentTime = 0.1; } catch (e) {}
                   try {

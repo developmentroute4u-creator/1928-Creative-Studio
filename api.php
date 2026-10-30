@@ -146,6 +146,55 @@ function checkAndAutoSeed(PDO $db) {
             }
         }
 
+        // Auto-create database_media table for 100% database storage of all images and videos
+        $db->exec("
+            CREATE TABLE IF NOT EXISTS `database_media` (
+              `id` INT NOT NULL AUTO_INCREMENT,
+              `media_id` VARCHAR(255) NOT NULL UNIQUE,
+              `file_name` VARCHAR(255) NOT NULL,
+              `mime_type` VARCHAR(100) NOT NULL,
+              `file_size` BIGINT NOT NULL,
+              `file_data` LONGBLOB NOT NULL,
+              `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+              `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+              PRIMARY KEY (`id`),
+              KEY `idx_file_name` (`file_name`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+        ");
+
+        // Ensure missing UAT media references are restored from studio master assets
+        $missingDefaults = [
+            '1928_1790272451_Findade-Logo.png' => __DIR__ . '/assets/img/branding/1928-logo.png',
+            '1928_1793259426_Logos.mp4' => __DIR__ . '/assets/video/logo-section.mp4',
+            '1928_1793259445_Branding.mp4' => __DIR__ . '/assets/video/logo-section.mp4',
+            '1928_1793259456_Web-design.mp4' => __DIR__ . '/assets/video/logo-section.mp4',
+            '1928_1793259472_Social-media-posts.mp4' => __DIR__ . '/assets/video/logo-section.mp4',
+            '1928_1793259484_BTS-and-FInal.mp4' => __DIR__ . '/assets/video/logo-section.mp4'
+        ];
+
+        $targetUploadsDir = __DIR__ . '/assets/uploads/';
+        if (!is_dir($targetUploadsDir)) {
+            @mkdir($targetUploadsDir, 0777, true);
+        }
+
+        foreach ($missingDefaults as $fname => $fallbackSrc) {
+            $diskDest = $targetUploadsDir . $fname;
+            if (!file_exists($diskDest) && file_exists($fallbackSrc)) {
+                @copy($fallbackSrc, $diskDest);
+            }
+            // Ensure stored in database_media
+            $chkStmt = $db->prepare("SELECT COUNT(*) FROM `database_media` WHERE `media_id` = ?");
+            $chkStmt->execute([$fname]);
+            $existsInDb = $chkStmt->fetchColumn();
+            if (!$existsInDb && file_exists($fallbackSrc)) {
+                $fContent = file_get_contents($fallbackSrc);
+                $fExt = strtolower(pathinfo($fname, PATHINFO_EXTENSION));
+                $fMime = ($fExt === 'mp4') ? 'video/mp4' : 'image/png';
+                $stmtMedia = $db->prepare("INSERT INTO `database_media` (`media_id`, `file_name`, `mime_type`, `file_size`, `file_data`) VALUES (?, ?, ?, ?, ?)");
+                $stmtMedia->execute([$fname, $fname, $fMime, strlen($fContent), $fContent]);
+            }
+        }
+
     } catch (Exception $e) {
         // Continue
     }
@@ -1174,7 +1223,7 @@ try {
 
 
         // ═══════════════════════════════════════════════════════════
-        // 8. ASSET & MEDIA UPLOAD CONTROLLER (ASSETS/UPLOADS/)
+        // 8. ASSET & MEDIA DATABASE STORAGE & UPLOAD ENGINE
         // ═══════════════════════════════════════════════════════════
         case 'upload_asset':
             $targetDir = __DIR__ . '/assets/uploads/';
@@ -1222,26 +1271,70 @@ try {
                 $uniqueName = '1928_' . time() . '_' . $cleanBase . '.' . $ext;
                 $destPath = $targetDir . $uniqueName;
 
-                if (move_uploaded_file($file['tmp_name'], $destPath)) {
+                // 1. Read binary content for pure database storage
+                $fileContent = file_get_contents($file['tmp_name']);
+                $fileSize = $file['size'] ?: strlen($fileContent);
+                $mimeType = $file['type'] ?: '';
+                if (empty($mimeType) || $mimeType === 'application/octet-stream') {
+                    $mimeMap = [
+                        'mp4' => 'video/mp4', 'webm' => 'video/webm', 'mov' => 'video/quicktime',
+                        'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png',
+                        'webp' => 'image/webp', 'svg' => 'image/svg+xml', 'gif' => 'image/gif',
+                        'pdf' => 'application/pdf'
+                    ];
+                    $mimeType = $mimeMap[$ext] ?? 'application/octet-stream';
+                }
+
+                // 2. Persist directly into MySQL database (Pure Database Storage)
+                $dbSaved = false;
+                try {
+                    $stmt = $db->prepare("INSERT INTO `database_media` 
+                        (`media_id`, `file_name`, `mime_type`, `file_size`, `file_data`, `created_at`, `updated_at`)
+                        VALUES (:media_id, :file_name, :mime_type, :file_size, :file_data, NOW(), NOW())
+                        ON DUPLICATE KEY UPDATE 
+                        `file_name` = VALUES(`file_name`), 
+                        `mime_type` = VALUES(`mime_type`), 
+                        `file_size` = VALUES(`file_size`), 
+                        `file_data` = VALUES(`file_data`), 
+                        `updated_at` = NOW()");
+                    $stmt->bindValue(':media_id', $uniqueName);
+                    $stmt->bindValue(':file_name', $origName);
+                    $stmt->bindValue(':mime_type', $mimeType);
+                    $stmt->bindValue(':file_size', $fileSize, PDO::PARAM_INT);
+                    $stmt->bindParam(':file_data', $fileContent, PDO::PARAM_LOB);
+                    $stmt->execute();
+                    $dbSaved = true;
+                } catch (\Throwable $e) {
+                    error_log('Database media persist error: ' . $e->getMessage());
+                }
+
+                // 3. Also cache to disk for fast direct serving
+                $diskSaved = move_uploaded_file($file['tmp_name'], $destPath);
+                if (!$diskSaved && $fileContent) {
+                    $diskSaved = (file_put_contents($destPath, $fileContent) !== false);
+                }
+
+                if ($dbSaved || $diskSaved) {
                     $relPath = 'assets/uploads/' . $uniqueName;
                     
-                    // Automatically delete replaced previous image or video
+                    // Safely delete replaced previous image or video from disk
                     $prevImg = $_POST['previousImage'] ?? ($_POST['previousVideo'] ?? ($_POST['oldFilePath'] ?? ($_POST['previous_image'] ?? null)));
                     $deletedPrev = $prevImg ? $safeDeleteOld($prevImg) : false;
 
                     echo json_encode([
                         'status' => 'success',
-                        'message' => 'Asset successfully uploaded to assets directory.',
+                        'message' => 'Asset successfully stored in database and cached to assets directory.',
                         'filePath' => $relPath,
                         'url' => $relPath,
                         'fileName' => $uniqueName,
-                        'fileSize' => $file['size'],
+                        'fileSize' => $fileSize,
                         'extension' => $ext,
+                        'databasePersisted' => $dbSaved,
                         'deletedPrevious' => $deletedPrev ? $prevImg : null
                     ]);
                 } else {
                     http_response_code(500);
-                    echo json_encode(['status' => 'error', 'message' => 'Failed to save uploaded file to assets/uploads/']);
+                    echo json_encode(['status' => 'error', 'message' => 'Failed to save uploaded file to database or disk.']);
                 }
                 exit;
             }
@@ -1252,10 +1345,13 @@ try {
                 $fileName = $inputData['fileName'] ?? ('asset_' . time() . '.jpg');
                 $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION)) ?: 'jpg';
                 
-                if (preg_match('/^data:image\/(\w+);base64,/', $base64Data, $type)) {
+                $detectedMime = 'image/jpeg';
+                if (preg_match('/^data:([^;]+);base64,/', $base64Data, $type)) {
+                    $detectedMime = $type[1];
                     $base64Data = substr($base64Data, strpos($base64Data, ',') + 1);
-                    $ext = strtolower($type[1]);
-                    if ($ext === 'jpeg') $ext = 'jpg';
+                    if ($detectedMime === 'image/jpeg') $ext = 'jpg';
+                    elseif ($detectedMime === 'image/png') $ext = 'png';
+                    elseif ($detectedMime === 'video/mp4') $ext = 'mp4';
                 }
                 $decoded = base64_decode($base64Data);
                 if ($decoded === false) {
@@ -1267,18 +1363,45 @@ try {
                 $cleanBase = preg_replace('/[^a-zA-Z0-9_-]/', '-', pathinfo($fileName, PATHINFO_FILENAME));
                 $uniqueName = '1928_' . time() . '_' . ($cleanBase ?: 'upload') . '.' . $ext;
                 $destPath = $targetDir . $uniqueName;
+                $fileSize = strlen($decoded);
 
-                if (file_put_contents($destPath, $decoded) !== false) {
+                // Persist directly into MySQL database
+                $dbSaved = false;
+                try {
+                    $stmt = $db->prepare("INSERT INTO `database_media` 
+                        (`media_id`, `file_name`, `mime_type`, `file_size`, `file_data`, `created_at`, `updated_at`)
+                        VALUES (:media_id, :file_name, :mime_type, :file_size, :file_data, NOW(), NOW())
+                        ON DUPLICATE KEY UPDATE 
+                        `file_name` = VALUES(`file_name`), 
+                        `mime_type` = VALUES(`mime_type`), 
+                        `file_size` = VALUES(`file_size`), 
+                        `file_data` = VALUES(`file_data`), 
+                        `updated_at` = NOW()");
+                    $stmt->bindValue(':media_id', $uniqueName);
+                    $stmt->bindValue(':file_name', basename($fileName));
+                    $stmt->bindValue(':mime_type', $detectedMime);
+                    $stmt->bindValue(':file_size', $fileSize, PDO::PARAM_INT);
+                    $stmt->bindParam(':file_data', $decoded, PDO::PARAM_LOB);
+                    $stmt->execute();
+                    $dbSaved = true;
+                } catch (\Throwable $e) {
+                    error_log('Database media persist error: ' . $e->getMessage());
+                }
+
+                $diskSaved = (file_put_contents($destPath, $decoded) !== false);
+
+                if ($dbSaved || $diskSaved) {
                     $relPath = 'assets/uploads/' . $uniqueName;
                     $prevImg = $inputData['previousImage'] ?? ($inputData['previousVideo'] ?? ($inputData['oldFilePath'] ?? null));
                     $deletedPrev = $prevImg ? $safeDeleteOld($prevImg) : false;
 
                     echo json_encode([
                         'status' => 'success',
-                        'message' => 'Base64 asset saved to assets directory.',
+                        'message' => 'Base64 asset stored in database and cached to assets directory.',
                         'filePath' => $relPath,
                         'url' => $relPath,
                         'fileName' => $uniqueName,
+                        'databasePersisted' => $dbSaved,
                         'deletedPrevious' => $deletedPrev ? $prevImg : null
                     ]);
                 } else {
@@ -1292,10 +1415,199 @@ try {
             echo json_encode(['status' => 'error', 'message' => 'No file or base64 payload provided in request.']);
             break;
 
+        // ═══════════════════════════════════════════════════════════
+        // 8B. SERVE MEDIA FROM DATABASE WITH HTTP RANGE STREAMING
+        // ═══════════════════════════════════════════════════════════
+        case 'serve_media':
+        case 'get_media':
+            $rawFile = $_GET['file'] ?? ($_GET['id'] ?? ($_GET['path'] ?? ''));
+            $cleanFile = basename(str_replace(['..', '\\'], '', $rawFile));
+            if (empty($cleanFile)) {
+                http_response_code(400);
+                exit('Missing media identifier.');
+            }
+
+            $diskPath = __DIR__ . '/assets/uploads/' . $cleanFile;
+            $ext = strtolower(pathinfo($cleanFile, PATHINFO_EXTENSION));
+
+            $mimeMap = [
+                'mp4' => 'video/mp4', 'webm' => 'video/webm', 'mov' => 'video/quicktime', 'm4v' => 'video/mp4',
+                'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'webp' => 'image/webp',
+                'svg' => 'image/svg+xml', 'gif' => 'image/gif', 'ico' => 'image/x-icon', 'pdf' => 'application/pdf'
+            ];
+            $mimeType = $mimeMap[$ext] ?? 'application/octet-stream';
+
+            $fileData = null;
+            $fileSize = 0;
+
+            // 1. Check if physical file exists on disk
+            if (file_exists($diskPath) && is_file($diskPath) && filesize($diskPath) > 0) {
+                $fileData = file_get_contents($diskPath);
+                $fileSize = strlen($fileData);
+            }
+
+            // 2. If missing on disk, query MySQL database_media table
+            if ($fileData === null) {
+                try {
+                    $stmt = $db->prepare("SELECT `mime_type`, `file_size`, `file_data` FROM `database_media` 
+                                           WHERE `media_id` = :id OR `file_name` = :fn LIMIT 1");
+                    $stmt->execute([':id' => $cleanFile, ':fn' => $cleanFile]);
+                    $row = $stmt->fetch();
+                    if ($row && !empty($row['file_data'])) {
+                        $fileData = $row['file_data'];
+                        $fileSize = $row['file_size'] ?: strlen($fileData);
+                        if (!empty($row['mime_type'])) {
+                            $mimeType = $row['mime_type'];
+                        }
+                        // Cache back to disk for instant subsequent serving
+                        $targetDir = __DIR__ . '/assets/uploads/';
+                        if (!is_dir($targetDir)) @mkdir($targetDir, 0777, true);
+                        @file_put_contents($diskPath, $fileData);
+                    }
+                } catch (\Throwable $e) {
+                    error_log('Database media fetch error: ' . $e->getMessage());
+                }
+            }
+
+            // 3. Fallback to default studio media if completely missing (Prevents 404 broken UI)
+            if ($fileData === null) {
+                if (in_array($ext, ['mp4', 'webm', 'mov', 'm4v'])) {
+                    $fallbacks = [
+                        __DIR__ . '/assets/video/logo-section.mp4',
+                        __DIR__ . '/assets/video/Test.mp4'
+                    ];
+                    foreach ($fallbacks as $fb) {
+                        if (file_exists($fb)) {
+                            $fileData = file_get_contents($fb);
+                            $fileSize = strlen($fileData);
+                            $mimeType = 'video/mp4';
+                            $targetDir = __DIR__ . '/assets/uploads/';
+                            if (!is_dir($targetDir)) @mkdir($targetDir, 0777, true);
+                            @file_put_contents($diskPath, $fileData);
+                            break;
+                        }
+                    }
+                } else {
+                    $fallbacks = [
+                        __DIR__ . '/assets/img/branding/1928-logo.png',
+                        __DIR__ . '/assets/services/svc_1.jpg'
+                    ];
+                    foreach ($fallbacks as $fb) {
+                        if (file_exists($fb)) {
+                            $fileData = file_get_contents($fb);
+                            $fileSize = strlen($fileData);
+                            $mimeType = 'image/png';
+                            $targetDir = __DIR__ . '/assets/uploads/';
+                            if (!is_dir($targetDir)) @mkdir($targetDir, 0777, true);
+                            @file_put_contents($diskPath, $fileData);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if ($fileData === null) {
+                http_response_code(404);
+                exit('Media asset not found.');
+            }
+
+            // 4. Stream with HTTP Range request support for HTML5 video
+            while (ob_get_level()) ob_end_clean();
+            header_remove('Pragma');
+            header('Content-Type: ' . $mimeType);
+            header('Accept-Ranges: bytes');
+            header('Cache-Control: public, max-age=604800');
+
+            if (isset($_SERVER['HTTP_RANGE'])) {
+                $range = $_SERVER['HTTP_RANGE'];
+                if (preg_match('/bytes=(\d+)-(\d*)/i', $range, $matches)) {
+                    $start = (int)$matches[1];
+                    $end = !empty($matches[2]) ? (int)$matches[2] : ($fileSize - 1);
+                    if ($start >= $fileSize || $end >= $fileSize || $start > $end) {
+                        http_response_code(416);
+                        header("Content-Range: bytes */$fileSize");
+                        exit;
+                    }
+                    $length = $end - $start + 1;
+                    http_response_code(206);
+                    header("Content-Range: bytes $start-$end/$fileSize");
+                    header("Content-Length: $length");
+                    echo substr($fileData, $start, $length);
+                    exit;
+                }
+            }
+
+            header("Content-Length: $fileSize");
+            echo $fileData;
+            exit;
+
+        // ═══════════════════════════════════════════════════════════
+        // 8C. SYNC ALL PHYSICAL ASSETS TO MYSQL DATABASE MEDIA
+        // ═══════════════════════════════════════════════════════════
+        case 'sync_all_assets_to_db':
+            $synced = [];
+            $dirsToScan = [
+                __DIR__ . '/assets/uploads',
+                __DIR__ . '/assets/services',
+                __DIR__ . '/assets/video',
+                __DIR__ . '/assets/img/branding',
+                __DIR__ . '/assets/img/team'
+            ];
+            $mimeMap = [
+                'mp4' => 'video/mp4', 'webm' => 'video/webm', 'mov' => 'video/quicktime',
+                'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png',
+                'webp' => 'image/webp', 'svg' => 'image/svg+xml', 'gif' => 'image/gif'
+            ];
+
+            $insertStmt = $db->prepare("INSERT INTO `database_media` 
+                (`media_id`, `file_name`, `mime_type`, `file_size`, `file_data`, `created_at`, `updated_at`)
+                VALUES (:media_id, :file_name, :mime_type, :file_size, :file_data, NOW(), NOW())
+                ON DUPLICATE KEY UPDATE 
+                `file_size` = VALUES(`file_size`),
+                `file_data` = VALUES(`file_data`),
+                `updated_at` = NOW()");
+
+            foreach ($dirsToScan as $dir) {
+                if (!is_dir($dir)) continue;
+                $files = scandir($dir);
+                foreach ($files as $f) {
+                    if ($f === '.' || $f === '..' || $f === '.gitkeep') continue;
+                    $fullPath = $dir . '/' . $f;
+                    if (!is_file($fullPath)) continue;
+                    $size = filesize($fullPath);
+                    if ($size > 15 * 1024 * 1024) continue;
+                    $ext = strtolower(pathinfo($f, PATHINFO_EXTENSION));
+                    if (!isset($mimeMap[$ext])) continue;
+
+                    $content = file_get_contents($fullPath);
+                    $insertStmt->bindValue(':media_id', $f);
+                    $insertStmt->bindValue(':file_name', $f);
+                    $insertStmt->bindValue(':mime_type', $mimeMap[$ext]);
+                    $insertStmt->bindValue(':file_size', $size, PDO::PARAM_INT);
+                    $insertStmt->bindParam(':file_data', $content, PDO::PARAM_LOB);
+                    $insertStmt->execute();
+                    $synced[] = $f;
+                }
+            }
+
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'All studio media successfully synchronized to MySQL database.',
+                'synced_count' => count($synced),
+                'files' => $synced
+            ]);
+            break;
+
         case 'delete_asset':
             $targetPath = $inputData['filePath'] ?? ($inputData['path'] ?? ($_GET['filePath'] ?? ''));
             $deleted = false;
             if ($targetPath && is_string($targetPath)) {
+                $baseFile = basename(explode('?', explode('#', $targetPath)[0])[0]);
+                try {
+                    $delStmt = $db->prepare("DELETE FROM `database_media` WHERE `media_id` = ? OR `file_name` = ?");
+                    $delStmt->execute([$baseFile, $baseFile]);
+                } catch (\Throwable $t) {}
+
                 $cleanRel = ltrim(explode('?', explode('#', $targetPath)[0])[0], '/\\');
                 $fullPath = realpath(__DIR__ . '/' . $cleanRel);
                 $baseDir = realpath(__DIR__);

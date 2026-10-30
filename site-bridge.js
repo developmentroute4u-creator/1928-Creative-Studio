@@ -954,7 +954,7 @@
           const renderServiceVisual = (imgUrl, title, idx, num) => {
             if (!imgUrl) return getServiceSculptureHTML(idx, num);
             if (isVidAsset(imgUrl)) {
-              return `<video class="svc-card-media-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;"><source src="${imgUrl}" type="video/mp4"></video>`;
+              return `<video class="svc-card-media-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;"><source src="${imgUrl}" type="video/mp4" onerror="this.parentElement.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');"></video>`;
             }
             return `<img src="${imgUrl}" alt="${title || ''}" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />`;
           };
@@ -970,7 +970,7 @@
         const renderServiceVisual = (imgUrl, title, idx, num) => {
           if (!imgUrl) return getServiceSculptureHTML(idx, num);
           if (isVidAsset(imgUrl)) {
-            return `<video class="svc-card-media-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;"><source src="${imgUrl}" type="video/mp4"></video>`;
+            return `<video class="svc-card-media-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;"><source src="${imgUrl}" type="video/mp4" onerror="this.parentElement.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');"></video>`;
           }
           return `<img src="${imgUrl}" alt="${title || ''}" onerror="this.parentElement.innerHTML=getServiceSculptureHTML(${idx}, '${num}');" style="width:100%;height:100%;object-fit:cover;object-position:center center;border-radius:18px;display:block;" />`;
         };
@@ -1141,7 +1141,7 @@
                 const fallbackImg = (matchingCoreSvc && matchingCoreSvc.image) ? matchingCoreSvc.image : 'assets/services/svc_1.jpg';
                 artFrame.innerHTML = `
                   <video class="svc-art-video" autoplay loop muted playsinline preload="auto" onloadedmetadata="this.muted=true;this.play();" onerror="this.style.display='none';if(this.nextElementSibling)this.nextElementSibling.style.display='block';" style="width:100%;height:100%;object-fit:cover;">
-                    <source src="${url}" type="video/mp4">
+                    <source src="${url}" type="video/mp4" onerror="this.parentElement.style.display='none';if(this.parentElement.nextElementSibling)this.parentElement.nextElementSibling.style.display='block';">
                   </video>
                   <img src="${fallbackImg}" alt="${card.title || 'Service'}" style="display:none;width:100%;height:100%;object-fit:cover;" />
                 `;

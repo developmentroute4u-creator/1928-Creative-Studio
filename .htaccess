@@ -12,6 +12,12 @@
     RewriteRule ^admin\.html$ - [L]
     RewriteRule ^api\.php$ - [L]
 
+    # Database-driven Media Engine:
+    # If a requested asset in assets/uploads/ does not physically exist on disk (e.g. wiped after git push),
+    # dynamically retrieve, restore, and stream it from the MySQL database!
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^assets/uploads/(.+)$ api.php?action=serve_media&file=$1 [QSA,L]
+
     # Pass through physical asset and media directories directly
     RewriteRule ^(admin|assets|css|js|images|uploads|vendor|whatsapp-api)/ - [L]
 
@@ -25,8 +31,8 @@
 </IfModule>
 
 <IfModule mod_headers.c>
-    # Prevent aggressive CDN/browser caching on admin control panel, API, and core scripts
-    <FilesMatch "(admin\.html|api\.php|data-store\.js)$">
+    # Prevent aggressive CDN/browser caching on admin control panel, admin styles, API, and core scripts
+    <FilesMatch "(admin\.html|admin\.css|api\.php|data-store\.js|admin-core\.js|site-bridge\.js)$">
         Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
         Header set Pragma "no-cache"
         Header set Expires "0"

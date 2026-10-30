@@ -4030,8 +4030,10 @@
     }
 
     .auth-card-logo {
-      width: 100%;
-      max-width: 520px;
+      width: auto;
+      max-width: 210px;
+      max-height: 44px;
+      margin: 0 auto;
       height: auto;
       display: block;
       object-fit: contain;

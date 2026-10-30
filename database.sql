@@ -400,4 +400,22 @@ INSERT INTO `studio_settings` (`setting_key`, `setting_value`) VALUES
 ('studio_name', '1928 Creative Studio'),
 ('twitter', 'https://twitter.com');
 
+-- --------------------------------------------------------
+-- Table structure for `database_media` (Pure Database Storage for Images & Videos)
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS `database_media`;
+CREATE TABLE `database_media` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `media_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mime_type` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_size` bigint NOT NULL,
+  `file_data` longblob NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `media_id` (`media_id`),
+  KEY `idx_file_name` (`file_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;

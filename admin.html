@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="admin/css/admin.css" />
+  <link rel="stylesheet" href="admin/css/admin.css?v=20261030_v2" />
 
   <!-- Anti-flash security verification: hides protected panels until unlocked -->
   <style id="authGateInitialStyle">
@@ -30,6 +30,59 @@
       opacity: 1 !important;
       pointer-events: auto !important;
       visibility: visible !important;
+    }
+    /* Critical fallback styles ensuring login gate is always centered & properly sized */
+    .admin-auth-overlay {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 999999 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      background: #F8F9FA !important;
+      overflow-y: auto !important;
+      padding: 24px !important;
+    }
+    .admin-auth-overlay[data-auth-theme="dark"] {
+      background: #000000 !important;
+    }
+    .auth-gate-wrapper {
+      width: 100% !important;
+      max-width: 520px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      margin: auto !important;
+    }
+    .auth-above-card-logo-wrap {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      margin: 0 auto 28px auto !important;
+      width: 100% !important;
+    }
+    .auth-card-logo {
+      width: auto !important;
+      max-width: 210px !important;
+      max-height: 44px !important;
+      height: auto !important;
+      display: block !important;
+      margin: 0 auto !important;
+      object-fit: contain !important;
+    }
+    .auth-gate-card {
+      width: 100% !important;
+      max-width: 440px !important;
+      background: #FFFFFF !important;
+      border: 1px solid rgba(0,0,0,0.08) !important;
+      border-radius: 18px !important;
+      padding: 36px 32px !important;
+      box-shadow: 0 16px 40px -12px rgba(0,0,0,0.07) !important;
+      box-sizing: border-box !important;
+    }
+    .admin-auth-overlay[data-auth-theme="dark"] .auth-gate-card {
+      background: #0E0E12 !important;
+      border-color: rgba(255,255,255,0.12) !important;
     }
   </style>
   <script>
@@ -62,8 +115,8 @@
 
       <!-- Large Prominent Centered Studio Logo ABOVE the card -->
       <div class="auth-above-card-logo-wrap">
-        <img src="assets/img/branding/1928-logo-horizontal-crimson.png" alt="1928 Creative Studio" class="auth-card-logo auth-card-logo-crimson" />
-        <img src="assets/img/branding/1928-logo-horizontal-white.png" alt="1928 Creative Studio" class="auth-card-logo auth-card-logo-white" />
+        <img src="assets/img/branding/1928-logo-horizontal-crimson.png" alt="1928 Creative Studio" class="auth-card-logo auth-card-logo-crimson" style="max-width:210px;max-height:44px;width:auto;height:auto;object-fit:contain;" />
+        <img src="assets/img/branding/1928-logo-horizontal-white.png" alt="1928 Creative Studio" class="auth-card-logo auth-card-logo-white" style="max-width:210px;max-height:44px;width:auto;height:auto;object-fit:contain;display:none;" />
       </div>
 
       <!-- Center Card -->
@@ -3289,11 +3342,11 @@
   <div id="toast-wrap"></div>
 
   <!-- Load Data Store -->
-  <script src="data-store.js?v=20261027_v3"></script>
+  <script src="data-store.js?v=20261030_v2"></script>
 
     <!-- ══ MODULAR ADMIN SECTION CONTROLLERS ══ -->
-  <script src="admin/js/admin-core.js?v=20261027_v3"></script>
-  <script src="admin/js/sections/auth.js?v=20261029_v1"></script>
+  <script src="admin/js/admin-core.js?v=20261030_v2"></script>
+  <script src="admin/js/sections/auth.js?v=20261030_v2"></script>
   <script src="admin/js/sections/dashboard.js?v=20261027_v3"></script>
   <script src="admin/js/sections/inquiries.js?v=20261027_v3"></script>
   <script src="admin/js/sections/seo.js?v=20261027_v3"></script>
@@ -3304,7 +3357,7 @@
   <script src="admin/js/sections/clients.js?v=20261027_v3"></script>
   <script src="admin/js/sections/contact.js?v=20261027_v3"></script>
   <script src="admin/js/sections/backup.js?v=20261027_v3"></script>
-  <script src="admin/js/admin-init.js?v=20261027_v3"></script>
+  <script src="admin/js/admin-init.js?v=20261030_v2"></script>
 </body>
 
 </html>
