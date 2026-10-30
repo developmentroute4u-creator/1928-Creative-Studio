@@ -4431,9 +4431,10 @@
        SIDEBAR REAL BRAND LOGO STYLES
        ═════════════════════════════════════════════════════════════════ */
     .sidebar-brand-img {
-      height: 32px;
+      height: auto;
+      max-height: 20px;
       width: auto;
-      max-width: 135px;
+      max-width: 195px;
       display: block;
       object-fit: contain;
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
