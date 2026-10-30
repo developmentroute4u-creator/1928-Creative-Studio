@@ -32,7 +32,7 @@
 
 <IfModule mod_headers.c>
     # Prevent aggressive CDN/browser caching on admin control panel, admin styles, API, and core scripts
-    <FilesMatch "(admin\.html|admin\.css|api\.php|data-store\.js|admin-core\.js|site-bridge\.js)$">
+    <FilesMatch "(admin\.html|admin\.css|api\.php|data-store\.js|admin-core\.js|site-bridge\.js|auth\.js)$">
         Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0"
         Header set Pragma "no-cache"
         Header set Expires "0"

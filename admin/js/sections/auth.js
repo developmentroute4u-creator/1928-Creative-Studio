@@ -146,6 +146,9 @@
       document.body.classList.add('auth-unlocked');
       document.documentElement.classList.add('auth-verified');
       gate.style.display = 'none';
+        gate.style.setProperty('display', 'none', 'important');
+        gate.style.setProperty('pointer-events', 'none', 'important');
+        gate.style.setProperty('visibility', 'hidden', 'important');
       gate.setAttribute('aria-hidden', 'true');
     } else {
       // Locked
@@ -280,6 +283,9 @@
             gate.style.opacity = '0';
             setTimeout(() => {
               gate.style.display = 'none';
+        gate.style.setProperty('display', 'none', 'important');
+        gate.style.setProperty('pointer-events', 'none', 'important');
+        gate.style.setProperty('visibility', 'hidden', 'important');
               document.body.classList.add('auth-unlocked');
               document.documentElement.classList.add('auth-verified');
               if (window.showToast) {
@@ -339,6 +345,9 @@
     document.documentElement.classList.remove('auth-verified');
 
     if (gate && gateCard) {
+      gate.style.removeProperty('display');
+      gate.style.removeProperty('pointer-events');
+      gate.style.removeProperty('visibility');
       gate.style.display = 'flex';
       void gate.offsetWidth;
       gate.style.opacity = '1';

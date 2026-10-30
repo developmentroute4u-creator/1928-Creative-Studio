@@ -4481,3 +4481,13 @@
       color: var(--cr-bright);
     }
 
+
+/* Complete Auth Unlocked State: Guarantee overlay does not block dashboard interactions */
+body.auth-unlocked #adminAuthGate,
+body.auth-unlocked .admin-auth-overlay {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  z-index: -9999 !important;
+}
