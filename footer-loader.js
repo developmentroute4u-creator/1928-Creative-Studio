@@ -382,7 +382,7 @@
 /* ═══════════════════════════════════════════════════════════
    PHONE VIEW (<= 768px) — LUXURY CARD FOOTER (Reference Image 2)
    ═══════════════════════════════════════════════════════════ */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   #footer-driver {
     position: relative !important;
     background: var(--bg) !important;

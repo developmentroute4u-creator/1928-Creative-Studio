@@ -3681,7 +3681,7 @@
       }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       /* Hide Trusted By label strictly on mobile */
       .bph-label {
         display: none !important;
@@ -3953,8 +3953,8 @@
       }
     }
 
-    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
-    @media (min-width: 769px) {
+    /* ── Smooth scrollbar on Desktop / Web view (> 1024px) ── */
+    @media (min-width: 1025px) {
       html {
         scrollbar-width: thin;
         scrollbar-color: var(--cr) var(--bg);
@@ -3974,8 +3974,8 @@
       }
     }
 
-    /* ── Hide Scrolling Sidebar (Scrollbar) completely on Phone view (<= 768px) ── */
-    @media (max-width: 768px) {
+    /* ── Hide Scrolling Sidebar (Scrollbar) completely on Phone & Tablet view (<= 1024px) ── */
+    @media (max-width: 1024px) {
       html, body {
         scrollbar-width: none !important;
         -ms-overflow-style: none !important;

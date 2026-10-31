@@ -1839,7 +1839,7 @@
         /* ------------------------------------------------------------
            PHONE SCREEN RULES (<= 860px ONLY)
            ------------------------------------------------------------ */
-        @media (max-width: 860px), (hover: none) and (pointer: coarse) {
+        @media (max-width: 1024px), (hover: none) and (pointer: coarse) {
           html, body {
             overflow-x: clip !important;
             max-width: 100vw !important;
@@ -3653,7 +3653,7 @@
 
     // Completely hide and disable custom cursor dot & hover ring on phone / touch screens
     function disableMobileCursor() {
-      if (window.innerWidth <= 860 || ('ontouchstart' in window && window.innerWidth <= 1024)) {
+      if (window.innerWidth <= 1024 || ('ontouchstart' in window && window.innerWidth <= 1024)) {
         document.querySelectorAll('.c-dot, .c-ring, #cDot, #cRing').forEach(el => {
           el.style.setProperty('display', 'none', 'important');
           el.style.setProperty('visibility', 'hidden', 'important');
@@ -3888,7 +3888,7 @@
     window.addEventListener('footerLoaded', ensureFooterSocialPlacement);
 
     function applyPhoneScrollbarPolicy() {
-      if (window.innerWidth <= 768) {
+      if (window.innerWidth <= 1024) {
         document.documentElement.classList.add('hide-scrollbar');
         document.body.classList.add('hide-scrollbar');
       }

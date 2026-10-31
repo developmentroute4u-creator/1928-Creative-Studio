@@ -3749,8 +3749,8 @@
       height: 0 !important;
     }
 
-    /* ── Smooth scrollbar on Desktop / Web view (> 768px) ── */
-    @media (min-width: 769px) {
+    /* ── Smooth scrollbar on Desktop / Web view (> 1024px) ── */
+    @media (min-width: 1025px) {
       html {
         scrollbar-width: thin;
         scrollbar-color: var(--cr) var(--bg);
@@ -3771,8 +3771,8 @@
     }
 
     /* ═══════════════════════════════════════════════════════════
-       MOBILE PHONE RESPONSIVE STYLES (Screen width <= 768px ONLY)
-       Desktop screens (> 768px) remain 100% untouched.
+       MOBILE PHONE & TABLET RESPONSIVE STYLES (Screen width <= 1024px)
+       Desktop screens (> 1024px) remain 100% untouched.
        ═══════════════════════════════════════════════════════════ */
     .phone-hero,
     .phone-story-section,
@@ -3780,7 +3780,7 @@
       display: none !important;
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
 
       /* ── Hide Custom Desktop Mouse Cursor ── */
       #cur,
@@ -3856,22 +3856,22 @@
         z-index: 10 !important;
       }
 
-      /* Phone View Hero Typography & Elements */
+      /* Phone & Tablet View Hero Typography & Elements */
       .hero-title {
         width: 92% !important;
-        max-width: 440px !important;
+        max-width: 600px !important;
       }
 
       .hero-title h1 {
-        font-size: clamp(34px, 9.5vw, 46px) !important;
+        font-size: clamp(34px, 7vw, 56px) !important;
         line-height: 1.04 !important;
         letter-spacing: -0.035em !important;
       }
 
       .hero-title .hero-sub {
-        font-size: clamp(13px, 3.5vw, 15px) !important;
+        font-size: clamp(13px, 2.8vw, 16px) !important;
         line-height: 1.5 !important;
-        max-width: 340px !important;
+        max-width: 500px !important;
         margin: 14px auto 0 !important;
       }
 
@@ -3938,18 +3938,18 @@
         transform: rotateY(0deg) rotateX(0deg) scale(0.68) !important;
       }
 
-      /* Hero Story Wrap on Phone */
+      /* Hero Story Wrap on Phone & Tablet */
       .hero-story-wrap {
         left: 50% !important;
         top: 65% !important;
         transform: translate(-50%, -50%) !important;
         width: calc(100vw - 40px) !important;
-        max-width: 380px !important;
+        max-width: 600px !important;
         text-align: center !important;
       }
 
       .story-words-block {
-        font-size: clamp(17px, 4.6vw, 21px) !important;
+        font-size: clamp(17px, 3.2vw, 24px) !important;
         line-height: 1.4 !important;
         text-align: center !important;
       }
@@ -3959,9 +3959,9 @@
         text-align: center !important;
       }
 
-      /* Hero Video Reel on Phone */
+      /* Hero Video Reel on Phone & Tablet */
       .hero-reel {
-        width: clamp(300px, 88vw, 380px) !important;
+        width: clamp(300px, 70vw, 520px) !important;
         height: auto !important;
         aspect-ratio: 16 / 9.5 !important;
         border-radius: 18px !important;
@@ -4372,12 +4372,12 @@
         margin: 0 !important;
         justify-content: center !important;
         width: 100% !important;
-        max-width: 380px !important;
+        max-width: 520px !important;
       }
 
       .p-card-v {
         width: 100% !important;
-        max-width: 380px !important;
+        max-width: 520px !important;
         transform: none !important;
         border-radius: 18px !important;
         box-sizing: border-box !important;
@@ -4439,7 +4439,7 @@
         transform: none !important;
         pointer-events: auto !important;
         width: 100% !important;
-        max-width: 390px !important;
+        max-width: 520px !important;
         box-sizing: border-box !important;
         flex-shrink: 0 !important;
       }
@@ -4493,7 +4493,7 @@
       .svc-stage {
         position: relative !important;
         width: 100% !important;
-        max-width: 390px !important;
+        max-width: 520px !important;
         flex: none !important;
         height: auto !important;
         display: flex !important;
@@ -4513,7 +4513,7 @@
         transform: none !important;
         opacity: 1 !important;
         width: 100% !important;
-        max-width: 390px !important;
+        max-width: 520px !important;
         margin: 0 auto !important;
         height: auto !important;
         min-height: 520px !important;
@@ -4534,7 +4534,7 @@
         margin: 0 auto !important;
         transform-origin: center top !important;
         width: 100% !important;
-        max-width: 390px !important;
+        max-width: 520px !important;
         height: auto !important;
         min-height: 460px !important;
         display: flex !important;
@@ -4945,7 +4945,7 @@
 
       .fbc-card {
         width: 100% !important;
-        max-width: 380px !important;
+        max-width: 520px !important;
         margin: 0 auto !important;
         box-sizing: border-box !important;
       }
@@ -7131,7 +7131,7 @@
         const sy = (typeof forcedSY === 'number') ? forcedSY : window.scrollY;
         const vh = window.innerHeight;
 
-        const isPhone = window.innerWidth <= 768;
+        const isPhone = window.innerWidth <= 1024;
         if (isPhone) {
           const isPastHero = sy >= (window.innerHeight * 0.6);
           if (nav) {
@@ -7228,7 +7228,7 @@
 
         /* ═══ §1 HERO & BRAND STORY ═══ */
         if (heroDriver && heroTitle && roomCube && heroReel) {
-          const isMob = window.innerWidth <= 768;
+          const isMob = window.innerWidth <= 1024;
           const heroH = heroDriver.offsetHeight - vh;
           const hp = clamp((sy - heroDriver.offsetTop) / (heroH || 1), 0, 1);
 
@@ -7393,7 +7393,7 @@
         }
 
         /* ═══ §3 SELECTED WORK — Parallax Showcase with Sticky Center Headline ═══ */
-        if (portDriver && window.innerWidth > 768) {
+        if (portDriver && window.innerWidth > 1024) {
           const portTop = portDriver.offsetTop;
 
           if (portStickyCenter) {
@@ -7446,7 +7446,7 @@
         }
 
         /* ═══ §4 SERVICES — Sequential Mobile Card Presentation ═══ */
-        if (window.innerWidth <= 768) {
+        if (window.innerWidth <= 1024) {
           if (svcDriver && allShowcaseCards && allShowcaseCards.length) {
             const svcTop = svcDriver.offsetTop;
             const svcH = svcDriver.offsetHeight - vh;
