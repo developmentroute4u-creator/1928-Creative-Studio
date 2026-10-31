@@ -4064,20 +4064,22 @@
         white-space: nowrap !important;
       }
 
-      /* ── 2. PHONE VIDEO & SYNCHRONIZED BRAND MANIFESTO (Pinned Scroll Stage) ── */
-      .phone-story-section {
-        display: block !important;
-        position: relative !important;
-        height: 240vh !important;
-        min-height: 240vh !important;
-        padding: 0 !important;
+      /* ── Redundant phone sections completely removed ── */
+      .phone-story-section,
+      #phoneStorySec,
+      .phone-hero,
+      #phoneHero,
+      .phone-manifesto-section {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
         margin: 0 !important;
-        background: var(--bg) !important;
-        z-index: 4 !important;
-        box-sizing: border-box !important;
-        width: 100% !important;
-        border-top: none !important;
-        border-bottom: 1px solid var(--rule, rgba(255, 255, 255, 0.08)) !important;
+        padding: 0 !important;
+        border: none !important;
       }
 
       .pss-container {
@@ -5328,7 +5330,7 @@
       </div>
 
       <!-- ══ PHONE HERO VIEW (Strictly scoped to phones <= 768px; hidden on desktop) ══ -->
-      <div class="phone-hero" id="phoneHero">
+      <div class="phone-hero" id="phoneHero" style="display:none !important;">
         <div class="ph-grid-bg"></div>
         <div class="ph-glow"></div>
 
@@ -5497,7 +5499,7 @@
   </section>
 
   <!-- ══ PHONE VIDEO & SYNCHRONIZED BRAND MANIFESTO (Strictly on phones <= 768px; hidden on desktop) ══ -->
-  <section id="phoneStorySec" class="phone-story-section">
+  <section id="phoneStorySec" class="phone-story-section" style="display:none !important;">
     <div class="pss-container">
 
       <!-- 1. The Featured Showreel Video Card (Proportional 16:9 Framed Card) -->
