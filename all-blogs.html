@@ -3,6 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var keys = ['1928_theme', 'theme', 't28', 'theme-1928'];
+        var t = "dark";
+        for (var i = 0; i < keys.length; i++) {
+          var v = localStorage.getItem(keys[i]);
+          if (v === "light" || v === "dark") { t = v; break; }
+        }
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20261101c" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20261101c" />

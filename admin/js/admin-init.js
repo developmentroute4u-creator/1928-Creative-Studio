@@ -38,7 +38,7 @@
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
+      try { ['1928_theme', 'theme', 't28', 'theme-1928'].forEach(k => localStorage.setItem(k, next)); } catch (e) {}
     });
 
     // ── 9. MYSQL LIVE DATABASE CONTROLLER ──

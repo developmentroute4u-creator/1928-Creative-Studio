@@ -14,6 +14,84 @@
 
   if (typeof window === 'undefined') return;
 
+  /* ============================================================
+     GLOBAL THEME PERSISTENCE ENGINE (Rock-Solid Cross-Page Sync)
+     ============================================================ */
+  window.StudioTheme = (function () {
+    const KEYS = ['1928_theme', 'theme', 't28', 'theme-1928'];
+
+    function getTheme() {
+      try {
+        for (let i = 0; i < KEYS.length; i++) {
+          const v = localStorage.getItem(KEYS[i]);
+          if (v === 'light' || v === 'dark') return v;
+        }
+      } catch (e) {}
+      return document.documentElement.getAttribute('data-theme') || 'dark';
+    }
+
+    function applyTheme(t) {
+      if (t !== 'light' && t !== 'dark') t = 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (document.body) {
+        document.body.setAttribute('data-theme', t);
+      }
+      try {
+        for (let i = 0; i < KEYS.length; i++) {
+          localStorage.setItem(KEYS[i], t);
+        }
+      } catch (e) {}
+
+      window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: t } }));
+    }
+
+    function toggleTheme() {
+      const cur = getTheme();
+      const next = cur === 'dark' ? 'light' : 'dark';
+      applyTheme(next);
+      return next;
+    }
+
+    // Apply immediately upon execution
+    applyTheme(getTheme());
+
+    // Listen to storage events across tabs & windows
+    window.addEventListener('storage', (e) => {
+      if (KEYS.includes(e.key)) {
+        const updated = getTheme();
+        if (document.documentElement.getAttribute('data-theme') !== updated) {
+          applyTheme(updated);
+        }
+      }
+    });
+
+    // Auto-bind to every theme toggle button on the page in capture phase
+    function bindThemeButtons() {
+      const buttons = document.querySelectorAll('#theme-fab, #themeFab, #authThemeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
+      buttons.forEach(btn => {
+        if (btn.dataset.themeMasterBound === 'true') return;
+        btn.dataset.themeMasterBound = 'true';
+        btn.addEventListener('click', (e) => {
+          e.stopImmediatePropagation();
+          toggleTheme();
+        }, true);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', bindThemeButtons);
+    } else {
+      bindThemeButtons();
+    }
+
+    return {
+      get: getTheme,
+      set: applyTheme,
+      toggle: toggleTheme,
+      bind: bindThemeButtons
+    };
+  })();
+
   function getCurrentPageKey() {
     const path = (window.location.pathname || '').toLowerCase().split('/').pop() || 'index.html';
     if (path === '' || path === 'index.html') return 'home';

@@ -3,6 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var keys = ['1928_theme', 'theme', 't28', 'theme-1928'];
+        var t = "dark";
+        for (var i = 0; i < keys.length; i++) {
+          var v = localStorage.getItem(keys[i]);
+          if (v === "light" || v === "dark") { t = v; break; }
+        }
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20261101c" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20261101c" />
@@ -6999,15 +7012,19 @@
 
       /* ── Floating Theme Toggle ──────────────────────────── */
       const DR = document.documentElement;
-      const initTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark';
-      DR.setAttribute('data-theme', initTheme);
+      function setUnifiedTheme(n) {
+        DR.setAttribute('data-theme', n);
+        try {
+          ['1928_theme', 'theme', 't28', 'theme-1928'].forEach(k => localStorage.setItem(k, n));
+        } catch (e) {}
+      }
+      const initTheme = localStorage.getItem('1928_theme') || localStorage.getItem('theme') || localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark';
+      setUnifiedTheme(initTheme);
       const themeFab = document.getElementById('theme-fab');
       if (themeFab) {
         themeFab.addEventListener('click', () => {
           const n = DR.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-          DR.setAttribute('data-theme', n);
-          localStorage.setItem('t28', n);
-          localStorage.setItem('theme-1928', n);
+          setUnifiedTheme(n);
         });
       }
 

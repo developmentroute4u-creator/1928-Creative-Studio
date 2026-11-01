@@ -3,6 +3,19 @@
 
 <head>
   <meta charset="UTF-8" />
+  <script>
+    (function () {
+      try {
+        var keys = ['1928_theme', 'theme', 't28', 'theme-1928'];
+        var t = "dark";
+        for (var i = 0; i < keys.length; i++) {
+          var v = localStorage.getItem(keys[i]);
+          if (v === "light" || v === "dark") { t = v; break; }
+        }
+        document.documentElement.setAttribute("data-theme", t);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Studio Terms · 1928 Creative Studio</title>
   <meta name="description" content="Studio Terms of 1928 Creative Studio — Our standard engagement terms, creative collaboration principles, intellectual property standards, and project guidelines." />
@@ -11,14 +24,6 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261101c" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20261101c" />
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v=20261101c" />
-  <script>
-    (function () {
-      try {
-        var t = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', t);
-      } catch (e) {}
-    })();
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -523,6 +528,7 @@
           localStorage.setItem('t28', t);
           localStorage.setItem('theme-1928', t);
           localStorage.setItem('theme', t);
+          localStorage.setItem('1928_theme', t);
         } catch (e) {}
       }
 
@@ -535,6 +541,7 @@
 
   <!-- ── Global Dynamic Footer ── -->
   <script src="footer-loader.js?v=20261025_02"></script>
+  <script src="site-bridge.js?v=20261101_v4"></script>
 </body>
 
 </html>
