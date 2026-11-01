@@ -27,14 +27,7 @@
   <meta name="description"
     content="Explore selected works and category-defining brand architectures engineered by 1928 Creative Studio." />
   
-  <!-- Immediate Theme Initializer & Session Tracker to prevent flashing -->
-  <script>
-    (function () {
-      try { sessionStorage.setItem('1928_site_visited', 'true'); } catch (e) { }
-      const savedTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    })();
-  </script>
+
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -2768,7 +2761,7 @@
           sector: 'Modern Architecture & Urban Planning',
           deliverables: 'Logo Mark, Embossed Stationery, Spatial Codes',
           timeline: '4 Months · MENA Region',
-          overview: 'Creating an architectural brand language rooted in structural integrity, monolithic geometries, and tactile materials that reflect physical urban excellence. We formulated a geometric logo token, tactile stationery system with micro-embossed crimson foil on raw concrete linen, and spatial brand codes that elevated the firm's global win-rate by 48% across international institutional developments.',
+          overview: 'Creating an architectural brand language rooted in structural integrity, monolithic geometries, and tactile materials that reflect physical urban excellence. We formulated a geometric logo token, tactile stationery system with micro-embossed crimson foil on raw concrete linen, and spatial brand codes that elevated the firm\'s global win-rate by 48% across international institutional developments.',
           heroImg: 'assets/img/portfolio/port-spectra.jpg',
           gal1: 'assets/img/portfolio/port-spectra.jpg',
           gal2: 'assets/img/why-choose/wc-l1.jpg',
@@ -2882,7 +2875,7 @@
           sector: 'Ultra-Luxury Hospitality',
           deliverables: 'VIP Onboarding Suite, Culinary Collateral, Campaign',
           timeline: '4 Months · Mumbai Flagship',
-          overview: 'A bespoke suite of sensory physical collateral and digital guest experiences engineered for one of India's most prestigious luxury hotel addresses. Featuring handcrafted gold foil debossing, custom calligraphy monograms, and tactile artisan paper stocks, the new collateral suite achieved record 99.2% VIP guest satisfaction ratings and international travel press acclaim.',
+          overview: 'A bespoke suite of sensory physical collateral and digital guest experiences engineered for one of India\'s most prestigious luxury hotel addresses. Featuring handcrafted gold foil debossing, custom calligraphy monograms, and tactile artisan paper stocks, the new collateral suite achieved record 99.2% VIP guest satisfaction ratings and international travel press acclaim.',
           heroImg: 'assets/services/svc_2.jpg',
           gal1: 'assets/services/svc_2.jpg',
           gal2: 'assets/services/svc_5.jpg',
@@ -3009,22 +3002,31 @@
       const themeFab = document.getElementById('theme-fab');
       const root = document.documentElement;
 
-      function setTheme(theme) {
-        root.setAttribute('data-theme', theme);
-        localStorage.setItem('t28', theme);
-        localStorage.setItem('theme-1928', theme);
-        localStorage.setItem('theme', theme);
+      function setUnifiedTheme(theme) {
+        if (window.StudioTheme && typeof window.StudioTheme.set === 'function') {
+          window.StudioTheme.set(theme);
+        } else {
+          root.setAttribute('data-theme', theme);
+          try {
+            ['1928_theme', 'theme', 't28', 'theme-1928'].forEach(k => localStorage.setItem(k, theme));
+          } catch (e) {}
+        }
       }
 
-      // Read current active or stored theme
-      const initialTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
-      setTheme(initialTheme);
+      const initialTheme = (window.StudioTheme && typeof window.StudioTheme.get === 'function')
+        ? window.StudioTheme.get()
+        : (localStorage.getItem('1928_theme') || localStorage.getItem('theme') || localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark');
+      setUnifiedTheme(initialTheme);
 
-      if (themeFab) {
+      if (themeFab && !themeFab.dataset.boundLocal) {
+        themeFab.dataset.boundLocal = 'true';
         themeFab.addEventListener('click', () => {
-          const current = root.getAttribute('data-theme');
-          const next = current === 'dark' ? 'light' : 'dark';
-          setTheme(next);
+          if (window.StudioTheme && typeof window.StudioTheme.toggle === 'function') {
+            window.StudioTheme.toggle();
+          } else {
+            const current = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            setUnifiedTheme(current);
+          }
         });
       }
 
@@ -3077,7 +3079,7 @@
     })();
   </script>
   <script src="data-store.js?v=20261027_v3"></script>
-  <script src="site-bridge.js?v=20261027_v3"></script>
+  <script src="site-bridge.js?v=20261101_v5"></script>
 </body>
 
 </html>

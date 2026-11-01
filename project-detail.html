@@ -483,16 +483,28 @@
 
       // Floating Theme Toggle Sync
       const themeFab = document.getElementById('theme-fab');
-      const savedTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark';
-      document.documentElement.setAttribute('data-theme', savedTheme);
+      function setUnifiedTheme(n) {
+        if (window.StudioTheme && typeof window.StudioTheme.set === 'function') {
+          window.StudioTheme.set(n);
+        } else {
+          document.documentElement.setAttribute('data-theme', n);
+          if (document.body) document.body.setAttribute('data-theme', n);
+          try {
+            ['1928_theme', 'theme', 't28', 'theme-1928'].forEach(k => localStorage.setItem(k, n));
+          } catch (e) {}
+        }
+      }
 
-      if (themeFab) {
+      if (themeFab && !themeFab.dataset.boundLocal) {
+        themeFab.dataset.boundLocal = 'true';
         themeFab.addEventListener('click', () => {
-          const curTheme = document.documentElement.getAttribute('data-theme');
-          const nextTheme = curTheme === 'dark' ? 'light' : 'dark';
-          document.documentElement.setAttribute('data-theme', nextTheme);
-          localStorage.setItem('t28', nextTheme);
-          localStorage.setItem('theme-1928', nextTheme);
+          if (window.StudioTheme && typeof window.StudioTheme.toggle === 'function') {
+            window.StudioTheme.toggle();
+          } else {
+            const curTheme = document.documentElement.getAttribute('data-theme');
+            const nextTheme = curTheme === 'dark' ? 'light' : 'dark';
+            setUnifiedTheme(nextTheme);
+          }
         });
       }
     })();
@@ -500,7 +512,7 @@
 
   <!-- CMS Live Bridge -->
   <script src="data-store.js?v=20261027_v3"></script>
-  <script src="site-bridge.js?v=20261027_v3"></script>
+  <script src="site-bridge.js?v=20261101_v5"></script>
 </body>
 
 </html>

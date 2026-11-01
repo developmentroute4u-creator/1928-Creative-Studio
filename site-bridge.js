@@ -46,7 +46,8 @@
     }
 
     function toggleTheme() {
-      const cur = getTheme();
+      const activeAttr = document.documentElement.getAttribute('data-theme');
+      const cur = (activeAttr === 'light' || activeAttr === 'dark') ? activeAttr : getTheme();
       const next = cur === 'dark' ? 'light' : 'dark';
       applyTheme(next);
       return next;
@@ -65,16 +66,17 @@
       }
     });
 
-    // Auto-bind to every theme toggle button on the page in capture phase
+    // Auto-bind to every theme toggle button on the page
     function bindThemeButtons() {
-      const buttons = document.querySelectorAll('#theme-fab, #themeFab, #authThemeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
+      const buttons = document.querySelectorAll('#theme-fab, #themeFab, #authThemeToggleBtn, #themeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
       buttons.forEach(btn => {
         if (btn.dataset.themeMasterBound === 'true') return;
         btn.dataset.themeMasterBound = 'true';
         btn.addEventListener('click', (e) => {
-          e.stopImmediatePropagation();
+          e.preventDefault();
+          e.stopPropagation();
           toggleTheme();
-        }, true);
+        });
       });
     }
 
@@ -83,6 +85,13 @@
     } else {
       bindThemeButtons();
     }
+    setTimeout(bindThemeButtons, 400);
+    setTimeout(bindThemeButtons, 1200);
+
+    // Global delegates so all legacy code syncs through StudioTheme
+    window.setTheme = applyTheme;
+    window.setUnifiedTheme = applyTheme;
+    window.toggleTheme = toggleTheme;
 
     return {
       get: getTheme,

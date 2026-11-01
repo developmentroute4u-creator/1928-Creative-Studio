@@ -33,13 +33,7 @@
     rel="stylesheet" />
 
   <script>
-    (function () {
-      try {
-        sessionStorage.setItem('1928_site_visited', 'true');
-        const saved = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
-        document.documentElement.setAttribute('data-theme', saved);
-      } catch (e) {}
-    })();
+    try { sessionStorage.setItem('1928_site_visited', 'true'); } catch (e) {}
   </script>
 
   <style>
@@ -5057,23 +5051,28 @@
   <script>
     /* ── Floating Theme Toggle Engine (Exact Home Page Behavior) ── */
     const DR = document.documentElement;
-    const initTheme = localStorage.getItem('t28') || localStorage.getItem('theme-1928') || localStorage.getItem('theme') || 'dark';
-    DR.setAttribute('data-theme', initTheme);
-    if (document.body) document.body.setAttribute('data-theme', initTheme);
-
-    function toggleTheme() {
-      const current = DR.getAttribute('data-theme') || 'dark';
-      const n = current === 'dark' ? 'light' : 'dark';
-      DR.setAttribute('data-theme', n);
-      if (document.body) document.body.setAttribute('data-theme', n);
-      try {
-        localStorage.setItem('t28', n);
-        localStorage.setItem('theme-1928', n);
-        localStorage.setItem('theme', n);
-      } catch (e) {}
+    function setUnifiedTheme(n) {
+      if (window.StudioTheme && typeof window.StudioTheme.set === 'function') {
+        window.StudioTheme.set(n);
+      } else {
+        DR.setAttribute('data-theme', n);
+        if (document.body) document.body.setAttribute('data-theme', n);
+        try {
+          ['1928_theme', 'theme', 't28', 'theme-1928'].forEach(k => localStorage.setItem(k, n));
+        } catch (e) {}
+      }
     }
-
+    function toggleTheme() {
+      if (window.StudioTheme && typeof window.StudioTheme.toggle === 'function') {
+        window.StudioTheme.toggle();
+      } else {
+        const current = DR.getAttribute('data-theme') || 'dark';
+        const n = current === 'dark' ? 'light' : 'dark';
+        setUnifiedTheme(n);
+      }
+    }
     window.toggleTheme = toggleTheme;
+    window.setUnifiedTheme = setUnifiedTheme;
 
     document.addEventListener('DOMContentLoaded', () => {
       const themeFab = document.getElementById('theme-fab');
@@ -6406,7 +6405,7 @@
     });
   </script>
   <script src="data-store.js?v=20261027_v3"></script>
-  <script src="site-bridge.js?v=20261027_v3"></script>
+  <script src="site-bridge.js?v=20261101_v5"></script>
 </body>
 
 </html>
