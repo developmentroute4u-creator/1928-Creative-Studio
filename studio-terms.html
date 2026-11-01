@@ -260,6 +260,30 @@
       font-weight: 700;
     }
 
+    .legal-sub-list {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-left: 2px;
+    }
+
+    .legal-sub-item {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .legal-sub-item strong {
+      color: var(--ink);
+      font-weight: 700;
+      min-width: 145px;
+      flex-shrink: 0;
+    }
+
     /* ── Floating Theme FAB ── */
     #theme-fab {
       position: fixed;
@@ -364,10 +388,16 @@
       <!-- 3 -->
       <section class="legal-item">
         <h2 class="legal-item-title">3. Intellectual Property &amp; Asset Ownership</h2>
-        <p class="legal-item-desc">
-          "¢ <strong>Final Deliverables:</strong> Upon project completion and full settlement of all associated invoices, all rights and title to final, approved creative deliverables (including custom logos, brand assets, vector artwork, and compiled web deliverables) transfer to the client for their intended commercial usage.<br />
-          "¢ <strong>Preliminary Explorations:</strong> Preliminary design concepts, unused drafts, rejected sketches, working source methodologies, and proprietary internal toolsets developed independently by 1928 Creative Studio remain the exclusive intellectual property of the studio.
-        </p>
+        <div class="legal-sub-list">
+          <div class="legal-sub-item">
+            <strong>Final Deliverables:</strong>
+            <span>Upon project completion and full settlement of all associated invoices, all rights and title to final, approved creative deliverables (including custom logos, brand assets, vector artwork, and compiled web deliverables) transfer to the client for their intended commercial usage.</span>
+          </div>
+          <div class="legal-sub-item">
+            <strong>Preliminary Explorations:</strong>
+            <span>Preliminary design concepts, unused drafts, rejected sketches, working source methodologies, and proprietary internal toolsets developed independently by 1928 Creative Studio remain the exclusive intellectual property of the studio.</span>
+          </div>
+        </div>
       </section>
 
       <!-- 4 -->

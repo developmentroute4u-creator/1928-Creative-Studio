@@ -260,6 +260,30 @@
       font-weight: 700;
     }
 
+    .legal-sub-list {
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-left: 2px;
+    }
+
+    .legal-sub-item {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-mid);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .legal-sub-item strong {
+      color: var(--ink);
+      font-weight: 700;
+      min-width: 145px;
+      flex-shrink: 0;
+    }
+
     /* ── Floating Theme FAB ── */
     #theme-fab {
       position: fixed;
@@ -351,10 +375,16 @@
         <p class="legal-item-desc">
           When you initiate contact, submit a project brief, or navigate our platform, we may gather specific information including:
         </p>
-        <p class="legal-item-desc">
-          "¢ <strong>Direct Contact &amp; Brief Information:</strong> Your name, business email address, telephone number, organization name, project scope, budget indications, timeline preferences, and any strategic documentation you provide.<br />
-          "¢ <strong>Technical &amp; Usage Information:</strong> Anonymous device analytics, browser configuration, IP address, referral URLs, and interaction signals designed to maintain system security and optimize presentation performance.
-        </p>
+        <div class="legal-sub-list">
+          <div class="legal-sub-item">
+            <strong>Direct Contact &amp; Brief Information:</strong>
+            <span>Your name, business email address, telephone number, organization name, project scope, budget indications, timeline preferences, and any strategic documentation you provide.</span>
+          </div>
+          <div class="legal-sub-item">
+            <strong>Technical &amp; Usage Information:</strong>
+            <span>Anonymous device analytics, browser configuration, IP address, referral URLs, and interaction signals designed to maintain system security and optimize presentation performance.</span>
+          </div>
+        </div>
       </section>
 
       <!-- 2 -->
@@ -363,12 +393,20 @@
         <p class="legal-item-desc">
           Every piece of information shared with 1928 Creative Studio serves a deliberate, purposeful function:
         </p>
-        <p class="legal-item-desc">
-          "¢ Reviewing and evaluating project briefs to prepare accurate creative scopes and proposals.<br />
-          "¢ Direct communication, scheduling consultations, and managing active client engagements.<br />
-          "¢ Facilitating contract execution, invoicing, and fulfillment of agreed-upon studio services.<br />
-          "¢ Maintaining the technical integrity, security, and continuous improvement of our digital portfolio.
-        </p>
+        <div class="legal-sub-list">
+          <div class="legal-sub-item">
+            <span>Reviewing and evaluating project briefs to prepare accurate creative scopes and proposals.</span>
+          </div>
+          <div class="legal-sub-item">
+            <span>Direct communication, scheduling consultations, and managing active client engagements.</span>
+          </div>
+          <div class="legal-sub-item">
+            <span>Facilitating contract execution, invoicing, and fulfillment of agreed-upon studio services.</span>
+          </div>
+          <div class="legal-sub-item">
+            <span>Maintaining the technical integrity, security, and continuous improvement of our digital portfolio.</span>
+          </div>
+        </div>
       </section>
 
       <!-- 3 -->
