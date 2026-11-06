@@ -14,14 +14,45 @@
         }
         document.documentElement.setAttribute("data-theme", t);
       } catch (e) {}
+
+      // Early global theme listener to prevent double-toggle & handle immediate user clicks
+      var isToggling = false;
+      window.__toggleThemeGlobal = function () {
+        if (isToggling) return;
+        isToggling = true;
+        setTimeout(function () { isToggling = false; }, 250);
+        var activeAttr = document.documentElement.getAttribute('data-theme') || 'dark';
+        var next = activeAttr === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        if (document.body) document.body.setAttribute('data-theme', next);
+        try {
+          var k = ['1928_theme', 'theme', 't28', 'theme-1928'];
+          for (var j = 0; j < k.length; j++) localStorage.setItem(k[j], next);
+        } catch (e) {}
+        window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: next } }));
+      };
+
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest && e.target.closest('#theme-fab, #themeFab, #authThemeToggleBtn, #themeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
+        if (btn) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          if (window.StudioTheme && typeof window.StudioTheme.toggle === 'function') {
+            window.StudioTheme.toggle();
+          } else {
+            window.__toggleThemeGlobal();
+          }
+        }
+      }, true);
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png?v=20261101c" />
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png?v=20261101c" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=20261101c" />
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=20261101c" />
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?v=20261101c" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png?v=20261106" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png?v=20261106" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg?v=20261106" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png?v=20261106" />
+  <link rel="shortcut icon" type="image/x-icon" href="assets/favicon/favicon.ico?v=20261106" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
 
   <title>Under Development · 1928 Creative Studio</title>
   <meta name="description" content="1928 Creative Studio — This page is currently under development." />
@@ -512,7 +543,7 @@
 
   <!-- CMS Live Bridge -->
   <script src="data-store.js?v=20261027_v3"></script>
-  <script src="site-bridge.js?v=20261101_v5"></script>
+  <script src="site-bridge.js?v=20261106_v6"></script>
 </body>
 
 </html>

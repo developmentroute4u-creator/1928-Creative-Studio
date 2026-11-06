@@ -19,6 +19,7 @@
      ============================================================ */
   window.StudioTheme = (function () {
     const KEYS = ['1928_theme', 'theme', 't28', 'theme-1928'];
+    let isToggling = false;
 
     function getTheme() {
       try {
@@ -46,6 +47,10 @@
     }
 
     function toggleTheme() {
+      if (isToggling) return getTheme();
+      isToggling = true;
+      setTimeout(() => { isToggling = false; }, 250);
+
       const activeAttr = document.documentElement.getAttribute('data-theme');
       const cur = (activeAttr === 'light' || activeAttr === 'dark') ? activeAttr : getTheme();
       const next = cur === 'dark' ? 'light' : 'dark';
@@ -66,27 +71,15 @@
       }
     });
 
-    // Auto-bind to every theme toggle button on the page
-    function bindThemeButtons() {
-      const buttons = document.querySelectorAll('#theme-fab, #themeFab, #authThemeToggleBtn, #themeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
-      buttons.forEach(btn => {
-        if (btn.dataset.themeMasterBound === 'true') return;
-        btn.dataset.themeMasterBound = 'true';
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          toggleTheme();
-        });
-      });
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', bindThemeButtons);
-    } else {
-      bindThemeButtons();
-    }
-    setTimeout(bindThemeButtons, 400);
-    setTimeout(bindThemeButtons, 1200);
+    // Capture-phase document click listener to reliably intercept all theme button clicks
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest && e.target.closest('#theme-fab, #themeFab, #authThemeToggleBtn, #themeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
+      if (btn) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        toggleTheme();
+      }
+    }, true);
 
     // Global delegates so all legacy code syncs through StudioTheme
     window.setTheme = applyTheme;
@@ -96,8 +89,7 @@
     return {
       get: getTheme,
       set: applyTheme,
-      toggle: toggleTheme,
-      bind: bindThemeButtons
+      toggle: toggleTheme
     };
   })();
 

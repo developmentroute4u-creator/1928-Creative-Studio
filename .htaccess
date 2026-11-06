@@ -18,6 +18,12 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^assets/uploads/(.+)$ api.php?action=serve_media&file=$1 [QSA,L]
 
+    # Fallback rewrites for direct root favicon requests to assets/favicon/
+    RewriteRule ^favicon\.ico$ assets/favicon/favicon.ico [L]
+    RewriteRule ^favicon\.svg$ assets/favicon/favicon.svg [L]
+    RewriteRule ^favicon\.png$ assets/favicon/favicon.png [L]
+    RewriteRule ^apple-touch-icon.*\.png$ assets/favicon/apple-touch-icon.png [L]
+
     # Pass through physical asset and media directories directly
     RewriteRule ^(admin|assets|css|js|images|uploads|vendor|whatsapp-api)/ - [L]
 
