@@ -99,6 +99,9 @@ function checkAndAutoSeed(PDO $db) {
         $portTableCheck = $db->query("SHOW TABLES LIKE 'portfolio'")->fetch();
         if ($portTableCheck) {
             $portCols = $db->query("SHOW COLUMNS FROM `portfolio`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('card_heading', $portCols)) {
+                $db->exec("ALTER TABLE `portfolio` ADD COLUMN `card_heading` TEXT NULL AFTER `title`");
+            }
             if (!in_array('gallery_json', $portCols)) {
                 $db->exec("ALTER TABLE `portfolio` ADD COLUMN `gallery_json` LONGTEXT NULL AFTER `cover_image`");
             }
@@ -513,6 +516,8 @@ try {
                 return [
                     'id' => $p['project_id'],
                     'title' => $p['title'],
+                    'cardHeading' => $p['card_heading'] ?? '',
+                    'cardTitle' => $p['card_heading'] ?? '',
                     'client' => $p['client'] ?? '',
                     'sector' => $p['sector'] ?? '',
                     'deliverables' => $p['deliverables'] ?? '',
@@ -1006,6 +1011,7 @@ try {
         case 'save_portfolio':
             $projectId = $inputData['id'] ?? ('proj-' . substr(md5(uniqid()), 0, 8));
             $title = $inputData['title'] ?? 'New Project';
+            $cardHeading = $inputData['cardHeading'] ?? ($inputData['cardTitle'] ?? '');
             $client = $inputData['client'] ?? '';
             $sector = $inputData['sector'] ?? '';
             $deliverables = $inputData['deliverables'] ?? '';
@@ -1048,11 +1054,12 @@ try {
 
             $stmt = $db->prepare("
                 INSERT INTO `portfolio`
-                (`project_id`, `title`, `client`, `sector`, `deliverables`, `category_keys`, `category_display`, `tag_pill`, `grid_span`, `year`, `timeline`, `cover_image`, `overview_title`, `gallery_json`, `summary`, `challenge`, `approach`, `impact`, `metrics_json`, `featured`, `display_order`, `active`)
+                (`project_id`, `title`, `card_heading`, `client`, `sector`, `deliverables`, `category_keys`, `category_display`, `tag_pill`, `grid_span`, `year`, `timeline`, `cover_image`, `overview_title`, `gallery_json`, `summary`, `challenge`, `approach`, `impact`, `metrics_json`, `featured`, `display_order`, `active`)
                 VALUES
-                (:pid, :title, :client, :sector, :deliverables, :cat, :catdisp, :pill, :span, :yr, :timeline, :cover, :ovtitle, :gallery, :sum, :chal, :appr, :imp, :metrics, :feat, :ord, 1)
+                (:pid, :title, :cardhead, :client, :sector, :deliverables, :cat, :catdisp, :pill, :span, :yr, :timeline, :cover, :ovtitle, :gallery, :sum, :chal, :appr, :imp, :metrics, :feat, :ord, 1)
                 ON DUPLICATE KEY UPDATE
                     `title` = VALUES(`title`),
+                    `card_heading` = VALUES(`card_heading`),
                     `client` = VALUES(`client`),
                     `sector` = VALUES(`sector`),
                     `deliverables` = VALUES(`deliverables`),
@@ -1077,6 +1084,7 @@ try {
             $stmt->execute([
                 ':pid' => $projectId,
                 ':title' => $title,
+                ':cardhead' => $cardHeading,
                 ':client' => $client,
                 ':sector' => $sector,
                 ':deliverables' => $deliverables,

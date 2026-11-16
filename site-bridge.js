@@ -668,7 +668,7 @@
         const numStr = slotNum < 10 ? `0${slotNum}` : `${slotNum}`;
         const clientStr = (proj.client || proj.title || 'CASE STUDY').toUpperCase();
         const img = proj.coverImage || proj.bannerImage || selectedWorkImages[i] || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';
-        const titleText = proj.summary || proj.subheading || proj.title;
+        const titleText = (proj.cardHeading && proj.cardHeading.trim()) ? proj.cardHeading.trim() : (proj.summary || proj.subheading || proj.title);
 
         // Parse 2 tags cleanly
         let tag1 = 'Branding';

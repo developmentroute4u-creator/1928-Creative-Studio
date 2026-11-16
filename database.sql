@@ -252,6 +252,7 @@ CREATE TABLE `portfolio` (
   `id` int NOT NULL AUTO_INCREMENT,
   `project_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `card_heading` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `client` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `sector` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deliverables` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,

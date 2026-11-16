@@ -889,7 +889,7 @@
     .modal-hero-banner {
       width: 100%;
       height: clamp(340px, 45vh, 560px);
-      border-radius: 28px;
+      border-radius: 0 !important;
       overflow: hidden;
       position: relative;
       margin-bottom: clamp(30px, 4vh, 50px);
@@ -901,6 +901,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: 0 !important;
     }
 
     .modal-hero-overlay {
@@ -948,7 +949,7 @@
     .modal-spec-card {
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid var(--rule);
-      border-radius: 20px;
+      border-radius: 0 !important;
       padding: 28px;
       display: flex;
       flex-direction: column;
@@ -1001,7 +1002,7 @@
     .modal-gal-card {
       width: 100%;
       height: clamp(700px, 88vh, 1020px);
-      border-radius: clamp(20px, 2.5vw, 32px);
+      border-radius: 0 !important;
       overflow: hidden;
       border: 1px solid var(--rule);
       background: #111115;
@@ -1018,6 +1019,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: 0 !important;
     }
 
     /* Modal End Benchmark CTA */
@@ -2566,8 +2568,8 @@
           </div>
         </div>
 
-        <!-- Project Visual Gallery Showcase (Stack of 6 Big Master Cards) -->
-        <div class="modal-project-gallery">
+        <!-- Project Visual Gallery Showcase (Dynamic Master Cards) -->
+        <div class="modal-project-gallery" id="modalProjectGallery">
           <div class="modal-gal-card">
             <img id="mGal1" src="assets/img/portfolio/port-chronos.jpg" alt="Case Study Asset 1" />
           </div>
@@ -2979,14 +2981,23 @@
         document.getElementById('mTimeline').textContent = timelineVal;
 
         const imgs = galleryImages;
-        for (let g = 1; g <= 6; g++) {
-          const galEl = document.getElementById('mGal' + g);
-          if (galEl) {
-            galEl.onerror = function() {
-              this.onerror = null;
-              this.src = 'assets/img/portfolio/port-chronos.jpg';
-            };
-            galEl.src = imgs[g - 1] || heroImg || 'assets/img/portfolio/port-chronos.jpg';
+        const galContainer = document.getElementById('modalProjectGallery') || document.querySelector('.modal-project-gallery');
+        if (galContainer && Array.isArray(imgs) && imgs.length > 0) {
+          galContainer.innerHTML = imgs.map((imgSrc, idx) => `
+            <div class="modal-gal-card" style="border-radius:0 !important;">
+              <img id="mGal${idx + 1}" src="${imgSrc || heroImg || 'assets/img/portfolio/port-chronos.jpg'}" alt="${title} Asset ${idx + 1}" style="border-radius:0 !important;" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
+            </div>
+          `).join('');
+        } else {
+          for (let g = 1; g <= 6; g++) {
+            const galEl = document.getElementById('mGal' + g);
+            if (galEl) {
+              galEl.onerror = function() {
+                this.onerror = null;
+                this.src = 'assets/img/portfolio/port-chronos.jpg';
+              };
+              galEl.src = (imgs && imgs[g - 1]) || heroImg || 'assets/img/portfolio/port-chronos.jpg';
+            }
           }
         }
 

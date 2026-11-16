@@ -2568,6 +2568,12 @@
             <span class="form-hint">Displayed on the work card and as the primary hero title on the case study detail page.</span>
           </div>
 
+          <div class="form-group">
+            <label class="form-label">Homepage Card Headline (Below Image on Homepage)</label>
+            <input type="text" class="form-input" id="projectCardHeadingInput" placeholder="e.g. Distinctive brand identity &amp; luxury digital architecture..." />
+            <span class="form-hint">Main heading displayed directly below this project card on the homepage showcase. Defaults to description if left blank.</span>
+          </div>
+
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
             <div class="form-group">
               <label class="form-label">Subheading at the Top</label>
@@ -2672,15 +2678,21 @@
             </div>
           </div>
 
-          <!-- Section 5: The Six Big Images (Drag & Drop Reorderable Gallery) -->
-          <div class="modal-section-badge">05 // The Six Big Gallery Images (Drag to Reorder · 01 to 06)</div>
+          <!-- Section 5: Big Gallery Images (Drag & Drop Reorderable Gallery) -->
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:24px;margin-bottom:12px;">
+            <div class="modal-section-badge" style="margin:0;">05 // Big Gallery Images (Drag to Reorder)</div>
+            <button type="button" class="btn-action-primary" id="addGalleryItemBtn" onclick="addGalleryImageSlot()" style="padding:7px 16px;font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:6px;border-radius:6px;cursor:pointer;flex-shrink:0;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Add Image</span>
+            </button>
+          </div>
           
           <p style="font-size:12px;color:var(--ink-mid);margin-bottom:12px;">
             Drag and drop any image card to rearrange the showcase order from first to last, or use the <strong>▲ / ▼</strong> arrow buttons. All changes update the detail page gallery in real-time.
           </p>
 
           <div id="projectGalleryReorderList" class="gallery-reorder-container">
-            <!-- Dynamically populated 6 reorderable image cards -->
+            <!-- Dynamically populated reorderable image cards -->
           </div>
 
         </div>

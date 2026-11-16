@@ -45,17 +45,24 @@
       const container = document.getElementById('projectGalleryReorderList');
       if (!container) return;
 
-      while (currentGalleryImages.length < 6) {
-        currentGalleryImages.push('assets/img/portfolio/port-chronos.jpg');
+      const count = currentGalleryImages.length;
+      if (count === 0) {
+        container.innerHTML = `
+          <div style="text-align:center;padding:24px;border:1px dashed var(--rule);border-radius:8px;color:var(--ink-mid);font-size:12px;">
+            No showcase images in gallery. Click <strong>+ Add Image</strong> above to add photos.
+          </div>
+        `;
+        return;
       }
-      currentGalleryImages = currentGalleryImages.slice(0, 6);
 
-      container.innerHTML = currentGalleryImages.map((imgUrl, idx) => `
+      container.innerHTML = currentGalleryImages.map((imgUrl, idx) => {
+        const numBadge = (idx + 1) < 10 ? `0${idx + 1}` : `${idx + 1}`;
+        return `
         <div class="gallery-drag-item" draggable="true" data-index="${idx}">
           <div class="gallery-drag-handle" title="Drag to reorder showcase">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="6" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="9" cy="18" r="1.5"/><circle cx="15" cy="6" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="15" cy="18" r="1.5"/></svg>
           </div>
-          <span class="gallery-order-badge">0${idx + 1}</span>
+          <span class="gallery-order-badge">${numBadge}</span>
           <div class="gallery-thumb-wrap">
             <img src="${imgUrl || 'assets/img/portfolio/port-chronos.jpg'}" alt="Gallery ${idx + 1}" id="galThumb_${idx}" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
           </div>
@@ -68,11 +75,12 @@
           </div>
           <div class="gallery-btn-group">
             <button type="button" class="gallery-icon-btn" onclick="moveGalleryItem(${idx}, -1)" title="Move Up" ${idx === 0 ? 'disabled style="opacity:0.25;cursor:not-allowed;"' : ''}>▲</button>
-            <button type="button" class="gallery-icon-btn" onclick="moveGalleryItem(${idx}, 1)" title="Move Down" ${idx === 5 ? 'disabled style="opacity:0.25;cursor:not-allowed;"' : ''}>▼</button>
-            <button type="button" class="gallery-icon-btn btn-delete" onclick="clearGalleryItem(${idx})" title="Reset image">✕</button>
+            <button type="button" class="gallery-icon-btn" onclick="moveGalleryItem(${idx}, 1)" title="Move Down" ${idx === count - 1 ? 'disabled style="opacity:0.25;cursor:not-allowed;"' : ''}>▼</button>
+            <button type="button" class="gallery-icon-btn btn-delete" onclick="removeGalleryItem(${idx})" title="Remove image">✕</button>
           </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
 
       initGalleryDragAndDrop();
     }
@@ -84,6 +92,7 @@
     }
 
     function moveGalleryItem(idx, direction) {
+      currentGalleryImages = getGalleryImagesFromUI();
       const targetIdx = idx + direction;
       if (targetIdx < 0 || targetIdx >= currentGalleryImages.length) return;
       const temp = currentGalleryImages[idx];
@@ -92,22 +101,35 @@
       renderGalleryReorderList();
     }
 
-    function clearGalleryItem(idx) {
-      const prev = currentGalleryImages[idx];
-      if (prev && !prev.includes('port-chronos.jpg')) {
-        fetch('api.php?action=delete_asset', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ filePath: prev })
-        }).catch(() => {});
-      }
-      currentGalleryImages[idx] = 'assets/img/portfolio/port-chronos.jpg';
+    function removeGalleryItem(idx) {
+      currentGalleryImages = getGalleryImagesFromUI();
+      if (idx < 0 || idx >= currentGalleryImages.length) return;
+      currentGalleryImages.splice(idx, 1);
       renderGalleryReorderList();
+      showToast('Image removed from gallery.');
     }
+
+    function addGalleryImageSlot(imagePath = '') {
+      currentGalleryImages = getGalleryImagesFromUI();
+      currentGalleryImages.push(imagePath || 'assets/img/portfolio/port-chronos.jpg');
+      renderGalleryReorderList();
+      showToast('New image slot added.');
+      const container = document.getElementById('projectGalleryReorderList');
+      if (container && container.lastElementChild) {
+        container.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    window.removeGalleryItem = removeGalleryItem;
+    window.clearGalleryItem = removeGalleryItem;
+    window.addGalleryImageSlot = addGalleryImageSlot;
+    window.moveGalleryItem = moveGalleryItem;
+    window.updateGalleryThumb = updateGalleryThumb;
 
     async function uploadGalleryFile(idx, event) {
       const file = event.target.files[0];
       if (!file) return;
+      currentGalleryImages = getGalleryImagesFromUI();
       const previousImage = currentGalleryImages[idx];
       showToast(`Uploading Image 0${idx + 1}...`, 'info');
 
@@ -195,6 +217,8 @@
       document.getElementById('projectModalTitle').textContent = pData ? 'Edit Portfolio Item' : 'Add New Portfolio Item';
       document.getElementById('projectIdInput').value = pData ? pData.id : '';
       document.getElementById('projectTitleInput').value = pData ? pData.title : '';
+      const cardHeadEl = document.getElementById('projectCardHeadingInput');
+      if (cardHeadEl) cardHeadEl.value = pData ? (pData.cardHeading || pData.cardTitle || '') : '';
       document.getElementById('projectCategoryDisplayInput').value = pData ? (pData.subheading || pData.categoryDisplay || '') : '';
       document.getElementById('projectTagPillInput').value = pData ? (pData.tagPill || '') : '';
       document.getElementById('projectClientInput').value = pData ? (pData.client || '') : '';
@@ -523,6 +547,8 @@
 
       const data = {
         title: document.getElementById('projectTitleInput').value.trim(),
+        cardHeading: (document.getElementById('projectCardHeadingInput')?.value || '').trim(),
+        cardTitle: (document.getElementById('projectCardHeadingInput')?.value || '').trim(),
         subheading: document.getElementById('projectCategoryDisplayInput').value.trim(),
         categoryDisplay: document.getElementById('projectCategoryDisplayInput').value.trim(),
         tagPill: document.getElementById('projectTagPillInput').value.trim() || 'Case Study',
