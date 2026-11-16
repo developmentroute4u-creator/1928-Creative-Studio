@@ -564,6 +564,15 @@
       if (typeof window.reapplyPortfolioFilter === 'function') {
         window.reapplyPortfolioFilter();
       }
+
+      // If project modal is currently open, dynamically sync its details & gallery images
+      if (window.__currentOpenProjectId && document.getElementById('projectModal')?.classList.contains('active')) {
+        if (typeof window.openProjectModal === 'function') {
+          window.openProjectModal(window.__currentOpenProjectId);
+        } else if (typeof window.openModal === 'function') {
+          window.openModal(window.__currentOpenProjectId);
+        }
+      }
     }
 
     // B. Best Works Sets on about.html (#worksSet1 and #worksSet2)

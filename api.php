@@ -95,6 +95,61 @@ function checkAndAutoSeed(PDO $db) {
             $db->exec("ALTER TABLE `seo_meta` ADD COLUMN `route_slug` VARCHAR(150) NULL AFTER `page_key`");
         }
 
+        // Auto-migration for portfolio table fields & gallery sync
+        $portTableCheck = $db->query("SHOW TABLES LIKE 'portfolio'")->fetch();
+        if ($portTableCheck) {
+            $portCols = $db->query("SHOW COLUMNS FROM `portfolio`")->fetchAll(PDO::FETCH_COLUMN);
+            if (!in_array('gallery_json', $portCols)) {
+                $db->exec("ALTER TABLE `portfolio` ADD COLUMN `gallery_json` LONGTEXT NULL AFTER `cover_image`");
+            }
+            if (!in_array('sector', $portCols)) {
+                $db->exec("ALTER TABLE `portfolio` ADD COLUMN `sector` VARCHAR(255) NULL AFTER `client`");
+            }
+            if (!in_array('deliverables', $portCols)) {
+                $db->exec("ALTER TABLE `portfolio` ADD COLUMN `deliverables` TEXT NULL AFTER `sector`");
+            }
+            if (!in_array('timeline', $portCols)) {
+                $db->exec("ALTER TABLE `portfolio` ADD COLUMN `timeline` VARCHAR(150) NULL AFTER `year`");
+            }
+            if (!in_array('overview_title', $portCols)) {
+                $db->exec("ALTER TABLE `portfolio` ADD COLUMN `overview_title` VARCHAR(255) NULL AFTER `cover_image`");
+            }
+
+            // Seed default gallery_json if NULL or empty
+            $pRowsNull = $db->query("SELECT `project_id`, `cover_image`, `gallery_json` FROM `portfolio` WHERE `gallery_json` IS NULL OR `gallery_json` = '' OR `gallery_json` = '[]'")->fetchAll();
+            if (!empty($pRowsNull)) {
+                $fallbacksByPid = [
+                    'aurora' => [
+                        file_exists(__DIR__ . '/assets/uploads/1928_1794824854_Baaki-Aapki-Choice-LOGO.png') ? 'assets/uploads/1928_1794824854_Baaki-Aapki-Choice-LOGO.png' : 'assets/img/portfolio/port-chronos.jpg',
+                        'assets/img/portfolio/port-spectra.jpg',
+                        'assets/img/portfolio/port-lumina.jpg',
+                        'assets/img/why-choose/wc-l1.jpg',
+                        'assets/img/why-choose/wc-r1.jpg',
+                        'assets/img/portfolio/port-veloce.jpg'
+                    ],
+                    'vertex' => ['assets/img/portfolio/port-spectra.jpg', 'assets/img/why-choose/wc-l1.jpg', 'assets/img/why-choose/wc-r1.jpg', 'assets/img/portfolio/port-lumina.jpg', 'assets/img/why-choose/wc-r2.jpg', 'assets/img/portfolio/port-chronos.jpg'],
+                    'solstice' => ['assets/img/portfolio/port-lumina.jpg', 'assets/img/portfolio/port-chronos.jpg', 'assets/services/svc_3.jpg', 'assets/img/why-choose/wc-l2.jpg', 'assets/services/svc_1.jpg', 'assets/img/why-choose/wc-r1.jpg'],
+                    'veloce' => ['assets/img/portfolio/port-veloce.jpg', 'assets/img/portfolio/port-kroma.jpg', 'assets/img/why-choose/wc-r2.jpg', 'assets/img/portfolio/port-zenith.jpg', 'assets/img/why-choose/wc-top.jpg', 'assets/services/svc_4.jpg'],
+                    'aetherion' => ['assets/img/portfolio/port-veloce.jpg', 'assets/img/portfolio/port-kroma.jpg', 'assets/img/why-choose/wc-r2.jpg', 'assets/img/portfolio/port-zenith.jpg', 'assets/img/why-choose/wc-top.jpg', 'assets/services/svc_4.jpg'],
+                    'quantum' => ['assets/img/portfolio/port-kroma.jpg', 'assets/img/portfolio/port-veloce.jpg', 'assets/img/why-choose/wc-top.jpg', 'assets/services/svc_5.jpg', 'assets/img/why-choose/wc-r1.jpg', 'assets/img/why-choose/wc-l2.jpg'],
+                    'milan' => ['assets/img/portfolio/port-zenith.jpg', 'assets/services/svc_4.jpg', 'assets/img/why-choose/wc-bot.jpg', 'assets/services/svc_1.jpg', 'assets/services/svc_2.jpg', 'assets/img/why-choose/wc-r2.jpg']
+                ];
+                $updateGalStmt = $db->prepare("UPDATE `portfolio` SET `gallery_json` = :gal WHERE `project_id` = :pid");
+                foreach ($pRowsNull as $pn) {
+                    $pid = $pn['project_id'];
+                    $list = $fallbacksByPid[$pid] ?? [
+                        $pn['cover_image'] ?: 'assets/img/portfolio/port-chronos.jpg',
+                        'assets/img/portfolio/port-spectra.jpg',
+                        'assets/img/portfolio/port-lumina.jpg',
+                        'assets/img/why-choose/wc-l1.jpg',
+                        'assets/img/why-choose/wc-r1.jpg',
+                        'assets/img/portfolio/port-veloce.jpg'
+                    ];
+                    $updateGalStmt->execute([':gal' => json_encode($list, JSON_UNESCAPED_SLASHES), ':pid' => $pid]);
+                }
+            }
+        }
+
         $routesTableCheck = $db->query("SHOW TABLES LIKE 'site_routes'")->fetch();
         if (!$routesTableCheck) {
             $db->exec("
@@ -454,21 +509,34 @@ try {
             $portStmt = $db->query("SELECT * FROM `portfolio` WHERE `active` = 1 ORDER BY `display_order` ASC");
             $portRows = $portStmt->fetchAll();
             $response['portfolio'] = array_map(function($p) {
+                $galleryImages = !empty($p['gallery_json']) ? (json_decode($p['gallery_json'], true) ?: []) : [];
                 return [
                     'id' => $p['project_id'],
                     'title' => $p['title'],
-                    'client' => $p['client'],
+                    'client' => $p['client'] ?? '',
+                    'sector' => $p['sector'] ?? '',
+                    'deliverables' => $p['deliverables'] ?? '',
+                    'timeline' => $p['timeline'] ?? ($p['year'] ? $p['year'] . ' · Complete Archive' : ''),
                     'category' => $p['category_keys'],
                     'categoryDisplay' => $p['category_display'],
+                    'subheading' => $p['category_display'],
                     'tagPill' => $p['tag_pill'],
                     'gridSpan' => $p['grid_span'],
                     'year' => $p['year'],
                     'coverImage' => $p['cover_image'],
+                    'bannerImage' => $p['cover_image'],
+                    'overviewTitle' => $p['overview_title'] ?? 'Strategic Overview',
+                    'strategicOverviewTitle' => $p['overview_title'] ?? 'Strategic Overview',
+                    'overview' => $p['summary'],
+                    'strategicOverview' => $p['summary'],
                     'summary' => $p['summary'],
-                    'challenge' => $p['challenge'],
-                    'approach' => $p['approach'],
-                    'impact' => $p['impact'],
+                    'description' => $p['summary'],
+                    'challenge' => $p['challenge'] ?? '',
+                    'approach' => $p['approach'] ?? '',
+                    'impact' => $p['impact'] ?? '',
                     'metrics' => !empty($p['metrics_json']) ? (json_decode($p['metrics_json'], true) ?: []) : [],
+                    'galleryImages' => $galleryImages,
+                    'gallery' => $galleryImages,
                     'featured' => (bool)$p['featured'],
                     'order' => (int)$p['display_order']
                 ];
@@ -939,13 +1007,23 @@ try {
             $projectId = $inputData['id'] ?? ('proj-' . substr(md5(uniqid()), 0, 8));
             $title = $inputData['title'] ?? 'New Project';
             $client = $inputData['client'] ?? '';
+            $sector = $inputData['sector'] ?? '';
+            $deliverables = $inputData['deliverables'] ?? '';
+            $timeline = $inputData['timeline'] ?? '';
             $categoryKeys = $inputData['category'] ?? 'brand-identity';
-            $categoryDisplay = $inputData['categoryDisplay'] ?? 'Brand Identity & WebGL';
+            $categoryDisplay = $inputData['categoryDisplay'] ?? ($inputData['subheading'] ?? 'Brand Identity & WebGL');
             $tagPill = $inputData['tagPill'] ?? 'Case Study';
             $gridSpan = $inputData['gridSpan'] ?? 'bento-compact';
-            $year = $inputData['year'] ?? date('Y');
-            $coverImage = $inputData['coverImage'] ?? 'assets/img/portfolio/port-chronos.jpg';
-            $summary = $inputData['summary'] ?? '';
+            $year = $inputData['year'] ?? '';
+            if (empty($year) && !empty($timeline)) {
+                $digits = preg_replace('/[^0-9]/', '', $timeline);
+                $year = strlen($digits) >= 4 ? substr($digits, 0, 4) : date('Y');
+            }
+            if (empty($year)) $year = date('Y');
+
+            $coverImage = $inputData['coverImage'] ?? ($inputData['bannerImage'] ?? 'assets/img/portfolio/port-chronos.jpg');
+            $overviewTitle = $inputData['overviewTitle'] ?? ($inputData['strategicOverviewTitle'] ?? 'Strategic Overview');
+            $summary = $inputData['summary'] ?? ($inputData['overview'] ?? ($inputData['strategicOverview'] ?? ($inputData['description'] ?? '')));
             $challenge = $inputData['challenge'] ?? '';
             $approach = $inputData['approach'] ?? '';
             $impact = $inputData['impact'] ?? '';
@@ -953,38 +1031,64 @@ try {
             $featured = isset($inputData['featured']) ? (int)$inputData['featured'] : 1;
             $order = isset($inputData['order']) ? (int)$inputData['order'] : 1;
 
+            // Gallery images array
+            $rawGallery = $inputData['galleryImages'] ?? ($inputData['gallery'] ?? []);
+            if (!is_array($rawGallery)) {
+                $rawGallery = !empty($rawGallery) ? json_decode($rawGallery, true) : [];
+            }
+            $cleanGallery = [];
+            if (is_array($rawGallery)) {
+                foreach ($rawGallery as $gImg) {
+                    if (is_string($gImg) && trim($gImg) !== '') {
+                        $cleanGallery[] = trim($gImg);
+                    }
+                }
+            }
+            $galleryJson = !empty($cleanGallery) ? json_encode(array_values($cleanGallery), JSON_UNESCAPED_SLASHES) : null;
+
             $stmt = $db->prepare("
                 INSERT INTO `portfolio`
-                (`project_id`, `title`, `client`, `category_keys`, `category_display`, `tag_pill`, `grid_span`, `year`, `cover_image`, `summary`, `challenge`, `approach`, `impact`, `metrics_json`, `featured`, `display_order`, `active`)
+                (`project_id`, `title`, `client`, `sector`, `deliverables`, `category_keys`, `category_display`, `tag_pill`, `grid_span`, `year`, `timeline`, `cover_image`, `overview_title`, `gallery_json`, `summary`, `challenge`, `approach`, `impact`, `metrics_json`, `featured`, `display_order`, `active`)
                 VALUES
-                (:pid, :title, :client, :cat, :catdisp, :pill, :span, :yr, :cover, :sum, :chal, :appr, :imp, :metrics, :feat, :ord, 1)
+                (:pid, :title, :client, :sector, :deliverables, :cat, :catdisp, :pill, :span, :yr, :timeline, :cover, :ovtitle, :gallery, :sum, :chal, :appr, :imp, :metrics, :feat, :ord, 1)
                 ON DUPLICATE KEY UPDATE
                     `title` = VALUES(`title`),
                     `client` = VALUES(`client`),
+                    `sector` = VALUES(`sector`),
+                    `deliverables` = VALUES(`deliverables`),
                     `category_keys` = VALUES(`category_keys`),
                     `category_display` = VALUES(`category_display`),
                     `tag_pill` = VALUES(`tag_pill`),
                     `grid_span` = VALUES(`grid_span`),
                     `year` = VALUES(`year`),
+                    `timeline` = VALUES(`timeline`),
                     `cover_image` = VALUES(`cover_image`),
+                    `overview_title` = VALUES(`overview_title`),
+                    `gallery_json` = VALUES(`gallery_json`),
                     `summary` = VALUES(`summary`),
                     `challenge` = VALUES(`challenge`),
                     `approach` = VALUES(`approach`),
                     `impact` = VALUES(`impact`),
                     `metrics_json` = VALUES(`metrics_json`),
                     `featured` = VALUES(`featured`),
-                    `display_order` = VALUES(`display_order`)
+                    `display_order` = VALUES(`display_order`),
+                    `active` = 1
             ");
             $stmt->execute([
                 ':pid' => $projectId,
                 ':title' => $title,
                 ':client' => $client,
+                ':sector' => $sector,
+                ':deliverables' => $deliverables,
                 ':cat' => $categoryKeys,
                 ':catdisp' => $categoryDisplay,
                 ':pill' => $tagPill,
                 ':span' => $gridSpan,
                 ':yr' => $year,
+                ':timeline' => $timeline,
                 ':cover' => $coverImage,
+                ':ovtitle' => $overviewTitle,
+                ':gallery' => $galleryJson,
                 ':sum' => $summary,
                 ':chal' => $challenge,
                 ':appr' => $approach,

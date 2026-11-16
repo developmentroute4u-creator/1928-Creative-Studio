@@ -2927,6 +2927,7 @@
       const triggerCards = document.querySelectorAll('[data-project-id]');
 
       function openModal(id) {
+        window.__currentOpenProjectId = id;
         let cmsP = null;
         if (window.CMSStore) {
           if (typeof window.CMSStore.getPortfolioById === 'function') cmsP = window.CMSStore.getPortfolioById(id);
@@ -2949,16 +2950,22 @@
         const heroImg = cmsP?.bannerImage || cmsP?.coverImage || fallback?.heroImg || 'assets/img/portfolio/port-chronos.jpg';
         const galleryImages = (cmsP?.galleryImages && Array.isArray(cmsP.galleryImages) && cmsP.galleryImages.length > 0)
           ? cmsP.galleryImages
-          : [
-              fallback?.gal1 || cmsP?.coverImage || 'assets/img/portfolio/port-chronos.jpg',
-              fallback?.gal2 || 'assets/img/portfolio/port-spectra.jpg',
-              fallback?.gal3 || 'assets/img/portfolio/port-lumina.jpg',
-              fallback?.gal4 || 'assets/img/why-choose/wc-l1.jpg',
-              fallback?.gal5 || 'assets/img/why-choose/wc-r1.jpg',
-              fallback?.gal6 || 'assets/img/portfolio/port-veloce.jpg'
-            ];
+          : (cmsP?.gallery && Array.isArray(cmsP.gallery) && cmsP.gallery.length > 0)
+            ? cmsP.gallery
+            : [
+                fallback?.gal1 || cmsP?.coverImage || 'assets/img/portfolio/port-chronos.jpg',
+                fallback?.gal2 || 'assets/img/portfolio/port-spectra.jpg',
+                fallback?.gal3 || 'assets/img/portfolio/port-lumina.jpg',
+                fallback?.gal4 || 'assets/img/why-choose/wc-l1.jpg',
+                fallback?.gal5 || 'assets/img/why-choose/wc-r1.jpg',
+                fallback?.gal6 || 'assets/img/portfolio/port-veloce.jpg'
+              ];
         
-        document.getElementById('mHeroImg').src = heroImg;
+        const heroEl = document.getElementById('mHeroImg');
+        if (heroEl) {
+          heroEl.onerror = function() { this.onerror = null; this.src = 'assets/img/portfolio/port-chronos.jpg'; };
+          heroEl.src = heroImg;
+        }
         document.getElementById('mHeroTitle').textContent = title;
         document.getElementById('mHeroCat').textContent = category;
         
@@ -2975,6 +2982,10 @@
         for (let g = 1; g <= 6; g++) {
           const galEl = document.getElementById('mGal' + g);
           if (galEl) {
+            galEl.onerror = function() {
+              this.onerror = null;
+              this.src = 'assets/img/portfolio/port-chronos.jpg';
+            };
             galEl.src = imgs[g - 1] || heroImg || 'assets/img/portfolio/port-chronos.jpg';
           }
         }
@@ -2989,6 +3000,7 @@
       }
 
       function closeModal() {
+        window.__currentOpenProjectId = null;
         modal.classList.remove('active');
         document.body.classList.remove('modal-open');
         const navEl = document.getElementById('nav');
@@ -3102,9 +3114,17 @@
       const hashProj = window.location.hash ? window.location.hash.replace('#', '').trim() : '';
       const targetProj = urlParams.get('project') || urlParams.get('id') || (hashProj && caseStudies[hashProj] ? hashProj : null);
       if (targetProj) {
-        setTimeout(() => {
-          openModal(targetProj);
-        }, 200);
+        if (window.CMSStore && typeof window.CMSStore.ready === 'function') {
+          window.CMSStore.ready().then(() => {
+            setTimeout(() => { openModal(targetProj); }, 60);
+          }).catch(() => {
+            setTimeout(() => { openModal(targetProj); }, 200);
+          });
+        } else {
+          setTimeout(() => {
+            openModal(targetProj);
+          }, 200);
+        }
       }
 
     })();

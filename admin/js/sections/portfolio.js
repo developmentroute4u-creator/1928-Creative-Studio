@@ -215,6 +215,8 @@
       // Set up 6 gallery images
       if (pData && pData.galleryImages && Array.isArray(pData.galleryImages) && pData.galleryImages.length) {
         currentGalleryImages = [...pData.galleryImages];
+      } else if (pData && pData.gallery && Array.isArray(pData.gallery) && pData.gallery.length) {
+        currentGalleryImages = [...pData.gallery];
       } else if (pData && pData.id) {
         const fallbacks = {
           aurora: ['assets/img/portfolio/port-chronos.jpg', 'assets/img/portfolio/port-spectra.jpg', 'assets/img/portfolio/port-lumina.jpg', 'assets/img/why-choose/wc-l1.jpg', 'assets/img/why-choose/wc-r1.jpg', 'assets/img/portfolio/port-veloce.jpg'],

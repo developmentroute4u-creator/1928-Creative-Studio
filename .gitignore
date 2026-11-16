@@ -16,3 +16,6 @@ Thumbs.db
 
 # Dependencies
 node_modules/
+
+# Large media files (served via server and database_media)
+assets/uploads/*.mp4
