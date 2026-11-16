@@ -119,7 +119,7 @@ function checkAndAutoSeed(PDO $db) {
             }
 
             // Seed default gallery_json if NULL or empty
-            $pRowsNull = $db->query("SELECT `project_id`, `cover_image`, `gallery_json` FROM `portfolio` WHERE `gallery_json` IS NULL OR `gallery_json` = '' OR `gallery_json` = '[]'")->fetchAll();
+            $pRowsNull = $db->query("SELECT `project_id`, `cover_image`, `gallery_json` FROM `portfolio` WHERE `gallery_json` IS NULL OR `gallery_json` = ''")->fetchAll();
             if (!empty($pRowsNull)) {
                 $fallbacksByPid = [
                     'aurora' => [
@@ -1050,7 +1050,7 @@ try {
                     }
                 }
             }
-            $galleryJson = !empty($cleanGallery) ? json_encode(array_values($cleanGallery), JSON_UNESCAPED_SLASHES) : null;
+            $galleryJson = json_encode(array_values($cleanGallery), JSON_UNESCAPED_SLASHES);
 
             $stmt = $db->prepare("
                 INSERT INTO `portfolio`

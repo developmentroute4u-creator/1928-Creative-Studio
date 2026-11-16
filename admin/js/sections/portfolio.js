@@ -57,6 +57,7 @@
 
       container.innerHTML = currentGalleryImages.map((imgUrl, idx) => {
         const numBadge = (idx + 1) < 10 ? `0${idx + 1}` : `${idx + 1}`;
+        const safeUrl = (imgUrl || '').replace(/"/g, '&quot;');
         return `
         <div class="gallery-drag-item" draggable="true" data-index="${idx}">
           <div class="gallery-drag-handle" title="Drag to reorder showcase">
@@ -64,10 +65,10 @@
           </div>
           <span class="gallery-order-badge">${numBadge}</span>
           <div class="gallery-thumb-wrap">
-            <img src="${imgUrl || 'assets/img/portfolio/port-chronos.jpg'}" alt="Gallery ${idx + 1}" id="galThumb_${idx}" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
+            <img src="${safeUrl || 'assets/img/portfolio/port-chronos.jpg'}" alt="Gallery ${idx + 1}" id="galThumb_${idx}" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
           </div>
           <div class="gallery-input-wrap">
-            <input type="text" class="form-input" style="height:38px;padding:6px 12px;font-size:12px;" value="${imgUrl || ''}" placeholder="e.g. assets/img/portfolio/port-chronos.jpg" oninput="updateGalleryThumb(${idx}, this.value)" />
+            <input type="text" class="form-input" style="height:38px;padding:6px 12px;font-size:12px;" value="${safeUrl}" placeholder="e.g. assets/img/portfolio/port-chronos.jpg" oninput="updateGalleryThumb(${idx}, this.value)" />
             <label class="btn-action-secondary" style="padding:7px 12px;font-size:11px;margin:0;cursor:pointer;flex-shrink:0;height:38px;display:inline-flex;align-items:center;">
               <span>Upload</span>
               <input type="file" accept="image/*" style="display:none;" onchange="uploadGalleryFile(${idx}, event)" />
@@ -103,20 +104,23 @@
 
     function removeGalleryItem(idx) {
       currentGalleryImages = getGalleryImagesFromUI();
-      if (idx < 0 || idx >= currentGalleryImages.length) return;
-      currentGalleryImages.splice(idx, 1);
-      renderGalleryReorderList();
-      showToast('Image removed from gallery.');
+      if (typeof idx === 'number' && idx >= 0 && idx < currentGalleryImages.length) {
+        currentGalleryImages.splice(idx, 1);
+        renderGalleryReorderList();
+        showToast('Image removed from gallery.');
+      }
     }
 
     function addGalleryImageSlot(imagePath = '') {
       currentGalleryImages = getGalleryImagesFromUI();
-      currentGalleryImages.push(imagePath || 'assets/img/portfolio/port-chronos.jpg');
+      currentGalleryImages.push(imagePath || '');
       renderGalleryReorderList();
       showToast('New image slot added.');
       const container = document.getElementById('projectGalleryReorderList');
       if (container && container.lastElementChild) {
         container.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        const newInp = container.lastElementChild.querySelector('input[type="text"]');
+        if (newInp) newInp.focus();
       }
     }
 
@@ -204,13 +208,15 @@
 
     function getGalleryImagesFromUI() {
       const container = document.getElementById('projectGalleryReorderList');
-      if (!container) return currentGalleryImages;
-      const inputs = container.querySelectorAll('.gallery-input-wrap input');
+      if (!container) return Array.isArray(currentGalleryImages) ? [...currentGalleryImages] : [];
+      const dragItems = container.querySelectorAll('.gallery-drag-item');
+      if (!dragItems.length) return [];
       const res = [];
-      inputs.forEach(inp => {
-        if (inp.value.trim()) res.push(inp.value.trim());
+      dragItems.forEach(item => {
+        const textInp = item.querySelector('.gallery-input-wrap input[type="text"]');
+        res.push(textInp ? textInp.value.trim() : '');
       });
-      return res.length ? res : currentGalleryImages;
+      return res;
     }
 
     function openProjectModal(pData = null) {
