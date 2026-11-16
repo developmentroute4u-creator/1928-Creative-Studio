@@ -555,7 +555,42 @@
     }
 
     getProjectById(id) {
-      return (this.data.portfolio || []).find(p => p.id === id);
+      if (!id) return null;
+      const cleanId = String(id).toLowerCase().trim().replace(/^#/, '');
+      const list = this.data.portfolio || [];
+      // 1. Direct match
+      let found = list.find(p => p.id === cleanId || p.id === id);
+      if (found) return found;
+
+      // 2. Common aliases
+      const aliases = {
+        'awards-plus': 'aurora',
+        'awardsplus': 'aurora',
+        'aurora': 'aurora',
+        'mudra-school': 'mudra',
+        'mudra': 'mudra',
+        'last-mile-analytics': 'last-mile',
+        'last-mile': 'last-mile',
+        'lastmile': 'last-mile',
+        'vibee-apparel': 'vibee',
+        'vibee': 'vibee',
+        'infyli-aromatics': 'infyli',
+        'infyli': 'infyli',
+        'alda-steel': 'alda',
+        'alda': 'alda'
+      };
+      if (aliases[cleanId]) {
+        found = list.find(p => p.id === aliases[cleanId]);
+        if (found) return found;
+      }
+
+      // 3. Substring / partial match on id, slug, or title
+      found = list.find(p => {
+        const pid = (p.id || '').toLowerCase();
+        const pTitle = (p.title || '').toLowerCase();
+        return pid.includes(cleanId) || cleanId.includes(pid) || pTitle.includes(cleanId);
+      });
+      return found || null;
     }
 
     getPortfolioById(id) {

@@ -495,8 +495,10 @@
       const pid = params.get('id') || params.get('project');
       if (pid) {
         window.location.replace(`portfolio.html?project=${encodeURIComponent(pid)}`);
-        return;
+      } else {
+        window.location.replace('portfolio.html');
       }
+      return;
 
       // Live Clock
       function updateClock() {
@@ -566,8 +568,8 @@
   </script>
 
   <!-- CMS Live Bridge -->
-  <script src="data-store.js?v=20261116_v16"></script>
-  <script src="site-bridge.js?v=20261116_v16"></script>
+  <script src="data-store.js?v=20261116_v17"></script>
+  <script src="site-bridge.js?v=20261116_v17"></script>
 </body>
 
 </html>

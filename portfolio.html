@@ -2653,8 +2653,8 @@
     </svg>
   </button>
 
-  <script src="data-store.js?v=20261116_v16"></script>
-  <script src="site-bridge.js?v=20261116_v16"></script>
+  <script src="data-store.js?v=20261116_v17"></script>
+  <script src="site-bridge.js?v=20261116_v17"></script>
 
   <!-- ═══════════════════════════════════════════════════════════
        JAVASCRIPT LOGIC & INTERACTIONS
@@ -3034,6 +3034,9 @@
           ]
         }
       };
+      caseStudies['mudra-school'] = caseStudies['mudra'];
+      caseStudies['last-mile-analytics'] = caseStudies['last-mile'];
+      caseStudies['awardsplus'] = caseStudies['aurora'];
 
       /* ── Modal Open / Close Controller ── */
       const modal = document.getElementById('projectModal');
@@ -3042,7 +3045,12 @@
       const triggerCards = document.querySelectorAll('[data-project-id]');
 
       function openModal(id) {
+        if (!id) return;
         window.__currentOpenProjectId = id;
+        if (window.history && window.history.replaceState) {
+          const newUrl = `${window.location.pathname}?project=${encodeURIComponent(id)}`;
+          window.history.replaceState(null, '', newUrl);
+        }
         let cmsP = null;
         if (window.CMSStore) {
           if (typeof window.CMSStore.getPortfolioById === 'function') cmsP = window.CMSStore.getPortfolioById(id);
@@ -3149,6 +3157,9 @@
         const navEl = document.getElementById('nav');
         if (navEl) navEl.classList.remove('hidden');
         document.body.style.overflow = '';
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', window.location.pathname);
+        }
       }
 
       window.openProjectModal = openModal;
@@ -3223,18 +3234,16 @@
       // Check for deep-link project URL param (?project=aurora or ?id=aurora or #aurora)
       const urlParams = new URLSearchParams(window.location.search);
       const hashProj = window.location.hash ? window.location.hash.replace('#', '').trim() : '';
-      const targetProj = urlParams.get('project') || urlParams.get('id') || (hashProj && caseStudies[hashProj] ? hashProj : null);
+      const targetProj = urlParams.get('project') || urlParams.get('id') || (hashProj ? hashProj : null);
       if (targetProj) {
+        // Open modal instantly on arrival
+        openModal(targetProj);
         if (window.CMSStore && typeof window.CMSStore.ready === 'function') {
           window.CMSStore.ready().then(() => {
-            setTimeout(() => { openModal(targetProj); }, 60);
-          }).catch(() => {
-            setTimeout(() => { openModal(targetProj); }, 200);
-          });
-        } else {
-          setTimeout(() => {
-            openModal(targetProj);
-          }, 200);
+            if (window.__currentOpenProjectId === targetProj) {
+              openModal(targetProj);
+            }
+          }).catch(() => {});
         }
       }
 
