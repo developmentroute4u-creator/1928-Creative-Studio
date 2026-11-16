@@ -16,7 +16,7 @@
     # If a requested asset in assets/uploads/ does not physically exist on disk (e.g. wiped after git push),
     # dynamically retrieve, restore, and stream it from the MySQL database!
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^assets/uploads/(.+)$ api.php?action=serve_media&file=$1 [QSA,L]
+    RewriteRule ^assets/(.+)$ api.php?action=serve_media&file=$1 [QSA,L]
 
     # Fallback rewrites for direct root favicon requests to assets/favicon/
     RewriteRule ^favicon\.ico$ assets/favicon/favicon.ico [L]

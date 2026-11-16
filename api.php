@@ -1421,13 +1421,35 @@ try {
         case 'serve_media':
         case 'get_media':
             $rawFile = $_GET['file'] ?? ($_GET['id'] ?? ($_GET['path'] ?? ''));
-            $cleanFile = basename(str_replace(['..', '\\'], '', $rawFile));
-            if (empty($cleanFile)) {
+            $cleanPath = str_replace(['..', '\\'], ['', '/'], $rawFile);
+            $cleanPath = ltrim($cleanPath, '/');
+            $basename = basename($cleanPath);
+            if (empty($basename)) {
                 http_response_code(400);
                 exit('Missing media identifier.');
             }
 
-            $diskPath = __DIR__ . '/assets/uploads/' . $cleanFile;
+            $possiblePaths = [
+                __DIR__ . '/assets/' . (strpos($cleanPath, 'assets/') === 0 ? substr($cleanPath, 7) : $cleanPath),
+                __DIR__ . '/assets/uploads/' . $basename,
+                __DIR__ . '/assets/img/portfolio/' . $basename,
+                __DIR__ . '/assets/services/' . $basename,
+                __DIR__ . '/assets/img/why-choose/' . $basename,
+                __DIR__ . '/assets/img/hero/' . $basename,
+                __DIR__ . '/assets/img/branding/' . $basename,
+                __DIR__ . '/' . $cleanPath
+            ];
+            $diskPath = null;
+            foreach ($possiblePaths as $pp) {
+                if (file_exists($pp) && is_file($pp) && filesize($pp) > 0) {
+                    $diskPath = $pp;
+                    break;
+                }
+            }
+            if (!$diskPath) {
+                $diskPath = __DIR__ . '/assets/uploads/' . $basename;
+            }
+            $cleanFile = $basename;
             $ext = strtolower(pathinfo($cleanFile, PATHINFO_EXTENSION));
 
             $mimeMap = [

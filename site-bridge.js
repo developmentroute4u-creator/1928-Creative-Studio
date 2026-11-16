@@ -330,7 +330,7 @@
         <div class="lbc-slide ${idx === 0 ? 'active' : ''}" data-index="${idx}">
           <div class="featured-monograph-spread" data-article-id="${b.id}" style="cursor:pointer;">
             <div class="fms-blueprint-visual">
-              <img src="${b.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${b.title}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
+              <img src="${b.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${b.title}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
               <div class="corner-crosshair cc-tl">+</div>
               <div class="corner-crosshair cc-tr">+</div>
               <div class="corner-crosshair cc-bl">+</div>
@@ -475,18 +475,27 @@
     const heroSec = document.getElementById('portfolio-hero');
     if (!heroSec || !window.CMSStore) return;
     const heroData = window.CMSStore.getPortfolioHero ? window.CMSStore.getPortfolioHero() : null;
-    if (!heroData) return;
+    const projects = typeof window.CMSStore.getPortfolio === 'function' ? window.CMSStore.getPortfolio() : [];
 
     const pills1 = heroSec.querySelectorAll('#heroPill1Media, .hero-pill-1');
     const pills2 = heroSec.querySelectorAll('#heroPill2Media, .hero-pill-2');
 
-    const p1Id = heroData.pill1ProjectId || 'vibee';
-    const proj1 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p1Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p1Id) : null);
-    const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage || heroData.pill1Img || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg') : (heroData.pill1Img || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg');
+    const defaultP1 = projects[0] || null;
+    const defaultP2 = projects[1] || projects[0] || null;
+
+    const p1Id = (heroData && heroData.pill1ProjectId) ? heroData.pill1ProjectId : (defaultP1 ? defaultP1.id : 'vibee');
+    const proj1 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p1Id) : null) || defaultP1;
+    const img1 = proj1 ? (proj1.bannerImage || proj1.coverImage) : ((heroData && heroData.pill1Img) || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg');
 
     pills1.forEach(pill1 => {
       const imgEl = pill1.querySelector('img') || document.getElementById('heroPill1Img');
-      if (imgEl) imgEl.src = img1;
+      if (imgEl) {
+        imgEl.onerror = function() {
+          this.onerror = null;
+          this.src = 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';
+        };
+        imgEl.src = img1;
+      }
       pill1.setAttribute('data-project-id', p1Id);
       if (proj1) pill1.setAttribute('title', `Explore ${proj1.title}`);
       pill1.onclick = () => {
@@ -495,13 +504,19 @@
       };
     });
 
-    const p2Id = heroData.pill2ProjectId || 'veloce';
-    const proj2 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p2Id) : null) || (typeof window.CMSStore.getProjectById === 'function' ? window.CMSStore.getProjectById(p2Id) : null);
-    const img2 = proj2 ? (proj2.bannerImage || proj2.coverImage || heroData.pill2Img || 'assets/img/portfolio/port-veloce.jpg') : (heroData.pill2Img || 'assets/img/portfolio/port-veloce.jpg');
+    const p2Id = (heroData && heroData.pill2ProjectId) ? heroData.pill2ProjectId : (defaultP2 ? defaultP2.id : 'infyli');
+    const proj2 = (typeof window.CMSStore.getPortfolioById === 'function' ? window.CMSStore.getPortfolioById(p2Id) : null) || defaultP2;
+    const img2 = proj2 ? (proj2.bannerImage || proj2.coverImage) : ((heroData && heroData.pill2Img) || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg');
 
     pills2.forEach(pill2 => {
       const imgEl = pill2.querySelector('img') || document.getElementById('heroPill2Img');
-      if (imgEl) imgEl.src = img2;
+      if (imgEl) {
+        imgEl.onerror = function() {
+          this.onerror = null;
+          this.src = 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg';
+        };
+        imgEl.src = img2;
+      }
       pill2.setAttribute('data-project-id', p2Id);
       if (proj2) pill2.setAttribute('title', `Explore ${proj2.title}`);
       pill2.onclick = () => {
@@ -531,7 +546,7 @@
           <div class="dzinr-project-card ${spanClass}" data-category="${p.category || 'brand-identity'}" data-project-id="${p.id}" style="cursor:pointer;" onclick="if(typeof window.openProjectModal==='function'){window.openProjectModal('${p.id}');}else if(typeof window.openModal==='function'){window.openModal('${p.id}');}">
             <div class="dpc-img-wrap">
               <span class="dpc-tag-pill">${p.tagPill || p.categoryDisplay || 'Case Study'}</span>
-              <img src="${p.bannerImage || p.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${p.title}" loading="lazy" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
+              <img src="${p.bannerImage || p.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${p.title}" loading="lazy" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
             </div>
             <div class="dpc-body">
               <div class="dpc-info">
@@ -566,7 +581,7 @@
         return `
           <a href="portfolio.html?project=${p.id || ''}" class="work-duo-card"${cardId ? ` id="${cardId}"` : ''}>
             <div class="work-card-media">
-              <img src="${img}" alt="${title}" class="work-card-img" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
+              <img src="${img}" alt="${title}" class="work-card-img" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
             </div>
             <div class="work-card-content">
               <div class="work-top-meta">
@@ -666,7 +681,7 @@
           <article class="p-flow-item p-item-${slotNum}">
             <a href="portfolio.html?project=${proj.id}" class="p-card-v p-card-${slotNum}">
               <div class="pcv-media">
-                <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;object-position:${objPos};transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
+                <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;object-position:${objPos};transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
                 <div class="pcv-badge-top"><span class="pcv-num">${numStr}</span><span class="pcv-client">${clientStr}</span></div>
               </div>
               <div class="pcv-info">
