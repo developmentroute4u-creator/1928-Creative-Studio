@@ -7065,8 +7065,18 @@
         requestAnimationFrame(L);
       })();
 
-      /* ── Theme FAB managed globally by StudioTheme ── */);
-      }
+      /* ── Section 3 Selected Work Parallax Elements ── */
+      const portDriver = document.getElementById('port-driver');
+      const portStickyCenter = document.getElementById('portStickyCenter');
+      const portCardsFlow = document.getElementById('portCardsFlow');
+      let portFlowCards = document.querySelectorAll('#portCardsFlow .p-flow-item');
+      let lastPortCard = portFlowCards.length ? portFlowCards[portFlowCards.length - 1] : null;
+
+      window.rebindPortfolioInteractions = function () {
+        portFlowCards = document.querySelectorAll('#portCardsFlow .p-flow-item');
+        lastPortCard = portFlowCards.length ? portFlowCards[portFlowCards.length - 1] : null;
+      };
+
 
       function resetShowcaseDeckDefault() {
         allShowcaseCards.forEach((card, idx) => {
@@ -8191,8 +8201,8 @@
       onScroll();
     })();
   </script>
-  <script src="data-store.js?v=20261116_v10"></script>
-  <script src="site-bridge.js?v=20261116_v10"></script>
+  <script src="data-store.js?v=20261116_v12"></script>
+  <script src="site-bridge.js?v=20261116_v12"></script>
 </body>
 
 </html>

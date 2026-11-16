@@ -2653,6 +2653,9 @@
     </svg>
   </button>
 
+  <script src="data-store.js?v=20261116_v12"></script>
+  <script src="site-bridge.js?v=20261116_v12"></script>
+
   <!-- ═══════════════════════════════════════════════════════════
        JAVASCRIPT LOGIC & INTERACTIONS
        ═══════════════════════════════════════════════════════════ -->
@@ -2974,19 +2977,27 @@
         const deliverablesVal = (cmsP && cmsP.deliverables !== undefined && cmsP.deliverables !== null && cmsP.deliverables !== '') ? cmsP.deliverables : (fallback?.deliverables || '');
         const timelineVal = (cmsP && cmsP.timeline !== undefined && cmsP.timeline !== null && cmsP.timeline !== '') ? cmsP.timeline : (cmsP?.year ? `${cmsP.year} · Complete Archive` : (fallback?.timeline || '2025 · Global Reveal'));
         const heroImg = cmsP?.bannerImage || cmsP?.coverImage || fallback?.heroImg || 'assets/img/portfolio/port-chronos.jpg';
-        const galleryImages = (cmsP?.galleryImages && Array.isArray(cmsP.galleryImages) && cmsP.galleryImages.length > 0)
-          ? cmsP.galleryImages
-          : (cmsP?.gallery && Array.isArray(cmsP.gallery) && cmsP.gallery.length > 0)
-            ? cmsP.gallery
-            : [
-                fallback?.gal1 || cmsP?.coverImage || 'assets/img/portfolio/port-chronos.jpg',
-                fallback?.gal2 || 'assets/img/portfolio/port-spectra.jpg',
-                fallback?.gal3 || 'assets/img/portfolio/port-lumina.jpg',
-                fallback?.gal4 || 'assets/img/why-choose/wc-l1.jpg',
-                fallback?.gal5 || 'assets/img/why-choose/wc-r1.jpg',
-                fallback?.gal6 || 'assets/img/portfolio/port-chronos.jpg'
-              ];
+        let galleryImages = [];
+        if (cmsP) {
+          if (Array.isArray(cmsP.galleryImages) && cmsP.galleryImages.length > 0) {
+            galleryImages = cmsP.galleryImages.filter(u => typeof u === 'string' && u.trim() !== '');
+          } else if (Array.isArray(cmsP.gallery) && cmsP.gallery.length > 0) {
+            galleryImages = cmsP.gallery.filter(u => typeof u === 'string' && u.trim() !== '');
+          }
+        }
         
+        // If not customized in CMS at all, fall back to caseStudies default
+        if (!galleryImages.length && !cmsP) {
+          galleryImages = [
+            fallback?.gal1 || fallback?.heroImg || 'assets/img/portfolio/port-chronos.jpg',
+            fallback?.gal2 || 'assets/img/portfolio/port-spectra.jpg',
+            fallback?.gal3 || 'assets/img/portfolio/port-lumina.jpg',
+            fallback?.gal4 || 'assets/img/why-choose/wc-l1.jpg',
+            fallback?.gal5 || 'assets/img/why-choose/wc-r1.jpg',
+            fallback?.gal6 || 'assets/img/portfolio/port-chronos.jpg'
+          ].filter(u => typeof u === 'string' && u.trim() !== '');
+        }
+
         const heroEl = document.getElementById('mHeroImg');
         if (heroEl) {
           heroEl.onerror = function() { this.onerror = null; this.src = 'assets/img/portfolio/port-chronos.jpg'; };
@@ -3006,22 +3017,15 @@
 
         const imgs = galleryImages;
         const galContainer = document.getElementById('modalProjectGallery') || document.querySelector('.modal-project-gallery');
-        if (galContainer && Array.isArray(imgs) && imgs.length > 0) {
-          galContainer.innerHTML = imgs.map((imgSrc, idx) => `
-            <div class="modal-gal-card" style="border-radius:0 !important;">
-              <img id="mGal${idx + 1}" src="${imgSrc || heroImg || 'assets/img/portfolio/port-chronos.jpg'}" alt="${title} Asset ${idx + 1}" style="border-radius:0 !important;" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
-            </div>
-          `).join('');
-        } else {
-          for (let g = 1; g <= 6; g++) {
-            const galEl = document.getElementById('mGal' + g);
-            if (galEl) {
-              galEl.onerror = function() {
-                this.onerror = null;
-                this.src = 'assets/img/portfolio/port-chronos.jpg';
-              };
-              galEl.src = (imgs && imgs[g - 1]) || heroImg || 'assets/img/portfolio/port-chronos.jpg';
-            }
+        if (galContainer) {
+          if (imgs.length > 0) {
+            galContainer.innerHTML = imgs.map((imgSrc, idx) => `
+              <div class="modal-gal-card" style="border-radius:0 !important;">
+                <img id="mGal${idx + 1}" src="${imgSrc}" alt="${title} Asset ${idx + 1}" style="border-radius:0 !important;" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
+              </div>
+            `).join('');
+          } else {
+            galContainer.innerHTML = '';
           }
         }
 
@@ -3032,6 +3036,13 @@
         const navEl = document.getElementById('nav');
         if (navEl) navEl.classList.add('hidden');
         document.body.style.overflow = 'hidden';
+
+        // If CMSStore is still loading from MySQL, re-populate once ready
+        if (window.CMSStore && typeof window.CMSStore.ready === 'function' && !window.CMSStore.isLoaded) {
+          window.CMSStore.ready().then(() => {
+            if (window.__currentOpenProjectId === id) openModal(id);
+          }).catch(() => {});
+        }
       }
 
       function closeModal() {
@@ -3075,9 +3086,6 @@
       }
       updateFooterTime();
       setInterval(updateFooterTime, 30000);
-
-      /* ── Theme FAB managed globally by StudioTheme ── */);
-      }
 
       let lastPortScrollY = window.scrollY;
       const navEl = document.getElementById('nav');
@@ -3135,8 +3143,6 @@
 
     })();
   </script>
-  <script src="data-store.js?v=20261116_v10"></script>
-  <script src="site-bridge.js?v=20261116_v10"></script>
 </body>
 
 </html>

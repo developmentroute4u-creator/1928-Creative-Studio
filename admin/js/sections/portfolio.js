@@ -93,7 +93,7 @@
     }
 
     function moveGalleryItem(idx, direction) {
-      currentGalleryImages = getGalleryImagesFromUI();
+      currentGalleryImages = getGalleryImagesFromUI(true);
       const targetIdx = idx + direction;
       if (targetIdx < 0 || targetIdx >= currentGalleryImages.length) return;
       const temp = currentGalleryImages[idx];
@@ -103,7 +103,7 @@
     }
 
     function removeGalleryItem(idx) {
-      currentGalleryImages = getGalleryImagesFromUI();
+      currentGalleryImages = getGalleryImagesFromUI(true);
       if (typeof idx === 'number' && idx >= 0 && idx < currentGalleryImages.length) {
         currentGalleryImages.splice(idx, 1);
         renderGalleryReorderList();
@@ -112,7 +112,7 @@
     }
 
     function addGalleryImageSlot(imagePath = '') {
-      currentGalleryImages = getGalleryImagesFromUI();
+      currentGalleryImages = getGalleryImagesFromUI(true);
       currentGalleryImages.push(imagePath || '');
       renderGalleryReorderList();
       showToast('New image slot added.');
@@ -206,15 +206,22 @@
       });
     }
 
-    function getGalleryImagesFromUI() {
+    function getGalleryImagesFromUI(includeEmpty = false) {
       const container = document.getElementById('projectGalleryReorderList');
-      if (!container) return Array.isArray(currentGalleryImages) ? [...currentGalleryImages] : [];
+      if (!container) {
+        return Array.isArray(currentGalleryImages)
+          ? (includeEmpty ? [...currentGalleryImages] : currentGalleryImages.filter(u => typeof u === 'string' && u.trim() !== ''))
+          : [];
+      }
       const dragItems = container.querySelectorAll('.gallery-drag-item');
       if (!dragItems.length) return [];
       const res = [];
       dragItems.forEach(item => {
         const textInp = item.querySelector('.gallery-input-wrap input[type="text"]');
-        res.push(textInp ? textInp.value.trim() : '');
+        const val = textInp ? textInp.value.trim() : '';
+        if (includeEmpty || val) {
+          res.push(val);
+        }
       });
       return res;
     }
@@ -547,7 +554,7 @@
       e.preventDefault();
       const id = document.getElementById('projectIdInput').value;
       const bannerImg = document.getElementById('projectCoverInput').value.trim() || 'assets/img/portfolio/port-chronos.jpg';
-      const galleryList = getGalleryImagesFromUI();
+      const galleryList = getGalleryImagesFromUI(false);
       const overviewTitle = document.getElementById('projectOverviewTitleInput').value.trim() || 'Strategic Overview';
       const overviewText = document.getElementById('projectOverviewInput').value.trim();
 

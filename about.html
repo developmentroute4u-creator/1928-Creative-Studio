@@ -5807,7 +5807,84 @@
       updateFooterTime();
       setInterval(updateFooterTime, 30000);
 
-      /* ── Theme FAB managed globally by StudioTheme ── */);
+              /* ── S-Curve Serpentine Progressive Creative Process Flow ── */
+      let _procResizeListener = null;
+      let _procScrollListener = null;
+
+      function initProcessSerpentine() {
+        const track = document.getElementById('processTrack');
+        const bgPath = document.getElementById('processBgPath');
+        const activePath = document.getElementById('processActivePath');
+        const items = document.querySelectorAll('.proc-step-item');
+        if (!track || !bgPath || !activePath || !items.length) return;
+
+        function updatePathCoordinates() {
+          const trackRect = track.getBoundingClientRect();
+          const points = [];
+
+          items.forEach(item => {
+            const circle = item.querySelector('.proc-node-circle');
+            if (!circle) return;
+            const cRect = circle.getBoundingClientRect();
+            const x = cRect.left + cRect.width / 2 - trackRect.left;
+            const y = cRect.top + cRect.height / 2 - trackRect.top;
+            points.push({ x, y });
+          });
+
+          if (points.length < 2) return;
+
+          let d = 'M ' + points[0].x.toFixed(1) + ' ' + points[0].y.toFixed(1);
+          for (let i = 0; i < points.length - 1; i++) {
+            const p1 = points[i];
+            const p2 = points[i + 1];
+            const dy = p2.y - p1.y;
+            const cp1x = p1.x;
+            const cp1y = p1.y + dy * 0.50;
+            const cp2x = p2.x;
+            const cp2y = p2.y - dy * 0.50;
+            d += ' C ' + cp1x.toFixed(1) + ' ' + cp1y.toFixed(1) + ', ' + cp2x.toFixed(1) + ' ' + cp2y.toFixed(1) + ', ' + p2.x.toFixed(1) + ' ' + p2.y.toFixed(1);
+          }
+
+          bgPath.setAttribute('d', d);
+          activePath.setAttribute('d', d);
+
+          const totalLen = activePath.getTotalLength ? activePath.getTotalLength() : 0;
+          if (totalLen) {
+            activePath.style.strokeDasharray = totalLen + ' ' + totalLen;
+          }
+          updateProcessScroll();
+        }
+
+        function updateProcessScroll() {
+          const vh = window.innerHeight;
+          const firstCircle = items[0].querySelector('.proc-node-circle');
+          const lastCircle = items[items.length - 1].querySelector('.proc-node-circle');
+          if (!firstCircle || !lastCircle) return;
+
+          const firstRect = firstCircle.getBoundingClientRect();
+          const lastRect = lastCircle.getBoundingClientRect();
+
+          const startLineY = vh * 0.72;
+          const endLineY = vh * 0.54;
+          const totalSpan = (lastRect.top - firstRect.top) + (startLineY - endLineY);
+          const currentPos = startLineY - firstRect.top;
+          const progress = Math.min(1, Math.max(0, currentPos / (totalSpan || 1)));
+
+          const totalLen = activePath.getTotalLength ? activePath.getTotalLength() : 0;
+          if (totalLen) {
+            activePath.style.strokeDashoffset = String(totalLen * (1 - progress));
+          }
+
+          items.forEach((item, idx) => {
+            const circle = item.querySelector('.proc-node-circle');
+            if (!circle) return;
+            const cTop = circle.getBoundingClientRect().top;
+            if (cTop <= vh * 0.72) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
         }
 
         if (_procResizeListener) window.removeEventListener('resize', _procResizeListener);
@@ -5945,8 +6022,8 @@
       onScroll();
     })();
   </script>
-  <script src="data-store.js?v=20261116_v10"></script>
-  <script src="site-bridge.js?v=20261116_v10"></script>
+  <script src="data-store.js?v=20261116_v12"></script>
+  <script src="site-bridge.js?v=20261116_v12"></script>
 </body>
 
 </html>
