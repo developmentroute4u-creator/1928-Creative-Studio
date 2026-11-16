@@ -38,12 +38,21 @@ if ($route === 'api/live-sync' || $route === 'live-sync') {
     exit;
 }
 
+// Helper to perform redirects while preserving query parameters (e.g. ?project=aurora)
+function redirectWithQuery(string $targetUrl, int $code = 301): void {
+    $qStr = !empty($_SERVER['QUERY_STRING']) ? ('?' . $_SERVER['QUERY_STRING']) : '';
+    if (!empty($qStr) && str_contains($targetUrl, '?')) {
+        $qStr = '&' . $_SERVER['QUERY_STRING'];
+    }
+    header("Location: " . $targetUrl . $qStr, true, $code);
+    exit;
+}
+
 // 2. Default route (Home)
 if ($route === '' || $route === 'index.html' || $route === 'home') {
     if ($route === 'index.html' || $route === 'home') {
         $cleanHome = getBaseUrl() . '/';
-        header("Location: $cleanHome", true, 301);
-        exit;
+        redirectWithQuery($cleanHome, 301);
     }
     serveFileWithSEO(__DIR__ . '/index.html', 'home');
     exit;
@@ -82,8 +91,7 @@ if (preg_match('/^(?:perspectives|blogs|perspective|blog)\/(.+)$/i', $route, $ma
     $foundSlug = $blogCheck->fetchColumn();
     if ($foundSlug) {
         $canon = getBaseUrl() . '/perspectives/' . $foundSlug;
-        header("Location: $canon", true, 301);
-        exit;
+        redirectWithQuery($canon, 301);
     }
 }
 
@@ -99,8 +107,7 @@ if (!empty($blogSlug)) {
     if ($blog) {
         if ($route !== 'perspectives/' . $blog['slug']) {
             $canon = getBaseUrl() . '/perspectives/' . $blog['slug'];
-            header("Location: $canon", true, 301);
-            exit;
+            redirectWithQuery($canon, 301);
         }
 
         $detailFile = __DIR__ . '/blog-detail.html';
@@ -130,8 +137,7 @@ try {
             $bFind->execute([':bid' => $bId]);
             $activeSlug = $bFind->fetchColumn();
             if ($activeSlug) {
-                header("Location: " . getBaseUrl() . '/perspectives/' . $activeSlug, true, 301);
-                exit;
+                redirectWithQuery(getBaseUrl() . '/perspectives/' . $activeSlug, 301);
             }
         } else {
             $sFind = $db->prepare("SELECT `slug` FROM `site_routes` WHERE `route_key` = :rk AND `is_active` = 1 LIMIT 1");
@@ -139,8 +145,7 @@ try {
             $activeSlug = $sFind->fetchColumn();
             if ($activeSlug !== false && $activeSlug !== null) {
                 $targetUrl = !empty($activeSlug) ? (getBaseUrl() . '/' . $activeSlug) : (getBaseUrl() . '/');
-                header("Location: " . $targetUrl, true, 301);
-                exit;
+                redirectWithQuery($targetUrl, 301);
             }
         }
     }
@@ -189,8 +194,7 @@ if (isset($systemRouteMap[$route])) {
     $activeSlug = $sStmt->fetchColumn();
     if ($activeSlug !== false && $activeSlug !== null && $route !== $activeSlug) {
         $dest = !empty($activeSlug) ? (getBaseUrl() . '/' . $activeSlug) : (getBaseUrl() . '/');
-        header("Location: " . $dest, true, 301);
-        exit;
+        redirectWithQuery($dest, 301);
     }
 }
 
@@ -208,8 +212,7 @@ if (file_exists($candidateFile)) {
 
     if ($found && !empty($found['slug']) && $route !== $found['slug']) {
         $cleanUrl = getBaseUrl() . '/' . $found['slug'];
-        header("Location: $cleanUrl", true, 301);
-        exit;
+        redirectWithQuery($cleanUrl, 301);
     }
     
     $routeKey = $found['route_key'] ?? str_replace('.html', '', $baseName);
@@ -244,8 +247,7 @@ foreach ($prefixMap as $pfx => $key) {
         $activeSlug = $sStmt->fetchColumn();
         if ($activeSlug !== false && $activeSlug !== null && $route !== $activeSlug) {
             $dest = !empty($activeSlug) ? (getBaseUrl() . '/' . $activeSlug) : (getBaseUrl() . '/');
-            header("Location: " . $dest, true, 301);
-            exit;
+            redirectWithQuery($dest, 301);
         }
     }
 }

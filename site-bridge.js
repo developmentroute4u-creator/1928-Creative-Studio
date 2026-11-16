@@ -749,7 +749,7 @@
         cardsHtml += `
           <!-- CARD ${slotNum} (SLOT ${slotNum}) -->
           <article class="p-flow-item p-item-${slotNum}">
-            <a href="portfolio.html?project=${proj.id}" class="p-card-v p-card-${slotNum}">
+            <a href="portfolio?project=${proj.id}" class="p-card-v p-card-${slotNum}">
               <div class="pcv-media">
                 <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;object-position:${objPos};transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
                 <div class="pcv-badge-top"><span class="pcv-num">${numStr}</span><span class="pcv-client">${clientStr}</span></div>

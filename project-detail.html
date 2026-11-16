@@ -494,9 +494,9 @@
       const params = new URLSearchParams(window.location.search);
       const pid = params.get('id') || params.get('project');
       if (pid) {
-        window.location.replace(`portfolio.html?project=${encodeURIComponent(pid)}`);
+        window.location.replace(`portfolio?project=${encodeURIComponent(pid)}`);
       } else {
-        window.location.replace('portfolio.html');
+        window.location.replace('portfolio');
       }
       return;
 
@@ -568,8 +568,8 @@
   </script>
 
   <!-- CMS Live Bridge -->
-  <script src="data-store.js?v=20261116_v17"></script>
-  <script src="site-bridge.js?v=20261116_v17"></script>
+  <script src="data-store.js?v=20261116_v18"></script>
+  <script src="site-bridge.js?v=20261116_v18"></script>
 </body>
 
 </html>
