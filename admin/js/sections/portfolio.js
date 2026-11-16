@@ -19,7 +19,7 @@
         <div class="cms-card" style="cursor:pointer;" onclick="editProject('${p.id}')">
           <div class="cms-card-media">
             <span class="cms-card-tag">${p.tagPill || p.categoryDisplay || 'CASE STUDY'}</span>
-            <img src="${p.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${p.title}" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
+            <img src="${p.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${p.title}" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
           </div>
           <div class="cms-card-body">
             <div>
@@ -78,7 +78,7 @@
           <div class="gallery-btn-group">
             <button type="button" class="gallery-icon-btn" onclick="moveGalleryItem(${idx}, -1)" title="Move Up" ${idx === 0 ? 'disabled style="opacity:0.25;cursor:not-allowed;"' : ''}>▲</button>
             <button type="button" class="gallery-icon-btn" onclick="moveGalleryItem(${idx}, 1)" title="Move Down" ${idx === count - 1 ? 'disabled style="opacity:0.25;cursor:not-allowed;"' : ''}>▼</button>
-            <button type="button" class="gallery-icon-btn btn-delete" onclick="removeGalleryItem(${idx})" title="Remove image">✕</button>
+            <button type="button" class="gallery-icon-btn btn-delete" onclick="removeGalleryItem(${idx}, event)" title="Remove image">✕</button>
           </div>
         </div>
       `;
@@ -103,7 +103,11 @@
       renderGalleryReorderList();
     }
 
-    function removeGalleryItem(idx) {
+    function removeGalleryItem(idx, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
       currentGalleryImages = getGalleryImagesFromUI(true);
       if (typeof idx === 'number' && idx >= 0 && idx < currentGalleryImages.length) {
         currentGalleryImages.splice(idx, 1);

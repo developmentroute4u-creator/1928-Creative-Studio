@@ -28,7 +28,7 @@
         <div class="cms-card" style="cursor:pointer;" onclick="editBlog('${b.id}')">
           <div class="cms-card-media">
             <span class="cms-card-tag">${b.category || 'THEORY'}</span>
-            <img src="${b.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${b.title}" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
+            <img src="${b.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${b.title}" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
           </div>
           <div class="cms-card-body">
             <div>
@@ -373,7 +373,7 @@
             <span class="curation-slot-num">${slotLabel}</span>
             <span id="slotCity_${section}_${slotIndex}" style="font-family:var(--font-mono);font-size:10px;color:var(--ink-mid);">${currentBlog.city || 'Editorial'}</span>
           </div>
-          <img class="curation-preview-img" id="slotThumb_${section}_${slotIndex}" src="${currentBlog.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${currentBlog.title || ''}" onerror="this.src='assets/img/portfolio/port-chronos.jpg';" />
+          <img class="curation-preview-img" id="slotThumb_${section}_${slotIndex}" src="${currentBlog.coverImage || 'assets/img/portfolio/port-chronos.jpg'}" alt="${currentBlog.title || ''}" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
           <div class="curation-preview-meta">
             <span id="slotCategory_${section}_${slotIndex}" style="color:var(--cr);font-weight:700;">${currentBlog.category || 'THEORY'}</span>
             <span id="slotDate_${section}_${slotIndex}">${currentBlog.date || '2026'} · ${currentBlog.readTime || '5 MIN'}</span>
@@ -488,7 +488,7 @@
         document.querySelectorAll('.custom-dropdown-container.open').forEach(el => {
           el.classList.remove('open');
         });
-        document.querySelectorAll('.curation-slot-card.dropdown-active, .hero-pill-card.dropdown-active').forEach(card => {
+        document.querySelectorAll('.dropdown-active').forEach(card => {
           card.classList.remove('dropdown-active');
         });
       }
@@ -502,12 +502,22 @@
       const el = document.getElementById(containerId);
       const isOpen = el && el.classList.contains('open');
       document.querySelectorAll('.custom-dropdown-container.open').forEach(c => c.classList.remove('open'));
-      document.querySelectorAll('.curation-slot-card.dropdown-active, .hero-pill-card.dropdown-active').forEach(card => card.classList.remove('dropdown-active'));
+      document.querySelectorAll('.dropdown-active').forEach(card => card.classList.remove('dropdown-active'));
       
       if (!isOpen && el) {
         el.classList.add('open');
-        const parentCard = el.closest('.curation-slot-card, .hero-pill-card');
-        if (parentCard) parentCard.classList.add('dropdown-active');
+        let parent = el.parentElement;
+        while (parent && parent !== document.body) {
+          if (parent.classList.contains('hero-pill-card') ||
+              parent.classList.contains('curation-slot-card') ||
+              parent.classList.contains('hero-pill-selection-grid') ||
+              parent.classList.contains('hero-sim-banner') ||
+              parent.classList.contains('form-group') ||
+              parent.id === 'homeShowcaseGrid') {
+            parent.classList.add('dropdown-active');
+          }
+          parent = parent.parentElement;
+        }
         const searchInput = el.querySelector('.custom-dropdown-search');
         if (searchInput) {
           searchInput.value = '';
@@ -521,6 +531,7 @@
         }
       }
     }
+    window.toggleGenericDropdown = toggleGenericDropdown;
 
     function selectGenericDropdownOption(containerId, hiddenInputId, value, label) {
       const hiddenInput = document.getElementById(hiddenInputId);
@@ -538,10 +549,10 @@
           });
         }
         container.classList.remove('open');
-        const parentCard = container.closest('.curation-slot-card, .hero-pill-card');
-        if (parentCard) parentCard.classList.remove('dropdown-active');
+        document.querySelectorAll('.dropdown-active').forEach(card => card.classList.remove('dropdown-active'));
       }
     }
+    window.selectGenericDropdownOption = selectGenericDropdownOption;
 
     function toggleCodexCountDropdown(event) {
       toggleGenericDropdown('customDropdown_codexCount', event);
@@ -566,6 +577,7 @@
         });
       }
     }
+    window.setCustomDropdownValue = setCustomDropdownValue;
 
     function updateSlotPreview(section, slotIndex, blogId) {
       const allBlogs = window.CMSStore.getBlogs();
