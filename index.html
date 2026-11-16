@@ -7065,7 +7065,30 @@
         requestAnimationFrame(L);
       })();
 
-      /* ── Section 3 Selected Work Parallax Elements ── */
+      /* ── Cached DOM Elements & Section References ──────── */
+      const nav = document.getElementById('nav');
+
+      // §1 Hero Elements
+      const heroDriver = document.getElementById('hero-driver');
+      const heroTitle = document.getElementById('heroTitle');
+      const heroReel = document.getElementById('heroReel');
+      const roomCube = document.getElementById('roomCube');
+      const heroFrame = document.getElementById('heroFrame');
+      const heroRaysSvg = document.getElementById('heroRaysSvg');
+      const r1Cards = document.querySelectorAll('.r1-card');
+      const heroWhiteout = document.getElementById('heroWhiteout');
+      const r1Outer = document.getElementById('r1Outer');
+      const r1Inner = document.getElementById('r1Inner');
+      const r1Rays = ['r1Ray1', 'r1Ray2', 'r1Ray3', 'r1Ray4'].map(id => document.getElementById(id));
+      const heroAmbient = document.querySelector('.hero-loading-ambient');
+
+      // §2 Story Elements
+      const heroStoryWrap = document.getElementById('heroStoryWrap');
+      const storyBlock = document.getElementById('storyBlock');
+      const storyTag = document.getElementById('storyTag');
+      const storyWords = document.querySelectorAll('.story-words-block .sw');
+
+      // §3 Portfolio Elements
       const portDriver = document.getElementById('port-driver');
       const portStickyCenter = document.getElementById('portStickyCenter');
       const portCardsFlow = document.getElementById('portCardsFlow');
@@ -7077,6 +7100,68 @@
         lastPortCard = portFlowCards.length ? portFlowCards[portFlowCards.length - 1] : null;
       };
 
+      // §4 Services Elements
+      const svcDriver = document.getElementById('svc-driver');
+      const svcHeroCapsule = document.getElementById('svcHeroCapsule');
+      const svcHeroRight = document.getElementById('svcHeroRight');
+      const svcSpotlight = document.querySelector('.svc-spotlight');
+      const mainSvcFolder = document.getElementById('mainSvcFolder');
+      const defaultCoverSheet = document.getElementById('svcSheetDefault');
+      const allDossierCards = [
+        document.getElementById('svcSheet0'),
+        document.getElementById('svcSheet1'),
+        document.getElementById('svcSheet2'),
+        document.getElementById('svcSheet3'),
+        document.getElementById('svcSheet4')
+      ];
+      const svcFiveMenu = document.getElementById('svcFiveMenu');
+      const svcDetailDeck = document.getElementById('svcDetailDeck');
+      const allShowcaseCards = [
+        document.getElementById('svcCard0'),
+        document.getElementById('svcCard1'),
+        document.getElementById('svcCard2'),
+        document.getElementById('svcCard3'),
+        document.getElementById('svcCard4')
+      ];
+      const totalSvcCards = 5;
+
+      // §5 Brands Elements
+      const brandsDriver = document.getElementById('brands-driver');
+      const brandsSticky = document.getElementById('brands-sticky');
+      const brandsPinHead = document.getElementById('brands-pin-head');
+      const brandsTrainViewport = document.getElementById('brands-train-viewport');
+      const brandsTrainTrack = document.getElementById('brands-train-track');
+      const card7FunnelSvg = document.getElementById('card7-funnel-svg');
+      const card7FunnelPath = document.getElementById('card7FunnelPath');
+      const funnelBorderTop = document.getElementById('funnelBorderTop');
+      const funnelBorderBottom = document.getElementById('funnelBorderBottom');
+      const funnelBlogStage = document.getElementById('funnelBlogStage');
+
+      // §7 Footer Elements
+      const footerDriver = document.getElementById('footer-driver');
+      const fgTop = document.getElementById('fgTop');
+      const fgBottom = document.getElementById('fgBottom');
+
+      // Easing helpers
+      function eioq(t) { return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2; }
+      function eoq(t) { return 1 - Math.pow(1 - t, 4); }
+      function eiq(t) { return t * t * t * t; }
+
+      // Services Helper Functions
+      function resetFolderSheetsDefault(offsetY = 0) {
+        if (defaultCoverSheet) {
+          defaultCoverSheet.style.transform = `translateY(${offsetY}px) scale(1.0) rotateX(0deg)`;
+          defaultCoverSheet.style.zIndex = '5';
+          defaultCoverSheet.style.opacity = '1';
+        }
+        allDossierCards.forEach((sheet) => {
+          if (sheet) {
+            sheet.style.transform = `translateY(${offsetY + 220}px) scale(0.93)`;
+            sheet.style.zIndex = '2';
+            sheet.style.opacity = '1';
+          }
+        });
+      }
 
       function resetShowcaseDeckDefault() {
         allShowcaseCards.forEach((card, idx) => {
@@ -8201,8 +8286,8 @@
       onScroll();
     })();
   </script>
-  <script src="data-store.js?v=20261116_v12"></script>
-  <script src="site-bridge.js?v=20261116_v12"></script>
+  <script src="data-store.js?v=20261116_v13"></script>
+  <script src="site-bridge.js?v=20261116_v13"></script>
 </body>
 
 </html>
