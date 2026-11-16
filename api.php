@@ -589,7 +589,7 @@ try {
 
             // H. Contact Brief Form Configuration
             if (isset($settings['contact_brief'])) {
-                $cb = json_decode($settings['contact_brief'], true);
+                $cb = is_array($settings['contact_brief']) ? $settings['contact_brief'] : json_decode($settings['contact_brief'], true);
                 if (is_array($cb)) {
                     $response['contactBrief'] = $cb;
                 }
