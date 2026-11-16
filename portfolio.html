@@ -5,37 +5,61 @@
   <meta charset="UTF-8" />
   <script>
     (function () {
-      try {
-        var keys = ['1928_theme', 'theme', 't28', 'theme-1928'];
-        var t = "dark";
-        for (var i = 0; i < keys.length; i++) {
-          var v = localStorage.getItem(keys[i]);
-          if (v === "light" || v === "dark") { t = v; break; }
-        }
-        document.documentElement.setAttribute("data-theme", t);
-      } catch (e) {}
+      var THEME_KEYS = ['1928_theme', 'theme', 't28', 'theme-1928'];
+      function readStoredTheme() {
+        try {
+          for (var i = 0; i < THEME_KEYS.length; i++) {
+            var v = localStorage.getItem(THEME_KEYS[i]);
+            if (v === 'light' || v === 'dark') return v;
+          }
+        } catch (e) {}
+        try {
+          var match = document.cookie.match(/(?:^|;\s*)1928_theme=(light|dark)(?:;|$)/);
+          if (match) return match[1];
+        } catch (e) {}
+        return 'dark';
+      }
 
-      // Early global theme listener to prevent double-toggle & handle immediate user clicks
-      var isToggling = false;
-      window.__toggleThemeGlobal = function () {
-        if (isToggling) return;
-        isToggling = true;
-        setTimeout(function () { isToggling = false; }, 250);
-        var activeAttr = document.documentElement.getAttribute('data-theme') || 'dark';
-        var next = activeAttr === 'dark' ? 'light' : 'dark';
+      function writeStoredTheme(t) {
+        try {
+          for (var i = 0; i < THEME_KEYS.length; i++) {
+            localStorage.setItem(THEME_KEYS[i], t);
+          }
+        } catch (e) {}
+        try {
+          document.cookie = '1928_theme=' + t + ';path=/;max-age=31536000;SameSite=Lax';
+        } catch (e) {}
+      }
+
+      var currentTheme = readStoredTheme();
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      writeStoredTheme(currentTheme);
+
+      window.__getGlobalTheme = readStoredTheme;
+      window.__setGlobalTheme = function (next) {
+        if (next !== 'light' && next !== 'dark') next = 'dark';
         document.documentElement.setAttribute('data-theme', next);
         if (document.body) document.body.setAttribute('data-theme', next);
-        try {
-          var k = ['1928_theme', 'theme', 't28', 'theme-1928'];
-          for (var j = 0; j < k.length; j++) localStorage.setItem(k[j], next);
-        } catch (e) {}
+        writeStoredTheme(next);
         window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: next } }));
+      };
+
+      var isToggling = false;
+      window.__toggleThemeGlobal = function () {
+        if (isToggling) return readStoredTheme();
+        isToggling = true;
+        setTimeout(function () { isToggling = false; }, 200);
+        var cur = document.documentElement.getAttribute('data-theme') || readStoredTheme();
+        var next = cur === 'dark' ? 'light' : 'dark';
+        window.__setGlobalTheme(next);
+        return next;
       };
 
       document.addEventListener('click', function (e) {
         var btn = e.target.closest && e.target.closest('#theme-fab, #themeFab, #authThemeToggleBtn, #themeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
         if (btn) {
           e.preventDefault();
+          e.stopPropagation();
           e.stopImmediatePropagation();
           if (window.StudioTheme && typeof window.StudioTheme.toggle === 'function') {
             window.StudioTheme.toggle();
@@ -2436,7 +2460,7 @@
           <div class="dzinr-project-card bento-wide" data-category="web-design brand-identity" data-project-id="aetherion">
             <div class="dpc-img-wrap">
               <span class="dpc-tag-pill">Cyber Cockpit</span>
-              <img src="assets/img/portfolio/port-veloce.jpg" alt="Aetherion EV" />
+              <img src="assets/img/portfolio/port-chronos.jpg" alt="Aetherion EV" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
             </div>
             <div class="dpc-body">
               <div class="dpc-info">
@@ -2586,7 +2610,7 @@
             <img id="mGal5" src="assets/img/why-choose/wc-r1.jpg" alt="Case Study Asset 5" />
           </div>
           <div class="modal-gal-card">
-            <img id="mGal6" src="assets/img/portfolio/port-veloce.jpg" alt="Case Study Asset 6" />
+            <img id="mGal6" src="assets/img/portfolio/port-chronos.jpg" alt="Case Study Asset 6" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
           </div>
         </div>
 
@@ -2960,7 +2984,7 @@
                 fallback?.gal3 || 'assets/img/portfolio/port-lumina.jpg',
                 fallback?.gal4 || 'assets/img/why-choose/wc-l1.jpg',
                 fallback?.gal5 || 'assets/img/why-choose/wc-r1.jpg',
-                fallback?.gal6 || 'assets/img/portfolio/port-veloce.jpg'
+                fallback?.gal6 || 'assets/img/portfolio/port-chronos.jpg'
               ];
         
         const heroEl = document.getElementById('mHeroImg');
@@ -3052,36 +3076,7 @@
       updateFooterTime();
       setInterval(updateFooterTime, 30000);
 
-      /* ── Comprehensive Dark / Light Theme Toggle & Cross-Site Persistence Engine ── */
-      const themeFab = document.getElementById('theme-fab');
-      const root = document.documentElement;
-
-      function setUnifiedTheme(theme) {
-        if (window.StudioTheme && typeof window.StudioTheme.set === 'function') {
-          window.StudioTheme.set(theme);
-        } else {
-          root.setAttribute('data-theme', theme);
-          try {
-            ['1928_theme', 'theme', 't28', 'theme-1928'].forEach(k => localStorage.setItem(k, theme));
-          } catch (e) {}
-        }
-      }
-
-      const initialTheme = (window.StudioTheme && typeof window.StudioTheme.get === 'function')
-        ? window.StudioTheme.get()
-        : (localStorage.getItem('1928_theme') || localStorage.getItem('theme') || localStorage.getItem('t28') || localStorage.getItem('theme-1928') || 'dark');
-      setUnifiedTheme(initialTheme);
-
-      if (themeFab && !themeFab.dataset.boundLocal) {
-        themeFab.dataset.boundLocal = 'true';
-        themeFab.addEventListener('click', () => {
-          if (window.StudioTheme && typeof window.StudioTheme.toggle === 'function') {
-            window.StudioTheme.toggle();
-          } else {
-            const current = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            setUnifiedTheme(current);
-          }
-        });
+      /* ── Theme FAB managed globally by StudioTheme ── */);
       }
 
       let lastPortScrollY = window.scrollY;
@@ -3140,8 +3135,8 @@
 
     })();
   </script>
-  <script src="data-store.js?v=20261116_v9"></script>
-  <script src="site-bridge.js?v=20261116_v9"></script>
+  <script src="data-store.js?v=20261116_v10"></script>
+  <script src="site-bridge.js?v=20261116_v10"></script>
 </body>
 
 </html>

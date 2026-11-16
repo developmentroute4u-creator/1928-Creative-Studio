@@ -404,16 +404,16 @@
     function savePortfolioHeroFromUI() {
       const sel1 = document.getElementById('heroPortfolioPill1Select');
       const sel2 = document.getElementById('heroPortfolioPill2Select');
-      const p1Id = sel1?.value || 'aurora';
-      const p2Id = sel2?.value || 'veloce';
+      const p1Id = sel1?.value || 'vibee';
+      const p2Id = sel2?.value || 'infyli';
       const proj1 = window.CMSStore.getPortfolioById(p1Id) || window.CMSStore.getProjectById(p1Id);
       const proj2 = window.CMSStore.getPortfolioById(p2Id) || window.CMSStore.getProjectById(p2Id);
 
       const heroData = {
         pill1ProjectId: p1Id,
-        pill1Img: proj1 ? (proj1.bannerImage || proj1.coverImage || 'assets/img/portfolio/port-chronos.jpg') : 'assets/img/portfolio/port-chronos.jpg',
+        pill1Img: proj1 ? (proj1.bannerImage || proj1.coverImage || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg') : 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
         pill2ProjectId: p2Id,
-        pill2Img: proj2 ? (proj2.bannerImage || proj2.coverImage || 'assets/img/portfolio/port-veloce.jpg') : 'assets/img/portfolio/port-veloce.jpg'
+        pill2Img: proj2 ? (proj2.bannerImage || proj2.coverImage || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg') : 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg'
       };
       window.CMSStore.savePortfolioHero(heroData);
       showToast('🎉 Hero media pills saved & synchronized with live website!');
@@ -582,4 +582,4 @@
       loadHomeShowcaseForm();
       showToast('🎉 Portfolio project saved & live website synchronized!');
     });
-
+

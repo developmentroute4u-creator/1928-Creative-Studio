@@ -5,37 +5,61 @@
   <meta charset="UTF-8" />
   <script>
     (function () {
-      try {
-        var keys = ['1928_theme', 'theme', 't28', 'theme-1928'];
-        var t = "dark";
-        for (var i = 0; i < keys.length; i++) {
-          var v = localStorage.getItem(keys[i]);
-          if (v === "light" || v === "dark") { t = v; break; }
-        }
-        document.documentElement.setAttribute("data-theme", t);
-      } catch (e) {}
+      var THEME_KEYS = ['1928_theme', 'theme', 't28', 'theme-1928'];
+      function readStoredTheme() {
+        try {
+          for (var i = 0; i < THEME_KEYS.length; i++) {
+            var v = localStorage.getItem(THEME_KEYS[i]);
+            if (v === 'light' || v === 'dark') return v;
+          }
+        } catch (e) {}
+        try {
+          var match = document.cookie.match(/(?:^|;\s*)1928_theme=(light|dark)(?:;|$)/);
+          if (match) return match[1];
+        } catch (e) {}
+        return 'dark';
+      }
 
-      // Early global theme listener to prevent double-toggle & handle immediate user clicks
-      var isToggling = false;
-      window.__toggleThemeGlobal = function () {
-        if (isToggling) return;
-        isToggling = true;
-        setTimeout(function () { isToggling = false; }, 250);
-        var activeAttr = document.documentElement.getAttribute('data-theme') || 'dark';
-        var next = activeAttr === 'dark' ? 'light' : 'dark';
+      function writeStoredTheme(t) {
+        try {
+          for (var i = 0; i < THEME_KEYS.length; i++) {
+            localStorage.setItem(THEME_KEYS[i], t);
+          }
+        } catch (e) {}
+        try {
+          document.cookie = '1928_theme=' + t + ';path=/;max-age=31536000;SameSite=Lax';
+        } catch (e) {}
+      }
+
+      var currentTheme = readStoredTheme();
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      writeStoredTheme(currentTheme);
+
+      window.__getGlobalTheme = readStoredTheme;
+      window.__setGlobalTheme = function (next) {
+        if (next !== 'light' && next !== 'dark') next = 'dark';
         document.documentElement.setAttribute('data-theme', next);
         if (document.body) document.body.setAttribute('data-theme', next);
-        try {
-          var k = ['1928_theme', 'theme', 't28', 'theme-1928'];
-          for (var j = 0; j < k.length; j++) localStorage.setItem(k[j], next);
-        } catch (e) {}
+        writeStoredTheme(next);
         window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: next } }));
+      };
+
+      var isToggling = false;
+      window.__toggleThemeGlobal = function () {
+        if (isToggling) return readStoredTheme();
+        isToggling = true;
+        setTimeout(function () { isToggling = false; }, 200);
+        var cur = document.documentElement.getAttribute('data-theme') || readStoredTheme();
+        var next = cur === 'dark' ? 'light' : 'dark';
+        window.__setGlobalTheme(next);
+        return next;
       };
 
       document.addEventListener('click', function (e) {
         var btn = e.target.closest && e.target.closest('#theme-fab, #themeFab, #authThemeToggleBtn, #themeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
         if (btn) {
           e.preventDefault();
+          e.stopPropagation();
           e.stopImmediatePropagation();
           if (window.StudioTheme && typeof window.StudioTheme.toggle === 'function') {
             window.StudioTheme.toggle();
@@ -5783,214 +5807,7 @@
       updateFooterTime();
       setInterval(updateFooterTime, 30000);
 
-      /* ── Dark / Light Theme FAB ── */
-      const themeFab = document.getElementById('theme-fab');
-      const root = document.documentElement;
-
-      const savedTheme = localStorage.getItem('theme') || 'dark';
-      root.setAttribute('data-theme', savedTheme);
-
-      if (themeFab) {
-        themeFab.addEventListener('click', () => {
-          const current = root.getAttribute('data-theme');
-          const next = current === 'dark' ? 'light' : 'dark';
-          root.setAttribute('data-theme', next);
-          localStorage.setItem('theme', next);
-        });
-      }
-
-      /* ── Best Works 2-Set Pinned Scroll Deck (Soft Crossfade with Zero Text Overlap) ── */
-      const worksDriver = document.getElementById('works-driver');
-      const worksSet1 = document.getElementById('worksSet1');
-      const worksSet2 = document.getElementById('worksSet2');
-      const worksDotsAll = document.querySelectorAll('.works-dot');
-
-      function updateWorksDots(activeCard) {
-        worksDotsAll.forEach(function (d) {
-          d.classList.toggle('active', d.getAttribute('data-card') === String(activeCard));
-        });
-      }
-
-      function updateWorksOnScroll() {
-        if (!worksDriver || !worksSet1 || !worksSet2) return;
-        const cardsSet1 = worksSet1.querySelectorAll('.work-duo-card');
-        const cardsSet2 = worksSet2.querySelectorAll('.work-duo-card');
-        const card1 = cardsSet1[0];
-        const card2 = cardsSet1[1];
-        const card3 = cardsSet2[0];
-        const card4 = cardsSet2[1];
-
-        /* ── MOBILE: 4 individual cards slide-up progression with live 4-dot indicator ── */
-        if (window.innerWidth <= 860) {
-          if (!card1 || !card2 || !card3 || !card4) return;
-          const mRect = worksDriver.getBoundingClientRect();
-          const mTotalDist = worksDriver.offsetHeight - window.innerHeight;
-          if (mTotalDist <= 0) return;
-
-          const mScrolled = Math.max(0, -mRect.top);
-          const mp = Math.min(1, Math.max(0, mScrolled / mTotalDist));
-
-          // 1. Card 2 enters (mp 0.05 -> 0.28): slides right to left over Card 1 inside worksSet1
-          const p2 = clamp((mp - 0.05) / 0.23, 0, 1);
-          const e2 = eioq(p2);
-          const x2 = (1 - e2) * 105;
-          card2.style.transform = `translate3d(${x2.toFixed(1)}%, 0, 0)`;
-          card1.style.transform = `translate3d(${(-25 * e2).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e2).toFixed(3)})`;
-          card1.style.opacity = `${(1 - 0.35 * e2).toFixed(2)}`;
-
-          // 2. Card 3 enters (mp 0.35 -> 0.58): worksSet2 (carrying Card 3) slides right to left over worksSet1
-          const p3 = clamp((mp - 0.35) / 0.23, 0, 1);
-          const e3 = eioq(p3);
-          const xSet2 = (1 - e3) * 105;
-          worksSet2.style.transform = `translate3d(${xSet2.toFixed(1)}%, 0, 0)`;
-          worksSet1.style.transform = `translate3d(${(-25 * e3).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e3).toFixed(3)})`;
-          worksSet1.style.opacity = `${(1 - 0.35 * e3).toFixed(2)}`;
-
-          // 3. Card 4 enters (mp 0.65 -> 0.88): Card 4 slides right to left over Card 3 inside worksSet2
-          const p4 = clamp((mp - 0.65) / 0.23, 0, 1);
-          const e4 = eioq(p4);
-          const x4 = (1 - e4) * 105;
-          card4.style.transform = `translate3d(${x4.toFixed(1)}%, 0, 0)`;
-          card3.style.transform = `translate3d(${(-25 * e4).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e4).toFixed(3)})`;
-          card3.style.opacity = `${(1 - 0.35 * e4).toFixed(2)}`;
-
-          // Active indicator dot & pointer events
-          let activeCard = 1;
-          if (mp >= 0.75) {
-            activeCard = 4;
-          } else if (mp >= 0.45) {
-            activeCard = 3;
-          } else if (mp >= 0.18) {
-            activeCard = 2;
-          }
-          card1.style.pointerEvents = activeCard === 1 ? 'auto' : 'none';
-          card2.style.pointerEvents = activeCard === 2 ? 'auto' : 'none';
-          card3.style.pointerEvents = activeCard === 3 ? 'auto' : 'none';
-          card4.style.pointerEvents = activeCard === 4 ? 'auto' : 'none';
-
-          updateWorksDots(activeCard);
-          return;
-        }
-
-        // DESKTOP (> 860px): Clear any mobile transforms on sets and individual cards
-        worksSet1.style.opacity = '';
-        worksSet2.style.opacity = '';
-        const allCards = worksDriver.querySelectorAll('.work-duo-card');
-        allCards.forEach(c => {
-          c.style.transform = '';
-          c.style.opacity = '';
-          c.style.pointerEvents = 'auto';
-        });
-
-        const rect = worksDriver.getBoundingClientRect();
-        const totalDist = worksDriver.offsetHeight - window.innerHeight;
-        if (totalDist <= 0) return;
-        const scrolled = -rect.top;
-        const p = clamp(scrolled / totalDist, 0, 1);
-
-        // Phase 1 (p: 0.0 -> 0.50): Set 1 (01 Juventus, 02 Bugatti)
-        // Stays centered & clear initially, then softly fades out in place (with subtle micro-scale) without moving into the text above
-        const set1ExitP = clamp((p - 0.18) / 0.28, 0, 1);
-        const set1E = eioq(set1ExitP);
-        const set1Scale = lerp(1, 0.96, set1E);
-        const set1Opac = lerp(1, 0, set1E);
-        worksSet1.style.transform = `translateY(0px) scale(${set1Scale})`;
-        worksSet1.style.opacity = `${set1Opac}`;
-        worksSet1.style.pointerEvents = set1Opac > 0.4 ? 'auto' : 'none';
-
-        // Phase 2 (p: 0.32 -> 1.0): Set 2 (03 Mini Brand, 04 Zerodha)
-        // Softly fades in and scales smoothly into full view
-        const set2EnterP = clamp((p - 0.32) / 0.28, 0, 1);
-        const set2E = eioq(set2EnterP);
-        const set2Scale = lerp(0.96, 1, set2E);
-        const set2Opac = lerp(0, 1, set2E);
-        worksSet2.style.transform = `translateY(0px) scale(${set2Scale})`;
-        worksSet2.style.opacity = `${set2Opac}`;
-        worksSet2.style.pointerEvents = set2Opac > 0.4 ? 'auto' : 'none';
-      }
-
-      /* ── S-Curve Serpentine Progressive Creative Process Flow ── */
-      let _procResizeListener = null;
-      let _procScrollListener = null;
-
-      function initProcessSerpentine() {
-        const track = document.getElementById('processTrack');
-        const bgPath = document.getElementById('processBgPath');
-        const activePath = document.getElementById('processActivePath');
-        const items = document.querySelectorAll('.proc-step-item');
-        if (!track || !bgPath || !activePath || !items.length) return;
-
-        function updatePathCoordinates() {
-          const trackRect = track.getBoundingClientRect();
-          const points = [];
-
-          items.forEach(item => {
-            const circle = item.querySelector('.proc-node-circle');
-            if (!circle) return;
-            const cRect = circle.getBoundingClientRect();
-            const x = cRect.left + cRect.width / 2 - trackRect.left;
-            const y = cRect.top + cRect.height / 2 - trackRect.top;
-            points.push({ x, y });
-          });
-
-          if (points.length < 2) return;
-
-          // Build smooth Bezier S-Curve path through all node centers
-          let d = `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
-          for (let i = 0; i < points.length - 1; i++) {
-            const p1 = points[i];
-            const p2 = points[i + 1];
-            const dy = p2.y - p1.y;
-            const cp1x = p1.x;
-            const cp1y = p1.y + dy * 0.50;
-            const cp2x = p2.x;
-            const cp2y = p2.y - dy * 0.50;
-            d += ` C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
-          }
-
-          bgPath.setAttribute('d', d);
-          activePath.setAttribute('d', d);
-
-          const totalLen = activePath.getTotalLength ? activePath.getTotalLength() : 0;
-          if (totalLen) {
-            activePath.style.strokeDasharray = `${totalLen} ${totalLen}`;
-          }
-          updateProcessScroll();
-        }
-
-        function updateProcessScroll() {
-          const vh = window.innerHeight;
-          const firstCircle = items[0].querySelector('.proc-node-circle');
-          const lastCircle = items[items.length - 1].querySelector('.proc-node-circle');
-          if (!firstCircle || !lastCircle) return;
-
-          const firstRect = firstCircle.getBoundingClientRect();
-          const lastRect = lastCircle.getBoundingClientRect();
-
-          // Smooth progress: starts when Node 1 is at 72% vh, hits 100% when Node 5 arrives at 54% vh
-          const startLineY = vh * 0.72;
-          const endLineY = vh * 0.54;
-          const totalSpan = (lastRect.top - firstRect.top) + (startLineY - endLineY);
-          const currentPos = startLineY - firstRect.top;
-          const progress = Math.min(1, Math.max(0, currentPos / (totalSpan || 1)));
-
-          const totalLen = activePath.getTotalLength ? activePath.getTotalLength() : 0;
-          if (totalLen) {
-            activePath.style.strokeDashoffset = `${totalLen * (1 - progress)}`;
-          }
-
-          // Progressively activate each node as the laser reaches it
-          items.forEach((item, idx) => {
-            const circle = item.querySelector('.proc-node-circle');
-            if (!circle) return;
-            const cTop = circle.getBoundingClientRect().top;
-            const itemTrigger = idx / (items.length - 1);
-            if (progress >= (itemTrigger * 0.96) || cTop <= vh * 0.65) {
-              item.classList.add('active');
-            } else {
-              item.classList.remove('active');
-            }
-          });
+      /* ── Theme FAB managed globally by StudioTheme ── */);
         }
 
         if (_procResizeListener) window.removeEventListener('resize', _procResizeListener);
@@ -6128,8 +5945,8 @@
       onScroll();
     })();
   </script>
-  <script src="data-store.js?v=20261027_v3"></script>
-  <script src="site-bridge.js?v=20261116_v9"></script>
+  <script src="data-store.js?v=20261116_v10"></script>
+  <script src="site-bridge.js?v=20261116_v10"></script>
 </body>
 
 </html>

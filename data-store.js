@@ -109,6 +109,9 @@
 
             // Parse settings that might be stored as JSON strings
             if (this.data.settings) {
+              if (typeof this.data.settings.home_selected_projects === 'string') {
+                try { this.data.settings.home_selected_projects = JSON.parse(this.data.settings.home_selected_projects); } catch (e) {}
+              }
               if (typeof this.data.settings.home_services === 'string') {
                 try { this.data.settings.home_services = JSON.parse(this.data.settings.home_services); } catch (e) {}
               }
@@ -597,7 +600,10 @@
     }
 
     getHomeSelectedProjects() {
-      const saved = this.data.settings?.home_selected_projects || this.data.settings?.homeSelectedProjects;
+      let saved = this.data.settings?.home_selected_projects || this.data.settings?.homeSelectedProjects;
+      if (typeof saved === 'string') {
+        try { saved = JSON.parse(saved); } catch (e) {}
+      }
       if (Array.isArray(saved) && saved.length > 0) return saved;
       return (this.data.portfolio || []).slice(0, 6).map(p => p.id);
     }

@@ -28,6 +28,10 @@
           if (v === 'light' || v === 'dark') return v;
         }
       } catch (e) {}
+      try {
+        const match = document.cookie.match(/(?:^|;\s*)1928_theme=(light|dark)(?:;|$)/);
+        if (match) return match[1];
+      } catch (e) {}
       return document.documentElement.getAttribute('data-theme') || 'dark';
     }
 
@@ -42,6 +46,17 @@
           localStorage.setItem(KEYS[i], t);
         }
       } catch (e) {}
+      try {
+        document.cookie = '1928_theme=' + t + ';path=/;max-age=31536000;SameSite=Lax';
+      } catch (e) {}
+
+      // Cross-tab broadcast channel
+      try {
+        if (typeof BroadcastChannel !== 'undefined') {
+          if (!window.__themeChannel) window.__themeChannel = new BroadcastChannel('1928_theme_channel');
+          window.__themeChannel.postMessage({ theme: t });
+        }
+      } catch (e) {}
 
       window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: t } }));
     }
@@ -49,7 +64,7 @@
     function toggleTheme() {
       if (isToggling) return getTheme();
       isToggling = true;
-      setTimeout(() => { isToggling = false; }, 250);
+      setTimeout(() => { isToggling = false; }, 200);
 
       const activeAttr = document.documentElement.getAttribute('data-theme');
       const cur = (activeAttr === 'light' || activeAttr === 'dark') ? activeAttr : getTheme();
@@ -71,15 +86,60 @@
       }
     });
 
+    // Listen to BroadcastChannel across tabs
+    try {
+      if (typeof BroadcastChannel !== 'undefined') {
+        if (!window.__themeChannel) window.__themeChannel = new BroadcastChannel('1928_theme_channel');
+        window.__themeChannel.onmessage = (e) => {
+          if (e.data && (e.data.theme === 'light' || e.data.theme === 'dark')) {
+            if (document.documentElement.getAttribute('data-theme') !== e.data.theme) {
+              applyTheme(e.data.theme);
+            }
+          }
+        };
+      }
+    } catch (e) {}
+
     // Capture-phase document click listener to reliably intercept all theme button clicks
     document.addEventListener('click', (e) => {
       const btn = e.target.closest && e.target.closest('#theme-fab, #themeFab, #authThemeToggleBtn, #themeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
       if (btn) {
         e.preventDefault();
+        e.stopPropagation();
         e.stopImmediatePropagation();
         toggleTheme();
       }
     }, true);
+
+    // Expand click hit target of theme toggle button for effortless clicks
+    if (typeof document !== 'undefined') {
+      const injectHitArea = () => {
+        if (!document.getElementById('theme-fab-expanded-hit-area-css')) {
+          const style = document.createElement('style');
+          style.id = 'theme-fab-expanded-hit-area-css';
+          style.textContent = `
+            #theme-fab, #themeFab, #authThemeToggleBtn {
+              position: fixed !important;
+              z-index: 999999 !important;
+              cursor: pointer !important;
+              touch-action: manipulation !important;
+              -webkit-tap-highlight-color: transparent !important;
+            }
+            #theme-fab::after, #themeFab::after, #authThemeToggleBtn::after {
+              content: '' !important;
+              position: absolute !important;
+              inset: -14px !important;
+              border-radius: 50% !important;
+              cursor: pointer !important;
+              pointer-events: auto !important;
+            }
+          `;
+          (document.head || document.documentElement).appendChild(style);
+        }
+      };
+      if (document.head) injectHitArea();
+      else document.addEventListener('DOMContentLoaded', injectHitArea);
+    }
 
     // Global delegates so all legacy code syncs through StudioTheme
     window.setTheme = applyTheme;
@@ -89,6 +149,7 @@
     return {
       get: getTheme,
       set: applyTheme,
+      apply: applyTheme,
       toggle: toggleTheme
     };
   })();

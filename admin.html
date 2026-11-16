@@ -5,37 +5,61 @@
   <meta charset="UTF-8" />
   <script>
     (function () {
-      try {
-        var keys = ['1928_theme', 'theme', 't28', 'theme-1928'];
-        var t = "dark";
-        for (var i = 0; i < keys.length; i++) {
-          var v = localStorage.getItem(keys[i]);
-          if (v === "light" || v === "dark") { t = v; break; }
-        }
-        document.documentElement.setAttribute("data-theme", t);
-      } catch (e) {}
+      var THEME_KEYS = ['1928_theme', 'theme', 't28', 'theme-1928'];
+      function readStoredTheme() {
+        try {
+          for (var i = 0; i < THEME_KEYS.length; i++) {
+            var v = localStorage.getItem(THEME_KEYS[i]);
+            if (v === 'light' || v === 'dark') return v;
+          }
+        } catch (e) {}
+        try {
+          var match = document.cookie.match(/(?:^|;\s*)1928_theme=(light|dark)(?:;|$)/);
+          if (match) return match[1];
+        } catch (e) {}
+        return 'dark';
+      }
 
-      // Early global theme listener to prevent double-toggle & handle immediate user clicks
-      var isToggling = false;
-      window.__toggleThemeGlobal = function () {
-        if (isToggling) return;
-        isToggling = true;
-        setTimeout(function () { isToggling = false; }, 250);
-        var activeAttr = document.documentElement.getAttribute('data-theme') || 'dark';
-        var next = activeAttr === 'dark' ? 'light' : 'dark';
+      function writeStoredTheme(t) {
+        try {
+          for (var i = 0; i < THEME_KEYS.length; i++) {
+            localStorage.setItem(THEME_KEYS[i], t);
+          }
+        } catch (e) {}
+        try {
+          document.cookie = '1928_theme=' + t + ';path=/;max-age=31536000;SameSite=Lax';
+        } catch (e) {}
+      }
+
+      var currentTheme = readStoredTheme();
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      writeStoredTheme(currentTheme);
+
+      window.__getGlobalTheme = readStoredTheme;
+      window.__setGlobalTheme = function (next) {
+        if (next !== 'light' && next !== 'dark') next = 'dark';
         document.documentElement.setAttribute('data-theme', next);
         if (document.body) document.body.setAttribute('data-theme', next);
-        try {
-          var k = ['1928_theme', 'theme', 't28', 'theme-1928'];
-          for (var j = 0; j < k.length; j++) localStorage.setItem(k[j], next);
-        } catch (e) {}
+        writeStoredTheme(next);
         window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme: next } }));
+      };
+
+      var isToggling = false;
+      window.__toggleThemeGlobal = function () {
+        if (isToggling) return readStoredTheme();
+        isToggling = true;
+        setTimeout(function () { isToggling = false; }, 200);
+        var cur = document.documentElement.getAttribute('data-theme') || readStoredTheme();
+        var next = cur === 'dark' ? 'light' : 'dark';
+        window.__setGlobalTheme(next);
+        return next;
       };
 
       document.addEventListener('click', function (e) {
         var btn = e.target.closest && e.target.closest('#theme-fab, #themeFab, #authThemeToggleBtn, #themeToggleBtn, .theme-btn, [data-action="toggle-theme"]');
         if (btn) {
           e.preventDefault();
+          e.stopPropagation();
           e.stopImmediatePropagation();
           if (window.StudioTheme && typeof window.StudioTheme.toggle === 'function') {
             window.StudioTheme.toggle();
@@ -900,7 +924,7 @@
           <!-- Pill 2 Card -->
           <div class="hero-pill-card">
             <div class="hero-pill-card-top">
-              <img src="assets/img/portfolio/port-veloce.jpg" id="heroPill2CardThumb" class="hero-pill-thumb" alt="Pill 2 Cover" onerror="this.onerror=null; this.src='assets/img/portfolio/port-veloce.jpg';" />
+              <img src="assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg" id="heroPill2CardThumb" class="hero-pill-thumb" alt="Pill 2 Cover" onerror="this.onerror=null; this.src='assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg';" />
               <div class="hero-pill-info">
                 <div class="hero-pill-slot-tag">Pill 02 · Embedded in Line 2</div>
                 <div class="hero-pill-title-txt" id="heroPill2CardTitle">Veloce Hypercraft Platforms</div>
@@ -3393,7 +3417,7 @@
   <div id="toast-wrap"></div>
 
   <!-- Load Data Store -->
-  <script src="data-store.js?v=20261116_v9"></script>
+  <script src="data-store.js?v=20261116_v10"></script>
 
     <!-- ══ MODULAR ADMIN SECTION CONTROLLERS ══ -->
   <script src="admin/js/admin-core.js?v=20261116_v9"></script>
@@ -3402,14 +3426,14 @@
   <script src="admin/js/sections/inquiries.js?v=20261116_v9"></script>
   <script src="admin/js/sections/seo.js?v=20261116_v9"></script>
   <script src="admin/js/sections/perspectives.js?v=20261116_v9"></script>
-  <script src="admin/js/sections/portfolio.js?v=20261116_v9"></script>
+  <script src="admin/js/sections/portfolio.js?v=20261116_v10"></script>
   <script src="admin/js/sections/team.js?v=20261116_v9"></script>
   <script src="admin/js/sections/services.js?v=20261116_v9"></script>
   <script src="admin/js/sections/clients.js?v=20261116_v9"></script>
   <script src="admin/js/sections/contact.js?v=20261116_v9"></script>
   <script src="admin/js/sections/backup.js?v=20261116_v9"></script>
   <script src="admin/js/admin-init.js?v=20261116_v9"></script>
-  <script src="site-bridge.js?v=20261116_v9"></script>
+  <script src="site-bridge.js?v=20261116_v10"></script>
 </body>
 
 </html>

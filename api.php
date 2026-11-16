@@ -581,7 +581,9 @@ try {
             $setRows = $setStmt->fetchAll();
             $settings = [];
             foreach ($setRows as $s) {
-                $settings[$s['setting_key']] = $s['setting_value'];
+                $rawVal = $s['setting_value'];
+                $decoded = json_decode($rawVal, true);
+                $settings[$s['setting_key']] = (json_last_error() === JSON_ERROR_NONE && (is_array($decoded) || is_object($decoded))) ? $decoded : $rawVal;
             }
             $response['settings'] = $settings;
 
