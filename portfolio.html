@@ -913,7 +913,7 @@
     .modal-hero-banner {
       width: 100%;
       height: clamp(340px, 45vh, 560px);
-      border-radius: 0 !important;
+      border-radius: 14px !important;
       overflow: hidden;
       position: relative;
       margin-bottom: clamp(30px, 4vh, 50px);
@@ -925,7 +925,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      border-radius: 0 !important;
+      border-radius: 14px !important;
     }
 
     .modal-hero-overlay {
@@ -1026,7 +1026,7 @@
     .modal-gal-card {
       width: 100%;
       height: clamp(700px, 88vh, 1020px);
-      border-radius: 0 !important;
+      border-radius: 14px !important;
       overflow: hidden;
       border: 1px solid var(--rule);
       background: #111115;
@@ -1043,7 +1043,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      border-radius: 0 !important;
+      border-radius: 14px !important;
     }
 
     /* Modal End Benchmark CTA */
@@ -1638,7 +1638,7 @@
 
       .modal-hero-banner {
         height: clamp(280px, 36vh, 340px) !important;
-        border-radius: 20px !important;
+        border-radius: 14px !important;
         margin-bottom: 24px !important;
       }
 
@@ -1699,7 +1699,7 @@
 
       .modal-gal-card {
         height: clamp(340px, 48vh, 440px) !important;
-        border-radius: 18px !important;
+        border-radius: 14px !important;
       }
 
       /* Modal Bottom CTA Deck on Mobile */
@@ -2653,8 +2653,8 @@
     </svg>
   </button>
 
-  <script src="data-store.js?v=20261116_v14"></script>
-  <script src="site-bridge.js?v=20261116_v14"></script>
+  <script src="data-store.js?v=20261116_v15"></script>
+  <script src="site-bridge.js?v=20261116_v15"></script>
 
   <!-- ═══════════════════════════════════════════════════════════
        JAVASCRIPT LOGIC & INTERACTIONS
@@ -2796,23 +2796,123 @@
       /* ── Project Case Study Modal Data Matrix ── */
       const caseStudies = {
         aurora: {
-          title: 'Aurora Chronometer Systems',
-          category: 'Brand Identity & WebGL Vault',
-          client: 'Aurora Horology Ltd. (Geneva)',
-          sector: 'Swiss Luxury Horology',
-          deliverables: 'Identity, Packaging, 3D WebGL Vault',
-          timeline: '6 Months · Global Launch',
-          overview: 'Aurora Horology commissioned 1928 Creative Studio to architect an enduring brand ecosystem that honors Swiss horological precision while establishing commanding digital authority for the next generation of luxury collectors. Through monolithic typographic architecture, bespoke crimson color physics, and a zero-latency 3D WebGL boutique vault, we transformed the brand into an iconic collector centerpiece that sold out its inaugural batch within minutes.',
-          heroImg: 'assets/img/portfolio/port-chronos.jpg',
-          gal1: 'assets/img/portfolio/port-chronos.jpg',
-          gal2: 'assets/img/portfolio/port-spectra.jpg',
-          galFull1: 'assets/img/why-choose/wc-top.jpg',
-          gal3: 'assets/img/portfolio/port-lumina.jpg',
-          gal4: 'assets/img/why-choose/wc-l1.jpg',
-          gal5: 'assets/img/why-choose/wc-r1.jpg',
-          galFull2: 'assets/img/why-choose/wc-bot.jpg',
-          gal6: 'assets/img/portfolio/port-veloce.jpg',
-          gal7: 'assets/services/svc_1.jpg'
+          title: 'AWARDSPLUS',
+          category: 'Brand Identity & WebGL Platform',
+          client: 'Awardsplus GmbH',
+          sector: 'Prestige Corporate & Accolade Systems',
+          deliverables: 'Brand Identity, Digital Architecture, 3D WebGL Platform',
+          timeline: '2026 · Global Reveal',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Developed a distinctive brand identity and professional website for Awardsplus, creating a cohesive digital presence that strengthens brand recognition, communicates credibility and reflects its vision.',
+          heroImg: 'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+          galleryImages: [
+            'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+            'assets/uploads/1928_1794828478_P1-Awardsplus-02.jpg',
+            'assets/uploads/1928_1794828489_P1-Awardsplus-03.jpg',
+            'assets/uploads/1928_1794828515_P1-Awardsplus-04.jpg'
+          ]
+        },
+        'awards-plus': {
+          title: 'Awards Plus — Prestige Corporate Identity',
+          category: 'Prestige Corporate Identity',
+          client: 'Awardsplus GmbH',
+          sector: 'Prestige Corporate & Accolade Systems',
+          deliverables: 'Brand Identity, Digital Architecture, 3D WebGL Platform',
+          timeline: '2026 · Global Reveal',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Developed a distinctive brand identity and professional website for Awardsplus, creating a cohesive digital presence that strengthens brand recognition, communicates credibility and reflects its vision.',
+          heroImg: 'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+          galleryImages: [
+            'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+            'assets/uploads/1928_1794828478_P1-Awardsplus-02.jpg',
+            'assets/uploads/1928_1794828489_P1-Awardsplus-03.jpg',
+            'assets/uploads/1928_1794828515_P1-Awardsplus-04.jpg'
+          ]
+        },
+        vibee: {
+          title: 'Vibee — Youth Culture & Apparel Identity',
+          category: 'Youth Culture & Apparel Identity',
+          client: 'Vibee Apparel Co.',
+          sector: 'Youth Culture & Streetwear',
+          deliverables: 'Brand Identity, Kinetic Apparel Motion, Drop Marketing',
+          timeline: '2026 · Worldwide',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Bold typographic street brand system with reactive apparel motion graphics, experiential packaging, and high-energy viral drop marketing built for next-generation youth culture.',
+          heroImg: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
+          galleryImages: [
+            'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
+            'assets/img/portfolio/port-spectra.jpg',
+            'assets/img/portfolio/port-lumina.jpg',
+            'assets/img/why-choose/wc-l1.jpg'
+          ]
+        },
+        infyli: {
+          title: 'Infyli — Minimalist Luxury Home Aromatics',
+          category: 'Minimalist Luxury Home Aromatics',
+          client: 'Infyli Paris & Mumbai',
+          sector: 'Minimalist Luxury Home Aromatics',
+          deliverables: 'Spatial Packaging, Vessel Engineering, Digital Storytelling',
+          timeline: '2026 · Paris & Mumbai',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Bespoke fluted ceramic vessel packaging and sensory digital storytelling for artisanal fragrance diffuser collections, evoking contemporary architectural serenity.',
+          heroImg: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
+          galleryImages: [
+            'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
+            'assets/img/portfolio/port-lumina.jpg',
+            'assets/services/svc_1.jpg',
+            'assets/img/why-choose/wc-r1.jpg'
+          ]
+        },
+        mudra: {
+          title: 'Mudra School — Classical Arts Digital Presence',
+          category: 'Classical Arts Digital Presence',
+          client: 'Mudra Performing Arts Trust',
+          sector: 'Classical Performing Arts & Heritage',
+          deliverables: 'Digital Flagship, Archival Typography, Performance Platform',
+          timeline: '2026 · National Heritage',
+          overviewTitle: 'Strategic Overview',
+          overview: 'An elegant responsive digital presence celebrating tradition through fluid micro-interactions, archival typography, and immersive stage performance galleries.',
+          heroImg: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+          galleryImages: [
+            'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+            'assets/services/svc_3.jpg',
+            'assets/img/portfolio/port-chronos.jpg',
+            'assets/img/why-choose/wc-top.jpg'
+          ]
+        },
+        'last-mile': {
+          title: 'Last Mile Analytics — Fintech Platform Architecture',
+          category: 'Fintech Platform Architecture',
+          client: 'Last Mile Global Markets',
+          sector: 'Fintech & Institutional Analytics',
+          deliverables: 'Financial Terminal UI, Design System, Platform Architecture',
+          timeline: '2026 · Institutional Release',
+          overviewTitle: 'Strategic Overview',
+          overview: 'High-frequency financial terminal UI design, real-time telemetry shaders, and enterprise brand authority architected for institutional trading algorithms.',
+          heroImg: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+          galleryImages: [
+            'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+            'assets/img/portfolio/port-veloce.jpg',
+            'assets/img/portfolio/port-kroma.jpg',
+            'assets/services/svc_4.jpg'
+          ]
+        },
+        alda: {
+          title: 'Alda — Precision Stainless Steel Spatial Identity',
+          category: 'Precision Stainless Steel Spatial Identity',
+          client: 'Alda Cookware & Architectural Steel',
+          sector: 'Precision Architectural Steel & Culinary Engineering',
+          deliverables: 'Industrial Photography, Brushed Metal Packaging, Spatial Showrooms',
+          timeline: '2026 · Global Distribution',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Industrial product engineering, brushed metal brand packaging, and high-precision spatial showroom displays celebrating stainless craftsmanship.',
+          heroImg: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg',
+          galleryImages: [
+            'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg',
+            'assets/services/svc_2.jpg',
+            'assets/img/why-choose/wc-l2.jpg',
+            'assets/img/portfolio/port-spectra.jpg'
+          ]
         },
         vertex: {
           title: 'Vertex Architectural Tokens',
@@ -2821,17 +2921,15 @@
           sector: 'Modern Architecture & Urban Planning',
           deliverables: 'Logo Mark, Embossed Stationery, Spatial Codes',
           timeline: '4 Months · MENA Region',
-          overview: 'Creating an architectural brand language rooted in structural integrity, monolithic geometries, and tactile materials that reflect physical urban excellence. We formulated a geometric logo token, tactile stationery system with micro-embossed crimson foil on raw concrete linen, and spatial brand codes that elevated the firm\'s global win-rate by 48% across international institutional developments.',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Creating an architectural brand language rooted in structural integrity, monolithic geometries, and tactile materials that reflect physical urban excellence.',
           heroImg: 'assets/img/portfolio/port-spectra.jpg',
-          gal1: 'assets/img/portfolio/port-spectra.jpg',
-          gal2: 'assets/img/why-choose/wc-l1.jpg',
-          galFull1: 'assets/img/why-choose/wc-r1.jpg',
-          gal3: 'assets/img/portfolio/port-lumina.jpg',
-          gal4: 'assets/img/why-choose/wc-r2.jpg',
-          gal5: 'assets/img/portfolio/port-chronos.jpg',
-          galFull2: 'assets/img/why-choose/wc-top.jpg',
-          gal6: 'assets/services/svc_2.jpg',
-          gal7: 'assets/services/svc_3.jpg'
+          galleryImages: [
+            'assets/img/portfolio/port-spectra.jpg',
+            'assets/img/why-choose/wc-l1.jpg',
+            'assets/img/why-choose/wc-r1.jpg',
+            'assets/img/portfolio/port-lumina.jpg'
+          ]
         },
         aetherion: {
           title: 'Aetherion Cyber Telemetry',
@@ -2840,17 +2938,15 @@
           sector: 'Hyper Electric Automotive',
           deliverables: 'Curved Cockpit UI, 3D Vehicle Configurator',
           timeline: '8 Months · Global Reveal',
-          overview: 'Designing the next-generation digital cockpit and companion mobile platform for an ultra-high performance electric hypercar capable of 0-100 km/h in 1.8 seconds. We synthesized dense telemetry parameters into a high-contrast dark mode visual hierarchy, procedural real-time raytraced shaders, and micro-haptic interactions running at 120fps on custom curved automotive displays.',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Designing the next-generation digital cockpit and companion mobile platform for an ultra-high performance electric hypercar capable of 0-100 km/h in 1.8 seconds.',
           heroImg: 'assets/img/portfolio/port-veloce.jpg',
-          gal1: 'assets/img/portfolio/port-veloce.jpg',
-          gal2: 'assets/img/portfolio/port-kroma.jpg',
-          galFull1: 'assets/img/why-choose/wc-r2.jpg',
-          gal3: 'assets/img/portfolio/port-zenith.jpg',
-          gal4: 'assets/img/why-choose/wc-top.jpg',
-          gal5: 'assets/services/svc_4.jpg',
-          galFull2: 'assets/img/why-choose/wc-bot.jpg',
-          gal6: 'assets/img/portfolio/port-chronos.jpg',
-          gal7: 'assets/services/svc_5.jpg'
+          galleryImages: [
+            'assets/img/portfolio/port-veloce.jpg',
+            'assets/img/portfolio/port-kroma.jpg',
+            'assets/img/portfolio/port-zenith.jpg',
+            'assets/services/svc_4.jpg'
+          ]
         },
         solstice: {
           title: 'Solstice Monolithic Perfume',
@@ -2859,17 +2955,15 @@
           sector: 'Luxury Fragrance & Cosmetics',
           deliverables: 'Glass Bottle Design, Logo Monogram, Box Suite',
           timeline: '5 Months · European Flagships',
-          overview: 'Sculpting a bespoke fluted glass vessel and monolithic identity for a Paris-based luxury fragrance house featuring deep crimson gradients and pure geometry. The physical packaging pairs fluted frosted crystal with a custom brushed brass collar, creating an instantly recognizable silhouette that won Pentawards Gold and secured commanding flagship shelf presence across Europe.',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Sculpting a bespoke fluted glass vessel and monolithic identity for a Paris-based luxury fragrance house featuring deep crimson gradients and pure geometry.',
           heroImg: 'assets/img/portfolio/port-lumina.jpg',
-          gal1: 'assets/img/portfolio/port-lumina.jpg',
-          gal2: 'assets/img/portfolio/port-chronos.jpg',
-          galFull1: 'assets/services/svc_3.jpg',
-          gal3: 'assets/img/why-choose/wc-l2.jpg',
-          gal4: 'assets/services/svc_1.jpg',
-          gal5: 'assets/img/why-choose/wc-r1.jpg',
-          galFull2: 'assets/img/why-choose/wc-top.jpg',
-          gal6: 'assets/img/portfolio/port-spectra.jpg',
-          gal7: 'assets/services/svc_2.jpg'
+          galleryImages: [
+            'assets/img/portfolio/port-lumina.jpg',
+            'assets/img/portfolio/port-chronos.jpg',
+            'assets/services/svc_3.jpg',
+            'assets/services/svc_1.jpg'
+          ]
         },
         milan: {
           title: 'Milan Runway Global Momentum',
@@ -2878,17 +2972,15 @@
           sector: 'High Fashion & Luxury Apparel',
           deliverables: 'Omnichannel Social Takeover, Dynamic Video Ads',
           timeline: '3 Months · Milan Fashion Week FW24',
-          overview: 'An avant-garde digital campaign orchestrating viral street projections, high-velocity motion graphics, and top-tier influencer activations for Milan Fashion Week. Combining kinetic oversized typography overlays with metallic crimson motion treatments and AR filter suites, the campaign captured over 18.4M organic impressions and drove complete capsule sell-outs.',
+          overviewTitle: 'Strategic Overview',
+          overview: 'An avant-garde digital campaign orchestrating viral street projections, high-velocity motion graphics, and top-tier influencer activations for Milan Fashion Week.',
           heroImg: 'assets/img/portfolio/port-zenith.jpg',
-          gal1: 'assets/img/portfolio/port-zenith.jpg',
-          gal2: 'assets/services/svc_4.jpg',
-          galFull1: 'assets/img/why-choose/wc-bot.jpg',
-          gal3: 'assets/services/svc_1.jpg',
-          gal4: 'assets/services/svc_2.jpg',
-          gal5: 'assets/img/why-choose/wc-r2.jpg',
-          galFull2: 'assets/img/why-choose/wc-top.jpg',
-          gal6: 'assets/img/portfolio/port-veloce.jpg',
-          gal7: 'assets/img/portfolio/port-kroma.jpg'
+          galleryImages: [
+            'assets/img/portfolio/port-zenith.jpg',
+            'assets/services/svc_4.jpg',
+            'assets/services/svc_1.jpg',
+            'assets/services/svc_2.jpg'
+          ]
         },
         quantum: {
           title: 'Quantum Chrome Engine',
@@ -2897,17 +2989,15 @@
           sector: 'Deep Tech & Generative AI',
           deliverables: 'Brand System, 3D WebGL Platform, Visual Tokens',
           timeline: '4 Months · Enterprise Launch',
-          overview: 'Engineering an interactive 3D brand environment and generative liquid chrome identity system that visualizes complex neural computing in real-time. Powered by custom GLSL procedural liquid metal shaders and responsive physics engines, the platform demystifies enterprise AI infrastructure and positioned the client to close their landmark $45M Series B funding round.',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Engineering an interactive 3D brand environment and generative liquid chrome identity system that visualizes complex neural computing in real-time.',
           heroImg: 'assets/img/portfolio/port-kroma.jpg',
-          gal1: 'assets/img/portfolio/port-kroma.jpg',
-          gal2: 'assets/img/portfolio/port-veloce.jpg',
-          galFull1: 'assets/img/why-choose/wc-top.jpg',
-          gal3: 'assets/services/svc_5.jpg',
-          gal4: 'assets/img/why-choose/wc-r1.jpg',
-          gal5: 'assets/img/why-choose/wc-l2.jpg',
-          galFull2: 'assets/img/why-choose/wc-bot.jpg',
-          gal6: 'assets/img/portfolio/port-lumina.jpg',
-          gal7: 'assets/services/svc_4.jpg'
+          galleryImages: [
+            'assets/img/portfolio/port-kroma.jpg',
+            'assets/img/portfolio/port-veloce.jpg',
+            'assets/services/svc_5.jpg',
+            'assets/img/why-choose/wc-r1.jpg'
+          ]
         },
         lofy: {
           title: 'LOFY Modular Architecture',
@@ -2916,36 +3006,32 @@
           sector: 'Architectural Real Estate',
           deliverables: 'Brand Guidelines, Spatial Flagships, Digital Portal',
           timeline: '6 Months · India / UAE',
-          overview: 'Crafting the foundational identity and environmental wayfinding for modular luxury residential developments across major metropolitan centers in India and the UAE. Utilizing a modular typographic grid, raw stone textures with crimson accents, and an interactive digital property sales portal, 100% of flagship residences were pre-sold within 60 days of unveil.',
+          overviewTitle: 'Strategic Overview',
+          overview: 'Crafting the foundational identity and environmental wayfinding for modular luxury residential developments across major metropolitan centers in India and the UAE.',
           heroImg: 'assets/services/svc_1.jpg',
-          gal1: 'assets/services/svc_1.jpg',
-          gal2: 'assets/services/svc_3.jpg',
-          galFull1: 'assets/services/svc_2.jpg',
-          gal3: 'assets/img/why-choose/wc-l1.jpg',
-          gal4: 'assets/services/svc_5.jpg',
-          gal5: 'assets/img/portfolio/port-spectra.jpg',
-          galFull2: 'assets/img/why-choose/wc-top.jpg',
-          gal6: 'assets/img/why-choose/wc-bot.jpg',
-          gal7: 'assets/img/portfolio/port-chronos.jpg'
+          galleryImages: [
+            'assets/services/svc_1.jpg',
+            'assets/services/svc_3.jpg',
+            'assets/services/svc_2.jpg',
+            'assets/img/why-choose/wc-l1.jpg'
+          ]
         },
         stregis: {
           title: 'St. Regis Mumbai Spatial Identity',
           category: 'Hospitality Brand & Collateral',
-          client: 'St. Regis Hotels &amp; Resorts',
+          client: 'St. Regis Hotels & Resorts',
           sector: 'Ultra-Luxury Hospitality',
           deliverables: 'VIP Onboarding Suite, Culinary Collateral, Campaign',
           timeline: '4 Months · Mumbai Flagship',
-          overview: 'A bespoke suite of sensory physical collateral and digital guest experiences engineered for one of India\'s most prestigious luxury hotel addresses. Featuring handcrafted gold foil debossing, custom calligraphy monograms, and tactile artisan paper stocks, the new collateral suite achieved record 99.2% VIP guest satisfaction ratings and international travel press acclaim.',
+          overviewTitle: 'Strategic Overview',
+          overview: 'A bespoke suite of sensory physical collateral and digital guest experiences engineered for one of India\'s most prestigious luxury hotel addresses.',
           heroImg: 'assets/services/svc_2.jpg',
-          gal1: 'assets/services/svc_2.jpg',
-          gal2: 'assets/services/svc_5.jpg',
-          galFull1: 'assets/img/portfolio/port-lumina.jpg',
-          gal3: 'assets/img/why-choose/wc-r1.jpg',
-          gal4: 'assets/services/svc_3.jpg',
-          gal5: 'assets/services/svc_1.jpg',
-          galFull2: 'assets/img/why-choose/wc-bot.jpg',
-          gal6: 'assets/img/why-choose/wc-top.jpg',
-          gal7: 'assets/img/portfolio/port-spectra.jpg'
+          galleryImages: [
+            'assets/services/svc_2.jpg',
+            'assets/services/svc_5.jpg',
+            'assets/img/portfolio/port-lumina.jpg',
+            'assets/img/why-choose/wc-r1.jpg'
+          ]
         }
       };
 
@@ -2966,17 +3052,18 @@
           }
         }
         
-        const fallback = caseStudies[id] || caseStudies.aurora;
+        const fallback = caseStudies[id] || caseStudies['aurora'] || {};
         
-        const title = cmsP?.title || fallback?.title || 'Featured Project';
-        const category = cmsP?.subheading || cmsP?.categoryDisplay || cmsP?.tagPill || fallback?.category || 'Brand Architecture';
-        const overviewTitle = cmsP?.overviewTitle || cmsP?.strategicOverviewTitle || 'Strategic Overview';
-        const overview = cmsP?.overview || cmsP?.strategicOverview || cmsP?.description || cmsP?.summary || fallback?.overview || '';
-        const clientVal = (cmsP && cmsP.client !== undefined && cmsP.client !== null && cmsP.client !== '') ? cmsP.client : (fallback?.client || '');
-        const sectorVal = (cmsP && cmsP.sector !== undefined && cmsP.sector !== null && cmsP.sector !== '') ? cmsP.sector : (fallback?.sector || '');
-        const deliverablesVal = (cmsP && cmsP.deliverables !== undefined && cmsP.deliverables !== null && cmsP.deliverables !== '') ? cmsP.deliverables : (fallback?.deliverables || '');
-        const timelineVal = (cmsP && cmsP.timeline !== undefined && cmsP.timeline !== null && cmsP.timeline !== '') ? cmsP.timeline : (cmsP?.year ? `${cmsP.year} · Complete Archive` : (fallback?.timeline || '2025 · Global Reveal'));
+        const title = (cmsP?.title || fallback?.title || 'Featured Project').trim();
+        const category = (cmsP?.subheading || cmsP?.categoryDisplay || cmsP?.tagPill || fallback?.category || 'Brand Architecture').trim();
+        const overviewTitle = (cmsP?.overviewTitle || cmsP?.strategicOverviewTitle || fallback?.overviewTitle || 'Strategic Overview').trim();
+        const overview = (cmsP?.overview || cmsP?.strategicOverview || cmsP?.description || cmsP?.summary || fallback?.overview || '').trim();
+        const clientVal = (cmsP?.client || fallback?.client || '').trim();
+        const sectorVal = (cmsP?.sector || fallback?.sector || '').trim();
+        const deliverablesVal = (cmsP?.deliverables || fallback?.deliverables || '').trim();
+        const timelineVal = (cmsP?.timeline || (cmsP?.year ? `${cmsP.year} · Complete Archive` : (fallback?.timeline || '2026 · Global Reveal'))).trim();
         const heroImg = cmsP?.bannerImage || cmsP?.coverImage || fallback?.heroImg || 'assets/img/portfolio/port-chronos.jpg';
+        
         let galleryImages = [];
         if (cmsP) {
           if (Array.isArray(cmsP.galleryImages) && cmsP.galleryImages.length > 0) {
@@ -2987,15 +3074,19 @@
         }
         
         // If not customized in CMS at all, fall back to caseStudies default
-        if (!galleryImages.length && !cmsP) {
-          galleryImages = [
-            fallback?.gal1 || fallback?.heroImg || 'assets/img/portfolio/port-chronos.jpg',
-            fallback?.gal2 || 'assets/img/portfolio/port-spectra.jpg',
-            fallback?.gal3 || 'assets/img/portfolio/port-lumina.jpg',
-            fallback?.gal4 || 'assets/img/why-choose/wc-l1.jpg',
-            fallback?.gal5 || 'assets/img/why-choose/wc-r1.jpg',
-            fallback?.gal6 || 'assets/img/portfolio/port-chronos.jpg'
-          ].filter(u => typeof u === 'string' && u.trim() !== '');
+        if (!galleryImages.length && fallback) {
+          if (Array.isArray(fallback.galleryImages) && fallback.galleryImages.length > 0) {
+            galleryImages = [...fallback.galleryImages];
+          } else {
+            galleryImages = [
+              fallback.gal1 || fallback.heroImg,
+              fallback.gal2,
+              fallback.gal3,
+              fallback.gal4,
+              fallback.gal5,
+              fallback.gal6
+            ].filter(u => typeof u === 'string' && u.trim() !== '');
+          }
         }
 
         const heroEl = document.getElementById('mHeroImg');
@@ -3020,8 +3111,8 @@
         if (galContainer) {
           if (imgs.length > 0) {
             galContainer.innerHTML = imgs.map((imgSrc, idx) => `
-              <div class="modal-gal-card" style="border-radius:0 !important;">
-                <img id="mGal${idx + 1}" src="${imgSrc}" alt="${title} Asset ${idx + 1}" style="border-radius:0 !important;" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
+              <div class="modal-gal-card" style="border-radius:14px !important;overflow:hidden;">
+                <img id="mGal${idx + 1}" src="${imgSrc}" alt="${title} Asset ${idx + 1}" style="border-radius:14px !important;" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
               </div>
             `).join('');
           } else {
@@ -3045,7 +3136,13 @@
         }
       }
 
-      function closeModal() {
+      window.addEventListener('1928_cms_updated', () => {
+        if (window.__currentOpenProjectId && modal && modal.classList.contains('active')) {
+          openModal(window.__currentOpenProjectId);
+        }
+      });
+
+            function closeModal() {
         window.__currentOpenProjectId = null;
         modal.classList.remove('active');
         document.body.classList.remove('modal-open');

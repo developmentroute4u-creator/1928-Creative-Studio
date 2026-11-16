@@ -227,62 +227,213 @@
       return res;
     }
 
+    const caseStudiesDefaults = {
+      aurora: {
+        title: 'AWARDSPLUS',
+        cardHeading: 'Developed a distinctive brand identity and professional website for Awardsplus, creating a cohesive digital presence that strengthens brand recognition, communicates credibility and reflects its vision.',
+        client: 'Awardsplus GmbH',
+        sector: 'Prestige Corporate & Accolade Systems',
+        deliverables: 'Brand Identity, Digital Architecture, 3D WebGL Platform',
+        timeline: '2026 · Global Reveal',
+        overviewTitle: 'Strategic Overview',
+        overview: 'Developed a distinctive brand identity and professional website for Awardsplus, creating a cohesive digital presence that strengthens brand recognition, communicates credibility and reflects its vision.',
+        coverImage: 'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+        galleryImages: [
+          'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+          'assets/uploads/1928_1794828478_P1-Awardsplus-02.jpg',
+          'assets/uploads/1928_1794828489_P1-Awardsplus-03.jpg',
+          'assets/uploads/1928_1794828515_P1-Awardsplus-04.jpg'
+        ]
+      },
+      'awards-plus': {
+        title: 'Awards Plus — Prestige Corporate Identity',
+        cardHeading: 'High-status corporate identity and ceremonial trophy catalog architecture for international accolades.',
+        client: 'Awardsplus GmbH',
+        sector: 'Prestige Corporate & Accolade Systems',
+        deliverables: 'Brand Identity, Digital Architecture, 3D WebGL Platform',
+        timeline: '2026 · Global Reveal',
+        overviewTitle: 'Strategic Overview',
+        overview: 'Developed a distinctive brand identity and professional website for Awardsplus, creating a cohesive digital presence that strengthens brand recognition, communicates credibility and reflects its vision.',
+        coverImage: 'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+        galleryImages: [
+          'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+          'assets/uploads/1928_1794828478_P1-Awardsplus-02.jpg',
+          'assets/uploads/1928_1794828489_P1-Awardsplus-03.jpg',
+          'assets/uploads/1928_1794828515_P1-Awardsplus-04.jpg'
+        ]
+      },
+      vibee: {
+        title: 'Vibee — Youth Culture & Apparel Identity',
+        cardHeading: 'Bold typographic street brand system with reactive apparel motion graphics and viral drop marketing.',
+        client: 'Vibee Apparel Co.',
+        sector: 'Youth Culture & Streetwear',
+        deliverables: 'Brand Identity, Kinetic Apparel Motion, Drop Marketing',
+        timeline: '2026 · Worldwide',
+        overviewTitle: 'Strategic Overview',
+        overview: 'Bold typographic street brand system with reactive apparel motion graphics, experiential packaging, and high-energy viral drop marketing built for next-generation youth culture.',
+        coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
+        galleryImages: [
+          'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
+          'assets/img/portfolio/port-spectra.jpg',
+          'assets/img/portfolio/port-lumina.jpg',
+          'assets/img/why-choose/wc-l1.jpg'
+        ]
+      },
+      infyli: {
+        title: 'Infyli — Minimalist Luxury Home Aromatics',
+        cardHeading: 'Bespoke ceramic vessel packaging and sensory digital storytelling for artisanal fragrance diffuser collections.',
+        client: 'Infyli Paris & Mumbai',
+        sector: 'Minimalist Luxury Home Aromatics',
+        deliverables: 'Spatial Packaging, Vessel Engineering, Digital Storytelling',
+        timeline: '2026 · Paris & Mumbai',
+        overviewTitle: 'Strategic Overview',
+        overview: 'Bespoke fluted ceramic vessel packaging and sensory digital storytelling for artisanal fragrance diffuser collections, evoking contemporary architectural serenity.',
+        coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
+        galleryImages: [
+          'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
+          'assets/img/portfolio/port-lumina.jpg',
+          'assets/services/svc_1.jpg',
+          'assets/img/why-choose/wc-r1.jpg'
+        ]
+      },
+      mudra: {
+        title: 'Mudra School — Classical Arts Digital Presence',
+        cardHeading: 'An elegant responsive digital presence celebrating tradition through fluid micro-interactions and archival clarity.',
+        client: 'Mudra Performing Arts Trust',
+        sector: 'Classical Performing Arts & Heritage',
+        deliverables: 'Digital Flagship, Archival Typography, Performance Platform',
+        timeline: '2026 · National Heritage',
+        overviewTitle: 'Strategic Overview',
+        overview: 'An elegant responsive digital presence celebrating tradition through fluid micro-interactions, archival typography, and immersive stage performance galleries.',
+        coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+        galleryImages: [
+          'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+          'assets/services/svc_3.jpg',
+          'assets/img/portfolio/port-chronos.jpg',
+          'assets/img/why-choose/wc-top.jpg'
+        ]
+      },
+      'last-mile': {
+        title: 'Last Mile Analytics — Fintech Platform Architecture',
+        cardHeading: 'Data-dense financial terminal UI design and enterprise brand authority for institutional crypto analytics.',
+        client: 'Last Mile Global Markets',
+        sector: 'Fintech & Institutional Analytics',
+        deliverables: 'Financial Terminal UI, Design System, Platform Architecture',
+        timeline: '2026 · Institutional Release',
+        overviewTitle: 'Strategic Overview',
+        overview: 'High-frequency financial terminal UI design, real-time telemetry shaders, and enterprise brand authority architected for institutional trading algorithms.',
+        coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+        galleryImages: [
+          'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+          'assets/img/portfolio/port-veloce.jpg',
+          'assets/img/portfolio/port-kroma.jpg',
+          'assets/services/svc_4.jpg'
+        ]
+      },
+      alda: {
+        title: 'Alda — Precision Stainless Steel Spatial Identity',
+        cardHeading: 'Industrial product photography, brushed metal brand packaging, and high-precision spatial showroom displays.',
+        client: 'Alda Cookware & Architectural Steel',
+        sector: 'Precision Architectural Steel & Culinary Engineering',
+        deliverables: 'Industrial Photography, Brushed Metal Packaging, Spatial Showrooms',
+        timeline: '2026 · Global Distribution',
+        overviewTitle: 'Strategic Overview',
+        overview: 'Industrial product engineering, brushed metal brand packaging, and high-precision spatial showroom displays celebrating stainless craftsmanship.',
+        coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg',
+        galleryImages: [
+          'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg',
+          'assets/services/svc_2.jpg',
+          'assets/img/why-choose/wc-l2.jpg',
+          'assets/img/portfolio/port-spectra.jpg'
+        ]
+      },
+      vertex: {
+        title: 'Vertex Architectural Tokens',
+        client: 'Vertex Studio Dubai',
+        sector: 'Modern Architecture & Urban Planning',
+        deliverables: 'Logo Mark, Embossed Stationery, Spatial Codes',
+        timeline: '4 Months · MENA Region',
+        overviewTitle: 'Strategic Overview',
+        overview: 'Creating an architectural brand language rooted in structural integrity, monolithic geometries, and tactile materials that reflect physical urban excellence.',
+        coverImage: 'assets/img/portfolio/port-spectra.jpg',
+        galleryImages: [
+          'assets/img/portfolio/port-spectra.jpg',
+          'assets/img/why-choose/wc-l1.jpg',
+          'assets/img/why-choose/wc-r1.jpg',
+          'assets/img/portfolio/port-lumina.jpg'
+        ]
+      },
+      aetherion: {
+        title: 'Aetherion Cyber Telemetry',
+        client: 'Aetherion Motors (Munich / Silicon Valley)',
+        sector: 'Hyper Electric Automotive',
+        deliverables: 'Curved Cockpit UI, 3D Vehicle Configurator',
+        timeline: '8 Months · Global Reveal',
+        overviewTitle: 'Strategic Overview',
+        overview: 'Designing the next-generation digital cockpit and companion mobile platform for an ultra-high performance electric hypercar capable of 0-100 km/h in 1.8 seconds.',
+        coverImage: 'assets/img/portfolio/port-veloce.jpg',
+        galleryImages: [
+          'assets/img/portfolio/port-veloce.jpg',
+          'assets/img/portfolio/port-kroma.jpg',
+          'assets/img/portfolio/port-zenith.jpg',
+          'assets/services/svc_4.jpg'
+        ]
+      }
+    };
+
     function openProjectModal(pData = null) {
+      const def = (pData && pData.id && caseStudiesDefaults[pData.id]) ? caseStudiesDefaults[pData.id] : {};
       document.getElementById('projectModalTitle').textContent = pData ? 'Edit Portfolio Item' : 'Add New Portfolio Item';
       document.getElementById('projectIdInput').value = pData ? pData.id : '';
-      document.getElementById('projectTitleInput').value = pData ? pData.title : '';
+      document.getElementById('projectTitleInput').value = pData ? (pData.title || def.title || '') : '';
       const cardHeadEl = document.getElementById('projectCardHeadingInput');
-      if (cardHeadEl) cardHeadEl.value = pData ? (pData.cardHeading || pData.cardTitle || '') : '';
-      document.getElementById('projectCategoryDisplayInput').value = pData ? (pData.subheading || pData.categoryDisplay || '') : '';
-      document.getElementById('projectTagPillInput').value = pData ? (pData.tagPill || '') : '';
-      document.getElementById('projectClientInput').value = pData ? (pData.client || '') : '';
-      document.getElementById('projectSectorInput').value = pData ? (pData.sector || '') : '';
-      document.getElementById('projectDeliverablesInput').value = pData ? (pData.deliverables || '') : '';
-      document.getElementById('projectTimelineInput').value = pData ? (pData.timeline || (pData.year ? `${pData.year} · Complete Archive` : '2025 · Global Reveal')) : '';
-      document.getElementById('projectCategoryKeysInput').value = pData ? (pData.category || '') : 'brand-identity';
+      if (cardHeadEl) cardHeadEl.value = pData ? (pData.cardHeading || pData.cardTitle || def.cardHeading || '') : '';
+      document.getElementById('projectCategoryDisplayInput').value = pData ? (pData.subheading || pData.categoryDisplay || def.categoryDisplay || '') : '';
+      document.getElementById('projectTagPillInput').value = pData ? (pData.tagPill || def.tagPill || '') : '';
+      document.getElementById('projectClientInput').value = pData ? (pData.client || def.client || '') : '';
+      document.getElementById('projectSectorInput').value = pData ? (pData.sector || def.sector || '') : '';
+      document.getElementById('projectDeliverablesInput').value = pData ? (pData.deliverables || def.deliverables || '') : '';
+      document.getElementById('projectTimelineInput').value = pData ? (pData.timeline || def.timeline || (pData.year ? `${pData.year} · Complete Archive` : '2026 · Global Reveal')) : '';
+      document.getElementById('projectCategoryKeysInput').value = pData ? (pData.category || 'brand-identity') : 'brand-identity';
       
-      const coverVal = pData ? (pData.bannerImage || pData.coverImage || 'assets/img/portfolio/port-chronos.jpg') : 'assets/img/portfolio/port-chronos.jpg';
+      const coverVal = pData ? (pData.bannerImage || pData.coverImage || def.coverImage || 'assets/img/portfolio/port-chronos.jpg') : 'assets/img/portfolio/port-chronos.jpg';
       document.getElementById('projectCoverInput').value = coverVal;
       if (projectUploader) projectUploader.refreshUI();
 
       // Overview Heading & Narrative Description
-      document.getElementById('projectOverviewTitleInput').value = pData ? (pData.overviewTitle || pData.strategicOverviewTitle || 'Strategic Overview') : 'Strategic Overview';
+      document.getElementById('projectOverviewTitleInput').value = pData ? (pData.overviewTitle || pData.strategicOverviewTitle || def.overviewTitle || 'Strategic Overview') : 'Strategic Overview';
 
-      document.getElementById('projectOverviewInput').value = pData ? (pData.overview || pData.strategicOverview || pData.description || pData.summary || '') : '';
+      document.getElementById('projectOverviewInput').value = pData ? (pData.overview || pData.strategicOverview || pData.description || pData.summary || def.overview || '') : '';
 
-      // Set up 6 gallery images
+      // Set up gallery images
       if (pData && pData.galleryImages && Array.isArray(pData.galleryImages) && pData.galleryImages.length) {
         currentGalleryImages = [...pData.galleryImages];
       } else if (pData && pData.gallery && Array.isArray(pData.gallery) && pData.gallery.length) {
         currentGalleryImages = [...pData.gallery];
+      } else if (def && def.galleryImages && Array.isArray(def.galleryImages) && def.galleryImages.length) {
+        currentGalleryImages = [...def.galleryImages];
       } else if (pData && pData.id) {
         const fallbacks = {
-          aurora: ['assets/img/portfolio/port-chronos.jpg', 'assets/img/portfolio/port-spectra.jpg', 'assets/img/portfolio/port-lumina.jpg', 'assets/img/why-choose/wc-l1.jpg', 'assets/img/why-choose/wc-r1.jpg', 'assets/img/portfolio/port-veloce.jpg'],
-          vertex: ['assets/img/portfolio/port-spectra.jpg', 'assets/img/why-choose/wc-l1.jpg', 'assets/img/why-choose/wc-r1.jpg', 'assets/img/portfolio/port-lumina.jpg', 'assets/img/why-choose/wc-r2.jpg', 'assets/img/portfolio/port-chronos.jpg'],
-          solstice: ['assets/img/portfolio/port-lumina.jpg', 'assets/img/portfolio/port-chronos.jpg', 'assets/services/svc_3.jpg', 'assets/img/why-choose/wc-l2.jpg', 'assets/services/svc_1.jpg', 'assets/img/why-choose/wc-r1.jpg'],
-          veloce: ['assets/img/portfolio/port-veloce.jpg', 'assets/img/portfolio/port-kroma.jpg', 'assets/img/why-choose/wc-r2.jpg', 'assets/img/portfolio/port-zenith.jpg', 'assets/img/why-choose/wc-top.jpg', 'assets/services/svc_4.jpg'],
-          aetherion: ['assets/img/portfolio/port-veloce.jpg', 'assets/img/portfolio/port-kroma.jpg', 'assets/img/why-choose/wc-r2.jpg', 'assets/img/portfolio/port-zenith.jpg', 'assets/img/why-choose/wc-top.jpg', 'assets/services/svc_4.jpg'],
-          quantum: ['assets/img/portfolio/port-kroma.jpg', 'assets/img/portfolio/port-veloce.jpg', 'assets/img/why-choose/wc-top.jpg', 'assets/services/svc_5.jpg', 'assets/img/why-choose/wc-r1.jpg', 'assets/img/why-choose/wc-l2.jpg'],
-          milan: ['assets/img/portfolio/port-zenith.jpg', 'assets/services/svc_4.jpg', 'assets/img/why-choose/wc-bot.jpg', 'assets/services/svc_1.jpg', 'assets/services/svc_2.jpg', 'assets/img/why-choose/wc-r2.jpg'],
-          lofy: ['assets/services/svc_1.jpg', 'assets/services/svc_3.jpg', 'assets/services/svc_2.jpg', 'assets/img/why-choose/wc-l1.jpg', 'assets/services/svc_5.jpg', 'assets/img/portfolio/port-spectra.jpg'],
-          stregis: ['assets/services/svc_2.jpg', 'assets/services/svc_5.jpg', 'assets/img/portfolio/port-lumina.jpg', 'assets/img/why-choose/wc-r1.jpg', 'assets/services/svc_3.jpg', 'assets/services/svc_1.jpg']
+          aurora: ['assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg', 'assets/uploads/1928_1794828478_P1-Awardsplus-02.jpg', 'assets/uploads/1928_1794828489_P1-Awardsplus-03.jpg', 'assets/uploads/1928_1794828515_P1-Awardsplus-04.jpg'],
+          vertex: ['assets/img/portfolio/port-spectra.jpg', 'assets/img/why-choose/wc-l1.jpg', 'assets/img/why-choose/wc-r1.jpg', 'assets/img/portfolio/port-lumina.jpg'],
+          vibee: ['assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg', 'assets/img/portfolio/port-spectra.jpg', 'assets/img/portfolio/port-lumina.jpg', 'assets/img/why-choose/wc-l1.jpg'],
+          infyli: ['assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg', 'assets/img/portfolio/port-lumina.jpg', 'assets/services/svc_1.jpg', 'assets/img/why-choose/wc-r1.jpg'],
+          mudra: ['assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg', 'assets/services/svc_3.jpg', 'assets/img/portfolio/port-chronos.jpg', 'assets/img/why-choose/wc-top.jpg'],
+          'last-mile': ['assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg', 'assets/img/portfolio/port-veloce.jpg', 'assets/img/portfolio/port-kroma.jpg', 'assets/services/svc_4.jpg'],
+          alda: ['assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg', 'assets/services/svc_2.jpg', 'assets/img/why-choose/wc-l2.jpg', 'assets/img/portfolio/port-spectra.jpg']
         };
         currentGalleryImages = fallbacks[pData.id] || [
           pData.coverImage || 'assets/img/portfolio/port-chronos.jpg',
           'assets/img/portfolio/port-spectra.jpg',
           'assets/img/portfolio/port-lumina.jpg',
-          'assets/img/why-choose/wc-l1.jpg',
-          'assets/img/why-choose/wc-r1.jpg',
-          'assets/img/portfolio/port-veloce.jpg'
+          'assets/img/why-choose/wc-l1.jpg'
         ];
       } else {
         currentGalleryImages = [
           'assets/img/portfolio/port-chronos.jpg',
           'assets/img/portfolio/port-spectra.jpg',
           'assets/img/portfolio/port-lumina.jpg',
-          'assets/img/why-choose/wc-l1.jpg',
-          'assets/img/why-choose/wc-r1.jpg',
-          'assets/img/portfolio/port-veloce.jpg'
+          'assets/img/why-choose/wc-l1.jpg'
         ];
       }
       renderGalleryReorderList();
@@ -290,7 +441,7 @@
       document.getElementById('projectModal').classList.add('active');
     }
 
-    function editProject(id) {
+        function editProject(id) {
       const proj = window.CMSStore.getProjectById(id) || (window.CMSStore.getPortfolioById ? window.CMSStore.getPortfolioById(id) : null);
       if (proj) openProjectModal(proj);
     }
