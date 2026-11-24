@@ -419,90 +419,6 @@
       color: #0A0A0A;
     }
 
-    /* ── "Click to enter" (shown at the end of the loader only when the browser would block the showreel's sound;
-          that one click is what lets the video arrive with its audio ON) ── */
-    .hl-enter-btn {
-      position: absolute;
-      left: 50%;
-      bottom: calc(clamp(20px, 3.5vh, 36px) + 48px);
-      z-index: 41;
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 26px;
-      font-family: var(--font-mono);
-      font-size: clamp(10px, 0.9vw, 11.5px);
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: #ffffff;
-      background: rgba(14, 14, 18, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 999px;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      cursor: pointer;
-      opacity: 0;
-      transform: translateX(-50%) translateY(14px);
-      pointer-events: none;
-      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
-    }
-
-    .hl-enter-btn[hidden] {
-      display: none;
-    }
-
-    .hl-enter-btn.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-      pointer-events: auto;
-    }
-
-    .hl-enter-btn:hover,
-    .hl-enter-btn:focus-visible {
-      border-color: var(--cr);
-      outline: none;
-    }
-
-    .hl-enter-btn svg {
-      width: 16px;
-      height: 16px;
-      flex: none;
-    }
-
-    .hl-enter-pulse {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--cr);
-      animation: hlEnterPulse 1.6s infinite;
-    }
-
-    @keyframes hlEnterPulse {
-      0% { box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.55); }
-      70% { box-shadow: 0 0 0 12px rgba(200, 16, 46, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(200, 16, 46, 0); }
-    }
-
-    /* Little bounce if the visitor tries to scroll before entering */
-    .hl-enter-btn.nudge {
-      animation: hlEnterNudge 0.5s ease;
-    }
-
-    @keyframes hlEnterNudge {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      30% { transform: translateX(-50%) translateY(-7px); }
-      60% { transform: translateX(-50%) translateY(2px); }
-    }
-
-    [data-theme="light"] .hl-enter-btn {
-      color: #0A0A0A;
-      background: rgba(255, 255, 255, 0.95);
-      border-color: rgba(10, 10, 10, 0.16);
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
-    }
-
     /* ── STEP 1: Only "1928" Comes First ── */
     .hero-title {
       position: absolute;
@@ -758,12 +674,6 @@
 
     html.hero-skip-anim .hero-loading-hud {
       display: none !important;
-    }
-
-    /* Page stays at the top (no scrolling) until the visitor clicks "enter" */
-    html body.hero-sound-gate {
-      overflow: hidden !important;
-      height: 100vh !important;
     }
 
     /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
@@ -4109,13 +4019,6 @@
         font-size: 9px !important;
       }
 
-      .hl-enter-btn {
-        bottom: calc(clamp(16px, 3vh, 24px) + 42px) !important;
-        padding: 12px 20px !important;
-        font-size: 10px !important;
-        letter-spacing: 0.18em !important;
-      }
-
       /* 3D Room & Card Scaling for Phone Screen */
       .room-scene {
         perspective: 800px !important;
@@ -5554,14 +5457,6 @@
           <div class="hl-progress-bar-fill" id="hlProgressFill"></div>
         </div>
       </div>
-      <button type="button" class="hl-enter-btn" id="heroEnterBtn" aria-label="Enter the site with sound" hidden>
-        <span class="hl-enter-pulse"></span>
-        <span id="heroEnterLabel">Click to enter</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-        </svg>
-      </button>
 
       <!-- ══ PHONE HERO VIEW (Strictly scoped to phones <= 768px; hidden on desktop) ══ -->
       <div class="phone-hero" id="phoneHero" style="display:none !important;">
@@ -7640,11 +7535,11 @@
           }
 
           // ── Showreel playback window ──
-          // Starts (with audio) only once the card is out on its own after the room — the same moment the
-          // scrollbar & theme button appear (hp >= 0.60). Stops (video + audio) as soon as the SELECTED WORK
-          // section comes up, or when scrolling back up. Rewinds only when the card is fully gone back into the room.
+          // Starts the moment the card begins coming out from the back (vidP > 0), so it is already playing
+          // while it grows. Pauses (video + audio) as soon as the SELECTED WORK section comes up, or when the
+          // card goes back into the room — where it is also rewound so the next entrance starts from the beginning.
           const portReached = portDriver ? sy >= portDriver.offsetTop - vh * 0.5 : false;
-          if (hp >= 0.60 && !portReached) {
+          if (vidP > 0 && !portReached) {
             if (typeof window.heroVideoEnter === 'function') window.heroVideoEnter();
           } else {
             if (typeof window.heroVideoExit === 'function') window.heroVideoExit(vidP <= 0);
@@ -8295,57 +8190,6 @@
         } catch (e) { }
 
         const hud = document.getElementById('heroLoadingHud');
-        const enterBtn = document.getElementById('heroEnterBtn');
-
-        // ── "Click to enter" sound gate ──
-        // Browsers refuse to start sound until the visitor clicks / taps / presses a key on the page.
-        // If that permission is missing when loading finishes, a "Click to enter" button appears and the
-        // page waits at the top; that one click lets the showreel arrive with its audio ON.
-        // If the browser already allows sound, nothing extra appears and everything continues as before.
-        function soundGateThen(onEnter) {
-          const check = (typeof window.heroCheckSound === 'function') ? window.heroCheckSound() : Promise.resolve(true);
-          check.then((allowed) => {
-            if (allowed || !enterBtn) { onEnter(); return; }
-
-            const label = document.getElementById('heroEnterLabel');
-            const touch = window.matchMedia && window.matchMedia('(hover: none)').matches;
-            if (label) label.textContent = touch ? 'Tap to enter' : 'Click to enter';
-            try { window.scrollTo(0, 0); } catch (e) { }
-            document.body.classList.add('hero-sound-gate');
-            enterBtn.hidden = false;
-            requestAnimationFrame(() => requestAnimationFrame(() => enterBtn.classList.add('show')));
-            try { enterBtn.focus({ preventScroll: true }); } catch (e) { }
-
-            let done = false;
-            let lastNudge = 0;
-            const nudge = () => {
-              const now = Date.now();
-              if (now - lastNudge < 700) return;
-              lastNudge = now;
-              enterBtn.classList.remove('nudge');
-              void enterBtn.offsetWidth;
-              enterBtn.classList.add('nudge');
-            };
-            const enter = () => {
-              if (done) return;
-              // Only a real click / tap / key press unlocks sound (Esc, for example, does not)
-              if (navigator.userActivation && !navigator.userActivation.isActive) return;
-              done = true;
-              window.removeEventListener('click', enter, true);
-              window.removeEventListener('keydown', enter, true);
-              window.removeEventListener('wheel', nudge);
-              window.removeEventListener('touchmove', nudge);
-              enterBtn.classList.remove('show');
-              setTimeout(() => { enterBtn.hidden = true; }, 650);
-              document.body.classList.remove('hero-sound-gate');
-              onEnter();
-            };
-            window.addEventListener('click', enter, true);
-            window.addEventListener('keydown', enter, true);
-            window.addEventListener('wheel', nudge, { passive: true });
-            window.addEventListener('touchmove', nudge, { passive: true });
-          });
-        }
 
         if (shouldSkip) {
           // Internal page switch: Titles, manifesto, wireframe box, rays & ambient ready immediately
@@ -8367,7 +8211,6 @@
             setTimeout(() => {
               document.body.classList.add('hero-loading-complete');
               onScroll();
-              soundGateThen(() => onScroll());
             }, 1600);
           }, 60);
           return;
@@ -8447,21 +8290,19 @@
         }, 5600);
 
         // 7. Complete loading & smoothly dismiss HUD into live interaction (7.3s)
-        //    (if the browser would block the showreel's sound, wait for "Click to enter" first)
         setTimeout(() => {
+          if (hud) hud.classList.add('hide');
+          document.body.classList.remove('hero-loading-active');
           document.body.classList.add('hero-loading-complete');
-          soundGateThen(() => {
-            if (hud) hud.classList.add('hide');
-            document.body.classList.remove('hero-loading-active');
-            onScroll();
-          });
+          onScroll();
         }, 7300);
       })();
 
       // ── Hero Showreel (no play/pause UI — only the audio on/off button)
       //  • Loading animation & 3D room: no card, no video.
-      //  • Card out on its own after the room (hp >= 0.60, when the scrollbar appears) -> video plays with audio.
-      //  • SELECTED WORK section comes up, or scrolling back up -> video + audio pause.
+      //  • Card starts coming out from the back -> video starts playing, MUTED by default.
+      //  • Visitor can turn the sound on/off with the audio button on the card.
+      //  • SELECTED WORK section comes up, or scrolling back up -> video (and sound) pause.
       //  • Card fully back into the room -> rewound, so the next entrance starts from the beginning.
       //  onScroll drives this through window.heroVideoEnter / window.heroVideoExit(rewind) (idempotent).
       const heroReelVideo = document.getElementById('heroReelVideo');
@@ -8470,99 +8311,53 @@
       const heroSoundOffIcon = document.getElementById('heroSoundOffIcon');
 
       if (heroReel && heroReelVideo) {
-        let started = false;      // card has come forward at least once
-        let inFront = false;      // inside the playback window (set by onScroll)
-        let soundWanted = true;   // visitor's choice via the audio button (on by default)
-        let audioAllowed = false; // browser will let us play audibly
-        let probing = false;
+        let inFront = false;  // inside the playback window (set by onScroll)
+        let soundOn = false;  // muted by default; only the audio button turns sound on
         heroReelVideo.volume = 1.0;
 
         const updateSoundIcons = () => {
           if (!heroSoundOnIcon || !heroSoundOffIcon) return;
-          const audible = !heroReelVideo.muted && !heroReelVideo.paused;
-          heroSoundOnIcon.style.display = audible ? 'block' : 'none';
-          heroSoundOffIcon.style.display = audible ? 'none' : 'block';
+          heroSoundOnIcon.style.display = soundOn ? 'block' : 'none';
+          heroSoundOffIcon.style.display = soundOn ? 'none' : 'block';
         };
 
         let ready = false;  // a real (non-black) picture is decoded and the card may be shown
         let startAt = 0;    // first moment of the video that is not a black frame
 
-        // Plays only inside the playback window — never during the loading animation / enter screen.
+        // Plays only inside the playback window — never during the loading animation.
         const shouldPlay = () =>
-          ready && inFront &&
-          !document.body.classList.contains('hero-loading-active') &&
-          !document.body.classList.contains('hero-sound-gate');
+          ready && inFront && !document.body.classList.contains('hero-loading-active');
 
         const apply = () => {
+          heroReelVideo.muted = !soundOn;
           if (document.hidden) return;
           if (shouldPlay()) {
-            const wantSound = started && soundWanted && audioAllowed;
-            heroReelVideo.muted = !wantSound;
             if (heroReelVideo.paused) {
               heroReelVideo.play().catch(() => {
+                // If the browser ever refuses audible playback, keep the picture moving muted
                 if (!heroReelVideo.muted) {
-                  audioAllowed = false;
+                  soundOn = false;
                   heroReelVideo.muted = true;
                   heroReelVideo.play().catch(() => {});
+                  updateSoundIcons();
                 }
-                updateSoundIcons();
               });
             }
           } else if (!heroReelVideo.paused) {
-            heroReelVideo.pause(); // stops video and audio together
+            heroReelVideo.pause(); // stops video and sound together
           }
           updateSoundIcons();
-        };
-
-        // Ask the browser whether audible playback is allowed, using a silent throwaway clip,
-        // so the showreel itself never stutters or freezes while we find out.
-        let silentUrl = null;
-        const getSilentUrl = () => {
-          if (silentUrl) return silentUrl;
-          const n = 800, buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
-          const w = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
-          w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt ');
-          v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
-          v.setUint32(24, 8000, true); v.setUint32(28, 16000, true); v.setUint16(32, 2, true);
-          v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true);
-          silentUrl = URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
-          return silentUrl;
-        };
-        // Resolves true when the browser will let the showreel play WITH sound right now.
-        // Also used by the loader to decide whether to show "Click to enter".
-        window.heroCheckSound = () => new Promise((resolve) => {
-          if (audioAllowed || (navigator.userActivation && navigator.userActivation.hasBeenActive)) {
-            audioAllowed = true;
-            resolve(true);
-            return;
-          }
-          try {
-            const a = new Audio(getSilentUrl());
-            a.play().then(() => {
-              a.pause();
-              audioAllowed = true;
-              resolve(true);
-            }).catch(() => resolve(false));
-          } catch (e) { resolve(false); }
-        });
-
-        const probeAudio = () => {
-          if (audioAllowed || probing) return;
-          probing = true;
-          window.heroCheckSound().finally(() => { probing = false; apply(); });
         };
 
         window.heroVideoEnter = () => {
           if (inFront) return;
           inFront = true;
-          started = true;
           // Browsers that ignore preload (e.g. iOS Safari) only start loading on play()
           if (!ready && heroReelVideo.readyState < 2) {
             heroReelVideo.muted = true;
             heroReelVideo.play().catch(() => {});
           }
           apply();
-          probeAudio();
         };
 
         window.heroVideoExit = (rewind) => {
@@ -8576,42 +8371,14 @@
           }
         };
 
-        // Audio on/off button (no play/pause).
+        // Audio on/off button (no play/pause). The visitor's click on it is what lets the sound play.
         if (heroReelSound) {
           heroReelSound.addEventListener('click', (e) => {
             e.stopPropagation();
-            const audibleNow = !heroReelVideo.muted && !heroReelVideo.paused;
-            soundWanted = !audibleNow;
-            if (soundWanted) audioAllowed = true; // this click counts as the visitor's permission
+            soundOn = !soundOn;
             apply();
           });
         }
-
-        // The very first click / tap / key press anywhere on the page grants audio permission.
-        // (Scrolling never does — that is a browser rule, so it is not used here.)
-        const UNLOCK_EVENTS = ['pointerdown', 'keydown', 'touchend', 'click'];
-        const unlockAudio = () => {
-          if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return;
-          UNLOCK_EVENTS.forEach(evt => window.removeEventListener(evt, unlockAudio, true));
-          audioAllowed = true;
-          apply();
-        };
-        UNLOCK_EVENTS.forEach(evt => {
-          window.addEventListener(evt, unlockAudio, { capture: true, passive: true });
-        });
-
-        // If the browser pauses the video by itself while it should be playing
-        // (e.g. it refused the sound), keep the picture moving muted instead of freezing.
-        heroReelVideo.addEventListener('pause', () => {
-          if (!document.hidden && shouldPlay()) {
-            audioAllowed = false;
-            heroReelVideo.muted = true;
-            heroReelVideo.play().catch(() => {});
-          }
-          updateSoundIcons();
-        });
-        heroReelVideo.addEventListener('play', updateSoundIcons);
-        heroReelVideo.addEventListener('volumechange', updateSoundIcons);
 
         document.addEventListener('visibilitychange', () => {
           if (document.hidden) { if (!heroReelVideo.paused) heroReelVideo.pause(); }

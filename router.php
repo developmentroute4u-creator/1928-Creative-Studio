@@ -165,7 +165,7 @@ $systemRouteMap = [
     'archives' => 'portfolio',
     'blogs' => 'blogs',
     'blogs.html' => 'blogs',
-    'all-blogs.html' => 'blogs',
+    // NOTE: all-blogs.html is intentionally NOT aliased here — it is its own page (/all-blogs)
     'perspectives' => 'blogs',
     'contact' => 'contact',
     'contact.html' => 'contact',

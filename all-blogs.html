@@ -1048,123 +1048,6 @@
         stroke-width: 2.4 !important;
       }
 
-      /* In-Drawer Reader Panel */
-      .reader-drawer-panel {
-        width: 100% !important;
-        max-width: 100% !important;
-        height: 100% !important;
-        height: 100dvh !important;
-      }
-      .reader-header-bar {
-        height: auto !important;
-        min-height: 64px !important;
-        padding: max(16px, env(safe-area-inset-top)) 20px 14px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        box-sizing: border-box !important;
-        border-bottom: 1px solid var(--rule-m) !important;
-      }
-      .reader-header-left {
-        display: flex !important;
-        align-items: center !important;
-        align-self: center !important;
-        gap: 10px !important;
-        margin: 0 !important;
-      }
-      .rhl-cat-pill {
-        margin: 0 !important;
-        font-family: var(--font-mono) !important;
-        font-size: 11px !important;
-        font-weight: 800 !important;
-        color: var(--cr) !important;
-        letter-spacing: 0.12em !important;
-        text-transform: uppercase !important;
-      }
-      .rhl-sep {
-        color: var(--rule-heavy) !important;
-      }
-      .rhl-read-time {
-        font-family: var(--font-mono) !important;
-        font-size: 11px !important;
-        color: var(--ink-dim) !important;
-        letter-spacing: 0.08em !important;
-        text-transform: uppercase !important;
-      }
-      .reader-close-btn,
-      #rdrCloseBtn {
-        width: 38px !important;
-        height: 38px !important;
-        align-self: center !important;
-        margin-left: auto !important;
-        flex-shrink: 0 !important;
-      }
-      .reader-scroll-viewport {
-        padding: 24px 20px 48px !important;
-        box-sizing: border-box !important;
-      }
-      .reader-h1 {
-        font-size: clamp(24px, 6vw, 30px) !important;
-        line-height: 1.18 !important;
-        text-align: left !important;
-      }
-      .reader-lead {
-        font-size: 15px !important;
-        text-align: left !important;
-      }
-      .reader-article-content {
-        text-align: left !important;
-      }
-
-      /* Bottom CTA Deck */
-      .reader-cta-deck {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        text-align: left !important;
-        gap: 18px !important;
-        padding-top: 28px !important;
-        width: 100% !important;
-      }
-      .reader-cta-deck > div {
-        width: 100% !important;
-        text-align: left !important;
-      }
-      .reader-cta-deck .sec-tag-pill {
-        margin-left: 0 !important;
-        margin-right: auto !important;
-        text-align: left !important;
-        justify-content: flex-start !important;
-        align-self: flex-start !important;
-        display: inline-flex !important;
-        margin-bottom: 8px !important;
-        width: -moz-fit-content !important;
-        width: fit-content !important;
-      }
-      .rcd-title {
-        font-size: clamp(20px, 4.8vw, 24px) !important;
-        line-height: 1.2 !important;
-        margin-bottom: 8px !important;
-        text-align: left !important;
-      }
-      .rcd-sub {
-        font-size: 14px !important;
-        line-height: 1.55 !important;
-        text-align: left !important;
-        margin-bottom: 0 !important;
-      }
-      .rcd-btn {
-        width: 100% !important;
-        max-width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        padding: 16px 24px !important;
-        box-sizing: border-box !important;
-        text-align: center !important;
-        gap: 10px !important;
-        border-radius: 999px !important;
-      }
     }
 
     /* ── INDIVIDUAL EDITORIAL BLOG CARD ── */
@@ -1230,6 +1113,32 @@
     .blog-card:hover .card-visual-box {
       border-color: var(--rule-heavy);
       background: var(--card-hover);
+    }
+
+    /* Real cover image from the CMS (covers the blueprint placeholder) */
+    .card-visual-box.has-cover {
+      border-style: solid;
+      border-color: transparent;
+    }
+
+    /* Hide the placeholder icon / crosshairs / "16:9" label behind a real image (they showed through transparent PNGs) */
+    .card-visual-box.has-cover > :not(.cvb-cover) {
+      display: none;
+    }
+
+    .cvb-cover {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 3;
+      border-radius: inherit;
+      transition: transform 0.6s var(--sp);
+    }
+
+    .blog-card:hover .cvb-cover {
+      transform: scale(1.04);
     }
 
     .cvb-crosshair {
@@ -1563,31 +1472,314 @@
       color: #ffffff;
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       ARTICLE READER MODAL DRAWER
-       ═══════════════════════════════════════════════════════════ */
-    .reader-drawer-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.75);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      z-index: 99990;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.45s var(--sp), visibility 0.45s;
+    /* Perspectives page colour palette, scoped to the ported reader so it looks identical */
+    #perspectiveModal,
+    #shareToast {
+      --bg: #070709;
+      --card-bg: #0e0e12;
+      --card-hover: #14141a;
+      --card-alt: #121217;
+      --ink: #f5f5f7;
+      --ink-mid: #9898a6;
+      --ink-dim: #545462;
+      --rule: rgba(255, 255, 255, 0.08);
+      --rule-m: rgba(255, 255, 255, 0.15);
+      --rule-heavy: rgba(255, 255, 255, 0.28);
+      --cr: #c8102e;
+      --cr-glow: rgba(200, 16, 46, 0.38);
+      --cr-soft: rgba(200, 16, 46, 0.09);
+      --cr-bright: #ff1e42;
+      --sp: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .reader-drawer-overlay.active {
+    [data-theme="light"] #perspectiveModal,
+    [data-theme="light"] #shareToast {
+      --bg: #f5f5f8;
+      --card-bg: #ffffff;
+      --card-hover: #ececf2;
+      --card-alt: #f0f0f6;
+      --ink: #0c0c0f;
+      --ink-mid: #4d4d5a;
+      --ink-dim: #848494;
+      --rule: rgba(0, 0, 0, 0.08);
+      --rule-m: rgba(0, 0, 0, 0.16);
+      --rule-heavy: rgba(0, 0, 0, 0.28);
+      --cr: #c8102e;
+      --cr-glow: rgba(200, 16, 46, 0.22);
+      --cr-soft: rgba(200, 16, 46, 0.06);
+      --cr-bright: #d91434;
+    }
+
+    /* Corner crosshairs on the reader banner (from the Perspectives page) */
+    .corner-crosshair {
+      position: absolute;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--ink-dim);
+      line-height: 1;
+      pointer-events: none;
+      transition: color 0.3s;
+    }
+
+    .reader-modal-stage:hover .corner-crosshair {
+      color: var(--cr);
+    }
+
+    .cc-tl { top: 10px; left: 10px; }
+    .cc-tr { top: 10px; right: 10px; }
+    .cc-bl { bottom: 10px; left: 10px; }
+    .cc-br { bottom: 10px; right: 10px; }
+
+    /* ── Perspective reader: phone view (verbatim from the Perspectives page) ── */
+    @media (max-width: 768px) {
+      /* ── PERSPECTIVE READER DRAWER (MOBILE VIEW) ── */
+      .reader-modal-stage {
+        height: 96vh !important;
+        border-top-left-radius: 28px !important;
+        border-top-right-radius: 28px !important;
+      }
+
+      .reader-top-bar {
+        padding: 12px 16px !important;
+        border-top-left-radius: 28px !important;
+        border-top-right-radius: 28px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+      }
+
+      .reader-top-bar .reader-cat-pill,
+      .reader-top-bar #mReaderCat {
+        display: none !important;
+      }
+
+      .reader-top-actions {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: 8px !important;
+        width: 100% !important;
+      }
+
+      .reader-share-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 6px !important;
+        padding: 7px 12px !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        border-radius: 999px !important;
+        flex-shrink: 0 !important;
+      }
+
+      .reader-share-btn .rsb-icon,
+      .reader-share-btn svg {
+        width: 13px !important;
+        height: 13px !important;
+        flex-shrink: 0 !important;
+        stroke-width: 2.2 !important;
+      }
+
+      .reader-close-btn,
+      #readerCloseBtn {
+        margin-left: auto !important;
+        flex-shrink: 0 !important;
+        width: 36px !important;
+        height: 36px !important;
+      }
+
+      .reader-body-wrap {
+        padding: 20px 16px 40px !important;
+      }
+
+      .reader-hero-title {
+        font-size: clamp(24px, 6vw, 30px) !important;
+        line-height: 1.15 !important;
+        text-align: left !important;
+      }
+
+      .reader-hero-box {
+        margin-bottom: 0 !important;
+      }
+
+      .reader-hero-meta {
+        display: flex !important;
+        align-items: center !important;
+        padding-bottom: 0 !important;
+        border-bottom: none !important;
+        margin-bottom: 0 !important;
+        width: 100% !important;
+      }
+
+      .rhm-author-pill {
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+      }
+
+      #mReaderSpecimenBanner {
+        height: 200px !important;
+        min-height: 200px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-top: 24px !important;
+        margin-bottom: 24px !important;
+      }
+
+      .reader-meta-row-below-image {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        padding-bottom: 18px !important;
+        border-bottom: 1px solid var(--rule-m) !important;
+        margin-bottom: 26px !important;
+      }
+
+      #mReaderDate {
+        text-align: left !important;
+        font-family: var(--font-mono) !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: var(--ink-mid) !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        display: inline-block !important;
+      }
+
+      #mReaderReadTime {
+        text-align: right !important;
+        font-family: var(--font-mono) !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: var(--ink-mid) !important;
+        padding: 0 !important;
+        background: transparent !important;
+        border: none !important;
+        display: inline-block !important;
+      }
+
+      #mReaderSpecimenBanner .hfs-badge,
+      #mReaderSpecimenBanner .hfs-prompt,
+      #mReaderSpecimenBadge,
+      #mReaderSpecimenPrompt,
+      .hfs-radar-ring {
+        display: none !important;
+      }
+
+      #mReaderSpecimenGlyph {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      #mReaderSpecimenGlyph .hfs-svg-icon {
+        width: 52px !important;
+        height: 52px !important;
+        display: block !important;
+        margin: 0 auto !important;
+        opacity: 0.65 !important;
+      }
+
+      .reader-cta-deck .sec-tag-pill,
+      .reader-cta-deck .modal-subheading-tag {
+        display: none !important;
+      }
+
+      .reader-editorial-layout {
+        display: flex !important;
+        flex-direction: column !important;
+      }
+
+      .reader-toc-sidebar {
+        display: none !important;
+      }
+
+      /* Perspective Bottom CTA Deck on Mobile */
+      .reader-cta-deck {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+        gap: 18px !important;
+        padding-top: 28px !important;
+        width: 100% !important;
+      }
+
+      .reader-cta-deck > div {
+        width: 100% !important;
+        text-align: left !important;
+      }
+
+      .reader-cta-deck .sec-tag-pill {
+        display: none !important;
+      }
+
+      .reader-cta-title {
+        font-size: clamp(20px, 4.8vw, 24px) !important;
+        line-height: 1.2 !important;
+        margin-bottom: 8px !important;
+        text-align: left !important;
+      }
+
+      .reader-cta-sub {
+        font-size: 14px !important;
+        line-height: 1.55 !important;
+        text-align: left !important;
+        margin-bottom: 0 !important;
+      }
+
+      .reader-cta-btn {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 16px 24px !important;
+        box-sizing: border-box !important;
+        text-align: center !important;
+        gap: 10px !important;
+        border-radius: 999px !important;
+      }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       9. DEEP-DIVE PERSPECTIVE READER DRAWER (Detail Modal)
+       (With Dynamic TOC Scrollspy & Related Articles Grid)
+       ═══════════════════════════════════════════════════════════ */
+    .reader-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: rgba(0, 0, 0, 0.88);
+      backdrop-filter: blur(28px);
+      -webkit-backdrop-filter: blur(28px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .reader-modal-backdrop.active {
       opacity: 1;
-      visibility: visible;
+      pointer-events: auto;
     }
 
     body.reader-open #nav,
-    .reader-drawer-overlay.active ~ #nav {
+    .reader-modal-backdrop.active ~ #nav {
       display: none !important;
       opacity: 0 !important;
       pointer-events: none !important;
@@ -1595,202 +1787,461 @@
       transform: translateY(-100%) !important;
     }
 
-    .reader-drawer-panel {
-      position: fixed;
+    .reader-modal-stage {
+      width: 100%;
+      max-width: 1360px;
+      height: 94vh;
+      background: var(--card-bg);
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
+      border: 1px solid var(--rule-m);
+      border-bottom: none;
+      box-shadow: 0 -24px 90px rgba(0, 0, 0, 0.85);
+      overflow-y: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s var(--sp);
+      position: relative;
+    }
+
+    .reader-modal-stage::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    .reader-modal-backdrop.active .reader-modal-stage {
+      transform: translateY(0);
+    }
+
+    /* Sticky Reader Nav Header */
+    .reader-top-bar {
+      position: sticky;
       top: 0;
-      right: 0;
-      width: min(920px, 94vw);
-      height: 100vh;
-      background: var(--bg);
-      border-left: 1px solid var(--rule-m);
-      z-index: 99995;
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.5s var(--sp);
-      box-shadow: -24px 0 60px rgba(0, 0, 0, 0.5);
-    }
-
-    .reader-drawer-overlay.active .reader-drawer-panel {
-      transform: translateX(0);
-    }
-
-    .reader-header-bar {
-      height: 72px;
+      z-index: 9999;
+      background: rgba(14, 14, 18, 0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--rule);
+      padding: 16px clamp(24px, 4vw, 48px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 clamp(20px, 3vw, 40px);
-      border-bottom: 1px solid var(--rule);
-      background: var(--bg);
-      flex-shrink: 0;
+      border-top-left-radius: 36px;
+      border-top-right-radius: 36px;
     }
 
-    .reader-header-left {
+    [data-theme="light"] .reader-top-bar {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: var(--rule);
+    }
+
+    .reader-cat-pill {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+      background: var(--cr-soft);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(200, 16, 46, 0.2);
+    }
+
+    .reader-top-actions {
       display: flex;
       align-items: center;
       gap: 12px;
     }
 
-    .rhl-cat-pill {
+    .reader-share-btn {
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--rule-m);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--ink);
       font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 800;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s var(--sp);
+    }
+
+    [data-theme="light"] .reader-share-btn {
+      background: rgba(0, 0, 0, 0.03);
+    }
+
+    .reader-share-btn:hover {
+      border-color: var(--cr);
       color: var(--cr);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .rhl-sep {
-      color: var(--rule-heavy);
-    }
-
-    .rhl-read-time {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--ink-dim);
     }
 
     .reader-close-btn {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: var(--card-bg);
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--rule-m);
       color: var(--ink);
-      font-size: 20px;
       display: grid;
       place-items: center;
+      font-size: 18px;
       cursor: pointer;
-      transition: all 0.3s var(--sp);
+      transition: transform 0.3s var(--sp), background 0.3s, border-color 0.3s;
     }
 
     .reader-close-btn:hover {
+      transform: rotate(90deg) scale(1.1);
       background: var(--cr);
       border-color: var(--cr);
-      color: #ffffff;
-      transform: rotate(90deg);
+      color: #fff;
     }
 
-    .reader-scroll-viewport {
-      flex: 1;
-      overflow-y: auto;
-      padding: clamp(32px, 5vw, 64px) clamp(24px, 4vw, 56px);
-      scroll-behavior: smooth;
+    .reader-body-wrap {
+      padding: clamp(28px, 4vw, 64px);
     }
 
-    .reader-body-container {
-      max-width: 740px;
-      margin: 0 auto;
+    .reader-hero-box {
+      margin-bottom: 0;
     }
 
-    .reader-h1 {
+    .reader-hero-title {
       font-family: var(--font-primary);
-      font-size: clamp(32px, 4vw, 46px);
       font-weight: 900;
-      line-height: 1.15;
+      font-size: clamp(30px, 3.8vw, 54px);
+      line-height: 1.1;
       letter-spacing: -0.035em;
       color: var(--ink);
       margin-bottom: 20px;
     }
 
-    .reader-lead {
-      font-size: 18px;
-      line-height: 1.68;
-      color: var(--ink-mid);
-      margin-bottom: 36px;
-      border-left: 3px solid var(--cr);
-      padding-left: 18px;
+    .reader-hero-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding-bottom: 0;
+      border-bottom: none;
+      margin-bottom: 0;
     }
 
-    .reader-article-content {
-      font-size: 16.5px;
-      line-height: 1.8;
-      color: var(--ink);
+    .rhm-author-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .reader-article-content h2 {
+    .rhm-avatar-initials {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--cr-soft);
+      border: 1.5px solid var(--cr);
+      color: var(--cr);
       font-family: var(--font-primary);
-      font-size: 24px;
       font-weight: 800;
-      margin-top: 40px;
-      margin-bottom: 16px;
+      font-size: 15px;
+      display: grid;
+      place-items: center;
+    }
+
+    .rhm-name {
+      font-family: var(--font-primary);
+      font-weight: 700;
+      font-size: 14px;
       color: var(--ink);
     }
 
-    .reader-article-content p {
-      margin-bottom: 24px;
+    .rhm-role {
+      font-size: 12px;
+      color: var(--ink-dim);
+    }
+
+    .rhm-info-chip {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Reader Blueprint Banner */
+    .reader-blueprint-banner {
+      width: 100%;
+      height: clamp(260px, 36vh, 440px);
+      border-radius: clamp(20px, 2.5vw, 32px);
+      background: radial-gradient(circle at 50% 50%, rgba(200, 16, 46, 0.08) 0%, transparent 65%), var(--card-alt);
+      border: 1px dashed var(--rule-heavy);
+      margin-top: clamp(24px, 3.5vh, 36px);
+      margin-bottom: clamp(24px, 3.5vh, 36px);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Date & Read Time Row Positioned Below the Image */
+    .reader-meta-row-below-image {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--rule);
+      margin-bottom: clamp(32px, 5vh, 52px);
+    }
+
+    /* Two-Column Reader Prose Layout */
+    .reader-editorial-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: clamp(40px, 5vw, 80px);
+      margin-bottom: clamp(52px, 7vh, 84px);
+    }
+
+    /* Sticky Table of Contents */
+    .reader-toc-sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .toc-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+    }
+
+    .toc-nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-left: 2px solid var(--rule);
+      padding-left: 14px;
+    }
+
+    .toc-nav-list li a {
+      font-family: var(--font-primary);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color 0.25s, transform 0.25s;
+      display: block;
+      line-height: 1.4;
+      cursor: pointer;
+    }
+
+    .toc-nav-list li a:hover,
+    .toc-nav-list li a.active {
+      color: var(--cr);
+      transform: translateX(4px);
+    }
+
+    /* Reader Typography Prose */
+    .reader-content-prose {
+      font-size: clamp(16px, 1.2vw, 18.5px);
       color: var(--ink-mid);
+      line-height: 1.8;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .reader-content-prose p {
+      margin: 0;
+    }
+
+    .reader-content-prose h2 {
+      font-family: var(--font-primary);
+      font-weight: 900;
+      font-size: clamp(24px, 2.2vw, 32px);
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-top: 24px;
+      line-height: 1.2;
     }
 
     .reader-pullquote {
-      margin: 36px 0;
-      padding: 28px 32px;
-      background: var(--card-alt);
-      border-left: 4px solid var(--cr);
-      border-radius: 0 16px 16px 0;
+      position: relative;
+      background: var(--cr-soft);
+      border-left: 3px solid var(--cr);
+      border-radius: 0 18px 18px 0;
+      padding: clamp(24px, 3vw, 36px);
+      margin: 12px 0;
+    }
+
+    .reader-pullquote p {
       font-family: var(--font-primary);
-      font-size: 20px;
       font-weight: 700;
-      font-style: italic;
+      font-size: clamp(18px, 1.4vw, 22px);
+      line-height: 1.45;
       color: var(--ink);
-      line-height: 1.5;
+      font-style: italic;
     }
 
     .reader-takeaway-box {
-      margin: 36px 0;
-      padding: 28px;
-      background: var(--card-bg);
+      background: rgba(255, 255, 255, 0.025);
       border: 1px solid var(--rule-m);
-      border-radius: 16px;
+      border-radius: 20px;
+      padding: clamp(22px, 3vw, 32px);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    [data-theme="light"] .reader-takeaway-box {
+      background: rgba(0, 0, 0, 0.03);
     }
 
     .rtb-title {
       font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 800;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--cr);
-      margin-bottom: 16px;
+      color: var(--cr-bright);
     }
 
     .rtb-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .rtb-list li {
-      position: relative;
-      padding-left: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
       font-size: 14.5px;
-      line-height: 1.6;
-      color: var(--ink-mid);
+      color: var(--ink);
     }
 
     .rtb-list li::before {
-      content: '▪';
-      position: absolute;
-      left: 0;
+      content: '→';
       color: var(--cr);
+      font-weight: 700;
     }
 
-    .reader-author-bio-card {
-      margin-top: 56px;
-      padding: 28px;
-      background: var(--card-bg);
-      border: 1px solid var(--rule-m);
-      border-radius: 20px;
+    /* ── Related Articles Grid inside Drawer ── */
+    .reader-related-section {
+      border-top: 1.5px solid var(--rule);
+      padding-top: clamp(36px, 5vh, 56px);
+      margin-bottom: clamp(48px, 6vh, 72px);
+    }
+
+    .rrs-header {
       display: flex;
       align-items: center;
-      gap: 20px;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .rrs-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+    }
+
+    .rrs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .rrs-card {
+      background: var(--card-alt);
+      border: 1px solid var(--rule-m);
+      border-radius: 20px;
+      padding: 24px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+      transition: transform 0.3s var(--sp), border-color 0.3s var(--sp), box-shadow 0.3s var(--sp);
+    }
+
+    [data-theme="light"] .rrs-card {
+      background: var(--card-bg);
+      border-color: var(--rule-m);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .rrs-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(200, 16, 46, 0.35);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22), 0 0 18px rgba(200, 16, 46, 0.06);
+    }
+
+    [data-theme="light"] .rrs-card:hover {
+      border-color: rgba(200, 16, 46, 0.25);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04), 0 0 18px rgba(200, 16, 46, 0.04);
+    }
+
+    .rrs-cat {
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cr-bright);
+    }
+
+    .rrs-card-title {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+
+    .rrs-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-dim);
+      border-top: 1px solid var(--rule);
+      padding-top: 12px;
+    }
+
+    /* Author Bio Signature Deck */
+    .reader-author-bio-card {
+      border-top: 1.5px solid var(--rule);
+      border-bottom: 1.5px solid var(--rule);
+      padding: 36px 0;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: clamp(48px, 6vh, 72px);
     }
 
     .rabc-avatar-box {
-      width: 56px;
-      height: 56px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
       background: var(--cr-soft);
       border: 2px solid var(--cr);
@@ -1799,81 +2250,87 @@
       color: var(--cr);
       font-family: var(--font-primary);
       font-weight: 900;
-      font-size: 18px;
+      font-size: 22px;
       flex-shrink: 0;
+    }
+
+    .rabc-text {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
     .rabc-name {
       font-family: var(--font-primary);
-      font-size: 16px;
       font-weight: 800;
+      font-size: 18px;
       color: var(--ink);
-      margin-bottom: 4px;
     }
 
     .rabc-role {
       font-family: var(--font-mono);
       font-size: 11px;
-      color: var(--cr);
+      color: var(--cr-bright);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 6px;
-      display: block;
+      letter-spacing: 0.1em;
     }
 
     .rabc-bio {
-      font-size: 13.5px;
-      color: var(--ink-dim);
-      line-height: 1.5;
+      font-size: 14px;
+      color: var(--ink-mid);
+      line-height: 1.55;
     }
 
+    /* Commission Callout Deck */
     .reader-cta-deck {
-      margin-top: 36px;
-      margin-bottom: 40px;
-      padding: 32px;
-      background: linear-gradient(135deg, rgba(200, 16, 46, 0.12) 0%, rgba(200, 16, 46, 0.02) 100%);
-      border: 1px solid var(--cr-soft);
-      border-radius: 20px;
+      border-top: 1.5px solid var(--rule);
+      padding-top: clamp(36px, 5vh, 52px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
       flex-wrap: wrap;
+      gap: 28px;
     }
 
-    .rcd-title {
+    .reader-cta-title {
       font-family: var(--font-primary);
-      font-size: 19px;
-      font-weight: 800;
+      font-weight: 900;
+      font-size: clamp(22px, 2.2vw, 32px);
+      letter-spacing: -0.03em;
       color: var(--ink);
-      margin-bottom: 4px;
+      margin: 0 0 6px 0;
     }
 
-    .rcd-sub {
-      font-size: 13.5px;
+    .reader-cta-sub {
+      font-size: clamp(14px, 1.1vw, 16px);
       color: var(--ink-mid);
+      margin: 0;
     }
 
-    .rcd-btn {
+    .reader-cta-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 999px;
-      background: var(--cr);
-      color: #ffffff;
+      gap: 12px;
+      padding: 16px 36px;
       font-family: var(--font-mono);
       font-size: 11.5px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
+      color: #ffffff;
+      background: var(--cr);
+      border: 1px solid var(--cr);
+      border-radius: 999px;
       text-decoration: none;
-      transition: all 0.3s var(--sp);
+      box-shadow: 0 12px 35px var(--cr-glow);
+      transition: all 0.35s var(--sp);
+      flex-shrink: 0;
     }
 
-    .rcd-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px var(--cr-glow);
+    .reader-cta-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 45px rgba(200, 16, 46, 0.45);
+      background: #e01436;
     }
 
     .rcd-arrow-svg {
@@ -1882,11 +2339,64 @@
       flex-shrink: 0;
       display: inline-block;
       vertical-align: middle;
-      transition: transform 0.25s var(--sp);
+      transition: transform 0.3s var(--sp);
     }
 
-    .rcd-btn:hover .rcd-arrow-svg {
+    .reader-cta-btn:hover .rcd-arrow-svg {
       transform: translate(3px, -3px);
+    }
+
+    /* Share Toast */
+    #shareToast {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #111115;
+      border: 1px solid var(--cr);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 24px var(--cr-glow);
+      z-index: 10000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s var(--sp);
+    }
+
+    #shareToast.active {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .reader-editorial-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .reader-toc-sidebar {
+        position: static;
+      }
+
+      .rrs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    body.reader-open #nav {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    /* When the banner shows a real image, never show the placeholder icon (the shared phone styles force it visible) */
+    #mReaderSpecimenBanner.has-image #mReaderSpecimenGlyph {
+      display: none !important;
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -2413,56 +2923,132 @@
   </main>
 
   <!-- ═══════════════════════════════════════════════════════════
-       ARTICLE READER DRAWER MODAL
+       9. DEEP-DIVE PERSPECTIVE READER DRAWER (Detail Modal)
+       (With Dynamic TOC Scrollspy & Related Articles Grid)
        ═══════════════════════════════════════════════════════════ -->
-  <div class="reader-drawer-overlay" id="articleReaderOverlay">
-    <div class="reader-drawer-panel" id="articleReaderPanel">
-      <div class="reader-header-bar">
-        <div class="reader-header-left">
-          <span class="rhl-cat-pill" id="rdrCat">Brand Architecture</span>
-          <span class="rhl-sep">·</span>
-          <span class="rhl-read-time" id="rdrReadTime">7 Min Read</span>
+  <div class="reader-modal-backdrop" id="perspectiveModal" aria-hidden="true">
+    <div class="reader-modal-stage">
+
+      <!-- Top Sticky Reader Bar -->
+      <div class="reader-top-bar">
+        <span class="reader-cat-pill" id="mReaderCat">Brand Architecture</span>
+        <div class="reader-top-actions">
+          <button class="reader-share-btn" id="mShareTwitterBtn" aria-label="Share Monograph">
+            <svg class="rsb-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            <span>Share</span>
+          </button>
+          <button class="reader-share-btn" id="mCopyLinkBtn" aria-label="Copy Monograph Link">
+            <svg class="rsb-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+            <span>Copy Link</span>
+          </button>
+          <button class="reader-close-btn" id="readerCloseBtn" aria-label="Close Perspective">✕</button>
         </div>
-        <button class="reader-close-btn" id="rdrCloseBtn" aria-label="Close Monograph">✕</button>
       </div>
 
-      <div class="reader-scroll-viewport">
-        <div class="reader-body-container">
-          <h1 class="reader-h1" id="rdrTitle">Monograph Title</h1>
-          <p class="reader-lead" id="rdrExcerpt">Monograph lead excerpt summary.</p>
-          <div class="reader-article-content" id="rdrContent">
-            <!-- Dynamically populated article body -->
-          </div>
+      <!-- Main Reader Content Area -->
+      <div class="reader-body-wrap">
 
-          <!-- Author Bio -->
-          <div class="reader-author-bio-card">
-            <div class="rabc-avatar-box" id="rdrAuthorAvatar">JT</div>
-            <div>
-              <span class="rabc-role" id="rdrAuthorRole">Studio Principal</span>
-              <h4 class="rabc-name" id="rdrAuthorName">Jay Thaker</h4>
-              <p class="rabc-bio" id="rdrAuthorBio">
-                Founder &amp; Principal Brand Strategist at 1928 Creative Studio. Advising high-growth luxury maisons,
-                architectural firms, and deep-tech enterprises on enduring visual authority and spatial physics.
-              </p>
+        <!-- Header Info -->
+        <div class="reader-hero-box">
+          <h2 class="reader-hero-title" id="mReaderTitle">The Monolithic Monogram</h2>
+          <div class="reader-hero-meta">
+            <div class="rhm-author-pill">
+              <div class="rhm-avatar-initials" id="mReaderAvatarInitials">JT</div>
+              <div>
+                <div class="rhm-name" id="mReaderAuthor">Jay Thaker</div>
+                <div class="rhm-role" id="mReaderRole">Studio Principal &amp; Brand Architect</div>
+              </div>
             </div>
-          </div>
-
-          <!-- Commission CTA Deck -->
-          <div class="reader-cta-deck">
-            <div>
-              <span class="sec-tag-pill" style="margin-bottom: 8px;">COMMISSION &amp; INQUIRY</span>
-              <h3 class="rcd-title">Ready to implement these strategic principles?</h3>
-              <p class="rcd-sub">Let's sculpt an enduring, category-defining visual architecture for your brand.</p>
-            </div>
-            <a href="contact.html" class="rcd-btn">
-              <span>Initiate Project Commission</span>
-              <svg class="rcd-arrow-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
           </div>
         </div>
+
+        <!-- Featured Architectural Blueprint Banner -->
+        <div class="reader-blueprint-banner" id="mReaderSpecimenBanner">
+          <div class="hfs-asset-glyph" id="mReaderSpecimenGlyph">
+            <svg viewBox="0 0 64 64" fill="none" class="hfs-svg-icon">
+              <rect x="6" y="10" width="52" height="44" rx="8" stroke="currentColor" stroke-width="1.8" />
+              <circle cx="24" cy="24" r="5" stroke="currentColor" stroke-width="1.8" />
+              <path d="M12 46L26 32L38 44L44 38L52 46" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <circle cx="32" cy="32" r="20" stroke="var(--cr)" stroke-width="1.5" stroke-dasharray="3 3"
+                class="hfs-radar-ring" />
+            </svg>
+            <div class="hfs-badge" id="mReaderSpecimenBadge">[ FULL MONOGRAPH ASSET SPECIMEN ]</div>
+            <div class="hfs-prompt" id="mReaderSpecimenPrompt">1928 EDITORIAL PROVENANCE CAPTURE</div>
+          </div>
+          <img id="mReaderSpecimenImg" src="" alt="Specimen Figure" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:12px;" />
+
+          <div class="corner-crosshair cc-tl">+</div>
+          <div class="corner-crosshair cc-tr">+</div>
+          <div class="corner-crosshair cc-bl">+</div>
+          <div class="corner-crosshair cc-br">+</div>
+        </div>
+
+        <!-- Date & Read Time Row Positioned Below the Image -->
+        <div class="reader-meta-row-below-image" id="mReaderMetaBelow">
+          <span class="rhm-info-chip" id="mReaderDate">September 2026</span>
+          <span class="rhm-info-chip" id="mReaderReadTime">7 Min Read</span>
+        </div>
+
+        <!-- Two-Column Editorial Layout -->
+        <div class="reader-editorial-layout">
+
+          <!-- Sticky Table of Contents -->
+          <aside class="reader-toc-sidebar">
+            <div class="toc-label">Table of Contents</div>
+            <ul class="toc-nav-list" id="mReaderTOC">
+              <!-- Dynamically rendered per article -->
+            </ul>
+          </aside>
+
+          <!-- Main Article Prose -->
+          <div class="reader-content-prose" id="mReaderProse">
+            <!-- Dynamically populated rich editorial content -->
+          </div>
+        </div>
+
+        <!-- Related Articles / Recommended Monographs Grid (User Architecture Requirement) -->
+        <div class="reader-related-section">
+          <div class="rrs-header">
+            <span class="rrs-title">Related Monographs // Strategic Adjacencies</span>
+          </div>
+          <div class="rrs-grid" id="mReaderRelatedGrid">
+            <!-- Dynamically populated 2 related cards -->
+          </div>
+        </div>
+
+        <!-- Author Signature Card -->
+        <div class="reader-author-bio-card">
+          <div class="rabc-avatar-box" id="mBioAvatarBox">JT</div>
+          <div class="rabc-text">
+            <span class="rabc-role">Author Monograph</span>
+            <h4 class="rabc-name" id="mBioName">Jay Thaker</h4>
+            <p class="rabc-bio" id="mBioText">
+              Founder &amp; Principal Brand Strategist at 1928 Creative Studio. Advising high-growth luxury maisons,
+              architectural firms, and deep-tech enterprises on enduring visual authority and spatial physics.
+            </p>
+          </div>
+        </div>
+
+        <!-- Benchmark Commission CTA -->
+        <div class="reader-cta-deck">
+          <div>
+            <span class="sec-tag-pill" style="margin-bottom: 8px;">COMMISSION &amp; INQUIRY</span>
+            <h3 class="reader-cta-title">Ready to implement these strategic principles?</h3>
+            <p class="reader-cta-sub">Let's sculpt an enduring, category-defining visual architecture for your brand.</p>
+          </div>
+          <a href="contact.html" class="reader-cta-btn">
+            <span>Initiate Project Commission</span>
+            <svg class="rcd-arrow-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+
       </div>
     </div>
   </div>
+
+  <!-- Share Toast -->
+  <div id="shareToast">✓ Monograph Link Copied to Clipboard</div>
 
   <!-- Modern Luxury Footer Loader -->
   <div id="footer-placeholder"></div>
@@ -2893,8 +3479,39 @@
       const essResetBtn = document.getElementById('essResetBtn');
       const filterBtns = document.querySelectorAll('.bah-filter-btn');
 
+      /* ── Live CMS list: shows EVERY published blog from the admin, with its cover image.
+            The built-in list above is only a fallback if the CMS cannot be reached. ── */
+      let blogsList = allBlogsData;
+
+      function syncBlogsFromCMS() {
+        const store = window.CMSStore;
+        if (!store || typeof store.getBlogs !== 'function') return;
+        const cmsBlogs = store.getBlogs(true);
+        if (!Array.isArray(cmsBlogs) || !cmsBlogs.length) return;
+        blogsList = cmsBlogs.map(b => {
+          const fb = allBlogsData.find(a => a.id === b.id) || {};
+          const category = b.category || fb.category || 'Perspective';
+          return {
+            id: b.id,
+            title: b.title || fb.title || '',
+            category: category,
+            categorySlug: b.categorySlug || fb.categorySlug || category.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+            date: b.date || fb.date || '',
+            readTime: b.readTime || fb.readTime || '',
+            city: b.city || fb.city || '',
+            author: b.author || fb.author || '',
+            initials: b.initials || fb.initials || '',
+            role: b.role || fb.role || '',
+            excerpt: b.excerpt || fb.excerpt || '',
+            contentHtml: b.content || fb.contentHtml || '',
+            coverImage: b.coverImage || ''
+          };
+        });
+        renderGrid();
+      }
+
       function getFilteredArticles() {
-        return allBlogsData.filter(item => {
+        return blogsList.filter(item => {
           // Category match
           const catMatch = (currentFilter === 'all') || (item.categorySlug === currentFilter);
           if (!catMatch) return false;
@@ -2934,8 +3551,9 @@
         grid.innerHTML = toShow.map((item, idx) => `
           <article class="blog-card" data-article-id="${item.id}" style="animation-delay: ${(idx % 8) * 0.06}s">
             <div>
-              <!-- 16:9 Blueprint Canvas -->
-              <div class="card-visual-box">
+              <!-- 16:9 Blueprint Canvas (shows the blog's cover image when it has one) -->
+              <div class="card-visual-box${item.coverImage ? ' has-cover' : ''}">
+                ${item.coverImage ? `<img class="cvb-cover" src="${String(item.coverImage).replace(/"/g, '&quot;')}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('has-cover'); this.remove();" />` : ''}
                 <div class="cvb-crosshair cvb-tl">+</div>
                 <div class="cvb-crosshair cvb-tr">+</div>
                 <div class="cvb-crosshair cvb-bl">+</div>
@@ -3006,6 +3624,10 @@
       // Initial Render (8 Blogs)
       renderGrid();
 
+      // Switch to the live CMS list as soon as it has loaded (and whenever it changes in the admin)
+      syncBlogsFromCMS();
+      window.addEventListener('1928_cms_updated', syncBlogsFromCMS);
+
       /* ── Load More Action Handler ── */
       loadMoreBtn.addEventListener('click', () => {
         loadMoreBtn.classList.add('loading');
@@ -3063,57 +3685,170 @@
         renderGrid();
       });
 
-      /* ── Open In-Drawer Reader Modal ── */
-      const readerOverlay = document.getElementById('articleReaderOverlay');
-      const rdrCat = document.getElementById('rdrCat');
-      const rdrReadTime = document.getElementById('rdrReadTime');
-      const rdrTitle = document.getElementById('rdrTitle');
-      const rdrExcerpt = document.getElementById('rdrExcerpt');
-      const rdrContent = document.getElementById('rdrContent');
-      const rdrAuthorName = document.getElementById('rdrAuthorName');
-      const rdrAuthorRole = document.getElementById('rdrAuthorRole');
-      const rdrAuthorAvatar = document.getElementById('rdrAuthorAvatar');
-      const rdrAuthorBio = document.getElementById('rdrAuthorBio');
-      const rdrCloseBtn = document.getElementById('rdrCloseBtn');
+      /* ── Perspective Reader (same layout & behaviour as the Perspectives page) ── */
+      const modal = document.getElementById('perspectiveModal');
+      const modalStage = modal ? modal.querySelector('.reader-modal-stage') : null;
+      const closeBtn = document.getElementById('readerCloseBtn');
+      const shareTwitterBtn = document.getElementById('mShareTwitterBtn');
+      const copyLinkBtn = document.getElementById('mCopyLinkBtn');
+      const shareToast = document.getElementById('shareToast');
+      const readerTOC = document.getElementById('mReaderTOC');
+      const readerRelatedGrid = document.getElementById('mReaderRelatedGrid');
 
-      function openReader(articleId) {
-        let article = allBlogsData.find(a => a.id === articleId);
+      const findBlog = (id) => {
+        const store = window.CMSStore;
+        const cms = store ? (store.getBlogById(id) || (store.getBlogs ? store.getBlogs().find(b => b.id === id) : null)) : null;
+        const local = blogsList.find(a => a.id === id) || allBlogsData.find(a => a.id === id) || null;
+        return { cms, local };
+      };
 
-        if (window.CMSStore) {
-          const cmsBlog = window.CMSStore.getBlogById(articleId) || (window.CMSStore.getBlogs ? window.CMSStore.getBlogs().find(b => b.id === articleId) : null);
-          if (cmsBlog) {
-            article = {
-              id: cmsBlog.id,
-              category: cmsBlog.category || article?.category || 'STRATEGY',
-              readTime: cmsBlog.readTime || article?.readTime || '6 MIN READ',
-              title: cmsBlog.title || article?.title || '',
-              excerpt: cmsBlog.excerpt || article?.excerpt || '',
-              contentHtml: cmsBlog.content || cmsBlog.contentHtml || article?.contentHtml || '',
-              author: cmsBlog.author || article?.author || 'Jay Thaker',
-              role: cmsBlog.role || article?.role || 'Studio Principal',
-              initials: cmsBlog.author ? cmsBlog.author.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase() : 'JT'
-            };
+      let currentReaderId = null;
+      const articleLink = () => {
+        const u = new URL(window.location.href);
+        u.search = currentReaderId ? `?article=${encodeURIComponent(currentReaderId)}` : '';
+        u.hash = '';
+        return u.toString();
+      };
+
+      function openReader(id) {
+        const { cms, local } = findBlog(id);
+        const src = cms || local;
+        if (!src) return;
+        currentReaderId = id;
+
+        const author = src.author || 'Jay Thaker';
+        const role = src.role || 'Studio Principal & Brand Architect';
+        const data = {
+          category: src.category || 'BRAND ARCHITECTURE',
+          title: src.title || 'Perspective Monograph',
+          author,
+          role,
+          initials: src.initials || author.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase(),
+          date: src.date || '',
+          readTime: src.readTime || '',
+          contentHtml: (cms && (cms.content || cms.contentHtml)) || (local && local.contentHtml) || '',
+          // Each author's own bio from the admin, otherwise their real role (never someone else's bio)
+          bio: (cms && cms.bio) || `${role} at 1928 Creative Studio.`,
+          // Banner: the specimen image if one is set, otherwise the blog's cover image
+          bannerImage: (cms && (cms.specimenImage || cms.coverImage)) || (local && local.coverImage) || '',
+          bannerCaption: (cms && cms.specimenCaption) || '1928 EDITORIAL PROVENANCE CAPTURE',
+          sections: (cms && Array.isArray(cms.sections) && cms.sections.length) ? cms.sections : null,
+          related: (cms && Array.isArray(cms.related) && cms.related.length) ? cms.related : null
+        };
+
+        document.getElementById('mReaderCat').textContent = data.category;
+        document.getElementById('mReaderTitle').textContent = data.title;
+        document.getElementById('mReaderAuthor').textContent = data.author;
+        document.getElementById('mReaderRole').textContent = data.role;
+        document.getElementById('mReaderAvatarInitials').textContent = data.initials;
+        document.getElementById('mReaderDate').textContent = data.date;
+        document.getElementById('mReaderReadTime').textContent = data.readTime;
+        document.getElementById('mReaderDate').style.display = data.date ? '' : 'none';
+        document.getElementById('mReaderReadTime').style.display = data.readTime ? '' : 'none';
+        const prose = document.getElementById('mReaderProse');
+        prose.innerHTML = data.contentHtml;
+        document.getElementById('mBioName').textContent = data.author;
+        document.getElementById('mBioAvatarBox').textContent = data.initials;
+        document.getElementById('mBioText').textContent = data.bio;
+
+        // Banner image (falls back to the blueprint placeholder only if there is no image at all)
+        const bannerImg = document.getElementById('mReaderSpecimenImg');
+        const bannerGlyph = document.getElementById('mReaderSpecimenGlyph');
+        const bannerPrompt = document.getElementById('mReaderSpecimenPrompt');
+        if (bannerPrompt) bannerPrompt.textContent = data.bannerCaption;
+        const banner = document.getElementById('mReaderSpecimenBanner');
+        if (banner) banner.classList.toggle('has-image', !!data.bannerImage);
+        if (bannerImg && bannerGlyph) {
+          if (data.bannerImage) {
+            bannerImg.onerror = () => { bannerImg.style.display = 'none'; bannerGlyph.style.display = 'flex'; if (banner) banner.classList.remove('has-image'); };
+            bannerImg.src = data.bannerImage;
+            bannerImg.alt = data.title;
+            bannerImg.style.display = 'block';
+            bannerGlyph.style.display = 'none';
+          } else {
+            bannerImg.style.display = 'none';
+            bannerGlyph.style.display = 'flex';
           }
         }
 
-        if (!article) return;
+        // Table of contents: the admin's sections if set, otherwise built from the article's real headings
+        const headings = Array.from(prose.querySelectorAll('h2'));
+        let sections = data.sections;
+        if (!sections) {
+          sections = headings.map((h, i) => {
+            if (!h.id) h.id = `rdr-sec-${i + 1}`;
+            return { id: h.id, title: h.textContent.trim() };
+          });
+        }
+        if (readerTOC) {
+          readerTOC.innerHTML = '';
+          sections.forEach((sec, idx) => {
+            const li = document.createElement('li');
+            const a = document.createElement('a');
+            a.textContent = sec.title;
+            a.setAttribute('data-target', sec.id);
+            if (idx === 0) a.classList.add('active');
+            a.addEventListener('click', (e) => {
+              e.preventDefault();
+              let targetEl = document.getElementById(sec.id);
+              if (!targetEl) {
+                headings.forEach(h => {
+                  if (h.textContent.trim().toLowerCase() === String(sec.title).trim().toLowerCase()) targetEl = h;
+                });
+              }
+              if (targetEl && modalStage) {
+                modalStage.scrollTo({ top: targetEl.offsetTop - 80, behavior: 'smooth' });
+              }
+            });
+            li.appendChild(a);
+            readerTOC.appendChild(li);
+          });
+          const tocAside = readerTOC.closest('.reader-toc-sidebar');
+          if (tocAside) tocAside.style.display = sections.length ? '' : 'none';
+        }
 
-        rdrCat.textContent = article.category;
-        rdrReadTime.textContent = article.readTime;
-        rdrTitle.textContent = article.title;
-        rdrExcerpt.textContent = article.excerpt;
-        rdrContent.innerHTML = article.contentHtml;
-        rdrAuthorName.textContent = article.author || 'Jay Thaker';
-        rdrAuthorRole.textContent = article.role || 'Studio Principal';
-        rdrAuthorAvatar.textContent = article.initials || 'JT';
+        // Related monographs: the admin's picks if set, otherwise others from the same category
+        if (readerRelatedGrid) {
+          let relatedIds = data.related;
+          if (!relatedIds) {
+            const pool = blogsList.filter(b => b.id !== id);
+            const sameCat = pool.filter(b => (b.categorySlug || '') === (src.categorySlug || local?.categorySlug || ''));
+            relatedIds = [...sameCat, ...pool.filter(b => !sameCat.includes(b))].slice(0, 2).map(b => b.id);
+          }
+          readerRelatedGrid.innerHTML = '';
+          relatedIds.forEach(relId => {
+            const rel = findBlog(relId);
+            const relData = rel.cms || rel.local;
+            if (!relData) return;
+            const card = document.createElement('div');
+            card.className = 'rrs-card';
+            card.innerHTML = `
+              <div>
+                <span class="rrs-cat">${relData.category || 'THEORY'}</span>
+                <h4 class="rrs-card-title">${relData.title}</h4>
+              </div>
+              <div class="rrs-meta">
+                <span>${relData.readTime || '5 MIN'}</span>
+                <span style="color:var(--cr-bright); font-weight:700;">Explore Monograph →</span>
+              </div>
+            `;
+            card.addEventListener('click', () => openReader(relId));
+            readerRelatedGrid.appendChild(card);
+          });
+          const relSection = readerRelatedGrid.closest('.reader-related-section');
+          if (relSection) relSection.style.display = readerRelatedGrid.children.length ? '' : 'none';
+        }
 
-        readerOverlay.classList.add('active');
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('reader-open');
         document.body.style.overflow = 'hidden';
+        if (modalStage) modalStage.scrollTop = 0;
       }
 
       function closeReader() {
-        readerOverlay.classList.remove('active');
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('reader-open');
         document.body.style.overflow = '';
       }
@@ -3121,7 +3856,7 @@
       window.openReader = openReader;
       window.closeReader = closeReader;
 
-      // Delegate click on cards to open reader
+      // Open the reader when a card in the grid is clicked
       grid.addEventListener('click', (e) => {
         const card = e.target.closest('.blog-card');
         if (card) {
@@ -3130,14 +3865,50 @@
         }
       });
 
-      rdrCloseBtn.addEventListener('click', closeReader);
-      readerOverlay.addEventListener('click', (e) => {
-        if (e.target === readerOverlay) closeReader();
+      if (closeBtn) closeBtn.addEventListener('click', closeReader);
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeReader();
+        });
+      }
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) closeReader();
       });
 
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeReader();
-      });
+      // Table-of-contents scrollspy
+      if (modalStage) {
+        modalStage.addEventListener('scroll', () => {
+          const tocLinks = readerTOC ? readerTOC.querySelectorAll('a[data-target]') : [];
+          if (!tocLinks.length) return;
+          let currentActiveId = '';
+          tocLinks.forEach(link => {
+            const targetEl = document.getElementById(link.getAttribute('data-target'));
+            if (targetEl && targetEl.getBoundingClientRect().top <= 200) currentActiveId = link.getAttribute('data-target');
+          });
+          if (currentActiveId) {
+            tocLinks.forEach(link => link.classList.toggle('active', link.getAttribute('data-target') === currentActiveId));
+          }
+        }, { passive: true });
+      }
+
+      // Share & copy link
+      if (shareTwitterBtn) {
+        shareTwitterBtn.addEventListener('click', () => {
+          const title = document.getElementById('mReaderTitle').textContent;
+          const url = encodeURIComponent(articleLink());
+          const tweetText = encodeURIComponent(`"${title}" by @1928creativestudio`);
+          window.open(`https://twitter.com/intent/tweet?text=${tweetText}&url=${url}`, '_blank');
+        });
+      }
+      if (copyLinkBtn) {
+        copyLinkBtn.addEventListener('click', () => {
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(articleLink());
+          if (shareToast) {
+            shareToast.classList.add('active');
+            setTimeout(() => shareToast.classList.remove('active'), 3000);
+          }
+        });
+      }
 
       // Auto-open reader if URL has query parameter ?article=... or hash #...
       function checkUrlAndOpenArticle() {
@@ -3146,6 +3917,12 @@
         if (articleParam) {
           setTimeout(() => {
             openReader(articleParam);
+            // Articles that only exist in the CMS open as soon as the CMS has loaded
+            if (!modal.classList.contains('active') && window.CMSStore && typeof window.CMSStore.ready === 'function') {
+              window.CMSStore.ready().then(() => {
+                if (!modal.classList.contains('active')) openReader(articleParam);
+              }).catch(() => {});
+            }
           }, 80);
         }
       }
@@ -3163,11 +3940,11 @@
             navEl.classList.add('visible');
             navEl.classList.remove('hidden');
           } else if (sy > lastAllBlogScrollY + 2) {
-            // Scrolling DOWN: header comes down smoothly from the top
+            // Scrolling DOWN: header comes down into view (opposite of the rest of the site — this page only)
             navEl.classList.add('visible');
             navEl.classList.remove('hidden');
           } else if (sy < lastAllBlogScrollY - 2) {
-            // Scrolling UP: header animates up away into the top
+            // Scrolling UP: header slides up out of view
             navEl.classList.remove('visible');
             navEl.classList.add('hidden');
           }

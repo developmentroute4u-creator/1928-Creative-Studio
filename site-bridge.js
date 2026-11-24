@@ -157,6 +157,7 @@
   function getCurrentPageKey() {
     const path = (window.location.pathname || '').toLowerCase().split('/').pop() || 'index.html';
     if (path === '' || path === 'index.html') return 'home';
+    if (path === 'all-blogs' || path === 'all-blogs.html') return 'all_blogs';
     if (path === 'service-logo-design.html') return 'service_logo_design';
     if (path === 'service-brand-identity.html') return 'service_brand_identity';
     if (path === 'service-website-development.html') return 'service_website_development';
@@ -176,6 +177,8 @@
   function applySEOMetadata() {
     if (!window.CMSStore) return;
     const pageKey = getCurrentPageKey();
+    // The All Blogs page keeps its own title & description unless the admin has an SEO entry for it
+    if (pageKey === 'all_blogs' && !((window.CMSStore.getAllSEO && window.CMSStore.getAllSEO()) || {}).all_blogs) return;
     const seo = window.CMSStore.getSEO(pageKey);
 
     if (seo && seo.title) {
@@ -1926,7 +1929,7 @@
       'service-content-creation.html': 'service_content_creation',
       'services.html': 'services',
       'blogs.html': 'blogs',
-      'all-blogs.html': 'blogs',
+      // all-blogs.html is its own page (/all-blogs) — not rewritten to the Perspectives route
       'portfolio.html': 'portfolio',
       'about.html': 'about',
       'contact.html': 'contact'
