@@ -5636,7 +5636,7 @@
       <!-- LAYER 5 (z:25) — Video Showreel -->
       <div class="hero-reel" id="heroReel">
         <div class="reel-inner" id="reelInner">
-          <video id="heroReelVideo" class="reel-video" playsinline loop autoplay preload="auto">
+          <video id="heroReelVideo" class="reel-video" playsinline loop autoplay muted preload="auto">
             <source src="assets/img/hero/main-1928-video.mp4" type="video/mp4">
             <source src="assets/img/hero/Main%201928%20Video%20.mp4" type="video/mp4">
             <source src="assets/img/hero/Main 1928 Video .mp4" type="video/mp4">
@@ -7476,7 +7476,14 @@
               storyBlock.style.transform = 'translate3d(-50px, 30px, 0)';
             }
             storyWords.forEach(word => word.classList.remove('active'));
-          } else if (hp < 0.66) {
+          } else {
+            // Guarantee video is in playing state whenever on screen or coming up
+            if (heroReelVideo && heroReelVideo.paused && !heroVideoUserPaused) {
+              heroReelVideo.play().catch(() => {});
+            }
+          }
+
+          if (vidP > 0 && hp < 0.66) {
             // 1. Center Pop-up: expands in center
             const maxScale = isMob ? 0.95 : 1.58;
             const rScale = lerp(0.04, maxScale, vidE);
@@ -7485,9 +7492,6 @@
             heroReel.style.top = '50%';
             heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
             heroReel.style.pointerEvents = vidP > 0.3 ? 'auto' : 'none';
-            if (heroReelVideo && heroReelVideo.paused && !heroVideoUserPaused) {
-              heroReelVideo.play().catch(() => {});
-            }
 
             if (storyTag) storyTag.classList.remove('vis');
             if (storyBlock) {
@@ -8310,7 +8314,7 @@
         }, 7300);
       })();
 
-      // Interactive Desktop Showreel Video with Full Default Audio Voice
+      // Interactive Desktop Showreel Video with Guaranteed Auto-play
       const heroReelVideo = document.getElementById('heroReelVideo');
       const heroReelPlay = document.getElementById('heroReelPlay');
       const heroReelSound = document.getElementById('heroReelSound');
@@ -8319,7 +8323,8 @@
       let heroVideoUserPaused = false;
 
       if (heroReel && heroReelVideo) {
-        heroReelVideo.muted = false;
+        // Start muted so browser engine GUARANTEES instant zero-click autoplay on load
+        heroReelVideo.muted = true;
         heroReelVideo.volume = 1.0;
 
         const updateSoundIcons = () => {
@@ -8364,18 +8369,9 @@
           if (e) e.stopPropagation();
           if (heroReelVideo.paused) {
             heroVideoUserPaused = false;
-            heroReelVideo.muted = false;
-            heroReelVideo.volume = 1.0;
-            updateSoundIcons();
             heroReelVideo.play().then(() => {
               updatePlayIcon();
-            }).catch(() => {
-              heroReelVideo.muted = true;
-              updateSoundIcons();
-              heroReelVideo.play().then(() => {
-                updatePlayIcon();
-              }).catch(() => {});
-            });
+            }).catch(() => {});
           } else {
             heroVideoUserPaused = true;
             heroReelVideo.pause();
@@ -8395,39 +8391,45 @@
         heroReelVideo.addEventListener('pause', updatePlayIcon);
         heroReelVideo.addEventListener('volumechange', updateSoundIcons);
 
-        // Immediate autoplay with default audio
-        let hasUnlockedAudio = false;
-        const startVideoWithAudio = () => {
-          heroReelVideo.muted = false;
-          heroReelVideo.volume = 1.0;
-          updateSoundIcons();
+        // Instant autoplay immediately on page load
+        const forceAutoplay = () => {
+          heroReelVideo.muted = true;
           heroReelVideo.play().then(() => {
             updatePlayIcon();
           }).catch(() => {
-            // If browser policy delays audio until user gesture, start muted immediately so video is playing already
-            heroReelVideo.muted = true;
-            updateSoundIcons();
-            heroReelVideo.play().then(() => {
-              updatePlayIcon();
-            }).catch(() => {});
-
-            if (!hasUnlockedAudio) {
-              const unlockEvents = ['click', 'touchstart', 'pointerdown', 'keydown', 'scroll', 'wheel'];
-              const unlockAudio = () => {
-                if (hasUnlockedAudio) return;
-                hasUnlockedAudio = true;
-                heroReelVideo.muted = false;
-                heroReelVideo.volume = 1.0;
-                updateSoundIcons();
-                unlockEvents.forEach(evt => window.removeEventListener(evt, unlockAudio, true));
-              };
-              unlockEvents.forEach(evt => window.addEventListener(evt, unlockAudio, { capture: true, once: true, passive: true }));
-            }
+            // Retry on first frame/canplay
+            heroReelVideo.addEventListener('canplay', () => {
+              heroReelVideo.play().catch(() => {});
+            }, { once: true });
           });
         };
 
-        startVideoWithAudio();
+        forceAutoplay();
         updatePlayIcon();
+        updateSoundIcons();
+
+        // Auto-unmute sound as soon as user interacts with the page (scroll, click, touch, key)
+        let hasUnlockedAudio = false;
+        const unlockAudio = () => {
+          if (hasUnlockedAudio) return;
+          hasUnlockedAudio = true;
+          heroReelVideo.muted = false;
+          heroReelVideo.volume = 1.0;
+          updateSoundIcons();
+          ['click', 'touchstart', 'pointerdown', 'keydown', 'scroll', 'wheel'].forEach(evt => {
+            window.removeEventListener(evt, unlockAudio, true);
+          });
+        };
+        ['click', 'touchstart', 'pointerdown', 'keydown', 'scroll', 'wheel'].forEach(evt => {
+          window.addEventListener(evt, unlockAudio, { capture: true, once: true, passive: true });
+        });
+
+        // Ensure playback continues when tab visibility changes
+        document.addEventListener('visibilitychange', () => {
+          if (!document.hidden && heroReelVideo && heroReelVideo.paused && !heroVideoUserPaused) {
+            heroReelVideo.play().catch(() => {});
+          }
+        });
       }
 
       // Interactive Phone Showreel Video
