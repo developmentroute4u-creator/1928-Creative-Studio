@@ -4,6 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <script>
+    // Never restore the old scroll position on refresh: the hero loading animation must always
+    // start at the top, otherwise the showreel card appears on top of the loading animation.
+    try { if ('scrollRestoration' in history) history.scrollRestoration = 'manual'; } catch (e) {}
+  </script>
+  <script>
     (function () {
       var THEME_KEYS = ['1928_theme', 'theme', 't28', 'theme-1928'];
       function readStoredTheme() {
@@ -279,6 +284,13 @@
       height: 100vh !important;
     }
 
+    /* The showreel card never shows during the loading animation */
+    body.hero-loading-active #heroReel {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+
     /* Ambient Depth Glow */
     .hero-loading-ambient {
       position: absolute;
@@ -405,6 +417,90 @@
 
     [data-theme="light"] .hl-count {
       color: #0A0A0A;
+    }
+
+    /* ── "Click to enter" (shown at the end of the loader only when the browser would block the showreel's sound;
+          that one click is what lets the video arrive with its audio ON) ── */
+    .hl-enter-btn {
+      position: absolute;
+      left: 50%;
+      bottom: calc(clamp(20px, 3.5vh, 36px) + 48px);
+      z-index: 41;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 26px;
+      font-family: var(--font-mono);
+      font-size: clamp(10px, 0.9vw, 11.5px);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(14, 14, 18, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateX(-50%) translateY(14px);
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    }
+
+    .hl-enter-btn[hidden] {
+      display: none;
+    }
+
+    .hl-enter-btn.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
+
+    .hl-enter-btn:hover,
+    .hl-enter-btn:focus-visible {
+      border-color: var(--cr);
+      outline: none;
+    }
+
+    .hl-enter-btn svg {
+      width: 16px;
+      height: 16px;
+      flex: none;
+    }
+
+    .hl-enter-pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cr);
+      animation: hlEnterPulse 1.6s infinite;
+    }
+
+    @keyframes hlEnterPulse {
+      0% { box-shadow: 0 0 0 0 rgba(200, 16, 46, 0.55); }
+      70% { box-shadow: 0 0 0 12px rgba(200, 16, 46, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(200, 16, 46, 0); }
+    }
+
+    /* Little bounce if the visitor tries to scroll before entering */
+    .hl-enter-btn.nudge {
+      animation: hlEnterNudge 0.5s ease;
+    }
+
+    @keyframes hlEnterNudge {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      30% { transform: translateX(-50%) translateY(-7px); }
+      60% { transform: translateX(-50%) translateY(2px); }
+    }
+
+    [data-theme="light"] .hl-enter-btn {
+      color: #0A0A0A;
+      background: rgba(255, 255, 255, 0.95);
+      border-color: rgba(10, 10, 10, 0.16);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.1);
     }
 
     /* ── STEP 1: Only "1928" Comes First ── */
@@ -662,6 +758,12 @@
 
     html.hero-skip-anim .hero-loading-hud {
       display: none !important;
+    }
+
+    /* Page stays at the top (no scrolling) until the visitor clicks "enter" */
+    html body.hero-sound-gate {
+      overflow: hidden !important;
+      height: 100vh !important;
     }
 
     /* ── Fixed Navigation Header (Unified Frosted Glassmorphism) ── */
@@ -1555,7 +1657,7 @@
       height: clamp(340px, 28vw, 448px);
       border-radius: 24px;
       overflow: hidden;
-      background: #000;
+      background: transparent;
       box-shadow: 0 32px 90px rgba(0, 0, 0, 0.45);
       will-change: transform, opacity, left, top;
       display: flex;
@@ -1572,10 +1674,15 @@
       cursor: pointer;
     }
 
+    /* No empty/black rectangle: the card stays fully invisible until the video shows a real picture */
+    #heroReel:not(.reel-ready) {
+      visibility: hidden !important;
+    }
+
     .hero-reel .reel-inner {
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #334155 100%);
+      background: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1602,33 +1709,6 @@
       z-index: 2;
       pointer-events: none;
       transition: opacity 0.3s ease;
-    }
-
-    .reel-play {
-      width: 64px;
-      height: 64px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      display: grid;
-      place-items: center;
-      border: 1.5px solid rgba(255, 255, 255, 0.35);
-      z-index: 3;
-      cursor: pointer;
-      opacity: 0 !important;
-      pointer-events: none !important;
-      transition: transform 0.3s var(--sp), opacity 0.3s var(--sp), background 0.3s ease;
-    }
-
-    .reel-play:hover {
-      transform: scale(1.1);
-      background: rgba(255, 255, 255, 0.28);
-    }
-
-    .hero-reel:hover .reel-play {
-      opacity: 1 !important;
-      pointer-events: auto !important;
     }
 
     .reel-sound-btn {
@@ -1663,13 +1743,6 @@
       height: 20px;
       fill: none;
       stroke: currentColor;
-    }
-
-    .reel-play svg {
-      width: 22px;
-      height: 22px;
-      fill: #fff;
-      margin-left: 3px;
     }
 
     .reel-inner::before {
@@ -4036,6 +4109,13 @@
         font-size: 9px !important;
       }
 
+      .hl-enter-btn {
+        bottom: calc(clamp(16px, 3vh, 24px) + 42px) !important;
+        padding: 12px 20px !important;
+        font-size: 10px !important;
+        letter-spacing: 0.18em !important;
+      }
+
       /* 3D Room & Card Scaling for Phone Screen */
       .room-scene {
         perspective: 800px !important;
@@ -5474,6 +5554,14 @@
           <div class="hl-progress-bar-fill" id="hlProgressFill"></div>
         </div>
       </div>
+      <button type="button" class="hl-enter-btn" id="heroEnterBtn" aria-label="Enter the site with sound" hidden>
+        <span class="hl-enter-pulse"></span>
+        <span id="heroEnterLabel">Click to enter</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        </svg>
+      </button>
 
       <!-- ══ PHONE HERO VIEW (Strictly scoped to phones <= 768px; hidden on desktop) ══ -->
       <div class="phone-hero" id="phoneHero" style="display:none !important;">
@@ -5636,7 +5724,7 @@
       <!-- LAYER 5 (z:25) — Video Showreel -->
       <div class="hero-reel" id="heroReel">
         <div class="reel-inner" id="reelInner">
-          <video id="heroReelVideo" class="reel-video" playsinline loop autoplay muted preload="auto">
+          <video id="heroReelVideo" class="reel-video" playsinline loop muted preload="auto">
             <source src="assets/img/hero/main-1928-video.mp4" type="video/mp4">
             <source src="assets/img/hero/Main%201928%20Video%20.mp4" type="video/mp4">
             <source src="assets/img/hero/Main 1928 Video .mp4" type="video/mp4">
@@ -5644,17 +5732,12 @@
             <source src="assets/video/Main 1928 Video.mp4" type="video/mp4">
           </video>
           <div class="reel-overlay"></div>
-          <button type="button" class="reel-play" id="heroReelPlay" aria-label="Play Studio Showreel">
-            <svg viewBox="0 0 24 24" id="heroReelPlayIcon">
-              <polygon points="5,3 19,12 5,21" />
-            </svg>
-          </button>
           <button type="button" class="reel-sound-btn" id="heroReelSound" aria-label="Toggle Audio" title="Audio / Voice Sound">
-            <svg id="heroSoundOnIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+            <svg id="heroSoundOnIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
               <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
             </svg>
-            <svg id="heroSoundOffIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+            <svg id="heroSoundOffIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
               <line x1="23" y1="9" x2="17" y2="15"></line>
               <line x1="17" y1="9" x2="23" y2="15"></line>
@@ -5672,7 +5755,7 @@
       <!-- 1. The Featured Showreel Video Card (Proportional 16:9 Framed Card) -->
       <div class="ph-reel-card" id="phReelCard">
         <div class="ph-reel-media" id="phReelMedia">
-          <video id="phReelVideo" playsinline loop autoplay preload="auto"
+          <video id="phReelVideo" playsinline loop muted preload="none"
             poster="assets/img/hero/3D Room Floating Cards (Hero Section)-01.jpg">
             <source src="assets/img/hero/main-1928-video.mp4" type="video/mp4">
             <source src="assets/img/hero/Main%201928%20Video%20.mp4" type="video/mp4">
@@ -7476,14 +7559,7 @@
               storyBlock.style.transform = 'translate3d(-50px, 30px, 0)';
             }
             storyWords.forEach(word => word.classList.remove('active'));
-          } else {
-            // Guarantee video is in playing state whenever on screen or coming up
-            if (heroReelVideo && heroReelVideo.paused && !heroVideoUserPaused) {
-              heroReelVideo.play().catch(() => {});
-            }
-          }
-
-          if (vidP > 0 && hp < 0.66) {
+          } else if (hp < 0.66) {
             // 1. Center Pop-up: expands in center
             const maxScale = isMob ? 0.95 : 1.58;
             const rScale = lerp(0.04, maxScale, vidE);
@@ -7561,6 +7637,17 @@
               if (idx <= activeCount) word.classList.add('active');
               else word.classList.remove('active');
             });
+          }
+
+          // ── Showreel playback window ──
+          // Starts (with audio) only once the card is out on its own after the room — the same moment the
+          // scrollbar & theme button appear (hp >= 0.60). Stops (video + audio) as soon as the SELECTED WORK
+          // section comes up, or when scrolling back up. Rewinds only when the card is fully gone back into the room.
+          const portReached = portDriver ? sy >= portDriver.offsetTop - vh * 0.5 : false;
+          if (hp >= 0.60 && !portReached) {
+            if (typeof window.heroVideoEnter === 'function') window.heroVideoEnter();
+          } else {
+            if (typeof window.heroVideoExit === 'function') window.heroVideoExit(vidP <= 0);
           }
         }
 
@@ -8198,8 +8285,9 @@
           }
         } catch (e) { }
 
-        const hasVisited = sessionStorage.getItem('1928_site_visited');
-        const shouldSkip = hasVisited && !isReload;
+        // Use the decision made by the early script in the page head (before footer-loader.js marks the session as visited);
+        // re-reading sessionStorage here wrongly skipped the loader on a visitor's very first visit.
+        const shouldSkip = document.documentElement.classList.contains('hero-skip-anim');
 
         // Mark visit in session for subsequent page transitions
         try {
@@ -8207,6 +8295,57 @@
         } catch (e) { }
 
         const hud = document.getElementById('heroLoadingHud');
+        const enterBtn = document.getElementById('heroEnterBtn');
+
+        // ── "Click to enter" sound gate ──
+        // Browsers refuse to start sound until the visitor clicks / taps / presses a key on the page.
+        // If that permission is missing when loading finishes, a "Click to enter" button appears and the
+        // page waits at the top; that one click lets the showreel arrive with its audio ON.
+        // If the browser already allows sound, nothing extra appears and everything continues as before.
+        function soundGateThen(onEnter) {
+          const check = (typeof window.heroCheckSound === 'function') ? window.heroCheckSound() : Promise.resolve(true);
+          check.then((allowed) => {
+            if (allowed || !enterBtn) { onEnter(); return; }
+
+            const label = document.getElementById('heroEnterLabel');
+            const touch = window.matchMedia && window.matchMedia('(hover: none)').matches;
+            if (label) label.textContent = touch ? 'Tap to enter' : 'Click to enter';
+            try { window.scrollTo(0, 0); } catch (e) { }
+            document.body.classList.add('hero-sound-gate');
+            enterBtn.hidden = false;
+            requestAnimationFrame(() => requestAnimationFrame(() => enterBtn.classList.add('show')));
+            try { enterBtn.focus({ preventScroll: true }); } catch (e) { }
+
+            let done = false;
+            let lastNudge = 0;
+            const nudge = () => {
+              const now = Date.now();
+              if (now - lastNudge < 700) return;
+              lastNudge = now;
+              enterBtn.classList.remove('nudge');
+              void enterBtn.offsetWidth;
+              enterBtn.classList.add('nudge');
+            };
+            const enter = () => {
+              if (done) return;
+              // Only a real click / tap / key press unlocks sound (Esc, for example, does not)
+              if (navigator.userActivation && !navigator.userActivation.isActive) return;
+              done = true;
+              window.removeEventListener('click', enter, true);
+              window.removeEventListener('keydown', enter, true);
+              window.removeEventListener('wheel', nudge);
+              window.removeEventListener('touchmove', nudge);
+              enterBtn.classList.remove('show');
+              setTimeout(() => { enterBtn.hidden = true; }, 650);
+              document.body.classList.remove('hero-sound-gate');
+              onEnter();
+            };
+            window.addEventListener('click', enter, true);
+            window.addEventListener('keydown', enter, true);
+            window.addEventListener('wheel', nudge, { passive: true });
+            window.addEventListener('touchmove', nudge, { passive: true });
+          });
+        }
 
         if (shouldSkip) {
           // Internal page switch: Titles, manifesto, wireframe box, rays & ambient ready immediately
@@ -8228,12 +8367,14 @@
             setTimeout(() => {
               document.body.classList.add('hero-loading-complete');
               onScroll();
+              soundGateThen(() => onScroll());
             }, 1600);
           }, 60);
           return;
         }
 
-        // Full cinematic loading assembly for first visit or page refresh
+        // Full cinematic loading assembly for first visit or page refresh — always from the very top
+        try { window.scrollTo(0, 0); } catch (e) { }
         document.body.classList.add('hero-loading-active');
 
         const statusText = document.getElementById('hlStatusText');
@@ -8306,130 +8447,227 @@
         }, 5600);
 
         // 7. Complete loading & smoothly dismiss HUD into live interaction (7.3s)
+        //    (if the browser would block the showreel's sound, wait for "Click to enter" first)
         setTimeout(() => {
-          if (hud) hud.classList.add('hide');
-          document.body.classList.remove('hero-loading-active');
           document.body.classList.add('hero-loading-complete');
-          onScroll();
+          soundGateThen(() => {
+            if (hud) hud.classList.add('hide');
+            document.body.classList.remove('hero-loading-active');
+            onScroll();
+          });
         }, 7300);
       })();
 
-      // Interactive Desktop Showreel Video with Guaranteed Auto-play
+      // ── Hero Showreel (no play/pause UI — only the audio on/off button)
+      //  • Loading animation & 3D room: no card, no video.
+      //  • Card out on its own after the room (hp >= 0.60, when the scrollbar appears) -> video plays with audio.
+      //  • SELECTED WORK section comes up, or scrolling back up -> video + audio pause.
+      //  • Card fully back into the room -> rewound, so the next entrance starts from the beginning.
+      //  onScroll drives this through window.heroVideoEnter / window.heroVideoExit(rewind) (idempotent).
       const heroReelVideo = document.getElementById('heroReelVideo');
-      const heroReelPlay = document.getElementById('heroReelPlay');
       const heroReelSound = document.getElementById('heroReelSound');
       const heroSoundOnIcon = document.getElementById('heroSoundOnIcon');
       const heroSoundOffIcon = document.getElementById('heroSoundOffIcon');
-      let heroVideoUserPaused = false;
 
       if (heroReel && heroReelVideo) {
-        // Start muted so browser engine GUARANTEES instant zero-click autoplay on load
-        heroReelVideo.muted = true;
+        let started = false;      // card has come forward at least once
+        let inFront = false;      // inside the playback window (set by onScroll)
+        let soundWanted = true;   // visitor's choice via the audio button (on by default)
+        let audioAllowed = false; // browser will let us play audibly
+        let probing = false;
         heroReelVideo.volume = 1.0;
 
         const updateSoundIcons = () => {
           if (!heroSoundOnIcon || !heroSoundOffIcon) return;
-          if (heroReelVideo.muted || heroReelVideo.volume === 0) {
-            heroSoundOnIcon.style.display = 'none';
-            heroSoundOffIcon.style.display = 'block';
-          } else {
-            heroSoundOnIcon.style.display = 'block';
-            heroSoundOffIcon.style.display = 'none';
-          }
+          const audible = !heroReelVideo.muted && !heroReelVideo.paused;
+          heroSoundOnIcon.style.display = audible ? 'block' : 'none';
+          heroSoundOffIcon.style.display = audible ? 'none' : 'block';
         };
 
-        const updatePlayIcon = () => {
-          if (!heroReelPlay) return;
-          if (heroReelVideo.paused) {
-            heroReelPlay.innerHTML = `<svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#fff;margin-left:3px;"><polygon points="5,3 19,12 5,21"/></svg>`;
-            heroReelPlay.setAttribute('aria-label', 'Play Studio Showreel');
-          } else {
-            heroReelPlay.innerHTML = `<svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#fff;"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>`;
-            heroReelPlay.setAttribute('aria-label', 'Pause Studio Showreel');
-          }
-        };
+        let ready = false;  // a real (non-black) picture is decoded and the card may be shown
+        let startAt = 0;    // first moment of the video that is not a black frame
 
-        const toggleSound = (e) => {
-          if (e) e.stopPropagation();
-          heroReelVideo.muted = !heroReelVideo.muted;
-          if (!heroReelVideo.muted && heroReelVideo.volume === 0) {
-            heroReelVideo.volume = 1.0;
+        // Plays only inside the playback window — never during the loading animation / enter screen.
+        const shouldPlay = () =>
+          ready && inFront &&
+          !document.body.classList.contains('hero-loading-active') &&
+          !document.body.classList.contains('hero-sound-gate');
+
+        const apply = () => {
+          if (document.hidden) return;
+          if (shouldPlay()) {
+            const wantSound = started && soundWanted && audioAllowed;
+            heroReelVideo.muted = !wantSound;
+            if (heroReelVideo.paused) {
+              heroReelVideo.play().catch(() => {
+                if (!heroReelVideo.muted) {
+                  audioAllowed = false;
+                  heroReelVideo.muted = true;
+                  heroReelVideo.play().catch(() => {});
+                }
+                updateSoundIcons();
+              });
+            }
+          } else if (!heroReelVideo.paused) {
+            heroReelVideo.pause(); // stops video and audio together
           }
           updateSoundIcons();
-          if (heroReelVideo.paused) {
+        };
+
+        // Ask the browser whether audible playback is allowed, using a silent throwaway clip,
+        // so the showreel itself never stutters or freezes while we find out.
+        let silentUrl = null;
+        const getSilentUrl = () => {
+          if (silentUrl) return silentUrl;
+          const n = 800, buf = new ArrayBuffer(44 + n * 2), v = new DataView(buf);
+          const w = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+          w(0, 'RIFF'); v.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt ');
+          v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+          v.setUint32(24, 8000, true); v.setUint32(28, 16000, true); v.setUint16(32, 2, true);
+          v.setUint16(34, 16, true); w(36, 'data'); v.setUint32(40, n * 2, true);
+          silentUrl = URL.createObjectURL(new Blob([buf], { type: 'audio/wav' }));
+          return silentUrl;
+        };
+        // Resolves true when the browser will let the showreel play WITH sound right now.
+        // Also used by the loader to decide whether to show "Click to enter".
+        window.heroCheckSound = () => new Promise((resolve) => {
+          if (audioAllowed || (navigator.userActivation && navigator.userActivation.hasBeenActive)) {
+            audioAllowed = true;
+            resolve(true);
+            return;
+          }
+          try {
+            const a = new Audio(getSilentUrl());
+            a.play().then(() => {
+              a.pause();
+              audioAllowed = true;
+              resolve(true);
+            }).catch(() => resolve(false));
+          } catch (e) { resolve(false); }
+        });
+
+        const probeAudio = () => {
+          if (audioAllowed || probing) return;
+          probing = true;
+          window.heroCheckSound().finally(() => { probing = false; apply(); });
+        };
+
+        window.heroVideoEnter = () => {
+          if (inFront) return;
+          inFront = true;
+          started = true;
+          // Browsers that ignore preload (e.g. iOS Safari) only start loading on play()
+          if (!ready && heroReelVideo.readyState < 2) {
+            heroReelVideo.muted = true;
             heroReelVideo.play().catch(() => {});
+          }
+          apply();
+          probeAudio();
+        };
+
+        window.heroVideoExit = (rewind) => {
+          if (inFront) {
+            inFront = false;
+            apply(); // pauses video + audio
+          }
+          // Card fully back in the room: park at the start (seeks once, then no-op)
+          if (rewind && ready && heroReelVideo.paused && Math.abs(heroReelVideo.currentTime - startAt) > 0.05) {
+            try { heroReelVideo.currentTime = startAt; } catch (e) {}
           }
         };
 
+        // Audio on/off button (no play/pause).
         if (heroReelSound) {
-          heroReelSound.addEventListener('click', toggleSound);
+          heroReelSound.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const audibleNow = !heroReelVideo.muted && !heroReelVideo.paused;
+            soundWanted = !audibleNow;
+            if (soundWanted) audioAllowed = true; // this click counts as the visitor's permission
+            apply();
+          });
         }
 
-        const toggleHeroVideo = (e) => {
-          if (e) e.stopPropagation();
-          if (heroReelVideo.paused) {
-            heroVideoUserPaused = false;
-            heroReelVideo.play().then(() => {
-              updatePlayIcon();
-            }).catch(() => {});
-          } else {
-            heroVideoUserPaused = true;
-            heroReelVideo.pause();
-            updatePlayIcon();
-          }
-        };
-
-        if (heroReelPlay) heroReelPlay.addEventListener('click', toggleHeroVideo);
-        heroReel.addEventListener('click', (e) => {
-          if (e.target !== heroReelPlay && !heroReelPlay?.contains(e.target) &&
-              e.target !== heroReelSound && !heroReelSound?.contains(e.target)) {
-            toggleHeroVideo(e);
-          }
-        });
-
-        heroReelVideo.addEventListener('play', updatePlayIcon);
-        heroReelVideo.addEventListener('pause', updatePlayIcon);
-        heroReelVideo.addEventListener('volumechange', updateSoundIcons);
-
-        // Instant autoplay immediately on page load
-        const forceAutoplay = () => {
-          heroReelVideo.muted = true;
-          heroReelVideo.play().then(() => {
-            updatePlayIcon();
-          }).catch(() => {
-            // Retry on first frame/canplay
-            heroReelVideo.addEventListener('canplay', () => {
-              heroReelVideo.play().catch(() => {});
-            }, { once: true });
-          });
-        };
-
-        forceAutoplay();
-        updatePlayIcon();
-        updateSoundIcons();
-
-        // Auto-unmute sound as soon as user interacts with the page (scroll, click, touch, key)
-        let hasUnlockedAudio = false;
+        // The very first click / tap / key press anywhere on the page grants audio permission.
+        // (Scrolling never does — that is a browser rule, so it is not used here.)
+        const UNLOCK_EVENTS = ['pointerdown', 'keydown', 'touchend', 'click'];
         const unlockAudio = () => {
-          if (hasUnlockedAudio) return;
-          hasUnlockedAudio = true;
-          heroReelVideo.muted = false;
-          heroReelVideo.volume = 1.0;
-          updateSoundIcons();
-          ['click', 'touchstart', 'pointerdown', 'keydown', 'scroll', 'wheel'].forEach(evt => {
-            window.removeEventListener(evt, unlockAudio, true);
-          });
+          if (navigator.userActivation && !navigator.userActivation.hasBeenActive) return;
+          UNLOCK_EVENTS.forEach(evt => window.removeEventListener(evt, unlockAudio, true));
+          audioAllowed = true;
+          apply();
         };
-        ['click', 'touchstart', 'pointerdown', 'keydown', 'scroll', 'wheel'].forEach(evt => {
-          window.addEventListener(evt, unlockAudio, { capture: true, once: true, passive: true });
+        UNLOCK_EVENTS.forEach(evt => {
+          window.addEventListener(evt, unlockAudio, { capture: true, passive: true });
         });
 
-        // Ensure playback continues when tab visibility changes
-        document.addEventListener('visibilitychange', () => {
-          if (!document.hidden && heroReelVideo && heroReelVideo.paused && !heroVideoUserPaused) {
+        // If the browser pauses the video by itself while it should be playing
+        // (e.g. it refused the sound), keep the picture moving muted instead of freezing.
+        heroReelVideo.addEventListener('pause', () => {
+          if (!document.hidden && shouldPlay()) {
+            audioAllowed = false;
+            heroReelVideo.muted = true;
             heroReelVideo.play().catch(() => {});
           }
+          updateSoundIcons();
         });
+        heroReelVideo.addEventListener('play', updateSoundIcons);
+        heroReelVideo.addEventListener('volumechange', updateSoundIcons);
+
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) { if (!heroReelVideo.paused) heroReelVideo.pause(); }
+          else apply();
+        });
+
+        // Start stopped; nothing plays until the card comes out of the centre.
+        heroReelVideo.muted = true;
+        heroReelVideo.pause();
+        updateSoundIcons();
+
+        // While the loading animation runs, find where the real picture starts (skipping any black
+        // opening frames), park the video there, and only then allow the card to be shown at all.
+        const markReady = () => {
+          if (ready) return;
+          ready = true;
+          heroReel.classList.add('reel-ready');
+          apply();
+        };
+        const findPictureStart = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 48; canvas.height = 27;
+          const ctx = canvas.getContext('2d', { willReadFrequently: true });
+          const probeTimes = [0, 0.25, 0.5, 0.75, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10];
+          let idx = 0;
+          const brightness = () => {
+            ctx.drawImage(heroReelVideo, 0, 0, canvas.width, canvas.height);
+            const d = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            let sum = 0;
+            for (let i = 0; i < d.length; i += 4) sum += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+            return sum / (d.length / 4);
+          };
+          const finish = (t) => {
+            heroReelVideo.removeEventListener('seeked', onSeeked);
+            startAt = t;
+            if (Math.abs(heroReelVideo.currentTime - t) < 0.01) { markReady(); return; }
+            heroReelVideo.addEventListener('seeked', markReady, { once: true });
+            try { heroReelVideo.currentTime = t; } catch (e) { markReady(); }
+          };
+          const onSeeked = () => {
+            let lum = 255;
+            try { lum = brightness(); } catch (e) { finish(0); return; } // can't read pixels: just use 0:00
+            const t = probeTimes[idx];
+            if (lum > 14) { finish(t); return; }               // real picture found
+            idx++;
+            const maxT = isFinite(heroReelVideo.duration) ? heroReelVideo.duration - 0.5 : 10;
+            if (idx >= probeTimes.length || probeTimes[idx] > maxT) { finish(0); return; }
+            heroReelVideo.currentTime = probeTimes[idx];
+          };
+          heroReelVideo.addEventListener('seeked', onSeeked);
+          try { heroReelVideo.currentTime = probeTimes[0] + 0.001; } catch (e) { finish(0); }
+        };
+        if (heroReelVideo.readyState >= 2) findPictureStart();
+        else heroReelVideo.addEventListener('loadeddata', findPictureStart, { once: true });
+        // Safety: never leave the card hidden forever if the video is slow or fails to decode
+        setTimeout(() => { if (!ready && heroReelVideo.readyState >= 2) markReady(); }, 15000);
       }
 
       // Interactive Phone Showreel Video
