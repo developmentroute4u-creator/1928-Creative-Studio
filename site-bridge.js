@@ -1177,6 +1177,127 @@
   }
 
   // ═══════════════════════════════════════════════════════════
+  // 6.4 SERVICE DETAIL PAGES FEATURED CASE STUDIES ("OUR BEST WORK")
+  // ═══════════════════════════════════════════════════════════
+  function syncServiceFeaturedWorks() {
+    const grid = document.querySelector('.sfw-grid');
+    if (!grid) return;
+
+    // Detect which service page we are on
+    const path = (window.location.pathname || '').toLowerCase();
+    let serviceNum = null;
+    if (path.includes('logo-design') || path.includes('service_logo_design') || path.includes('service-logo-design')) serviceNum = '01';
+    else if (path.includes('brand-identity') || path.includes('service_brand_identity') || path.includes('service-brand-identity')) serviceNum = '02';
+    else if (path.includes('website-development') || path.includes('service_website_development') || path.includes('service-website-development')) serviceNum = '03';
+    else if (path.includes('digital-marketing') || path.includes('service_digital_marketing') || path.includes('service-digital-marketing')) serviceNum = '04';
+    else if (path.includes('content-creation') || path.includes('service_content_creation') || path.includes('service-content-creation')) serviceNum = '05';
+
+    if (!serviceNum) {
+      const h1Text = (document.querySelector('.sph-title, h1, .sph-badge')?.textContent || '').toLowerCase();
+      if (h1Text.includes('logo')) serviceNum = '01';
+      else if (h1Text.includes('brand')) serviceNum = '02';
+      else if (h1Text.includes('website') || h1Text.includes('development')) serviceNum = '03';
+      else if (h1Text.includes('marketing')) serviceNum = '04';
+      else if (h1Text.includes('content') || h1Text.includes('creation')) serviceNum = '05';
+    }
+
+    if (!serviceNum) return;
+
+    const services = (window.CMSStore && typeof window.CMSStore.getServices === 'function')
+      ? window.CMSStore.getServices()
+      : [];
+
+    const service = services.find(s => s.num === serviceNum || parseInt(s.num, 10) === parseInt(serviceNum, 10));
+
+    const defaultPairings = {
+      '01': [
+        { projectId: 'vibee', tag: '01 / GLOBAL ICON', customTitle: 'Vibee — Youth Culture & Apparel Identity' },
+        { projectId: 'aurora', tag: '02 / GLOBAL ICON', customTitle: 'Awards Plus — Prestige Corporate Identity' }
+      ],
+      '02': [
+        { projectId: 'vibee', tag: '01 / GLOBAL ICON', customTitle: 'Vibee — Youth Culture & Apparel Identity' },
+        { projectId: 'infyli', tag: '02 / GLOBAL ICON', customTitle: 'Infyli — Minimalist Luxury Home Aromatics' }
+      ],
+      '03': [
+        { projectId: 'mudra', tag: '01 / GLOBAL ICON', customTitle: 'Mudra School — Classical Arts Digital Presence' },
+        { projectId: 'last-mile', tag: '02 / GLOBAL ICON', customTitle: 'Last Mile Analytics — Fintech Platform Architecture' }
+      ],
+      '04': [
+        { projectId: 'vibee', tag: '01 / GLOBAL ICON', customTitle: 'Vibee — Youth Culture & Apparel Identity' },
+        { projectId: 'mudra', tag: '02 / GLOBAL ICON', customTitle: 'Mudra School — Classical Arts Digital Presence' }
+      ],
+      '05': [
+        { projectId: 'infyli', tag: '01 / GLOBAL ICON', customTitle: 'Infyli — Minimalist Luxury Home Aromatics' },
+        { projectId: 'alda', tag: '02 / GLOBAL ICON', customTitle: 'Alda — Precision Stainless Steel Spatial Identity' }
+      ]
+    };
+
+    const works = (service && Array.isArray(service.featuredWorks) && service.featuredWorks.length >= 2)
+      ? service.featuredWorks
+      : (defaultPairings[serviceNum] || defaultPairings['01']);
+
+    const defaultImages = {
+      'vibee': 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg',
+      'aurora': 'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+      'awards-plus': 'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+      'awardsplus': 'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg',
+      'infyli': 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg',
+      'mudra': 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+      'mudra-school': 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg',
+      'last-mile': 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+      'last-mile-analytics': 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg',
+      'alda': 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg'
+    };
+
+    const cardsHtml = works.slice(0, 2).map((item, idx) => {
+      const pId = item.projectId || 'vibee';
+      let proj = null;
+      if (window.CMSStore && typeof window.CMSStore.getProjectById === 'function') {
+        proj = window.CMSStore.getProjectById(pId);
+      }
+      
+      const tag = item.tag || (`0${idx + 1} / GLOBAL ICON`);
+      const title = item.customTitle || proj?.title || (pId.toUpperCase());
+      const fallbackImg = defaultImages[pId.toLowerCase()] || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';
+      const img = item.customImage || proj?.coverImage || proj?.bannerImage || fallbackImg;
+      const cleanHref = `portfolio?project=${encodeURIComponent(pId)}`;
+
+      return `
+        <a href="${cleanHref}" class="sfw-card" aria-label="View ${title} case study">
+          <div class="sfw-card-media">
+            <img src="${img}" alt="${title}" class="sfw-card-img" loading="lazy" onerror="this.onerror=null; this.src='${fallbackImg}';" />
+          </div>
+          <div class="sfw-card-content">
+            <div class="sfw-top-meta">
+              <span class="sfw-num">
+                <svg class="sfw-globe-icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <line x1="2" y1="12" x2="22" y2="12"></line>
+                  <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+                ${tag}
+              </span>
+            </div>
+            <div class="sfw-bottom-block">
+              <h3 class="sfw-work-title">${title}</h3>
+              <div class="sfw-bottom-meta">
+                <div class="sfw-cta-wrap">
+                  <span>View Case Study</span>
+                  <div class="sfw-cta-arrow">
+                    <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      `;
+    }).join('');
+
+    grid.innerHTML = cardsHtml;
+  }
+
+  // ═══════════════════════════════════════════════════════════
   // 6.5 HOME PAGE SERVICES & POCKET DOSSIER RENDERER (INDEX.HTML)
   // ═══════════════════════════════════════════════════════════
   function renderHomePageServices() {
@@ -1908,6 +2029,7 @@
     renderServicesPage();
     renderHomePageServices();
     renderContactPage();
+    syncServiceFeaturedWorks();
   }
 
   if (document.readyState === 'loading') {
@@ -3313,15 +3435,7 @@
 
           /* Clean View All Work button at bottom between cards margins, removing prompt */
           .sfw-footer-bar {
-            display: flex !important;
-            justify-content: center !important;
-            align-items: center !important;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 16px 0 0 0 !important;
-            margin-top: 8px !important;
-            width: 100% !important;
+            display: none !important;
           }
 
           .sfw-footer-prompt {

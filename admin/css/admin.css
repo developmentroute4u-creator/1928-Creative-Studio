@@ -2742,6 +2742,11 @@
       position: relative;
       z-index: 999999 !important;
     }
+    .service-featured-card.dropdown-active,
+    .service-featured-card:has(.custom-dropdown-container.open) {
+      position: relative;
+      z-index: 999999 !important;
+    }
     .dropdown-active {
       position: relative !important;
       z-index: 999999 !important;

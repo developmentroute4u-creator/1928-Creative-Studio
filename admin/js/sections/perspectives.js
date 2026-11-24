@@ -526,6 +526,8 @@
             filterHomeSlotDropdown(parseInt(match[0], 10), '');
           } else if (match && containerId.includes('heroPill') && typeof filterHeroPillDropdown === 'function') {
             filterHeroPillDropdown(parseInt(match[0], 10), '');
+          } else if (match && containerId.includes('serviceWork') && typeof filterServiceWorkDropdown === 'function') {
+            filterServiceWorkDropdown(parseInt(match[0], 10), '');
           }
           setTimeout(() => searchInput.focus(), 60);
         }

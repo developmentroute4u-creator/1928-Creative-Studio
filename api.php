@@ -487,6 +487,7 @@ try {
                     'desc' => $s['description'],
                     'image' => (!empty($s['image_url']) && file_exists(__DIR__ . '/' . $s['image_url'])) ? $s['image_url'] : '',
                     'deliverables' => !empty($s['deliverables_json']) ? (json_decode($s['deliverables_json'], true) ?: []) : [],
+                    'featuredWorks' => !empty($s['featured_works_json']) ? (json_decode($s['featured_works_json'], true) ?: []) : [],
                     'order' => (int)$s['display_order']
                 ];
             }, $svcRows);
@@ -1298,13 +1299,19 @@ try {
             $order = isset($inputData['order']) ? (int)$inputData['order'] : (int)preg_replace('/\D/', '', $num);
             if ($order <= 0) $order = 1;
 
+            $featuredWorks = $inputData['featuredWorks'] ?? ($inputData['featured_works'] ?? []);
+            $featuredWorksJson = json_encode(is_array($featuredWorks) ? array_values($featuredWorks) : []);
+
             try {
                 $db->exec("ALTER TABLE `services` ADD COLUMN `image_url` VARCHAR(255) DEFAULT NULL");
             } catch (Exception $e) {}
+            try {
+                $db->exec("ALTER TABLE `services` ADD COLUMN `featured_works_json` TEXT DEFAULT NULL");
+            } catch (Exception $e) {}
 
             $stmt = $db->prepare("
-                INSERT INTO `services` (`service_id`, `num`, `title`, `tagline`, `description`, `deliverables_json`, `image_url`, `display_order`, `active`)
-                VALUES (:sid, :num, :title, :tagline, :desc, :deliv, :img, :ord, 1)
+                INSERT INTO `services` (`service_id`, `num`, `title`, `tagline`, `description`, `deliverables_json`, `image_url`, `featured_works_json`, `display_order`, `active`)
+                VALUES (:sid, :num, :title, :tagline, :desc, :deliv, :img, :fw, :ord, 1)
                 ON DUPLICATE KEY UPDATE
                     `num` = VALUES(`num`),
                     `title` = VALUES(`title`),
@@ -1312,6 +1319,7 @@ try {
                     `description` = VALUES(`description`),
                     `deliverables_json` = VALUES(`deliverables_json`),
                     `image_url` = VALUES(`image_url`),
+                    `featured_works_json` = VALUES(`featured_works_json`),
                     `display_order` = VALUES(`display_order`)
             ");
             $stmt->execute([
@@ -1322,6 +1330,7 @@ try {
                 ':desc' => $desc,
                 ':deliv' => $delivJson,
                 ':img' => $image,
+                ':fw' => $featuredWorksJson,
                 ':ord' => $order
             ]);
 

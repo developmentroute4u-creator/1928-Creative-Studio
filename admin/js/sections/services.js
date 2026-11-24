@@ -218,6 +218,123 @@
       }).join('');
     }
 
+    let currentServicePortfolioList = [];
+
+    function renderServiceWorkOptions(slotNum, activeId, portfolioList) {
+      const listEl = document.getElementById(`serviceWork${slotNum}CustomOptionsList`);
+      if (!listEl) return;
+      const list = portfolioList || currentServicePortfolioList;
+      listEl.innerHTML = list.map(p => {
+        const isActive = (p.id === activeId);
+        const safeTitle = (p.title || '').replace(/'/g, "\\'");
+        const clientLabel = p.client ? ` (${p.client})` : '';
+        const displayLabel = `${p.title}${clientLabel}`.replace(/'/g, "\\'");
+        const img = p.bannerImage || p.coverImage || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';
+        const searchText = `${p.title} ${p.client || ''}`.toLowerCase();
+        return `
+          <div class="custom-dropdown-item ${isActive ? 'active' : ''}" data-value="${p.id}" data-search="${searchText}" onclick="selectServiceWorkOption(${slotNum}, '${p.id}', '${displayLabel}')">
+            <div style="display:flex;align-items:center;gap:9px;min-width:0;flex:1;">
+              <img src="${img}" style="width:26px;height:26px;border-radius:5px;object-fit:cover;flex-shrink:0;border:1px solid var(--rule-m);" onerror="this.onerror=null; this.src='assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';" />
+              <div style="min-width:0;flex:1;">
+                <div class="custom-dropdown-item-title" style="font-weight:700;font-size:12px;">${p.title}</div>
+                <div style="font-size:10px;color:var(--ink-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${p.client || 'Case Study'}</div>
+              </div>
+            </div>
+            ${isActive ? '<svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:var(--cr);fill:none;stroke-width:2.5;flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.selectServiceWorkOption = function(slotNum, pId, label) {
+      if (typeof window.selectGenericDropdownOption === 'function') {
+        window.selectGenericDropdownOption(`customDropdown_serviceWork${slotNum}`, `serviceWork${slotNum}Project`, pId, label);
+      } else {
+        const hidden = document.getElementById(`serviceWork${slotNum}Project`);
+        if (hidden) hidden.value = pId;
+        const valSpan = document.getElementById(`customDropdownVal_serviceWork${slotNum}`);
+        if (valSpan) valSpan.textContent = label;
+      }
+      const container = document.getElementById(`customDropdown_serviceWork${slotNum}`);
+      if (container) container.classList.remove('open');
+      renderServiceWorkOptions(slotNum, pId, currentServicePortfolioList);
+    };
+
+    window.filterServiceWorkDropdown = function(slotNum, query) {
+      const listEl = document.getElementById(`serviceWork${slotNum}CustomOptionsList`);
+      if (!listEl) return;
+      const q = (query || '').toLowerCase().trim();
+      listEl.querySelectorAll('.custom-dropdown-item').forEach(item => {
+        const s = (item.dataset.search || '').toLowerCase();
+        item.style.display = (!q || s.includes(q)) ? 'flex' : 'none';
+      });
+    };
+
+    function populateServiceCaseStudyDropdowns(sData) {
+      const p1Hidden = document.getElementById('serviceWork1Project');
+      const p2Hidden = document.getElementById('serviceWork2Project');
+      if (!p1Hidden || !p2Hidden) return;
+
+      const portfolio = (window.CMSStore && typeof window.CMSStore.getPortfolio === 'function')
+        ? window.CMSStore.getPortfolio()
+        : [];
+
+      const defaultOptions = [
+        { id: 'vibee', title: 'Vibee — Youth Culture & Apparel Identity', client: 'Vibee Apparel Co.', coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg' },
+        { id: 'aurora', title: 'AWARDSPLUS / Awards Plus — Prestige Corporate Identity', client: 'Awardsplus GmbH', coverImage: 'assets/uploads/1928_1794828463_P1-Awardsplus-01.jpg' },
+        { id: 'infyli', title: 'Infyli — Minimalist Luxury Home Aromatics', client: 'Infyli Paris & Mumbai', coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-02.jpg' },
+        { id: 'mudra', title: 'Mudra School — Classical Arts Digital Presence', client: 'Mudra Performing Arts Trust', coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-03.jpg' },
+        { id: 'last-mile', title: 'Last Mile Analytics — Fintech Platform Architecture', client: 'Last Mile Global Markets', coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-05.jpg' },
+        { id: 'alda', title: 'Alda — Precision Stainless Steel Spatial Identity', client: 'Alda Cookware Global', coverImage: 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-06.jpg' }
+      ];
+
+      const allProjectsMap = new Map();
+      portfolio.forEach(p => allProjectsMap.set(p.id, p));
+      defaultOptions.forEach(p => {
+        if (!allProjectsMap.has(p.id)) allProjectsMap.set(p.id, p);
+      });
+
+      currentServicePortfolioList = Array.from(allProjectsMap.values());
+
+      const sNum = sData?.num || '01';
+      let def1 = 'vibee', def2 = 'aurora';
+      if (sNum === '02') { def1 = 'vibee'; def2 = 'infyli'; }
+      else if (sNum === '03') { def1 = 'mudra'; def2 = 'last-mile'; }
+      else if (sNum === '04') { def1 = 'vibee'; def2 = 'mudra'; }
+      else if (sNum === '05') { def1 = 'infyli'; def2 = 'alda'; }
+
+      const fw = sData?.featuredWorks || [];
+      const p1Id = fw[0]?.projectId || def1;
+      const p2Id = fw[1]?.projectId || def2;
+
+      const p1Proj = currentServicePortfolioList.find(p => p.id === p1Id) || currentServicePortfolioList[0];
+      const p2Proj = currentServicePortfolioList.find(p => p.id === p2Id) || currentServicePortfolioList[1] || currentServicePortfolioList[0];
+
+      const p1Label = p1Proj ? `${p1Proj.title}${p1Proj.client ? ` (${p1Proj.client})` : ''}` : p1Id;
+      const p2Label = p2Proj ? `${p2Proj.title}${p2Proj.client ? ` (${p2Proj.client})` : ''}` : p2Id;
+
+      const p1Val = document.getElementById('customDropdownVal_serviceWork1');
+      const p2Val = document.getElementById('customDropdownVal_serviceWork2');
+
+      p1Hidden.value = p1Id;
+      p2Hidden.value = p2Id;
+      if (p1Val) p1Val.textContent = p1Label;
+      if (p2Val) p2Val.textContent = p2Label;
+
+      renderServiceWorkOptions(1, p1Id, currentServicePortfolioList);
+      renderServiceWorkOptions(2, p2Id, currentServicePortfolioList);
+
+      const w1Tag = document.getElementById('serviceWork1Tag');
+      const w1Title = document.getElementById('serviceWork1Title');
+      const w2Tag = document.getElementById('serviceWork2Tag');
+      const w2Title = document.getElementById('serviceWork2Title');
+
+      if (w1Tag) w1Tag.value = fw[0]?.tag || '01 / GLOBAL ICON';
+      if (w1Title) w1Title.value = fw[0]?.customTitle || '';
+      if (w2Tag) w2Tag.value = fw[1]?.tag || '02 / GLOBAL ICON';
+      if (w2Title) w2Title.value = fw[1]?.customTitle || '';
+    }
+
     function openServiceModal(sData = null) {
       document.getElementById('serviceModalTitle').textContent = sData ? `Edit Service ${sData.num || ''}` : 'Add Service Capability';
       document.getElementById('serviceIdInput').value = sData ? sData.id : '';
@@ -230,6 +347,8 @@
       const imgVal = sData ? (sData.image || '') : '';
       document.getElementById('serviceImageInput').value = imgVal;
       if (serviceUploader) serviceUploader.refreshUI();
+
+      populateServiceCaseStudyDropdowns(sData);
 
       document.getElementById('serviceModal').classList.add('active');
     }
@@ -251,13 +370,27 @@
         return;
       }
 
+      const featuredWorks = [
+        {
+          projectId: document.getElementById('serviceWork1Project')?.value || 'vibee',
+          tag: document.getElementById('serviceWork1Tag')?.value.trim() || '01 / GLOBAL ICON',
+          customTitle: document.getElementById('serviceWork1Title')?.value.trim() || ''
+        },
+        {
+          projectId: document.getElementById('serviceWork2Project')?.value || 'aurora',
+          tag: document.getElementById('serviceWork2Tag')?.value.trim() || '02 / GLOBAL ICON',
+          customTitle: document.getElementById('serviceWork2Title')?.value.trim() || ''
+        }
+      ];
+
       const data = {
         num: document.getElementById('serviceNumInput').value.trim(),
         tagline: document.getElementById('serviceTaglineInput').value.trim(),
         title: document.getElementById('serviceTitleInput').value.trim(),
         desc: document.getElementById('serviceDescInput').value.trim(),
         deliverables: deliverables,
-        image: imgVal
+        image: imgVal,
+        featuredWorks: featuredWorks
       };
       if (id) data.id = id;
 

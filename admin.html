@@ -3048,6 +3048,77 @@
             </div>
           </div>
 
+          <div class="modal-section-badge" style="margin-top:24px;">05 / Featured Case Studies (Our Best Work)</div>
+          <p style="font-size:12px;color:var(--ink-mid);margin:0 0 14px;line-height:1.5;">
+            Configure the 2 featured portfolio case studies displayed in the "Our Best Work" section on this service's dedicated page.
+          </p>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:14px;margin-bottom:8px;">
+            <!-- Case Study 01 -->
+            <div class="service-featured-card" style="padding:14px;border-radius:12px;background:var(--card-alt);border:1px solid var(--rule);position:relative;">
+              <div style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">
+                Case Study 01 (Left Card)
+              </div>
+              <div class="form-group" style="margin-bottom:10px;position:relative;">
+                <label class="form-label">Select Portfolio Project</label>
+                <div class="custom-dropdown-container dropdown-down" id="customDropdown_serviceWork1">
+                  <button type="button" class="custom-dropdown-trigger" id="customDropdownTrigger_serviceWork1" onclick="toggleGenericDropdown('customDropdown_serviceWork1', event)" style="height:38px;padding:6px 12px;font-size:12px;border-radius:8px;">
+                    <span class="custom-dropdown-val" id="customDropdownVal_serviceWork1">Select Case Study...</span>
+                    <svg class="custom-dropdown-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                  <div class="custom-dropdown-menu" id="customDropdownMenu_serviceWork1">
+                    <div class="custom-dropdown-search-wrap" onclick="event.stopPropagation()">
+                      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                      <input type="text" class="custom-dropdown-search" placeholder="Search case study..." oninput="filterServiceWorkDropdown(1, this.value)" onclick="event.stopPropagation()" />
+                    </div>
+                    <div class="custom-dropdown-list" id="serviceWork1CustomOptionsList" style="padding:5px;max-height:220px;overflow-y:auto;"></div>
+                  </div>
+                  <input type="hidden" id="serviceWork1Project" value="vibee" />
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Badge / Meta Tag</label>
+                <input type="text" class="form-input" id="serviceWork1Tag" placeholder="e.g. 01 / GLOBAL ICON" style="font-size:12px;" />
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Custom Title (Optional Override)</label>
+                <input type="text" class="form-input" id="serviceWork1Title" placeholder="Leave blank to use project title" style="font-size:12px;" />
+              </div>
+            </div>
+
+            <!-- Case Study 02 -->
+            <div class="service-featured-card" style="padding:14px;border-radius:12px;background:var(--card-alt);border:1px solid var(--rule);position:relative;">
+              <div style="font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--cr);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;">
+                Case Study 02 (Right Card)
+              </div>
+              <div class="form-group" style="margin-bottom:10px;position:relative;">
+                <label class="form-label">Select Portfolio Project</label>
+                <div class="custom-dropdown-container dropdown-down" id="customDropdown_serviceWork2">
+                  <button type="button" class="custom-dropdown-trigger" id="customDropdownTrigger_serviceWork2" onclick="toggleGenericDropdown('customDropdown_serviceWork2', event)" style="height:38px;padding:6px 12px;font-size:12px;border-radius:8px;">
+                    <span class="custom-dropdown-val" id="customDropdownVal_serviceWork2">Select Case Study...</span>
+                    <svg class="custom-dropdown-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  </button>
+                  <div class="custom-dropdown-menu" id="customDropdownMenu_serviceWork2">
+                    <div class="custom-dropdown-search-wrap" onclick="event.stopPropagation()">
+                      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                      <input type="text" class="custom-dropdown-search" placeholder="Search case study..." oninput="filterServiceWorkDropdown(2, this.value)" onclick="event.stopPropagation()" />
+                    </div>
+                    <div class="custom-dropdown-list" id="serviceWork2CustomOptionsList" style="padding:5px;max-height:220px;overflow-y:auto;"></div>
+                  </div>
+                  <input type="hidden" id="serviceWork2Project" value="aurora" />
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:10px;">
+                <label class="form-label">Badge / Meta Tag</label>
+                <input type="text" class="form-input" id="serviceWork2Tag" placeholder="e.g. 02 / GLOBAL ICON" style="font-size:12px;" />
+              </div>
+              <div class="form-group" style="margin-bottom:0;">
+                <label class="form-label">Custom Title (Optional Override)</label>
+                <input type="text" class="form-input" id="serviceWork2Title" placeholder="Leave blank to use project title" style="font-size:12px;" />
+              </div>
+            </div>
+          </div>
+
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-action-secondary" onclick="closeModal('serviceModal')">Cancel</button>
