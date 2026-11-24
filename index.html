@@ -1568,6 +1568,10 @@
       pointer-events: none;
     }
 
+    .hero-reel {
+      cursor: pointer;
+    }
+
     .hero-reel .reel-inner {
       width: 100%;
       height: 100%;
@@ -1577,6 +1581,27 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
+      border-radius: 24px;
+    }
+
+    .hero-reel .reel-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      z-index: 1;
+      border-radius: 24px;
+    }
+
+    .hero-reel .reel-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.12);
+      z-index: 2;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
     }
 
     .reel-play {
@@ -1588,7 +1613,18 @@
       display: grid;
       place-items: center;
       border: 1.5px solid rgba(255, 255, 255, 0.35);
-      z-index: 2;
+      z-index: 3;
+      cursor: pointer;
+      transition: transform 0.3s var(--sp), opacity 0.3s var(--sp), background 0.3s ease;
+    }
+
+    .reel-play:hover {
+      transform: scale(1.1);
+      background: rgba(255, 255, 255, 0.28);
+    }
+
+    .hero-reel:hover .reel-play {
+      opacity: 1 !important;
     }
 
     .reel-play svg {
@@ -1604,6 +1640,7 @@
       inset: -50%;
       background: repeating-linear-gradient(-45deg, transparent 0px, transparent 40px, rgba(255, 255, 255, 0.03) 40px, rgba(255, 255, 255, 0.03) 42px);
       animation: reelScan 8s linear infinite;
+      z-index: 0;
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -5560,10 +5597,18 @@
 
       <!-- LAYER 5 (z:25) — Video Showreel -->
       <div class="hero-reel" id="heroReel">
-        <div class="reel-inner">
-          <div class="reel-play"><svg viewBox="0 0 24 24">
+        <div class="reel-inner" id="reelInner">
+          <video id="heroReelVideo" class="reel-video" playsinline loop muted autoplay preload="auto">
+            <source src="assets/img/hero/Main 1928 Video .mp4" type="video/mp4">
+            <source src="assets/img/hero/Main 1928 Video.mp4" type="video/mp4">
+            <source src="assets/video/Main 1928 Video.mp4" type="video/mp4">
+          </video>
+          <div class="reel-overlay"></div>
+          <button type="button" class="reel-play" id="heroReelPlay" aria-label="Play Studio Showreel">
+            <svg viewBox="0 0 24 24" id="heroReelPlayIcon">
               <polygon points="5,3 19,12 5,21" />
-            </svg></div>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -5578,6 +5623,9 @@
         <div class="ph-reel-media" id="phReelMedia">
           <video id="phReelVideo" playsinline loop muted preload="metadata"
             poster="assets/img/hero/3D Room Floating Cards (Hero Section)-01.jpg">
+            <source src="assets/img/hero/Main 1928 Video .mp4" type="video/mp4">
+            <source src="assets/img/hero/Main 1928 Video.mp4" type="video/mp4">
+            <source src="assets/video/Main 1928 Video.mp4" type="video/mp4">
             <source src="assets/video/Test.mp4" type="video/mp4">
           </video>
           <div class="ph-reel-overlay"></div>
@@ -7369,6 +7417,7 @@
             heroReel.style.opacity = '0';
             heroReel.style.transform = 'translate(-50%,-50%) scale(0.04)';
             heroReel.style.pointerEvents = 'none';
+            if (heroReelVideo && !heroReelVideo.paused) heroReelVideo.pause();
             if (storyTag) storyTag.classList.remove('vis');
             if (storyBlock) {
               storyBlock.style.opacity = '0';
@@ -7384,6 +7433,9 @@
             heroReel.style.top = '50%';
             heroReel.style.transform = `translate(-50%,-50%) scale(${rScale})`;
             heroReel.style.pointerEvents = vidP > 0.3 ? 'auto' : 'none';
+            if (heroReelVideo && heroReelVideo.paused && !heroVideoUserPaused && vidP > 0.1) {
+              heroReelVideo.play().catch(() => {});
+            }
 
             if (storyTag) storyTag.classList.remove('vis');
             if (storyBlock) {
@@ -8206,6 +8258,47 @@
         }, 7300);
       })();
 
+      // Interactive Desktop Showreel Video
+      const heroReelVideo = document.getElementById('heroReelVideo');
+      const heroReelPlay = document.getElementById('heroReelPlay');
+      let heroVideoUserPaused = false;
+
+      if (heroReel && heroReelVideo) {
+        const toggleHeroVideo = (e) => {
+          if (e) e.stopPropagation();
+          if (heroReelVideo.paused) {
+            heroVideoUserPaused = false;
+            heroReelVideo.play().then(() => {
+              if (heroReelPlay) heroReelPlay.style.opacity = '0';
+            }).catch(() => {});
+          } else {
+            heroVideoUserPaused = true;
+            heroReelVideo.pause();
+            if (heroReelPlay) heroReelPlay.style.opacity = '1';
+          }
+        };
+
+        if (heroReelPlay) heroReelPlay.addEventListener('click', toggleHeroVideo);
+        heroReel.addEventListener('click', (e) => {
+          if (e.target !== heroReelPlay && !heroReelPlay.contains(e.target)) {
+            toggleHeroVideo(e);
+          }
+        });
+
+        heroReelVideo.addEventListener('play', () => {
+          if (heroReelPlay) heroReelPlay.style.opacity = '0';
+        });
+
+        heroReelVideo.addEventListener('pause', () => {
+          if (heroReelPlay) heroReelPlay.style.opacity = '1';
+        });
+
+        // Autoplay attempt on page load
+        heroReelVideo.play().then(() => {
+          if (heroReelPlay) heroReelPlay.style.opacity = '0';
+        }).catch(() => {});
+      }
+
       // Interactive Phone Showreel Video
       const phPlayBtn = document.getElementById('phPlayBtn');
       const phReelVideo = document.getElementById('phReelVideo');
@@ -8287,8 +8380,8 @@
       onScroll();
     })();
   </script>
-  <script src="data-store.js?v=20261116_v18"></script>
-  <script src="site-bridge.js?v=20261116_v18"></script>
+  <script src="data-store.js?v=20261124_v1"></script>
+  <script src="site-bridge.js?v=20261124_v1"></script>
 </body>
 
 </html>

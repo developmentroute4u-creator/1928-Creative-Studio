@@ -19,3 +19,5 @@ node_modules/
 
 # Large media files (served via server and database_media)
 assets/uploads/*.mp4
+assets/img/hero/*.mp4
+assets/video/*.mp4
