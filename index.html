@@ -1627,6 +1627,40 @@
       opacity: 1 !important;
     }
 
+    .reel-sound-btn {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      z-index: 4;
+      transition: all 0.3s ease;
+      opacity: 0.9;
+    }
+
+    .reel-sound-btn:hover {
+      background: rgba(0, 0, 0, 0.75);
+      border-color: rgba(255, 255, 255, 0.55);
+      transform: scale(1.08);
+      opacity: 1;
+    }
+
+    .reel-sound-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+    }
+
     .reel-play svg {
       width: 22px;
       height: 22px;
@@ -5598,7 +5632,7 @@
       <!-- LAYER 5 (z:25) — Video Showreel -->
       <div class="hero-reel" id="heroReel">
         <div class="reel-inner" id="reelInner">
-          <video id="heroReelVideo" class="reel-video" playsinline loop muted autoplay preload="auto">
+          <video id="heroReelVideo" class="reel-video" playsinline loop autoplay preload="auto">
             <source src="assets/img/hero/Main 1928 Video .mp4" type="video/mp4">
             <source src="assets/img/hero/Main 1928 Video.mp4" type="video/mp4">
             <source src="assets/video/Main 1928 Video.mp4" type="video/mp4">
@@ -5607,6 +5641,17 @@
           <button type="button" class="reel-play" id="heroReelPlay" aria-label="Play Studio Showreel">
             <svg viewBox="0 0 24 24" id="heroReelPlayIcon">
               <polygon points="5,3 19,12 5,21" />
+            </svg>
+          </button>
+          <button type="button" class="reel-sound-btn" id="heroReelSound" aria-label="Toggle Audio" title="Audio / Voice Sound">
+            <svg id="heroSoundOnIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg id="heroSoundOffIcon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
             </svg>
           </button>
         </div>
@@ -8258,19 +8303,61 @@
         }, 7300);
       })();
 
-      // Interactive Desktop Showreel Video
+      // Interactive Desktop Showreel Video with Full Default Audio Voice
       const heroReelVideo = document.getElementById('heroReelVideo');
       const heroReelPlay = document.getElementById('heroReelPlay');
+      const heroReelSound = document.getElementById('heroReelSound');
+      const heroSoundOnIcon = document.getElementById('heroSoundOnIcon');
+      const heroSoundOffIcon = document.getElementById('heroSoundOffIcon');
       let heroVideoUserPaused = false;
 
       if (heroReel && heroReelVideo) {
+        heroReelVideo.muted = false;
+        heroReelVideo.volume = 1.0;
+
+        const updateSoundIcons = () => {
+          if (!heroSoundOnIcon || !heroSoundOffIcon) return;
+          if (heroReelVideo.muted || heroReelVideo.volume === 0) {
+            heroSoundOnIcon.style.display = 'none';
+            heroSoundOffIcon.style.display = 'block';
+          } else {
+            heroSoundOnIcon.style.display = 'block';
+            heroSoundOffIcon.style.display = 'none';
+          }
+        };
+
+        const toggleSound = (e) => {
+          if (e) e.stopPropagation();
+          heroReelVideo.muted = !heroReelVideo.muted;
+          if (!heroReelVideo.muted && heroReelVideo.volume === 0) {
+            heroReelVideo.volume = 1.0;
+          }
+          updateSoundIcons();
+          if (heroReelVideo.paused) {
+            heroReelVideo.play().catch(() => {});
+          }
+        };
+
+        if (heroReelSound) {
+          heroReelSound.addEventListener('click', toggleSound);
+        }
+
         const toggleHeroVideo = (e) => {
           if (e) e.stopPropagation();
           if (heroReelVideo.paused) {
             heroVideoUserPaused = false;
+            heroReelVideo.muted = false;
+            heroReelVideo.volume = 1.0;
+            updateSoundIcons();
             heroReelVideo.play().then(() => {
               if (heroReelPlay) heroReelPlay.style.opacity = '0';
-            }).catch(() => {});
+            }).catch(() => {
+              heroReelVideo.muted = true;
+              updateSoundIcons();
+              heroReelVideo.play().then(() => {
+                if (heroReelPlay) heroReelPlay.style.opacity = '0';
+              }).catch(() => {});
+            });
           } else {
             heroVideoUserPaused = true;
             heroReelVideo.pause();
@@ -8280,7 +8367,8 @@
 
         if (heroReelPlay) heroReelPlay.addEventListener('click', toggleHeroVideo);
         heroReel.addEventListener('click', (e) => {
-          if (e.target !== heroReelPlay && !heroReelPlay.contains(e.target)) {
+          if (e.target !== heroReelPlay && !heroReelPlay?.contains(e.target) &&
+              e.target !== heroReelSound && !heroReelSound?.contains(e.target)) {
             toggleHeroVideo(e);
           }
         });
@@ -8293,10 +8381,33 @@
           if (heroReelPlay) heroReelPlay.style.opacity = '1';
         });
 
-        // Autoplay attempt on page load
+        heroReelVideo.addEventListener('volumechange', updateSoundIcons);
+
+        // Attempt unmuted play on page load (with automatic audio unlock on first user gesture)
+        heroReelVideo.muted = false;
+        heroReelVideo.volume = 1.0;
+        updateSoundIcons();
         heroReelVideo.play().then(() => {
           if (heroReelPlay) heroReelPlay.style.opacity = '0';
-        }).catch(() => {});
+        }).catch(() => {
+          heroReelVideo.muted = true;
+          updateSoundIcons();
+          heroReelVideo.play().then(() => {
+            if (heroReelPlay) heroReelPlay.style.opacity = '0';
+          }).catch(() => {});
+
+          const unlockAudio = () => {
+            heroReelVideo.muted = false;
+            heroReelVideo.volume = 1.0;
+            updateSoundIcons();
+            window.removeEventListener('click', unlockAudio, true);
+            window.removeEventListener('touchstart', unlockAudio, true);
+            window.removeEventListener('keydown', unlockAudio, true);
+          };
+          window.addEventListener('click', unlockAudio, { capture: true, once: true });
+          window.addEventListener('touchstart', unlockAudio, { capture: true, once: true });
+          window.addEventListener('keydown', unlockAudio, { capture: true, once: true });
+        });
       }
 
       // Interactive Phone Showreel Video
@@ -8306,7 +8417,12 @@
       if (phPlayBtn && phReelVideo) {
         const togglePhVideo = () => {
           if (phReelVideo.paused) {
-            phReelVideo.play().catch(() => { });
+            phReelVideo.muted = false;
+            phReelVideo.volume = 1.0;
+            phReelVideo.play().catch(() => {
+              phReelVideo.muted = true;
+              phReelVideo.play().catch(() => {});
+            });
             phPlayBtn.style.opacity = '0';
           } else {
             phReelVideo.pause();
@@ -8380,8 +8496,8 @@
       onScroll();
     })();
   </script>
-  <script src="data-store.js?v=20261124_v1"></script>
-  <script src="site-bridge.js?v=20261124_v1"></script>
+  <script src="data-store.js?v=20261124_v2"></script>
+  <script src="site-bridge.js?v=20261124_v2"></script>
 </body>
 
 </html>
