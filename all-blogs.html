@@ -3935,16 +3935,12 @@
       window.addEventListener('scroll', () => {
         const sy = window.scrollY;
         if (navEl) {
-          if (sy <= 10) {
-            // At the very top resting position: header is visible
+          if (sy <= 40 || sy < lastAllBlogScrollY - 3) {
+            // Scrolling UP (or at top): header comes down smoothly into view — same as the Perspectives page
             navEl.classList.add('visible');
             navEl.classList.remove('hidden');
-          } else if (sy > lastAllBlogScrollY + 2) {
-            // Scrolling DOWN: header comes down into view (opposite of the rest of the site — this page only)
-            navEl.classList.add('visible');
-            navEl.classList.remove('hidden');
-          } else if (sy < lastAllBlogScrollY - 2) {
-            // Scrolling UP: header slides up out of view
+          } else if (sy > lastAllBlogScrollY + 3) {
+            // Scrolling DOWN: header animates up out of view
             navEl.classList.remove('visible');
             navEl.classList.add('hidden');
           }
