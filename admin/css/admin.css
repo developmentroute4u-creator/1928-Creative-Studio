@@ -5134,6 +5134,8 @@ body.auth-unlocked .admin-auth-overlay {
 }
 
 #blogModal .be-toc-preview li.be-toc-empty {
+  display: block; /* plain sentence, not split into columns */
+  line-height: 1.55;
   background: transparent;
   border: 1px dashed var(--rule-m);
   color: var(--ink-dim);
