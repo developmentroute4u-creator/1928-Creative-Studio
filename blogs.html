@@ -2661,6 +2661,64 @@
       line-height: 1.2;
     }
 
+    /* Article content from the admin editor: subheadings, lists, images, links, divider lines */
+    .reader-content-prose h3 {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(19px, 1.6vw, 23px);
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1.3;
+      margin: 8px 0 0;
+    }
+
+    .reader-content-prose ul,
+    .reader-content-prose ol {
+      margin: 0;
+      padding-left: 1.3em;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .reader-content-prose li::marker {
+      color: var(--cr);
+    }
+
+    .reader-content-prose strong {
+      color: var(--ink);
+    }
+
+    .reader-content-prose a {
+      color: var(--cr);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .reader-content-prose figure {
+      margin: 0;
+    }
+
+    .reader-content-prose img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+
+    .reader-content-prose hr,
+    .reader-content-prose .editorial-divider {
+      border: none;
+      border-top: 1.5px solid var(--rule);
+      margin: 8px 0;
+      width: 100%;
+    }
+
+    /* Banner with a real image: never show the placeholder icon (shared phone styles force it visible) */
+    #mReaderSpecimenBanner.has-image #mReaderSpecimenGlyph {
+      display: none !important;
+    }
+
     .reader-pullquote {
       position: relative;
       background: var(--cr-soft);
@@ -5656,10 +5714,17 @@
               readTime: cmsBlog.readTime || data?.readTime || '7 MIN READ',
               contentHtml: cmsBlog.content || cmsBlog.contentHtml || data?.contentHtml || '',
               bio: cmsBlog.bio || data?.bio || 'Founder & Principal Brand Strategist at 1928 Creative Studio. Advising luxury maisons and deep-tech founders on enduring visual systems.',
-              specimenImage: cmsBlog.specimenImage || data?.specimenImage || '',
+              // Banner: the article's own banner image, otherwise its cover image
+              specimenImage: cmsBlog.specimenImage || data?.specimenImage || cmsBlog.coverImage || '',
               specimenCaption: cmsBlog.specimenCaption || data?.specimenCaption || '1928 EDITORIAL PROVENANCE CAPTURE',
-              sections: (Array.isArray(cmsBlog.sections) && cmsBlog.sections.length) ? cmsBlog.sections : (data?.sections || defaultSections),
-              related: (Array.isArray(cmsBlog.related) && cmsBlog.related.length) ? cmsBlog.related : (data?.related || ['art-spatial', 'art-webgl'])
+              // Contents list: saved sections, otherwise built from the article's own headings (below)
+              sections: (Array.isArray(cmsBlog.sections) && cmsBlog.sections.length) ? cmsBlog.sections : null,
+              // Suggested blogs: chosen in the admin, otherwise two from the same category
+              related: (Array.isArray(cmsBlog.related) && cmsBlog.related.length) ? cmsBlog.related : (() => {
+                const pool = (window.CMSStore.getBlogs ? window.CMSStore.getBlogs(true) : []).filter(b => b.id !== id);
+                const same = pool.filter(b => (b.categorySlug || b.category) === (cmsBlog.categorySlug || cmsBlog.category));
+                return [...same, ...pool.filter(b => !same.includes(b))].slice(0, 2).map(b => b.id);
+              })()
             };
           }
         }
@@ -5675,6 +5740,15 @@
         document.getElementById('mReaderDate').textContent = data.date;
         document.getElementById('mReaderReadTime').textContent = data.readTime;
         document.getElementById('mReaderProse').innerHTML = data.contentHtml;
+        // No saved contents list: build it from the article's headings (giving each heading an id to jump to)
+        if (!Array.isArray(data.sections) || !data.sections.length) {
+          data.sections = Array.from(document.getElementById('mReaderProse').querySelectorAll('h2')).map((h, i) => {
+            if (!h.id) h.id = `rdr-sec-${i + 1}`;
+            return { id: h.id, title: h.textContent.trim() };
+          }).filter(s => s.title);
+        }
+        const tocAside = document.querySelector('#perspectiveModal .reader-toc-sidebar');
+        if (tocAside) tocAside.style.display = data.sections.length ? '' : 'none';
         document.getElementById('mBioName').textContent = data.author;
         document.getElementById('mBioAvatarBox').textContent = data.initials;
         document.getElementById('mBioText').textContent = data.bio;
@@ -5686,13 +5760,17 @@
         if (specimenPromptEl) specimenPromptEl.textContent = data.specimenCaption || '1928 EDITORIAL PROVENANCE CAPTURE';
 
         if (specimenImgEl && specimenGlyphEl) {
+          const specimenBanner = document.getElementById('mReaderSpecimenBanner');
           if (data.specimenImage) {
+            specimenImgEl.onerror = () => { specimenImgEl.style.display = 'none'; specimenGlyphEl.style.display = 'flex'; if (specimenBanner) specimenBanner.classList.remove('has-image'); };
             specimenImgEl.src = data.specimenImage;
             specimenImgEl.style.display = 'block';
             specimenGlyphEl.style.display = 'none';
+            if (specimenBanner) specimenBanner.classList.add('has-image');
           } else {
             specimenImgEl.style.display = 'none';
             specimenGlyphEl.style.display = 'flex';
+            if (specimenBanner) specimenBanner.classList.remove('has-image');
           }
         }
 

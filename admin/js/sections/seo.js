@@ -24,6 +24,17 @@
       return loc.origin;
     }
 
+    // Current link of the Portfolio page itself (projects live under it: /<portfolio>/<project>)
+    function getPortfolioSlug() {
+      return (window.CMSStore && window.CMSStore.getRoute ? window.CMSStore.getRoute('portfolio') : '') || 'portfolio';
+    }
+
+    function findProjectForKey(pageKey) {
+      const projectId = pageKey.replace('project_', '');
+      const list = (window.CMSStore && window.CMSStore.getPortfolio) ? window.CMSStore.getPortfolio() : [];
+      return list.find(p => p.id === projectId) || null;
+    }
+
     function loadSEOForm() {
       const pageKey = document.getElementById('seoPageSelector').value;
       const titleInput = document.getElementById('seoTitleInput');
@@ -43,6 +54,14 @@
         kwInput.value = blog.category || 'perspective, luxury architecture';
         slugInput.value = blog.slug || '';
         if (prefixEl) prefixEl.textContent = 'https://1928creativestudio.com/perspectives/';
+      } else if (pageKey.startsWith('project_')) {
+        // Portfolio project: only its page link is edited here (title & description come from the project itself)
+        const proj = findProjectForKey(pageKey) || {};
+        titleInput.value = proj.title ? `${proj.title} · Work · 1928 Creative Studio` : '';
+        descInput.value = (proj.summary || proj.cardHeading || '').replace(/<[^>]*>/g, '').slice(0, 160);
+        kwInput.value = proj.categoryDisplay || proj.subheading || '';
+        slugInput.value = proj.slug || proj.id || '';
+        if (prefixEl) prefixEl.textContent = `https://1928creativestudio.com/${getPortfolioSlug()}/`;
       } else {
         const seo = window.CMSStore.getSEO(pageKey);
         const storedRoute = (window.CMSStore.getRoute ? window.CMSStore.getRoute(pageKey) : null) || seo.routeSlug || (DEFAULT_SYSTEM_ROUTES[pageKey]?.slug ?? '');
@@ -76,6 +95,8 @@
       let livePath = '';
       if (pageKey.startsWith('blog_')) {
         livePath = slugVal ? `perspectives/${slugVal}` : 'perspectives';
+      } else if (pageKey.startsWith('project_')) {
+        livePath = slugVal ? `${getPortfolioSlug()}/${slugVal}` : getPortfolioSlug();
       } else if (slugVal) {
         livePath = slugVal;
       } else if (pageKey === 'home') {
@@ -161,6 +182,51 @@
       });
     }
 
+    // Portfolio projects as sub-pages of "Portfolio Page" (same arrow style as the service pages)
+    function populateProjectOptionsInDropdown() {
+      const menu = document.getElementById('seoDropdownMenu');
+      if (!menu) return;
+      const portfolioOpt = menu.querySelector('.custom-option[data-value="portfolio"]');
+      if (!portfolioOpt) return;
+
+      const projects = window.CMSStore && window.CMSStore.getPortfolio ? window.CMSStore.getPortfolio() : [];
+      const selectedVal = document.getElementById('seoPageSelector')?.value || '';
+      menu.querySelectorAll('.custom-option-project').forEach(el => el.remove());
+      if (!projects.length) return;
+
+      const portfolioSlug = getPortfolioSlug();
+      let insertAfter = portfolioOpt;
+      projects.forEach((p, idx) => {
+        const opt = document.createElement('div');
+        opt.className = 'custom-option custom-option-sub custom-option-project';
+        opt.setAttribute('data-value', `project_${p.id}`);
+        if (`project_${p.id}` === selectedVal) opt.classList.add('selected');
+
+        const arrowSpan = document.createElement('span');
+        arrowSpan.className = 'opt-sub-arrow';
+        arrowSpan.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="20" y2="12"></line><polyline points="14 6 20 12 14 18"></polyline></svg>';
+
+        const labelSpan = document.createElement('span');
+        const num = String(idx + 1).padStart(2, '0');
+        labelSpan.textContent = `Project ${num}: ${p.title || p.id} (/${portfolioSlug}/${p.slug || p.id})`;
+
+        opt.appendChild(arrowSpan);
+        opt.appendChild(labelSpan);
+        opt.addEventListener('click', (e) => {
+          e.stopPropagation();
+          document.getElementById('seoPageSelector').value = opt.getAttribute('data-value');
+          document.getElementById('seoDropdownSelectedText').innerHTML = opt.innerHTML;
+          menu.querySelectorAll('.custom-option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+          document.getElementById('seoCustomDropdown').classList.remove('open');
+          loadSEOForm();
+        });
+
+        insertAfter.insertAdjacentElement('afterend', opt);
+        insertAfter = opt;
+      });
+    }
+
     function selectSEOPage(pageKey) {
       const hiddenInput = document.getElementById('seoPageSelector');
       const selectedText = document.getElementById('seoDropdownSelectedText');
@@ -199,6 +265,8 @@
       let fullUrl = '';
       if (pageKey.startsWith('blog_')) {
         fullUrl = `https://1928creativestudio.com/perspectives/${slugVal}`;
+      } else if (pageKey.startsWith('project_')) {
+        fullUrl = `https://1928creativestudio.com/${getPortfolioSlug()}/${slugVal}`;
       } else {
         fullUrl = `https://1928creativestudio.com/${slugVal}`;
       }
@@ -244,6 +312,20 @@
           const blogId = pageKey.replace('blog_', '');
           await window.CMSStore.updateRoute(pageKey, slug, true, blogId);
           showToast(`Perspective route updated to '/perspectives/${slug}'!`);
+        } else if (pageKey.startsWith('project_')) {
+          const projectId = pageKey.replace('project_', '');
+          const result = await window.CMSStore.updateProjectSlug(projectId, slug);
+          if (result && result.status === 'success') {
+            document.getElementById('seoSlugInput').value = result.slug;
+            populateProjectOptionsInDropdown();
+            const opt = document.querySelector(`#seoDropdownMenu .custom-option[data-value="${pageKey}"]`);
+            if (opt) document.getElementById('seoDropdownSelectedText').innerHTML = opt.innerHTML;
+            showToast(`Project link saved: /${getPortfolioSlug()}/${result.slug}`);
+          } else {
+            const proj = findProjectForKey(pageKey);
+            if (proj) document.getElementById('seoSlugInput').value = proj.slug || proj.id;
+            showToast((result && result.message) || 'Could not save the project link.', 'error');
+          }
         } else {
           await window.CMSStore.updateSEO(pageKey, {
             title,
@@ -287,6 +369,7 @@
 
     // Reactively refresh SEO form whenever MySQL data updates or reloads
     window.addEventListener('1928_cms_updated', () => {
+      populateProjectOptionsInDropdown();
       populateBlogOptionsInDropdown();
       loadSEOForm();
     });
@@ -294,11 +377,13 @@
     // Initial load when CMSStore is ready
     if (window.CMSStore && typeof window.CMSStore.ready === 'function') {
       window.CMSStore.ready().then(() => {
+        populateProjectOptionsInDropdown();
         populateBlogOptionsInDropdown();
         loadSEOForm();
         renderRouteRegistry();
       });
     } else {
+      populateProjectOptionsInDropdown();
       populateBlogOptionsInDropdown();
       loadSEOForm();
       renderRouteRegistry();

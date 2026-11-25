@@ -67,106 +67,525 @@
       document.getElementById(modalId).classList.remove('active');
     }
 
-    // ── 0. EDITORIAL VISUAL WYSIWYG CONTROLLER ──
-    function execEditorCommand(command, value = null) {
-      const editor = document.getElementById('blogVisualEditor');
-      if (!editor) return;
+    // ── 0. BLOG ARTICLE EDITOR (visual editor: toolbar, smart paste, images, live contents list) ──
+    function beEditor() { return document.getElementById('blogVisualEditor'); }
+
+    function beEscape(str) {
+      return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function beSlugify(text) {
+      return String(text || '').toLowerCase().normalize('NFKD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80);
+    }
+
+    // Make sure toolbar actions apply inside the editor (put the caret at the end if focus is elsewhere)
+    let beSavedRange = null;
+    function beEnsureSelection() {
+      const editor = beEditor();
+      if (!editor) return null;
+      const sel = window.getSelection();
+      if (sel && sel.rangeCount && editor.contains(sel.getRangeAt(0).commonAncestorContainer)) {
+        editor.focus();
+        return sel;
+      }
       editor.focus();
-      document.execCommand(command, false, value);
+      const range = document.createRange();
+      if (beSavedRange && editor.contains(beSavedRange.commonAncestorContainer)) {
+        range.setStart(beSavedRange.startContainer, beSavedRange.startOffset);
+        range.setEnd(beSavedRange.endContainer, beSavedRange.endOffset);
+      } else {
+        range.selectNodeContents(editor);
+        range.collapse(false);
+      }
+      sel.removeAllRanges();
+      sel.addRange(range);
+      return sel;
+    }
+
+    function beInsertHtml(html) {
+      beEnsureSelection();
+      document.execCommand('insertHTML', false, html);
+    }
+
+    function afterEditorChange() {
       syncVisualEditorToInput();
       updateEditorWordCount();
+      beRefreshToolbarState();
+    }
+
+    // Highlight the toolbar buttons that apply where the cursor is (Text / Heading / Subheading, bold, italic, lists)
+    function beRefreshToolbarState() {
+      const editor = beEditor();
+      const toolbar = document.getElementById('blogEditorToolbar');
+      if (!editor || !toolbar) return;
+      const sel = window.getSelection();
+      if (!sel || !sel.rangeCount || !editor.contains(sel.getRangeAt(0).commonAncestorContainer)) return;
+      const block = String(document.queryCommandValue('formatBlock') || '').toLowerCase();
+      toolbar.querySelectorAll('[data-block]').forEach(b => b.classList.toggle('is-active', b.dataset.block === (block || 'p')));
+      const inHeading = /^h[1-6]$/.test(block);
+      toolbar.querySelectorAll('[data-state]').forEach(b => {
+        let on = false;
+        // Headings are bold by design, so "Bold" is not shown as switched on there
+        if (!(inHeading && b.dataset.state === 'bold')) {
+          try { on = document.queryCommandState(b.dataset.state); } catch (e) {}
+        }
+        b.classList.toggle('is-on', !!on);
+      });
+    }
+
+    function execEditorCommand(command, value = null) {
+      if (!beEditor()) return;
+      beEnsureSelection();
+      document.execCommand(command, false, value);
+      afterEditorChange();
     }
 
     function formatEditorHeading(level) {
-      const editor = document.getElementById('blogVisualEditor');
-      if (!editor) return;
-      editor.focus();
-      if (level === 'p') {
-        document.execCommand('formatBlock', false, '<p>');
-      } else {
-        document.execCommand('formatBlock', false, `<h${level}>`);
-      }
-      syncVisualEditorToInput();
-      updateEditorWordCount();
+      if (!beEditor()) return;
+      beEnsureSelection();
+      const target = level === 'p' ? 'p' : `h${level}`;
+      const current = String(document.queryCommandValue('formatBlock') || '').toLowerCase();
+      // Clicking "Heading" on a heading turns it back into normal text
+      document.execCommand('formatBlock', false, current === target && target !== 'p' ? 'p' : target);
+      afterEditorChange();
+    }
+
+    function beSelectedText() {
+      const sel = window.getSelection();
+      return sel ? sel.toString().trim() : '';
     }
 
     function insertEditorPullquote() {
-      const editor = document.getElementById('blogVisualEditor');
-      if (!editor) return;
-      editor.focus();
-      const sel = window.getSelection();
-      const text = sel ? sel.toString().trim() : '';
-      const quoteText = text || 'Highlight a key perspective or architectural takeaway quote here...';
-      const quoteHtml = `<div class="reader-pullquote"><p>“${quoteText.replace(/^["“]|["”]$/g, '')}”</p></div><p></p>`;
-      document.execCommand('insertHTML', false, quoteHtml);
-      syncVisualEditorToInput();
-      updateEditorWordCount();
+      if (!beEditor()) return;
+      beEnsureSelection();
+      const text = beSelectedText().replace(/^["“]|["”]$/g, '') || 'Write the quote here';
+      beInsertHtml(`<div class="reader-pullquote"><p>“${beEscape(text)}”</p></div><p><br></p>`);
+      afterEditorChange();
     }
 
     function insertEditorTakeaway() {
-      const editor = document.getElementById('blogVisualEditor');
-      if (!editor) return;
-      editor.focus();
-      const sel = window.getSelection();
-      const text = sel ? sel.toString().trim() : '';
-      const boxText = text || 'Core thesis takeaway for executive readers.';
-      const boxHtml = `<div class="reader-takeaway-box"><div class="rtb-title">Key Principle</div><p>${boxText}</p></div><p></p>`;
-      document.execCommand('insertHTML', false, boxHtml);
-      syncVisualEditorToInput();
-      updateEditorWordCount();
+      if (!beEditor()) return;
+      beEnsureSelection();
+      const text = beSelectedText() || 'Write the key point here';
+      beInsertHtml(`<div class="reader-takeaway-box"><div class="rtb-title">Key point</div><p>${beEscape(text)}</p></div><p><br></p>`);
+      afterEditorChange();
     }
 
     function insertEditorDivider() {
-      const editor = document.getElementById('blogVisualEditor');
-      if (!editor) return;
-      editor.focus();
-      document.execCommand('insertHTML', false, '<hr class="editorial-divider" /><p></p>');
-      syncVisualEditorToInput();
+      if (!beEditor()) return;
+      beInsertHtml('<hr class="editorial-divider"><p><br></p>');
+      afterEditorChange();
     }
 
     function insertEditorLink() {
-      const editor = document.getElementById('blogVisualEditor');
-      if (!editor) return;
+      if (!beEditor()) return;
+      beEnsureSelection();
+      const sel = window.getSelection();
+      const range = sel && sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
+      const selected = beSelectedText();
+      let url = prompt('Paste the link (for example https://example.com or a page like contact):', 'https://');
+      if (!url || !url.trim() || url.trim() === 'https://') return;
+      url = url.trim();
+      if (!/^(https?:|mailto:|tel:|\/|#)/i.test(url) && /\.[a-z]{2,}/i.test(url)) url = 'https://' + url;
+      const editor = beEditor();
       editor.focus();
-      const url = prompt('Enter website URL or internal link (e.g. https://... or portfolio.html):');
-      if (url && url.trim()) {
-        document.execCommand('createLink', false, url.trim());
-        syncVisualEditorToInput();
+      if (range) { sel.removeAllRanges(); sel.addRange(range); }
+      if (selected) {
+        document.execCommand('createLink', false, url);
+      } else {
+        document.execCommand('insertHTML', false, `<a href="${beEscape(url)}">${beEscape(url)}</a>&nbsp;`);
       }
+      // Links to other websites open in a new tab
+      editor.querySelectorAll('a[href]').forEach(a => {
+        if (/^https?:/i.test(a.getAttribute('href'))) { a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener'); }
+      });
+      afterEditorChange();
+    }
+
+    // ── Images inside the article ──
+    async function beUploadImage(fileOrBlob, fileName) {
+      const fd = new FormData();
+      fd.append('file', fileOrBlob, fileName || fileOrBlob.name || 'image.png');
+      const res = await fetch('api.php?action=upload_asset', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (data && data.status === 'success' && data.filePath) return data.filePath;
+      throw new Error((data && data.message) || 'Upload failed');
+    }
+
+    function beInsertUploadingImage(file) {
+      const tempId = 'be-img-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      const previewUrl = URL.createObjectURL(file);
+      beInsertHtml(`<figure class="is-uploading" id="${tempId}"><img src="${previewUrl}" alt=""></figure><p><br></p>`);
+      afterEditorChange();
+      beUploadImage(file).then(path => {
+        const fig = document.getElementById(tempId);
+        if (fig) {
+          fig.querySelector('img').setAttribute('src', path);
+          fig.classList.remove('is-uploading');
+          fig.removeAttribute('id');
+        }
+        URL.revokeObjectURL(previewUrl);
+        afterEditorChange();
+      }).catch(err => {
+        const fig = document.getElementById(tempId);
+        if (fig) fig.remove();
+        showToast('Image upload failed: ' + err.message, 'error');
+        afterEditorChange();
+      });
+    }
+
+    function insertEditorImage() {
+      const input = document.getElementById('blogEditorImageFile');
+      if (!input) return;
+      const sel = window.getSelection();
+      const editor = beEditor();
+      beSavedRange = (sel && sel.rangeCount && editor && editor.contains(sel.getRangeAt(0).commonAncestorContainer)) ? sel.getRangeAt(0).cloneRange() : null;
+      input.value = '';
+      input.onchange = () => {
+        Array.from(input.files || []).filter(f => f.type.startsWith('image/')).forEach(beInsertUploadingImage);
+      };
+      input.click();
+    }
+
+    // Pasted images that live on other websites (e.g. Google Docs) or inside the clipboard are copied to our own server
+    async function beRehostImages() {
+      const editor = beEditor();
+      if (!editor) return;
+      const imgs = Array.from(editor.querySelectorAll('img')).filter(img => {
+        const src = img.getAttribute('src') || '';
+        return src.startsWith('data:image/') || (/^https?:/i.test(src) && !src.startsWith(window.location.origin));
+      });
+      for (const img of imgs) {
+        const src = img.getAttribute('src');
+        try {
+          const blob = await (await fetch(src, { mode: 'cors' })).blob();
+          if (!blob.type.startsWith('image/')) continue;
+          const ext = (blob.type.split('/')[1] || 'png').replace('jpeg', 'jpg').replace('svg+xml', 'svg');
+          const path = await beUploadImage(blob, `article-image.${ext}`);
+          img.setAttribute('src', path);
+        } catch (e) {
+          // The other website does not allow copying; the image keeps pointing to it
+        }
+      }
+      afterEditorChange();
+    }
+
+    // ── Cleaning pasted content (Word / Google Docs / web pages) ──
+    const BE_BOLD_RE = /font-weight\s*:\s*(bold|[6-9]00)/i;
+    const BE_ITALIC_RE = /font-style\s*:\s*italic/i;
+
+    function cleanEditorHtml(rawHtml) {
+      const doc = new DOMParser().parseFromString(`<div id="be-root">${rawHtml}</div>`, 'text/html');
+      const root = doc.getElementById('be-root');
+      if (!root) return '';
+      root.querySelectorAll('script, style, meta, link, title, xml, head, noscript, iframe, object, embed').forEach(n => n.remove());
+      const out = doc.createElement('div');
+      let droppedImages = 0;
+
+      const BLOCK_TAGS = new Set(['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'UL', 'OL', 'LI', 'BLOCKQUOTE', 'FIGURE', 'HR', 'TABLE', 'TR', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER', 'MAIN', 'ASIDE', 'PRE']);
+
+      function safeHref(href) {
+        href = (href || '').trim();
+        if (/^(https?:|mailto:|tel:|\/|#)/i.test(href)) return href;
+        if (/^[a-z0-9][a-z0-9/_-]*(\.html)?([?#].*)?$/i.test(href)) return href;
+        return '';
+      }
+
+      function walk(src, dest) {
+        Array.from(src.childNodes).forEach(n => {
+          if (n.nodeType === 3) {
+            const t = n.nodeValue.replace(/ /g, ' ');
+            if (t) dest.appendChild(doc.createTextNode(t));
+            return;
+          }
+          if (n.nodeType !== 1) return;
+          const tag = n.tagName;
+          const style = n.getAttribute('style') || '';
+          const cls = (n.getAttribute('class') || '');
+
+          // Keep the editor's own special blocks as they are
+          if (/\b(reader-pullquote|reader-takeaway-box)\b/.test(cls)) {
+            const keep = doc.createElement('div');
+            keep.className = /reader-pullquote/.test(cls) ? 'reader-pullquote' : 'reader-takeaway-box';
+            keep.innerHTML = n.innerHTML;
+            dest.appendChild(keep);
+            return;
+          }
+
+          let el = null;
+          switch (tag) {
+            case 'H1': case 'H2': el = doc.createElement('h2'); break;
+            case 'H3': case 'H4': case 'H5': case 'H6': el = doc.createElement('h3'); break;
+            case 'P': case 'PRE': el = doc.createElement('p'); break;
+            case 'UL': el = doc.createElement('ul'); break;
+            case 'OL': el = doc.createElement('ol'); break;
+            case 'LI': el = doc.createElement('li'); break;
+            case 'BLOCKQUOTE': {
+              const q = doc.createElement('div');
+              q.className = 'reader-pullquote';
+              const p = doc.createElement('p');
+              walk(n, p);
+              if (p.textContent.trim()) { q.appendChild(p); dest.appendChild(q); }
+              return;
+            }
+            case 'HR': { const hr = doc.createElement('hr'); hr.className = 'editorial-divider'; dest.appendChild(hr); return; }
+            case 'BR': dest.appendChild(doc.createElement('br')); return;
+            case 'IMG': {
+              const src = n.getAttribute('src') || '';
+              if (/^(https?:|data:image\/|assets\/|\/)/i.test(src)) {
+                const fig = doc.createElement('figure');
+                const img = doc.createElement('img');
+                img.setAttribute('src', src);
+                img.setAttribute('alt', n.getAttribute('alt') || '');
+                fig.appendChild(img);
+                dest.appendChild(fig);
+              } else {
+                droppedImages++;
+              }
+              return;
+            }
+            case 'A': {
+              const href = safeHref(n.getAttribute('href'));
+              if (!href) { walk(n, dest); return; }
+              el = doc.createElement('a');
+              el.setAttribute('href', href);
+              if (/^https?:/i.test(href)) { el.setAttribute('target', '_blank'); el.setAttribute('rel', 'noopener'); }
+              break;
+            }
+            case 'STRONG': el = doc.createElement('strong'); break;
+            case 'B':
+              // Google Docs wraps everything in <b style="font-weight:normal">
+              if (/font-weight\s*:\s*(normal|[1-4]00)/i.test(style)) { walk(n, dest); return; }
+              el = doc.createElement('strong'); break;
+            case 'EM': case 'I': el = doc.createElement('em'); break;
+            case 'U': el = doc.createElement('u'); break;
+            case 'SPAN': case 'FONT': {
+              let target = dest;
+              if (BE_BOLD_RE.test(style)) { const s = doc.createElement('strong'); target.appendChild(s); target = s; }
+              if (BE_ITALIC_RE.test(style)) { const e = doc.createElement('em'); target.appendChild(e); target = e; }
+              walk(n, target);
+              return;
+            }
+            case 'TD': case 'TH': el = doc.createElement('p'); break;
+            default:
+              walk(n, dest); // div, section, table wrappers, etc. are flattened
+              return;
+          }
+          walk(n, el);
+          dest.appendChild(el);
+        });
+      }
+      walk(root, out);
+
+      // Wrap loose text at the top level into paragraphs
+      const final = doc.createElement('div');
+      let para = null;
+      Array.from(out.childNodes).forEach(n => {
+        const isBlock = n.nodeType === 1 && (BLOCK_TAGS.has(n.tagName) || n.tagName === 'FIGURE' || n.tagName === 'HR');
+        if (isBlock) { para = null; final.appendChild(n); return; }
+        if (n.nodeType === 1 && n.tagName === 'BR' && para) { para.appendChild(n); return; }
+        if (!para) { para = doc.createElement('p'); final.appendChild(para); }
+        para.appendChild(n);
+      });
+
+      // Tidy: nested blocks inside paragraphs, empty paragraphs, bullet-text paragraphs, bold "title" lines
+      final.querySelectorAll('p').forEach(p => {
+        if (p.querySelector('h2, h3, ul, ol, figure, div, p')) {
+          const frag = doc.createDocumentFragment();
+          Array.from(p.childNodes).forEach(c => frag.appendChild(c));
+          p.replaceWith(frag);
+        }
+      });
+      Array.from(final.querySelectorAll('p, h2, h3, li')).forEach(el => {
+        // trim leading/trailing <br>
+        while (el.firstChild && el.firstChild.nodeType === 1 && el.firstChild.tagName === 'BR') el.firstChild.remove();
+        while (el.lastChild && el.lastChild.nodeType === 1 && el.lastChild.tagName === 'BR') el.lastChild.remove();
+        if (!el.textContent.trim() && !el.querySelector('img')) el.remove();
+      });
+
+      // Word-style bullet paragraphs ("• item") → real lists
+      const BULLET_RE = /^\s*([•·▪◦\-–*]|o(?=\s)|§)\s+/;
+      let list = null;
+      Array.from(final.children).forEach(el => {
+        if (el.tagName === 'P' && BULLET_RE.test(el.textContent)) {
+          if (!list) { list = doc.createElement('ul'); el.before(list); }
+          const li = doc.createElement('li');
+          li.innerHTML = el.innerHTML.replace(/^(\s|&nbsp;)*([•·▪◦\-–*]|o|§)(\s|&nbsp;)+/, '');
+          list.appendChild(li);
+          el.remove();
+        } else {
+          list = null;
+        }
+      });
+
+      // Headings written as bold lines or "## Title" / "01. Title" → real headings
+      const kids = Array.from(final.children);
+      kids.forEach((el, i) => {
+        if (el.tagName !== 'P') return;
+        const text = el.textContent.trim();
+        if (!text) return;
+        const md = text.match(/^(#{1,3})\s+(.+)$/);
+        if (md) {
+          const h = doc.createElement(md[1].length === 3 ? 'h3' : 'h2');
+          h.textContent = md[2].trim();
+          el.replaceWith(h);
+          return;
+        }
+        const boldText = Array.from(el.querySelectorAll('strong, b')).map(s => s.textContent).join('').trim();
+        const allBold = boldText && boldText.replace(/\s+/g, ' ') === text.replace(/\s+/g, ' ');
+        const shortLine = text.length <= 90 && text.split(/\s+/).length <= 14 && !/[.!?,;]$/.test(text);
+        const numberedTitle = /^\d{1,2}[.)]\s+\S/.test(text) && shortLine;
+        const hasNext = i < kids.length - 1;
+        if ((allBold && shortLine && hasNext) || (numberedTitle && hasNext && kids[i + 1] && kids[i + 1].tagName === 'P' && kids[i + 1].textContent.trim().length > text.length)) {
+          const h = doc.createElement('h2');
+          h.textContent = text.replace(/:$/, '');
+          el.replaceWith(h);
+        }
+      });
+
+      if (droppedImages) {
+        setTimeout(() => showToast(`${droppedImages} image(s) could not be copied from the document. Add them with the Image button.`, 'info'), 50);
+      }
+      return final.innerHTML;
+    }
+
+    // Plain text → paragraphs, headings and lists
+    function textToEditorHtml(text) {
+      const lines = String(text || '').replace(/\r\n?/g, '\n').split('\n');
+      const blocks = [];
+      lines.forEach(raw => {
+        const line = raw.trim();
+        if (!line) { blocks.push({ type: 'gap' }); return; }
+        if (/^[-*•·▪]\s+/.test(line)) { blocks.push({ type: 'ul', text: line.replace(/^[-*•·▪]\s+/, '') }); return; }
+        if (/^\d{1,3}[.)]\s+/.test(line)) { blocks.push({ type: 'num', text: line.replace(/^\d{1,3}[.)]\s+/, ''), raw: line }); return; }
+        const md = line.match(/^(#{1,3})\s+(.+)$/);
+        if (md) { blocks.push({ type: md[1].length === 3 ? 'h3' : 'h2', text: md[2] }); return; }
+        blocks.push({ type: 'p', text: line });
+      });
+
+      const inline = (t) => beEscape(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/(^|\s)_(.+?)_(?=\s|$)/g, '$1<em>$2</em>');
+      const real = blocks.filter(b => b.type !== 'gap');
+      let html = '';
+      for (let i = 0; i < blocks.length; i++) {
+        const b = blocks[i];
+        if (b.type === 'gap') continue;
+        if (b.type === 'ul' || b.type === 'num') {
+          // consecutive list lines become one list; a single short numbered line is a heading
+          const kind = b.type;
+          const run = [];
+          while (i < blocks.length && blocks[i].type === kind) { run.push(blocks[i]); i++; }
+          i--;
+          if (kind === 'num' && run.length === 1) {
+            const t = run[0].raw;
+            const isTitle = t.length <= 90 && !/[.!?,;]$/.test(t);
+            html += isTitle ? `<h2>${inline(t)}</h2>` : `<p>${inline(t)}</p>`;
+            continue;
+          }
+          const tag = kind === 'ul' ? 'ul' : 'ol';
+          html += `<${tag}>${run.map(r => `<li>${inline(r.text)}</li>`).join('')}</${tag}>`;
+          continue;
+        }
+        if (b.type === 'h2' || b.type === 'h3') { html += `<${b.type}>${inline(b.text)}</${b.type}>`; continue; }
+        // A short line without ending punctuation, followed by a longer paragraph, reads as a heading
+        const idx = real.indexOf(b);
+        const next = real[idx + 1];
+        const looksLikeTitle = b.text.length <= 80 && b.text.split(/\s+/).length <= 12 && !/[.!?,;:]$/.test(b.text) && next && next.type === 'p' && next.text.length > b.text.length + 20;
+        if (/^["“].+["”]$/.test(b.text) && b.text.length > 20) { html += `<div class="reader-pullquote"><p>${inline(b.text)}</p></div>`; continue; }
+        html += looksLikeTitle ? `<h2>${inline(b.text)}</h2>` : `<p>${inline(b.text)}</p>`;
+      }
+      return html;
+    }
+
+    function handleEditorPaste(e) {
+      const cd = e.clipboardData;
+      if (!cd) return;
+      const html = cd.getData('text/html');
+      const text = cd.getData('text/plain');
+      const files = Array.from(cd.files || []).filter(f => f.type.startsWith('image/'));
+
+      // A copied image (e.g. a screenshot)
+      if (files.length && !(html && html.trim()) && !(text && text.trim())) {
+        e.preventDefault();
+        files.forEach(beInsertUploadingImage);
+        return;
+      }
+
+      e.preventDefault();
+      if (html && html.trim()) {
+        let clean = cleanEditorHtml(html);
+        // A small inline snippet (one paragraph) is inserted as text into the current paragraph
+        const single = clean.match(/^<p>([\s\S]*)<\/p>$/);
+        if (single && !/<\/?(p|h2|h3|ul|ol|figure|div)\b/i.test(single[1])) clean = single[1];
+        beInsertHtml(clean || beEscape(text));
+      } else if (text) {
+        if (!/\n/.test(text.trim())) {
+          document.execCommand('insertText', false, text);
+        } else {
+          beInsertHtml(textToEditorHtml(text));
+        }
+      }
+      afterEditorChange();
+      beRehostImages();
+    }
+
+    // "Tidy up" button: cleans the whole article and turns title-like lines into headings
+    function autoFormatEditorContent() {
+      const editor = beEditor();
+      if (!editor) return;
+      if (!editor.textContent.trim()) {
+        showToast('The article is empty. Write or paste your text first.', 'info');
+        return;
+      }
+      const before = editor.querySelectorAll('h2').length;
+      const blocks = editor.querySelectorAll('p, h2, h3, ul, ol, div, figure').length;
+      const brCount = editor.querySelectorAll('br').length;
+      // Text that arrived as one big block with line breaks is rebuilt from its lines
+      if (blocks <= 2 && brCount >= 3) {
+        editor.innerHTML = textToEditorHtml(editor.innerText);
+      } else {
+        editor.innerHTML = cleanEditorHtml(editor.innerHTML);
+      }
+      afterEditorChange();
+      const after = editor.querySelectorAll('h2').length;
+      showToast(after > before
+        ? `Tidied up. Found ${after - before} new heading(s).`
+        : 'Tidied up. Tip: put the cursor on a title line and click "Heading" to make it a heading.');
     }
 
     function toggleCodeView() {
-      const visualEditor = document.getElementById('blogVisualEditor');
+      const visualEditor = beEditor();
       const codeEditor = document.getElementById('blogContentInput');
       const btn = document.getElementById('btnToggleEditorCode');
       if (!visualEditor || !codeEditor) return;
+      const toolbar = document.getElementById('blogEditorToolbar');
 
       if (visualEditor.style.display === 'none') {
-        visualEditor.innerHTML = codeEditor.value || '<p></p>';
+        visualEditor.innerHTML = codeEditor.value || '<p><br></p>';
         visualEditor.style.display = 'block';
         codeEditor.style.display = 'none';
-        if (btn) btn.classList.remove('active');
-        showToast('Visual Editor active', 'info');
+        if (toolbar) toolbar.style.display = '';
+        if (btn) { btn.classList.remove('active'); btn.textContent = 'Edit as HTML'; }
       } else {
         codeEditor.value = getCleanHtmlFromVisualEditor();
         visualEditor.style.display = 'none';
         codeEditor.style.display = 'block';
-        if (btn) btn.classList.add('active');
-        showToast('HTML Code view active', 'info');
+        if (toolbar) toolbar.style.display = 'none';
+        if (btn) { btn.classList.add('active'); btn.textContent = 'Back to the visual editor'; }
       }
       updateEditorWordCount();
     }
 
     function getCleanHtmlFromVisualEditor() {
-      const editor = document.getElementById('blogVisualEditor');
+      const editor = beEditor();
       if (!editor) return '';
-      let html = editor.innerHTML || '';
-      if (!html.trim() || html === '<p><br></p>' || html === '<p></p>' || html === '<br>') return '';
-      return html.trim();
+      const html = (editor.innerHTML || '').trim();
+      if (!html || html === '<p><br></p>' || html === '<p></p>' || html === '<br>') return '';
+      return html;
     }
 
     function syncVisualEditorToInput() {
-      const visualEditor = document.getElementById('blogVisualEditor');
+      const visualEditor = beEditor();
       const codeEditor = document.getElementById('blogContentInput');
       if (!visualEditor || !codeEditor) return;
       if (visualEditor.style.display !== 'none') {
@@ -174,52 +593,87 @@
       }
     }
 
-    function updateEditorWordCount() {
-      const visualEditor = document.getElementById('blogVisualEditor');
-      const badge = document.getElementById('editorWordCountBadge');
-      if (!visualEditor || !badge) return;
-      const text = visualEditor.innerText || visualEditor.textContent || '';
-      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-      badge.textContent = `${words} word${words === 1 ? '' : 's'}`;
-    }
-
-    function autoFormatEditorContent() {
-      const editor = document.getElementById('blogVisualEditor');
-      if (!editor) return;
-      let raw = editor.innerText || editor.textContent || '';
-      if (!raw.trim()) {
-        showToast('Editor is empty. Paste or write your article text first.', 'info');
-        return;
-      }
-      
-      const blocks = raw.split(/\n\s*\n/);
-      const formattedBlocks = blocks.map(block => {
-        const trimmed = block.trim();
-        if (!trimmed) return '';
-        if (/^#{1,3}\s+(.+)$/m.test(trimmed)) {
-          const heading = trimmed.replace(/^#{1,3}\s+/, '');
-          return `<h2>${heading}</h2>`;
-        }
-        if (/^(0[1-9]|[1-9][0-9]?)\.\s+[A-Z]/m.test(trimmed) && trimmed.length < 90 && !trimmed.includes('\n')) {
-          return `<h2>${trimmed}</h2>`;
-        }
-        if (/^[-*•]\s+/m.test(trimmed)) {
-          const items = trimmed.split(/\n/).map(l => `  <li>${l.replace(/^[-*•]\s+/, '').trim()}</li>`).join('\n');
-          return `<ul>\n${items}\n</ul>`;
-        }
-        if (/^["“]/.test(trimmed) && /["”]$/.test(trimmed)) {
-          return `<div class="reader-pullquote">\n  <p>${trimmed}</p>\n</div>`;
-        }
-        const pContent = trimmed.replace(/\n/g, '<br />');
-        return `<p>${pContent}</p>`;
+    // Adds a stable id to every main heading and returns the contents list built from them
+    function beHeadingsAndIds(html) {
+      const doc = new DOMParser().parseFromString(`<div id="be-root">${html || ''}</div>`, 'text/html');
+      const root = doc.getElementById('be-root');
+      const used = new Set();
+      const sections = [];
+      root.querySelectorAll('h2').forEach((h, i) => {
+        const title = h.textContent.trim();
+        if (!title) return;
+        let id = h.getAttribute('id') || `sec-${beSlugify(title) || (i + 1)}`;
+        while (used.has(id)) id = `${id}-${i + 1}`;
+        used.add(id);
+        h.setAttribute('id', id);
+        sections.push({ id, title });
       });
-
-      const finalHtml = formattedBlocks.filter(Boolean).join('\n\n');
-      editor.innerHTML = finalHtml;
-      syncVisualEditorToInput();
-      updateEditorWordCount();
-      showToast('⚡ Article automatically formatted into clean visual headings & paragraphs!');
+      return { html: root.innerHTML, sections };
     }
+
+    function beArticleText() {
+      const visualEditor = beEditor();
+      const codeEditor = document.getElementById('blogContentInput');
+      if (visualEditor && visualEditor.style.display !== 'none') return visualEditor.innerText || '';
+      const tmp = document.createElement('div');
+      tmp.innerHTML = codeEditor ? codeEditor.value : '';
+      return tmp.textContent || '';
+    }
+
+    function beAutoReadTime() {
+      const words = beArticleText().trim() ? beArticleText().trim().split(/\s+/).length : 0;
+      return { words, minutes: Math.max(1, Math.round(words / 200)) };
+    }
+
+    // Word count, read time and the live contents list
+    function updateEditorWordCount() {
+      const { words, minutes } = beAutoReadTime();
+      const badge = document.getElementById('editorWordCountBadge');
+      if (badge) badge.textContent = `${words} word${words === 1 ? '' : 's'}`;
+      const rt = document.getElementById('editorReadTimeBadge');
+      if (rt) rt.textContent = `${minutes} min read`;
+      const rtInput = document.getElementById('blogReadTimeInput');
+      if (rtInput) rtInput.placeholder = `Auto: ${minutes} min`;
+
+      const toc = document.getElementById('blogTOCPreview');
+      if (toc) {
+        const source = beEditor() && beEditor().style.display !== 'none' ? beEditor().innerHTML : (document.getElementById('blogContentInput')?.value || '');
+        const { sections } = beHeadingsAndIds(source);
+        toc.innerHTML = sections.length
+          // Headings that already start with a number ("01. ...") don't get a second one
+          ? sections.map(s => `<li${/^\s*\d+[.):-]/.test(s.title) ? ' class="be-toc-numbered"' : ''}>${beEscape(s.title)}</li>`).join('')
+          : '<li class="be-toc-empty">No headings yet. Put the cursor on a title line and click <strong>Heading</strong>, or click <strong>Tidy up</strong> after pasting.</li>';
+      }
+    }
+
+    // Highlight Text / Heading / Subheading for the current line
+    document.addEventListener('selectionchange', () => {
+      const editor = beEditor();
+      const toolbar = document.getElementById('blogEditorToolbar');
+      if (!editor || !toolbar) return;
+      const sel = window.getSelection();
+      if (!sel || !sel.rangeCount || !editor.contains(sel.getRangeAt(0).commonAncestorContainer)) return;
+      beSavedRange = sel.getRangeAt(0).cloneRange();
+      beRefreshToolbarState();
+    });
+
+    // Keep the text selection when a toolbar button is pressed; enable smart paste
+    document.addEventListener('DOMContentLoaded', () => {
+      const toolbar = document.getElementById('blogEditorToolbar');
+      if (toolbar) toolbar.addEventListener('mousedown', (e) => { if (e.target.closest('.be-tool')) e.preventDefault(); });
+      const editor = beEditor();
+      if (editor) {
+        editor.addEventListener('paste', handleEditorPaste);
+        editor.addEventListener('drop', (e) => {
+          const files = Array.from((e.dataTransfer && e.dataTransfer.files) || []).filter(f => f.type.startsWith('image/'));
+          if (!files.length) return;
+          e.preventDefault();
+          files.forEach(beInsertUploadingImage);
+        });
+      }
+      const codeEditor = document.getElementById('blogContentInput');
+      if (codeEditor) codeEditor.addEventListener('input', updateEditorWordCount);
+    });
 
     // ── 0.1 TEXTAREA & MANUAL INPUT HELPERS ──
     function insertTagIntoTextarea(textareaId, openTag, closeTag) {

@@ -4533,3 +4533,776 @@ body.auth-unlocked .admin-auth-overlay {
   opacity: 0 !important;
   z-index: -9999 !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   BLOG EDITOR (simple two-column writing screen)
+   Left: title, summary, article · Right: cover, details, author, link,
+   automatic contents list, suggested blogs, more options
+   ═══════════════════════════════════════════════════════════════════════ */
+#blogModal .be-card {
+  max-width: 1280px;
+  height: 92vh;
+  max-height: 92vh;
+}
+
+#blogModal .be-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+#blogModal .be-view-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-mid);
+  text-decoration: none;
+  padding: 9px 14px;
+  border: 1px solid var(--rule-m);
+  border-radius: 999px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+#blogModal .be-view-link:hover {
+  color: var(--cr);
+  border-color: var(--cr);
+}
+
+#blogModal .be-body {
+  padding: 28px 32px 40px;
+  background: var(--sidebar-bg);
+}
+
+#blogModal .be-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 28px;
+  /* Both columns end at the same line: the article box grows down to the last box on the right */
+  align-items: stretch;
+}
+
+#blogModal .be-main {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+#blogModal .be-field.be-field-article {
+  flex: 1 1 auto;
+  margin-bottom: 0;
+}
+
+#blogModal .be-field-article .be-editor-wrap {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+#blogModal .be-field-article .be-editor,
+#blogModal .be-field-article .be-html-editor {
+  flex: 1 1 auto;
+}
+
+#blogModal .be-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 16px;
+}
+
+#blogModal .be-label {
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#blogModal .be-hint {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-dim);
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+#blogModal .be-hint-block {
+  display: block;
+  margin: -4px 0 12px;
+}
+
+#blogModal .be-hint strong {
+  color: var(--ink-mid);
+}
+
+/* Title: reads like a document title */
+#blogModal .be-title-input {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-primary);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--ink);
+  background: var(--card-bg);
+  border: 1.5px solid var(--rule-m);
+  border-radius: 12px;
+  padding: 14px 18px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#blogModal .be-title-input::placeholder {
+  color: var(--ink-dim);
+  font-weight: 700;
+}
+
+#blogModal .be-title-input:focus {
+  border-color: var(--cr);
+  box-shadow: 0 0 0 3px var(--cr-lo);
+}
+
+#blogModal #blogBioInput {
+  min-height: 64px;
+  resize: vertical;
+}
+
+#blogModal .be-summary {
+  min-height: 64px;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+#blogModal .be-field.is-invalid .be-title-input,
+#blogModal .be-field.is-invalid .form-textarea {
+  border-color: var(--cr);
+  box-shadow: 0 0 0 3px var(--cr-lo);
+}
+
+#blogModal .be-article-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Editor */
+#blogModal .be-editor-wrap {
+  overflow: visible;
+  border-radius: 14px;
+}
+
+#blogModal .be-toolbar {
+  position: sticky;
+  top: -28px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 7px 6px;
+  background: var(--card-alt);
+  border-bottom: 1px solid var(--rule-m);
+  border-radius: 13px 13px 0 0;
+  user-select: none;
+}
+
+[data-theme="light"] #blogModal .be-toolbar {
+  background: #F6F6F9;
+}
+
+/* Text / Heading / Subheading: one switch, the current line's style is highlighted */
+#blogModal .be-seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="light"] #blogModal .be-seg {
+  background: rgba(17, 17, 26, 0.06);
+}
+
+#blogModal .be-seg .be-tool {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 7px;
+}
+
+#blogModal .be-seg .be-tool.is-active {
+  background: var(--card-bg);
+  color: var(--cr);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--rule);
+}
+
+[data-theme="light"] #blogModal .be-seg .be-tool.is-active {
+  background: #fff;
+}
+
+#blogModal .be-tool-sep {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+  background: var(--rule-m);
+  flex-shrink: 0;
+}
+
+#blogModal .be-tool {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 9px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-mid);
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+  white-space: nowrap;
+}
+
+#blogModal .be-tool svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+#blogModal .be-tool-icon {
+  width: 32px;
+  padding: 0;
+}
+
+#blogModal .be-tool:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--ink);
+}
+
+[data-theme="light"] #blogModal .be-tool:hover {
+  background: rgba(17, 17, 26, 0.06);
+}
+
+#blogModal .be-seg .be-tool.is-active:hover {
+  background: var(--card-bg);
+  color: var(--cr);
+}
+
+[data-theme="light"] #blogModal .be-seg .be-tool.is-active:hover {
+  background: #fff;
+}
+
+/* Bold / italic / list is switched on where the cursor is */
+#blogModal .be-tool.is-on,
+#blogModal .be-tool.is-on:hover {
+  background: var(--cr-lo);
+  color: var(--cr);
+}
+
+/* Tidy up: one action for the whole article, kept apart on the right */
+#blogModal .be-tool-tidy {
+  margin-left: auto;
+  color: var(--cr);
+  box-shadow: inset 0 0 0 1px rgba(200, 16, 46, 0.35);
+}
+
+#blogModal .be-tool-tidy:hover,
+[data-theme="light"] #blogModal .be-tool-tidy:hover {
+  background: var(--cr-lo);
+  color: var(--cr);
+}
+
+/* Small label under a button on hover */
+#blogModal .be-tool[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translate(-50%, -3px);
+  padding: 6px 9px;
+  border-radius: 7px;
+  background: var(--ink);
+  color: var(--card-bg);
+  font-family: var(--font-primary);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s, transform 0.15s;
+  z-index: 20;
+}
+
+#blogModal .be-tool[data-tip]:hover::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  transition-delay: 0.3s;
+}
+
+#blogModal .be-tool-tidy[data-tip]::after {
+  left: auto;
+  right: 0;
+  transform: translateY(-3px);
+}
+
+#blogModal .be-tool-tidy[data-tip]:hover::after {
+  transform: translateY(0);
+}
+
+#blogModal .be-editor {
+  min-height: 460px;
+  max-height: none;
+  overflow: visible;
+  padding: 24px 28px 32px;
+  font-family: var(--font-secondary);
+  font-size: 15.5px;
+  line-height: 1.8;
+  border-radius: 0 0 13px 13px;
+}
+
+#blogModal .be-editor p,
+#blogModal .be-editor li {
+  font-size: 15.5px;
+  line-height: 1.8;
+}
+
+#blogModal .be-editor h2 {
+  font-size: 22px;
+  margin: 30px 0 12px;
+}
+
+#blogModal .be-editor h3 {
+  font-size: 17.5px;
+  margin: 22px 0 8px;
+}
+
+#blogModal .be-editor ul,
+#blogModal .be-editor ol {
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+
+#blogModal .be-editor img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+  margin: 8px 0;
+}
+
+#blogModal .be-editor figure {
+  margin: 20px 0;
+}
+
+#blogModal .be-editor figure.is-uploading img {
+  opacity: 0.45;
+}
+
+#blogModal .be-editor a {
+  color: var(--cr);
+  text-decoration: underline;
+}
+
+#blogModal .be-html-editor {
+  min-height: 460px;
+  border-radius: 0 0 13px 13px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+#blogModal .be-editor-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-dim);
+}
+
+#blogModal .be-link-btn {
+  margin-left: auto;
+  background: none;
+  border: none;
+  padding: 4px 0;
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+#blogModal .be-link-btn:hover,
+#blogModal .be-link-btn.active {
+  color: var(--cr);
+}
+
+/* Right column panels */
+#blogModal .be-side {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+#blogModal .be-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--rule-m);
+  border-radius: 14px;
+  padding: 18px 18px 4px;
+}
+
+#blogModal .be-panel-title {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#blogModal .be-tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--success);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+#blogModal .be-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+#blogModal .be-panel .form-input,
+#blogModal .be-panel .form-textarea {
+  font-size: 13.5px;
+}
+
+#blogModal .be-media {
+  margin-bottom: 14px;
+  /* The side panel is already a card: no second frame around the image */
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+#blogModal .be-media .media-dropzone {
+  padding: 18px 12px;
+}
+
+/* Author */
+#blogModal .be-author-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+#blogModal .be-avatar {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid var(--cr);
+  background: var(--cr-lo);
+  color: var(--cr);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 900;
+}
+
+#blogModal .be-author-fields {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Page link */
+#blogModal .be-slug {
+  display: flex;
+  align-items: stretch;
+  border: 1.5px solid var(--rule-m);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card-bg);
+  margin-bottom: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#blogModal .be-slug:focus-within {
+  border-color: var(--cr);
+  box-shadow: 0 0 0 3px var(--cr-lo);
+}
+
+#blogModal .be-slug-prefix {
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--ink-dim);
+  background: var(--card-alt);
+  border-right: 1px solid var(--rule);
+  white-space: nowrap;
+}
+
+[data-theme="light"] #blogModal .be-slug-prefix {
+  background: #F3F3F7;
+}
+
+#blogModal .be-slug input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  padding: 10px 10px;
+}
+
+/* Automatic contents list */
+#blogModal .be-toc-preview {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  counter-reset: betoc;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+#blogModal .be-toc-preview li {
+  counter-increment: betoc;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--card-alt);
+  line-height: 1.4;
+}
+
+[data-theme="light"] #blogModal .be-toc-preview li {
+  background: #F3F3F7;
+}
+
+#blogModal .be-toc-preview li::before {
+  content: counter(betoc, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--cr);
+  flex-shrink: 0;
+}
+
+#blogModal .be-toc-preview li.be-toc-empty {
+  background: transparent;
+  border: 1px dashed var(--rule-m);
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+
+#blogModal .be-toc-preview li.be-toc-empty::before,
+#blogModal .be-toc-preview li.be-toc-numbered::before {
+  content: none;
+}
+
+/* More options */
+/* Images: cover + article image together */
+#blogModal .be-image-field {
+  margin-bottom: 16px;
+}
+
+#blogModal .be-image-field + .be-image-field {
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+
+#blogModal .be-image-head {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 10px;
+}
+
+#blogModal .be-image-field .be-media {
+  margin-bottom: 0;
+}
+
+/* More options: page link, contents list, suggested blogs */
+#blogModal .be-more > summary {
+  cursor: pointer;
+  list-style: none;
+  margin-bottom: 14px;
+  user-select: none;
+}
+
+#blogModal .be-more-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+#blogModal .be-more-text small {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--ink-dim);
+}
+
+#blogModal .be-more-block {
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  margin-bottom: 14px;
+}
+
+#blogModal .be-sub-title {
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#blogModal .be-more-block .be-field:last-child,
+#blogModal .be-more-block .be-toc-preview {
+  margin-bottom: 0;
+}
+
+#blogModal .be-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+#blogModal .be-more > summary::after {
+  content: "+";
+  margin-left: auto;
+  font-size: 16px;
+  color: var(--ink-dim);
+}
+
+#blogModal .be-more[open] > summary::after {
+  content: "\2013";
+}
+
+/* Footer */
+#blogModal .be-save-status {
+  margin-right: auto;
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-dim);
+}
+
+#blogModal .be-save-status.is-error {
+  color: var(--cr);
+}
+
+#blogModal .be-save-status.is-ok {
+  color: var(--success);
+}
+
+#blogModal #blogSaveBtn[disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Smaller laptops: Key point and Image show as icons (their name appears on hover) so the toolbar stays on one line */
+@media (max-width: 1310px) {
+  #blogModal .be-tool-label {
+    display: none;
+  }
+  #blogModal .be-tool-short {
+    width: 32px;
+    padding: 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  #blogModal .be-layout {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+}
+
+@media (max-width: 900px) {
+  #blogModal .be-layout {
+    grid-template-columns: 1fr;
+  }
+  #blogModal .be-body {
+    padding: 20px 18px 32px;
+  }
+  #blogModal .be-toolbar {
+    top: -20px;
+  }
+}
+
+/* Blog editor: image boxes in the narrow side column (big preview, buttons below, no file path) */
+#blogModal .be-media .media-preview-container {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  padding: 10px;
+}
+#blogModal .be-media .media-preview-thumb-wrap {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+#blogModal .be-media .media-small-thumbnail {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  box-shadow: none;
+}
+#blogModal .be-media .media-preview-meta {
+  display: none;
+}
+#blogModal .be-media .media-actions-deck {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+#blogModal .be-media .media-actions-deck button {
+  justify-content: center;
+  width: 100%;
+}

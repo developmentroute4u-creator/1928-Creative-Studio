@@ -56,114 +56,38 @@
 
     document.getElementById('searchBlogsInput').addEventListener('input', renderBlogsGrid);
 
-    // ── Table of Contents (TOC) Dynamic Manager ──
-    function addTOCRow(title = '', anchorId = '') {
-      const container = document.getElementById('blogTOCRowsContainer');
-      if (!container) return;
-      const row = document.createElement('div');
-      row.className = 'toc-editor-row';
-      row.style.cssText = 'display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr) 36px;gap:8px;align-items:center;background:var(--card-alt);padding:8px 10px;border:1px solid var(--rule);border-radius:6px;width:100%;box-sizing:border-box;';
-      const cleanTitle = (title || '').replace(/"/g, '&quot;');
-      const cleanAnchor = (anchorId || '').replace(/"/g, '&quot;');
-      row.innerHTML = `
-        <div style="min-width:0;width:100%;">
-          <input type="text" class="form-input toc-title-input" placeholder="Section Title (e.g. 01. The Strategic Shift)" value="${cleanTitle}" style="font-size:12px;padding:7px 10px;width:100%;box-sizing:border-box;" />
-        </div>
-        <div style="min-width:0;width:100%;">
-          <input type="text" class="form-input toc-anchor-input" placeholder="Anchor ID (e.g. sec-shift)" value="${cleanAnchor}" style="font-size:12px;padding:7px 10px;font-family:var(--font-mono);width:100%;box-sizing:border-box;" />
-        </div>
-        <button type="button" class="btn-icon-square" onclick="this.closest('.toc-editor-row').remove()" style="width:32px;height:32px;border-color:transparent;color:var(--cr);flex-shrink:0;" title="Remove Section Anchor">✕</button>
-      `;
-      container.appendChild(row);
-    }
-
+    // ── Blog editor: contents list is automatic (built from the article's Headings) ──
+    // Kept for compatibility with older code paths: refreshes the live contents preview.
     function autoDetectTOCFromContent() {
-      syncVisualEditorToInput();
-      const html = document.getElementById('blogContentInput').value || '';
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(`<div>${html}</div>`, 'text/html');
-      const headings = doc.querySelectorAll('h2, h3, [id^="sec-"]');
-      
-      const detected = [];
-      headings.forEach((h, idx) => {
-        const text = h.textContent.trim();
-        if (!text) return;
-        let anchorId = h.id || h.closest('[id]')?.id || '';
-        if (!anchorId) {
-          const cleanSlug = text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-          anchorId = cleanSlug ? `sec-${cleanSlug}` : `sec-${idx + 1}`;
-        }
-        detected.push({ title: text, id: anchorId });
-      });
-
-      if (!detected.length) {
-        showToast('No headings found in HTML content to detect.', 'info');
-        return;
-      }
-
-      const container = document.getElementById('blogTOCRowsContainer');
-      if (container) container.innerHTML = '';
-      detected.forEach(d => addTOCRow(d.title, d.id));
-      showToast(`⚡ Detected ${detected.length} sections from article HTML!`);
+      updateEditorWordCount();
     }
 
-    function getTOCRowsData() {
-      const container = document.getElementById('blogTOCRowsContainer');
-      if (!container) return [];
-      const rows = container.querySelectorAll('.toc-editor-row');
-      const result = [];
-      rows.forEach((r, idx) => {
-        const title = r.querySelector('.toc-title-input')?.value.trim() || '';
-        let anchorId = r.querySelector('.toc-anchor-input')?.value.trim() || '';
-        if (title) {
-          if (!anchorId) {
-            anchorId = `sec-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || (idx + 1)}`;
-          }
-          result.push({ id: anchorId, title: title });
-        }
-      });
-      return result;
-    }
-
-    function setTOCRowsData(sections) {
-      const container = document.getElementById('blogTOCRowsContainer');
-      if (!container) return;
-      container.innerHTML = '';
-      if (Array.isArray(sections) && sections.length) {
-        sections.forEach(s => {
-          addTOCRow(s.title || s.name || '', s.id || s.target || '');
-        });
-      } else {
-        addTOCRow('01. The Strategic Shift', 'sec-shift');
-        addTOCRow('02. Mathematical Geometry', 'sec-geometry');
-        addTOCRow('03. Strategic Takeaways', 'sec-takeaways');
-      }
-    }
-
-    // ── Related Monographs Dropdowns Manager ──
+    // ── "Suggested blogs" dropdowns (empty = Automatic: the website picks from the same category) ──
     function populateRelatedDropdowns(currentBlogId, selectedRel1, selectedRel2) {
       const allBlogs = window.CMSStore.getBlogs();
-      const filteredBlogs = allBlogs.filter(b => b.id !== currentBlogId);
-
-      if (!selectedRel1 && filteredBlogs.length > 0) selectedRel1 = filteredBlogs[0].id;
-      if (!selectedRel2 && filteredBlogs.length > 1) selectedRel2 = filteredBlogs[1].id;
+      const others = allBlogs.filter(b => b.id !== currentBlogId);
 
       ['blogRelated1', 'blogRelated2'].forEach((prefix, pIdx) => {
-        const selectedId = pIdx === 0 ? selectedRel1 : selectedRel2;
+        const selectedId = (pIdx === 0 ? selectedRel1 : selectedRel2) || '';
         const input = document.getElementById(`${prefix}Input`);
         const valEl = document.getElementById(`${prefix}Val`);
         const list = document.getElementById(`${prefix}List`);
-        
-        if (input) input.value = selectedId || '';
-        
         const selectedBlog = allBlogs.find(b => b.id === selectedId);
-        if (valEl) valEl.textContent = selectedBlog ? selectedBlog.title : 'Select Related Perspective...';
+
+        if (input) input.value = selectedBlog ? selectedId : '';
+        if (valEl) valEl.textContent = selectedBlog ? selectedBlog.title : 'Automatic';
 
         if (list) {
-          list.innerHTML = filteredBlogs.map(b => `
+          const autoItem = `
+            <div class="custom-dropdown-item ${!selectedBlog ? 'active' : ''}" data-id="" data-title="${encodeURIComponent('Automatic')}" onclick="selectRelatedDropdownOption('${prefix}', '')">
+              <span class="custom-dropdown-item-title">Automatic</span>
+              <span class="custom-dropdown-item-tag">SAME CATEGORY</span>
+              <svg class="custom-dropdown-item-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </div>`;
+          list.innerHTML = autoItem + others.map(b => `
             <div class="custom-dropdown-item ${b.id === selectedId ? 'active' : ''}" data-id="${b.id}" data-title="${encodeURIComponent(b.title || '')}" onclick="selectRelatedDropdownOption('${prefix}', '${b.id}')">
               <span class="custom-dropdown-item-title">${b.title}</span>
-              <span class="custom-dropdown-item-tag">${b.category || 'THEORY'}</span>
+              <span class="custom-dropdown-item-tag">${b.category || ''}</span>
               <svg class="custom-dropdown-item-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
             </div>
           `).join('');
@@ -173,20 +97,18 @@
 
     function selectRelatedDropdownOption(prefix, blogId) {
       const input = document.getElementById(`${prefix}Input`);
-      if (input) input.value = blogId;
+      if (input) input.value = blogId || '';
 
-      const allBlogs = window.CMSStore.getBlogs();
-      const blog = allBlogs.find(b => b.id === blogId);
+      const blog = blogId ? window.CMSStore.getBlogs().find(b => b.id === blogId) : null;
       const valEl = document.getElementById(`${prefix}Val`);
-      if (valEl) valEl.textContent = blog ? blog.title : 'Select Related Perspective...';
+      if (valEl) valEl.textContent = blog ? blog.title : 'Automatic';
 
       const menu = document.getElementById(`${prefix}Menu`);
       if (menu) {
         menu.querySelectorAll('.custom-dropdown-item').forEach(item => {
-          item.classList.toggle('active', item.dataset.id === blogId);
+          item.classList.toggle('active', (item.dataset.id || '') === (blogId || ''));
         });
       }
-
       const container = document.getElementById(`${prefix}Dropdown`);
       if (container) container.classList.remove('open');
     }
@@ -198,75 +120,134 @@
       list.querySelectorAll('.custom-dropdown-item').forEach(item => {
         const title = decodeURIComponent(item.dataset.title || '').toLowerCase();
         const tag = (item.querySelector('.custom-dropdown-item-tag')?.textContent || '').toLowerCase();
-        if (!q || title.includes(q) || tag.includes(q)) {
-          item.style.display = 'flex';
-        } else {
-          item.style.display = 'none';
-        }
+        item.style.display = (!q || title.includes(q) || tag.includes(q)) ? 'flex' : 'none';
       });
     }
 
+    // ── Blog editor open / fill ──
+    let currentEditingBlog = null;   // the blog as it was when the editor opened (null for a new blog)
+    let blogSlugTouched = false;     // stop auto-filling the link once the user edits it
+
+    function blogInitials(name) {
+      return (name || '').trim().split(/\s+/).filter(Boolean).map(w => w[0]).join('').slice(0, 2).toUpperCase() || '19';
+    }
+
+    function blogCurrentMonthText() {
+      return new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase(); // e.g. NOV 2026
+    }
+
+    function setBlogSaveStatus(text, kind) {
+      const el = document.getElementById('blogSaveStatus');
+      if (!el) return;
+      el.textContent = text || '';
+      el.classList.toggle('is-error', kind === 'error');
+      el.classList.toggle('is-ok', kind === 'ok');
+    }
+
+    function refreshAuthorAvatarPreview() {
+      const avatar = document.getElementById('blogAuthorAvatarPreview');
+      if (avatar) avatar.textContent = blogInitials(document.getElementById('blogAuthorInput').value);
+    }
+
+    function blogLiveUrl(slug) {
+      const base = (typeof getLocalBaseUrl === 'function') ? getLocalBaseUrl() : window.location.origin;
+      return `${base}/perspectives/${slug}`;
+    }
+
     function openBlogModal(blogData = null) {
-      document.getElementById('blogModalTitle').textContent = blogData ? 'Edit Perspective' : 'Add New Perspective';
+      currentEditingBlog = blogData ? { ...blogData } : null;
+      blogSlugTouched = !!blogData;
+      setBlogSaveStatus('');
+      document.querySelectorAll('#blogModal .be-field.is-invalid').forEach(f => f.classList.remove('is-invalid'));
+
+      document.getElementById('blogModalTitle').textContent = blogData ? 'Edit blog' : 'New blog';
       document.getElementById('blogIdInput').value = blogData ? blogData.id : '';
-      document.getElementById('blogTitleInput').value = blogData ? blogData.title : '';
+      document.getElementById('blogTitleInput').value = blogData ? (blogData.title || '') : '';
       document.getElementById('blogSlugInput').value = blogData ? (blogData.slug || '') : '';
-      document.getElementById('blogCategoryInput').value = blogData ? blogData.category : 'TYPOGRAPHIC THEORY';
-      document.getElementById('blogReadTimeInput').value = blogData ? (blogData.readTime || '') : '6 MIN READ';
-      document.getElementById('blogDateInput').value = blogData ? (blogData.date || '') : 'SEP 2026';
-      document.getElementById('blogCityInput').value = blogData ? (blogData.city || '') : 'Milan, Italy';
-      
-      const authorName = blogData ? (blogData.author || '') : 'Jay Thaker';
-      document.getElementById('blogAuthorInput').value = authorName;
-      document.getElementById('blogRoleInput').value = blogData ? (blogData.role || '') : 'Studio Principal & Brand Architect';
-      
-      let initials = blogData ? (blogData.initials || '') : '';
-      if (!initials && authorName) {
-        initials = authorName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-      }
-      document.getElementById('blogInitialsInput').value = initials || 'JT';
-
-      document.getElementById('blogBioInput').value = blogData ? (blogData.bio || '') : 'Founder & Principal Brand Strategist at 1928 Creative Studio. Advising luxury maisons and deep-tech founders on enduring visual systems.';
-
-      // Cover Image
-      const coverVal = blogData ? (blogData.coverImage || '') : 'assets/img/portfolio/port-chronos.jpg';
-      document.getElementById('blogCoverInput').value = coverVal;
-      if (blogUploader) blogUploader.refreshUI();
-
-      // Specimen Asset Image & Caption
-      const specimenVal = blogData ? (blogData.specimenImage || '') : '';
-      document.getElementById('blogSpecimenInput').value = specimenVal;
-      if (blogSpecimenUploader) blogSpecimenUploader.refreshUI();
-      document.getElementById('blogSpecimenCaptionInput').value = blogData ? (blogData.specimenCaption || '') : '1928 EDITORIAL PROVENANCE CAPTURE';
-
       document.getElementById('blogExcerptInput').value = blogData ? (blogData.excerpt || '') : '';
-      
-      // Visual WYSIWYG Content Loader
+
+      // Category suggestions come from the categories already used on the website
+      const categories = Array.from(new Set(window.CMSStore.getBlogs().map(b => (b.category || '').trim()).filter(Boolean))).sort();
+      const datalist = document.getElementById('blogCategoriesList');
+      if (datalist) datalist.innerHTML = categories.map(c => `<option value="${c.replace(/"/g, '&quot;')}"></option>`).join('');
+      document.getElementById('blogCategoryInput').value = blogData ? (blogData.category || '') : '';
+
+      document.getElementById('blogDateInput').value = blogData ? (blogData.date || '') : blogCurrentMonthText();
+      document.getElementById('blogCityInput').value = blogData ? (blogData.city || '') : '';
+
+      document.getElementById('blogAuthorInput').value = blogData ? (blogData.author || '') : 'Jay Thaker';
+      document.getElementById('blogRoleInput').value = blogData ? (blogData.role || '') : 'Studio Principal & Brand Architect';
+      document.getElementById('blogBioInput').value = blogData ? (blogData.bio || '') : '';
+      refreshAuthorAvatarPreview();
+
+      // Images
+      document.getElementById('blogCoverInput').value = blogData ? (blogData.coverImage || '') : '';
+      if (blogUploader) blogUploader.refreshUI();
+      document.getElementById('blogSpecimenInput').value = blogData ? (blogData.specimenImage || '') : '';
+      if (blogSpecimenUploader) blogSpecimenUploader.refreshUI();
+      // "More options" (page link, contents list, suggested blogs) stays closed until clicked
+      const more = document.getElementById('blogMoreOptions');
+      if (more) more.open = false;
+
+      // Article
       const contentVal = blogData ? (blogData.content || blogData.contentHtml || '') : '';
       const visualEditor = document.getElementById('blogVisualEditor');
       const codeEditor = document.getElementById('blogContentInput');
       if (visualEditor) {
-        visualEditor.innerHTML = contentVal || '<p></p>';
+        visualEditor.innerHTML = contentVal || '';
         visualEditor.style.display = 'block';
       }
       if (codeEditor) {
         codeEditor.value = contentVal || '';
         codeEditor.style.display = 'none';
       }
+      const toolbar = document.getElementById('blogEditorToolbar');
+      if (toolbar) {
+        toolbar.style.display = '';
+        toolbar.querySelectorAll('.is-active, .is-on').forEach(b => b.classList.remove('is-active', 'is-on'));
+      }
       const codeBtn = document.getElementById('btnToggleEditorCode');
-      if (codeBtn) codeBtn.classList.remove('active');
+      if (codeBtn) { codeBtn.classList.remove('active'); codeBtn.textContent = 'Edit as HTML'; }
+
+      // Read time: empty means automatic (from the word count)
+      const savedRT = blogData ? (blogData.readTime || '') : '';
+      document.getElementById('blogReadTimeInput').value = savedRT;
       updateEditorWordCount();
+      const autoRT = `${beAutoReadTime().minutes} MIN READ`;
+      if (savedRT && savedRT.toUpperCase() === autoRT) document.getElementById('blogReadTimeInput').value = '';
 
-      // Table of Contents
-      setTOCRowsData(blogData ? blogData.sections : null);
-
-      // Related Monographs
+      // Suggested blogs
       const rel1 = (blogData && Array.isArray(blogData.related)) ? blogData.related[0] : '';
       const rel2 = (blogData && Array.isArray(blogData.related)) ? blogData.related[1] : '';
       populateRelatedDropdowns(blogData ? blogData.id : '', rel1, rel2);
 
+      // "View on website" for existing blogs
+      const viewLink = document.getElementById('blogViewLiveLink');
+      if (viewLink) {
+        if (blogData && blogData.slug) { viewLink.href = blogLiveUrl(blogData.slug); viewLink.style.display = ''; }
+        else viewLink.style.display = 'none';
+      }
+
       document.getElementById('blogModal').classList.add('active');
+      const body = document.querySelector('#blogModal .modal-body');
+      if (body) body.scrollTop = 0;
+      if (!blogData) setTimeout(() => document.getElementById('blogTitleInput').focus(), 50);
     }
+
+    // Link follows the title for new blogs until the user edits the link themselves
+    document.getElementById('blogTitleInput').addEventListener('input', (e) => {
+      e.target.closest('.be-field')?.classList.remove('is-invalid');
+      if (!blogSlugTouched) document.getElementById('blogSlugInput').value = beSlugify(e.target.value);
+    });
+    document.getElementById('blogSlugInput').addEventListener('input', () => { blogSlugTouched = true; });
+    document.getElementById('blogSlugInput').addEventListener('blur', (e) => { e.target.value = beSlugify(e.target.value); });
+    document.getElementById('blogAuthorInput').addEventListener('input', refreshAuthorAvatarPreview);
+    // Once the person starts fixing things, clear the old "Please add…" message
+    document.getElementById('blogForm').addEventListener('input', () => {
+      const status = document.getElementById('blogSaveStatus');
+      if (status && status.classList.contains('is-error')) setBlogSaveStatus('');
+    });
+    document.getElementById('blogExcerptInput').addEventListener('input', (e) => e.target.closest('.be-field')?.classList.remove('is-invalid'));
 
     function editBlog(id) {
       const blog = window.CMSStore.getBlogById(id);
@@ -274,59 +255,100 @@
     }
 
     function deleteBlog(id) {
-      if (confirm('Are you sure you want to delete this perspective?')) {
-        const blog = window.CMSStore.getBlogById(id);
-        if (blog) {
-          if (blog.coverImage) fetch('api.php?action=delete_asset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filePath: blog.coverImage }) }).catch(() => {});
-          if (blog.specimenImage) fetch('api.php?action=delete_asset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filePath: blog.specimenImage }) }).catch(() => {});
-        }
-        window.CMSStore.deleteBlog(id);
-        renderBlogsGrid();
-        showToast('Perspective deleted.');
+      const blog = window.CMSStore.getBlogById(id);
+      if (!confirm(`Delete "${blog ? blog.title : 'this blog'}"? This cannot be undone.`)) return;
+      if (blog) {
+        if (blog.coverImage) fetch('api.php?action=delete_asset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filePath: blog.coverImage }) }).catch(() => {});
+        if (blog.specimenImage) fetch('api.php?action=delete_asset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ filePath: blog.specimenImage }) }).catch(() => {});
       }
+      window.CMSStore.deleteBlog(id);
+      renderBlogsGrid();
+      showToast('Blog deleted.');
     }
 
-    document.getElementById('blogForm').addEventListener('submit', (e) => {
+    // ── Save ──
+    let blogSaving = false;
+    document.getElementById('blogForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (blogSaving) return;
       syncVisualEditorToInput();
-      const id = document.getElementById('blogIdInput').value;
-      const authorName = document.getElementById('blogAuthorInput').value.trim();
-      let initials = document.getElementById('blogInitialsInput').value.trim();
-      if (!initials && authorName) {
-        initials = authorName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+      // Check the essentials
+      const title = document.getElementById('blogTitleInput').value.trim();
+      const excerpt = document.getElementById('blogExcerptInput').value.trim();
+      const rawContent = document.getElementById('blogContentInput').value.trim();
+      const problems = [];
+      if (!title) { problems.push('a title'); document.getElementById('blogTitleInput').closest('.be-field').classList.add('is-invalid'); }
+      if (!excerpt) { problems.push('a short summary'); document.getElementById('blogExcerptInput').closest('.be-field').classList.add('is-invalid'); }
+      if (!rawContent.replace(/<[^>]*>/g, '').trim() && !/<img/i.test(rawContent)) problems.push('the article text');
+      if (problems.length) {
+        setBlogSaveStatus(`Please add ${problems.join(', ')}.`, 'error');
+        document.querySelector('#blogModal .modal-body').scrollTop = 0;
+        return;
       }
 
-      const related1 = document.getElementById('blogRelated1Input').value.trim();
-      const related2 = document.getElementById('blogRelated2Input').value.trim();
-      const related = [related1, related2].filter(Boolean);
+      const { html: contentWithIds, sections } = beHeadingsAndIds(rawContent);
+      const id = document.getElementById('blogIdInput').value;
+      const authorName = document.getElementById('blogAuthorInput').value.trim() || 'Jay Thaker';
+      const readTimeInput = document.getElementById('blogReadTimeInput').value.trim();
+      const related = [document.getElementById('blogRelated1Input').value.trim(), document.getElementById('blogRelated2Input').value.trim()].filter(Boolean);
+      const wantedSlug = beSlugify(document.getElementById('blogSlugInput').value || title);
 
-      const slugVal = document.getElementById('blogSlugInput').value.trim();
       const data = {
-        title: document.getElementById('blogTitleInput').value.trim(),
-        slug: slugVal ? slugVal.toLowerCase().replace(/[^a-z0-9\/-]+/g, '-').replace(/^\/+|\/+$/g, '') : undefined,
-        category: document.getElementById('blogCategoryInput').value.trim(),
-        readTime: document.getElementById('blogReadTimeInput').value.trim(),
-        date: document.getElementById('blogDateInput').value.trim(),
+        title,
+        category: (document.getElementById('blogCategoryInput').value.trim() || 'PERSPECTIVES').toUpperCase(),
+        readTime: readTimeInput ? readTimeInput.toUpperCase() : `${beAutoReadTime().minutes} MIN READ`,
+        date: document.getElementById('blogDateInput').value.trim().toUpperCase() || blogCurrentMonthText(),
         city: document.getElementById('blogCityInput').value.trim(),
         author: authorName,
         role: document.getElementById('blogRoleInput').value.trim(),
-        initials: initials || '19',
+        initials: blogInitials(authorName),
         bio: document.getElementById('blogBioInput').value.trim(),
         coverImage: document.getElementById('blogCoverInput').value.trim() || 'assets/img/portfolio/port-chronos.jpg',
         specimenImage: document.getElementById('blogSpecimenInput').value.trim(),
-        specimenCaption: document.getElementById('blogSpecimenCaptionInput').value.trim() || '1928 EDITORIAL PROVENANCE CAPTURE',
-        excerpt: document.getElementById('blogExcerptInput').value.trim(),
-        content: document.getElementById('blogContentInput').value.trim(),
-        sections: getTOCRowsData(),
-        related: related
+        specimenCaption: (currentEditingBlog && currentEditingBlog.specimenCaption) || '',
+        excerpt,
+        content: contentWithIds,
+        sections,
+        related
       };
-      if (id) data.id = id;
+      if (id) data.id = id; else data.slug = wantedSlug;
 
-      window.CMSStore.saveBlog(data);
-      closeModal('blogModal');
-      renderBlogsGrid();
-      populatePerspectivesCurationUI();
-      showToast('🎉 Perspective, TOC, and Related Monographs successfully saved to MySQL database!');
+      blogSaving = true;
+      const saveBtn = document.getElementById('blogSaveBtn');
+      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving…'; }
+      setBlogSaveStatus('Saving…');
+
+      try {
+        const result = await window.CMSStore.saveBlogChecked(data);
+        if (!result || result.status !== 'success') {
+          setBlogSaveStatus((result && result.message) || 'Could not save. Please try again.', 'error');
+          return;
+        }
+
+        // Existing blog with a changed link: update it (the old link keeps redirecting)
+        if (id && currentEditingBlog && wantedSlug && wantedSlug !== currentEditingBlog.slug) {
+          const r = await window.CMSStore.updateBlogSlug(id, wantedSlug);
+          if (!r || r.status !== 'success') {
+            setBlogSaveStatus(`Saved, but the link was not changed: ${(r && r.message) || 'please try again.'}`, 'error');
+            document.getElementById('blogSlugInput').value = currentEditingBlog.slug || '';
+            // Show the link field so the problem is visible
+            const more = document.getElementById('blogMoreOptions');
+            if (more) more.open = true;
+            document.getElementById('blogSlugInput').focus();
+            renderBlogsGrid();
+            return;
+          }
+        }
+
+        closeModal('blogModal');
+        renderBlogsGrid();
+        populatePerspectivesCurationUI();
+        showToast(id ? 'Blog saved. The changes are live.' : 'Blog published. It is now live on the website.');
+      } finally {
+        blogSaving = false;
+        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save blog'; }
+      }
     });
 
     // ── 3.1 PERSPECTIVES DEDICATED SECTIONS & CURATION CONTROLLER ──

@@ -60,6 +60,39 @@ if ($route === '' || $route === 'index.html' || $route === 'home') {
 
 $db = getDB();
 
+// ═════════════════════════════════════════════════════════════════
+// PORTFOLIO PROJECT PAGES: /<portfolio-slug>/<project-slug>
+// (slug editable per project in Admin → SEO & Metadata)
+// ═════════════════════════════════════════════════════════════════
+$portfolioSlug = getPortfolioSlug($db);
+$portfolioAliases = array_unique(array_filter([$portfolioSlug, 'portfolio', 'portfolio.html', 'work']));
+
+// Old-style links (/portfolio?project=aurora) → 301 to the project's clean link
+if (in_array($route, $portfolioAliases, true) && !empty($_GET['project'])) {
+    $proj = findProject($db, (string)$_GET['project']);
+    if ($proj) {
+        header('Location: ' . getBaseUrl() . '/' . $portfolioSlug . '/' . rawurlencode($proj['slug']), true, 301);
+        exit;
+    }
+}
+
+if (preg_match('#^([^/]+)/([^/]+)$#', $route, $pm) && in_array($pm[1], $portfolioAliases, true)) {
+    $requested = $pm[2];
+    $proj = findProject($db, $requested);
+    if ($proj) {
+        // Always serve on the canonical link (redirects project IDs, old slugs and /work/... aliases)
+        if ($route !== $portfolioSlug . '/' . $proj['slug']) {
+            header('Location: ' . getBaseUrl() . '/' . $portfolioSlug . '/' . rawurlencode($proj['slug']), true, 301);
+            exit;
+        }
+        serveProjectPage(__DIR__ . '/portfolio.html', $proj, $portfolioSlug);
+        exit;
+    }
+    // Unknown project → the portfolio page
+    header('Location: ' . getBaseUrl() . '/' . $portfolioSlug, true, 302);
+    exit;
+}
+
 // 3. Check for matching active route in site_routes table
 $routeStmt = $db->prepare("
     SELECT * FROM `site_routes` 
@@ -115,6 +148,21 @@ if (!empty($blogSlug)) {
             serveBlogDetail($detailFile, $blog);
             exit;
         }
+    } else {
+        // A link that was changed in the admin: send visitors to the article's current link
+        try {
+            $oldStmt = $db->prepare("SELECT `route_key` FROM `route_redirects` WHERE `old_slug` = :os AND `route_key` LIKE 'blog\\_%' LIMIT 1");
+            $oldStmt->execute([':os' => $blogSlug]);
+            $oldKey = $oldStmt->fetchColumn();
+            if ($oldKey) {
+                $curStmt = $db->prepare("SELECT `slug` FROM `blogs` WHERE `blog_id` = :bid LIMIT 1");
+                $curStmt->execute([':bid' => substr($oldKey, 5)]);
+                $currentSlug = $curStmt->fetchColumn();
+                if ($currentSlug) {
+                    redirectWithQuery(getBaseUrl() . '/perspectives/' . $currentSlug, 301);
+                }
+            }
+        } catch (\Throwable $t) {}
     }
 }
 
@@ -358,6 +406,107 @@ function serveFileWithSEO(string $filePath, string $pageKey, ?array $routeData =
     ]);
     $injectionScript = "<script>window.__1928_SERVER_ROUTE__ = {$routeJson};</script>\n";
     $html = str_ireplace('</head>', "  {$injectionScript}</head>", $html);
+
+    header('Content-Type: text/html; charset=utf-8');
+    echo $html;
+}
+
+function getPortfolioSlug(PDO $db): string {
+    try {
+        $s = $db->query("SELECT `slug` FROM `site_routes` WHERE `route_key` = 'portfolio' AND `is_active` = 1 LIMIT 1");
+        $slug = $s ? $s->fetchColumn() : '';
+        return ($slug !== false && $slug !== null && $slug !== '') ? strtolower($slug) : 'portfolio';
+    } catch (\Throwable $t) {
+        return 'portfolio';
+    }
+}
+
+/**
+ * Finds an active portfolio project by its link (slug), its project ID, a legacy alias used in
+ * older links, or a previous link that was changed in the admin. Returns null if nothing matches.
+ */
+function findProject(PDO $db, string $key): ?array {
+    $key = strtolower(trim(rawurldecode($key)));
+    if ($key === '') return null;
+    $cols = "`project_id`, `title`, `card_heading`, `summary`, `cover_image`, `category_display`";
+    $normalize = function ($row) {
+        if (!$row) return null;
+        $row['slug'] = !empty($row['slug']) ? $row['slug'] : strtolower($row['project_id']);
+        return $row;
+    };
+    // 1. Current link
+    try {
+        $s = $db->prepare("SELECT $cols, `slug` FROM `portfolio` WHERE `active` = 1 AND `slug` = :k LIMIT 1");
+        $s->execute([':k' => $key]);
+        if ($row = $s->fetch()) return $normalize($row);
+    } catch (\Throwable $t) { /* slug column not created yet — fall back to IDs below */ }
+
+    $byId = function (string $id) use ($db, $cols, $normalize) {
+        try {
+            $s = $db->prepare("SELECT $cols, `slug` FROM `portfolio` WHERE `active` = 1 AND LOWER(`project_id`) = :id LIMIT 1");
+            $s->execute([':id' => $id]);
+        } catch (\Throwable $t) {
+            $s = $db->prepare("SELECT $cols FROM `portfolio` WHERE `active` = 1 AND LOWER(`project_id`) = :id LIMIT 1");
+            $s->execute([':id' => $id]);
+        }
+        return $normalize($s->fetch());
+    };
+    // 2. Project ID
+    if ($row = $byId($key)) return $row;
+    // 3. Aliases used by older hard-coded links on the site
+    $aliases = [
+        'awardsplus' => 'aurora', 'mudra-school' => 'mudra', 'last-mile-analytics' => 'last-mile',
+        'lastmile' => 'last-mile', 'vibee-apparel' => 'vibee', 'infyli-aromatics' => 'infyli', 'alda-steel' => 'alda'
+    ];
+    if (isset($aliases[$key]) && ($row = $byId($aliases[$key]))) return $row;
+    // 4. A previous link changed in the admin
+    try {
+        $s = $db->prepare("SELECT `route_key` FROM `route_redirects` WHERE `old_slug` = :os LIMIT 1");
+        $s->execute([':os' => 'project:' . $key]);
+        $rk = $s->fetchColumn();
+        if ($rk && str_starts_with($rk, 'project_') && ($row = $byId(strtolower(substr($rk, 8))))) return $row;
+    } catch (\Throwable $t) {}
+    return null;
+}
+
+function serveProjectPage(string $filePath, array $proj, string $portfolioSlug): void {
+    $html = file_get_contents($filePath);
+    $baseUrl = getBaseUrl();
+    $canonicalUrl = $baseUrl . '/' . $portfolioSlug . '/' . rawurlencode($proj['slug']);
+
+    $descSource = trim(strip_tags((string)($proj['summary'] ?: $proj['card_heading'] ?: '')));
+    if (mb_strlen($descSource) > 160) $descSource = rtrim(mb_substr($descSource, 0, 157)) . '...';
+    $safeTitle = htmlspecialchars(trim($proj['title']) . ' · Work · 1928 Creative Studio', ENT_QUOTES, 'UTF-8');
+    $safeDesc = htmlspecialchars($descSource, ENT_QUOTES, 'UTF-8');
+
+    $html = preg_replace('/<title>.*?<\/title>/is', "<title>{$safeTitle}</title>", $html, 1);
+    if ($safeDesc !== '') {
+        if (preg_match('/<meta\s+name=["\']description["\']/i', $html)) {
+            $html = preg_replace('/<meta\s+name=["\']description["\']\s+content=["\'].*?["\']/is', "<meta name=\"description\" content=\"{$safeDesc}\"", $html, 1);
+        } else {
+            $html = preg_replace('/<\/head>/i', "  <meta name=\"description\" content=\"{$safeDesc}\">\n</head>", $html, 1);
+        }
+    }
+    if (!preg_match('/<base\s+href=/i', $html)) {
+        $html = preg_replace('/<head>/i', "<head>\n  <base href=\"{$baseUrl}/\">", $html, 1);
+    }
+    if (preg_match('/<link\s+rel=["\']canonical["\']/i', $html)) {
+        $html = preg_replace('/<link\s+rel=["\']canonical["\']\s+href=["\'].*?["\']/is', "<link rel=\"canonical\" href=\"{$canonicalUrl}\"", $html, 1);
+    } else {
+        $html = preg_replace('/<\/head>/i', "  <link rel=\"canonical\" href=\"{$canonicalUrl}\" />\n</head>", $html, 1);
+    }
+
+    // Tell the portfolio page which project to open, and where its links live
+    $routeJson = json_encode([
+        'pageKey' => 'portfolio_project',
+        'slug' => $portfolioSlug,
+        'portfolioSlug' => $portfolioSlug,
+        'baseUrl' => $baseUrl,
+        'targetFile' => 'portfolio.html',
+        'projectId' => $proj['project_id'],
+        'projectSlug' => $proj['slug']
+    ]);
+    $html = preg_replace('/<\/head>/i', "  <script>window.__1928_SERVER_ROUTE__ = {$routeJson};</script>\n</head>", $html, 1);
 
     header('Content-Type: text/html; charset=utf-8');
     echo $html;

@@ -118,6 +118,16 @@ function checkAndAutoSeed(PDO $db) {
                 $db->exec("ALTER TABLE `portfolio` ADD COLUMN `overview_title` VARCHAR(255) NULL AFTER `cover_image`");
             }
 
+            // Editable page link (slug) per project: /portfolio/<slug>
+            if (!in_array('slug', $portCols)) {
+                $db->exec("ALTER TABLE `portfolio` ADD COLUMN `slug` VARCHAR(150) NULL AFTER `project_id`");
+                try {
+                    $db->exec("ALTER TABLE `portfolio` ADD UNIQUE KEY `uniq_portfolio_slug` (`slug`)");
+                } catch (\Throwable $t) {}
+            }
+            // Any project without a link yet starts with its project ID (e.g. /portfolio/aurora)
+            $db->exec("UPDATE `portfolio` SET `slug` = LOWER(`project_id`) WHERE `slug` IS NULL OR `slug` = ''");
+
             // Seed default gallery_json if NULL or empty
             $pRowsNull = $db->query("SELECT `project_id`, `cover_image`, `gallery_json` FROM `portfolio` WHERE `gallery_json` IS NULL OR `gallery_json` = ''")->fetchAll();
             if (!empty($pRowsNull)) {
@@ -516,6 +526,7 @@ try {
                 $galleryImages = !empty($p['gallery_json']) ? (json_decode($p['gallery_json'], true) ?: []) : [];
                 return [
                     'id' => $p['project_id'],
+                    'slug' => !empty($p['slug']) ? $p['slug'] : $p['project_id'],
                     'title' => $p['title'],
                     'cardHeading' => $p['card_heading'] ?? '',
                     'cardTitle' => $p['card_heading'] ?? '',
@@ -767,6 +778,69 @@ try {
         case 'save_route':
             $routeKey = trim((string)($inputData['route_key'] ?? ''));
             $newSlug = trim((string)($inputData['slug'] ?? ''));
+
+            // ── Portfolio project page link: /<portfolio-page-slug>/<project-slug> ──
+            if (!empty($inputData['is_project']) || str_starts_with($routeKey, 'project_')) {
+                $projectId = trim((string)($inputData['project_id'] ?? substr($routeKey, 8)));
+                $projSlug = strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', $newSlug));
+                $projSlug = trim(preg_replace('/-+/', '-', $projSlug), '-');
+
+                $exists = $db->prepare("SELECT `slug` FROM `portfolio` WHERE `project_id` = :pid LIMIT 1");
+                $exists->execute([':pid' => $projectId]);
+                $oldProjSlug = $exists->fetchColumn();
+                if ($oldProjSlug === false) {
+                    echo json_encode(['status' => 'error', 'message' => "Project '{$projectId}' was not found."]);
+                    break;
+                }
+                if ($projSlug === '') {
+                    echo json_encode(['status' => 'error', 'message' => 'The project link cannot be empty.']);
+                    break;
+                }
+                $dupe = $db->prepare("SELECT `project_id` FROM `portfolio` WHERE `slug` = :slug AND `project_id` != :pid LIMIT 1");
+                $dupe->execute([':slug' => $projSlug, ':pid' => $projectId]);
+                if ($dupe->fetch()) {
+                    echo json_encode(['status' => 'error', 'message' => "The link '{$projSlug}' is already used by another project."]);
+                    break;
+                }
+
+                // Keep the old link working: remember it so the router can 301-redirect to the new one
+                if (!empty($oldProjSlug) && $oldProjSlug !== $projSlug) {
+                    $db->exec("
+                        CREATE TABLE IF NOT EXISTS `route_redirects` (
+                          `id` INT AUTO_INCREMENT PRIMARY KEY,
+                          `route_key` VARCHAR(64) NOT NULL,
+                          `old_slug` VARCHAR(191) NOT NULL UNIQUE,
+                          `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                          `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                          INDEX `idx_old_slug` (`old_slug`),
+                          INDEX `idx_route_key` (`route_key`)
+                        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+                    ");
+                    $redStmt = $db->prepare("
+                        INSERT INTO `route_redirects` (`route_key`, `old_slug`)
+                        VALUES (:rk, :os)
+                        ON DUPLICATE KEY UPDATE `route_key` = VALUES(`route_key`)
+                    ");
+                    $redStmt->execute([':rk' => 'project_' . $projectId, ':os' => 'project:' . $oldProjSlug]);
+                }
+                try {
+                    $db->prepare("DELETE FROM `route_redirects` WHERE `old_slug` = :os")->execute([':os' => 'project:' . $projSlug]);
+                } catch (\Throwable $t) {}
+
+                $upd = $db->prepare("UPDATE `portfolio` SET `slug` = :slug WHERE `project_id` = :pid");
+                $upd->execute([':slug' => $projSlug, ':pid' => $projectId]);
+
+                $pSlugStmt = $db->query("SELECT `slug` FROM `site_routes` WHERE `route_key` = 'portfolio' AND `is_active` = 1 LIMIT 1");
+                $portfolioSlug = ($pSlugStmt ? $pSlugStmt->fetchColumn() : '') ?: 'portfolio';
+
+                echo json_encode([
+                    'status' => 'success',
+                    'route_key' => 'project_' . $projectId,
+                    'slug' => $projSlug,
+                    'message' => "Project link updated to '/{$portfolioSlug}/{$projSlug}'."
+                ]);
+                break;
+            }
             $isBlog = !empty($inputData['is_blog']) || str_starts_with($routeKey, 'blog_') || !empty($inputData['blog_id']);
             $blogId = $inputData['blog_id'] ?? ($isBlog ? str_replace('blog_', '', $routeKey) : '');
 
@@ -792,7 +866,7 @@ try {
             }
 
             if (empty($cleanSlug) && $routeKey !== 'home') {
-                echo json_encode(['status' => 'error', 'message' => 'Route URL slug cannot be empty.']);
+                echo json_encode(['status' => 'error', 'message' => 'The page link cannot be empty.']);
                 break;
             }
 
@@ -800,7 +874,7 @@ try {
                 $check = $db->prepare("SELECT `id` FROM `blogs` WHERE `slug` = :slug AND `blog_id` != :bid LIMIT 1");
                 $check->execute([':slug' => $cleanSlug, ':bid' => $blogId]);
                 if ($check->fetch()) {
-                    echo json_encode(['status' => 'error', 'message' => "The slug '{$cleanSlug}' is already assigned to another perspective."]);
+                    echo json_encode(['status' => 'error', 'message' => "The link '{$cleanSlug}' is already used by another blog. Please choose a different one."]);
                     break;
                 }
 
@@ -925,7 +999,26 @@ try {
         // ═══════════════════════════════════════════════════════════
         case 'save_blog':
             $blogId = $inputData['id'] ?? ('art-' . substr(md5(uniqid()), 0, 8));
-            $slug = $inputData['slug'] ?? strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $inputData['title'] ?? 'perspective')));
+
+            $existingStmt = $db->prepare("SELECT `slug`, `display_order` FROM `blogs` WHERE `blog_id` = :bid LIMIT 1");
+            $existingStmt->execute([':bid' => $blogId]);
+            $existingBlog = $existingStmt->fetch();
+
+            if ($existingBlog) {
+                // Existing blog: its link only changes through save_route (which also keeps the old link redirecting)
+                $slug = $existingBlog['slug'];
+            } else {
+                // New blog: link from the given slug or the title, made unique
+                $slugBase = strtolower(trim(preg_replace('/-+/', '-', preg_replace('/[^A-Za-z0-9-]+/', '-', $inputData['slug'] ?? ($inputData['title'] ?? 'perspective'))), '-'));
+                if ($slugBase === '') $slugBase = 'perspective';
+                $slug = $slugBase;
+                $slugTaken = $db->prepare("SELECT COUNT(*) FROM `blogs` WHERE `slug` = :slug");
+                for ($n = 2; ; $n++) {
+                    $slugTaken->execute([':slug' => $slug]);
+                    if ((int)$slugTaken->fetchColumn() === 0) break;
+                    $slug = $slugBase . '-' . $n;
+                }
+            }
             $title = $inputData['title'] ?? 'Untitled Perspective';
             $category = $inputData['category'] ?? 'BRAND ARCHITECTURE';
             $categorySlug = $inputData['categorySlug'] ?? strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $category)));
@@ -945,10 +1038,17 @@ try {
             $sectionsJson = json_encode($inputData['sections'] ?? []);
             $relatedJson = json_encode($inputData['related'] ?? []);
             $published = isset($inputData['published']) ? (int)$inputData['published'] : 1;
-            $order = isset($inputData['order']) ? (int)$inputData['order'] : 1;
+            if (isset($inputData['order'])) {
+                $order = (int)$inputData['order'];
+            } elseif ($existingBlog) {
+                $order = (int)$existingBlog['display_order'];   // editing keeps the blog's position
+            } else {
+                // New blogs go to the top of the list
+                $order = (int)($db->query("SELECT COALESCE(MIN(`display_order`), 1) - 1 FROM `blogs`")->fetchColumn());
+            }
 
             $stmt = $db->prepare("
-                INSERT INTO `blogs` 
+                INSERT INTO `blogs`
                 (`blog_id`, `slug`, `title`, `category`, `category_slug`, `city`, `author`, `author_role`, `initials`, `author_bio`, `date_text`, `read_time`, `cover_image`, `specimen_image`, `specimen_caption`, `excerpt`, `content_html`, `sections_json`, `related_json`, `published`, `display_order`)
                 VALUES 
                 (:bid, :slug, :title, :cat, :catslug, :city, :author, :role, :init, :bio, :dt, :rt, :cover, :specimg, :speccap, :exc, :content, :secs, :rel, :pub, :ord)
@@ -997,7 +1097,7 @@ try {
                 ':ord' => $order
             ]);
 
-            echo json_encode(['status' => 'success', 'message' => 'Perspective saved to MySQL.', 'blog_id' => $blogId]);
+            echo json_encode(['status' => 'success', 'message' => 'Perspective saved to MySQL.', 'blog_id' => $blogId, 'slug' => $slug, 'order' => $order]);
             break;
 
         case 'delete_blog':
@@ -1055,11 +1155,29 @@ try {
             }
             $galleryJson = json_encode(array_values($cleanGallery), JSON_UNESCAPED_SLASHES);
 
+            // Page link (slug): existing projects keep theirs (it is only changed from SEO & Metadata, which
+            // also records the redirect); new projects get one generated from the brand name in the title.
+            $slugLookup = $db->prepare("SELECT `slug` FROM `portfolio` WHERE `project_id` = :pid LIMIT 1");
+            $slugLookup->execute([':pid' => $projectId]);
+            $projectSlug = (string)($slugLookup->fetchColumn() ?: '');
+            if ($projectSlug === '') {
+                $brand = trim(explode('—', $title)[0]);
+                $base = strtolower(trim(preg_replace('/-+/', '-', preg_replace('/[^a-zA-Z0-9]+/', '-', $brand)), '-'));
+                if ($base === '') $base = strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', $projectId));
+                $projectSlug = $base;
+                $taken = $db->prepare("SELECT COUNT(*) FROM `portfolio` WHERE `slug` = :slug AND `project_id` != :pid");
+                for ($n = 2; ; $n++) {
+                    $taken->execute([':slug' => $projectSlug, ':pid' => $projectId]);
+                    if ((int)$taken->fetchColumn() === 0) break;
+                    $projectSlug = $base . '-' . $n;
+                }
+            }
+
             $stmt = $db->prepare("
                 INSERT INTO `portfolio`
-                (`project_id`, `title`, `card_heading`, `client`, `sector`, `deliverables`, `category_keys`, `category_display`, `tag_pill`, `grid_span`, `year`, `timeline`, `cover_image`, `overview_title`, `gallery_json`, `summary`, `challenge`, `approach`, `impact`, `metrics_json`, `featured`, `display_order`, `active`)
+                (`project_id`, `slug`, `title`, `card_heading`, `client`, `sector`, `deliverables`, `category_keys`, `category_display`, `tag_pill`, `grid_span`, `year`, `timeline`, `cover_image`, `overview_title`, `gallery_json`, `summary`, `challenge`, `approach`, `impact`, `metrics_json`, `featured`, `display_order`, `active`)
                 VALUES
-                (:pid, :title, :cardhead, :client, :sector, :deliverables, :cat, :catdisp, :pill, :span, :yr, :timeline, :cover, :ovtitle, :gallery, :sum, :chal, :appr, :imp, :metrics, :feat, :ord, 1)
+                (:pid, :pslug, :title, :cardhead, :client, :sector, :deliverables, :cat, :catdisp, :pill, :span, :yr, :timeline, :cover, :ovtitle, :gallery, :sum, :chal, :appr, :imp, :metrics, :feat, :ord, 1)
                 ON DUPLICATE KEY UPDATE
                     `title` = VALUES(`title`),
                     `card_heading` = VALUES(`card_heading`),
@@ -1086,6 +1204,7 @@ try {
             ");
             $stmt->execute([
                 ':pid' => $projectId,
+                ':pslug' => $projectSlug,
                 ':title' => $title,
                 ':cardhead' => $cardHeading,
                 ':client' => $client,
@@ -1109,7 +1228,7 @@ try {
                 ':ord' => $order
             ]);
 
-            echo json_encode(['status' => 'success', 'message' => 'Portfolio saved to MySQL.', 'project_id' => $projectId]);
+            echo json_encode(['status' => 'success', 'message' => 'Portfolio saved to MySQL.', 'project_id' => $projectId, 'slug' => $projectSlug]);
             break;
 
         case 'delete_portfolio':

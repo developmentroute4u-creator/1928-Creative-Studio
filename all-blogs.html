@@ -2078,6 +2078,64 @@
       line-height: 1.2;
     }
 
+    /* Article content from the admin editor: subheadings, lists, images, links, divider lines */
+    .reader-content-prose h3 {
+      font-family: var(--font-primary);
+      font-weight: 800;
+      font-size: clamp(19px, 1.6vw, 23px);
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      line-height: 1.3;
+      margin: 8px 0 0;
+    }
+
+    .reader-content-prose ul,
+    .reader-content-prose ol {
+      margin: 0;
+      padding-left: 1.3em;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .reader-content-prose li::marker {
+      color: var(--cr);
+    }
+
+    .reader-content-prose strong {
+      color: var(--ink);
+    }
+
+    .reader-content-prose a {
+      color: var(--cr);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .reader-content-prose figure {
+      margin: 0;
+    }
+
+    .reader-content-prose img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+    }
+
+    .reader-content-prose hr,
+    .reader-content-prose .editorial-divider {
+      border: none;
+      border-top: 1.5px solid var(--rule);
+      margin: 8px 0;
+      width: 100%;
+    }
+
+    /* Banner with a real image: never show the placeholder icon (shared phone styles force it visible) */
+    #mReaderSpecimenBanner.has-image #mReaderSpecimenGlyph {
+      display: none !important;
+    }
+
     .reader-pullquote {
       position: relative;
       background: var(--cr-soft);

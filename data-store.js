@@ -558,8 +558,8 @@
       if (!id) return null;
       const cleanId = String(id).toLowerCase().trim().replace(/^#/, '');
       const list = this.data.portfolio || [];
-      // 1. Direct match
-      let found = list.find(p => p.id === cleanId || p.id === id);
+      // 1. Direct match (project ID or its editable page link)
+      let found = list.find(p => p.id === cleanId || p.id === id) || list.find(p => (p.slug || '').toLowerCase() === cleanId);
       if (found) return found;
 
       // 2. Common aliases
@@ -595,6 +595,32 @@
 
     getPortfolioById(id) {
       return this.getProjectById(id);
+    }
+
+    /**
+     * Changes a project's page link (/portfolio/<slug>). Returns the API response
+     * ({ status, slug, message }) so the admin can show errors such as a duplicate link.
+     */
+    async updateProjectSlug(projectId, newSlug) {
+      const clean = (newSlug || '').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+      let result = { status: 'error', message: 'Could not reach the server.' };
+      try {
+        const res = await fetch('api.php?action=save_route', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ route_key: `project_${projectId}`, slug: clean, is_project: true, project_id: projectId })
+        });
+        result = await res.json();
+      } catch (err) {
+        console.error('[1928 CMS] Failed to update project link:', err);
+      }
+      if (result && result.status === 'success') {
+        const proj = (this.data.portfolio || []).find(p => p.id === projectId);
+        if (proj) proj.slug = result.slug || clean;
+        try { localStorage.setItem('1928_db_sync_ping', Date.now().toString()); } catch (e) {}
+        this._notify();
+      }
+      return result;
     }
 
     saveProject(projectData) {
@@ -684,6 +710,63 @@
       this._notify();
       this._sendToAPI('save_blog', blogData);
       return blogData;
+    }
+
+    /** Changes a blog's page link (/perspectives/<slug>); the old link keeps redirecting. Returns the API response. */
+    async updateBlogSlug(blogId, newSlug) {
+      const clean = (newSlug || '').toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+      let result = { status: 'error', message: 'Could not reach the server.' };
+      try {
+        const res = await fetch('api.php?action=save_route', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ route_key: `blog_${blogId}`, slug: clean, is_blog: true, blog_id: blogId })
+        });
+        result = await res.json();
+      } catch (err) {
+        console.error('[1928 CMS] Failed to update blog link:', err);
+      }
+      if (result && result.status === 'success') {
+        const blog = (this.data.blogs || []).find(b => b.id === blogId);
+        if (blog) blog.slug = result.slug || clean;
+        try { localStorage.setItem('1928_db_sync_ping', Date.now().toString()); } catch (e) {}
+        this._notify();
+      }
+      return result;
+    }
+
+    /**
+     * Saves a blog and waits for the server's answer (used by the admin editor).
+     * Returns the API response ({ status, message, blog_id, slug, order }).
+     */
+    async saveBlogChecked(blogData) {
+      if (!blogData.id) blogData.id = 'art-' + Date.now().toString(36);
+      let result = { status: 'error', message: 'Could not reach the server. Please check your connection and try again.' };
+      try {
+        const res = await fetch('api.php?action=save_blog', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(blogData)
+        });
+        const text = await res.text();
+        try { result = JSON.parse(text); } catch (e) { result = { status: 'error', message: 'The server returned an unexpected answer.' }; }
+      } catch (err) {
+        console.error('[1928 CMS] Failed to save blog:', err);
+      }
+      if (result && result.status === 'success') {
+        if (result.slug) blogData.slug = result.slug;
+        if (typeof result.order === 'number') blogData.order = result.order;
+        const idx = this.data.blogs.findIndex(b => b.id === blogData.id);
+        if (idx >= 0) {
+          this.data.blogs[idx] = { ...this.data.blogs[idx], ...blogData };
+        } else {
+          if (blogData.published === undefined) blogData.published = true;
+          this.data.blogs.unshift(blogData);
+        }
+        try { localStorage.setItem('1928_db_sync_ping', Date.now().toString()); } catch (e) {}
+        this._notify();
+      }
+      return result;
     }
 
     deleteBlog(id) {

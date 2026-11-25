@@ -154,6 +154,23 @@
     };
   })();
 
+  /* Clean link to a portfolio project: /<portfolio-page-slug>/<project-slug> (slug editable in the admin).
+     Accepts a project object or an ID / legacy alias. Falls back to ?project= (the router redirects it). */
+  function getProjectHref(projectOrId) {
+    const store = window.CMSStore;
+    const proj = (projectOrId && typeof projectOrId === 'object')
+      ? projectOrId
+      : (store && typeof store.getProjectById === 'function' ? store.getProjectById(projectOrId) : null);
+    const portfolioSlug = (store && typeof store.getRoute === 'function' && store.getRoute('portfolio')) || 'portfolio';
+    const basePath = (window.location.pathname || '').includes('/1928/') ? '/1928/' : '/';
+    if (proj && (proj.slug || proj.id)) {
+      return `${basePath}${portfolioSlug}/${encodeURIComponent(proj.slug || proj.id)}`;
+    }
+    const raw = (projectOrId && typeof projectOrId === 'object') ? (projectOrId.id || '') : (projectOrId || '');
+    return raw ? `${basePath}${portfolioSlug}?project=${encodeURIComponent(raw)}` : `${basePath}${portfolioSlug}`;
+  }
+  window.getProjectHref = getProjectHref;
+
   function getCurrentPageKey() {
     const path = (window.location.pathname || '').toLowerCase().split('/').pop() || 'index.html';
     if (path === '' || path === 'index.html') return 'home';
@@ -176,6 +193,8 @@
   // ═══════════════════════════════════════════════════════════
   function applySEOMetadata() {
     if (!window.CMSStore) return;
+    // Individual project pages get their title & description from the server (router.php)
+    if (window.__1928_SERVER_ROUTE__ && window.__1928_SERVER_ROUTE__.pageKey === 'portfolio_project') return;
     const pageKey = getCurrentPageKey();
     // The All Blogs page keeps its own title & description unless the admin has an SEO entry for it
     if (pageKey === 'all_blogs' && !((window.CMSStore.getAllSEO && window.CMSStore.getAllSEO()) || {}).all_blogs) return;
@@ -652,7 +671,7 @@
         const title = p.title || 'FEATURED WORK';
         const img = p.bannerImage || p.coverImage || 'assets/img/portfolio/port-chronos.jpg';
         return `
-          <a href="portfolio.html?project=${p.id || ''}" class="work-duo-card"${cardId ? ` id="${cardId}"` : ''}>
+          <a href="${getProjectHref(p)}" class="work-duo-card"${cardId ? ` id="${cardId}"` : ''}>
             <div class="work-card-media">
               <img src="${img}" alt="${title}" class="work-card-img" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
             </div>
@@ -752,7 +771,7 @@
         cardsHtml += `
           <!-- CARD ${slotNum} (SLOT ${slotNum}) -->
           <article class="p-flow-item p-item-${slotNum}">
-            <a href="portfolio?project=${proj.id}" class="p-card-v p-card-${slotNum}">
+            <a href="${getProjectHref(proj)}" class="p-card-v p-card-${slotNum}">
               <div class="pcv-media">
                 <img src="${img}" alt="${proj.title}" style="width:100%;height:100%;object-fit:cover;object-position:${objPos};transition:transform .7s cubic-bezier(0.16,1,0.3,1);" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
                 <div class="pcv-badge-top"><span class="pcv-num">${numStr}</span><span class="pcv-client">${clientStr}</span></div>
@@ -1263,7 +1282,7 @@
       const title = item.customTitle || proj?.title || (pId.toUpperCase());
       const fallbackImg = defaultImages[pId.toLowerCase()] || 'assets/img/portfolio/Selected Work Case Study Cards (Portfolio Showcase)-01.jpg';
       const img = item.customImage || proj?.coverImage || proj?.bannerImage || fallbackImg;
-      const cleanHref = `portfolio?project=${encodeURIComponent(pId)}`;
+      const cleanHref = getProjectHref(proj || pId);
 
       return `
         <a href="${cleanHref}" class="sfw-card" aria-label="View ${title} case study">
@@ -1962,6 +1981,15 @@
             key = k;
             break;
           }
+        }
+      }
+
+      // Portfolio project links (?project=...) → the project's own clean link
+      if (key === 'portfolio' && queryPart) {
+        const projectParam = new URLSearchParams(queryPart).get('project');
+        if (projectParam) {
+          a.setAttribute('href', getProjectHref(projectParam));
+          return;
         }
       }
 

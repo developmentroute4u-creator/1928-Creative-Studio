@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="admin/css/admin.css?v=20261124_v2" />
+  <link rel="stylesheet" href="admin/css/admin.css?v=20261125_v8" />
 
   <!-- Anti-flash security verification: hides protected panels until unlocked -->
   <style id="authGateInitialStyle">
@@ -2225,343 +2225,272 @@
        MODAL 1: BLOG / PERSPECTIVE EDITOR
        ═══════════════════════════════════════════════════════════ -->
   <div class="modal-backdrop" id="blogModal">
-    <div class="modal-card">
-      <div class="modal-header">
+    <div class="modal-card be-card">
+      <div class="modal-header be-header">
         <div class="modal-title-wrap">
-          <h3 class="modal-title" id="blogModalTitle">Edit Perspective</h3>
-          <span class="modal-subtitle">Direct MySQL Database Sync &amp; Asset Management</span>
+          <h3 class="modal-title" id="blogModalTitle">Edit blog</h3>
+          <span class="modal-subtitle">Changes go live on the website when you press Save.</span>
         </div>
-        <button class="btn-icon-square" type="button" onclick="closeModal('blogModal')">✕</button>
+        <div class="be-header-actions">
+          <a class="be-view-link" id="blogViewLiveLink" href="#" target="_blank" rel="noopener" style="display:none;">
+            View on website
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+          <button class="btn-icon-square" type="button" onclick="closeModal('blogModal')" aria-label="Close">✕</button>
+        </div>
       </div>
-      <form id="blogForm">
-        <div class="modal-body">
+      <form id="blogForm" novalidate>
+        <div class="modal-body be-body">
           <input type="hidden" id="blogIdInput" />
+          <input type="hidden" id="blogInitialsInput" />
 
-          <!-- Section 1: Article Identity -->
-          <div class="modal-section-badge">01 // Article Identity &amp; Classification</div>
+          <div class="be-layout">
 
-          <div class="form-group">
-            <label class="form-label">Article Title</label>
-            <input type="text" class="form-input" id="blogTitleInput" placeholder="e.g. The Mathematics of Visual Silence" required />
-          </div>
+            <!-- ═══ LEFT: WRITING ═══ -->
+            <div class="be-main">
+              <div class="be-field">
+                <label class="be-label" for="blogTitleInput">Title</label>
+                <input type="text" class="be-title-input" id="blogTitleInput" placeholder="Give your blog a clear title" autocomplete="off" />
+              </div>
 
-          <div class="form-group">
-            <label class="form-label">Perspective Custom URL Slug</label>
-            <div class="route-input-group">
-              <span class="route-prefix">https://1928creativestudio.com/perspectives/</span>
-              <input type="text" class="route-slug-field" id="blogSlugInput" placeholder="e.g. monolithic-luxury-monogram" autocomplete="off" />
+              <div class="be-field">
+                <label class="be-label" for="blogExcerptInput">Short summary <span class="be-hint">Shown on the blog cards. One or two sentences.</span></label>
+                <textarea class="form-textarea be-summary" id="blogExcerptInput" rows="2" placeholder="What is this blog about?"></textarea>
+              </div>
+
+              <div class="be-field be-field-article">
+                <div class="be-article-head">
+                  <label class="be-label">Article</label>
+                  <span class="be-hint">Paste straight from Word or Google Docs: headings, lists, bold and links are kept.</span>
+                </div>
+
+                <div class="wysiwyg-editor-wrap be-editor-wrap">
+                  <div class="be-toolbar" id="blogEditorToolbar" role="toolbar" aria-label="Formatting">
+                    <div class="be-seg" role="group" aria-label="Line style">
+                      <button type="button" class="be-tool" data-block="p" onclick="formatEditorHeading('p')" data-tip="Normal paragraph">Text</button>
+                      <button type="button" class="be-tool" data-block="h2" onclick="formatEditorHeading('2')" data-tip="Shows in the contents list">Heading</button>
+                      <button type="button" class="be-tool" data-block="h3" onclick="formatEditorHeading('3')" data-tip="Smaller heading">Subheading</button>
+                    </div>
+                    <span class="be-tool-sep" aria-hidden="true"></span>
+                    <button type="button" class="be-tool be-tool-icon" data-state="bold" onclick="execEditorCommand('bold')" data-tip="Bold · Ctrl+B" aria-label="Bold">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h9a4 4 0 0 1 0 8H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7a4 4 0 0 1 0 8"/></svg>
+                    </button>
+                    <button type="button" class="be-tool be-tool-icon" data-state="italic" onclick="execEditorCommand('italic')" data-tip="Italic · Ctrl+I" aria-label="Italic">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="19" x2="10" y1="4" y2="4"/><line x1="14" x2="5" y1="20" y2="20"/><line x1="15" x2="9" y1="4" y2="20"/></svg>
+                    </button>
+                    <span class="be-tool-sep" aria-hidden="true"></span>
+                    <button type="button" class="be-tool be-tool-icon" data-state="insertUnorderedList" onclick="execEditorCommand('insertUnorderedList')" data-tip="Bullet list" aria-label="Bullet list">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+                    </button>
+                    <button type="button" class="be-tool be-tool-icon" data-state="insertOrderedList" onclick="execEditorCommand('insertOrderedList')" data-tip="Numbered list" aria-label="Numbered list">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11"/><path d="M10 12h11"/><path d="M10 18h11"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+                    </button>
+                    <span class="be-tool-sep" aria-hidden="true"></span>
+                    <button type="button" class="be-tool be-tool-icon" onclick="insertEditorPullquote()" data-tip="Quote · select text first" aria-label="Quote">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/><path d="M5 3a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2 1 1 0 0 1 1 1v1a2 2 0 0 1-2 2 1 1 0 0 0-1 1v2a1 1 0 0 0 1 1 6 6 0 0 0 6-6V5a2 2 0 0 0-2-2z"/></svg>
+                    </button>
+                    <button type="button" class="be-tool be-tool-short" onclick="insertEditorTakeaway()" data-tip="Key point box · select text first" aria-label="Key point">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                      <span class="be-tool-label">Key point</span>
+                    </button>
+                    <button type="button" class="be-tool be-tool-icon" onclick="insertEditorDivider()" data-tip="Divider line" aria-label="Divider line">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="12" y2="12"/><polyline points="8 7 12 3 16 7"/><polyline points="16 17 12 21 8 17"/></svg>
+                    </button>
+                    <span class="be-tool-sep" aria-hidden="true"></span>
+                    <button type="button" class="be-tool be-tool-icon" onclick="insertEditorLink()" data-tip="Link · select text first" aria-label="Link">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </button>
+                    <button type="button" class="be-tool be-tool-short" onclick="insertEditorImage()" data-tip="Add a picture inside the article" aria-label="Image">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>
+                      <span class="be-tool-label">Image</span>
+                    </button>
+                    <button type="button" class="be-tool be-tool-tidy" onclick="autoFormatEditorContent()" data-tip="Turns title lines into headings and cleans messy styling">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/></svg>
+                      Tidy up
+                    </button>
+                  </div>
+                  <input type="file" id="blogEditorImageFile" accept="image/*" style="display:none;" />
+
+                  <div id="blogVisualEditor" class="editorial-wysiwyg-editor be-editor" contenteditable="true" data-placeholder="Start writing, or paste your article here…" spellcheck="true"></div>
+                  <textarea class="editorial-raw-html-editor be-html-editor" id="blogContentInput" rows="16" spellcheck="false"></textarea>
+                </div>
+
+                <div class="be-editor-foot">
+                  <span id="editorWordCountBadge">0 words</span>
+                  <span class="be-dot">·</span>
+                  <span id="editorReadTimeBadge">1 min read</span>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div class="form-group">
-              <label class="form-label">Category</label>
-              <input type="text" class="form-input" id="blogCategoryInput" list="blogCategoriesList" placeholder="e.g. TYPOGRAPHIC THEORY" required />
-              <datalist id="blogCategoriesList">
-                <option value="TYPOGRAPHIC THEORY"></option>
-                <option value="BRAND ARCHITECTURE"></option>
-                <option value="SPATIAL BRANDING"></option>
-                <option value="DIGITAL EXPERIENCES"></option>
-                <option value="MOTION IDENTITY"></option>
-                <option value="STRATEGIC MONOGRAPH"></option>
-                <option value="EDITORIAL ESSAY"></option>
-              </datalist>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Read Time</label>
-              <input type="text" class="form-input" id="blogReadTimeInput" placeholder="e.g. 6 MIN READ" />
-            </div>
-          </div>
+            <!-- ═══ RIGHT: SETTINGS ═══ -->
+            <aside class="be-side">
 
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-            <div class="form-group">
-              <label class="form-label">Publication Date</label>
-              <input type="text" class="form-input" id="blogDateInput" placeholder="e.g. SEP 2026" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">City / Geographic Origin</label>
-              <input type="text" class="form-input" id="blogCityInput" placeholder="e.g. Milan, Italy" />
-            </div>
-          </div>
+              <section class="be-panel be-images">
+                <h4 class="be-panel-title">Images</h4>
 
-          <!-- Section 2: Editorial Bylines & Authorship -->
-          <div class="modal-section-badge">02 // Editorial Bylines, Authorship &amp; Monograph Bio</div>
+                <div class="be-image-field">
+                <div class="be-image-head">
+                  <span class="be-label">Cover image</span>
+                  <span class="be-hint">Shown on the blog cards</span>
+                </div>
+                <div class="media-upload-card be-media" id="blogCoverUploadCard">
+                  <input type="hidden" id="blogCoverInput" value="" />
+                  <input type="file" id="blogCoverFileInput" accept="image/*" style="display:none;" />
+                  <div class="media-preview-container" id="blogCoverPreviewBox" style="display:none;">
+                    <div class="media-preview-thumb-wrap">
+                      <img src="" alt="Cover preview" class="media-small-thumbnail" id="blogCoverPreviewImg" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
+                      <div class="media-preview-meta">
+                        <span class="media-path-pill" id="blogCoverPathTxt">assets/uploads/...</span>
+                      </div>
+                    </div>
+                    <div class="media-actions-deck">
+                      <button type="button" class="btn-media-change" id="blogChangeCoverBtn">Change</button>
+                      <button type="button" class="btn-media-delete" id="blogDeleteCoverBtn">Remove</button>
+                    </div>
+                  </div>
+                  <div class="media-dropzone" id="blogCoverDropzone">
+                    <svg class="dropzone-cloud-icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+                    <div class="dropzone-title">Click or drop an image</div>
+                    <div class="dropzone-hint">JPG, PNG or WEBP · wide images look best</div>
+                  </div>
+                  <input type="hidden" id="blogCoverManualInput" />
+                </div>
+                </div>
 
-          <div style="display:grid;grid-template-columns:1fr 1fr 120px;gap:16px;">
-            <div class="form-group">
-              <label class="form-label">Author Name</label>
-              <input type="text" class="form-input" id="blogAuthorInput" placeholder="e.g. Jay Thaker" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Author Role</label>
-              <input type="text" class="form-input" id="blogRoleInput" placeholder="e.g. Studio Principal &amp; Brand Architect" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Avatar Initials</label>
-              <input type="text" class="form-input" id="blogInitialsInput" placeholder="e.g. JT" maxlength="4" style="text-align:center;font-weight:700;letter-spacing:1px;" />
-            </div>
-          </div>
+                <div class="be-image-field">
+                <div class="be-image-head">
+                  <span class="be-label">Article image</span>
+                  <span class="be-hint">Shown at the top of the article</span>
+                </div>
+                <div class="media-upload-card be-media" id="blogSpecimenUploadCard">
+                  <input type="hidden" id="blogSpecimenInput" value="" />
+                  <input type="file" id="blogSpecimenFileInput" accept="image/*" style="display:none;" />
+                  <div class="media-preview-container" id="blogSpecimenPreviewBox" style="display:none;">
+                    <div class="media-preview-thumb-wrap">
+                      <img src="" alt="Article image preview" class="media-small-thumbnail" id="blogSpecimenPreviewImg" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
+                      <div class="media-preview-meta">
+                        <span class="media-path-pill" id="blogSpecimenPathTxt">assets/uploads/...</span>
+                      </div>
+                    </div>
+                    <div class="media-actions-deck">
+                      <button type="button" class="btn-media-change" id="blogChangeSpecimenBtn">Change</button>
+                      <button type="button" class="btn-media-delete" id="blogDeleteSpecimenBtn">Remove</button>
+                    </div>
+                  </div>
+                  <div class="media-dropzone" id="blogSpecimenDropzone">
+                    <svg class="dropzone-cloud-icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+                    <div class="dropzone-title">Click or drop an image</div>
+                    <div class="dropzone-hint">Uses the cover image if empty</div>
+                  </div>
+                  <input type="hidden" id="blogSpecimenManualInput" />
+                </div>
+                </div>
+              </section>
 
-          <div class="form-group">
-            <label class="form-label">Author Biography (Displayed on Detail Page Signature Card)</label>
-            <textarea class="form-textarea" id="blogBioInput" rows="2" placeholder="Founder &amp; Principal Brand Strategist at 1928 Creative Studio. Advising luxury maisons and deep-tech founders on enduring visual systems."></textarea>
-          </div>
-
-          <!-- Section 3: Cover & Specimen Media Assets -->
-          <div class="modal-section-badge">03 // Media Assets &amp; Specimen Figures</div>
-
-          <div class="form-group">
-            <label class="form-label">Primary Cover Image Asset</label>
-            <div class="media-upload-card" id="blogCoverUploadCard">
-              <input type="hidden" id="blogCoverInput" value="" />
-              <input type="file" id="blogCoverFileInput" accept="image/*,video/*" style="display:none;" />
-
-              <div class="media-preview-container" id="blogCoverPreviewBox" style="display:none;">
-                <div class="media-preview-thumb-wrap">
-                  <img src="" alt="Cover Preview" class="media-small-thumbnail" id="blogCoverPreviewImg" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
-                  <div class="media-preview-meta">
-                    <span class="media-path-pill" id="blogCoverPathTxt">assets/uploads/...</span>
-                    <span class="media-storage-tag">📁 Cover Asset · Stored in Database</span>
+              <section class="be-panel">
+                <h4 class="be-panel-title">Details</h4>
+                <div class="be-field">
+                  <label class="be-label" for="blogCategoryInput">Category</label>
+                  <input type="text" class="form-input" id="blogCategoryInput" list="blogCategoriesList" placeholder="Choose or type a category" autocomplete="off" />
+                  <datalist id="blogCategoriesList"></datalist>
+                </div>
+                <div class="be-grid-2">
+                  <div class="be-field">
+                    <label class="be-label" for="blogDateInput">Date</label>
+                    <input type="text" class="form-input" id="blogDateInput" placeholder="e.g. NOV 2026" />
+                  </div>
+                  <div class="be-field">
+                    <label class="be-label" for="blogReadTimeInput">Read time</label>
+                    <input type="text" class="form-input" id="blogReadTimeInput" placeholder="Automatic" />
                   </div>
                 </div>
-                <div class="media-actions-deck">
-                  <button type="button" class="btn-media-change" id="blogChangeCoverBtn">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-                    Change Image
-                  </button>
-                  <button type="button" class="btn-media-delete" id="blogDeleteCoverBtn">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                    Delete Image
-                  </button>
+                <div class="be-field">
+                  <label class="be-label" for="blogCityInput">City</label>
+                  <input type="text" class="form-input" id="blogCityInput" placeholder="e.g. Ahmedabad, India" />
                 </div>
-              </div>
+              </section>
 
-              <div class="media-dropzone" id="blogCoverDropzone">
-                <svg class="dropzone-cloud-icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
-                <div class="dropzone-title">Click to upload cover image or drag &amp; drop here</div>
-                <div class="dropzone-hint">SVG, PNG, JPG, WEBP, AVIF or MP4 · Automatically uploaded to /assets/uploads/</div>
-              </div>
-
-              <div style="display:flex;justify-content:flex-end;">
-                <span class="media-manual-toggle" onclick="toggleManualInput('blogManualWrap')">Manual path input</span>
-              </div>
-              <div id="blogManualWrap" style="display:none;margin-top:10px;">
-                <input type="text" class="form-input" id="blogCoverManualInput" placeholder="e.g. assets/img/portfolio/port-chronos.jpg or assets/uploads/my-image.webp" oninput="syncManualToHidden('blogCoverManualInput','blogCoverInput','blogCoverPreviewBox','blogCoverPreviewImg','blogCoverPathTxt','blogCoverDropzone')" />
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-top:16px;">
-            <label class="form-label">Detail Page Specimen Image Asset (Optional Full Blueprint / Figure)</label>
-            <div class="media-upload-card" id="blogSpecimenUploadCard">
-              <input type="hidden" id="blogSpecimenInput" value="" />
-              <input type="file" id="blogSpecimenFileInput" accept="image/*,video/*" style="display:none;" />
-
-              <div class="media-preview-container" id="blogSpecimenPreviewBox" style="display:none;">
-                <div class="media-preview-thumb-wrap">
-                  <img src="" alt="Specimen Preview" class="media-small-thumbnail" id="blogSpecimenPreviewImg" onerror="this.onerror=null; this.src='assets/img/portfolio/port-chronos.jpg';" />
-                  <div class="media-preview-meta">
-                    <span class="media-path-pill" id="blogSpecimenPathTxt">assets/uploads/...</span>
-                    <span class="media-storage-tag">📁 Monograph Specimen Banner</span>
+              <section class="be-panel">
+                <h4 class="be-panel-title">Author</h4>
+                <div class="be-author-row">
+                  <div class="be-avatar" id="blogAuthorAvatarPreview">JT</div>
+                  <div class="be-author-fields">
+                    <input type="text" class="form-input" id="blogAuthorInput" placeholder="Author name" aria-label="Author name" />
+                    <input type="text" class="form-input" id="blogRoleInput" placeholder="Role, e.g. Brand Strategist" aria-label="Author role" />
                   </div>
                 </div>
-                <div class="media-actions-deck">
-                  <button type="button" class="btn-media-change" id="blogChangeSpecimenBtn">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-                    Change Image
-                  </button>
-                  <button type="button" class="btn-media-delete" id="blogDeleteSpecimenBtn">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-                    Delete Image
-                  </button>
+                <div class="be-field">
+                  <label class="be-label" for="blogBioInput">About the author <span class="be-hint">Optional</span></label>
+                  <textarea class="form-textarea" id="blogBioInput" rows="2" placeholder="One line about the author, shown at the end of the article."></textarea>
                 </div>
-              </div>
+              </section>
 
-              <div class="media-dropzone" id="blogSpecimenDropzone">
-                <svg class="dropzone-cloud-icon" viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
-                <div class="dropzone-title">Click to upload specimen figure image (or leave blank for radar glyph)</div>
-                <div class="dropzone-hint">Appears in the header specimen banner of the reading view</div>
-              </div>
+              <details class="be-panel be-more" id="blogMoreOptions">
+                <summary class="be-panel-title">
+                  <span class="be-more-text">More options<small>Page link, contents list, suggested blogs</small></span>
+                </summary>
 
-              <div style="display:flex;justify-content:flex-end;">
-                <span class="media-manual-toggle" onclick="toggleManualInput('blogSpecimenManualWrap')">Manual path input</span>
-              </div>
-              <div id="blogSpecimenManualWrap" style="display:none;margin-top:10px;">
-                <input type="text" class="form-input" id="blogSpecimenManualInput" placeholder="e.g. assets/img/portfolio/port-chronos.jpg or assets/uploads/specimen.webp" oninput="syncManualToHidden('blogSpecimenManualInput','blogSpecimenInput','blogSpecimenPreviewBox','blogSpecimenPreviewImg','blogSpecimenPathTxt','blogSpecimenDropzone')" />
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group" style="margin-top:10px;">
-            <label class="form-label">Specimen Caption / Provenance Tag</label>
-            <input type="text" class="form-input" id="blogSpecimenCaptionInput" placeholder="e.g. 1928 EDITORIAL PROVENANCE CAPTURE" />
-          </div>
-
-          <!-- Section 4: Abstract & Article Content -->
-          <div class="modal-section-badge">04 // Abstract &amp; Editorial Monograph Content</div>
-
-          <div class="form-group">
-            <label class="form-label">Excerpt / Summary Hook</label>
-            <textarea class="form-textarea" id="blogExcerptInput" rows="2" placeholder="Brief 1-2 sentence executive summary of the monograph..." required></textarea>
-          </div>
-
-          <div class="form-group">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-              <label class="form-label" style="margin-bottom:0;">Full Article Content &amp; Editorial Body</label>
-              <div style="display:flex;align-items:center;gap:8px;">
-                <button type="button" class="wysiwyg-pill-btn" onclick="autoFormatEditorContent()" title="Auto-detect &amp; format pasted text into headings and paragraphs">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                  <span>Auto-Format Paste</span>
-                </button>
-                <button type="button" class="wysiwyg-btn" id="btnToggleEditorCode" onclick="toggleCodeView()" title="Toggle HTML Code View" style="border:1px solid var(--rule);padding:3px 8px;font-size:11px;">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                  <span>HTML View</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="wysiwyg-editor-wrap">
-              <!-- Visual Formatting Toolbar -->
-              <div class="wysiwyg-toolbar">
-                <!-- Headings Group -->
-                <div class="wysiwyg-btn-group">
-                  <button type="button" class="wysiwyg-btn" onclick="formatEditorHeading('p')" title="Normal Paragraph">¶ Body</button>
-                  <button type="button" class="wysiwyg-btn" onclick="formatEditorHeading('2')" title="Major Section Heading (H2)">H2 Heading</button>
-                  <button type="button" class="wysiwyg-btn" onclick="formatEditorHeading('3')" title="Subsection (H3)">H3 Sub</button>
-                </div>
-
-                <div class="wysiwyg-divider"></div>
-
-                <!-- Text Style Group -->
-                <div class="wysiwyg-btn-group">
-                  <button type="button" class="wysiwyg-btn" onclick="execEditorCommand('bold')" title="Bold (Ctrl+B)">
-                    <strong style="font-size:13px;font-family:var(--font-primary);">B</strong>
-                  </button>
-                  <button type="button" class="wysiwyg-btn" onclick="execEditorCommand('italic')" title="Italic (Ctrl+I)">
-                    <em style="font-size:13px;font-family:var(--font-primary);">I</em>
-                  </button>
-                  <button type="button" class="wysiwyg-btn" onclick="execEditorCommand('underline')" title="Underline (Ctrl+U)">
-                    <u style="font-size:13px;font-family:var(--font-primary);">U</u>
-                  </button>
-                </div>
-
-                <div class="wysiwyg-divider"></div>
-
-                <!-- Structure & Elements Group -->
-                <div class="wysiwyg-btn-group">
-                  <button type="button" class="wysiwyg-btn" onclick="execEditorCommand('insertUnorderedList')" title="Bullet List">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-                    <span>Bullet</span>
-                  </button>
-                  <button type="button" class="wysiwyg-btn" onclick="execEditorCommand('insertOrderedList')" title="Numbered List">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/></svg>
-                    <span>Numbers</span>
-                  </button>
-                  <button type="button" class="wysiwyg-btn" onclick="insertEditorPullquote()" title="Insert Editorial Pullquote Box">
-                    <span style="font-size:14px;line-height:1;">❝</span>
-                    <span>Quote</span>
-                  </button>
-                  <button type="button" class="wysiwyg-btn" onclick="insertEditorTakeaway()" title="Insert Key Takeaway / Principle Callout Box">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
-                    <span>Callout</span>
-                  </button>
-                  <button type="button" class="wysiwyg-btn" onclick="insertEditorDivider()" title="Insert Section Divider Line">
-                    <span style="font-size:15px;line-height:1;font-weight:700;">―</span>
-                    <span>Divider</span>
-                  </button>
-                  <button type="button" class="wysiwyg-btn" onclick="insertEditorLink()" title="Insert Link">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                    <span>Link</span>
-                  </button>
-                </div>
-
-                <div class="wysiwyg-divider"></div>
-
-                <!-- Utilities Group -->
-                <div class="wysiwyg-btn-group">
-                  <button type="button" class="wysiwyg-btn" onclick="execEditorCommand('removeFormat')" title="Clear Formatting (Tx)">Tx Clear</button>
-                </div>
-              </div>
-
-              <!-- Visual Contenteditable Canvas -->
-              <div id="blogVisualEditor" class="editorial-wysiwyg-editor" contenteditable="true" data-placeholder="Start typing your article here, or paste formatted text from Word, Google Docs, or Notes..." spellcheck="true"></div>
-
-              <!-- Raw HTML Fallback / Synchronized Textarea (Hidden by default) -->
-              <textarea class="editorial-raw-html-editor" id="blogContentInput" rows="8" placeholder="<p>Full article paragraphs...</p>"></textarea>
-            </div>
-            <div style="font-size:11.5px;color:var(--ink-dim);margin-top:6px;display:flex;justify-content:space-between;">
-              <span>💡 Formatted visually as you write. Paste from Word/Docs automatically converts into clean paragraphs.</span>
-              <span id="editorWordCountBadge" style="font-family:var(--font-mono);font-size:11px;">0 words</span>
-            </div>
-          </div>
-
-          <!-- Section 5: Dynamic Table of Contents -->
-          <div class="modal-section-badge" style="display:flex;justify-content:space-between;align-items:center;">
-            <span>05 // Table of Contents (TOC Navigation Sections)</span>
-            <button type="button" class="btn-preset-pill" onclick="autoDetectTOCFromContent()" style="font-size:10px;padding:3px 10px;letter-spacing:0.5px;" title="Scan article HTML content for <h2>/<h3> headings to auto-populate TOC">⚡ Auto-Detect from Headings</button>
-          </div>
-
-          <div class="form-group">
-            <div style="font-size:12px;color:var(--ink-mid);margin-bottom:8px;">
-              Configure the interactive section links displayed in the sticky Table of Contents sidebar on the reading page:
-            </div>
-            <div id="blogTOCRowsContainer" style="display:flex;flex-direction:column;gap:8px;margin-bottom:10px;">
-              <!-- Dynamically populated TOC Rows -->
-            </div>
-            <button type="button" class="btn-action-secondary" onclick="addTOCRow()" style="font-size:11.5px;padding:9px 16px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;box-sizing:border-box;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              <span>Add Section Anchor</span>
-            </button>
-          </div>
-
-          <!-- Section 6: Related Monographs (Strategic Adjacencies) -->
-          <div class="modal-section-badge">06 // Related Monographs (Strategic Adjacencies)</div>
-
-          <div style="font-size:12px;color:var(--ink-mid);margin-bottom:10px;">
-            Select the two related perspective articles recommended at the bottom of this monograph:
-          </div>
-
-          <div style="display:grid;grid-template-columns:minmax(0, 1fr) minmax(0, 1fr);gap:16px;width:100%;box-sizing:border-box;">
-            <div class="form-group" style="min-width:0;width:100%;box-sizing:border-box;">
-              <label class="form-label">Related Monograph #1</label>
-              <div class="custom-dropdown-container" id="blogRelated1Dropdown">
-                <button type="button" class="custom-dropdown-trigger" id="blogRelated1Trigger" onclick="toggleGenericDropdown('blogRelated1Dropdown', event)">
-                  <span class="custom-dropdown-val" id="blogRelated1Val">Select Related Perspective 1...</span>
-                  <svg class="custom-dropdown-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
-                <div class="custom-dropdown-menu" id="blogRelated1Menu">
-                  <div class="custom-dropdown-search-wrap" onclick="event.stopPropagation()">
-                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" class="custom-dropdown-search" placeholder="Search monographs..." oninput="filterRelatedDropdown('blogRelated1', this.value)" onclick="event.stopPropagation()" />
+                <div class="be-more-block">
+                  <h5 class="be-sub-title">Page link</h5>
+                  <div class="be-slug">
+                    <span class="be-slug-prefix">/perspectives/</span>
+                    <input type="text" id="blogSlugInput" placeholder="made-from-the-title" autocomplete="off" spellcheck="false" />
                   </div>
-                  <div class="custom-dropdown-list" id="blogRelated1List"></div>
+                  <p class="be-hint be-hint-block" id="blogSlugHint">Made from the title automatically. If you change it later, the old link keeps working.</p>
                 </div>
-                <input type="hidden" id="blogRelated1Input" value="" />
-              </div>
-            </div>
 
-            <div class="form-group" style="min-width:0;width:100%;box-sizing:border-box;">
-              <label class="form-label">Related Monograph #2</label>
-              <div class="custom-dropdown-container" id="blogRelated2Dropdown">
-                <button type="button" class="custom-dropdown-trigger" id="blogRelated2Trigger" onclick="toggleGenericDropdown('blogRelated2Dropdown', event)">
-                  <span class="custom-dropdown-val" id="blogRelated2Val">Select Related Perspective 2...</span>
-                  <svg class="custom-dropdown-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                </button>
-                <div class="custom-dropdown-menu" id="blogRelated2Menu">
-                  <div class="custom-dropdown-search-wrap" onclick="event.stopPropagation()">
-                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" class="custom-dropdown-search" placeholder="Search monographs..." oninput="filterRelatedDropdown('blogRelated2', this.value)" onclick="event.stopPropagation()" />
-                  </div>
-                  <div class="custom-dropdown-list" id="blogRelated2List"></div>
+                <div class="be-more-block">
+                  <h5 class="be-sub-title">Contents list <span class="be-tag">Automatic</span></h5>
+                  <p class="be-hint be-hint-block">Made from the <strong>Headings</strong> in your article. Readers click them to jump to that part.</p>
+                  <ol class="be-toc-preview" id="blogTOCPreview"></ol>
                 </div>
-                <input type="hidden" id="blogRelated2Input" value="" />
-              </div>
-            </div>
+
+                <div class="be-more-block">
+                  <h5 class="be-sub-title">Suggested blogs</h5>
+                  <p class="be-hint be-hint-block">Two blogs shown at the end of this one. <strong>Automatic</strong> picks them from the same category.</p>
+                  <div class="be-field">
+                    <div class="custom-dropdown-container" id="blogRelated1Dropdown">
+                      <button type="button" class="custom-dropdown-trigger" id="blogRelated1Trigger" onclick="toggleGenericDropdown('blogRelated1Dropdown', event)">
+                        <span class="custom-dropdown-val" id="blogRelated1Val">Automatic</span>
+                        <svg class="custom-dropdown-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="custom-dropdown-menu" id="blogRelated1Menu">
+                        <div class="custom-dropdown-search-wrap" onclick="event.stopPropagation()">
+                          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                          <input type="text" class="custom-dropdown-search" placeholder="Search blogs..." oninput="filterRelatedDropdown('blogRelated1', this.value)" onclick="event.stopPropagation()" />
+                        </div>
+                        <div class="custom-dropdown-list" id="blogRelated1List"></div>
+                      </div>
+                      <input type="hidden" id="blogRelated1Input" value="" />
+                    </div>
+                  </div>
+                  <div class="be-field">
+                    <div class="custom-dropdown-container" id="blogRelated2Dropdown">
+                      <button type="button" class="custom-dropdown-trigger" id="blogRelated2Trigger" onclick="toggleGenericDropdown('blogRelated2Dropdown', event)">
+                        <span class="custom-dropdown-val" id="blogRelated2Val">Automatic</span>
+                        <svg class="custom-dropdown-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+                      <div class="custom-dropdown-menu" id="blogRelated2Menu">
+                        <div class="custom-dropdown-search-wrap" onclick="event.stopPropagation()">
+                          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                          <input type="text" class="custom-dropdown-search" placeholder="Search blogs..." oninput="filterRelatedDropdown('blogRelated2', this.value)" onclick="event.stopPropagation()" />
+                        </div>
+                        <div class="custom-dropdown-list" id="blogRelated2List"></div>
+                      </div>
+                      <input type="hidden" id="blogRelated2Input" value="" />
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+            </aside>
           </div>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer be-footer">
+          <span class="be-save-status" id="blogSaveStatus" role="status" aria-live="polite"></span>
           <button type="button" class="btn-action-secondary" onclick="closeModal('blogModal')">Cancel</button>
-          <button type="submit" class="btn-action-primary">Save Perspective</button>
+          <button type="submit" class="btn-action-primary" id="blogSaveBtn">Save blog</button>
         </div>
       </form>
     </div>
@@ -3488,23 +3417,23 @@
   <div id="toast-wrap"></div>
 
   <!-- Load Data Store -->
-  <script src="data-store.js?v=20261124_v2"></script>
+  <script src="data-store.js?v=20261125_v8"></script>
 
     <!-- ══ MODULAR ADMIN SECTION CONTROLLERS ══ -->
-  <script src="admin/js/admin-core.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/auth.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/dashboard.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/inquiries.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/seo.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/perspectives.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/portfolio.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/team.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/services.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/clients.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/contact.js?v=20261124_v2"></script>
-  <script src="admin/js/sections/backup.js?v=20261124_v2"></script>
-  <script src="admin/js/admin-init.js?v=20261124_v2"></script>
-  <script src="site-bridge.js?v=20261124_v2"></script>
+  <script src="admin/js/admin-core.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/auth.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/dashboard.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/inquiries.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/seo.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/perspectives.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/portfolio.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/team.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/services.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/clients.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/contact.js?v=20261125_v8"></script>
+  <script src="admin/js/sections/backup.js?v=20261125_v8"></script>
+  <script src="admin/js/admin-init.js?v=20261125_v8"></script>
+  <script src="site-bridge.js?v=20261125_v8"></script>
 </body>
 
 </html>

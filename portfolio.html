@@ -3038,13 +3038,18 @@
       const closeBtn = document.getElementById('modalCloseBtn');
       const triggerCards = document.querySelectorAll('[data-project-id]');
 
+      // Where project pages live: /<portfolio-page-slug>/<project-slug> (path provided by the server router)
+      function portfolioListPath() {
+        const R = window.__1928_SERVER_ROUTE__;
+        if (!R || (R.pageKey !== 'portfolio' && R.pageKey !== 'portfolio_project')) return null;
+        let base = '';
+        try { base = new URL(R.baseUrl).pathname.replace(/\/+$/, ''); } catch (e) {}
+        return `${base}/${R.portfolioSlug || R.slug || 'portfolio'}`;
+      }
+
       function openModal(id) {
         if (!id) return;
         window.__currentOpenProjectId = id;
-        if (window.history && window.history.replaceState) {
-          const newUrl = `${window.location.pathname}?project=${encodeURIComponent(id)}`;
-          window.history.replaceState(null, '', newUrl);
-        }
         let cmsP = null;
         if (window.CMSStore) {
           if (typeof window.CMSStore.getPortfolioById === 'function') cmsP = window.CMSStore.getPortfolioById(id);
@@ -3052,6 +3057,14 @@
           if (!cmsP && typeof window.CMSStore.getPortfolio === 'function') {
             cmsP = window.CMSStore.getPortfolio().find(p => p.id === id);
           }
+        }
+        // Show the project's own link in the address bar (e.g. /portfolio/awardsplus)
+        if (window.history && window.history.replaceState) {
+          const listPath = portfolioListPath();
+          const newUrl = listPath
+            ? `${listPath}/${encodeURIComponent((cmsP && cmsP.slug) || id)}`
+            : `${window.location.pathname}?project=${encodeURIComponent(id)}`;
+          try { window.history.replaceState(null, '', newUrl); } catch (e) {}
         }
         
         const fallback = caseStudies[id] || caseStudies['aurora'] || {};
@@ -3152,7 +3165,7 @@
         if (navEl) navEl.classList.remove('hidden');
         document.body.style.overflow = '';
         if (window.history && window.history.replaceState) {
-          window.history.replaceState(null, '', window.location.pathname);
+          try { window.history.replaceState(null, '', portfolioListPath() || window.location.pathname); } catch (e) {}
         }
       }
 
@@ -3228,7 +3241,9 @@
       // Check for deep-link project URL param (?project=aurora or ?id=aurora or #aurora)
       const urlParams = new URLSearchParams(window.location.search);
       const hashProj = window.location.hash ? window.location.hash.replace('#', '').trim() : '';
-      const targetProj = urlParams.get('project') || urlParams.get('id') || (hashProj ? hashProj : null);
+      const serverRoute = window.__1928_SERVER_ROUTE__ || {};
+      const targetProj = (serverRoute.pageKey === 'portfolio_project' && serverRoute.projectId)
+        || urlParams.get('project') || urlParams.get('id') || (hashProj ? hashProj : null);
       if (targetProj) {
         // Open modal instantly on arrival
         openModal(targetProj);

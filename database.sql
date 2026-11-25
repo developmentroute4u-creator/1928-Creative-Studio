@@ -251,6 +251,7 @@ DROP TABLE IF EXISTS `portfolio`;
 CREATE TABLE `portfolio` (
   `id` int NOT NULL AUTO_INCREMENT,
   `project_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `card_heading` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `client` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -275,7 +276,8 @@ CREATE TABLE `portfolio` (
   `active` tinyint(1) DEFAULT '1',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `project_id` (`project_id`)
+  UNIQUE KEY `project_id` (`project_id`),
+  UNIQUE KEY `uniq_portfolio_slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Dumping data for `portfolio`
