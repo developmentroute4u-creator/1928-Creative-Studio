@@ -4615,6 +4615,18 @@
     (function () {
       'use strict';
 
+      // ── Contact form settings from the admin (Contact & Brief) ──
+      function briefConfig() {
+        try { return (window.CMSStore && window.CMSStore.getContactBrief) ? (window.CMSStore.getContactBrief() || {}) : {}; } catch (e) { return {}; }
+      }
+      // Label of the final button (admin: Credentials & Success → Submit Button Label)
+      function submitButtonLabel() {
+        const cb = briefConfig();
+        const creds = (cb.step4 && (cb.step4.nameLabel || cb.step4.namePlaceholder)) ? cb.step4 : (cb.step5 || {});
+        const txt = String((creds && creds.submitBtnText) || 'Submit');
+        return txt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
       // ── Web Audio Synthesizer for Luxury Haptic Feedback ──
       let audioCtx = null;
       function playLuxuryHaptic(freq = 520, type = 'sine', duration = 0.04) {
@@ -4791,7 +4803,7 @@
 
         if (btnNext) {
           if (step === totalSteps) {
-            btnNext.innerHTML = `<span>Submit</span> ${ARROW_RIGHT_SVG}`;
+            btnNext.innerHTML = `<span>${submitButtonLabel()}</span> ${ARROW_RIGHT_SVG}`;
             setTimeout(ensureTurnstileWidget, 50);
           } else {
             btnNext.innerHTML = `<span>Continue</span> ${ARROW_RIGHT_SVG}`;
@@ -5154,7 +5166,7 @@
 
                 btnNext.disabled = false;
                 btnNext.classList.remove('is-loading');
-                btnNext.innerHTML = `<span>Submit</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
+                btnNext.innerHTML = `<span>${submitButtonLabel()}</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
               });
           }
         });
@@ -5192,7 +5204,7 @@
 
           btnNext.classList.remove('is-loading');
           btnNext.disabled = false;
-          btnNext.innerHTML = `<span>Submit</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
+          btnNext.innerHTML = `<span>${submitButtonLabel()}</span> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
 
           navigateToStep(1);
           playLuxuryHaptic(580, 'sine', 0.03);
@@ -5246,11 +5258,32 @@
         ]
       };
 
+      // The admin allocation step (tiers with a ₹ price and a $ price)
+      function adminAllocation() {
+        const cb = briefConfig();
+        return (cb.step2 && Array.isArray(cb.step2.tiers) && cb.step2.tiers.length) ? cb.step2 : (cb.step3 || null);
+      }
+
+      // Prices for the chosen currency: from the admin, otherwise the built-in ones
+      function tierDataFor(curr) {
+        const cfg = adminAllocation();
+        const tiers = (cfg && Array.isArray(cfg.tiers) && cfg.tiers.length) ? cfg.tiers : null;
+        if (!tiers) return tierCurrencyData[curr];
+        return tiers.map((t, i) => {
+          const fallback = tierCurrencyData[curr][i] || {};
+          const amount = curr === 'USD' ? (t.amountUsd || fallback.amount || t.amount) : (t.amount || fallback.amount);
+          return { amount, name: t.name || fallback.name, tier: amount };
+        });
+      }
+
       function updateCurrency(curr) {
         currentCurrency = curr;
         const allocHeadline = document.getElementById('allocHeadline');
         if (allocHeadline) {
-          allocHeadline.textContent = curr === 'INR' ? 'Capital Allocation (INR ₹)' : 'Capital Allocation (USD $)';
+          // The admin heading, with the currency of the active switch
+          const cfg = adminAllocation();
+          const base = String((cfg && cfg.headline) || 'Capital Allocation').replace(/\s*\((INR|USD)[^)]*\)\s*$/i, '').trim();
+          allocHeadline.textContent = `${base} (${curr === 'INR' ? 'INR ₹' : 'USD $'})`;
         }
         document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
           btn.classList.toggle('active', btn.getAttribute('data-currency') === curr);
@@ -5261,7 +5294,7 @@
         boxes.forEach((b, i) => { if (b.classList.contains('active')) activeIdx = i; });
         if (activeIdx < 0) activeIdx = 1;
 
-        tierCurrencyData[curr].forEach((item, idx) => {
+        tierDataFor(curr).forEach((item, idx) => {
           if (boxes[idx]) {
             boxes[idx].setAttribute('data-tier', item.tier);
             const amt = boxes[idx].querySelector('.tob-amount');
@@ -5272,6 +5305,9 @@
           }
         });
       }
+
+      // site-bridge.js calls this after it draws the admin tiers (in ₹)
+      window.__applyContactCurrency = () => updateCurrency(currentCurrency);
 
       document.querySelectorAll('.currency-toggle-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -5319,6 +5355,9 @@
       const todayYear = _now.getFullYear();
       // Studio Admin backend integration: Fully booked dates (synchronized from MySQL)
       let bookedDays = [];
+      // Blocked days are day numbers of the month chosen in the admin calendar (this month if none)
+      let bookedYear = todayYear;
+      let bookedMonth = todayMonth;
       function syncLiveBookedDays() {
         try {
           const _cb = (window.CMSStore && window.CMSStore.getContactBrief) ? window.CMSStore.getContactBrief() : null;
@@ -5326,9 +5365,17 @@
           if (_s && Array.isArray(_s.bookedDays)) {
             bookedDays = _s.bookedDays.map(d => parseInt(d, 10)).filter(d => !isNaN(d));
           }
+          const y = _s ? parseInt(_s.defaultYear, 10) : NaN;
+          const m = _s ? parseInt(_s.defaultMonth, 10) : NaN;
+          if (!isNaN(y) && !isNaN(m)) { bookedYear = y; bookedMonth = m; }
+          if (bookedYear < todayYear || (bookedYear === todayYear && bookedMonth < todayMonth)) { bookedYear = todayYear; bookedMonth = todayMonth; }
         } catch (e) {
           bookedDays = [];
         }
+      }
+      // A day is unavailable only when it is blocked in the admin (Sundays are not blocked automatically)
+      function isBlockedDay(year, month, day) {
+        return year === bookedYear && month === bookedMonth && bookedDays.includes(day);
       }
       syncLiveBookedDays();
 
@@ -5392,13 +5439,11 @@
       let viewCalMonth = todayMonth;
 
       // Start with preferred day: Monday 26th if today is 25th (Sunday)
-      let initialCandidateDay = (todayDay === 25) ? 26 : todayDay;
+      let initialCandidateDay = todayDay;
       const initialMonthDays = new Date(todayYear, todayMonth + 1, 0).getDate();
       while (initialCandidateDay <= initialMonthDays) {
-        const testD = new Date(todayYear, todayMonth, initialCandidateDay);
-        const isSun = testD.getDay() === 0;
-        const isBkd = bookedDays.includes(initialCandidateDay);
-        if (!isSun && !isBkd) break;
+        const isBkd = isBlockedDay(todayYear, todayMonth, initialCandidateDay);
+        if (!isBkd) break;
         initialCandidateDay++;
       }
       if (initialCandidateDay > initialMonthDays) initialCandidateDay = todayDay;
@@ -5489,17 +5534,15 @@
         // Find selected day
         let targetDay = preferredDay;
         if (!targetDay) {
-          targetDay = isCurrentMonthYear ? ((todayDay === 25) ? 26 : todayDay) : 1;
+          targetDay = isCurrentMonthYear ? todayDay : 1;
         }
         if (targetDay > daysInMonth) targetDay = 1;
 
         let checkDay = targetDay;
         while (checkDay <= daysInMonth) {
-          const testD = new Date(viewCalYear, viewCalMonth, checkDay);
-          const isSun = testD.getDay() === 0;
-          const isBkd = isCurrentMonthYear && bookedDays.includes(checkDay);
+          const isBkd = isBlockedDay(viewCalYear, viewCalMonth, checkDay);
           const isPast = isCurrentMonthYear && (checkDay < minCalDay);
-          if (!isSun && !isBkd && !isPast) break;
+          if (!isBkd && !isPast) break;
           checkDay++;
         }
         if (checkDay <= daysInMonth) {
@@ -5531,9 +5574,8 @@
         for (let day = 1; day <= daysInMonth; day++) {
           const dateObj = new Date(viewCalYear, viewCalMonth, day);
           const dayOfWeek = dateObj.getDay();
-          const isSunday = dayOfWeek === 0;
           const isPast = isCurrentMonthYear ? (day < minCalDay) : (viewCalYear < minCalYear || (viewCalYear === minCalYear && viewCalMonth < minCalMonth));
-          const isBooked = isCurrentMonthYear && bookedDays.includes(day);
+          const isBooked = isBlockedDay(viewCalYear, viewCalMonth, day);
           const isSelected = day === stepSelectedCalDate.day;
           const isToday = isCurrentMonthYear && (day === minCalDay);
 
@@ -5542,7 +5584,7 @@
           let classList = ['sb-day-cell'];
           if (isSelected) classList.push('active');
           if (isToday) classList.push('today');
-          if (isSunday || isPast) classList.push('disabled');
+          if (isPast) classList.push('disabled');
           if (isBooked) classList.push('booked');
 
           cell.className = classList.join(' ');
@@ -5553,7 +5595,7 @@
             cell.setAttribute('title', `${monthNamesList[viewCalMonth]} ${day}, ${viewCalYear} · Fully Booked`);
           }
 
-          if (!isSunday && !isPast && !isBooked) {
+          if (!isPast && !isBooked) {
             cell.addEventListener('click', () => {
               document.querySelectorAll('#stepSbDaysGrid .sb-day-cell').forEach(c => c.classList.remove('active'));
               cell.classList.add('active');

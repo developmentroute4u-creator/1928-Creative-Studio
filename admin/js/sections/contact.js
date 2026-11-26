@@ -2,19 +2,19 @@
     // 7.5 CONTACT & MULTI-STEP BRIEF CONTROLLER
     // ═══════════════════════════════════════════════════════════
     let currentContactTab = 'scope';
+    // $ prices used until they are set in the admin (the ones the website showed before)
+    const CONTACT_DEFAULT_USD_PRICES = ['< $500', '$500 to 1000$', '1000$ to 2000$', '2000$ +'];
 
     function switchContactSubTab(tabName) {
       currentContactTab = tabName;
       const tabBtns = {
         scope: 'tabBtnContactScope',
-        disciplines: 'tabBtnContactDisc',
         allocation: 'tabBtnContactAlloc',
         session: 'tabBtnContactSession',
         credentials: 'tabBtnContactCreds'
       };
       const subPanes = {
         scope: 'contactSubpaneScope',
-        disciplines: 'contactSubpaneDisciplines',
         allocation: 'contactSubpaneAllocation',
         session: 'contactSubpaneSession',
         credentials: 'contactSubpaneCredentials'
@@ -31,10 +31,8 @@
     }
 
     // Dynamic Lists State
-    let contactDisciplinesState = [];
     let contactTimelinesState = [];
     let contactSlotsState = [];
-    let contactTopicsState = [];
     let contactDateSlotsState = {};
     let selectedSlotDateKey = 'default';
     let adminCalMonth = 9; // October (0-indexed)
@@ -66,17 +64,6 @@
         if (elKw) elKw.value = Array.isArray(c.keywords) ? c.keywords.join(', ') : (c.keywords || '');
       }
 
-      // ── Subpane 2: Disciplines ──
-      const s2 = brief.step2 || {};
-      const elS2Rail = document.getElementById('contactStep2RailWord');
-      const elS2Head = document.getElementById('contactStep2Headline');
-      const elS2Cap = document.getElementById('contactStep2Caption');
-      if (elS2Rail) elS2Rail.value = s2.railWord || 'Disciplines';
-      if (elS2Head) elS2Head.value = s2.headline || 'Specialized Disciplines';
-      if (elS2Cap) elS2Cap.value = s2.caption || 'Choose all deliverables and capabilities required for this engagement.';
-
-      contactDisciplinesState = Array.isArray(s2.disciplines) ? JSON.parse(JSON.stringify(s2.disciplines)) : [];
-      renderContactDisciplinesList();
 
       // ── Subpane 3: Capital Allocation ──
       const s3 = brief.step3 || {};
@@ -94,6 +81,8 @@
         const elName = document.getElementById(`contactTierName_${i}`);
         const elRad = document.getElementById(`contactTierDefault_${i}`);
         if (elAmt) elAmt.value = t.amount || '';
+        const elUsd = document.getElementById(`contactTierAmountUsd_${i}`);
+        if (elUsd) elUsd.value = t.amountUsd || CONTACT_DEFAULT_USD_PRICES[i] || '';
         if (elName) elName.value = t.name || '';
         if (elRad) elRad.checked = !!t.defaultSelected || (i === 1 && !tiers.some(x => x.defaultSelected));
       }
@@ -126,6 +115,10 @@
 
       adminCalMonth = (s4.defaultMonth !== undefined && s4.defaultMonth !== null && !isLegacyDemo) ? s4.defaultMonth : currentMonth;
       adminCalYear = (s4.defaultYear && s4.defaultYear >= currentYear) ? s4.defaultYear : currentYear;
+      if (adminCalYear < currentYear || (adminCalYear === currentYear && adminCalMonth < currentMonth)) {
+        adminCalMonth = currentMonth;
+        adminCalYear = currentYear;
+      }
 
       selectGenericDropdownOption('customDropdown_contactMonth', 'contactStep4Month', String(adminCalMonth), monthNames[adminCalMonth] || 'October');
 
@@ -155,17 +148,6 @@
       renderAdminSlotsDateScroller();
       renderContactSlotsList();
 
-      const elFocusLabel = document.getElementById('contactStep4FocusLabel');
-      if (elFocusLabel) elFocusLabel.value = s4.focusLabel || 'Consultation Focus Area';
-      contactTopicsState = Array.isArray(s4.focusTopics) ? [...s4.focusTopics] : [
-        'Logo Design & Visual Identity',
-        'Brand Identity Development',
-        'Website Design & Development',
-        'Social Media & Digital Marketing',
-        'Content Creation & Influencer Marketing',
-        'Full 360° Studio Creative Partnership'
-      ];
-      renderContactTopicsList();
 
       // ── Subpane 5: Credentials & Success ──
       const s5 = brief.step5 || {};
@@ -196,43 +178,12 @@
       setVal('contactStep5SubmitBtnText', s5.submitBtnText, 'Submit');
       setVal('contactStep5SuccessTitle', s5.successTitle, 'BRIEF SUBMITTED.');
       setVal('contactStep5ResetBtnText', s5.resetBtnText, 'Submit Another Brief');
-      setVal('contactStep5SuccessDesc', s5.successDesc, 'Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.');
+      // The line under the title on the success screen (an old long default text was never shown on the website)
+      const legacySuccessDesc = 'Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.';
+      setVal('contactStep5SuccessDesc', (s5.successDesc && s5.successDesc !== legacySuccessDesc) ? s5.successDesc : null, 'Received · Under Review (Response within 72 hrs)');
     }
 
     // ── Dynamic List Renderers ──
-    function renderContactDisciplinesList() {
-      const container = document.getElementById('contactDisciplinesListContainer');
-      if (!container) return;
-      if (!contactDisciplinesState.length) {
-        container.innerHTML = `<div style="padding:16px;text-align:center;color:var(--ink-dim);font-size:12px;">No discipline chips added. Click "+ Add Discipline Chip" above.</div>`;
-        return;
-      }
-      container.innerHTML = contactDisciplinesState.map((d, idx) => `
-        <div style="display:grid;grid-template-columns:1fr 160px 40px;gap:12px;align-items:center;background:var(--card-bg);padding:10px 14px;border-radius:8px;border:1px solid var(--rule);">
-          <input type="text" class="form-input" value="${d.label || ''}" placeholder="Discipline name" oninput="contactDisciplinesState[${idx}].label = this.value" />
-          <label style="display:flex;align-items:center;gap:6px;font-size:12px;cursor:pointer;white-space:nowrap;">
-            <input type="checkbox" ${d.defaultSelected ? 'checked' : ''} onchange="contactDisciplinesState[${idx}].defaultSelected = this.checked" />
-            <span>Default Active</span>
-          </label>
-          <button type="button" class="btn-icon-square" style="color:var(--cr);" onclick="removeContactDisciplineRow(${idx})" title="Delete chip">✕</button>
-        </div>
-      `).join('');
-    }
-
-    function addContactDisciplineRow(label = 'New Deliverable', defaultSelected = false) {
-      contactDisciplinesState.push({
-        id: 'disc-' + Date.now().toString(36),
-        label,
-        defaultSelected
-      });
-      renderContactDisciplinesList();
-    }
-
-    function removeContactDisciplineRow(idx) {
-      contactDisciplinesState.splice(idx, 1);
-      renderContactDisciplinesList();
-    }
-
     function renderContactTimelinesList() {
       const container = document.getElementById('contactTimelinesListContainer');
       if (!container) return;
@@ -417,27 +368,6 @@
       autoSaveSessionStep();
     }
 
-    function renderContactTopicsList() {
-      const container = document.getElementById('contactTopicsListContainer');
-      if (!container) return;
-      container.innerHTML = contactTopicsState.map((topic, idx) => `
-        <div style="display:flex;align-items:center;gap:12px;background:var(--card-bg);padding:8px 14px;border-radius:8px;border:1px solid var(--rule);">
-          <input type="text" class="form-input" value="${topic}" placeholder="Topic Title" oninput="contactTopicsState[${idx}] = this.value" />
-          <button type="button" class="btn-icon-square" style="color:var(--cr);" onclick="removeContactTopicRow(${idx})" title="Delete topic">✕</button>
-        </div>
-      `).join('');
-    }
-
-    function addContactTopicRow(topic = 'New Consultation Topic') {
-      contactTopicsState.push(topic);
-      renderContactTopicsList();
-    }
-
-    function removeContactTopicRow(idx) {
-      contactTopicsState.splice(idx, 1);
-      renderContactTopicsList();
-    }
-
     // ── Collectors and Save Functions ──
     function collectContactScopeData() {
       const cards = [];
@@ -458,28 +388,14 @@
       };
     }
 
-    function collectContactDisciplinesData() {
-      return {
-        step2: {
-          railWord: document.getElementById('contactStep2RailWord')?.value.trim() || 'Disciplines',
-          headline: document.getElementById('contactStep2Headline')?.value.trim() || 'Specialized Disciplines',
-          caption: document.getElementById('contactStep2Caption')?.value.trim() || 'Choose all deliverables and capabilities required for this engagement.',
-          disciplines: contactDisciplinesState.map((d, i) => ({
-            id: d.id || `disc-${i+1}`,
-            label: d.label || 'Deliverable',
-            defaultSelected: !!d.defaultSelected
-          }))
-        }
-      };
-    }
-
     function collectContactAllocationData() {
       const tiers = [];
       for (let i = 0; i < 4; i++) {
         const amt = document.getElementById(`contactTierAmount_${i}`)?.value.trim() || '';
         const name = document.getElementById(`contactTierName_${i}`)?.value.trim() || '';
+        const amtUsd = document.getElementById(`contactTierAmountUsd_${i}`)?.value.trim() || '';
         const isDef = !!document.getElementById(`contactTierDefault_${i}`)?.checked;
-        tiers.push({ id: `tier-${i+1}`, amount: amt, name, defaultSelected: isDef });
+        tiers.push({ id: `tier-${i+1}`, amount: amt, amountUsd: amtUsd, name, defaultSelected: isDef });
       }
       return {
         step3: {
@@ -516,9 +432,7 @@
           timezone: document.getElementById('contactStep4Timezone')?.value.trim() || 'Asia/Kolkata (IST · GMT+5:30)',
           slots: contactSlotsState.map(s => s.trim()).filter(Boolean),
           dateSlots: contactDateSlotsState,
-          bookedDays,
-          focusLabel: document.getElementById('contactStep4FocusLabel')?.value.trim() || 'Consultation Focus Area',
-          focusTopics: contactTopicsState.map(t => t.trim()).filter(Boolean)
+          bookedDays
         }
       };
     }
@@ -542,7 +456,7 @@
           ndaText: document.getElementById('contactStep5NdaText')?.value.trim() || 'Execute Bilateral Non-Disclosure Agreement (NDA) prior to review.',
           submitBtnText: document.getElementById('contactStep5SubmitBtnText')?.value.trim() || 'Submit',
           successTitle: document.getElementById('contactStep5SuccessTitle')?.value.trim() || 'BRIEF SUBMITTED.',
-          successDesc: document.getElementById('contactStep5SuccessDesc')?.value.trim() || 'Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.',
+          successDesc: document.getElementById('contactStep5SuccessDesc')?.value.trim() || 'Received · Under Review (Response within 72 hrs)',
           resetBtnText: document.getElementById('contactStep5ResetBtnText')?.value.trim() || 'Submit Another Brief'
         }
       };
@@ -554,28 +468,22 @@
       showToast('✅ Step 01 Scope saved successfully!');
     }
 
-    function saveContactTabDisciplines() {
-      const data = collectContactDisciplinesData();
-      window.CMSStore.saveContactBrief({ step2: data.step2 });
-      showToast('✅ Step 02 Disciplines saved successfully!');
-    }
-
     function saveContactTabAllocation() {
       const data = collectContactAllocationData();
       window.CMSStore.saveContactBrief({ step3: data.step3 });
-      showToast('✅ Step 03 Capital Allocation saved successfully!');
+      showToast('✅ Step 02 Capital Allocation saved successfully!');
     }
 
     function saveContactTabSession() {
       const data = collectContactSessionData();
       window.CMSStore.saveContactBrief({ step4: data.step4 });
-      showToast('✅ Step 04 Strategy Session & Calendar Month saved successfully!');
+      showToast('✅ Step 03 Strategy Session & Calendar saved successfully!');
     }
 
     function saveContactTabCredentials() {
       const data = collectContactCredentialsData();
       window.CMSStore.saveContactBrief({ step5: data.step5 });
-      showToast('✅ Step 05 Credentials & Success Screen saved successfully!');
+      showToast('✅ Step 04 Credentials & Success Screen saved successfully!');
     }
 
     
@@ -895,21 +803,19 @@
 
     function saveAllContactAdmin() {
       const d1 = collectContactScopeData();
-      const d2 = collectContactDisciplinesData();
       const d3 = collectContactAllocationData();
       const d4 = collectContactSessionData();
       const d5 = collectContactCredentialsData();
 
       const fullBrief = {
         step1: d1.step1,
-        step2: d2.step2,
         step3: d3.step3,
         step4: d4.step4,
         step5: d5.step5
       };
 
       window.CMSStore.saveContactBrief(fullBrief);
-      showToast('🎉 All 5 Contact Brief Steps & Calendar settings saved successfully!');
+      showToast('🎉 All 4 contact form steps saved successfully!');
     }
 
 

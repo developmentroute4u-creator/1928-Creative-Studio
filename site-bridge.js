@@ -1494,30 +1494,17 @@
     const headerBadge = document.querySelector('#start-project-sec .fs-right-badge span:last-child');
     if (headerBadge && brief.header?.badge) headerBadge.textContent = brief.header.badge;
 
-    // Left Rail Step Words (01 to 05)
+    // Left rail step words. The website form has 4 steps: Scope, Allocation, Session, Credentials
+    // (stored as admin steps 1, 3, 4 and 5; an older 5-step layout used all five)
     const railTabs = document.querySelectorAll('.integrated-left-rail .rail-step-tab');
-    if (railTabs.length >= 5) {
-      if (brief.step1?.railWord) {
-        const rw1 = railTabs[0].querySelector('.rail-step-word');
-        if (rw1) rw1.textContent = brief.step1.railWord;
-      }
-      if (brief.step2?.railWord) {
-        const rw2 = railTabs[1].querySelector('.rail-step-word');
-        if (rw2) rw2.textContent = brief.step2.railWord;
-      }
-      if (brief.step3?.railWord) {
-        const rw3 = railTabs[2].querySelector('.rail-step-word');
-        if (rw3) rw3.textContent = brief.step3.railWord;
-      }
-      if (brief.step4?.railWord) {
-        const rw4 = railTabs[3].querySelector('.rail-step-word');
-        if (rw4) rw4.textContent = brief.step4.railWord;
-      }
-      if (brief.step5?.railWord) {
-        const rw5 = railTabs[4].querySelector('.rail-step-word');
-        if (rw5) rw5.textContent = brief.step5.railWord;
-      }
-    }
+    const railSources = railTabs.length >= 5
+      ? [brief.step1, brief.step2, brief.step3, brief.step4, brief.step5]
+      : [brief.step1, brief.step3, brief.step4, brief.step5];
+    railTabs.forEach((tab, i) => {
+      const word = tab.querySelector('.rail-step-word');
+      const src = railSources[i];
+      if (word && src && src.railWord) word.textContent = src.railWord;
+    });
 
     // ── STEP 1: Scope ──
     const p1 = document.getElementById('stepPane1');
@@ -1581,8 +1568,9 @@
 
       const tierGrid = document.getElementById('tierGrid');
       if (tierGrid && Array.isArray(allocConfig.tiers) && allocConfig.tiers.length) {
+        const hasDefaultTier = allocConfig.tiers.some(x => x.defaultSelected);
         tierGrid.innerHTML = allocConfig.tiers.map((t, idx) => `
-          <div class="tier-option-box${t.defaultSelected || idx === 1 ? ' active' : ''}" data-tier="${t.amount}">
+          <div class="tier-option-box${(hasDefaultTier ? t.defaultSelected : idx === 1) ? ' active' : ''}" data-tier="${t.amount}">
             <div class="tob-amount">${t.amount}</div>
             <div class="tob-tier-name">${t.name}</div>
           </div>
@@ -1601,8 +1589,9 @@
 
       const tlPills = document.getElementById('timelinePills');
       if (tlPills && Array.isArray(allocConfig.timelines) && allocConfig.timelines.length) {
+        const hasDefaultTl = allocConfig.timelines.some(x => x.defaultSelected);
         tlPills.innerHTML = allocConfig.timelines.map((tl, idx) => `
-          <button type="button" class="timeline-pill${tl.defaultSelected || idx === 0 ? ' active' : ''}">${tl.label}</button>
+          <button type="button" class="timeline-pill${(hasDefaultTl ? tl.defaultSelected : idx === 0) ? ' active' : ''}">${tl.label}</button>
         `).join('');
 
         tlPills.querySelectorAll('.timeline-pill').forEach(pill => {
@@ -1613,6 +1602,9 @@
         });
       }
     }
+
+    // Prices are drawn in ₹; switch them (and the heading) to the currency the visitor has chosen
+    if (typeof window.__applyContactCurrency === 'function') window.__applyContactCurrency();
 
     // ── STEP 3: Strategy Session Window (Calendar & Dynamic Month Navigation) ──
     const p3 = document.getElementById('stepPane3') || document.getElementById('stepPane4');
@@ -1647,6 +1639,12 @@
       if (Array.isArray(s3.bookedDays)) {
         bookedList = s3.bookedDays.map(d => parseInt(d, 10)).filter(d => !isNaN(d));
       }
+      // Blocked days are day numbers of the month chosen in the admin calendar (this month if none).
+      // A day is unavailable only when it is blocked there: Sundays are not blocked automatically.
+      let bookedYear = !isNaN(parseInt(s3.defaultYear, 10)) ? parseInt(s3.defaultYear, 10) : minYear;
+      let bookedMonth = !isNaN(parseInt(s3.defaultMonth, 10)) ? parseInt(s3.defaultMonth, 10) : minMonth;
+      if (bookedYear < minYear || (bookedYear === minYear && bookedMonth < minMonth)) { bookedYear = minYear; bookedMonth = minMonth; }
+      const isBlockedDay = (y, m, d) => y === bookedYear && m === bookedMonth && bookedList.includes(d);
 
       const monthNames = [
         'January', 'February', 'March', 'April', 'May', 'June',
@@ -1761,11 +1759,9 @@
         // Ensure targetDay is not a past day, Sunday, or blackout day
         let checkDay = targetDay;
         while (checkDay <= daysInMonth) {
-          const testDate = new Date(calYear, calMonth, checkDay);
-          const isSun = testDate.getDay() === 0;
-          const isBkd = isCurrentMonthYear && bookedList.includes(checkDay);
+          const isBkd = isBlockedDay(calYear, calMonth, checkDay);
           const isPast = isCurrentMonthYear && (checkDay < minDay);
-          if (!isSun && !isBkd && !isPast) {
+          if (!isBkd && !isPast) {
             break;
           }
           checkDay++;
@@ -1798,10 +1794,9 @@
         for (let day = 1; day <= daysInMonth; day++) {
           const dObj = new Date(calYear, calMonth, day);
           const dow = dObj.getDay();
-          const isSun = dow === 0;
           const isPast = isCurrentMonthYear ? (day < minDay) : (calYear < minYear || (calYear === minYear && calMonth < minMonth));
           const isToday = isCurrentMonthYear && (day === minDay);
-          const isBooked = isCurrentMonthYear && bookedList.includes(day);
+          const isBooked = isBlockedDay(calYear, calMonth, day);
           const isSelected = day === selectedDay;
 
           const cell = document.createElement('button');
@@ -1810,7 +1805,7 @@
           let classes = ['sb-day-cell'];
           if (isSelected) classes.push('active');
           if (isToday) classes.push('today');
-          if (isSun || isPast) classes.push('disabled');
+          if (isPast) classes.push('disabled');
           if (isBooked) classes.push('booked');
 
           cell.className = classes.join(' ');
@@ -1821,7 +1816,7 @@
             cell.setAttribute('title', `${monthNames[calMonth]} ${day}, ${calYear} · Fully Booked`);
           }
 
-          if (!isSun && !isPast && !isBooked) {
+          if (!isPast && !isBooked) {
             cell.addEventListener('click', () => {
               daysGrid.querySelectorAll('.sb-day-cell').forEach(c => c.classList.remove('active'));
               cell.classList.add('active');
@@ -1879,7 +1874,8 @@
       }
 
       // Initial Calendar Render with configured day or next business day
-      const initialPreferredDay = (isCurrentMonthYear && s3.defaultDay) ? parseInt(s3.defaultDay, 10) : (minDay === 25 ? 26 : minDay);
+      const startsThisMonth = (calYear === minYear && calMonth === minMonth);
+      const initialPreferredDay = s3.defaultDay ? parseInt(s3.defaultDay, 10) : (startsThisMonth ? minDay : 1);
       renderMonthCalendar(initialPreferredDay);
     }
 
@@ -1928,8 +1924,9 @@
     const successTitle = document.querySelector('#monolithSuccessOverlay .mso-title');
     if (successTitle && credsConfig.successTitle) successTitle.textContent = credsConfig.successTitle;
 
-    const successDesc = document.querySelector('#monolithSuccessOverlay .mso-desc');
-    if (successDesc && credsConfig.successDesc) successDesc.textContent = credsConfig.successDesc;
+    const successDesc = document.querySelector('#monolithSuccessOverlay .mso-subtitle');
+    const legacySuccessDesc = 'Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours.';
+    if (successDesc && credsConfig.successDesc && credsConfig.successDesc !== legacySuccessDesc) successDesc.textContent = credsConfig.successDesc;
 
     const btnReset = document.getElementById('btnResetBrief');
     if (btnReset && credsConfig.resetBtnText) {

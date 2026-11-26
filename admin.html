@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="admin/css/admin.css?v=20261126_v13" />
+  <link rel="stylesheet" href="admin/css/admin.css?v=20261126_v15" />
 
   <!-- Anti-flash security verification: hides protected panels until unlocked -->
   <style id="authGateInitialStyle">
@@ -331,7 +331,7 @@
       <a class="nav-item" data-view="contact">
         <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         <span>Contact &amp; Brief</span>
-        <span class="badge">5 Steps</span>
+        <span class="badge">4 Steps</span>
       </a>
 
     </nav>
@@ -1458,34 +1458,30 @@
       <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:24px;">
         <div>
           <h1 class="panel-headline" style="margin-bottom:6px;">Contact Page &amp; Brief Engine</h1>
-          <p class="panel-sub" style="margin:0;">Manage the 5-step interactive questionnaire, strategy session window, and dynamic month &amp; calendar.</p>
+          <p class="panel-sub" style="margin:0;">Manage the 4-step interactive questionnaire, strategy session window, and dynamic month &amp; calendar.</p>
         </div>
         <div class="action-row" style="margin:0;flex-shrink:0;">
           <button class="btn-action-primary" onclick="saveAllContactAdmin()" style="white-space:nowrap;padding:12px 24px;">Save All Contact Settings</button>
         </div>
       </div>
 
-      <!-- Sub-navigation Tabs for 5 Steps (Single Clean Line) -->
-      <div class="subnav-tabs" style="display:grid;grid-template-columns:repeat(5, 1fr);gap:10px;margin-bottom:24px;width:100%;">
+      <!-- Sub-navigation Tabs: the same 4 steps as the website form -->
+      <div class="subnav-tabs" style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;margin-bottom:24px;width:100%;">
         <button class="subnav-tab-btn active" id="tabBtnContactScope" onclick="switchContactSubTab('scope')" style="justify-content:center;padding:10px 8px;font-size:12px;white-space:nowrap;">
           <svg class="subnav-tab-icon" viewBox="0 0 24 24"><rect width="7" height="7" x="3" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="3" rx="1.5"/><rect width="7" height="7" x="14" y="14" rx="1.5"/><rect width="7" height="7" x="3" y="14" rx="1.5"/></svg>
           <span>01 Scope</span>
         </button>
-        <button class="subnav-tab-btn" id="tabBtnContactDisc" onclick="switchContactSubTab('disciplines')" style="justify-content:center;padding:10px 8px;font-size:12px;white-space:nowrap;">
-          <svg class="subnav-tab-icon" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <span>02 Disciplines</span>
-        </button>
         <button class="subnav-tab-btn" id="tabBtnContactAlloc" onclick="switchContactSubTab('allocation')" style="justify-content:center;padding:10px 8px;font-size:12px;white-space:nowrap;">
           <svg class="subnav-tab-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
-          <span>03 Capital Allocation</span>
+          <span>02 Capital Allocation</span>
         </button>
         <button class="subnav-tab-btn" id="tabBtnContactSession" onclick="switchContactSubTab('session')" style="justify-content:center;padding:10px 8px;font-size:12px;white-space:nowrap;">
           <svg class="subnav-tab-icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
-          <span>04 Session &amp; Calendar</span>
+          <span>03 Session &amp; Calendar</span>
         </button>
         <button class="subnav-tab-btn" id="tabBtnContactCreds" onclick="switchContactSubTab('credentials')" style="justify-content:center;padding:10px 8px;font-size:12px;white-space:nowrap;">
           <svg class="subnav-tab-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>05 Credentials &amp; Success</span>
+          <span>04 Credentials &amp; Success</span>
         </button>
       </div>
 
@@ -1619,52 +1615,12 @@
         </div>
       </div>
 
-      <!-- ── SUBPANE 2: DISCIPLINES ── -->
-      <div class="subnav-pane" id="contactSubpaneDisciplines">
+      <!-- ── SUBPANE 2: CAPITAL ALLOCATION ── -->
+      <div class="subnav-pane" id="contactSubpaneAllocation">
         <div style="width:100%;">
           <!-- Step 02 Headings -->
           <div class="stat-card" style="margin-bottom:24px;border:1px solid var(--rule-m);">
             <div class="modal-section-badge" style="margin-bottom:16px;">Step 02 Navigation &amp; Headings</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
-              <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">Rail Word</label>
-                <input type="text" class="form-input" id="contactStep2RailWord" placeholder="Disciplines" />
-              </div>
-              <div class="form-group" style="margin-bottom:0;">
-                <label class="form-label">Step Headline</label>
-                <input type="text" class="form-input" id="contactStep2Headline" placeholder="Specialized Disciplines" />
-              </div>
-            </div>
-            <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">Step Caption</label>
-              <input type="text" class="form-input" id="contactStep2Caption" placeholder="Choose all deliverables and capabilities required for this engagement." />
-            </div>
-          </div>
-
-          <!-- Discipline Chips Manager -->
-          <div class="stat-card" style="border:1px solid var(--rule-m);">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-              <div class="modal-section-badge" style="margin:0;">Discipline Deliverable Chips</div>
-              <button type="button" class="btn-action-secondary" style="padding:6px 14px;font-size:12px;" onclick="addContactDisciplineRow()">+ Add Discipline Chip</button>
-            </div>
-
-            <div id="contactDisciplinesListContainer" style="display:flex;flex-direction:column;gap:10px;">
-              <!-- Rendered dynamically -->
-            </div>
-
-            <div style="margin-top:24px;display:flex;justify-content:flex-end;">
-              <button type="button" class="btn-action-primary" onclick="saveContactTabDisciplines()">Save Step 02 Settings</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── SUBPANE 3: CAPITAL ALLOCATION ── -->
-      <div class="subnav-pane" id="contactSubpaneAllocation">
-        <div style="width:100%;">
-          <!-- Step 03 Headings -->
-          <div class="stat-card" style="margin-bottom:24px;border:1px solid var(--rule-m);">
-            <div class="modal-section-badge" style="margin-bottom:16px;">Step 03 Navigation &amp; Headings</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
               <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Rail Word</label>
@@ -1683,14 +1639,18 @@
 
           <!-- 4 Budget Tiers -->
           <div class="stat-card" style="margin-bottom:24px;border:1px solid var(--rule-m);">
-            <div class="modal-section-badge" style="margin-bottom:16px;">Budget Investment Tiers (4 Tiers)</div>
+            <div class="modal-section-badge" style="margin-bottom:16px;">Budget Investment Tiers (4 Tiers) · shown in ₹ or $ with the website switch</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
               <!-- Tier 1 -->
               <div style="background:var(--card-bg);border:1px solid var(--rule);border-radius:10px;padding:16px;">
                 <div style="font-family:var(--font-mono);font-size:10px;color:var(--cr);font-weight:700;margin-bottom:8px;">TIER 01</div>
                 <div class="form-group">
-                  <label class="form-label">Amount Range</label>
+                  <label class="form-label">Price in ₹ (INR)</label>
                   <input type="text" class="form-input" id="contactTierAmount_0" placeholder="< ₹15 Lakhs" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Price in $ (USD)</label>
+                  <input type="text" class="form-input" id="contactTierAmountUsd_0" placeholder="< $500" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">Tier Name / Subtitle</label>
@@ -1706,8 +1666,12 @@
               <div style="background:var(--card-bg);border:1px solid var(--rule);border-radius:10px;padding:16px;">
                 <div style="font-family:var(--font-mono);font-size:10px;color:var(--cr);font-weight:700;margin-bottom:8px;">TIER 02</div>
                 <div class="form-group">
-                  <label class="form-label">Amount Range</label>
+                  <label class="form-label">Price in ₹ (INR)</label>
                   <input type="text" class="form-input" id="contactTierAmount_1" placeholder="₹15L – ₹30 Lakhs" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Price in $ (USD)</label>
+                  <input type="text" class="form-input" id="contactTierAmountUsd_1" placeholder="$500 to 1000$" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">Tier Name / Subtitle</label>
@@ -1723,8 +1687,12 @@
               <div style="background:var(--card-bg);border:1px solid var(--rule);border-radius:10px;padding:16px;">
                 <div style="font-family:var(--font-mono);font-size:10px;color:var(--cr);font-weight:700;margin-bottom:8px;">TIER 03</div>
                 <div class="form-group">
-                  <label class="form-label">Amount Range</label>
+                  <label class="form-label">Price in ₹ (INR)</label>
                   <input type="text" class="form-input" id="contactTierAmount_2" placeholder="₹30L – ₹60 Lakhs" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Price in $ (USD)</label>
+                  <input type="text" class="form-input" id="contactTierAmountUsd_2" placeholder="1000$ to 2000$" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">Tier Name / Subtitle</label>
@@ -1740,8 +1708,12 @@
               <div style="background:var(--card-bg);border:1px solid var(--rule);border-radius:10px;padding:16px;">
                 <div style="font-family:var(--font-mono);font-size:10px;color:var(--cr);font-weight:700;margin-bottom:8px;">TIER 04</div>
                 <div class="form-group">
-                  <label class="form-label">Amount Range</label>
+                  <label class="form-label">Price in ₹ (INR)</label>
                   <input type="text" class="form-input" id="contactTierAmount_3" placeholder="₹60 Lakhs+" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Price in $ (USD)</label>
+                  <input type="text" class="form-input" id="contactTierAmountUsd_3" placeholder="2000$ +" />
                 </div>
                 <div class="form-group">
                   <label class="form-label">Tier Name / Subtitle</label>
@@ -1772,18 +1744,18 @@
             </div>
 
             <div style="margin-top:24px;display:flex;justify-content:flex-end;">
-              <button type="button" class="btn-action-primary" onclick="saveContactTabAllocation()">Save Step 03 Settings</button>
+              <button type="button" class="btn-action-primary" onclick="saveContactTabAllocation()">Save Step 02 Settings</button>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── SUBPANE 4: STRATEGY SESSION & DYNAMIC CALENDAR ── -->
+      <!-- ── SUBPANE 3: STRATEGY SESSION & DYNAMIC CALENDAR ── -->
       <div class="subnav-pane" id="contactSubpaneSession">
         <div style="width:100%;">
-          <!-- Step 04 Headings -->
+          <!-- Step 03 Headings -->
           <div class="stat-card" style="margin-bottom:24px;border:1px solid var(--rule-m);">
-            <div class="modal-section-badge" style="margin-bottom:16px;">Step 04 Navigation &amp; Headings</div>
+            <div class="modal-section-badge" style="margin-bottom:16px;">Step 03 Navigation &amp; Headings</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
               <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Rail Word</label>
@@ -1882,35 +1854,18 @@
             </div>
           </div>
 
-          <!-- Focus Area Topics -->
-          <div class="stat-card" style="border:1px solid var(--rule-m);">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-              <div class="modal-section-badge" style="margin:0;">Consultation Focus Topics Dropdown</div>
-              <button type="button" class="btn-action-secondary" style="padding:6px 14px;font-size:12px;" onclick="addContactTopicRow()">+ Add Focus Topic</button>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Focus Dropdown Label</label>
-              <input type="text" class="form-input" id="contactStep4FocusLabel" placeholder="Consultation Focus Area" />
-            </div>
-
-            <div id="contactTopicsListContainer" style="display:flex;flex-direction:column;gap:10px;">
-              <!-- Rendered dynamically -->
-            </div>
-
-            <div style="margin-top:24px;display:flex;justify-content:flex-end;">
-              <button type="button" class="btn-action-primary" onclick="saveContactTabSession()">Save Step 04 Settings</button>
-            </div>
+          <div style="display:flex;justify-content:flex-end;">
+              <button type="button" class="btn-action-primary" onclick="saveContactTabSession()">Save Step 03 Settings</button>
           </div>
         </div>
       </div>
 
-      <!-- ── SUBPANE 5: CREDENTIALS & SUCCESS ── -->
+      <!-- ── SUBPANE 4: CREDENTIALS & SUCCESS ── -->
       <div class="subnav-pane" id="contactSubpaneCredentials">
         <div style="width:100%;">
-          <!-- Step 05 Headings -->
+          <!-- Step 04 Headings -->
           <div class="stat-card" style="margin-bottom:24px;border:1px solid var(--rule-m);">
-            <div class="modal-section-badge" style="margin-bottom:16px;">Step 05 Navigation &amp; Headings</div>
+            <div class="modal-section-badge" style="margin-bottom:16px;">Step 04 Navigation &amp; Headings</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px;">
               <div class="form-group" style="margin-bottom:0;">
                 <label class="form-label">Rail Word</label>
@@ -2019,12 +1974,12 @@
             </div>
 
             <div class="form-group" style="margin-bottom:0;">
-              <label class="form-label">Success Modal Message / Description</label>
+              <label class="form-label">Success Line (under the title)</label>
               <textarea class="form-textarea" id="contactStep5SuccessDesc" rows="3" placeholder="Thank you. Your confidential brief has been received by our leadership. We will review your scope parameters and respond within 24 hours."></textarea>
             </div>
 
             <div style="margin-top:24px;display:flex;justify-content:flex-end;">
-              <button type="button" class="btn-action-primary" onclick="saveContactTabCredentials()">Save Step 05 Settings</button>
+              <button type="button" class="btn-action-primary" onclick="saveContactTabCredentials()">Save Step 04 Settings</button>
             </div>
           </div>
         </div>
@@ -3350,23 +3305,23 @@
   <div id="toast-wrap"></div>
 
   <!-- Load Data Store -->
-  <script src="data-store.js?v=20261126_v13"></script>
+  <script src="data-store.js?v=20261126_v15"></script>
 
     <!-- ══ MODULAR ADMIN SECTION CONTROLLERS ══ -->
-  <script src="admin/js/admin-core.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/auth.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/dashboard.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/inquiries.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/seo.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/perspectives.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/portfolio.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/about-page.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/team.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/services.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/clients.js?v=20261126_v13"></script>
-  <script src="admin/js/sections/contact.js?v=20261126_v13"></script>
-  <script src="admin/js/admin-init.js?v=20261126_v13"></script>
-  <script src="site-bridge.js?v=20261126_v13"></script>
+  <script src="admin/js/admin-core.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/auth.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/dashboard.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/inquiries.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/seo.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/perspectives.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/portfolio.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/about-page.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/team.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/services.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/clients.js?v=20261126_v15"></script>
+  <script src="admin/js/sections/contact.js?v=20261126_v15"></script>
+  <script src="admin/js/admin-init.js?v=20261126_v15"></script>
+  <script src="site-bridge.js?v=20261126_v15"></script>
 </body>
 
 </html>
