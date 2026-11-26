@@ -44,7 +44,6 @@
         profile: 'Studio & Team Minds',
         services: 'Core Services',
         clients: 'Client Logos',
-        backup: 'Backup & Database'
       };
       document.getElementById('topbarCurrentViewName').textContent = titleMap[viewName] || 'Dashboard';
 

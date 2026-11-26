@@ -949,11 +949,6 @@
       }
     }
 
-    async resetToDefaults() {
-      await this._sendToAPI('reset_database', {});
-      await this._fetchFromDatabase();
-      return true;
-    }
   }
 
   // Instantiate singleton

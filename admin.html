@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="admin/css/admin.css?v=20261126_v12" />
+  <link rel="stylesheet" href="admin/css/admin.css?v=20261126_v13" />
 
   <!-- Anti-flash security verification: hides protected panels until unlocked -->
   <style id="authGateInitialStyle">
@@ -334,11 +334,6 @@
         <span class="badge">5 Steps</span>
       </a>
 
-      <div class="nav-label">System</div>
-      <a class="nav-item" data-view="backup">
-        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
-        <span>Backup &amp; Reset</span>
-      </a>
     </nav>
 
     <div class="sidebar-footer">
@@ -2144,108 +2139,6 @@
 
     </section>
 
-    <!-- ── VIEW 8: BACKUP & DATABASE ── -->
-    <section class="view-panel" id="view-backup">
-      <div class="panel-header">
-        <div>
-          <h1 class="panel-headline">Database &amp; Data Management</h1>
-          <p class="panel-sub">Export full database backups, import JSON configurations, or restore initial website defaults.</p>
-        </div>
-      </div>
-
-      <!-- MySQL Database Synchronization & Telemetry -->
-      <h3 style="font-family:var(--font-primary);font-size:15px;font-weight:800;letter-spacing:-0.01em;text-transform:uppercase;color:var(--ink);margin-bottom:16px;">MySQL Live Database (Laragon &amp; phpMyAdmin)</h3>
-      <div class="stats-grid" style="margin-bottom:36px;">
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <div class="stat-card-icon primary">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-            </div>
-            <span class="stat-card-title">Push to MySQL</span>
-          </div>
-          <p class="stat-card-desc">Writes all 17 live blogs, 10 case studies, 12 client logos, 6 team members, 5 services, and 7 SEO records directly into MySQL tables.</p>
-          <button class="btn-action-primary" onclick="pushAllDataToMySQL()" style="margin-top:auto;justify-content:center;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-            <span>Push Everything to MySQL</span>
-          </button>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <div class="stat-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-            </div>
-            <span class="stat-card-title">Pull &amp; Sync from MySQL</span>
-          </div>
-          <p class="stat-card-desc">Forces an instant synchronization fetch to retrieve and apply the latest records from your live MySQL database.</p>
-          <button class="btn-action-secondary" onclick="pullDataFromMySQL()" style="margin-top:auto;justify-content:center;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-            <span>Pull Fresh from MySQL</span>
-          </button>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <div class="stat-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            </div>
-            <span class="stat-card-title">Database Health &amp; Telemetry</span>
-          </div>
-          <p class="stat-card-desc">Inspect real-time connection status to your MySQL database, monitor PHP engine diagnostics, and verify data table integrity across all collections.</p>
-          <button class="btn-action-secondary" onclick="checkDatabaseStatus(true)" style="margin-top:auto;justify-content:center;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
-            <span>Inspect Connection</span>
-          </button>
-        </div>
-      </div>
-
-      <h3 style="font-family:var(--font-primary);font-size:15px;font-weight:800;letter-spacing:-0.01em;text-transform:uppercase;color:var(--ink);margin-bottom:16px;">JSON File Backups &amp; Reset</h3>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <div class="stat-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-            </div>
-            <span class="stat-card-title">Export JSON Backup</span>
-          </div>
-          <p class="stat-card-desc">Download a standalone `.json` snapshot of all SEO tags, team profiles, blogs, case studies, services, and client logos.</p>
-          <button class="btn-action-secondary" onclick="exportDatabaseJSON()" style="margin-top:auto;justify-content:center;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-            <span>Download JSON Backup</span>
-          </button>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <div class="stat-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
-            </div>
-            <span class="stat-card-title">Restore from JSON File</span>
-          </div>
-          <p class="stat-card-desc">Upload a previously exported JSON backup file to restore your full studio website content and database state.</p>
-          <input type="file" id="importFileInput" accept=".json" style="display:none;" onchange="handleImportFile(event)" />
-          <button class="btn-action-secondary" onclick="document.getElementById('importFileInput').click()" style="margin-top:auto;justify-content:center;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
-            <span>Upload Backup File</span>
-          </button>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-card-header">
-            <div class="stat-card-icon danger">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            </div>
-            <span class="stat-card-title" style="color:#EF4444;">Factory Reset Database</span>
-          </div>
-          <p class="stat-card-desc">Re-seed both MySQL and local store with 100% of the original website dataset. Unsaved edits will be reverted.</p>
-          <button class="btn-action-danger" onclick="confirmResetDefaults()" style="margin-top:auto;justify-content:center;padding:12px 20px;font-size:12px;">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-            <span>Reset All to Defaults</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- ═══════════════════════════════════════════════════════════
@@ -3457,24 +3350,23 @@
   <div id="toast-wrap"></div>
 
   <!-- Load Data Store -->
-  <script src="data-store.js?v=20261126_v12"></script>
+  <script src="data-store.js?v=20261126_v13"></script>
 
     <!-- ══ MODULAR ADMIN SECTION CONTROLLERS ══ -->
-  <script src="admin/js/admin-core.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/auth.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/dashboard.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/inquiries.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/seo.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/perspectives.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/portfolio.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/about-page.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/team.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/services.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/clients.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/contact.js?v=20261126_v12"></script>
-  <script src="admin/js/sections/backup.js?v=20261126_v12"></script>
-  <script src="admin/js/admin-init.js?v=20261126_v12"></script>
-  <script src="site-bridge.js?v=20261126_v12"></script>
+  <script src="admin/js/admin-core.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/auth.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/dashboard.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/inquiries.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/seo.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/perspectives.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/portfolio.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/about-page.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/team.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/services.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/clients.js?v=20261126_v13"></script>
+  <script src="admin/js/sections/contact.js?v=20261126_v13"></script>
+  <script src="admin/js/admin-init.js?v=20261126_v13"></script>
+  <script src="site-bridge.js?v=20261126_v13"></script>
 </body>
 
 </html>
