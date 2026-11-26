@@ -2398,6 +2398,26 @@
       transform: translateY(0);
     }
 
+    /* Opened from an article's own link (/perspectives/<slug>): the reader covers the page from the
+       first frame, so the listing never shows first. The article slides in once its content is ready. */
+    html.reader-boot body {
+      overflow: hidden;
+    }
+
+    html.reader-boot .reader-modal-backdrop {
+      opacity: 1;
+      pointer-events: auto;
+      transition: none;
+    }
+
+    html.reader-boot .reader-modal-backdrop:not(.active) .reader-modal-stage {
+      visibility: hidden;
+    }
+
+    html.reader-boot #nav {
+      visibility: hidden;
+    }
+
     /* Sticky Reader Nav Header */
     .reader-top-bar {
       position: sticky;
@@ -5016,14 +5036,6 @@
       <div class="reader-top-bar">
         <span class="reader-cat-pill" id="mReaderCat">Brand Architecture</span>
         <div class="reader-top-actions">
-          <button class="reader-share-btn" id="mShareTwitterBtn" aria-label="Share Monograph">
-            <svg class="rsb-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-            <span>Share</span>
-          </button>
-          <button class="reader-share-btn" id="mCopyLinkBtn" aria-label="Copy Monograph Link">
-            <svg class="rsb-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-            <span>Copy Link</span>
-          </button>
           <button class="reader-close-btn" id="readerCloseBtn" aria-label="Close Perspective">✕</button>
         </div>
       </div>
@@ -5693,6 +5705,57 @@
       const readerTOC = document.getElementById('mReaderTOC');
       const readerRelatedGrid = document.getElementById('mReaderRelatedGrid');
 
+      /* ── Article link in the address bar ──
+         While an article is open the address bar shows its own link from the admin (/perspectives/<slug>),
+         so refreshing, sharing or copying it opens that same article. Closing goes back to the page. */
+      const serverRoute = window.__1928_SERVER_ROUTE__ || {};
+      let urlBeforeReader = null;
+      let titleBeforeReader = null;
+
+      function findCmsBlog(key) {
+        const store = window.CMSStore;
+        if (!store || !key) return null;
+        const list = store.getBlogs ? store.getBlogs(true) : [];
+        return (store.getBlogById && store.getBlogById(key)) || list.find(b => b.id === key || b.blog_id === key || b.slug === key) || null;
+      }
+
+      function readerShowArticleUrl(id, title) {
+        const blog = findCmsBlog(id);
+        if (!blog || !blog.slug || !window.history || !window.history.replaceState) return;
+        if (urlBeforeReader === null) {
+          urlBeforeReader = window.location.href;
+          titleBeforeReader = document.title;
+        }
+        try {
+          window.history.replaceState(null, '', new URL('perspectives/' + encodeURIComponent(blog.slug), document.baseURI).href);
+        } catch (e) {}
+        if (title) document.title = `${title} · 1928 Perspectives`;
+      }
+
+      function readerRestoreUrl() {
+        if (urlBeforeReader === null) return;
+        let back = urlBeforeReader;
+        let backTitle = titleBeforeReader;
+        if (serverRoute.pageKey === 'blog_article') {
+          // Arrived on the article's own link: closing it shows the Perspectives page
+          back = new URL(serverRoute.listSlug || 'perspectives', document.baseURI).href;
+          backTitle = serverRoute.listTitle || backTitle;
+        } else {
+          try {
+            const u = new URL(back);
+            const linkedId = u.searchParams.get('article') || u.searchParams.get('id');
+            u.searchParams.delete('article');
+            u.searchParams.delete('id');
+            if (u.hash && findCmsBlog(u.hash.slice(1))) u.hash = '';
+            if (linkedId || u.href !== back) back = u.href;
+          } catch (e) {}
+        }
+        try { window.history.replaceState(null, '', back); } catch (e) {}
+        if (backTitle) document.title = backTitle;
+        urlBeforeReader = null;
+        titleBeforeReader = null;
+      }
+
       function openReader(id) {
         let data = articlesData[id];
 
@@ -5839,12 +5902,15 @@
         document.body.classList.add('reader-open');
         document.body.style.overflow = 'hidden';
         if (modalStage) modalStage.scrollTop = 0;
+        readerShowArticleUrl(id, data.title);
       }
 
       function closeReader() {
         modal.classList.remove('active');
         document.body.classList.remove('reader-open');
         document.body.style.overflow = '';
+        document.documentElement.classList.remove('reader-boot');
+        readerRestoreUrl();
       }
 
       window.openReader = openReader;
@@ -6289,19 +6355,34 @@
       renderArticles();
 
       /* ── Deep Link Article Direct Routing Handler ── */
+      // Opens the article from its own link (/perspectives/<slug>, sent by the server) or from an old
+      // ?article=<id> link, once the blogs have loaded from the database.
       function checkUrlAndOpenArticle() {
         const params = new URLSearchParams(window.location.search);
-        const articleParam = params.get('article') || params.get('id') || (window.location.hash ? window.location.hash.replace('#', '') : null);
-        if (articleParam) {
-          if (articlesData[articleParam]) {
-            setTimeout(() => {
-              openReader(articleParam);
-            }, 80);
-          } else {
-            // If the article is not on the Perspectives page, redirect to the Explore All Blogs archive page!
-            window.location.href = `all-blogs.html?article=${encodeURIComponent(articleParam)}`;
-          }
+        const hashKey = window.location.hash ? window.location.hash.replace('#', '') : '';
+        const wanted = (serverRoute.pageKey === 'blog_article' && serverRoute.blogId)
+          || params.get('article') || params.get('id') || hashKey || '';
+        const endBoot = () => document.documentElement.classList.remove('reader-boot');
+        if (!wanted) { endBoot(); return; }
+
+        let done = false;
+        const tryOpen = () => {
+          if (done) return;
+          done = true;
+          const blog = findCmsBlog(wanted);
+          const id = blog ? blog.id : (articlesData[wanted] ? wanted : null);
+          if (id) openReader(id);
+          // Let the stage slide in (it is already on its way up from the class "active")
+          requestAnimationFrame(endBoot);
+        };
+
+        if (window.CMSStore && typeof window.CMSStore.ready === 'function') {
+          window.CMSStore.ready().then(tryOpen, tryOpen);
+        } else {
+          setTimeout(tryOpen, 80);
         }
+        // Never leave the page covered if the data cannot load
+        setTimeout(() => { if (!done) { done = true; endBoot(); } }, 8000);
       }
       checkUrlAndOpenArticle();
 

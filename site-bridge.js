@@ -195,6 +195,9 @@
     if (!window.CMSStore) return;
     // Individual project pages get their title & description from the server (router.php)
     if (window.__1928_SERVER_ROUTE__ && window.__1928_SERVER_ROUTE__.pageKey === 'portfolio_project') return;
+    // Same for a single article on its own link, and while an article is open in the reader
+    if (window.__1928_SERVER_ROUTE__ && window.__1928_SERVER_ROUTE__.pageKey === 'blog_article' && document.documentElement.classList.contains('reader-boot')) return;
+    if (document.body && document.body.classList.contains('reader-open')) return;
     const pageKey = getCurrentPageKey();
     // The All Blogs page keeps its own title & description unless the admin has an SEO entry for it
     if (pageKey === 'all_blogs' && !((window.CMSStore.getAllSEO && window.CMSStore.getAllSEO()) || {}).all_blogs) return;
@@ -545,7 +548,12 @@
           e.preventDefault();
           window.openReader(aid);
         } else if (!isPerspectivePage) {
-          window.location.href = `all-blogs.html?id=${aid}`;
+          // Pages without a reader (e.g. home): go to the article's own link
+          e.preventDefault();
+          const linked = blogs.find(b => b.id === aid || b.blog_id === aid);
+          window.location.href = (linked && linked.slug)
+            ? new URL('perspectives/' + encodeURIComponent(linked.slug), document.baseURI).href
+            : `all-blogs.html?id=${encodeURIComponent(aid)}`;
         }
       };
     });
@@ -2042,8 +2050,10 @@
       const foundBlog = blogs.find(b => b.id === aid || b.blog_id === aid);
       if (foundBlog && foundBlog.slug) {
         card.setAttribute('data-article-slug', foundBlog.slug);
-        const cardLink = card.querySelector('a');
-        if (cardLink && (!cardLink.getAttribute('href') || cardLink.getAttribute('href').includes('blogs.html') || cardLink.getAttribute('href').includes('all-blogs.html') || cardLink.getAttribute('href').includes('blog-detail.html'))) {
+        // The card itself may be the link (home page), or contain one
+        const cardLink = card.matches('a') ? card : card.querySelector('a');
+        const oldHref = cardLink ? (cardLink.getAttribute('href') || '') : '';
+        if (cardLink && (!oldHref || oldHref.includes('blogs.html') || oldHref.includes('all-blogs.html') || oldHref.includes('blog-detail.html') || /[?&]article=/.test(oldHref))) {
           cardLink.setAttribute('href', `${basePath}perspectives/${foundBlog.slug}`);
         }
       }

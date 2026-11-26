@@ -2991,14 +2991,6 @@
       <div class="reader-top-bar">
         <span class="reader-cat-pill" id="mReaderCat">Brand Architecture</span>
         <div class="reader-top-actions">
-          <button class="reader-share-btn" id="mShareTwitterBtn" aria-label="Share Monograph">
-            <svg class="rsb-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-            <span>Share</span>
-          </button>
-          <button class="reader-share-btn" id="mCopyLinkBtn" aria-label="Copy Monograph Link">
-            <svg class="rsb-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-            <span>Copy Link</span>
-          </button>
           <button class="reader-close-btn" id="readerCloseBtn" aria-label="Close Perspective">✕</button>
         </div>
       </div>
@@ -3761,11 +3753,47 @@
       };
 
       let currentReaderId = null;
+      // The article's own link, as set in the admin: /perspectives/<slug>
+      const articleSlugFor = (id) => {
+        const { cms, local } = findBlog(id);
+        return (cms && cms.slug) || (local && local.slug) || '';
+      };
       const articleLink = () => {
+        const slug = currentReaderId ? articleSlugFor(currentReaderId) : '';
+        if (slug) {
+          try { return new URL('perspectives/' + encodeURIComponent(slug), document.baseURI).href; } catch (e) {}
+        }
         const u = new URL(window.location.href);
         u.search = currentReaderId ? `?article=${encodeURIComponent(currentReaderId)}` : '';
         u.hash = '';
         return u.toString();
+      };
+      // While an article is open the address bar shows its link; closing puts the All Blogs link back
+      let urlBeforeReader = null;
+      let titleBeforeReader = null;
+      const showArticleUrl = (title) => {
+        if (!window.history || !window.history.replaceState || !articleSlugFor(currentReaderId)) return;
+        if (urlBeforeReader === null) {
+          urlBeforeReader = window.location.href;
+          titleBeforeReader = document.title;
+        }
+        try { window.history.replaceState(null, '', articleLink()); } catch (e) {}
+        if (title) document.title = `${title} · 1928 Perspectives`;
+      };
+      const restoreListUrl = () => {
+        if (urlBeforeReader === null) return;
+        let back = urlBeforeReader;
+        try {
+          const u = new URL(back);
+          u.searchParams.delete('article');
+          u.searchParams.delete('id');
+          if (u.hash) u.hash = '';
+          back = u.href;
+        } catch (e) {}
+        try { window.history.replaceState(null, '', back); } catch (e) {}
+        if (titleBeforeReader) document.title = titleBeforeReader;
+        urlBeforeReader = null;
+        titleBeforeReader = null;
       };
 
       function openReader(id) {
@@ -3902,6 +3930,7 @@
         document.body.classList.add('reader-open');
         document.body.style.overflow = 'hidden';
         if (modalStage) modalStage.scrollTop = 0;
+        showArticleUrl(data.title);
       }
 
       function closeReader() {
@@ -3909,6 +3938,7 @@
         modal.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('reader-open');
         document.body.style.overflow = '';
+        restoreListUrl();
       }
 
       window.openReader = openReader;

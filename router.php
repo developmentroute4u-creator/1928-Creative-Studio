@@ -143,9 +143,10 @@ if (!empty($blogSlug)) {
             redirectWithQuery($canon, 301);
         }
 
-        $detailFile = __DIR__ . '/blog-detail.html';
-        if (file_exists($detailFile)) {
-            serveBlogDetail($detailFile, $blog);
+        // The article opens straight away in the Perspectives reader, on its own link (/perspectives/<slug>)
+        $perspectivesFile = __DIR__ . '/blogs.html';
+        if (file_exists($perspectivesFile)) {
+            serveBlogArticle($db, $perspectivesFile, $blog);
             exit;
         }
     } else {
@@ -563,6 +564,91 @@ function serveBlogDetail(string $filePath, array $blog): void {
     </script>\n";
 
     $html = str_ireplace('</head>', "  {$injection}</head>", $html);
+
+    header('Content-Type: text/html; charset=utf-8');
+    echo $html;
+}
+
+/** Replace the first match with text inserted exactly as written (titles like "$300" stay intact). */
+function replaceOnceLiteral(string $pattern, string $literal, string $html): string {
+    return preg_replace_callback($pattern, static function () use ($literal) { return $literal; }, $html, 1);
+}
+
+/**
+ * One article on its own link: the Perspectives page (blogs.html) is sent with the article's title,
+ * description and share preview, and the reader opens on that article as soon as the page loads.
+ */
+function serveBlogArticle(PDO $db, string $filePath, array $blog): void {
+    $html = file_get_contents($filePath);
+    $baseUrl = getBaseUrl();
+    $canonicalUrl = $baseUrl . '/perspectives/' . rawurlencode($blog['slug']);
+
+    // Where "close" goes: the Perspectives page link and title
+    $listSlug = 'perspectives';
+    $listTitle = '';
+    try {
+        $s = $db->prepare("SELECT `slug` FROM `site_routes` WHERE `route_key` = 'blogs' AND `is_active` = 1 LIMIT 1");
+        $s->execute();
+        $v = $s->fetchColumn();
+        if (is_string($v) && $v !== '') $listSlug = $v;
+        $s = $db->prepare("SELECT `title` FROM `seo_meta` WHERE `page_key` = 'blogs' LIMIT 1");
+        $s->execute();
+        $v = $s->fetchColumn();
+        if (is_string($v) && $v !== '') $listTitle = $v;
+    } catch (\Throwable $t) {}
+    if ($listTitle === '' && preg_match('/<title>(.*?)<\/title>/is', $html, $m)) {
+        $listTitle = html_entity_decode(trim($m[1]), ENT_QUOTES, 'UTF-8');
+    }
+
+    $title = trim((string)$blog['title']) . ' · 1928 Perspectives';
+    $descSource = trim(preg_replace('/\s+/', ' ', strip_tags((string)($blog['excerpt'] ?: ($blog['content_html'] ?? '')))));
+    if (mb_strlen($descSource) > 160) $descSource = rtrim(mb_substr($descSource, 0, 157)) . '...';
+    $image = trim((string)($blog['cover_image'] ?: ($blog['specimen_image'] ?? '')));
+    if ($image !== '' && !preg_match('#^https?://#i', $image)) $image = $baseUrl . '/' . ltrim($image, '/');
+
+    $safeTitle = htmlspecialchars($title, ENT_QUOTES, 'UTF-8');
+    $safeDesc = htmlspecialchars($descSource, ENT_QUOTES, 'UTF-8');
+    $safeUrl = htmlspecialchars($canonicalUrl, ENT_QUOTES, 'UTF-8');
+    $safeImage = htmlspecialchars($image, ENT_QUOTES, 'UTF-8');
+
+    $html = replaceOnceLiteral('/<title>.*?<\/title>/is', "<title>{$safeTitle}</title>", $html);
+    if ($safeDesc !== '') {
+        if (preg_match('/<meta\s+name=["\']description["\']/i', $html)) {
+            $html = replaceOnceLiteral('/<meta\s+name=["\']description["\']\s+content=["\'].*?["\']/is', "<meta name=\"description\" content=\"{$safeDesc}\"", $html);
+        } else {
+            $html = replaceOnceLiteral('/<\/head>/i', "  <meta name=\"description\" content=\"{$safeDesc}\">\n</head>", $html);
+        }
+    }
+    if (!preg_match('/<base\s+href=/i', $html)) {
+        $html = replaceOnceLiteral('/<head>/i', "<head>\n  <base href=\"{$baseUrl}/\">", $html);
+    }
+    if (preg_match('/<link\s+rel=["\']canonical["\']/i', $html)) {
+        $html = replaceOnceLiteral('/<link\s+rel=["\']canonical["\']\s+href=["\'].*?["\']/is', "<link rel=\"canonical\" href=\"{$safeUrl}\"", $html);
+    } else {
+        $html = replaceOnceLiteral('/<\/head>/i', "  <link rel=\"canonical\" href=\"{$safeUrl}\" />\n</head>", $html);
+    }
+
+    // Preview shown when the link is shared (WhatsApp, LinkedIn, X, ...)
+    $share = "  <meta property=\"og:type\" content=\"article\">\n"
+           . "  <meta property=\"og:title\" content=\"{$safeTitle}\">\n"
+           . "  <meta property=\"og:description\" content=\"{$safeDesc}\">\n"
+           . "  <meta property=\"og:url\" content=\"{$safeUrl}\">\n"
+           . ($safeImage !== '' ? "  <meta property=\"og:image\" content=\"{$safeImage}\">\n" : '')
+           . "  <meta name=\"twitter:card\" content=\"" . ($safeImage !== '' ? 'summary_large_image' : 'summary') . "\">\n";
+
+    $routeJson = json_encode([
+        'pageKey' => 'blog_article',
+        'slug' => $listSlug,
+        'listSlug' => $listSlug,
+        'listTitle' => $listTitle,
+        'baseUrl' => $baseUrl,
+        'targetFile' => 'blogs.html',
+        'blogId' => $blog['blog_id'],
+        'blogSlug' => $blog['slug']
+    ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE);
+    // reader-boot: the reader covers the page from the first frame, so the listing never flashes first
+    $boot = "  <script>window.__1928_SERVER_ROUTE__ = {$routeJson}; document.documentElement.classList.add('reader-boot');</script>\n";
+    $html = replaceOnceLiteral('/<\/head>/i', $share . $boot . '</head>', $html);
 
     header('Content-Type: text/html; charset=utf-8');
     echo $html;
