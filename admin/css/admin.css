@@ -5334,3 +5334,140 @@ body.auth-unlocked .admin-auth-overlay {
   color: var(--ink-dim);
   text-align: center;
 }
+
+/* ═══ ABOUT PAGE: 4 project cards for "Work worth showing" ═══ */
+.aw-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.aw-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px;
+  background: var(--card-bg);
+  border: 1px solid var(--rule-m);
+  border-radius: 14px;
+}
+
+.aw-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.aw-num {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.aw-when {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cr);
+  background: rgba(200, 16, 46, 0.08);
+  padding: 3px 7px;
+  border-radius: 5px;
+  white-space: nowrap;
+}
+
+.aw-thumb {
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--card-alt);
+}
+
+.aw-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.aw-meta {
+  min-width: 0;
+}
+
+.aw-cat {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--cr);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 13px;
+}
+
+.aw-title {
+  font-family: var(--font-primary);
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.3;
+  margin-top: 3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 36px;
+}
+
+.aw-card .custom-dropdown-trigger {
+  height: 38px;
+  font-size: 12px;
+}
+
+.aw-status {
+  font-family: var(--font-primary);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  align-self: center;
+}
+
+.aw-status.is-dirty {
+  color: var(--cr);
+}
+
+#aboutWorksSaveBtn[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.aw-note {
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+.aw-empty {
+  grid-column: 1 / -1;
+  padding: 28px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-dim);
+  border: 1px dashed var(--rule-m);
+  border-radius: 14px;
+}
+
+@media (max-width: 1200px) {
+  .aw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .aw-grid { grid-template-columns: 1fr; }
+}

@@ -679,6 +679,33 @@
       return projectIdsArray;
     }
 
+    // About page "Work worth showing": the 4 projects picked in the admin (About Page section).
+    // Returns exactly 4 projects: the saved picks first, then the first projects in the Work list
+    // for any empty or deleted slot (so nothing changes until something is picked).
+    getAboutSelectedProjects() {
+      let saved = this.data.settings?.about_selected_projects;
+      if (typeof saved === 'string') {
+        try { saved = JSON.parse(saved); } catch (e) { saved = []; }
+      }
+      const all = this.getPortfolio();
+      const picked = [];
+      (Array.isArray(saved) ? saved : []).forEach(id => {
+        const p = all.find(x => x.id === id);
+        if (p && !picked.includes(p)) picked.push(p);
+      });
+      all.forEach(p => { if (picked.length < 4 && !picked.includes(p)) picked.push(p); });
+      return picked.slice(0, 4);
+    }
+
+    async saveAboutSelectedProjects(projectIdsArray) {
+      if (!this.data.settings) this.data.settings = {};
+      this.data.settings.about_selected_projects = projectIdsArray;
+      this._notify();
+      return this._sendToAPI('save_settings', {
+        about_selected_projects: projectIdsArray
+      });
+    }
+
     // ═══════════════════════════════════════════════════════════
     // 6. PERSPECTIVES & BLOGS (MySQL: blogs)
     // ═══════════════════════════════════════════════════════════

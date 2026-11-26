@@ -5807,6 +5807,120 @@
       updateFooterTime();
       setInterval(updateFooterTime, 30000);
 
+      /* ── Best Works 2-Set Pinned Scroll Deck (Soft Crossfade with Zero Text Overlap) ── */
+      const worksDriver = document.getElementById('works-driver');
+      const worksSet1 = document.getElementById('worksSet1');
+      const worksSet2 = document.getElementById('worksSet2');
+      const worksDotsAll = document.querySelectorAll('.works-dot');
+
+      function updateWorksDots(activeCard) {
+        worksDotsAll.forEach(function (d) {
+          d.classList.toggle('active', d.getAttribute('data-card') === String(activeCard));
+        });
+      }
+
+      // Restored: this was removed by mistake in commit 8569de0 (theme clean-up)
+      function updateWorksOnScroll() {
+        if (!worksDriver || !worksSet1 || !worksSet2) return;
+        const cardsSet1 = worksSet1.querySelectorAll('.work-duo-card');
+        const cardsSet2 = worksSet2.querySelectorAll('.work-duo-card');
+        const card1 = cardsSet1[0];
+        const card2 = cardsSet1[1];
+        const card3 = cardsSet2[0];
+        const card4 = cardsSet2[1];
+
+        /* ── MOBILE: 4 individual cards slide-up progression with live 4-dot indicator ── */
+        if (window.innerWidth <= 860) {
+          if (!card1 || !card2 || !card3 || !card4) return;
+          const mRect = worksDriver.getBoundingClientRect();
+          const mTotalDist = worksDriver.offsetHeight - window.innerHeight;
+          if (mTotalDist <= 0) return;
+
+          const mScrolled = Math.max(0, -mRect.top);
+          const mp = Math.min(1, Math.max(0, mScrolled / mTotalDist));
+
+          // 1. Card 2 enters (mp 0.05 -> 0.28): slides right to left over Card 1 inside worksSet1
+          const p2 = clamp((mp - 0.05) / 0.23, 0, 1);
+          const e2 = eioq(p2);
+          const x2 = (1 - e2) * 105;
+          card2.style.transform = `translate3d(${x2.toFixed(1)}%, 0, 0)`;
+          card1.style.transform = `translate3d(${(-25 * e2).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e2).toFixed(3)})`;
+          card1.style.opacity = `${(1 - 0.35 * e2).toFixed(2)}`;
+
+          // 2. Card 3 enters (mp 0.35 -> 0.58): worksSet2 (carrying Card 3) slides right to left over worksSet1
+          const p3 = clamp((mp - 0.35) / 0.23, 0, 1);
+          const e3 = eioq(p3);
+          const xSet2 = (1 - e3) * 105;
+          worksSet2.style.transform = `translate3d(${xSet2.toFixed(1)}%, 0, 0)`;
+          worksSet1.style.transform = `translate3d(${(-25 * e3).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e3).toFixed(3)})`;
+          worksSet1.style.opacity = `${(1 - 0.35 * e3).toFixed(2)}`;
+
+          // 3. Card 4 enters (mp 0.65 -> 0.88): Card 4 slides right to left over Card 3 inside worksSet2
+          const p4 = clamp((mp - 0.65) / 0.23, 0, 1);
+          const e4 = eioq(p4);
+          const x4 = (1 - e4) * 105;
+          card4.style.transform = `translate3d(${x4.toFixed(1)}%, 0, 0)`;
+          card3.style.transform = `translate3d(${(-25 * e4).toFixed(1)}%, 0, 0) scale(${(1 - 0.04 * e4).toFixed(3)})`;
+          card3.style.opacity = `${(1 - 0.35 * e4).toFixed(2)}`;
+
+          // Active indicator dot & pointer events
+          let activeCard = 1;
+          if (mp >= 0.75) {
+            activeCard = 4;
+          } else if (mp >= 0.45) {
+            activeCard = 3;
+          } else if (mp >= 0.18) {
+            activeCard = 2;
+          }
+          card1.style.pointerEvents = activeCard === 1 ? 'auto' : 'none';
+          card2.style.pointerEvents = activeCard === 2 ? 'auto' : 'none';
+          card3.style.pointerEvents = activeCard === 3 ? 'auto' : 'none';
+          card4.style.pointerEvents = activeCard === 4 ? 'auto' : 'none';
+
+          updateWorksDots(activeCard);
+          return;
+        }
+
+        // DESKTOP (> 860px): Clear any mobile transforms on sets and individual cards
+        worksSet1.style.opacity = '';
+        worksSet2.style.opacity = '';
+        const allCards = worksDriver.querySelectorAll('.work-duo-card');
+        allCards.forEach(c => {
+          c.style.transform = '';
+          c.style.opacity = '';
+          c.style.pointerEvents = 'auto';
+        });
+
+        const rect = worksDriver.getBoundingClientRect();
+        const totalDist = worksDriver.offsetHeight - window.innerHeight;
+        if (totalDist <= 0) return;
+        const scrolled = -rect.top;
+        const p = clamp(scrolled / totalDist, 0, 1);
+
+        // Phase 1 (p: 0.0 -> 0.50): Set 1 (01 Juventus, 02 Bugatti)
+        // Stays centered & clear initially, then softly fades out in place (with subtle micro-scale) without moving into the text above
+        const set1ExitP = clamp((p - 0.18) / 0.28, 0, 1);
+        const set1E = eioq(set1ExitP);
+        const set1Scale = lerp(1, 0.96, set1E);
+        const set1Opac = lerp(1, 0, set1E);
+        worksSet1.style.transform = `translateY(0px) scale(${set1Scale})`;
+        worksSet1.style.opacity = `${set1Opac}`;
+        worksSet1.style.pointerEvents = set1Opac > 0.4 ? 'auto' : 'none';
+
+        // Phase 2 (p: 0.32 -> 1.0): Set 2 (03 Mini Brand, 04 Zerodha)
+        // Softly fades in and scales smoothly into full view
+        const set2EnterP = clamp((p - 0.32) / 0.28, 0, 1);
+        const set2E = eioq(set2EnterP);
+        const set2Scale = lerp(0.96, 1, set2E);
+        const set2Opac = lerp(0, 1, set2E);
+        worksSet2.style.transform = `translateY(0px) scale(${set2Scale})`;
+        worksSet2.style.opacity = `${set2Opac}`;
+        worksSet2.style.pointerEvents = set2Opac > 0.4 ? 'auto' : 'none';
+      }
+
+      // site-bridge.js calls this after it fills the cards from the admin
+      window.updateWorksOnScroll = updateWorksOnScroll;
+
               /* ── S-Curve Serpentine Progressive Creative Process Flow ── */
       let _procResizeListener = null;
       let _procScrollListener = null;

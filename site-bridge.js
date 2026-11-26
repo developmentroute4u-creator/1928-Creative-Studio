@@ -670,10 +670,14 @@
     const worksSet1 = document.getElementById('worksSet1');
     const worksSet2 = document.getElementById('worksSet2');
     if (worksSet1 && worksSet2) {
-      const p1 = projects[0] || {};
-      const p2 = projects[1] || {};
-      const p3 = projects[2] || {};
-      const p4 = projects[3] || {};
+      // The 4 projects picked in the admin (About Page); the first four in the Work list otherwise
+      const aboutPicks = (typeof window.CMSStore.getAboutSelectedProjects === 'function')
+        ? window.CMSStore.getAboutSelectedProjects()
+        : projects.slice(0, 4);
+      const p1 = aboutPicks[0] || {};
+      const p2 = aboutPicks[1] || {};
+      const p3 = aboutPicks[2] || {};
+      const p4 = aboutPicks[3] || {};
 
       function makeWorkCard(p, numStr, subStr, cardId) {
         const title = p.title || 'FEATURED WORK';

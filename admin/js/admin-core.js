@@ -40,6 +40,7 @@
         seo: 'SEO & Metadata',
         blogs: 'Perspectives / Blogs',
         portfolio: 'Work & Portfolio',
+        about: 'About Page',
         profile: 'Studio & Team Minds',
         services: 'Core Services',
         clients: 'Client Logos',
@@ -54,6 +55,10 @@
       }
       if (viewName === 'services') {
         renderHomeServicesGrid();
+      }
+      if (viewName === 'about' && typeof renderAboutWorksView === 'function') {
+        // Show the saved picks each time the section is opened (unless there are unsaved changes)
+        renderAboutWorksView(typeof aboutWorksDirty === 'undefined' || !aboutWorksDirty);
       }
       if (viewName === 'seo') {
         if (typeof window.loadSEOForm === 'function') {

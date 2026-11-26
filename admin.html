@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="admin/css/admin.css?v=20261126_v11" />
+  <link rel="stylesheet" href="admin/css/admin.css?v=20261126_v12" />
 
   <!-- Anti-flash security verification: hides protected panels until unlocked -->
   <style id="authGateInitialStyle">
@@ -302,6 +302,12 @@
         <svg viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><path d="M2 10h20"/></svg>
         <span>Work &amp; Portfolio</span>
         <span class="badge" id="badgeProjectsCount">0</span>
+      </a>
+
+      <a class="nav-item" data-view="about">
+        <svg viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M12 9v12"/></svg>
+        <span>About Page</span>
+        <span class="badge">4</span>
       </a>
 
       <a class="nav-item" data-view="profile">
@@ -1186,6 +1192,27 @@
       <div class="data-grid-matrix" id="principlesGrid">
         <!-- Rendered dynamically -->
       </div>
+    </section>
+
+    <!-- ── ABOUT PAGE: the 4 project cards in "Work worth showing" ── -->
+    <section class="view-panel" id="view-about">
+      <div class="panel-header">
+        <div>
+          <h1 class="panel-headline">About Page</h1>
+          <p class="panel-sub">Choose the 4 projects shown in “Work worth showing” on the About page.</p>
+        </div>
+        <div class="action-row">
+          <span class="aw-status" id="aboutWorksStatus"></span>
+          <button type="button" class="btn-action-secondary" onclick="openAboutPagePreview()">View About page</button>
+          <button type="button" class="btn-action-primary" id="aboutWorksSaveBtn" onclick="saveAboutWorks()" disabled>Save</button>
+        </div>
+      </div>
+
+      <div class="aw-grid" id="aboutWorksGrid">
+        <!-- Rendered by admin/js/sections/about-page.js -->
+      </div>
+
+      <p class="aw-note">Cards 01–02 are shown first; cards 03–04 appear as visitors scroll. On phones the cards appear one by one. Picking a project that is already in another card swaps the two.</p>
     </section>
 
     <!-- ── VIEW 6: SERVICES ── -->
@@ -3430,23 +3457,24 @@
   <div id="toast-wrap"></div>
 
   <!-- Load Data Store -->
-  <script src="data-store.js?v=20261126_v11"></script>
+  <script src="data-store.js?v=20261126_v12"></script>
 
     <!-- ══ MODULAR ADMIN SECTION CONTROLLERS ══ -->
-  <script src="admin/js/admin-core.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/auth.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/dashboard.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/inquiries.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/seo.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/perspectives.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/portfolio.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/team.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/services.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/clients.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/contact.js?v=20261126_v11"></script>
-  <script src="admin/js/sections/backup.js?v=20261126_v11"></script>
-  <script src="admin/js/admin-init.js?v=20261126_v11"></script>
-  <script src="site-bridge.js?v=20261126_v11"></script>
+  <script src="admin/js/admin-core.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/auth.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/dashboard.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/inquiries.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/seo.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/perspectives.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/portfolio.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/about-page.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/team.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/services.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/clients.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/contact.js?v=20261126_v12"></script>
+  <script src="admin/js/sections/backup.js?v=20261126_v12"></script>
+  <script src="admin/js/admin-init.js?v=20261126_v12"></script>
+  <script src="site-bridge.js?v=20261126_v12"></script>
 </body>
 
 </html>

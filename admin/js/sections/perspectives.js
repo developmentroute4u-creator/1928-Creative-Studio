@@ -634,6 +634,8 @@
             filterServiceWorkDropdown(parseInt(match[0], 10), '');
           } else if (containerId === 'blogCategoryDropdown') {
             renderBlogCategoryList('');
+          } else if (containerId.startsWith('aboutWorkDropdown_') && typeof filterAboutWorkDropdown === 'function') {
+            filterAboutWorkDropdown(parseInt(containerId.split('_')[1], 10), '');
           }
           setTimeout(() => searchInput.focus(), 60);
         }
