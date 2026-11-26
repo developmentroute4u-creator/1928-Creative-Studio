@@ -86,7 +86,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,600;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="admin/css/admin.css?v=20261125_v9" />
+  <link rel="stylesheet" href="admin/css/admin.css?v=20261126_v11" />
 
   <!-- Anti-flash security verification: hides protected panels until unlocked -->
   <style id="authGateInitialStyle">
@@ -2391,9 +2391,22 @@
               <section class="be-panel">
                 <h4 class="be-panel-title">Details</h4>
                 <div class="be-field">
-                  <label class="be-label" for="blogCategoryInput">Category</label>
-                  <input type="text" class="form-input" id="blogCategoryInput" list="blogCategoriesList" placeholder="Choose or type a category" autocomplete="off" />
-                  <datalist id="blogCategoriesList"></datalist>
+                  <span class="be-label">Category</span>
+                  <!-- Every category used in any blog; type to search or to add a new one -->
+                  <div class="custom-dropdown-container dropdown-down be-category" id="blogCategoryDropdown">
+                    <button type="button" class="custom-dropdown-trigger" id="blogCategoryTrigger" onclick="toggleGenericDropdown('blogCategoryDropdown', event)">
+                      <span class="custom-dropdown-val is-empty" id="blogCategoryVal">Choose a category</span>
+                      <svg class="custom-dropdown-chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="custom-dropdown-menu" id="blogCategoryMenu">
+                      <div class="custom-dropdown-search-wrap" onclick="event.stopPropagation()">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" class="custom-dropdown-search" id="blogCategorySearch" placeholder="Search, or type a new category" autocomplete="off" oninput="renderBlogCategoryList(this.value)" onkeydown="blogCategorySearchKey(event)" onclick="event.stopPropagation()" />
+                      </div>
+                      <div class="custom-dropdown-list" id="blogCategoryList"></div>
+                    </div>
+                    <input type="hidden" id="blogCategoryInput" value="" />
+                  </div>
                 </div>
                 <div class="be-grid-2">
                   <div class="be-field">
@@ -3417,23 +3430,23 @@
   <div id="toast-wrap"></div>
 
   <!-- Load Data Store -->
-  <script src="data-store.js?v=20261125_v9"></script>
+  <script src="data-store.js?v=20261126_v11"></script>
 
     <!-- ══ MODULAR ADMIN SECTION CONTROLLERS ══ -->
-  <script src="admin/js/admin-core.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/auth.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/dashboard.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/inquiries.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/seo.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/perspectives.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/portfolio.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/team.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/services.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/clients.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/contact.js?v=20261125_v9"></script>
-  <script src="admin/js/sections/backup.js?v=20261125_v9"></script>
-  <script src="admin/js/admin-init.js?v=20261125_v9"></script>
-  <script src="site-bridge.js?v=20261125_v9"></script>
+  <script src="admin/js/admin-core.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/auth.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/dashboard.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/inquiries.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/seo.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/perspectives.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/portfolio.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/team.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/services.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/clients.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/contact.js?v=20261126_v11"></script>
+  <script src="admin/js/sections/backup.js?v=20261126_v11"></script>
+  <script src="admin/js/admin-init.js?v=20261126_v11"></script>
+  <script src="site-bridge.js?v=20261126_v11"></script>
 </body>
 
 </html>

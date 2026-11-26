@@ -5308,3 +5308,29 @@ body.auth-unlocked .admin-auth-overlay {
   justify-content: center;
   width: 100%;
 }
+
+/* Blog editor: category dropdown (all categories used in any blog, type to search or add) */
+#blogModal .be-category .custom-dropdown-trigger {
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+#blogModal .be-category .custom-dropdown-val.is-empty {
+  color: var(--ink-dim);
+  font-weight: 500;
+}
+
+#blogModal .be-category .be-cat-add .custom-dropdown-item-title {
+  color: var(--cr);
+  font-weight: 700;
+}
+
+#blogModal .be-category .be-cat-empty {
+  padding: 16px 12px;
+  font-family: var(--font-primary);
+  font-size: 12.5px;
+  color: var(--ink-dim);
+  text-align: center;
+}

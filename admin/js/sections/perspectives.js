@@ -124,6 +124,88 @@
       });
     }
 
+    // ── Category dropdown ──
+    // Lists every category used in any blog (a category added in one blog shows up for all the others).
+    // Typing filters the list; a name that does not exist yet can be added as a new category.
+    function blogCategoryEscape(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function blogCategoryCounts() {
+      const counts = {};
+      window.CMSStore.getBlogs().forEach(b => {
+        const c = (b.category || '').trim().toUpperCase();
+        if (c) counts[c] = (counts[c] || 0) + 1;
+      });
+      return counts;
+    }
+
+    function renderBlogCategoryList(query) {
+      const list = document.getElementById('blogCategoryList');
+      if (!list) return;
+      const current = (document.getElementById('blogCategoryInput').value || '').trim().toUpperCase();
+      const typed = (query || '').trim();
+      const typedU = typed.toUpperCase();
+      const counts = blogCategoryCounts();
+      const all = Object.keys(counts).sort((a, b) => a.localeCompare(b));
+      // A category picked in this editor but not saved on any blog yet still appears
+      if (current && !counts[current]) all.unshift(current);
+      const shown = typedU ? all.filter(c => c.includes(typedU)) : all;
+
+      const check = '<svg class="custom-dropdown-item-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      let html = '';
+      if (typedU && !all.includes(typedU)) {
+        html += `
+          <div class="custom-dropdown-item be-cat-add" data-value="${blogCategoryEscape(typedU)}" onclick="selectBlogCategory(this.dataset.value, true)">
+            <span class="custom-dropdown-item-title">+ Add “${blogCategoryEscape(typedU)}”</span>
+            <span class="custom-dropdown-item-tag">NEW</span>
+          </div>`;
+      }
+      html += shown.map(c => {
+        const n = counts[c] || 0;
+        return `
+          <div class="custom-dropdown-item ${c === current ? 'active' : ''}" data-value="${blogCategoryEscape(c)}" onclick="selectBlogCategory(this.dataset.value, true)">
+            <span class="custom-dropdown-item-title">${blogCategoryEscape(c)}</span>
+            <span class="custom-dropdown-item-tag">${n ? `${n} ${n === 1 ? 'BLOG' : 'BLOGS'}` : 'NEW'}</span>
+            ${check}
+          </div>`;
+      }).join('');
+      if (!all.length && !typedU) {
+        html = '<div class="be-cat-empty">No category yet. Type one above to add it.</div>';
+      }
+      list.innerHTML = html;
+    }
+
+    function selectBlogCategory(value, closeMenu) {
+      const v = String(value || '').trim().toUpperCase();
+      document.getElementById('blogCategoryInput').value = v;
+      const label = document.getElementById('blogCategoryVal');
+      if (label) {
+        label.textContent = v || 'Choose a category';
+        label.classList.toggle('is-empty', !v);
+      }
+      const search = document.getElementById('blogCategorySearch');
+      if (search) search.value = '';
+      renderBlogCategoryList('');
+      if (closeMenu) {
+        const box = document.getElementById('blogCategoryDropdown');
+        if (box) box.classList.remove('open');
+      }
+    }
+
+    // Enter picks the typed category (an existing one if the name matches, otherwise a new one)
+    function blogCategorySearchKey(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const typed = e.target.value.trim();
+        if (typed) selectBlogCategory(typed, true);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        const box = document.getElementById('blogCategoryDropdown');
+        if (box) box.classList.remove('open');
+      }
+    }
+
     // ── Blog editor open / fill ──
     let currentEditingBlog = null;   // the blog as it was when the editor opened (null for a new blog)
     let blogSlugTouched = false;     // stop auto-filling the link once the user edits it
@@ -166,11 +248,11 @@
       document.getElementById('blogSlugInput').value = blogData ? (blogData.slug || '') : '';
       document.getElementById('blogExcerptInput').value = blogData ? (blogData.excerpt || '') : '';
 
-      // Category suggestions come from the categories already used on the website
-      const categories = Array.from(new Set(window.CMSStore.getBlogs().map(b => (b.category || '').trim()).filter(Boolean))).sort();
-      const datalist = document.getElementById('blogCategoriesList');
-      if (datalist) datalist.innerHTML = categories.map(c => `<option value="${c.replace(/"/g, '&quot;')}"></option>`).join('');
-      document.getElementById('blogCategoryInput').value = blogData ? (blogData.category || '') : '';
+      // Every dropdown starts closed (one left open last time would otherwise close on the first click)
+      document.querySelectorAll('#blogModal .custom-dropdown-container.open').forEach(c => c.classList.remove('open'));
+
+      // Category: the dropdown lists every category used in any blog
+      selectBlogCategory(blogData ? (blogData.category || '') : '', true);
 
       document.getElementById('blogDateInput').value = blogData ? (blogData.date || '') : blogCurrentMonthText();
       document.getElementById('blogCityInput').value = blogData ? (blogData.city || '') : '';
@@ -550,6 +632,8 @@
             filterHeroPillDropdown(parseInt(match[0], 10), '');
           } else if (match && containerId.includes('serviceWork') && typeof filterServiceWorkDropdown === 'function') {
             filterServiceWorkDropdown(parseInt(match[0], 10), '');
+          } else if (containerId === 'blogCategoryDropdown') {
+            renderBlogCategoryList('');
           }
           setTimeout(() => searchInput.focus(), 60);
         }
